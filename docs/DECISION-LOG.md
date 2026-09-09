@@ -5473,3 +5473,141 @@ casos que les peces 4 i 5 han deixat oberts: el peu de la figura d'assaigs, `fig
 figures de situació de Bell-lloc.
 
 *Fi entrada 2026-09-08 (4). La figura de situació són els dos mapes del full de l'Eva, de costat: 0 % → 71 %.*
+
+## 2026-09-08 (5) — IMATGES pas 3, peça 7a: la ranura única de figura es parteix en tres blocs amb peu propi (situació 1-2 i projecte 0-2 a l'1.1, assaigs 0-1 al 2.2) i la numeració de les figures va per presència; `fix` 74 → 77 M, imatges 74 → 72 % (transitori, la 7b ho recupera)
+
+### Context
+
+Última peça del pas 3. Handoff `_FOR-NEW-YOU-20260908-2130` §3: «el premi és la numeració». Baseline amb el codi quiet
+(`2026-09-08-m341-peca7-baseline`): idèntic a `2026-09-08-m341-peca5` als tres `diff` (escalars, agregat, imatges).
+GO del Josep (2026-09-08, nit) al capítol **2.2** per a la figura d'assaigs i als **tres peus fixos**; la peça es fa en
+dues subpeces mesurables: **7a** (plantilla + numeració, amb les imatges d'avui) i **7b** (lector de figures).
+
+**Correcció al handoff.** Les 25 X del grup `fix`, classificades a mà (`grep '\[fix\].*MISMATCH'` als 7): **10** són
+cascada de figures (Bell-lloc 4, Linyola 3, Vilanova 2, Anciles 1) i són l'única part que toca aquesta peça; **5** són
+les taules de Linyola, cascada de `table_dpsh_range` («3 i 4» vs «3, 4 i 5», registre #2 i #83, pregunta 23), no de cap
+figura; **7** són seccions (expansivitat P28, 2.4.3 duplicat a Bell-lloc, empentes d'Anciles); **3** són fotos
+(Castellar salta la Fotografia 3 al signat; Rubí no tria la vista Google Earth `F3 VG.png`, D5). El sostre de la peça 7
+sobre `fix` és **75 → 85 %** (84 M · 15 X), no el 93 % del handoff.
+
+**Troballa nova: el capítol.** Als signats, la figura d'assaigs és al **2.2 Reconeixement del terreny** en 5 de 6
+(Castellar, Rubí, Alcoletge, Vilanova, Anciles); Linyola la posa a l'1.1. Les figures del projecte van sempre a l'1.1,
+després de la situació. La plantilla tenia les dues ranures a l'1.1. Seqüències: Bell-lloc sit×2 + proj; Linyola sit +
+assaigs + proj; Vilanova sit + proj + assaigs; Anciles sit + proj×2 + assaigs; els altres tres sit + assaigs.
+
+### Decisions arquitectòniques clau
+
+**1. Tres blocs condicionals amb peu propi (D11 del pas 2), tot clonat de la plantilla.** `{%p if not fig_situacio_image_2 %}`
+taula d'una cel·la + «Figura N. Situació de la zona d'estudi.» / `{%p if fig_situacio_image_2 %}` les dues imatges en
+línia + «Figura N i Figura N+1. Detall de la ubicació de la parcel·la en estudi. Font: Projecte.» (Bell-lloc) /
+`{%p if fig_projecte_image_n %}` imatge + «Figura N. {{ fig_projecte_caption_n }}» (0-2, el peu l'escriu el lector:
+els de l'Eva varien a cada informe) / al 2.2, després del paràgraf del laboratori de camp (posició de Rubí, la
+plantilla base): `{%p if fig_assaigs_image %}` imatge + «Figura N. Situació de l'estructura projectada i els assaigs
+realitzats.» (Rubí i Alcoletge). Script reproduïble `docs/imatges/scripts/peca7_plantilla.py` (lxml, idempotent, cap
+XML a mà).
+
+**2. Cap taula nova a la plantilla: la situació doble va en un sol paràgraf amb les dues imatges en línia.** La primera
+versió clonava la taula de dues cel·les de les vistes generals. Mesurat amb el refresc de veritats en sec contra les
+dues plantilles: amb l'antiga **0** diferències als 7 projectes; amb la taula nova **23-28 claus per projecte** a la
+deriva (`dpsh_tests`, `sondeig_tests`, `spt_*`, `geotech_rows`, `perm_rows`, `seismic_rows`, `lab_*`, `geomech_*`,
+`sulfate_*`, `cota_referencia`, `bearing_layer_idx`): totes surten de taules, i l'extractor les aparella per ordre
+(gotcha de la peça 1, ara amb la mesura que el quantifica). Sense la taula: només les claus de figura es mouen. Test
+que fixa el nombre de taules (14).
+
+**3. Numeració per presència, calculada DESPRÉS de les imatges.** `figure_numbers(n_situacio, n_projecte, has_assaigs)`
+(ordre situació → projecte → assaigs → cullera → geològic → tall) i `figure_numbers_from_context` a `render_template`,
+quan `ImageManager.build_context` ja ha dit quines imatges hi ha (abans la numeració es feia a `_build_template_context`,
+molt abans de les imatges, a partir de `num_project_figures` del `user_data`, que ningú omplia). Buit = `''` i el bloc
+no s'imprimeix. Linyola (projecte DESPRÉS d'assaigs) queda amb els dos números creuats: 1 de 7, s'accepta.
+**Els noms de numeració han d'acabar en `_num`**: `_is_numbering` de l'extractor ho exigeix (`fig_situacio_num_2` no
+hi entrava; ara `fig_situacio_2_num`, `fig_projecte_1_num`, `fig_projecte_2_num`).
+
+**4. Ranures noves a `image_manager`, amb els noms antics com a àlies.** `fig_situacio_image_1` (cadena de la peça 5),
+`fig_situacio_image_2` (buit: lector, 7b), `fig_assaigs_image` (el `plan_crop` de la peça 4), `fig_projecte_image_1/2`
++ `_caption_1/2` (buits: lector, 7b); `fig_cadastre_image`, `fig_main_plan_image`, `fig_location_image`,
+`fig_building_image` segueixen com a àlies. **Fora (D4):** el retall `main_plan` del rol `architect_plan`, la caixa de
+`planol_extracted.json` i el render de la pàgina sencera de l'`A.01.pdf`: cap dels 7 signats els porta, i sense
+candidat clar ara no s'imprimeix cap figura (el bloc és condicional), mai una pàgina sencera amb caixetí.
+
+**5. El retall del full de situació va a la ranura d'assaigs a tots els projectes, també a Bell-lloc (límit conegut).**
+El full de Bell-lloc no té punts i l'Eva el fa servir com a figura del projecte. Buscat un senyal determinista i cap
+serveix: les etiquetes «P-n» del FreeHand **no són text** (Castellar i Rubí en tenen i `get_text` no en dona cap) i
+els farcits vectorials petits dins la regió no separen res (Castellar 1, Rubí 1, Linyola 6, Bell-lloc 3 de llegenda).
+Ho classifica el lector de la 7b, que mira la imatge. Mentrestant la mesura ho diu honestament: Bell-lloc perd un M
+(F3 projecte → ND) i té 1 sobrant.
+
+**6. L'extractor admet dos PEUS amb el mateix forat.** Els dos peus de situació porten `fig_situacio_num`; abans el
+segon es descartava (la regla era per a l'índex i la capçalera, que sí que han de comptar una sola vegada). Ara la
+regla només val per a capçaleres, cada peu s'aparella pel seu text i, si dos peus trobessin peu al signat, mana el de
+més puntuació (avís al registre). Bell-lloc dona (1, 2) pel peu doble; Alcoletge 1 pel simple.
+
+**7. La mesura d'imatges és estricta per ranura.** `SLOT_MAP`: `fig_assaigs_image` només contra `fig_assaigs`,
+`fig_projecte_image_n` només contra `fig_projecte` (abans `fig_main_plan_image` valia per a totes dues i amagava el peu
+equivocat). `IMAGE_SLOTS` del test de presència inclou les 5 ranures condicionals (buit = absent).
+
+### Implementació
+
+| Fitxer | Què |
+|---|---|
+| `templates/g3dt-jinja-template.docx` | +20 paràgrafs (1.1: 4 blocs; 2.2: 1 bloc), 14 taules (sense canvi), 122 → 123 KB |
+| `docs/imatges/scripts/peca7_plantilla.py` | nou, 130 línies: la transformació, idempotent, amb assert del nombre de taules |
+| `automation/report_generator.py` | `figure_numbers`, `figure_numbers_from_context`, `_is_image`; `_build_numbering_context` −30/+5; `render_template` +2 |
+| `automation/image_manager.py` | bloc 3 reescrit (−80/+60): ranures noves, àlies, fallbacks de l'`A.01` fora; `ROLE_TO_FIGURE_VAR` |
+| `automation/reference_extractor.py` | peus poden repetir forat; el primer mana (+10) |
+| `docs/wizard-headless/mesures/imatges_font.py`, `mesura_341.py` | `SLOT_MAP` i `IMAGE_SLOTS` amb les ranures noves |
+| `web/api.py`, `templates/validation/review.html` | calaix de figures: prefixos `situacio_*` i `plan_crop_*`, etiquetes «Situació (1.1)» / «Assaigs (2.2)» |
+| `reference-material/*/validation/eva_reference_values.json` | +6 claus (`fig_situacio_num` ×2, `fig_situacio_2_num`, `fig_assaigs_num` ×3), −3 (`fig_cadastre_num` ×2, `fig_main_plan_num`) via `refresh_eva_narrativa.py --keys … --drop …` |
+| `tests/test_peca7_figures.py` | 14 tests nous; 4 fitxers de tests existents actualitzats als noms nous |
+
+### Validació empírica
+
+Run `2026-09-08-m341-peca7a` contra `2026-09-08-m341-peca5` (= baseline):
+
+| | abans | després |
+|---|---|---|
+| grup `fix` | 74 M · 0 C · 25 X → 75 % | **77 M** · 0 C · 25 X → 75 % (veritats 99 → 102) |
+| escalars totals | 308 · 43 · 124 · 32 → 74 % | **311** · 43 · 124 · 32 → 74 % (Rubí 80 → 81, Linyola 68 → 69) |
+| taules | 292 · 99 · 88 → 82 % | idèntic |
+| imatges | 31 M · 4 C · 12 X · 9 ND → 74 % | **29 M · 4 C · 13 X · 10 ND → 72 %** |
+| `fig_assaigs` | 4 · 0 · 0 · 2 → 100 % | 4 · 0 · 2 · 0 → 67 % (Linyola i Vilanova: el nostre retall contra la SEVA figura d'assaigs) |
+| `fig_projecte` | 2 · 0 · 1 · 2 → 67 % | 0 · 0 · 0 · 5 (cap figura del projecte fins a la 7b) |
+
+L'únic escalar que canvia d'estat és Bell-lloc: `fig_main_plan_num` X (2 vs 3) → `fig_situacio_2_num` X ('' vs 2).
+Els 3 M nous de `fix` són `fig_assaigs_num` (Rubí, Linyola, Alcoletge = 2). Els `.docx` generats: situació a l'1.1,
+assaigs al 2.2 amb el seu peu, numeració contínua, cap resta de Jinja (comprovat a Bell-lloc, Rubí i Anciles).
+
+### Tests
+
+14 nous (`tests/test_peca7_figures.py`): estructura dels blocs i posició al 2.2, cap taula nova, numeració per
+presència (els 7 signats + topalls), numeració des del context (buits i pendents), `render_template` renumera després
+de les imatges, extractor amb dos peus del mateix forat (Bell-lloc, Alcoletge, empat, índex+capçalera), context de
+`image_manager` (claus, àlies, retall → assaigs) amb la cau aïllada a `tmp_path`. Actualitzats: `test_peca1_plantilla`,
+`test_peca4_retall_planta`, `test_peca0_imatges_font`, `test_bloc4_numeracio`. Suite sencera: **31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2510 verds / 5 omesos (203 s)**.
+
+### Limitacions conegudes
+
+1. **Imatges 74 → 72 % és transitori i volgut**: Bell-lloc (el retall sense punts imprès com a assaigs; F3 projecte ND
+   + 1 sobrant) i Vilanova (el mateix dibuix li serveix per a F2 i F3; ara només es puntua contra F3, retall estret).
+   Registre de pèrdues #8-#10, marcades «transitòria (7b)».
+2. La numeració per presència només puja quan hi ha figures del projecte i la 2a de situació: **7b**.
+3. Linyola: projecte després d'assaigs (1 de 7): els dos números quedaran creuats quan hi hagi figura del projecte.
+4. El peu de les figures del projecte no té text fix → l'extractor no en pot treure veritat (`fig_projecte_n_num`
+   sempre en blanc): la numeració es mesura per la cullera, el geològic i el tall, que sí que en tenen.
+5. El calaix del wizard segueix amb les claus `fig_cadastre` / `fig_main_plan` (només etiquetes noves).
+
+### GO/NO-GO
+
+- ✅ Capítol 2.2 i tres peus fixos: GO del Josep.
+- ✅ Cap taula nova; només les claus de figura es mouen a les veritats (mesurat contra les dues plantilles).
+- ✅ Escalars: +3 M, cap altre canvi; taules intactes.
+- ⏳ Imatges −2 M transitòries → 7b.
+
+### Següents passos
+
+**7b, el lector de figures**: skill nova com la de fotos, que mira les pàgines candidates i escriu `figure_selection.json`
+(ranura, fitxer, pàgina, retall, peu) amb precedència Eva > lector > determinista. Cobreix Anciles (topogràfic p5 de
+`IV_PLANOS.pdf` i tipologies `A01_TIPOL.pdf`), Linyola (secció del projecte i `Punts de Sondeig_Silvia_Jaume.pdf` com a
+figura d'assaigs), Bell-lloc (dos insets de l'`A.01.pdf` i el retall com a projecte, no assaigs) i Vilanova (retall
+estret del mateix dibuix per a la Figura 3). Guany potencial: fins a 7 imatges més en M i 10 X de `fix`.
+
+*Fi entrada 2026-09-08 (5). Peça 7a: tres blocs de figura amb peu propi, assaigs al 2.2, numeració per presència; `fix` 74 → 77 M; cap taula nova.*

@@ -33,6 +33,14 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
 6. **Una ranura de plantilla només pot servir UNA figura de l'Eva.** A Vilanova el mateix dibuix li fa de Figura 2
    (emplaçament, retall ample) i de Figura 3 (assaigs, retall estret); amb un sol forat només se n'omple una. És el
    motiu de fons de la peça 7.
+7. **Una TAULA nova a la plantilla mou totes les veritats que surten de taules** (peça 7a, 2026-09-08). L'extractor de
+   referència aparella les taules del signat amb les de la plantilla per ordre: mesurat amb el refresc en sec contra
+   les dues plantilles, 0 diferències amb l'antiga i **23-28 claus per projecte** a la deriva amb una taula de més
+   (`dpsh_tests`, `spt_*`, `geotech_rows`, `lab_*`, `geomech_*`, `sulfate_*`…). Dues imatges de costat = un sol
+   paràgraf amb dos `InlineImage`, no una taula. Hi ha un test que fixa el nombre de taules (14).
+8. **Els forats de numeració han d'acabar en `_num`** (`_is_numbering` de l'extractor): `fig_situacio_num_2` no
+   s'extreu mai; `fig_situacio_2_num` sí. I **les etiquetes «P-n» dels fulls del FreeHand no són text**: cap senyal
+   determinista diu si el dibuix té punts (Bell-lloc no en té i l'Eva el fa servir com a figura del projecte).
 
 ## 1. On som, ranura per ranura
 
@@ -43,13 +51,15 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
 | `foto_sondeig` | 2 | 0 | 1 | 0 | ✅ peça 2 (1 empat) |
 | `foto_vista` | 2 | 0 | 1 | 1 | ✅ peça 2 (1 empat) |
 | `foto_dpsh` | 3 | 0 | 4 | 0 | ✅ peça 2 (4 empats) |
-| `fig_assaigs` | 4 | 0 | 0 | 2 | ✅ peça 4 (2 ND: la ranura única se n'ha anat a `fig_projecte`) |
-| `fig_projecte` | 2 | 0 | 1 | 2 | ⏳ **peça 7** (peu i partició de la ranura) |
+| `fig_assaigs` | 4 | 0 | 2 | 0 | ✅ peça 4 + 7a (ranura pròpia al 2.2; 2 X = Linyola, planta del projecte; Vilanova, retall estret → 7b) |
+| `fig_projecte` | 0 | 0 | 0 | 5 | ⏳ **peça 7b** (lector: Anciles ×2, Linyola secció, Bell-lloc i Vilanova classificació/retall) |
 | `fig_geologic` | 3 | 0 | 3 | 1 | ✅ peça 6 (3 X = la vista ICGC de l'Eva, pregunta 34; 1 ND = Anciles, Aragó) |
 | `fig_situacio` | 5 | 0 | 2 | 1 | ✅ peça 5 (2 X = Linyola i Bell-lloc; 1 ND = la 2a de Bell-lloc, ranura única) |
 
-**Només queda la peça 7**: el peu de cada figura, la partició de les ranures i la numeració variable. Les fotos, el
-dibuix amb punts, el mapa geològic i la situació ja estan.
+**Peça 7a FETA (2026-09-08, DECISION-LOG (5))**: tres blocs amb peu propi (situació 1-2 i projecte 0-2 a l'1.1, assaigs
+0-1 al 2.2) i numeració per presència; `fix` 74 → 77 M. Imatges 74 → **72 %** (29 M · 4 C · 13 X · 10 ND): la baixada
+és Bell-lloc (retall sense punts imprès com a assaigs) i Vilanova (un sol retall per a dues figures), registre #8-#10,
+i la recupera la **7b**, l'única peça que queda.
 
 ## 2. Les peces que queden
 
@@ -106,18 +116,37 @@ dibuix amb punts, el mapa geològic i la situació ja estan.
 - **No tocar:** els paràmetres de `get_geological_map_with_terrain` (base topogràfica + `unitats-geologiques-50000` al
   0,65 amb `alpha_composite`, buffer 700 m, 800×600, EPSG:25831, punt vermell r=10) — és la imatge que l'Eva va aprovar.
 
-### Peça 7 — Figures del projecte, peu i bloc de figures variable — *M*
+### Peça 7a — Peus propis, tres blocs condicionals, assaigs al 2.2, numeració per presència — ✅ FETA (2026-09-08)
+
+- **Què s'ha fet** (GO Josep al 2.2 i als tres peus): `{%p if not fig_situacio_image_2 %}` taula d'una cel·la + «Situació
+  de la zona d'estudi.» / `{%p if fig_situacio_image_2 %}` dues imatges en línia + «Figura N i Figura N+1. Detall de la
+  ubicació de la parcel·la en estudi. Font: Projecte.» / `{%p if fig_projecte_image_n %}` (0-2) + «Figura N.
+  {{ fig_projecte_caption_n }}» / al **2.2**, després del paràgraf del laboratori de camp: `{%p if fig_assaigs_image %}` +
+  «Situació de l'estructura projectada i els assaigs realitzats.». Numeració `figure_numbers` (situació → projecte →
+  assaigs → cullera → geològic → tall), refeta a `render_template` quan ja se sap quines imatges hi ha.
+  Script `docs/imatges/scripts/peca7_plantilla.py`. Fora: l'`A.01.pdf` sencer i el retall `main_plan` del rol (D4).
+- **Resultat:** run `2026-09-08-m341-peca7a`: `fix` 74 → **77 M** · 25 X (veritats 99 → 102: `fig_situacio_num`,
+  `fig_situacio_2_num`, `fig_assaigs_num`; `fig_cadastre_num` i `fig_main_plan_num` fora), escalars 308 → 311 M, taules
+  intactes; imatges 31 → 29 M (72 %), transitori (registre #8-#10).
+- **Correcció al handoff 2130:** de les 25 X de `fix` només **10** són cascada de figures; 5 són les taules de Linyola
+  (registre #2), 7 seccions, 3 fotos. Sostre de la peça 7 sobre `fix`: 85 %, no 93 %.
+
+### Peça 7b — El lector de figures (projecte 0-2, 2a situació, classificació del retall) — *M*
 
 - **Què fa l'Eva:** 0-2 figures «Font: Projecte» tretes del projecte de l'arquitecte (secció a Linyola, emplaçament
   sense punts a Bell-lloc i Vilanova, topogràfic i tipologies a Anciles), sempre **retallades al dibuix**, sense
   caixetí. No hi ha regla fixa: depèn del que l'arquitecte enviï.
 - **Què cal fer:** que Claude triï la pàgina (és el cas més clar de «mira i tria») i la retalli; i **que la plantilla
   imprimeixi el nombre de figures que toca** (situació 1-2 + assaigs 0-1 + projecte 0-2 + geològic + tall).
-- **Hereta de la peça 4** (2026-09-08): partir `fig_main_plan_image` en dues ranures amb **peus propis** — avui la
-  ranura única imprimeix el peu de Bell-lloc sobre la figura d'assaigs de quatre projectes — i triar, a Linyola, entre
-  la planta del projecte (la que l'Eva va fer servir) i el seu propi annex.
-- **Per què importa més del que sembla:** és **l'única peça que mou el grup `fix` de la numeració** (avui 74 M · 25 X;
-  10 d'aquelles X són «nombre de figures del projecte»). Les peces 1-6 no el mouen.
+- **Hereta de la 7a:** les ranures ja hi són (`fig_projecte_image_1/2` + `_caption_1/2`, `fig_situacio_image_2`) i la
+  numeració les segueix sola. El lector escriu `validation/figure_selection.json` (ranura, fitxer, pàgina, retall, peu;
+  `source=lector`, l'Eva el sobreescriu) i `image_manager` el llegeix amb precedència Eva > lector > determinista.
+  Feina per projecte: **Anciles** topogràfic (`IV_PLANOS.pdf` p5) + tipologies (`A01_TIPOL.pdf`); **Linyola** secció
+  (`2_02B_DG…` p4/p11) + la planta amb punts `Punts de Sondeig_Silvia_Jaume.pdf` com a figura d'assaigs (avui X);
+  **Bell-lloc** dos insets de l'`A.01.pdf` a la situació + el retall del full classificat com a projecte («Ubicació de
+  l'habitatge…»); **Vilanova** retall estret del mateix dibuix per a la Figura 3 (avui X) i l'ample com a projecte.
+- **Per què importa:** és el que mou el grup `fix` (10 X de cascada: Bell-lloc 4, Linyola 3, Vilanova 2, Anciles 1 →
+  sostre 85 %) i recupera fins a 7 imatges en M (72 → ~85 %).
 - **Obert amb l'Eva:** pregunta 32 (quan hi afegeix figures del projecte).
 
 ## 3. Pendents que no són cap de les quatre peces
@@ -129,7 +158,7 @@ dibuix amb punts, el mapa geològic i la situació ja estan.
 | 3 | **Descripció textual dels exemplars** | La llibreria `docs/imatges/veritat/` té les imatges i el peu, però no la descripció per exemplar que el pas 2 va decidir (què s'hi veu, com està compost). El lector de fotos ja funciona sense, però les figures compostes la necessitaran. | S |
 | 4 | **Text fix de Rubí a la plantilla** | Dins el bucle de nivells s'imprimeix a TOTS els projectes: «Aquest materials s'associa als materials de la unitat **NMgo**, amb un tram superficial alterat…». És la mateixa família de risc que el pastís de granulometria (ja tret): text d'un projecte imprès a tots. No és una imatge, però va sortir mirant-les. | S |
 | 5 | **Barra d'escala al tall** | L'Eva la inclou a 2 dels 7 signats i el nostre retall la inclou sempre. Diferència petita, no s'hi toca fins que hi hagi criteri. | — |
-| 6 | **`fig_cadastre_num` a la veritat** | A Castellar i Rubí l'extractor de numeració no aparella el peu de la situació (ratio < 0,5 per la cua entre parèntesis amb la font). Límit de l'extractor del bloc 4, no de les imatges. | S |
+| 6 | **`fig_situacio_num` a la veritat** (abans `fig_cadastre_num`) | A Castellar i Rubí l'extractor de numeració no aparella el peu de la situació (ratio < 0,5 per la cua entre parèntesis amb la font). Límit de l'extractor del bloc 4, no de les imatges. Igual amb els noms de la peça 7a. | S |
 
 ## 4. Bloqueigs de fons
 

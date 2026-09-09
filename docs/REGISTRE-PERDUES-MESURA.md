@@ -113,3 +113,14 @@ narrativa; guanys i pèrdues per separat.
 
 Les dues pèrdues són el mateix tipus: **empat sense criteri conegut** entre fotos equivalents. No s'inventa cap regla; van a
 l'Eva. La segona canvia una cel·la de ND a X: el sistema ara diu una cosa (imprimeix dues vistes) on abans callava.
+
+## 2026-09-08 — Imatges peça 7a (blocs de figura amb peu propi) — runs `2026-09-08-m341-peca5` → `2026-09-08-m341-peca7a`
+
+| # | Projecte · variable | Abans → ara (signat) | Per què s'ha perdut | Com es reobre | Estat |
+|---|---|---|---|---|---|
+| 8 | Bell-lloc · `fig_projecte` (Figura 3, «Ubicació de l'habitatge…») | M (phash 8) → ND; +1 sobrant | El retall del full de situació (sense punts) ara s'imprimeix a la ranura d'ASSAIGS del 2.2 amb el peu «…i els assaigs realitzats», i la mesura és estricta per ranura. Cap senyal determinista distingeix un full sense punts (les «P-n» del FreeHand no són text; els farcits petits no separen). | Lector de figures (7b): classifica el retall com a projecte amb el peu «Ubicació de l'habitatge a l'interior de la parcel·la. Font: Projecte.» | transitòria (7b) |
+| 9 | Vilanova · `fig_projecte` (Figura 2, «emplazamiento», retall ample) | M (phash 6) → ND | El mateix dibuix li serveix per a F2 (projecte, ample) i F3 (assaigs, estret); el nostre únic retall ara només es puntua contra F3. | 7b: dos retalls del mateix full (ample → projecte, estret → assaigs). | transitòria (7b) |
+| 10 | Vilanova · `fig_assaigs` (Figura 3, retall estret) | ND → X | Idem: el retall ample contra la figura estreta no passa el llindar. | 7b (retall estret). | transitòria (7b) |
+
+Les tres són el mateix moviment: la mesura ha deixat de deixar passar una imatge sota un peu que no li toca. El grup `fix`
+(numeració) puja 74 → 77 M al mateix run i cap altre escalar ni taula es mou.
