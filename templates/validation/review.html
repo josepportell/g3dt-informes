@@ -1214,6 +1214,38 @@
             z-index: 9999;
             cursor: pointer;
         }
+        /* Acció 4 (2026-09-09): zona FIXA amb les alternatives del lector — sempre visible a la pestanya d'imatges,
+           s'omple sola en fer hover sobre una ranura (l'Eva no ha de clicar cap botó per veure-les) */
+        #altZone {
+            position: fixed; top: 8px; right: 8px; width: 30vw; height: 30vh; min-width: 300px; min-height: 220px;
+            z-index: 10000; background: #fff; border: 2px solid #3498db; border-radius: 8px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.25); display: none; flex-direction: column; overflow: hidden;
+            font-size: 12px;
+        }
+        #altZone .alt-head { padding: 6px 10px; background: #eaf3fb; border-bottom: 1px solid #cfe2f3; display: flex; justify-content: space-between; align-items: center; }
+        #altZone .alt-body { padding: 8px 10px; overflow: auto; flex: 1; }
+        #altZone .alt-cur { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+        #altZone .alt-cur img { height: 64px; border: 2px solid #27ae60; border-radius: 4px; }
+        #altZone .alt-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        #altZone .alt-card { width: 118px; cursor: pointer; border: 2px solid #e5e7eb; border-radius: 6px; padding: 4px; background: #fafafa; }
+        #altZone .alt-card:hover { border-color: #3498db; background: #f0f7fd; }
+        #altZone .alt-card img { width: 100%; height: 60px; object-fit: cover; border-radius: 3px; display: block; }
+        #altZone .alt-card .alt-rao { font-size: 10px; color: #555; margin-top: 3px; line-height: 1.25; max-height: 3.8em; overflow: hidden; }
+        #altZone .alt-none { color: #7f8c8d; font-style: italic; }
+        #altZone .alt-btn { font-size: 11px; padding: 3px 8px; border: 1px solid #bbb; background: #fff; border-radius: 4px; cursor: pointer; }
+        #altZone .alt-btn:hover { background: #f3f4f6; }
+        #altZone .alt-badge { font-size: 10px; padding: 1px 6px; border-radius: 3px; color: #fff; }
+        .wizard-images { margin: 18px 0; padding: 14px 16px; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .wizard-images h4 { margin: 0 0 10px; font-size: 14px; color: #2c3e50; }
+        .wizard-images .wi-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; border-top: 1px solid #eee; }
+        .wizard-images .wi-row:first-of-type { border-top: none; }
+        .wizard-images .wi-thumb { width: 96px; height: 64px; object-fit: cover; border-radius: 4px; border: 2px solid #27ae60; background: #fff; flex: none; }
+        .wizard-images .wi-none { width: 96px; height: 64px; border-radius: 4px; border: 1px dashed #bbb; color: #999; font-size: 11px; display: flex; align-items: center; justify-content: center; text-align: center; flex: none; }
+        .wizard-images .wi-label { min-width: 190px; font-weight: 600; font-size: 13px; color: #2c3e50; }
+        .wizard-images .wi-meta { color: #7f8c8d; font-size: 11px; flex: 1; }
+        .alt-open { font-size: 12px; padding: 3px 10px; border: 1px solid #3498db; color: #2c3e50; background: #eaf3fb; border-radius: 12px; cursor: pointer; margin-left: 10px; }
+        .alt-open:hover { background: #d6e9f8; }
+        .alt-open[data-n="0"] { border-color: #ccc; color: #7f8c8d; background: #f3f4f6; }
         .evidence-expanded-overlay img {
             max-width: 90%;
             max-height: 90%;
@@ -2268,9 +2300,10 @@
 
         /* Production v1 (2026-05-04): hide non-Wizard tabs from end users.
            Tabs queden al DOM (perquè el JS interaccioni si cal) però no
-           es renderitzen visualment. Reactivable trient aquesta regla. */
+           es renderitzen visualment. Reactivable trient aquesta regla.
+           Acció 4 (2026-09-09): la pestanya d'IMATGES torna a ser visible: és on l'Eva tria entre les
+           alternatives dels lectors (botó «Alternatives (n)» per ranura). */
         #tab-smartscan,
-        #tab-photos,
         #tab-explicacio,
         #tab-dev,
         #tab-pipeline,
@@ -2314,6 +2347,17 @@
     </style>
 </head>
 <body>
+    <!-- Acció 4 (2026-09-09): zona fixa amb les alternatives del lector; filla directa de <body> perquè cap contenidor amagat ni cap transform la tapi -->
+    <div id="altZone" aria-live="polite">
+        <div class="alt-head">
+            <strong id="altTitle">Alternatives del lector</strong>
+            <span style="display:flex; gap:8px; align-items:center;">
+                <span id="altSource" class="alt-badge" style="background:#7f8c8d;"></span>
+                <button class="alt-btn" onclick="hideAltZone()" title="Tanca" aria-label="Tanca" style="line-height:1;">✕</button>
+            </span>
+        </div>
+        <div class="alt-body" id="altBody"><span class="alt-none">Clica «Alternatives» en una imatge de l'informe per veure-les aquí.</span></div>
+    </div>
     <div class="container">
         <header>
             <h1>G3DT - Revisio de Dades de Camp</h1>
@@ -2498,7 +2542,7 @@
             <div class="tabs" id="tabNav">
                 <button class="tab" id="tab-smartscan" data-tab="smartscan" onclick="switchTab('smartscan')">SmartScan</button>
                 <button class="tab" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
-                <button class="tab" id="tab-photos" data-tab="photos" onclick="switchTab('photos')">Fotografies</button>
+                <button class="tab" id="tab-photos" data-tab="photos" onclick="switchTab('photos')">Imatges</button>
                 <button class="tab disabled" id="tab-explicacio" data-tab="explicacio" onclick="switchTab('explicacio')">Explicacio</button>
                 <button class="tab" id="tab-dev" data-tab="dev" onclick="switchTab('dev')">Dev</button>
                 <button class="tab" id="tab-pipeline" data-tab="pipeline" onclick="switchTab('pipeline')">Pipeline</button>
@@ -2921,6 +2965,9 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Acció 4 (2026-09-09): imatges de l'informe dins el formulari (Josep: «el camp del formulari del wizard») -->
+                        <div id="wizardImages" class="wizard-images" style="display:none;"></div>
 
                         <!-- Actions -->
                         <div class="wizard-actions">
@@ -3347,12 +3394,28 @@
         }
 
         function finishStepper() {
+            // «Llest» només quan TOTS els anteriors han ACABAT (Josep, 2026-09-09): si la visió encara corre (el SSE
+            // ha enviat «prefills» abans que acabi), «Visió» es queda activa i «Llest» pendent; `markVisionDone()`
+            // els tanca quan la visió acaba de debò.
+            const visionRunning = document.getElementById('step-vision').classList.contains('active');
             PIPELINE_STEPS.forEach((s, i) => {
+                if (visionRunning && s === 'vision') return;               // es queda activa
+                if (visionRunning && s === 'ready') { setStepState('ready', ''); return; }
                 setStepState(s, 'done');
-                if (i < PIPELINE_STEPS.length - 1) {
+                if (i < PIPELINE_STEPS.length - 1 && !(visionRunning && s === 'extract')) {
                     document.getElementById(`conn-${i + 1}`).className = 'step-connector done';
                 }
             });
+            if (visionRunning) {
+                document.getElementById('conn-4').className = 'step-connector';   // Visió → Llest, encara no
+                document.getElementById('conn-3').className = 'step-connector done';
+            }
+        }
+
+        function markVisionDone() {
+            setStepState('vision', 'done');
+            document.getElementById('conn-4').className = 'step-connector done';
+            setStepState('ready', 'done');
         }
 
         function hideStepper() {
@@ -3423,6 +3486,7 @@
                 content.classList.remove('active');
             });
             document.getElementById(`${tabName}-content`).classList.add('active');
+            if (tabName !== 'photos' && tabName !== 'wizard') hideAltZone();
 
             // Lazy-load data on first switch
             if (tabName === 'smartscan' && selectedProject && !smartscanLoaded) {
@@ -3432,7 +3496,8 @@
                 loadWizardData();
             }
             if (tabName === 'photos' && selectedProject && !photosLoaded) {
-                loadPhotos();
+                if (imagesReadyFor === selectedProject) loadPhotos();
+                else renderPhotosPlaceholder();      // abans de llançar el pipeline no es mostra res «de memòria»
             }
             if (tabName === 'dev' && !devLoaded && selectedProject) {
                 loadDevAnalysis();
@@ -3482,6 +3547,7 @@
         function renderData() {
             if (!currentData) return;
 
+            imagesReadyFor = selectedProject;
             emptyState.style.display = 'none';
             dataContent.style.display = 'block';
 
@@ -4860,6 +4926,9 @@
 
         async function onProjectChange(projectName) {
             selectedProject = projectName;
+            // Triar el projecte és llançar-ne el pipeline (les dues vies acaben a loadProjectData): a partir d'aquí la
+            // pestanya d'imatges i la zona d'alternatives poden mostrar-se; abans, res «de memòria» (Josep, 2026-09-09).
+            imagesReadyFor = projectName; altData = null; altSlotShown = null; hideAltZone();
             // Lectura headless: cap decisio ni cap tria del projecte anterior
             // pot sobreviure al canvi de projecte (no hi ha recarrega de pagina).
             _lecturaResetState();
@@ -5018,8 +5087,12 @@
                 if (visionStep && !visionStep.classList.contains('done') && !visionStep.classList.contains('active')) {
                     setStepState('vision', 'done');
                 }
+                // Visió acabada abans dels prefills (tots els JSON de visió hi són): tanca-la; si no, «Llest» espera
+                const vsNow = wizardPrefills._vision_status ? wizardPrefills._vision_status.value : null;
+                if (vsNow && ['planol', 'dpsh', 'sondeig', 'docs'].every(k => vsNow[k])) setStepState('vision', 'done');
                 finishStepper();
                 showWizardContent();
+                if (visionStep && visionStep.classList.contains('active')) startVisionPolling();   // per tancar «Llest» quan acabi
                 // Lectura headless (Fase 7): via B no hauria de portar `_lectura`
                 // avui, pero es defensiu (robustesa disseny §7 punt 6) per si
                 // el merge canvia. Sense _lectura -> no fa res.
@@ -5295,6 +5368,7 @@
                         clearInterval(visionPollTimer);
                         visionPollTimer = null;
                         visionRunning = false;
+                        markVisionDone();                                   // stepper: Visió i Llest, ara sí
 
                         if (newFiles > 0) {
                             showMessage(`Visio completada! ${newFiles} fitxer(s) extrets. Actualitzant...`, 'success');
@@ -5607,6 +5681,7 @@
         }
 
         function showWizardContent() {
+            imagesReadyFor = selectedProject;        // acció 4: les imatges i la zona d'alternatives, només a partir d'aquí
             detectAvailableTabs();
             updateTabVisibility();
             dataContent.style.display = 'block';
@@ -5614,6 +5689,7 @@
             renderWizardForm();
             renderInstructions(wizardPrefills);
             loadEvidence(selectedProject);
+            renderWizardImages();
             wizardDataLoaded = true;
             wizardDirty = false;
             document.getElementById('wizardLoading').style.display = 'none';
@@ -7584,9 +7660,11 @@
         let lastPhotosData = null;
 
         const REPORT_SLOTS = [
-            // Figures (report order)
-            { key: 'fig_cadastre', label: 'Figura - Situacio (1.1)', size: '150mm', type: 'figure' },
-            { key: 'fig_main_plan', label: 'Figura - Assaigs (2.2)', size: '150mm', type: 'figure' },
+            // Figures (report order; claus de la plantilla de la peça 7a)
+            { key: 'fig_situacio', label: 'Figura - Situacio (1.1)', size: '150mm', type: 'figure' },
+            { key: 'fig_projecte_1', label: 'Figura - Projecte 1 (1.1)', size: '150mm, 0-2', type: 'figure' },
+            { key: 'fig_projecte_2', label: 'Figura - Projecte 2 (1.1)', size: '150mm, 0-2', type: 'figure' },
+            { key: 'fig_assaigs', label: 'Figura - Assaigs (2.2)', size: '150mm', type: 'figure' },
             // Field photos
             { key: 'site_1', label: 'Foto vista general 1', size: '70mm costat', type: 'photo' },
             { key: 'site_2', label: 'Foto vista general 2', size: '70mm costat', type: 'photo' },
@@ -7645,6 +7723,7 @@
                 document.getElementById('photosLoading').style.display = 'none';
                 document.getElementById('photosContent').style.display = 'block';
                 photosLoaded = true;
+                await loadAlternatives();         // esperada: el formulari i la zona es pinten amb les dades noves
 
             } catch(err) {
                 document.getElementById('photosLoading').style.display = 'none';
@@ -7669,7 +7748,8 @@
                 if (slot.type === 'figure') {
                     // --- Figure slot: preview-only, no alternatives ---
                     const fig = figures[slot.key];
-                    const hasFig = !!fig;
+                    const noneChosen = !!(fig && !fig.thumbnail_url);          // la selecció diu «cap figura»
+                    const hasFig = !!fig && !noneChosen;
                     const borderColor = hasFig ? '#8e44ad' : '#dee2e6';
 
                     html += `<div style="margin-bottom:28px; padding:16px; background:#f5f0f8; border-radius:8px; border-left:4px solid ${borderColor};">`;
@@ -7678,9 +7758,12 @@
                     html += `<strong style="font-size:14px; color:#2c3e50;">${escapeHtml(slot.label)}</strong>`;
                     html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
                     html += `<span style="background:#8e44ad; color:white; font-size:10px; padding:1px 6px; border-radius:3px; margin-left:8px;">Figura</span>`;
+                    html += altOpenButton(slot.key);
                     html += `</div>`;
                     if (hasFig) {
                         html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(fig.source)}</span>`;
+                    } else if (noneChosen) {
+                        html += `<span style="color:#7f8c8d; font-size:12px;">${escapeHtml(fig.source)}</span>`;
                     } else {
                         html += `<span style="color:#e74c3c; font-size:12px;">Imatge pendent</span>`;
                     }
@@ -7691,6 +7774,8 @@
                         html += `<img src="${escapeHtml(fig.thumbnail_url)}&size=300" style="max-height:200px; display:block;" loading="lazy" alt="${escapeHtml(fig.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:30px;text-align:center;color:#aaa;font-size:11px\\'>Error carregant</div>'">`;
                         html += `</div>`;
                         html += `<div style="color:#7f8c8d; font-size:11px; margin-top:4px;">${escapeHtml(fig.filename)}</div>`;
+                    } else if (noneChosen) {
+                        html += `<div style="padding:14px; color:#7f8c8d; font-size:13px; background:#f3f4f6; border-radius:4px; display:inline-block;">Cap figura en aquesta ranura (passa el ratolí per veure alternatives)</div>`;
                     } else {
                         html += `<div style="padding:20px; color:#e74c3c; font-size:13px; background:#fdf0f0; border-radius:4px; display:inline-block;">Imatge pendent (es generara al executar el pipeline)</div>`;
                     }
@@ -7709,6 +7794,7 @@
                     html += `<div>`;
                     html += `<strong style="font-size:14px; color:#2c3e50;">${escapeHtml(slot.label)}</strong>`;
                     html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
+                    html += altOpenButton(slot.key);
                     html += `</div>`;
                     if (selectedPhoto) {
                         const evaTag = selectedPhoto.kind === 'eva_png' ? ' (PNG de l\'Eva, ALTRES)' : '';
@@ -7765,6 +7851,204 @@
             }
 
             slotsDiv.innerHTML = html;
+        }
+
+        // --- Acció 4 (2026-09-09): les alternatives del lector en una zona flotant que s'obre amb un clic al camp ---
+        // Correcció del Josep (nit): la zona NO apareix sola (tapava «Començar»), s'obre en clicar «Alternatives (n)»
+        // d'una ranura i es tanca amb l'aspa; ni la zona ni les imatges surten abans de llançar el pipeline del projecte.
+        let altData = null;
+        let altSlotShown = null;
+        let imagesReadyFor = null;                   // projecte del qual s'ha llançat el pipeline en aquesta sessió
+
+        function renderPhotosPlaceholder() {
+            document.getElementById('photosLoading').style.display = 'none';
+            document.getElementById('photosContent').style.display = 'none';
+            const e = document.getElementById('photosEmpty');
+            e.innerHTML = `<p>Les imatges de l'informe es mostren un cop llançat el pipeline del projecte (<strong>Començar</strong>).</p>`;
+            e.style.display = 'block';
+        }
+
+        function altOpenButton(slotKey) {
+            return `<button class="alt-open" data-slot="${escapeHtml(slotKey)}" data-n="" onclick="showSlotAlternatives('${escapeHtml(slotKey)}')" title="Veure les alternatives del lector per a aquesta ranura">Alternatives</button>`;
+        }
+
+        function updateAltBadges() {
+            document.querySelectorAll('.alt-open[data-slot]').forEach(b => {
+                const d = altData && altData.slots[b.dataset.slot];
+                if (!d) { b.style.display = 'none'; return; }
+                const n = d.alternatives.length;
+                b.style.display = ''; b.dataset.n = String(n);
+                b.textContent = n ? `Alternatives (${n})` : (d.cap_font ? 'Alternatives (cap font)' : 'Alternatives (cap)');
+            });
+        }
+
+        function hideAltZone() {
+            const z = document.getElementById('altZone');
+            if (z) z.style.display = 'none';
+        }
+
+        function altSourceLabel(src) {
+            return ({ user: "tria de l'Eva", lector: 'tria del lector', ia: 'cau IA antiga' })[src] || 'automàtic';
+        }
+
+        async function renderWizardImages() {
+            // Secció «Imatges de l'informe» del formulari: l'actual de cada ranura + «Alternatives (n)» → la mateixa zona
+            const box = document.getElementById('wizardImages');
+            if (!box) return;
+            if (!selectedProject || imagesReadyFor !== selectedProject) { box.style.display = 'none'; return; }
+            if (!altData) await loadAlternatives();
+            if (!altData) { box.style.display = 'none'; return; }
+            let html = `<h4>Imatges de l'informe <span style="font-weight:400; color:#7f8c8d; font-size:12px;">(la tria de cada ranura; les alternatives del lector s'obren amb el botó)</span></h4>`;
+            for (const slot of REPORT_SLOTS) {
+                const d = altData.slots[slot.key];
+                if (!d) continue;                                   // cullera, geològic i tall: automàtics, sense tria
+                const cur = d.current;
+                let thumb;
+                if (cur && cur.thumbnail_url) {
+                    thumb = `<img class="wi-thumb" src="${escapeHtml(cur.thumbnail_url)}&size=200" alt="">` +
+                            (cur.thumbnail_url_2 ? `<img class="wi-thumb" src="${escapeHtml(cur.thumbnail_url_2)}&size=200" alt="">` : '');
+                } else if (d.type === 'figure' && d.is_default) {
+                    thumb = `<div class="wi-none">${escapeHtml(d.default_label || 'automàtic')}</div>`;
+                } else {
+                    thumb = `<div class="wi-none">${d.cap_font ? 'cap font' : 'cap imatge'}</div>`;
+                }
+                const meta = [altSourceLabel(d.source), cur && cur.caption ? cur.caption : '', d.rao || ''].filter(Boolean).join(' · ');
+                html += `<div class="wi-row"><span class="wi-label">${escapeHtml(slot.label)}</span>${thumb}<span class="wi-meta">${escapeHtml(meta)}</span>${altOpenButton(slot.key)}</div>`;
+            }
+            box.innerHTML = html;
+            box.style.display = 'block';
+            updateAltBadges();
+        }
+
+        async function loadAlternatives() {
+            try {
+                const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}`);
+                if (!resp.ok) throw new Error(await resp.text());
+                altData = await resp.json();
+            } catch (err) {
+                altData = null;
+                document.getElementById('altBody').innerHTML = `<span class="alt-none">No s'han pogut carregar les alternatives: ${escapeHtml(err.message)}</span>`;
+                return;
+            }
+            updateAltBadges();
+            const z = document.getElementById('altZone');
+            if (z && z.style.display !== 'none' && altSlotShown) showSlotAlternatives(altSlotShown);
+        }
+
+        function altSourceBadge(src) {
+            const map = { user: ['Tria de l\'Eva', '#27ae60'], lector: ['Tria del lector', '#3498db'], ia: ['Cau IA antiga', '#95a5a6'] };
+            const [txt, col] = map[src] || ['Automàtic', '#7f8c8d'];
+            const el = document.getElementById('altSource'); el.textContent = txt; el.style.background = col;
+        }
+
+        function renderAltSummary() {
+            document.getElementById('altTitle').textContent = 'Alternatives del lector';
+            altSourceBadge(altData ? (altData.photo_source || altData.figure_source) : null);
+            if (!altData) return;
+            const lines = [];
+            for (const s of REPORT_SLOTS) {
+                const d = altData.slots[s.key]; if (!d) continue;
+                const n = d.alternatives.length;
+                const state = d.current ? '' : (d.cap_font ? ' · cap font' : (d.is_default ? ' · automàtic' : ' · buida'));
+                lines.push(`<div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px dotted #eee;"><span>${escapeHtml(s.label)}${state}</span><span style="color:${n ? '#2c3e50' : '#bbb'};">${n ? n + ' alternativa' + (n > 1 ? 's' : '') : '—'}</span></div>`);
+            }
+            document.getElementById('altBody').innerHTML = `<div style="color:#7f8c8d; margin-bottom:6px;">Passa el ratolí per sobre d'una imatge de l'informe per veure'n les alternatives.</div>` + lines.join('');
+        }
+
+        function altThumb(item) {
+            let h = `<img src="${escapeHtml(item.thumbnail_url)}&size=240" loading="lazy" alt="">`;      // els dos endpoints accepten `size`
+            if (item.thumbnail_url_2) h += `<img src="${escapeHtml(item.thumbnail_url_2)}&size=240" loading="lazy" alt="" style="margin-top:2px;">`;
+            return h;
+        }
+
+        function showSlotAlternatives(slotKey) {      // (no `showAlternatives`: ja existeix per al popup «+N» dels camps de text)
+            altSlotShown = slotKey;
+            const z = document.getElementById('altZone');
+            if (z) z.style.display = 'flex';
+            const slotDef = REPORT_SLOTS.find(s => s.key === slotKey);
+            document.getElementById('altTitle').textContent = slotDef ? slotDef.label : slotKey;
+            if (!altData) {                      // encara no ha arribat la resposta: es refresca sola quan arribi
+                document.getElementById('altBody').innerHTML = `<span class="alt-none">Carregant les alternatives…</span>`;
+                altSourceBadge(null); return;
+            }
+            if (!altData.slots[slotKey]) {
+                document.getElementById('altBody').innerHTML = `<span class="alt-none">Aquesta ranura és automàtica (sense alternatives del lector).</span>`;
+                altSourceBadge(null); return;
+            }
+            const d = altData.slots[slotKey];
+            altSourceBadge(d.source);
+            let html = '';
+            if (d.current) {
+                html += `<div class="alt-cur">${altThumb(d.current)}<div><div style="color:#27ae60; font-weight:600;">Actual</div>`;
+                if (d.current.caption) html += `<div style="color:#555;">${escapeHtml(d.current.caption)}</div>`;
+                if (d.rao) html += `<div style="color:#7f8c8d; font-size:11px;">${escapeHtml(d.rao)}</div>`;
+                html += `</div></div>`;
+            } else if (d.type === 'figure' && d.is_default) {
+                html += `<div class="alt-cur"><div><div style="color:#27ae60; font-weight:600;">Actual: ${escapeHtml(d.default_label || 'automàtic')}</div></div></div>`;
+            } else {
+                html += `<div class="alt-cur"><div><div style="color:#7f8c8d; font-weight:600;">Actual: cap imatge</div>` + (d.rao ? `<div style="color:#7f8c8d; font-size:11px;">${escapeHtml(d.rao)}</div>` : '') + `</div></div>`;
+            }
+            if (d.cap_font) html += `<div style="color:#c0392b; margin-bottom:6px;">El lector no ha trobat cap imatge vàlida per a aquest forat.</div>`;
+            html += `<div style="font-weight:600; margin:4px 0;">Alternatives (${d.alternatives.length})</div>`;
+            if (d.alternatives.length) {
+                html += `<div class="alt-list">`;
+                d.alternatives.forEach((a, i) => {
+                    html += `<div class="alt-card" onclick="chooseAlternative('${escapeHtml(slotKey)}', ${i})" title="${escapeHtml(a.rao || '')}">${altThumb(a)}`;
+                    if (a.caption) html += `<div class="alt-rao" style="color:#2c3e50;">${escapeHtml(a.caption)}</div>`;
+                    html += `<div class="alt-rao">${escapeHtml(a.rao || (a.rel ? a.rel.split('/').pop() : ''))}</div></div>`;
+                });
+                html += `</div>`;
+            } else {
+                html += `<div class="alt-none">${d.type === 'photo' ? 'Cap alternativa del lector; a sota hi ha totes les fotos del projecte.' : 'Cap alternativa del lector.'}</div>`;
+            }
+            html += `<div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">`;
+            if (d.type === 'figure' && slotKey !== 'fig_situacio' && d.alternatives.length) {
+                html += `<label style="font-size:11px; color:#555;">Posa l'alternativa com a <select id="altTarget" class="alt-btn">` +
+                    ['fig_assaigs', 'fig_projecte_1', 'fig_projecte_2'].map(k => `<option value="${k}" ${k === slotKey ? 'selected' : ''}>${escapeHtml((REPORT_SLOTS.find(s => s.key === k) || {label: k}).label)}</option>`).join('') + `</select></label>`;
+            }
+            if (d.type === 'figure' && slotKey === 'fig_situacio' && !d.is_default) {
+                html += `<button class="alt-btn" onclick="chooseAlternative('fig_situacio', -1)">Composició automàtica del full</button>`;
+            } else if (d.current || (d.type === 'figure' && !d.is_default)) {
+                html += `<button class="alt-btn" onclick="chooseAlternative('${escapeHtml(slotKey)}', -1)">Cap imatge en aquesta ranura</button>`;
+            }
+            html += `</div>`;
+            document.getElementById('altBody').innerHTML = html;
+        }
+
+        async function chooseAlternative(slotKey, index) {
+            if (!altData || !altData.slots[slotKey]) return;
+            const d = altData.slots[slotKey];
+            const alt = index >= 0 ? d.alternatives[index] : null;
+            let target = slotKey;
+            const sel = document.getElementById('altTarget');
+            if (alt && sel && d.type === 'figure') target = sel.value;
+            const body = { slot: target };
+            if (d.type === 'photo') body.rel = alt ? alt.rel : null;
+            else body.entry = alt ? alt.entry : null;
+            try {
+                const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}/choose`, {
+                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
+                });
+                if (!resp.ok) throw new Error(await resp.text());
+                const saved = await resp.json();
+                const labelOf = k => (REPORT_SLOTS.find(s => s.key === k) || {label: k}).label;
+                const cleared = (saved.cleared || []).map(labelOf);
+                if (saved.placed && saved.placed !== target) {
+                    showMessage(`Posada com a «${labelOf(saved.placed)}»: les figures del projecte van per ordre, la 2 darrere de la 1.`, 'info');
+                    target = saved.placed;
+                } else {
+                    showMessage(cleared.length
+                        ? `Tria desada. Una foto només pot anar a un forat: s'ha tret de «${cleared.join('», «')}».`
+                        : 'Tria desada (mana sobre el lector)', 'success');
+                }
+                altSlotShown = target;
+                altData = null;                  // res de dades antigues: es tornen a demanar
+                photosLoaded = false;
+                await loadPhotos();              // refresca la pestanya d'imatges, les alternatives i la zona
+                await renderWizardImages();      // i la secció del formulari, ja amb les dades noves
+            } catch (err) {
+                showMessage('Error desant la tria: ' + err.message, 'error');
+            }
         }
 
         function selectPhotoForSlot(slotKey, photoPath) {

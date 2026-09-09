@@ -203,3 +203,23 @@ def test_aparellament_amb_l_annex_invariant_a_la_rotacio(tmp_path):
     assert by["FOTOGRAFIES/P1.jpg"]["annex"] is None
     prompt = LF.build_prompt(inv, p / "x.jpg", {}, p / "o.json", None)
     assert f"annex p1 foto #2 (hi és girada {a['rot']}°)" in prompt
+
+
+# --- 2026-09-09, acció 4: alternatives del lector per forat (l'Eva les veu al wizard) ---
+
+def test_alternatives_per_forat_es_validen_i_s_escriuen(tmp_path):
+    cands = [{"idx": 1, "rel": "FOTOGRAFIES/P1.jpg"}, {"idx": 2, "rel": "FOTOGRAFIES/P2.jpg"}, {"idx": 3, "rel": "FOTOGRAFIES/P3.jpg"},
+             {"idx": 4, "rel": "FOTOGRAFIES/SPT1.jpg"}, {"idx": 5, "rel": "FOTOGRAFIES/SPT2.jpg"}]
+    clean, w = LF.validate_selection({"dpsh": 1, "materials": 4,
+                                      "alternatives": {"dpsh": [{"idx": 2, "rao": "P-2"}, 3, {"idx": 1, "rao": "el triat"}, {"idx": 2}, {"idx": 9}],
+                                                       "materials": [{"idx": 5, "rao": "primer pla"}], "site_1": [], "sondeig": "no és cap llista"}}, cands)
+    assert clean["alternatives"] == {"dpsh": [{"rel": "FOTOGRAFIES/P2.jpg", "rao": "P-2"}, {"rel": "FOTOGRAFIES/P3.jpg", "rao": ""}],
+                                     "materials": [{"rel": "FOTOGRAFIES/SPT2.jpg", "rao": "primer pla"}]}   # ni el triat, ni repetits, ni el 9
+    assert any("alternatives dpsh: «9»" in x for x in w)
+    p = tmp_path / "4009999 PROVA"; p.mkdir()
+    d = json.loads(LF.write_selection(p, clean, {}).read_text(encoding="utf-8"))
+    assert d["alternatives"]["dpsh"][0]["rel"] == "FOTOGRAFIES/P2.jpg" and d["source"] == "lector"
+    clean2, _ = LF.validate_selection({"dpsh": 1, "alternatives": {"dpsh": [2, 3, 4, 5]}}, cands)
+    assert len(clean2["alternatives"]["dpsh"]) == LF.MAX_ALTERNATIVES
+    clean3, _ = LF.validate_selection({"dpsh": 1}, cands)
+    assert "alternatives" not in clean3

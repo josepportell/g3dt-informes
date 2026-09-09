@@ -60,6 +60,7 @@ MIN_DRAWINGS = 5                    # una pàgina només de text no és cap cand
 THUMB_W, THUMB_H = 360, 270
 DETAIL_MAX_SIDE = 1600
 MIN_CROP_AREA = 0.02
+MAX_ALTERNATIVES = 3                # acció 4: candidats de més per ranura que l'Eva veu al wizard
 
 
 def _cache_dir() -> Path:
@@ -377,6 +378,42 @@ def validate_selection(sel: dict, cands: list[dict]) -> tuple[dict, list[str]]:
             clean["projecte"].append(e)
     if len(proj) > 2:
         warnings.append(f"projecte: {len(proj)} figures, només les 2 primeres")
+    # Acció 4 (2026-09-09): fins a 3 candidats MÉS per ranura (assaigs, projecte), amb raó; l'Eva els veu al wizard.
+    alts: dict[str, list[dict]] = {}
+    raw_alts = sel.get("alternatives")
+    chosen = set(used)
+    if isinstance(raw_alts, dict):
+        for slot in ("assaigs", "projecte"):
+            items = raw_alts.get(slot)
+            if not isinstance(items, list):
+                continue
+            lst: list[dict] = []; seen: set[tuple] = set()
+            for it in items:
+                if not isinstance(it, dict):
+                    continue
+                try:
+                    c = by_idx.get(int(it.get("idx")))
+                except (TypeError, ValueError):
+                    c = None
+                if c is None:
+                    warnings.append(f"alternatives {slot}: idx «{it.get('idx')}» no és cap candidat"); continue
+                crop = _crop_ok(it.get("crop"))
+                key = (c["idx"], tuple(crop) if crop else None)
+                if key in chosen or key in seen:
+                    continue
+                seen.add(key)
+                e = {"idx": c["idx"], "kind": c["kind"], "rel": c["rel"], "page": c.get("page"), "src": c["src"], "crop": crop,
+                     "rao": str(it.get("rao") or "").strip()[:200]}
+                cap = str(it.get("caption") or "").strip()
+                if cap:
+                    e["caption"] = cap[:200]
+                lst.append(e)
+                if len(lst) >= MAX_ALTERNATIVES:
+                    break
+            if lst:
+                alts[slot] = lst
+    if alts:
+        clean["alternatives"] = alts
     sit = sel.get("situacio")
     if isinstance(sit, dict) and sit.get("idx") is not None:
         crops = [_crop_ok(c) for c in (sit.get("crops") or [])]
@@ -504,7 +541,10 @@ def write_selection(project: Path, clean: dict, meta: dict) -> Path:
     if sel_path.exists() and not bak.exists():
         shutil.copy2(sel_path, bak)
     payload = {"source": "lector", "assaigs": clean.get("assaigs"), "projecte": clean.get("projecte") or [],
-               "situacio": clean.get("situacio"), "_lector": meta}
+               "situacio": clean.get("situacio")}
+    if clean.get("alternatives"):
+        payload["alternatives"] = clean["alternatives"]
+    payload["_lector"] = meta
     sel_path.write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
     return sel_path
 

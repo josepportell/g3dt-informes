@@ -73,7 +73,11 @@ quan la figura és un dibuix d'aquella pàgina.
    facis servir Bash ni cap altra eina, no obris els PDF originals. Mira i decideix: són 1-3 tries.
 2. Per a cada ranura, l'índex i el retall. Un mateix candidat pot servir per a dues ranures amb retalls diferents;
    el mateix retall dues vegades, no.
-3. Escriu la sortida (Write tool) al camí que et diu el prompt i imprimeix el mateix JSON com a resposta final.
+3. A `alternatives`, per a `assaigs` i `projecte`, fins a 3 candidats MÉS (amb retall si cal, i peu per al projecte)
+   que també hi podrien anar, per ordre de preferència i amb una raó curta: l'altre retall del mateix full, la planta
+   en lloc de la secció, el full de l'Eva en lloc del de l'arquitecte. L'Eva els veurà al wizard al costat de la teva
+   tria i decidirà; si no n'hi ha cap, llista buida.
+4. Escriu la sortida (Write tool) al camí que et diu el prompt i imprimeix el mateix JSON com a resposta final.
 
 ## Sortida (només JSON)
 
@@ -84,6 +88,10 @@ quan la figura és un dibuix d'aquella pàgina.
     {"idx": 7, "crop": [0.06, 0.50, 0.94, 0.90], "caption": "Detall del perfil de l'habitatge projectat. Font: Projecte."}
   ],
   "situacio": null,
+  "alternatives": {
+    "assaigs": [{"idx": 4, "crop": [0.10, 0.30, 0.90, 0.85], "rao": "candidat 4 (…pdf, pàgina 2): la planta de l'arquitecte amb els punts, retall estret"}],
+    "projecte": [{"idx": 9, "crop": null, "caption": "Planta de l'habitatge projectat. Font: Projecte.", "rao": "candidat 9 (…pdf, pàgina 3): la planta baixa, si l'Eva prefereix la planta a la secció"}]
+  },
   "raons": {"assaigs": "candidat 1 (plan_crop…, annex_crop): el retall del full de l'Eva porta P-1, P-2 i S-1 sobre la planta", "projecte": "candidat 7 (…pdf, pàgina 4): la meitat inferior és la secció amb el terreny i les cotes de carener i forjat"},
   "confianca": {"assaigs": 0.95, "projecte": 0.7},
   "cap_font": [],
@@ -92,5 +100,7 @@ quan la figura és un dibuix d'aquella pàgina.
 ```
 
 `assaigs` és un objecte o `null`; `situacio` sempre `null`; `projecte` és una llista de 0 a 2 objectes amb `caption`;
-`crop` és `null` (tot el candidat) o `[x0, y0, x1, y1]`. `cap_font` llista les ranures que has deixat a `null` perquè
+`crop` és `null` (tot el candidat) o `[x0, y0, x1, y1]`. `alternatives`: per a `assaigs` i `projecte`, 0-3 objectes
+més (`idx`, `crop`, `rao`; `caption` al projecte), mai el mateix candidat amb el mateix retall que ja has triat.
+`cap_font` llista les ranures que has deixat a `null` perquè
 cap candidat val (no hi posis `projecte` si simplement no calen figures del projecte: digues-ho a `notes`).

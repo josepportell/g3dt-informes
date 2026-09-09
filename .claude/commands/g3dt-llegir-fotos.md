@@ -77,7 +77,10 @@ que mostra el solar com ho faria una foto SÍ que val (vegeu `site_1`).
    llista ja diu quins candidats són el mateix fitxer amb dos noms). Mira i decideix: són 3-5 tries.
 2. Per a cada forat, tria l'índex. Una foto només pot anar a UN forat. Si dubtes entre dues del mateix motiu, la que
    coincideix amb l'annex de l'Eva.
-3. Escriu la sortida (Write tool) al camí que et diu el prompt i imprimeix el mateix JSON com a resposta final.
+3. Per a cada forat, apunta a `alternatives` fins a 3 candidats MÉS que també hi podrien anar (les altres fotos del
+   mateix motiu: els altres punts P-n, l'altre enquadrament de la mostra), per ordre de preferència i amb una raó
+   curta. L'Eva les veurà al wizard al costat de la teva tria i decidirà; si no n'hi ha cap, llista buida.
+4. Escriu la sortida (Write tool) al camí que et diu el prompt i imprimeix el mateix JSON com a resposta final.
 
 ## Sortida (només JSON)
 
@@ -85,6 +88,7 @@ que mostra el solar com ho faria una foto SÍ que val (vegeu `site_1`).
 {
   "site_1": 5, "site_2": null, "dpsh": 2, "sondeig": null, "materials": 7,
   "materials_per_punt": [{"punt": "S-1", "idx": 7}, {"punt": "S-2", "idx": 9}],
+  "alternatives": {"dpsh": [{"idx": 3, "rao": "P-2, la mateixa màquina en un altre punt"}, {"idx": 4, "rao": "P-3, més lluny"}], "materials": [{"idx": 8, "rao": "la mateixa mostra en primer pla, amb l'etiqueta"}], "site_1": []},
   "raons": {"dpsh": "màquina DPSH sencera al solar, és la foto #1 de l'annex («vista de la màquina…»)", "materials": "cullera SPT oberta amb la mostra"},
   "confianca": {"site_1": 0.6, "dpsh": 0.95, "sondeig": 1.0, "materials": 0.9},
   "cap_font": ["sondeig"],
@@ -93,5 +97,6 @@ que mostra el solar com ho faria una foto SÍ que val (vegeu `site_1`).
 ```
 
 Els valors dels forats són l'ÍNDEX del full de contacte (enter) o `null`. `materials_per_punt` és opcional.
+`alternatives`: per forat, 0-3 índexs més amb raó, per ordre de preferència (mai el que ja has triat per a aquell forat).
 `cap_font` llista els forats que has deixat a `null` perquè no hi ha cap foto vàlida (no hi posis `sondeig` si
 simplement el projecte no en té: digues-ho a `notes`).

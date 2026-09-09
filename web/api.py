@@ -1021,25 +1021,101 @@ _G3DT_ROOT = Path(__file__).resolve().parent.parent
 # Prefix patterns in cache dir → figure slot key
 _CACHE_PREFIX_TO_SLOT: list[tuple[str, str, str]] = [
     # (glob prefix, slot_key, human source label)
+    # Acció 4 (2026-09-09): claus de ranura = les de la plantilla de la peça 7a (`fig_situacio`, `fig_assaigs`,
+    # `fig_projecte_1/2`); les d'assaigs i projecte surten de `figure_selection.json` (vegeu `_collect_figure_previews`)
     # Peça 5 / 4 (2026-09-08): els dos mapes del full de situació i el retall del dibuix amb punts (peça 7a: al 2.2)
-    ("situacio_*", "fig_cadastre", "Dos mapes del full de situació"),
-    ("plan_crop_*", "fig_main_plan", "Retall del dibuix amb punts (figura d'assaigs, 2.2)"),
-    ("cadastre_sitplan_*", "fig_cadastre", "PDF crop situation plan"),
-    ("cadastre_*", "fig_cadastre", "Architect plan crop"),
-    ("main_plan_*", "fig_main_plan", "Architect plan crop"),
-    ("planol_*", "fig_main_plan", "Full plan render"),
+    ("situacio_*", "fig_situacio", "Dos mapes del full de situació"),
+    ("plan_crop_*", "fig_assaigs", "Retall del dibuix amb punts (figura d'assaigs, 2.2)"),
+    ("cadastre_sitplan_*", "fig_situacio", "PDF crop situation plan"),
+    ("cadastre_*", "fig_situacio", "Architect plan crop"),
+    ("main_plan_*", "fig_assaigs", "Architect plan crop"),
+    ("planol_*", "fig_assaigs", "Full plan render"),
     ("geological_composite_*", "fig_geological", "ICGC geological composite"),
     ("geological_*", "fig_geological", "ICGC geological map"),
+    ("tall_crop2_*", "fig_correlation", "Retall del tall de correlació"),
     ("tall_*", "fig_correlation", "Correlation section PDF"),
 ]
 
 # SmartScan role → figure slot key
 _ROLE_TO_FIGURE_SLOT: dict[str, tuple[str, str]] = {
-    "figure_situation_map": ("fig_cadastre", "SmartScan figure"),
+    "figure_situation_map": ("fig_situacio", "SmartScan figure"),
     "figure_geological_map": ("fig_geological", "SmartScan figure"),
     "figure_test_points": ("fig_test_points", "SmartScan figure"),
     "figure_correlation": ("fig_correlation", "SmartScan figure"),
 }
+
+#: ranures que MANEN des de `figure_selection.json` (lector o Eva): la selecció també buida (cap figura = cap figura)
+_SELECTION_SLOTS = {"fig_assaigs_image": "fig_assaigs", "fig_projecte_image_1": "fig_projecte_1",
+                    "fig_projecte_image_2": "fig_projecte_2", "fig_situacio_image_1": "fig_situacio",
+                    "fig_situacio_image_2": "fig_situacio_2"}
+
+
+_CACHE_SOURCE_PDF_RE = __import__("re").compile(r"tall|corte|situ|pl[aà]nol|plano|A\.01", __import__("re").I)
+_UTM_RE = __import__("re").compile(r'"utm_x"\s*:\s*([0-9.]+)[^{}]*?"utm_y"\s*:\s*([0-9.]+)', __import__("re").S)
+
+
+def _project_cache_keys(project_path: Path) -> set[str]:
+    """Marques que identifiquen les imatges de la cau d'AQUEST projecte: el hash de contingut (10 hex) dels PDF font
+    (`_cache_name`: tall, plànol de situació, A.01…) i els parells UTM `x_y` (`geological_composite_{x}_{y}`,
+    `orthophoto_parcel_…`) que hi hagi als JSON de `validation/`. La cau és GLOBAL: sense aquest filtre el calaix
+    mostrava «el fitxer més recent» del prefix, que podia ser d'un altre projecte (2026-09-09, vist amb Tulipa)."""
+    import hashlib, re
+    keys: set[str] = set()
+    try:
+        for f in project_path.rglob("*.pdf"):
+            rel = f.relative_to(project_path)
+            if len(rel.parts) > 4 or "validation" in rel.parts or not _CACHE_SOURCE_PDF_RE.search(f.name):
+                continue
+            try:
+                keys.add(hashlib.md5(f.read_bytes()).hexdigest()[:10])
+            except OSError:
+                continue
+        vdir = project_path / "validation"
+        if vdir.is_dir():
+            for j in vdir.glob("*.json"):
+                try:
+                    if j.stat().st_size > 2_000_000:
+                        continue
+                    txt = j.read_text(encoding="utf-8", errors="replace")
+                except OSError:
+                    continue
+                for x, y in _UTM_RE.findall(txt):
+                    try:
+                        keys.add(f"{float(x):.0f}_{float(y):.0f}")
+                    except ValueError:
+                        pass
+    except Exception as exc:
+        logger.warning("_project_cache_keys: %s", exc)
+    return keys
+
+
+def _figures_from_selection(project_path: Path, project_name: str) -> dict[str, dict[str, str]] | None:
+    """Acció 4: les figures d'assaigs, projecte i situació doble tal com les aplicarà el generador
+    (`lector_figures.apply_selection`, mateixa cau `figsel_*`). `None` si no hi ha cap selecció vàlida."""
+    from automation.imatges.lector_figures import apply_selection, load_selection
+    sel = load_selection(project_path)
+    if not sel:
+        return None
+    label = "Tria de l'Eva" if sel.get("source") == "user" else "Tria del lector de figures"
+    encoded_name = quote(project_name, safe='')
+    out: dict[str, dict[str, str]] = {}
+    try:
+        applied = apply_selection(project_path, _FIGURE_CACHE_DIR)
+    except Exception as exc:
+        logger.warning("figure_selection al calaix: %s", exc)
+        return None
+    for key, slot in _SELECTION_SLOTS.items():
+        val = applied.get(key)
+        if not val:
+            continue
+        p = Path(val)
+        if p.is_file():
+            out[slot] = {"filename": p.name, "source": label,
+                         "thumbnail_url": f"/api/figure-preview/{encoded_name}?slot={slot}&file={quote(p.name, safe='')}"}
+    # la selecció mana també quan diu «cap»: assaigs i projecte no cauen als prefixos de la cau
+    for slot in ("fig_assaigs", "fig_projecte_1", "fig_projecte_2"):
+        out.setdefault(slot, {"filename": "", "source": f"{label}: cap figura", "thumbnail_url": ""})
+    return out
 
 
 def _collect_figure_previews(
@@ -1055,14 +1131,19 @@ def _collect_figure_previews(
     figures: dict[str, dict[str, str]] = {}
     encoded_name = quote(project_name, safe='')
 
-    # 1. Scan cache dir for known prefixes
+    # 0. Acció 4 (2026-09-09): la selecció del lector de figures / de l'Eva mana sobre assaigs, projecte i situació doble
+    figures.update(_figures_from_selection(project_path, project_name) or {})
+
+    # 1. Scan cache dir for known prefixes — només els fitxers d'AQUEST projecte (hash del PDF font o UTM al nom)
     if _FIGURE_CACHE_DIR.is_dir():
+        keys = _project_cache_keys(project_path)
         for glob_prefix, slot_key, source_label in _CACHE_PREFIX_TO_SLOT:
             if slot_key in figures:
                 continue  # first match wins per slot
-            matches = sorted(_FIGURE_CACHE_DIR.glob(glob_prefix))
+            matches = [f for f in _FIGURE_CACHE_DIR.glob(glob_prefix) if any(k in f.name for k in keys)]
+            matches.sort(key=lambda f: f.stat().st_mtime)
             if matches:
-                f = matches[-1]  # most recent by name
+                f = matches[-1]  # el més recent d'aquest projecte
                 if f.is_file() and f.suffix.lower() in _IMAGE_EXTENSIONS:
                     figures[slot_key] = {
                         "filename": f.name,
@@ -1182,18 +1263,10 @@ def list_photos(project_name: str):
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    # Find photos directory
-    foto_dir: Path | None = None
-    for name in ['FOTOGRAFIES', 'FOTOS DE CAMP + PLANOL PUNTS', 'FOTOGRAFÍAS']:
-        candidate = project_path / name
-        if candidate.is_dir():
-            foto_dir = candidate
-            break
-    if foto_dir is None:
-        for d in sorted(project_path.iterdir()):
-            if d.is_dir() and d.name.upper().startswith('FOTOS'):
-                foto_dir = d
-                break
+    # Find photos directory: la mateixa cerca que el lector de fotos i l'ImageManager (rol `photos_dir`, `FOTOGRAFIA`
+    # en singular, `FOTOS*`/`FOTOGRAF*`); abans un projecte amb `FOTOGRAFIA/` no llistava cap foto (2026-09-09)
+    from automation.imatges.lector_fotos import find_photos_dir
+    foto_dir: Path | None = find_photos_dir(project_path)
 
     photos: list[dict[str, str]] = []
     if foto_dir:
@@ -1247,6 +1320,250 @@ def list_photos(project_name: str):
         "current_selection": current_selection,
         "slot_info": slot_info,
     }
+
+
+# --- Acció 4 (2026-09-09): les alternatives dels lectors, visibles al wizard (zona fixa amb hover) ---
+
+_PHOTO_SLOTS = ("site_1", "site_2", "dpsh", "sondeig", "materials")
+_PHOTO_SLOT_LABELS = {"site_1": "Foto vista general 1", "site_2": "Foto vista general 2", "dpsh": "Foto penetròmetre DPSH",
+                      "sondeig": "Foto sondeig", "materials": "Foto materials"}
+_FIGURE_SLOT_LABELS = {"fig_situacio": "Figura de situació (1.1)", "fig_projecte_1": "Figura del projecte 1 (1.1)",
+                       "fig_projecte_2": "Figura del projecte 2 (1.1)", "fig_assaigs": "Figura d'assaigs (2.2)"}
+_ENTRY_KEYS = ("idx", "kind", "rel", "page", "src", "crop", "caption", "rao", "crops")
+
+
+def _read_json_file(path: Path) -> dict | None:
+    import json as _json
+    try:
+        d = _json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return d if isinstance(d, dict) else None
+
+
+def _entry_ok(project_path: Path, e) -> dict | None:
+    """Una entrada de figura (candidat del lector) segura de renderitzar: `src` dins el projecte o dins la cau
+    d'imatges, o `rel` dins el projecte. Cap camí arbitrari."""
+    if not isinstance(e, dict) or not e.get("rel") or not e.get("kind"):
+        return None
+    out = {k: e.get(k) for k in _ENTRY_KEYS if k in e}
+    root = str(project_path.resolve()); cache = str(_FIGURE_CACHE_DIR.resolve())
+    src = e.get("src")
+    if src:
+        sp = Path(str(src)).resolve()
+        if not (str(sp).startswith(root) or str(sp).startswith(cache)) or not sp.is_file():
+            return None
+    else:
+        rp = (project_path / str(e["rel"])).resolve()
+        if not str(rp).startswith(root) or not rp.is_file():
+            return None
+    return out
+
+
+def _fig_thumb_url(project_path: Path, project_name: str, entry: dict, crop, tag: str) -> str:
+    """Renderitza el candidat (o reaprofita la cau `figsel_*`, com el generador) i dona la URL de la miniatura."""
+    from automation.imatges.lector_figures import _out_name, render_entry
+    p = _out_name(_FIGURE_CACHE_DIR, tag, entry, crop)
+    if not p.exists() and render_entry(project_path, entry, p, crop=crop) is None:
+        return ""
+    return f"/api/figure-preview/{quote(project_name, safe='')}?slot={tag}&file={quote(p.name, safe='')}"
+
+
+@router.get("/alternatives/{project_name:path}")
+def list_alternatives(project_name: str):
+    """Per ranura d'imatge: la tria actual, les alternatives del lector (2-3, amb raó i miniatura), la raó de la tria i
+    si el lector no hi ha trobat cap font. Fotos de `photo_selection.json`, figures de `figure_selection.json`."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    enc = quote(project_name, safe='')
+    slots: dict[str, dict] = {}
+
+    psel = _read_json_file(project_path / 'validation' / 'photo_selection.json') or {}
+    pmeta = psel.get('_lector') if isinstance(psel.get('_lector'), dict) else {}
+    palts = psel.get('alternatives') if isinstance(psel.get('alternatives'), dict) else {}
+
+    def photo_item(rel: str, rao: str = "") -> dict:
+        return {"rel": rel, "rao": rao or "", "thumbnail_url": f"/api/thumbnail/{enc}?file={quote(rel, safe='/')}"}
+
+    plector = psel.get("_lector_selection") if isinstance(psel.get("_lector_selection"), dict) else None
+    for slot in _PHOTO_SLOTS:
+        rel = psel.get(slot) if isinstance(psel.get(slot), str) else None
+        cur = photo_item(rel) if rel and (project_path / rel).is_file() else None
+        lector_rel = plector.get(slot) if plector else rel          # la tria del lector (si l'Eva n'ha canviat alguna)
+        alts = []
+        if isinstance(lector_rel, str) and lector_rel != rel and (project_path / lector_rel).is_file():
+            alts.append(photo_item(lector_rel, "la tria del lector: " + str((pmeta.get("raons") or {}).get(slot) or "")))
+        alts += [photo_item(a["rel"], a.get("rao")) for a in (palts.get(slot) or [])
+                 if isinstance(a, dict) and isinstance(a.get("rel"), str) and a["rel"] != rel and a["rel"] != lector_rel
+                 and (project_path / a["rel"]).is_file()]
+        is_lector = (rel == lector_rel)
+        # font PER RANURA (Josep, nit): amb una sola tria de l'Eva no es torna «tria de l'Eva» tot el fitxer
+        file_src = psel.get("source") or ("ia" if psel else None)
+        slot_src = ("lector" if (plector is not None and is_lector) else file_src) if file_src == "user" else file_src
+        slots[slot] = {"type": "photo", "label": _PHOTO_SLOT_LABELS[slot], "source": slot_src,
+                       "current": cur, "alternatives": alts, "rao": (pmeta.get("raons") or {}).get(slot) if is_lector else None,
+                       "cap_font": slot in (pmeta.get("cap_font") or []) and is_lector,
+                       "confianca": (pmeta.get("confianca") or {}).get(slot) if is_lector else None}
+
+    fsel = _read_json_file(project_path / 'validation' / 'figure_selection.json') or {}
+    fsrc = fsel.get("source") if fsel.get("source") in ("user", "lector") else None
+    fmeta = fsel.get('_lector') if isinstance(fsel.get('_lector'), dict) else {}
+    falts = fsel.get('alternatives') if isinstance(fsel.get('alternatives'), dict) else {}
+    raons = fmeta.get("raons") or {}; cap_font = fmeta.get("cap_font") or []; conf = fmeta.get("confianca") or {}
+
+    def fig_item(e, tag: str) -> dict | None:
+        e = _entry_ok(project_path, e)
+        if not e:
+            return None
+        crops = e.get("crops")
+        item = {"entry": e, "rao": e.get("rao") or "", "caption": e.get("caption") or ""}
+        if isinstance(crops, list) and len(crops) == 2:            # situació doble: dues miniatures
+            item["thumbnail_url"] = _fig_thumb_url(project_path, project_name, e, crops[0], f"{tag}1")
+            item["thumbnail_url_2"] = _fig_thumb_url(project_path, project_name, e, crops[1], f"{tag}2")
+        else:
+            item["thumbnail_url"] = _fig_thumb_url(project_path, project_name, e, e.get("crop"), tag)
+        return item
+
+    flector = fsel.get("_lector_selection") if isinstance(fsel.get("_lector_selection"), dict) else None
+
+    def _same_entry(a, b) -> bool:
+        if not isinstance(a, dict) or not isinstance(b, dict):
+            return a is None and b is None
+        return (a.get("rel"), a.get("page"), a.get("crop"), a.get("crops")) == (b.get("rel"), b.get("page"), b.get("crop"), b.get("crops"))
+
+    def fig_source(key: str, current_entry, k: int | None = None) -> str | None:
+        """Font per ranura: «lector» si el que hi ha és el que va triar el lector (`_lector_selection`), «user» si l'Eva
+        l'ha canviat; sense tries de l'Eva, la font del fitxer."""
+        if key == "situacio":                     # la proposta d'insets del lector només s'aplica si l'Eva la tria
+            return "user" if current_entry else None   # None = composició automàtica del full
+        if fsrc != "user" or flector is None:
+            return fsrc
+        if key == "projecte":
+            lst = [x for x in (flector.get("projecte") or []) if isinstance(x, dict)]
+            lec = lst[k - 1] if k is not None and len(lst) >= k else None
+        else:
+            lec = flector.get(key)
+        return "lector" if _same_entry(current_entry, lec) else "user"
+
+    def fig_slot(label: str, key: str, current, alternatives: list, extra: dict | None = None, k: int | None = None) -> dict:
+        cur_entry = current["entry"] if isinstance(current, dict) else None
+        src = fig_source(key, cur_entry, k)
+        is_lec = src != "user"
+        d = {"type": "figure", "label": label, "source": src, "current": current, "alternatives": [a for a in alternatives if a],
+             "rao": raons.get(key) if is_lec else None, "cap_font": (key in cap_font) and is_lec, "confianca": conf.get(key) if is_lec else None}
+        d.update(extra or {})
+        return d
+
+    slots["fig_assaigs"] = fig_slot(_FIGURE_SLOT_LABELS["fig_assaigs"], "assaigs",
+                                    fig_item(fsel.get("assaigs"), "assaigs") if fsrc else None,
+                                    [fig_item(a, "alt") for a in (falts.get("assaigs") or [])])
+    proj = [x for x in (fsel.get("projecte") or []) if isinstance(x, dict)] if fsrc else []
+    alts_p = [fig_item(a, "alt") for a in (falts.get("projecte") or [])]
+    for k in (1, 2):
+        cur = fig_item(proj[k - 1], f"projecte{k}") if len(proj) >= k else None
+        # la figura de l'altra posició només s'ofereix quan intercanviar-les té sentit (les dues posicions plenes)
+        others = [fig_item(proj[j], f"projecte{j + 1}") for j in range(len(proj)) if j != k - 1] if len(proj) == 2 else []
+        used = [proj[j] for j in range(len(proj))]
+        alts_k = [a for a in alts_p if a and not any(_same_entry(a["entry"], u) for u in used)]
+        slots[f"fig_projecte_{k}"] = fig_slot(_FIGURE_SLOT_LABELS[f"fig_projecte_{k}"], "projecte", cur, others + alts_k, k=k)
+    sit = fig_item(fsel.get("situacio"), "situacio") if fsrc and isinstance(fsel.get("situacio"), dict) else None
+    slots["fig_situacio"] = fig_slot(_FIGURE_SLOT_LABELS["fig_situacio"], "situacio",
+                                     sit if (fsrc == "user" and sit) else None,
+                                     [sit] if (sit and fsrc != "user") else [],
+                                     {"default_label": "Els dos mapes del full de situació (automàtic)",
+                                      "is_default": not (fsrc == "user" and sit)})
+    return {"slots": slots, "photo_source": psel.get("source"), "figure_source": fsrc}
+
+
+class AlternativeChoice(BaseModel):
+    slot: str
+    rel: str | None = None          # fotos: camí relatiu al projecte; None = cap foto
+    entry: dict | None = None       # figures: entrada del lector (idx, kind, rel, page, src, crop[, caption, crops]); None = cap / automàtic
+
+
+@router.post("/alternatives/{project_name:path}/choose")
+def choose_alternative(project_name: str, req: AlternativeChoice):
+    """Desa la tria de l'Eva per a UNA ranura amb `source: user` (mana al generador) i conserva la resta de la selecció
+    del lector (alternatives, raons, i una còpia de la seva tria a `_lector_selection`)."""
+    import json as _json
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    vdir = project_path / 'validation'; vdir.mkdir(exist_ok=True)
+    root = str(project_path.resolve())
+
+    if req.slot in _PHOTO_SLOTS:
+        path = vdir / 'photo_selection.json'; sel = _read_json_file(path) or {}
+        if req.rel is not None:
+            fp = (project_path / req.rel).resolve()
+            if not str(fp).startswith(root):
+                raise HTTPException(status_code=403, detail="Path traversal not allowed")
+            if not fp.is_file():
+                raise HTTPException(status_code=404, detail=f"File not found: {req.rel}")
+            if fp.suffix.lower() not in _IMAGE_EXTENSIONS:
+                raise HTTPException(status_code=400, detail=f"Not an image file: {req.rel}")
+        if sel.get("source") == "lector" and "_lector_selection" not in sel:
+            sel["_lector_selection"] = {s: sel.get(s) for s in _PHOTO_SLOTS}
+        cleared: list[str] = []
+        for s in _PHOTO_SLOTS:                                   # una foto només pot anar a un forat
+            if req.rel is not None and sel.get(s) == req.rel and s != req.slot:
+                sel[s] = None
+                cleared.append(s)
+        sel[req.slot] = req.rel
+        payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
+        path.write_text(_json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+        return {"status": "saved", "slot": req.slot, "rel": req.rel, "cleared": cleared}
+
+    if req.slot in _FIGURE_SLOT_LABELS:
+        path = vdir / 'figure_selection.json'
+        sel = _read_json_file(path) or {"assaigs": None, "projecte": [], "situacio": None}
+        e = _entry_ok(project_path, req.entry) if req.entry is not None else None
+        if req.entry is not None and e is None:
+            raise HTTPException(status_code=400, detail="Entrada de figura no vàlida")
+        placed: str | None = None
+        if sel.get("source") == "lector" and "_lector_selection" not in sel:
+            sel["_lector_selection"] = {k: sel.get(k) for k in ("assaigs", "projecte", "situacio")}
+        proj = [x for x in (sel.get("projecte") or []) if isinstance(x, dict)]
+
+        def same(a, b) -> bool:
+            return bool(a and b) and (a.get("rel"), a.get("page"), a.get("crop")) == (b.get("rel"), b.get("page"), b.get("crop"))
+
+        if req.slot == "fig_assaigs":
+            sel["assaigs"] = {k: e.get(k) for k in ("idx", "kind", "rel", "page", "src", "crop")} if e else None
+            proj = [x for x in proj if not same(x, e)]           # el mateix retall no s'imprimeix dues vegades
+        elif req.slot.startswith("fig_projecte_"):
+            # Les figures del projecte són una LLISTA ORDENADA (la 2 va darrere de la 1): una tria per a la 2 amb la 1
+            # buida queda a la posició 1 i la resposta ho diu (`placed`); una figura que ja hi és es reordena.
+            k = int(req.slot[-1])
+            if e:
+                ent = {kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crop")}
+                ent["caption"] = (e.get("caption") or "Detall del projecte. Font: Projecte.")[:200]
+                j = next((i for i, x in enumerate(proj) if same(x, e)), None)
+                if j is not None:
+                    if j != k - 1 and len(proj) >= k:
+                        proj[j], proj[k - 1] = proj[k - 1], proj[j]
+                else:
+                    if same(sel.get("assaigs"), e):
+                        sel["assaigs"] = None
+                    if len(proj) >= k:
+                        proj[k - 1] = ent
+                    else:
+                        proj.append(ent)
+                placed = f"fig_projecte_{next(i for i, x in enumerate(proj) if same(x, e)) + 1}"
+            elif len(proj) >= k:
+                del proj[k - 1]
+        elif req.slot == "fig_situacio":
+            sel["situacio"] = ({kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crops")}
+                               if e and isinstance(e.get("crops"), list) and len(e["crops"]) == 2 else None)
+        sel["projecte"] = proj[:2]
+        payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
+        path.write_text(_json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+        return {"status": "saved", "slot": req.slot, "placed": placed or req.slot}
+
+    raise HTTPException(status_code=400, detail=f"Ranura desconeguda: {req.slot}")
 
 
 @router.post("/photos/{project_name:path}/select")

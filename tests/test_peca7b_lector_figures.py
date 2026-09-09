@@ -175,3 +175,23 @@ def test_la_seleccio_amb_assaigs_null_buida_el_retall_determinista(tmp_path, mon
     assert ctx["fig_assaigs_image"] == "" and ctx["fig_projecte_image_1"].startswith("IMG:figsel_projecte1_")
     from automation.report_generator import figure_numbers_from_context
     assert figure_numbers_from_context(ctx)["fig_spt_cullera_num"] == 3        # situació 1 + projecte 1, cap d'assaigs
+
+
+# --- 2026-09-09, acció 4: alternatives del lector per ranura ---
+
+def test_alternatives_de_figures_es_validen_i_s_escriuen(tmp_path):
+    cands = [{"idx": i, "kind": "project_page", "rel": "25.9999/PROJECTE.pdf", "page": i, "src": "/x/PROJECTE.pdf"} for i in (1, 2, 3, 4)]
+    sel = {"assaigs": {"idx": 1, "crop": None}, "projecte": [{"idx": 2, "crop": None, "caption": "Secció. Font: Projecte."}],
+           "alternatives": {"assaigs": [{"idx": 1, "crop": None, "rao": "el triat"}, {"idx": 1, "crop": [0.1, 0.1, 0.9, 0.9], "rao": "més estret"},
+                                        {"idx": 3, "rao": "el full de l'Eva"}, {"idx": 3, "crop": None}, {"idx": 42}],
+                            "projecte": [{"idx": 4, "crop": [0, 0, 0.5, 0.5], "caption": "Planta. Font: Projecte.", "rao": "la planta"}],
+                            "situacio": [{"idx": 2}]}}
+    clean, w = LG.validate_selection(sel, cands)
+    a = clean["alternatives"]
+    assert [(e["idx"], e["crop"], e["rao"]) for e in a["assaigs"]] == [(1, [0.1, 0.1, 0.9, 0.9], "més estret"), (3, None, "el full de l'Eva")]
+    assert a["projecte"][0]["caption"] == "Planta. Font: Projecte." and a["projecte"][0]["crop"] == [0.0, 0.0, 0.5, 0.5]
+    assert "situacio" not in a and any("idx «42»" in x for x in w)
+    p = tmp_path / "4009999 PROVA"; p.mkdir()
+    d = json.loads(LG.write_selection(p, clean, {"model": "test"}).read_text(encoding="utf-8"))
+    assert list(d)[:5] == ["source", "assaigs", "projecte", "situacio", "alternatives"] and d["alternatives"]["assaigs"][1]["rao"] == "el full de l'Eva"
+    assert LG.apply_selection(p, tmp_path / "cache") is not None       # les alternatives no canvien el que s'aplica

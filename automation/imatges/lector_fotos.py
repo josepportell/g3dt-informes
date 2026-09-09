@@ -436,7 +436,39 @@ def validate_selection(sel: dict, cands: list[dict]) -> tuple[dict, list[str]]:
                 extra.append({"punt": str(item.get("punt") or ""), "rel": rel})
     if extra:
         clean["materials_per_punt"] = extra
+    alts = validate_alternatives(sel.get("alternatives"), clean, resolve, warnings)
+    if alts:
+        clean["alternatives"] = alts
     return clean, warnings
+
+
+MAX_ALTERNATIVES = 3
+
+
+def validate_alternatives(raw, clean: dict, resolve, warnings: list[str]) -> dict[str, list[dict]]:
+    """Acció 4 (2026-09-09): per forat, fins a 3 candidats MÉS que també hi podrien anar (l'Eva els veu al wizard i
+    tria). Cada un: índex o camí + raó curta. Fora: el triat del mateix forat, els repetits, els que no són candidats."""
+    out: dict[str, list[dict]] = {}
+    if not isinstance(raw, dict):
+        return out
+    for slot in SLOTS:
+        items = raw.get(slot)
+        if not isinstance(items, list):
+            continue
+        seen: set[str] = set(); lst: list[dict] = []
+        for it in items:
+            v, rao = (it.get("idx", it.get("rel")), it.get("rao")) if isinstance(it, dict) else (it, None)
+            rel = resolve(v)
+            if rel is None:
+                warnings.append(f"alternatives {slot}: «{v}» no és cap candidat"); continue
+            if rel == clean.get(slot) or rel in seen:
+                continue
+            seen.add(rel); lst.append({"rel": rel, "rao": str(rao or "").strip()[:200]})
+            if len(lst) >= MAX_ALTERNATIVES:
+                break
+        if lst:
+            out[slot] = lst
+    return out
 
 
 def write_selection(project: Path, clean: dict, meta: dict) -> Path:
@@ -447,6 +479,8 @@ def write_selection(project: Path, clean: dict, meta: dict) -> Path:
     payload = {"source": "lector", **{k: clean.get(k) for k in SLOTS}}
     if clean.get("materials_per_punt"):
         payload["materials_per_punt"] = clean["materials_per_punt"]
+    if clean.get("alternatives"):
+        payload["alternatives"] = clean["alternatives"]
     payload["_lector"] = meta
     sel_path.write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
     return sel_path
