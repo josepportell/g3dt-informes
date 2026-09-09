@@ -6,10 +6,20 @@ punts i els estrats) i deixa fora el mapa de situació, la llegenda, la barra d'
 
 1. **Nucli**: els farciments amples i de color (els estrats). Un `tall.pdf` sempre en té: són el dibuix.
 2. **Finestra**: el nucli eixamplat (per defecte 25 % a l'esquerra per a l'eix de cotes, 15 % a la dreta, 75 % de
-   l'alçada a dalt per a les etiquetes «P-1»/«A'», 20 % a baix per als «Nb=R»). Res de fora hi entra mai.
+   l'alçada a dalt per a les etiquetes «P-1»/«A'» —i com a mínim 40 mm: les etiquetes pengen 15-32 mm sobre els
+   estrats als 7 signats, i una secció curta (30 mm) no hi arribava—, 20 % a baix per als «Nb=R»). Res de fora hi
+   entra mai.
 3. **Creixement fins al buit blanc**: dins la finestra, s'hi afegeixen els traços i les paraules que toquen el que ja
-   tenim (amb una tolerància del 5 % de l'alçada del nucli) fins que no en queda cap de contigu. La franja de la
-   llegenda i el mapa queden fora perquè entre ells i la secció hi ha blanc.
+   tenim (a menys de 5 mm) fins que no en queda cap de contigu. La franja de la llegenda i el mapa queden fora perquè
+   entre ells i la secció hi ha blanc. «Blanc» són 5 mm en absolut, no una fracció de l'alçada del nucli: mesurat als
+   7 signats (2026-09-09), els números de l'eix de cotes són a 0,4-3,7 mm de la barra (l'Eva els posa 7/7) i la
+   llegenda mai a menys de 16 mm de la secció (l'Eva la deixa fora 7/7).
+
+**Un traç són tants objectes com rectangles.** El FreeHand exporta com a UN SOL traç un grup de línies o guions
+separats (la línia superior de la caixa de la llegenda i la línia del terreny de la secció alhora; les dues línies
+d'una caixa): la seva caixa englobant abasta l'espai entre elles sense cap tinta a dins, i entrava al nucli com un
+«estrat» ample i ple (Linyola i Vilanova: 49 i 73 mm de llegenda i plànol a sobre de la secció). `_ink_rects` mira
+la tinta (cada rectangle del traç), no la caixa.
 
 Límits durs: la franja del caixetí (per sobre del primer text «TÍTOL/TÍTULO/Data/Fecha/Exp/Pàgina») i les imatges
 incrustades (el mapa de situació i el logo). Si no hi ha nucli, es retorna `None` i qui crida ha de fer servir la
@@ -29,9 +39,10 @@ log = logging.getLogger(__name__)
 TITLE_BLOCK_WORDS = {"títol", "titulo", "título", "data", "fecha", "exp", "pàgina", "pagina", "página"}
 CORE_MIN_WIDTH = 0.25      # amplada mínima d'un farciment per ser «estrat», en fracció de la pàgina
 CORE_MIN_AREA = 0.01       # àrea mínima, en fracció de la pàgina
-GAP = 0.05                 # tolerància del creixement, en fracció de l'alçada del nucli
+GAP_MM = 5.0               # «blanc» = més de 5 mm (eix de cotes a 0,4-3,7 mm; llegenda mai a menys de 16 mm; 7 signats)
 PAD_LEFT, PAD_RIGHT = 0.25, 0.15
 PAD_UP, PAD_DOWN = 0.75, 0.20
+PAD_UP_MIN_MM = 40.0       # les etiquetes «P-n»/«A-A'» pengen 15-32 mm sobre els estrats (7 signats, 2026-09-09)
 MARGIN = 0.006             # marge final, en fracció del costat gran de la pàgina
 
 
@@ -71,7 +82,17 @@ def _union(box, r):
     return fitz.Rect(min(box.x0, r.x0), min(box.y0, r.y0), max(box.x1, r.x1), max(box.y1, r.y1))
 
 
-def detect_section_region(page, *, gap: float = GAP, pad_left: float = PAD_LEFT, pad_right: float = PAD_RIGHT,
+def _ink_rects(d) -> list:
+    """Rectangles amb TINTA d'un traç. Si tots els items són rectangles (línies, guions, marcs que el FreeHand agrupa en
+    un sol traç), cada rectangle és un objecte; si no (polígons dels estrats, corbes), la caixa del traç."""
+    import fitz
+    items = d.get("items") or []
+    if items and all(it[0] == "re" for it in items):
+        return [fitz.Rect(it[1]) for it in items]
+    return [fitz.Rect(d["rect"])]
+
+
+def detect_section_region(page, *, gap_mm: float = GAP_MM, pad_left: float = PAD_LEFT, pad_right: float = PAD_RIGHT,
                           pad_up: float = PAD_UP, pad_down: float = PAD_DOWN):
     """Rectangle del dibuix dins la pàgina (`fitz.Rect`), o `None` si no s'hi troba cap nucli d'estrats."""
     import fitz
@@ -88,34 +109,36 @@ def detect_section_region(page, *, gap: float = GAP, pad_left: float = PAD_LEFT,
     core = fitz.Rect(W, H, 0, 0)
     found = 0
     for d in draws:
-        r = d["rect"]
         fill = d.get("fill")
-        if not fill or r.y1 > y_bottom or r.width < CORE_MIN_WIDTH * W or r.width > 0.97 * W:
-            continue
-        if abs(r.get_area()) < CORE_MIN_AREA * page_area or _covered(r, images):
+        if not fill:
             continue
         if max(fill) - min(fill) < 0.06 and min(fill) > 0.9:      # blanc: caixa de la llegenda, no un estrat
             continue
-        core |= r
-        found += 1
+        for r in _ink_rects(d):                                     # la tinta, no la caixa del traç
+            if r.y1 > y_bottom or r.width < CORE_MIN_WIDTH * W or r.width > 0.97 * W:
+                continue
+            if abs(r.get_area()) < CORE_MIN_AREA * page_area or _covered(r, images):
+                continue
+            core |= r
+            found += 1
     if not found:
         return None
 
     cw, chh = core.width, core.height
-    window = fitz.Rect(max(0, core.x0 - pad_left * cw), max(0, core.y0 - pad_up * chh),
+    window = fitz.Rect(max(0, core.x0 - pad_left * cw), max(0, core.y0 - max(pad_up * chh, PAD_UP_MIN_MM / 25.4 * 72)),
                        min(W, core.x1 + pad_right * cw), min(y_bottom, core.y1 + pad_down * chh))
     items = []
     for d in draws:
-        r = fitz.Rect(d["rect"])
-        if r.width < 0.97 * W and r.height < 0.97 * H and _inside(window, r) and not _covered(r, images):
-            items.append(r)
+        for r in _ink_rects(d):
+            if r.width < 0.97 * W and r.height < 0.97 * H and _inside(window, r) and not _covered(r, images):
+                items.append(r)
     for w in words:
         r = fitz.Rect(w[0], w[1], w[2], w[3])
         if _inside(window, r) and not _covered(r, images):
             items.append(r)
 
     box = fitz.Rect(core)
-    tol = gap * chh
+    tol = gap_mm / 25.4 * 72
     changed = True
     while changed:                       # creix mentre hi hagi contingut contigu; s'atura al blanc
         changed = False

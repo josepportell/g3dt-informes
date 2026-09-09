@@ -1257,8 +1257,9 @@ class ImageManager:
                         logger.info(f"Tall de correlació des del rol figure_correlation: {fig_path.name}")
             if tall_pdf:
                 # Peça 3 (2026-09-07): l'Eva retalla la secció del tall (sense caixetí, llegenda ni logo): 7/7 signats.
-                # Prefix propi (`tall_crop`) perquè no xoqui amb la pàgina sencera que hi hagi a la cau.
-                cached = self._cache_name("tall_crop", tall_pdf)
+                # Prefix propi (`tall_crop`) perquè no xoqui amb la pàgina sencera que hi hagi a la cau; `2` des del
+                # 2026-09-09 (tinta dels traços i «blanc» = 5 mm): els retalls antics de la cau no valen.
+                cached = self._cache_name("tall_crop2", tall_pdf)
                 if not cached.exists():
                     from .imatges.retall import crop_drawing
                     if crop_drawing(tall_pdf, cached) is None:      # sense dibuix detectat: pàgina sencera, com abans

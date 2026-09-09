@@ -69,3 +69,56 @@ def test_funciona_sense_caixeti_ni_llegenda(tmp_path):
     pdf = _plan_page(tmp_path / "net.pdf", with_legend=False, with_title_block=False, with_map=False)
     r = detect_section_region(fitz.open(pdf)[0])
     assert r is not None and r.y0 < 270 and r.x1 > 690
+
+
+# --- 2026-09-09, acció 3 (estudi del retall del tall als 7 signats) ---
+
+def test_un_trac_de_rectangles_separats_no_fa_de_pont_amb_la_llegenda(tmp_path):
+    """Linyola i Vilanova: el FreeHand exporta en UN traç la línia de la caixa de la llegenda i la del terreny; la caixa
+    del traç abastava l'espai entre elles i entrava al nucli com un «estrat» (49-73 mm de llegenda a sobre de la secció)."""
+    pdf = _plan_page(tmp_path / "tall.pdf")
+    doc = fitz.open(pdf); page = doc[0]
+    sh = page.new_shape()
+    sh.draw_rect(fitz.Rect(280, 119, 700, 120.5))                 # línia inferior de la caixa de la llegenda
+    sh.draw_rect(fitz.Rect(200, 298.5, 700, 300))                 # línia del terreny, tocant el primer estrat
+    sh.finish(color=None, fill=(0, 0, 0), even_odd=True)          # un sol traç amb dos rectangles
+    sh.commit()
+    p2 = tmp_path / "tall2.pdf"; doc.save(p2); doc.close()
+    d = [x for x in fitz.open(p2)[0].get_drawings() if x.get("fill") == (0.0, 0.0, 0.0)]
+    assert any(len(x["items"]) == 2 and all(it[0] == "re" for it in x["items"]) for x in d)   # el fixture reprodueix el traç
+    r = detect_section_region(fitz.open(p2)[0])
+    assert r is not None and 200 < r.y0 < 270                    # la llegenda continua fora; les etiquetes «P-n» dins
+    assert r.y0 <= 298.5 and r.x1 > 690                          # la línia del terreny sí que hi és
+
+
+def test_els_numeros_de_l_eix_a_menys_de_5_mm_hi_entren_i_el_que_es_a_mes_no(tmp_path):
+    """Bell-lloc: els números de l'eix són a 3,7 mm de la barra i quedaven fora (tolerància del 5 % de l'alçada del
+    nucli = 2 mm); als 7 signats són a 0,4-3,7 mm i la llegenda mai a menys de 16 mm. «Blanc» = 5 mm."""
+    doc = fitz.open(); page = doc.new_page(width=842, height=595)
+    page.draw_rect(fitz.Rect(200, 300, 700, 340), color=None, fill=(0.55, 0.35, 0.15))
+    page.draw_rect(fitz.Rect(200, 340, 700, 430), color=None, fill=(0.95, 0.7, 0.35))
+    page.draw_rect(fitz.Rect(196, 300, 200, 430), color=None, fill=(0, 0, 0))       # barra de l'eix, enganxada
+    for i, y in enumerate((310, 350, 390, 425)):
+        page.insert_text((172, y), f"{213 - i}", fontsize=7)                          # números: acaben a ~185 → 11 pt ≈ 3,9 mm
+    page.insert_text((110, 310), "ESCALA", fontsize=7)                                # a ~50 pt ≈ 18 mm: fora
+    p = tmp_path / "eix.pdf"; doc.save(p); doc.close()
+    page = fitz.open(p)[0]
+    nums = [w for w in page.get_text("words") if w[4].isdigit()]
+    assert 8 < 196 - max(w[2] for w in nums) < 14.2                                   # el salt del fixture és de 3-5 mm
+    r = detect_section_region(page)
+    assert r is not None and r.x0 <= min(w[0] for w in nums) and r.x0 > 130
+
+
+def test_una_seccio_curta_arriba_a_les_etiquetes_que_pengen_30_mm_a_sobre(tmp_path):
+    """Alcoletge: amb el nucli net (només estrats, 30 mm d'alçada) la finestra del 75 % no arribava a «(msnm)» ni a
+    «A»/«A'», 32 mm a sobre. Als 7 signats les etiquetes pengen 15-32 mm sobre els estrats: mínim 40 mm."""
+    doc = fitz.open(); page = doc.new_page(width=842, height=595)
+    page.draw_rect(fitz.Rect(200, 300, 700, 330), color=None, fill=(0.55, 0.35, 0.15))     # secció de 85 pt = 30 mm
+    page.draw_rect(fitz.Rect(200, 330, 700, 385), color=None, fill=(0.95, 0.7, 0.35))
+    page.insert_text((200, 213), "A", fontsize=8); page.insert_text((690, 213), "A'", fontsize=8)   # 32 mm a sobre, als extrems
+    for x, lab in ((260, "P-1"), (620, "P-2")):
+        page.draw_line(fitz.Point(x, 232), fitz.Point(x, 300), color=(0, 0, 1))              # línia fins a l'estrat
+        page.insert_text((x - 8, 228), lab, fontsize=8)
+    p = tmp_path / "curta.pdf"; doc.save(p); doc.close()
+    r = detect_section_region(fitz.open(p)[0])
+    assert r is not None and r.y0 < 204 and r.x0 <= 200 and r.x1 > 697          # «A», «A'» i les etiquetes dins
