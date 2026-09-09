@@ -5844,7 +5844,7 @@ no canvien la tria. 3 passades × 2-3 projectes ≈ 8 crides. M341: 0 LLM, ~4 mi
 
 - ✅ Rubí `foto_vista` ND → M; `fix` +2; cap pèrdua a cap projecte; taules intactes.
 - ✅ Skill neutre (`grep` dels 7 noms = 0); cap regla d'un sol cas (rotació: 2 projectes; PNG: el lector decideix).
-- ✅ Suite amb els mateixos vermells. ⏳ Commit pendent de GO del Josep.
+- ✅ Suite amb els mateixos vermells. ✅ Commitejat `44c9106` (codi) · `aa72d41` (mesura) · `c2af8a0` (docs), GO del Josep.
 
 ### Següents passos
 
