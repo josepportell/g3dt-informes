@@ -41,6 +41,14 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
 8. **Els forats de numeració han d'acabar en `_num`** (`_is_numbering` de l'extractor): `fig_situacio_num_2` no
    s'extreu mai; `fig_situacio_2_num` sí. I **les etiquetes «P-n» dels fulls del FreeHand no són text**: cap senyal
    determinista diu si el dibuix té punts (Bell-lloc no en té i l'Eva el fa servir com a figura del projecte).
+   *(Correcció 2026-09-09: el full de Bell-lloc SÍ que porta els punts; l'Eva el va posar com a figura del projecte i
+   no en va fer cap d'assaigs. Pregunta 31.)*
+9. **Els 7 signats són SITUACIONS, no objectius** (Josep, 2026-09-09; memòria
+   `feedback_reference_projects_are_situations_not_targets`). Un skill que cita un projecte pel nom fa que el lector
+   reprodueixi el que l'Eva va fer en aquell projecte: el número puja i res generalitza. Mesurat: amb el skill neutre,
+   Anciles passa de 2 figures amb els peus exactes de l'Eva a 1 de diferent. Regla: `grep` dels 7 noms sobre el
+   skill = 0; una regla amb un sol cas a favor és una pregunta a l'Eva o una opció al wizard; el % de M341 és
+   in-sample amb N=7.
 
 ## 1. On som, ranura per ranura
 
@@ -51,15 +59,15 @@ Recollits el 2026-09-08 en fer les peces 4 i 6. **Tots són mesurats**, no visto
 | `foto_sondeig` | 2 | 0 | 1 | 0 | ✅ peça 2 (1 empat) |
 | `foto_vista` | 2 | 0 | 1 | 1 | ✅ peça 2 (1 empat) |
 | `foto_dpsh` | 3 | 0 | 4 | 0 | ✅ peça 2 (4 empats) |
-| `fig_assaigs` | 4 | 0 | 2 | 0 | ✅ peça 4 + 7a (ranura pròpia al 2.2; 2 X = Linyola, planta del projecte; Vilanova, retall estret → 7b) |
-| `fig_projecte` | 0 | 0 | 0 | 5 | ⏳ **peça 7b** (lector: Anciles ×2, Linyola secció, Bell-lloc i Vilanova classificació/retall) |
+| `fig_assaigs` | 4 | 0 | 2 | 0 | ✅ peça 4 + 7a + 7b (2 X = Linyola, planta acolorida amb icones de l'Eva, irreproduïble; Vilanova, ncc 0,683 vs llindar 0,70; Bell-lloc sobrant: pregunta 31) |
+| `fig_projecte` | 0 | 0 | 2 | 3 | ✅ peça 7b (lector amb skill neutre: tria una figura defensable a Linyola i Anciles, no la de l'Eva; Bell-lloc, Vilanova i la 2a d'Anciles ND: pregunta 32) |
 | `fig_geologic` | 3 | 0 | 3 | 1 | ✅ peça 6 (3 X = la vista ICGC de l'Eva, pregunta 34; 1 ND = Anciles, Aragó) |
 | `fig_situacio` | 5 | 0 | 2 | 1 | ✅ peça 5 (2 X = Linyola i Bell-lloc; 1 ND = la 2a de Bell-lloc, ranura única) |
 
-**Peça 7a FETA (2026-09-08, DECISION-LOG (5))**: tres blocs amb peu propi (situació 1-2 i projecte 0-2 a l'1.1, assaigs
-0-1 al 2.2) i numeració per presència; `fix` 74 → 77 M. Imatges 74 → **72 %** (29 M · 4 C · 13 X · 10 ND): la baixada
-és Bell-lloc (retall sense punts imprès com a assaigs) i Vilanova (un sol retall per a dues figures), registre #8-#10,
-i la recupera la **7b**, l'única peça que queda.
+**Peça 7a FETA (2026-09-08, DECISION-LOG (5))** i **peça 7b FETA (2026-09-09, DECISION-LOG 2026-09-09)**: tres blocs amb
+peu propi, numeració per presència, i el lector de figures amb skill NEUTRE. Estat final del pas 3: **imatges 29 M · 4 C
+· 15 X · 8 ND → 69 %** (in-sample, N=7), `fix` 79 M · 23 X → 77 %. **El pas 3 queda tancat en el que és mecànica**: el
+que resta és judici de l'Eva (preguntes 30-32, 34, 37, 38) i opcions al wizard, no cap peça.
 
 ## 2. Les peces que queden
 
@@ -131,7 +139,21 @@ i la recupera la **7b**, l'única peça que queda.
 - **Correcció al handoff 2130:** de les 25 X de `fix` només **10** són cascada de figures; 5 són les taules de Linyola
   (registre #2), 7 seccions, 3 fotos. Sostre de la peça 7 sobre `fix`: 85 %, no 93 %.
 
-### Peça 7b — El lector de figures (projecte 0-2, 2a situació, classificació del retall) — *M*
+### Peça 7b — El lector de figures (projecte 0-2, classificació del retall) — ✅ FETA (2026-09-09, skill neutre)
+
+- **Què s'ha fet:** `automation/imatges/lector_figures.py` + skill `g3dt-llegir-figures` + runner del corpus: candidats
+  (retall de l'annex, pàgines del projecte, PNG d'ALTRES) amb quadrícula i franja d'índex, exemplars leave-one-out,
+  una crida `claude -p` (sonnet, medium, 37-95 s), `figure_selection.json` que MANA sobre assaigs i projecte (també
+  quan diu «cap»), situació sempre determinista (la regla dels insets s'ha provat i retirat: Bell-lloc sí, Alcoletge no).
+- **Skill neutre** (decisió del Josep): cap nom de projecte, cap excepció d'un sol cas. Amb fuites el número era 78 % /
+  68 %; el que val és el neutre: `fix` 77 → **79 M (77 %)**, imatges 72 → **69 %** (Linyola i Anciles imprimeixen una
+  figura del projecte defensable que no és la de l'Eva: registre #11-#12).
+- **Què queda (judici, no mecànica):** Bell-lloc (dibuix amb punts com a projecte, cap d'assaigs: pregunta 31), Vilanova
+  (ample + estret del mateix dibuix: pregunta 32), quan i quina figura del projecte (pregunta 32), Linyola (planta
+  acolorida amb icones dibuixades per ella: irreproduïble sense dibuixar punts, D3). Al wizard: mostrar la tria del
+  lector amb «cap font» i deixar-la canviar (`source: user`), situació doble inclosa.
+
+### (referència) El que la peça 7b havia de cobrir, escrit abans de fer-la
 
 - **Què fa l'Eva:** 0-2 figures «Font: Projecte» tretes del projecte de l'arquitecte (secció a Linyola, emplaçament
   sense punts a Bell-lloc i Vilanova, topogràfic i tipologies a Anciles), sempre **retallades al dibuix**, sense

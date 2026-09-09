@@ -5611,3 +5611,139 @@ figura d'assaigs), Bell-lloc (dos insets de l'`A.01.pdf` i el retall com a proje
 estret del mateix dibuix per a la Figura 3). Guany potencial: fins a 7 imatges més en M i 10 X de `fix`.
 
 *Fi entrada 2026-09-08 (5). Peça 7a: tres blocs de figura amb peu propi, assaigs al 2.2, numeració per presència; `fix` 74 → 77 M; cap taula nova.*
+
+## 2026-09-09 — IMATGES pas 3, peça 7b: el LECTOR DE FIGURES és Claude Code (skill `g3dt-llegir-figures`, candidats amb quadrícula, exemplars leave-one-out), amb el skill NEUTRE (cap nom de projecte, cap excepció d'un sol cas) després que el Josep detectés que s'estava ajustant als 7 signats: `fix` 77 → 79 M (77 %), imatges 72 → 69 % (honest); el pas 3 d'imatges queda tancat
+
+### Context
+
+- Peça 7a (DECISION-LOG 2026-09-08 (5)): plantilla amb tres blocs de figura i numeració per presència; les ranures
+  `fig_projecte_image_1/2` i la classificació del retall quedaven per al lector. Baseline: `2026-09-08-m341-peca7a`.
+- GO del Josep (nit del 8): commit de la 7a en tres (`c95f2b0` · `c4c4763` · `f783ceb`) i començar la 7b.
+- **Intervenció del Josep a mig camí (2026-09-09):** «Si només estem construint el codi perquè surti bé en aquests
+  projectes de referència, tinc una mala notícia: l'Eva no correrà de nou aquests projectes.» Memòria
+  `feedback_reference_projects_are_situations_not_targets`. Tot el que segueix es divideix en «abans» (skill amb fuites)
+  i «després» (skill neutre); el número que val és el segon.
+
+### Decisions arquitectòniques clau
+
+**D1. Mateixa mecànica que el lector de fotos (peça 2), amb candidats que són PÀGINES i retalls en fraccions.**
+`automation/imatges/lector_figures.py`: inventari de candidats = el retall determinista del full de l'Eva (`annex_crop`,
+peça 4) + cada pàgina amb dibuix dels PDF del projecte de l'arquitecte + imatges de l'expedient + PNG d'`ALTRES`/`OTROS`;
+cada candidat renderitzat amb una QUADRÍCULA de fraccions 0-1 i una franja «CANDIDAT N · fitxer · pàgina»; full de
+contacte; exemplars de les tres ranures dels ALTRES signats (leave-one-out); prompt = skill + llista; `claude -p` pel
+runner de la lectura (sonnet, medium, una crida); validació (índex, retalls dins [0,1] i ≥ 2 % d'àrea, ≤ 2 figures
+del projecte amb peu, cap (candidat, retall) repetit); retall (PDF: `clip` en coordenades de `page.rect`, que és
+l'espai girat; imatge: PIL) + marge blanc fora; `validation/figure_selection.json` amb `source: lector`.
+**Els documents del projecte** són la carpeta d'expedient `NN.NNNN/` (només s'hi treuen pressupostos i informes de G3:
+a Linyola «Punts de Sondeig_Silvia_Jaume.pdf» conté «Sondeig» i és de l'arquitecte) més els fitxers de l'arrel amb rol
+d'arquitecte, deduplicats per md5; pàgines només de text fora; topall 40 pàgines per PDF i 60 candidats (Anciles: 38).
+
+**D2. La franja amb l'índex a cada render.** A la primera passada el lector va descriure la secció de la p11 i va
+escriure l'índex de la p3. Amb la franja i l'obligació de citar «candidat N (fitxer, pàgina)» a `raons`, no ha tornat
+a passar en 14 crides.
+
+**D3. La selecció MANA sobre les tres ranures, també quan diu «cap».** `apply_selection` retorna les cinc claus sempre
+(buit = `''`): sense això, a Bell-lloc el lector deia «cap figura d'assaigs» i el camí determinista en posava una →
+el mateix dibuix imprès dues vegades (1.1 com a projecte, 2.2 com a assaigs), i la cullera «encertava» per
+casualitat. Test de regressió.
+
+**D4. La ranura de situació NO la toca el lector.** Regla provada i retirada: «si el plànol de l'arquitecte porta els
+dos mapes com a insets, l'Eva els fa servir» encerta a Bell-lloc (C + X) i falla a Alcoletge (hi són i ella va posar
+la seva composició: una M substituïda per dues X). La situació doble només s'aplica si la tria l'Eva (`source: user`).
+
+**D5. Skill NEUTRE: cap nom de projecte, cap excepció d'un sol cas (decisió del Josep).** Fora del skill: «excepció
+Bell-lloc» (el lector veia el nom del projecte i reproduïa la inconsistència de l'Eva), «retall estret com a
+Vilanova» (sense cap condició observable), «planta amb punts de l'arquitecte abans que l'annex, com a Linyola» (ni
+tan sols és el que va fer l'Eva: hi va posar la planta acolorida del projecte amb icones dibuixades per ella), els
+peus citats dels 7 signats (els exemplars leave-one-out ja els donen). Queden: la figura d'assaigs = el dibuix amb
+punts, normalment l'`annex_crop` sencer; projecte 0-2 amb criteris genèrics (secció respecte del terreny, emplaçament
+si la d'assaigs no mostra la parcel·la, topogràfic facilitat, tipologies de diversos habitatges) i regla de
+sobrietat (per defecte ≤ 1); situació sempre `null`; `annex_crop` i `eva_png` sencers. Test barat: `grep -c` dels 7
+noms sobre el skill = 0 (també aplicat al skill de fotos, que en citava 2 entre parèntesis).
+Per què: els 7 signats són exemples de SITUACIONS que es tornaran a presentar; l'Eva mai tornarà a córrer aquests
+projectes. Una regla que només un projecte dispara no és una regla: és una pregunta a l'Eva (30, 31, 32) o una opció
+al wizard.
+
+### Implementació
+
+| Fitxer | Què |
+|---|---|
+| `automation/imatges/lector_figures.py` | nou, ≈ 430 línies: documents del projecte, inventari + quadrícula + franja, full de contacte, exemplars, prompt, validació, `render_entry` (clip/PIL + `trim_white`), `write_selection`, `load_selection`, `apply_selection` |
+| `.claude/commands/g3dt-llegir-figures.md` | nou, 96 línies, neutre |
+| `.claude/commands/g3dt-llegir-fotos.md` | 2 noms de projecte fora (cap selecció desada canvia) |
+| `automation/image_manager.py` | bloc 7b: `apply_selection` després del camí determinista; buit = `''`; 70 mm per a la situació doble, 150 mm assaigs/projecte |
+| `docs/wizard-headless/mesures/llegir_figures_corpus.py` | nou: 7 projectes, leave-one-out, puntuació amb `imatges_font.score_pair` |
+| `tests/test_peca7b_lector_figures.py` | 8 tests: documents del projecte, inventari, validació, retall + marge, `apply_selection` (lector vs `user`), precedència a `ImageManager`, «cap» que buida |
+| `.gitignore` | `validation/_lector_figures/` |
+
+### Validació empírica
+
+Lector (run `2026-09-09-lector-figures-p5`, skill neutre, sonnet/medium, leave-one-out, 37-80 s per projecte):
+
+| projecte | assaigs | projecte | comentari |
+|---|---|---|---|
+| castellar | `annex_crop` → **M** (ph 6) | cap | = signat |
+| rubi | `annex_crop` → **M** (ph 6) | cap | = signat |
+| bell-lloc | `annex_crop` → sobrant | cap (l'Eva en posa 1) | l'Eva va posar aquest mateix dibuix com a figura del PROJECTE i cap al 2.2: pregunta 31 |
+| linyola | `annex_crop` → X (ph 24) | p2 emplaçament → X | l'Eva: planta acolorida amb icones seves (irreproduïble, D3) i la secció de la p11 |
+| alcoletge | `annex_crop` → **M** (ph 8) | cap | = signat |
+| vilanova | `annex_crop` → X (ncc 0,683, llindar 0,70) | cap (l'Eva en posa 1) | el mateix dibuix li fa de F2 ample i F3 estret: pregunta 32 |
+| anciles | `annex_crop` → **M** (ph 6) | secció p25 → X | l'Eva: topogràfic + tipologies (2 figures) |
+
+M341 `2026-09-09-m341-peca7b` contra `2026-09-08-m341-peca7a`:
+
+| | 7a | 7b (neutre) | 7b amb fuites (`-fuites`, no val) |
+|---|---|---|---|
+| `fix` | 77 M · 25 X → 75 % | **79 M · 23 X → 77 %** | 80 · 22 → 78 % |
+| escalars | 311 · 43 · 124 · 32 → 74 % | 313 · 43 · 122 · 32 → 74 % | 314 |
+| taules | 82 % | idèntic | idèntic |
+| imatges | 29 · 4 · 13 · 10 → 72 % | **29 M · 4 C · 15 X · 8 ND → 69 %** | 30 · 4 · 16 · 6 → 68 % |
+| `fig_projecte` | 0 · 0 · 0 · 5 | 0 · 0 · 2 · 3 | 1 · 0 · 3 · 1 |
+
+L'únic escalar que es mou és Linyola: cullera, geològic i tall X → M (una figura del projecte, com al signat) i
+`fig_assaigs_num` M → X (creuament conegut: l'Eva posa la del projecte després de la d'assaigs). Cap altre escalar,
+cap taula. Les dues X noves d'imatges són figures del projecte que existeixen i que l'Eva no va triar; els `.docx`
+(Linyola, Anciles, Bell-lloc): situació 1.1, projecte 1.1, assaigs 2.2, numeració contínua, cap Jinja.
+
+### Tests
+
++8 (`tests/test_peca7b_lector_figures.py`). Suite sencera: **31 vermells amb els mateixos NOMS que
+`suite-vermells-esperats.txt` / 2518 verds / 5 omesos (238 s)**.
+
+### Latència / cost
+
+- Lector: 37-95 s per projecte, una crida (sonnet, medium); Anciles amb 38 candidats, 61 s. 14 crides en total avui
+  (3 passades senceres + 3 repeticions).
+- **Variància entre passades**: el mateix projecte dona retalls diferents (Linyola: C amb 0,50-0,89, X amb
+  0,48-0,93) i a vegades una figura de més. En producció l'Eva veurà la tria al wizard; no s'ha de «repetir fins que
+  surti bé» per mesurar.
+
+### Limitacions conegudes
+
+1. **El % és in-sample amb N=7**: regles i skill s'han fet mirant aquests 7. El skill neutre és el que corre; el
+   número del skill amb fuites (78 % / 68 %) queda al run `-fuites` només com a evidència del biaix.
+2. `fig_projecte` 0 M: les figures del projecte són un judici (quan, quina, quin retall) i l'Eva no en té cap regla
+   escrita (pregunta 32). El lector tria una figura defensable; a Linyola i Anciles no és la seva.
+3. Bell-lloc (dibuix amb punts com a projecte i cap al 2.2) i Vilanova (ample + estret del mateix dibuix): sense regla,
+   preguntes 31 i 32; al registre (#8-#10, ara obertes).
+4. A Anciles l'Eva va enganxar el full de tipologies SENCER amb caixetí i d'una altra versió del document («PROYECTO
+   BÁSICO REVISADO»): «mai el caixetí» tampoc és absolut.
+5. El lector no és determinista (vegeu latència); i necessita Claude Code a l'ordinador de l'Eva (via A).
+6. Escalars i taules de tots els blocs anteriors: intactes.
+
+### GO/NO-GO
+
+- ✅ El lector existeix, escriu un contracte amb font, raó i confiança, i el generador l'aplica amb precedència Eva > lector > determinista.
+- ✅ Skill neutre (grep = 0), mesurat i publicat el número honest.
+- ✅ Escalars +2 M, taules intactes, suite amb els noms esperats.
+- ⏳ Pas 3 d'imatges TANCAT en el que és mecànica: el que queda és judici de l'Eva (preguntes 30-32, 34, 37, 38) i opcions al wizard.
+- ⏳ Commit (GO del Josep): proposta en 3 — lector + skill + integració + tests · runner del corpus + seleccions + `.gitignore` · runs i docs.
+
+### Següents passos
+
+- **Preguntes a l'Eva** (amb el Josep): 30-32 (situació, punts, figures del projecte), 34 (vista ICGC), 37-38 (fotos), 19a.
+- **Wizard**: mostrar la tria del lector (assaigs, projecte, peus) amb «cap font» explícit i deixar-la canviar
+  (`source: user`), incloent la situació doble.
+- **Bloc 5 del PLA (castellà)** i els pendents de plantilla del §3 de `PENDENTS-IMATGES.md`.
+
+*Fi entrada 2026-09-09. Peça 7b: el lector de figures amb el skill neutre; `fix` 77 → 79 M, imatges 69 % honest; pas 3 d'imatges tancat.*

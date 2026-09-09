@@ -1,0 +1,788 @@
+{
+ "fig_situacio_num": 1,
+ "fig_situacio_2_num": "",
+ "fig_projecte_1_num": "",
+ "fig_projecte_2_num": "",
+ "fig_assaigs_num": 2,
+ "fig_spt_cullera_num": 3,
+ "fig_geological_num": 4,
+ "fig_correlation_num": 5,
+ "fig_cadastre_num": 1,
+ "fig_location_num": 1,
+ "fig_main_plan_num": 2,
+ "fig_building_num": 2,
+ "photo_site_text": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d'estudi.",
+ "_num_site_photos": 2,
+ "photo_dpsh_num": 3,
+ "photo_sondeig_num": 4,
+ "photo_materials_num": 5,
+ "photo_materials_source": "del sondeig",
+ "table_dpsh_range": "3, 4 i 5",
+ "table_lab_num": 6,
+ "table_permeability_num": 7,
+ "table_lab_values_num": 8,
+ "table_seismic_num": 9,
+ "table_soil_chars_num": 10,
+ "section1": "<Section1Content>",
+ "section2": "<Section2Content>",
+ "section3": "<Section3Content>",
+ "section4": "<Section4Content>",
+ "client": "RAMON MITJANA S.L.",
+ "client_de": "de RAMON MITJANA S.L.",
+ "expedient": "4001612",
+ "street_address": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+ "municipality": "Bell-lloc d'Urgell",
+ "municipality_de": "de Bell-lloc d'Urgell",
+ "data_camp_text": "1 i 6 d'octubre de 2025",
+ "data_camp_inici_text": "1 d'octubre de 2025",
+ "data_signatura_text": "27 d'octubre de 2025",
+ "architect_name": "Jordi Bosch Novell",
+ "architect_company": "ABN Arquitectura Bosch Novell",
+ "architect_company_de": ", d'ABN Arquitectura Bosch Novell",
+ "architect_name_upper": "JORDI BOSCH NOVELL",
+ "building_type": "Habitatge unifamiliar aïllat",
+ "building_type_lower": "un habitatge unifamiliar aïllat",
+ "building_type_de": "d'un habitatge unifamiliar aïllat",
+ "num_floors": "Pb+1Pp",
+ "report_language": "ca",
+ "building_structure_desc": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+ "_narr_building_structure": {
+  "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+  "source": "amb pis i sense soterrani (Castellar, Linyola, Alcoletge)",
+  "candidates": [
+   {
+    "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+    "source": "amb pis i sense soterrani (Castellar, Linyola, Alcoletge)"
+   },
+   {
+    "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+    "source": "variant (a) dels signats"
+   },
+   {
+    "value": "amb nivell de soterrani, i per tant, es preveu una excavació general fins a la cota de fonamentació del soterrani, a més del sanejament i l'anivellació.",
+    "source": "amb soterrani"
+   }
+  ],
+  "notes": []
+ },
+ "municipality_upper": "BELL.LLOC D'URGELL (LLEIDA)",
+ "street_1": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz",
+ "street_2": "Bell-lloc",
+ "cte_building_class": "C-1",
+ "cte_soil_class": "T-1",
+ "cte_edificacio": "C-1",
+ "cte_sol": "T-1",
+ "plantes": "Pb+1Pp",
+ "superficie_parcela": "995",
+ "superficie_cadastral": "",
+ "superficie_parcela_planol": "995",
+ "superficie_construida": "397",
+ "access_description": "",
+ "site_description": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+ "lab_field_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_field_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_testing_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "cota_referencia": "+199.50",
+ "_parcel_rcs": [
+  "4613173CG1141S"
+ ],
+ "adjacent_north": "parcel·la buida",
+ "adjacent_south": "Carrer Antoni Bellet Pérez",
+ "adjacent_east": "Carrer Mestre Ramon Ortiz",
+ "adjacent_west": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb piscina",
+ "adjacent_nearest_street": "Carrer Antoni Bellet Pérez",
+ "location_sentence": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-lloc d'Urgell",
+ "adjacent_north_fmt": "Per la part nord amb una parcel·la buida.",
+ "adjacent_south_fmt": "Per la part sud amb el Carrer Antoni Bellet Pérez.",
+ "adjacent_east_fmt": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+ "adjacent_west_fmt": "I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb piscina.",
+ "access_street": "carrer adjacent situat al sud",
+ "_narr_access": {
+  "value": "carrer adjacent situat al sud",
+  "candidates": [
+   "carrer adjacent situat al sud",
+   "Carrer existent al sud",
+   "carrer Antoni Bellet Pérez"
+  ]
+ },
+ "adjacent_intro": "La parcel·la objecte d'estudi es situa al oest del municipi de Bell-lloc d'Urgell, pren una morfologia rectangular i limita:",
+ "_narr_parcel": {
+  "position": "oest",
+  "shape": "rectangular",
+  "centroid": [
+   314503.36467778473,
+   4611178.177442509
+  ],
+  "rcs": [
+   "4613173CG1141S"
+  ]
+ },
+ "is_sloped": false,
+ "slope_percent": "3.3",
+ "slope_direction": "W",
+ "site_condition": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+ "_narr_site_condition": {
+  "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "source": "pendent 3 % ≤ 10 %, no antropitzat (Linyola, Alcoletge)",
+  "candidates": [
+   {
+    "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Com que es tracta d'un solar pla»"
+   },
+   {
+    "value": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Tot i no ser un solar pla»"
+   },
+   {
+    "value": "Degut a que es tracta d'un solar antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Degut a que es tracta d'un solar antropitzat»"
+   },
+   {
+    "value": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Es tracta d'un solar no antropitzat»"
+   }
+  ],
+  "notes": [
+   "antropitzat sense font (no derivable del Cadastre ni de l'ICGC): revisar"
+  ]
+ },
+ "_narr_site_description": {
+  "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+  "source": "sense edifici al Cadastre i pendent 3 % (Bell-lloc, Linyola)",
+  "candidates": [
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+    "source": "sense edifici al Cadastre i pendent 3 % (Bell-lloc, Linyola)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer, i amb vegetació de petita alçada.",
+    "source": "variant amb vegetació (Bell-lloc)"
+   },
+   {
+    "value": "La parcel·la es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.",
+    "source": "variant «explanada» (Linyola)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+    "source": "cap «buit pendent»"
+   },
+   {
+    "value": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+    "source": "cap «construit»"
+   }
+  ],
+  "notes": [
+   "vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita"
+  ]
+ },
+ "_own_parcel_building": {
+  "has_building": false,
+  "num_floors_above": 0,
+  "num_floors_below": 0,
+  "has_pool": false,
+  "total_built_m2": 0.0,
+  "refs": [
+   "4613173CG1141S"
+  ]
+ },
+ "has_sondeig": true,
+ "section_sondeig_num": "2.4.2",
+ "section_spt_num": "2.4.3",
+ "section_resum_num": "2.4.4",
+ "include_geothermal": false,
+ "include_expansivity": false,
+ "include_earth_pressure": false,
+ "include_slope_stability": false,
+ "show_granulometric": false,
+ "section_excavabilitat_num": "3.5",
+ "section_sismica_num": "3.6",
+ "section_rado_num": "3.7",
+ "section_fonamentacio_num": "4.3",
+ "section_empentes_num": "",
+ "section_estabilitat_num": "",
+ "num_dpsh_tests": 2,
+ "dpsh_test_ids": "P-1,P-2",
+ "dpsh_avg_n20": "23",
+ "dpsh_tests": [
+  {
+   "test_id": "P-1",
+   "cota": "+199.50",
+   "depth": "-1.35",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-2",
+   "cota": "+199.50",
+   "depth": "-2.45",
+   "refusal": "Si",
+   "water": "No detectat"
+  }
+ ],
+ "sondeig_tests": [
+  {
+   "test_id": "S-1",
+   "cota": "+199.50",
+   "depth": "-1.80",
+   "spt_ma": "1/0",
+   "water": "No detectat"
+  }
+ ],
+ "spt_test_id": "SPT-1",
+ "spt_location": "S-1",
+ "spt_depth_range": "-1.00 a -1.60",
+ "spt_n30": "62",
+ "spt_lithology": "Grava amb matriu sorrenca",
+ "spt_ma_tests": [
+  {
+   "test_id": "SPT-1",
+   "location": "S-1",
+   "depth_range": "-1.00 a -1.60",
+   "n30": "62",
+   "lithology": "Grava amb matriu sorrenca"
+  }
+ ],
+ "lab_sample_id": "SPT-1",
+ "lab_location": "S-1",
+ "lab_depth": "-1.0 a -1.6",
+ "lab_tests_text": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+ "_narr_lab_tests": {
+  "value": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+  "source": "sulfats sol: «1 assaig de…» (Castellar, Bell-lloc)",
+  "candidates": [
+   {
+    "value": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+    "source": "sulfats sol: «1 assaig de…» (Castellar, Bell-lloc)"
+   },
+   {
+    "value": "Determinació del contingut en ió sulfat en sòls UNE 83963 / 08",
+    "source": "línies literals del GTL"
+   }
+  ],
+  "notes": []
+ },
+ "materials_level_1": "El nivell 1 està format per graves amb sorres, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials plistocè, unitat Qvpu segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.60 m, amb un gruix de 2.60 m. Aquests materials presenten un valor mitjà de N20 de 19 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja. Dels assaigs de penetració dinàmica es dedueix una consistència mitja.",
+ "materials_intro": "A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+ "seismic_ab_text": "0,04",
+ "radon_zone": "1",
+ "radon_zone_description": "",
+ "radon_sentence": "La parcel·la concreta d'estudi es localitza al terme municipal de BELL-LLOC D'URGELL i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+ "csn_radon_text": "",
+ "geology_para_1": "La zona que avarca aquest estudi es troba situada dins la Depressió de l'Ebre, en el seu extrem oriental, que rep el nom de Depressió Central Catalana. Aquesta és una unitat morfoestructural que forma part d'una conca sedimentària d'avantpaís desenvolupada entre la fi del Cretaci superior i el Miocè Superior.",
+ "geology_para_2": "La conca de l'Ebre està relacionada amb l'evolució de l'orogen pirinenc, i es desenvolupa com a resposta de l'apropament de la placa Ibèrica sota la placa Euroasiàtica, amb inici de subducció de la primera respecte la segona. D'aquesta manera, aquesta conca és una fossa tectònica formada entre els Pirineus, al nord, i les Serralades Costaneres Catalanes, al sud-est.",
+ "geology_para_3": "Durant l'Eocè, la conca de l'Ebre estava connectada amb l'oceà Atlàntic per l'oest. Fruit de la col·lisió entre les dues plaques tectòniques, s'inicia la col·locació de làmines encavalcants o mantells de corriment que van avançant, progressivament, cap al sud en el cas del Pirineu i cap al nord en el cas de les Serralades Costaneres Catalanes.",
+ "geology_para_4": "A partir de finals de l'Eocè i durant tot l'Oligocè, la conca de l'Ebre actua com a conca endorreica, tancada, on la sedimentació que es produeix és d'origen continental. Els sediments continentals terciaris es troben organitzats en fàcies clàstiques al·luvials a prop de les serralades emergides (conglomerats i gresos), que passen a fàcies lacustres (margues, guixos i calcàries) cap a les zones centrals de la conca.",
+ "geology_para_5": "Des de finals de l'Oligocè fins a l'actualitat la depressió de l'Ebre ha deixat d'actuar com a conca sedimentària i ha esdevingut una cubeta on l'agent predominant principal ha estat l'erosió. Localment, durant el Quaternari s'han dipositat materials sedimentaris recents en forma de terrasses fluvials, cons al·luvials i glacis associats als cursos fluvials actuals i a la dinàmica dels vessants.",
+ "geology_para_6": "En concret, i segons l'Institut Cartogràfic i Geològic de Catalunya (ICGC), afloren els materials de la unitat Qvpu, corresponents a graves amb matriu lutítica i llentillons sorrencs del Plistocè.",
+ "geology_paragraphs": [
+  "La zona que avarca aquest estudi es troba situada dins la Depressió de l'Ebre, en el seu extrem oriental, que rep el nom de Depressió Central Catalana. Aquesta és una unitat morfoestructural que forma part d'una conca sedimentària d'avantpaís desenvolupada entre la fi del Cretaci superior i el Miocè Superior.",
+  "La conca de l'Ebre està relacionada amb l'evolució de l'orogen pirinenc, i es desenvolupa com a resposta de l'apropament de la placa Ibèrica sota la placa Euroasiàtica, amb inici de subducció de la primera respecte la segona. D'aquesta manera, aquesta conca és una fossa tectònica formada entre els Pirineus, al nord, i les Serralades Costaneres Catalanes, al sud-est.",
+  "Durant l'Eocè, la conca de l'Ebre estava connectada amb l'oceà Atlàntic per l'oest. Fruit de la col·lisió entre les dues plaques tectòniques, s'inicia la col·locació de làmines encavalcants o mantells de corriment que van avançant, progressivament, cap al sud en el cas del Pirineu i cap al nord en el cas de les Serralades Costaneres Catalanes.",
+  "A partir de finals de l'Eocè i durant tot l'Oligocè, la conca de l'Ebre actua com a conca endorreica, tancada, on la sedimentació que es produeix és d'origen continental. Els sediments continentals terciaris es troben organitzats en fàcies clàstiques al·luvials a prop de les serralades emergides (conglomerats i gresos), que passen a fàcies lacustres (margues, guixos i calcàries) cap a les zones centrals de la conca.",
+  "Des de finals de l'Oligocè fins a l'actualitat la depressió de l'Ebre ha deixat d'actuar com a conca sedimentària i ha esdevingut una cubeta on l'agent predominant principal ha estat l'erosió. Localment, durant el Quaternari s'han dipositat materials sedimentaris recents en forma de terrasses fluvials, cons al·luvials i glacis associats als cursos fluvials actuals i a la dinàmica dels vessants.",
+  "En concret, i segons l'Institut Cartogràfic i Geològic de Catalunya (ICGC), afloren els materials de la unitat Qvpu, corresponents a graves amb matriu lutítica i llentillons sorrencs del Plistocè."
+ ],
+ "_narr_radon": {
+  "value": "La parcel·la concreta d'estudi es localitza al terme municipal de BELL-LLOC D'URGELL i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "source": "zona 1 (RD 732/2019, apèndix B)",
+  "candidates": [
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal de BELL-LLOC D'URGELL i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+    "source": "signat: Castellar, Bell-lloc, Alcoletge"
+   },
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal de BELL-LLOC D'URGELL i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
+    "source": "signat: Rubí"
+   }
+  ],
+  "notes": []
+ },
+ "materials_depth_text": "",
+ "materials_geomech_text": "",
+ "conclusions_level_1": "El nivell 1 està format per graves amb sorres, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials plistocè, unitat Qvpu segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.60 m, amb un gruix de 2.60 m. Aquests materials presenten un valor mitjà de N20 de 19 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja. Dels assaigs de penetració dinàmica es dedueix una consistència mitja.",
+ "soil_levels": [
+  {
+   "description": "Graves amb sorres",
+   "description_short": "Graves amb sorres",
+   "ordinal": "1er",
+   "materials_text": "El nivell 1 està format per graves amb sorres, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials plistocè, unitat Qvpu segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.60 m, amb un gruix de 2.60 m. Aquests materials presenten un valor mitjà de N20 de 19 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja. Dels assaigs de penetració dinàmica es dedueix una consistència mitja.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.60 m de profunditat, amb potències estudiades de 2.60 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant mitja. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 19 cops, assolint rebuig a la penetració pels trams més profunds."
+  }
+ ],
+ "conclusions_levels_detected": "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+ "soil_level_rows": [
+  {
+   "name": "1er nivell.",
+   "material": "Graves amb sorres",
+   "material_short": "Graves amb sorres"
+  }
+ ],
+ "perm_rows": [
+  {
+   "name": "1er nivell",
+   "k_value": "10^-2 a 10^-4",
+   "material": "Graves amb sorres",
+   "material_short": "Graves amb sorres"
+  }
+ ],
+ "sulfate_level_name": "1er nivell",
+ "sulfate_value": "89.8",
+ "sulfate_baumann": "---",
+ "sulfate_classification": "No Agressius",
+ "seismic_rows": [
+  {
+   "num": "1",
+   "terrain_type": "Tipus II",
+   "thickness": "2.60",
+   "c_coeff": "1.3"
+  }
+ ],
+ "geotech_rows": [
+  {
+   "name": "1er nivell. Graves amb sorres.",
+   "material_short": "Graves amb sorres",
+   "nb": "23-R",
+   "n": "62",
+   "density": "2.00",
+   "cohesion": "0.00",
+   "phi": "38°",
+   "E": "450"
+  }
+ ],
+ "geotech_level_name": "1er nivell. Graves amb sorres.",
+ "geotech_nb": "23-R",
+ "geotech_n": "62",
+ "geotech_density": "2.00",
+ "geotech_cohesion": "0.00",
+ "geotech_phi": "38°",
+ "geotech_E": "450",
+ "_calc_E": "CTE D.23 N20=19 | Rang Eva: 450-650",
+ "_calc_phi": "Schmertmann Nb=23 | Rang Eva: 38-39",
+ "_calc_gamma": "CTE D.27 grava | Rang Eva: 2.0",
+ "_calc_cohesion": "Rang Eva: 0.0-0.05",
+ "soil_level_name": "1er nivell.",
+ "soil_level_material": "Graves amb sorres",
+ "perm_level_name": "1er nivell",
+ "perm_k_value": "10^-2 a 10^-4",
+ "perm_material": "Graves amb sorres",
+ "k30_value": "6.0",
+ "_calc_k30": "E/75 = 450/75 (granular)",
+ "qa_value": "3.00",
+ "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.00 cm, immediats en el temps donat el comportament granular dels materials.",
+ "_calc_settlement": "Schmertmann Es=155 (2.5×N SPT 62), B=1 m → 1.00 cm · règim granular → «iguals o inferiors a 1.00 cm» | alt: Es=56 (2.5×Nb 22.6) → 2.80 cm, Es=450 (E del criteri) → 0.30 cm · variant signada (Bell-lloc): «inferiors a» sense «iguals o»",
+ "_calc_Es": "Es=155 (2.5×N SPT 62) · 2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes) | alt: Es=56 (2.5×Nb 22.6) → 2.80 cm, Es=450 (E del criteri) → 0.30 cm",
+ "settlement": "1.00",
+ "_calc_qa": "Nb/12=30/12=2.52 / Fw=1.69 x Fd=1.10 = 3.03 | Cap: 3.00 (3.0)",
+ "conclusions_geologia_summary": "Segons els resultats dels assaigs de penetració realitzats, s'ha identificat un únic nivell geotècnic fins a la fondària investigada. Aquest nivell correspon a graves amb sorres amb un valor mitjà de N20 de 19 cops.",
+ "conclusions_water_statement": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+ "conclusions_aggressivity_statement": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+ "empentes_paragraph": "",
+ "ka_value": "",
+ "kp_value": "",
+ "estabilitat_paragraph": "",
+ "expansivitat_paragraph": "",
+ "project": {
+  "project": {
+   "expedient": "4001612",
+   "municipality": "BELL.LLOC D'URGELL (Lleida)",
+   "report_date": "2026-09-09"
+  },
+  "client": {
+   "company_name": "RAMON MITJANA SL",
+   "contact_name": "RAMON MITJANA GRÍFOL",
+   "nif": "B25771726",
+   "address": "Carrer Doctor Torrebadella 8, 25220 BELL.LLOC D’URGELL (Lleida)"
+  },
+  "architect": {
+   "name": "Jordi Bosch Novell",
+   "company": "ABN Arquitectura Bosch Novell"
+  },
+  "building": {
+   "type": "Habitatge unifamiliar aïllat",
+   "num_floors": "PB+PP",
+   "superficie_parcela_m2": "995.0",
+   "superficie_cadastral_m2": "",
+   "superficie_construida_m2": "",
+   "has_basement": false,
+   "has_retaining_walls": false
+  },
+  "location": {
+   "street_address": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+   "utm_x": 314418.9,
+   "utm_y": 4611117.6
+  },
+  "descriptions": {
+   "site_description": "",
+   "access_description": "",
+   "cota_referencia": "+199.50",
+   "field_work_dates": [
+    "2025-10-01",
+    "2025-10-06"
+   ],
+   "field_work_dates_text": "1 i 6 d'octubre de 2025",
+   "lab_company": "",
+   "lab_company_alias": "",
+   "lab_description": ""
+  },
+  "sondeig_tests": [
+   {
+    "test_id": "S-1",
+    "total_depth_m": 1.8,
+    "num_geological_levels": 1,
+    "layers": [
+     {
+      "depth_from_m": 0.0,
+      "depth_to_m": 1.0,
+      "description": "Graves carbonatades",
+      "geological_level": 1,
+      "uscs_classification": null,
+      "color": null,
+      "moisture": null,
+      "consistency": null,
+      "density": null,
+      "confidence": 0.65,
+      "note": "Description partially legible in rotated handwritten table; interpreted as 'Graves carbonatades' (carbonated gravels). No USCS column present. Crown type H01 W.8 noted."
+     },
+     {
+      "depth_from_m": 1.0,
+      "depth_to_m": 1.8,
+      "description": "Graves con arena carbonatada",
+      "geological_level": 1,
+      "uscs_classification": null,
+      "color": null,
+      "moisture": null,
+      "consistency": null,
+      "density": null,
+      "confidence": 0.6,
+      "note": "Second layer description partially legible; interpreted as 'Graves con arena carbonatada' (gravels with carbonated sand). Crown type H01 W.8 noted. Same geological unit as layer 1 — no 'Unitat litologica' column present, defaulting to single geological level."
+     }
+    ],
+    "spt_results": [
+     {
+      "test_id": "SPT-1",
+      "depth_from_m": 1.0,
+      "depth_to_m": 1.6,
+      "blows": [
+       2,
+       3,
+       28,
+       30
+      ],
+      "n_spt": 58,
+      "confidence": 0.65
+     }
+    ],
+    "elevation_z": null,
+    "water_level_m": null,
+    "rock_detected": false,
+    "rock_depth_m": null,
+    "extraction_notes": "Water level field reads 'Amba B.allot - B.allot +/-0' which appears to reference the site location name (C/Antoni Bellot), not a numeric depth — water level depth set to null. No 'Unitat litologica' column present in this field sheet format; num_geological_levels defaulted to 1. Total depth 1.80m confirmed from Albara delivery note (1.80 ML perf. en graves 0-20m). Site sketch (Image 3) shows S-1 located approximately 4.2m from one boundary and ~4m from another, on plot bounded by C/Antoni Bellet and C/Mestre Ramon Ortiz. A second unlabelled dot visible on sketch — may indicate a planned future borehole or reference mark."
+   }
+  ],
+  "spt_data": null,
+  "lab_tests": [
+   {
+    "type": "Contingut en sulfats solubles UNE 83963:2008",
+    "sample_id": "SPT-1",
+    "location": "S-1",
+    "depth": "-1.0 a -1.6",
+    "value": 89.8,
+    "unit": "mg/kg",
+    "standard": ""
+   }
+  ],
+  "site": {
+   "adjacent_parcels": {
+    "north": "parcel·la buida",
+    "south": "Carrer Antoni Bellet Pérez",
+    "east": "Carrer Mestre Ramon Ortiz",
+    "west": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb piscina"
+   },
+   "position": "centre",
+   "shape": "rectangular",
+   "is_urban": true,
+   "is_sloped": false,
+   "slope_percent": null,
+   "slope_direction": null,
+   "slope_height_m": null,
+   "is_anthropized": null
+  },
+  "tests": {
+   "has_dpsh": true,
+   "num_dpsh_tests": 2,
+   "has_sondeig": true,
+   "has_spt": true,
+   "water_detected": false
+  },
+  "lab": {
+   "sulfate_mg_kg": 89.8,
+   "aggressivity_class": ""
+  },
+  "cte": {
+   "building_class": "C-1",
+   "soil_class": "T-1"
+  },
+  "soil_levels": [
+   {
+    "level_number": 1,
+    "description": "Graves amb sorres",
+    "thickness_m": 2.6,
+    "thickness_open": false,
+    "n20_average": 18.75,
+    "depth_from_m": 0.0,
+    "depth_to_m": 2.6,
+    "n20_min": 13,
+    "n20_max": 27,
+    "soil_type": "grava"
+   }
+  ],
+  "geotechnical_params": {
+   "gamma_g_cm3": 2.0,
+   "cohesion_kg_cm2": 0.0,
+   "phi_deg": 38,
+   "E_kg_cm2": 450
+  },
+  "terzaghi": {
+   "inputs": {
+    "phi_deg": 38,
+    "cohesion_kg_cm2": 0.0,
+    "gamma_g_cm3": 2.0,
+    "B_m": 1.0,
+    "Df_m": 0.3,
+    "L_m": null,
+    "shape": "square"
+   },
+   "factors": {
+    "Nc": 77.5,
+    "Nq": 61.5,
+    "Ngamma": 67.4,
+    "sc": 1.3,
+    "sq": 1.0,
+    "sgamma": 0.8
+   },
+   "results": {
+    "qu_kg_cm2": 9.082,
+    "safety_factor": 3.0,
+    "Qa_kg_cm2": 3.0,
+    "Qa_uncapped_kg_cm2": 3.03,
+    "settlement_cm": 1.0,
+    "settlement_type": "immediat",
+    "Es_used_kg_cm2": 155.0,
+    "qa_terzaghi_peck_kg_cm2": 1.22,
+    "Fw": 1.69,
+    "Fd_tp": 1.099,
+    "qa_governs": "cap"
+   }
+  },
+  "conditional_sections": {
+   "include_expansivity": false,
+   "include_earth_pressure": false,
+   "include_slope_stability": false,
+   "include_geothermal": false,
+   "show_granulometric": false
+  },
+  "dpsh": {
+   "expedient": "4001612",
+   "source_file": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/4001612 BELL-LLOC/ANNEXES/4001612_DPSH.xls",
+   "num_tests": 2,
+   "test_ids": [
+    "P-1",
+    "P-2"
+   ],
+   "overall_average_n20": 25.12,
+   "any_water_detected": false,
+   "tests": [
+    {
+     "test_id": "P-1",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.35,
+     "average_n20": 35.67,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.4,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 20,
+       "nb": 24.1,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 27,
+       "nb": 32.53,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 16,
+       "nb": 19.28,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 19,
+       "nb": 22.89,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-2",
+     "correction_factor": 0.83,
+     "depth_reached_m": 2.45,
+     "average_n20": 37.25,
+     "refusal_reached": true,
+     "refusal_depth_m": 2.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 17,
+       "nb": 20.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 21,
+       "nb": 25.3,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 17,
+       "nb": 20.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 20,
+       "nb": 24.1,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 30,
+       "nb": 36.14,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 52,
+       "nb": 62.65,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 55,
+       "nb": 66.27,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 80,
+       "nb": 96.39,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "fig_spt_cullera_image": "<InlineImage>",
+ "photo_site_image_1": "<InlineImage>",
+ "photo_site_image_2": "<InlineImage>",
+ "photo_dpsh_image": "<InlineImage>",
+ "photo_sondeig_image": "<InlineImage>",
+ "photo_materials_image": "<InlineImage>",
+ "fig_situacio_image_1": "<InlineImage>",
+ "fig_situacio_image_2": "",
+ "fig_assaigs_image": "<InlineImage>",
+ "fig_projecte_image_1": "",
+ "fig_projecte_caption_1": "",
+ "fig_projecte_image_2": "",
+ "fig_projecte_caption_2": "",
+ "has_plan_crops": true,
+ "fig_cadastre_image": "<InlineImage>",
+ "fig_location_image": "<InlineImage>",
+ "fig_main_plan_image": "<InlineImage>",
+ "fig_building_image": "<InlineImage>",
+ "fig_geological_image": "<InlineImage>",
+ "fig_correlation_image": "<InlineImage>"
+}

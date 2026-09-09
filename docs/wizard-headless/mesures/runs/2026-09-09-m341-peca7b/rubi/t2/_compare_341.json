@@ -1,0 +1,607 @@
+[
+ {
+  "var": "access_street",
+  "grup": "narr",
+  "eva": "carrer de la Miranda",
+  "gen": "S'accedeix pel nord.",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "adjacent_east_fmt",
+  "grup": "narr",
+  "eva": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
+  "gen": "Per la part sud i est amb parcel·les amb construcció.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_intro",
+  "grup": "narr",
+  "eva": "La parcel·la objecte d’estudi es situa al sud-oest del municipi de Rubí, pren una morfologia rectangular, i limita:",
+  "gen": "La parcel·la objecte d'estudi es situa al nord-oest del municipi de Rubí, pren una morfologia rectangular i limita:",
+  "status": "MISMATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "adjacent_north_fmt",
+  "grup": "narr",
+  "eva": "Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arbres.",
+  "gen": "Per la part nord amb el Passeig Miranda.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_south_fmt",
+  "grup": "narr",
+  "eva": "Per la part sud, amb el carrer de la Miranda",
+  "gen": "Per la part sud i est amb parcel·les amb construcció.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_west_fmt",
+  "grup": "narr",
+  "eva": "Finalment, Per la part est i oest, amb construccions de característiques similars.",
+  "gen": "I finalment, per la part oest, amb la Avinguda Can Tapis.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_name_upper",
+  "grup": "A",
+  "eva": "JOANA MARTINEZ",
+  "gen": "SR.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 0,
+  "gen": 0,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
+  "var": "building_structure_desc",
+  "grup": "narr",
+  "eva": "en planta baixa i porxo, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+  "gen": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+  "status": "CLOSE",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "building_type_lower",
+  "grup": "A",
+  "eva": "un habitatge unifamiliar aïllat modular",
+  "gen": "un habitatge unifamiliar",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client",
+  "grup": "A",
+  "eva": "SRA. JOANA MARTINEZ",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "conclusions_aggressivity_statement",
+  "grup": "narr",
+  "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten no agressius al formigó.",
+  "gen": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_levels_detected",
+  "grup": "narr",
+  "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "gen": "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_water_statement",
+  "grup": "narr",
+  "eva": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "gen": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "cota_referencia",
+  "grup": "A",
+  "eva": "+212.50",
+  "gen": "+211.90",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-0",
+  "gen": "C-0",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "14 de novembre de 2025",
+  "gen": "14 de novembre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "14 de novembre de 2025",
+  "gen": "14 de novembre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_signatura_text",
+  "grup": "resta",
+  "eva": "17 de desembre de 2025",
+  "gen": "9 de setembre de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "expedient",
+  "grup": "A",
+  "eva": "3001631",
+  "gen": "3001631",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "fig_assaigs_num",
+  "grup": "fix",
+  "eva": "2",
+  "gen": 2,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_correlation_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_geological_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 4,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "geo_p",
+  "grup": "resta",
+  "eva": "Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo, corresponents a gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics d’edat Miocè.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "geomech_E",
+  "grup": "calc",
+  "eva": "450",
+  "gen": 450,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_cohesion",
+  "grup": "calc",
+  "eva": "0.05",
+  "gen": 0.0,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_gamma",
+  "grup": "calc",
+  "eva": "2.0",
+  "gen": 2.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_phi",
+  "grup": "calc",
+  "eva": "39",
+  "gen": 39,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "k30_value",
+  "grup": "calc",
+  "eva": "6.0",
+  "gen": "6.0",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "lab_depth",
+  "grup": "A",
+  "eva": "Profunditat:  -0.60  a -1.20 m",
+  "gen": "-0.6 a -1.2",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_field_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_field_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_location",
+  "grup": "A",
+  "eva": "Punt: P-3",
+  "gen": "P-3",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_sample_id",
+  "grup": "A",
+  "eva": "Mostra : SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_testing_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_testing_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_tests_text",
+  "grup": "narr",
+  "eva": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nDeterminació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
+  "gen": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nAssaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
+  "status": "CLOSE",
+  "method": "table_cell"
+ },
+ {
+  "var": "materials_intro",
+  "grup": "narr",
+  "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "gen": "A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "municipality_de",
+  "grup": "A",
+  "eva": "de Rubí (Barcelona)",
+  "gen": "de Rubí",
+  "status": "CLOSE",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "num_dpsh_tests",
+  "grup": "A",
+  "eva": "3",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "photo_dpsh_num",
+  "grup": "fix",
+  "eva": "2",
+  "gen": 1,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_materials_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 2,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_site_text",
+  "grup": "narr",
+  "eva": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "plantes",
+  "grup": "A",
+  "eva": "PB + Porxo",
+  "gen": "Pb",
+  "status": "CLOSE",
+  "method": "table_cell"
+ },
+ {
+  "var": "qa_value",
+  "grup": "calc",
+  "eva": "3.50",
+  "gen": "3.50",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "radon_sentence",
+  "grup": "narr",
+  "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
+  "gen": "La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "radon_zone",
+  "grup": "calc",
+  "eva": "1",
+  "gen": "1",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.7",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.6",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "seismic_ab_text",
+  "grup": "calc",
+  "eva": "AB  =0,08 g  (essent g el valor de la gravetat)",
+  "gen": "0,04",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "settlement_sentence",
+  "grup": "calc",
+  "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.50 cm, immediats en el temps donat el comportament granular dels materials.",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.80 cm, immediats en el temps donat el comportament granular dels materials.",
+  "status": "MISMATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_condition",
+  "grup": "narr",
+  "eva": "Al solar, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+  "gen": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "status": "MISMATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_description",
+  "grup": "narr",
+  "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer de la Miranda.\nEl solar es localitza sense construccions i pavimentacions. Topogràficament, fa una lleugera baixada, de sudoest a nord-est, es troba una diferència de cota d'uns 13.20 metres, des d'uns 212,20 m.s.n.m. fins a 199,00 m.s.n.m. respectivament, tot i que la zona de treball es mostra totalment plana. La pendent comença la zona posterior (a la meitat del fons ).\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+  "gen": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-0.60 a -1.20",
+  "gen": "-0.60 a -1.20",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Graves i sorres",
+  "gen": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)",
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "P-3",
+  "gen": "P-3",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "40",
+  "gen": "40",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "sulfate_classification",
+  "grup": "calc",
+  "eva": "No Agressius",
+  "gen": "No Agressius",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_level_name",
+  "grup": "calc",
+  "eva": "1er nivell",
+  "gen": "1er nivell",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_value",
+  "grup": "calc",
+  "eva": "632.3",
+  "gen": "632.3",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "92",
+  "gen": "64",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_parcela",
+  "grup": "A",
+  "eva": "951",
+  "gen": "1.414",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "table_dpsh_range",
+  "grup": "calc",
+  "eva": "3 i 4",
+  "gen": "3 i 4",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "table_lab_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_lab_values_num",
+  "grup": "fix",
+  "eva": "7",
+  "gen": 7,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_permeability_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 6,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_seismic_num",
+  "grup": "fix",
+  "eva": "8",
+  "gen": 8,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_soil_chars_num",
+  "grup": "fix",
+  "eva": "9",
+  "gen": 9,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "utm_x",
+  "grup": "A",
+  "eva": "418215",
+  "gen": 418215,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "utm_y",
+  "grup": "A",
+  "eva": "4595648",
+  "gen": 4595658,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ }
+]

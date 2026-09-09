@@ -1,0 +1,72 @@
+{
+ "project": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/4001607 LINYOLA",
+ "n_candidats": 16,
+ "exemplars": {
+  "assaigs": 5,
+  "projecte": 4,
+  "situacio": 7
+ },
+ "warnings": [],
+ "rc": 0,
+ "timeout": false,
+ "elapsed_s": 94.6,
+ "model": "sonnet",
+ "effort": "medium",
+ "cli": {
+  "cli_json_ok": true,
+  "num_turns": 12,
+  "duration_ms": 84930,
+  "duration_api_ms": 85593,
+  "cost_usd": 0.47901620000000006,
+  "is_error": false,
+  "subtype": "success",
+  "usage": {
+   "input_tokens": 10,
+   "output_tokens": 6615,
+   "cache_creation_input_tokens": 83567,
+   "cache_read_input_tokens": 359966
+  },
+  "models": [
+   "claude-haiku-4-5-20251001",
+   "claude-sonnet-5"
+  ]
+ },
+ "selection": {
+  "assaigs": {
+   "idx": 16,
+   "kind": "project_page",
+   "rel": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+   "page": 1,
+   "src": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/4001607 LINYOLA/validation/_lector_figures/pages/src_Punts de Sondeig_Silvia_Jaume_296c5aa75d_p1.png",
+   "crop": [
+    0.02,
+    0.08,
+    0.99,
+    0.9
+   ]
+  },
+  "projecte": [
+   {
+    "idx": 7,
+    "kind": "project_page",
+    "rel": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "page": 3,
+    "src": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/4001607 LINYOLA/validation/_lector_figures/pages/src_2_02B_DG_Silvia_Jaume_7df29e1f09_p3.png",
+    "crop": [
+     0.02,
+     0.02,
+     0.87,
+     0.41
+    ],
+    "caption": "Detall del perfil de l'habitatge projectat. Font: Projecte."
+   }
+  ],
+  "situacio": null
+ },
+ "path": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/4001607 LINYOLA/validation/figure_selection.json",
+ "slug": "linyola",
+ "score": {
+  "assaigs": "X (fig 2, ph 28, ncc 0.408)",
+  "projecte1": "X (fig 3, ph 26, ncc 0.368)"
+ }
+}

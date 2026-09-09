@@ -1,0 +1,459 @@
+{
+ "tag": "castellar/t2",
+ "generated": "/home/josep/g3dt-e2e/informes-mesura/2026-09-09-m341-peca7b/castellar_t2.docx",
+ "eva": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/golden-read-taules/_eva_truth/castellar.json",
+ "tables": {
+  "plantes": {
+   "counts": {
+    "MATCH": 2,
+    "MISMATCH": 2,
+    "CLOSE": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Pb+1Pp"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Superfície de la parcel·la segons plànols cadastrals  (m2)",
+     "eva": "Superfície de la parcel·la (m2)"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "440",
+     "eva": "1.284"
+    },
+    {
+     "row": "fila2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila2",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "120",
+     "eva": "120 m2"
+    }
+   ]
+  },
+  "cte_edificacio": {
+   "counts": {
+    "MATCH": 4
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "dpsh": {
+   "counts": {
+    "MATCH": 20
+   },
+   "cells": [
+    {
+     "row": "p-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 4,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "sondeig": {
+   "counts": {
+    "MATCH": 4,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "s-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "-4.00",
+     "eva": "-4.20"
+    },
+    {
+     "row": "s-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 4,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "spt_ma": {
+   "counts": {
+    "MATCH": 4,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "spt-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "spt-1",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)",
+     "eva": "Limolites i bretxes"
+    }
+   ]
+  },
+  "mostra_lab": {
+   "counts": {
+    "CLOSE": 3,
+    "MATCH": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Mostra :",
+     "eva": "Mostra : SPT-1"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Punt:",
+     "eva": "Punt: S-1"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Profunditat: -1.0 a -1.2",
+     "eva": "Profunditat:  -1.00  a -1.20 m"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "soil_levels": {
+   "counts": {
+    "CLOSE": 2
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell.",
+     "eva": "1er nivell"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+     "eva": "Bretxes amb intercalacions de lutites i gresos vermells. Substrat rocós."
+    }
+   ]
+  },
+  "permeabilitat": {
+   "counts": {
+    "MATCH": 1,
+    "MISMATCH": 1,
+    "CLOSE": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "10^-3 a 10^-5",
+     "eva": "10⁻5 – 10⁻7"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+     "eva": "Bretxes amb intercalacions de lutites i gresos vermells."
+    }
+   ]
+  },
+  "sulfats": {
+   "counts": {
+    "MATCH": 3,
+    "CLOSE": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "---",
+     "eva": "--"
+    },
+    {
+     "row": "1r",
+     "col": 3,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "sismica": {
+   "counts": {
+    "MATCH": 3,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "1.60",
+     "eva": "1.15*"
+    },
+    {
+     "row": "1",
+     "col": 3,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "geotecnica": {
+   "counts": {
+    "CLOSE": 1,
+    "MISMATCH": 1,
+    "MATCH": 5
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell. Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+     "eva": "1er nivell: Bretxes amb intercalacions de lutites i gresos"
+    },
+    {
+     "row": "1r",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "27-R",
+     "eva": "17-R"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 5,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1r",
+     "col": 6,
+     "estat": "MATCH"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "MATCH": 48,
+  "MISMATCH": 7,
+  "CLOSE": 10
+ }
+}

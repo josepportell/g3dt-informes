@@ -1,0 +1,52 @@
+{
+ "project": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE",
+ "n_candidats": 4,
+ "exemplars": {
+  "assaigs": 5,
+  "projecte": 5,
+  "situacio": 7
+ },
+ "warnings": [],
+ "rc": 0,
+ "timeout": false,
+ "elapsed_s": 52.8,
+ "model": "sonnet",
+ "effort": "medium",
+ "cli": {
+  "cli_json_ok": true,
+  "num_turns": 9,
+  "duration_ms": 46116,
+  "duration_api_ms": 47130,
+  "cost_usd": 0.3639064,
+  "is_error": false,
+  "subtype": "success",
+  "usage": {
+   "input_tokens": 8,
+   "output_tokens": 4080,
+   "cache_creation_input_tokens": 66363,
+   "cache_read_input_tokens": 261767
+  },
+  "models": [
+   "claude-haiku-4-5-20251001",
+   "claude-sonnet-5"
+  ]
+ },
+ "selection": {
+  "assaigs": {
+   "idx": 1,
+   "kind": "annex_crop",
+   "rel": "plan_crop_4001670_plànol de situació_8b280d876d.jpg",
+   "page": null,
+   "src": "/home/josep/g3dt-prod-cache/images/plan_crop_4001670_plànol de situació_8b280d876d.jpg",
+   "crop": null
+  },
+  "projecte": [],
+  "situacio": null
+ },
+ "path": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE/validation/figure_selection.json",
+ "slug": "alcoletge",
+ "score": {
+  "assaigs": "M (fig 2, ph 8, ncc None)",
+  "projecte1": "—"
+ }
+}

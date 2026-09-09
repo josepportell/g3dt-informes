@@ -118,9 +118,17 @@ l'Eva. La segona canvia una cel·la de ND a X: el sistema ara diu una cosa (impr
 
 | # | Projecte · variable | Abans → ara (signat) | Per què s'ha perdut | Com es reobre | Estat |
 |---|---|---|---|---|---|
-| 8 | Bell-lloc · `fig_projecte` (Figura 3, «Ubicació de l'habitatge…») | M (phash 8) → ND; +1 sobrant | El retall del full de situació (sense punts) ara s'imprimeix a la ranura d'ASSAIGS del 2.2 amb el peu «…i els assaigs realitzats», i la mesura és estricta per ranura. Cap senyal determinista distingeix un full sense punts (les «P-n» del FreeHand no són text; els farcits petits no separen). | Lector de figures (7b): classifica el retall com a projecte amb el peu «Ubicació de l'habitatge a l'interior de la parcel·la. Font: Projecte.» | transitòria (7b) |
-| 9 | Vilanova · `fig_projecte` (Figura 2, «emplazamiento», retall ample) | M (phash 6) → ND | El mateix dibuix li serveix per a F2 (projecte, ample) i F3 (assaigs, estret); el nostre únic retall ara només es puntua contra F3. | 7b: dos retalls del mateix full (ample → projecte, estret → assaigs). | transitòria (7b) |
-| 10 | Vilanova · `fig_assaigs` (Figura 3, retall estret) | ND → X | Idem: el retall ample contra la figura estreta no passa el llindar. | 7b (retall estret). | transitòria (7b) |
+| 8 | Bell-lloc · `fig_projecte` (Figura 3, «Ubicació de l'habitatge…») | M (phash 8) → ND; +1 sobrant | El retall del full de situació (sense punts) ara s'imprimeix a la ranura d'ASSAIGS del 2.2 amb el peu «…i els assaigs realitzats», i la mesura és estricta per ranura. Cap senyal determinista distingeix un full sense punts (les «P-n» del FreeHand no són text; els farcits petits no separen). | Sense regla: el full de l'Eva porta els punts i ella no en va fer figura d'assaigs. Pregunta 31; opció al wizard. | oberta (7b, 2026-09-09) |
+| 9 | Vilanova · `fig_projecte` (Figura 2, «emplazamiento», retall ample) | M (phash 6) → ND | El mateix dibuix li serveix per a F2 (projecte, ample) i F3 (assaigs, estret); el nostre únic retall ara només es puntua contra F3. | Sense regla observable per a «ample + estret del mateix dibuix». Pregunta 32; opció al wizard. | oberta (7b, 2026-09-09) |
+| 10 | Vilanova · `fig_assaigs` (Figura 3, retall estret) | ND → X | Idem: el retall ample contra la figura estreta no passa el llindar. | Idem #9 (ncc 0,683, llindar 0,70). | oberta (7b, 2026-09-09) |
 
 Les tres són el mateix moviment: la mesura ha deixat de deixar passar una imatge sota un peu que no li toca. El grup `fix`
 (numeració) puja 74 → 77 M al mateix run i cap altre escalar ni taula es mou.
+
+## 2026-09-09 — Imatges peça 7b (lector de figures, skill neutre) — runs `2026-09-08-m341-peca7a` → `2026-09-09-m341-peca7b`
+
+| # | Projecte · variable | Abans → ara (signat) | Per què s'ha perdut | Com es reobre | Estat |
+|---|---|---|---|---|---|
+| 11 | Linyola · `fig_projecte` (Figura 3, secció p11) | ND → X (p2, emplaçament) | El lector tria una figura defensable amb els criteris genèrics; l'Eva hi va posar la secció. En una passada anterior l'havia encertada (C, 0,787): variància del lector. | Pregunta 32 (quan i quina figura del projecte); tria al wizard. | oberta |
+| 12 | Anciles · `fig_projecte` (Figura 2 topogràfic + Figura 3 tipologies) | ND, ND → X (secció p25), ND | Idem: una figura en lloc de dues, i no les seves. Amb el skill que citava Anciles pel nom sortien les dues amb els peus exactes: per això no val. | Pregunta 32. | oberta |
+| 13 | Linyola · `fig_assaigs_num` | 2 M → 3 X (signat 2) | L'Eva posa la figura del projecte DESPRÉS de la d'assaigs (totes dues a l'1.1); la plantilla les posa a l'inrevés (5 de 6 signats). Contrapartida: cullera, geològic i tall passen a M. | Només si l'Eva ho vol així: decisió de plantilla. | acceptada |

@@ -1,0 +1,52 @@
+{
+ "project": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA",
+ "n_candidats": 11,
+ "exemplars": {
+  "assaigs": 5,
+  "projecte": 4,
+  "situacio": 7
+ },
+ "warnings": [],
+ "rc": 0,
+ "timeout": false,
+ "elapsed_s": 43.5,
+ "model": "sonnet",
+ "effort": "medium",
+ "cli": {
+  "cli_json_ok": true,
+  "num_turns": 9,
+  "duration_ms": 39341,
+  "duration_api_ms": 40106,
+  "cost_usd": 0.3703616,
+  "is_error": false,
+  "subtype": "success",
+  "usage": {
+   "input_tokens": 10,
+   "output_tokens": 2932,
+   "cache_creation_input_tokens": 65999,
+   "cache_read_input_tokens": 353128
+  },
+  "models": [
+   "claude-haiku-4-5-20251001",
+   "claude-sonnet-5"
+  ]
+ },
+ "selection": {
+  "assaigs": {
+   "idx": 1,
+   "kind": "annex_crop",
+   "rel": "plan_crop_4001671_plano de situación_4aba9a8270.jpg",
+   "page": null,
+   "src": "/home/josep/g3dt-prod-cache/images/plan_crop_4001671_plano de situación_4aba9a8270.jpg",
+   "crop": null
+  },
+  "projecte": [],
+  "situacio": null
+ },
+ "path": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/validation/figure_selection.json",
+ "slug": "vilanova",
+ "score": {
+  "assaigs": "X (fig 4, ph 18, ncc 0.683)",
+  "projecte1": "ND (l'Eva en posa 1)"
+ }
+}

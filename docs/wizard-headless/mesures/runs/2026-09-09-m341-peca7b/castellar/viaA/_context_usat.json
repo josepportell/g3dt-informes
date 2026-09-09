@@ -1,0 +1,819 @@
+{
+ "fig_situacio_num": 1,
+ "fig_situacio_2_num": "",
+ "fig_projecte_1_num": "",
+ "fig_projecte_2_num": "",
+ "fig_assaigs_num": 2,
+ "fig_spt_cullera_num": 3,
+ "fig_geological_num": 4,
+ "fig_correlation_num": 5,
+ "fig_cadastre_num": 1,
+ "fig_location_num": 1,
+ "fig_main_plan_num": 2,
+ "fig_building_num": 2,
+ "photo_site_text": "",
+ "_num_site_photos": 0,
+ "photo_dpsh_num": 1,
+ "photo_sondeig_num": 2,
+ "photo_materials_num": 3,
+ "photo_materials_source": "del sondeig",
+ "table_dpsh_range": "3, 4 i 5",
+ "table_lab_num": 6,
+ "table_permeability_num": 7,
+ "table_lab_values_num": 8,
+ "table_seismic_num": 9,
+ "table_soil_chars_num": 10,
+ "section1": "<Section1Content>",
+ "section2": "<Section2Content>",
+ "section3": "<Section3Content>",
+ "section4": "<Section4Content>",
+ "client": "WOOD COMFORT PROMOCIONS S.L.U.",
+ "client_de": "de WOOD COMFORT PROMOCIONS S.L.U.",
+ "expedient": "3001621",
+ "street_address": "Carrer Arbrells, Nº 18A-18B-20, Castellar del Vallès (Barcelona)",
+ "municipality": "Castellar del Vallès",
+ "municipality_de": "de Castellar del Vallès",
+ "data_camp_text": "24 d'octubre de 2025",
+ "data_camp_inici_text": "24 d'octubre de 2025",
+ "data_signatura_text": "19 de novembre de 2025",
+ "architect_name": "WOOD COMFORT PROMOCIONS SLU",
+ "architect_company": "",
+ "architect_company_de": "",
+ "architect_name_upper": "WOOD COMFORT PROMOCIONS SLU",
+ "building_type": "Habitatge unifamiliar aïllat",
+ "building_type_lower": "un habitatge unifamiliar aïllat",
+ "building_type_de": "d'un habitatge unifamiliar aïllat",
+ "num_floors": "Pb+1Pp",
+ "report_language": "ca",
+ "building_structure_desc": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+ "_narr_building_structure": {
+  "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+  "source": "amb pis i sense soterrani (Castellar, Linyola, Alcoletge)",
+  "candidates": [
+   {
+    "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+    "source": "amb pis i sense soterrani (Castellar, Linyola, Alcoletge)"
+   },
+   {
+    "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+    "source": "variant (a) dels signats"
+   },
+   {
+    "value": "amb nivell de soterrani, i per tant, es preveu una excavació general fins a la cota de fonamentació del soterrani, a més del sanejament i l'anivellació.",
+    "source": "amb soterrani"
+   }
+  ],
+  "notes": []
+ },
+ "municipality_upper": "CASTELLAR DEL VALLÈS",
+ "street_1": "Carrer Arbrells",
+ "street_2": "Nº 18A-18B-20, Castellar del Vallès (Barcelona)",
+ "cte_building_class": "C-1",
+ "cte_soil_class": "T-1",
+ "cte_edificacio": "C-1",
+ "cte_sol": "T-1",
+ "plantes": "Pb+1Pp",
+ "superficie_parcela": "1.284",
+ "superficie_cadastral": "",
+ "superficie_parcela_planol": "1.284",
+ "superficie_construida": "120",
+ "access_description": "",
+ "site_description": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+ "lab_field_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_field_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_testing_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "cota_referencia": "+570.90",
+ "_parcel_rcs": [
+  "3298012DG2039N",
+  "3298013DG2039N",
+  "3298014DG2039N"
+ ],
+ "adjacent_north": "parcel·la buida",
+ "adjacent_south": "Carrer dels Arbrells",
+ "adjacent_east": "parcel·la on existeix un edifici aïllat en planta baixa, amb piscina",
+ "adjacent_west": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb soterrani i piscina",
+ "adjacent_nearest_street": "Carrer dels Arbrells",
+ "location_sentence": "al Carrer Arbrells de Castellar del Vallès",
+ "adjacent_north_fmt": "Per la part nord amb una parcel·la buida.",
+ "adjacent_south_fmt": "Per la part sud amb el Carrer dels Arbrells.",
+ "adjacent_east_fmt": "Per la part est amb una parcel·la on existeix un edifici aïllat en planta baixa, amb piscina.",
+ "adjacent_west_fmt": "I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb soterrani i piscina.",
+ "access_street": "carrer adjacent situat al sud",
+ "_narr_access": {
+  "value": "carrer adjacent situat al sud",
+  "candidates": [
+   "carrer adjacent situat al sud",
+   "Carrer existent al sud",
+   "carrer dels Arbrells"
+  ]
+ },
+ "adjacent_intro": "La parcel·la objecte d'estudi es situa al nord del municipi de Castellar del Vallès, pren una morfologia quasi rectangular i limita:",
+ "_narr_parcel": {
+  "position": "nord",
+  "shape": "quasi rectangular",
+  "centroid": [
+   423178.4938756975,
+   4609624.077096589
+  ],
+  "rcs": [
+   "3298012DG2039N",
+   "3298013DG2039N",
+   "3298014DG2039N"
+  ]
+ },
+ "is_sloped": true,
+ "slope_percent": "33.6",
+ "slope_direction": "NW",
+ "site_condition": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+ "_narr_site_condition": {
+  "value": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "source": "pendent 34 % > 10 % (Castellar)",
+  "candidates": [
+   {
+    "value": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Tot i no ser un solar pla»"
+   },
+   {
+    "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Com que es tracta d'un solar pla»"
+   },
+   {
+    "value": "Degut a que es tracta d'un solar antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Degut a que es tracta d'un solar antropitzat»"
+   },
+   {
+    "value": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Es tracta d'un solar no antropitzat»"
+   }
+  ],
+  "notes": [
+   "antropitzat sense font (no derivable del Cadastre ni de l'ICGC): revisar"
+  ]
+ },
+ "_narr_site_description": {
+  "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+  "source": "sense edifici al Cadastre i pendent 34 % > 10 % (Castellar, Rubí)",
+  "candidates": [
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+    "source": "sense edifici al Cadastre i pendent 34 % > 10 % (Castellar, Rubí)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, fa una lleugera baixada, tot i que la zona de treball es mostra totalment plana.",
+    "source": "variant «lleugera baixada» (Rubí)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, s'ha realitzat un desbroç de la zona de treball i s'ha adequat un accés a la zona de treball. Topogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina.",
+    "source": "variant «plataforma de treball» (Castellar)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+    "source": "cap «buit pla»"
+   },
+   {
+    "value": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+    "source": "cap «construit»"
+   }
+  ],
+  "notes": [
+   "vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita"
+  ]
+ },
+ "_own_parcel_building": {
+  "has_building": false,
+  "num_floors_above": 0,
+  "num_floors_below": 0,
+  "has_pool": false,
+  "total_built_m2": 0.0,
+  "refs": [
+   "3298012DG2039N",
+   "3298013DG2039N",
+   "3298014DG2039N"
+  ]
+ },
+ "has_sondeig": true,
+ "section_sondeig_num": "2.4.2",
+ "section_spt_num": "2.4.3",
+ "section_resum_num": "2.4.4",
+ "include_geothermal": false,
+ "include_expansivity": false,
+ "include_earth_pressure": true,
+ "include_slope_stability": true,
+ "show_granulometric": false,
+ "section_excavabilitat_num": "3.5",
+ "section_sismica_num": "3.6",
+ "section_rado_num": "3.7",
+ "section_fonamentacio_num": "4.3",
+ "section_empentes_num": "4.4",
+ "section_estabilitat_num": "4.5",
+ "num_dpsh_tests": 4,
+ "dpsh_test_ids": "P-1,P-2,P-3,P-4",
+ "dpsh_avg_n20": "27",
+ "dpsh_tests": [
+  {
+   "test_id": "P-1",
+   "cota": "-4.00",
+   "depth": "-1.08",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-2",
+   "cota": "-4.20",
+   "depth": "-0.48",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-3",
+   "cota": "-4.00",
+   "depth": "-0.76",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-4",
+   "cota": "-4.00",
+   "depth": "-1.55",
+   "refusal": "Si",
+   "water": "No detectat"
+  }
+ ],
+ "sondeig_tests": [
+  {
+   "test_id": "S-1",
+   "cota": "-4.00",
+   "depth": "-1.20",
+   "spt_ma": "1/0",
+   "water": "No detectat"
+  }
+ ],
+ "spt_test_id": "SPT-1",
+ "spt_location": "S-1",
+ "spt_depth_range": "-1.00 a -1.20",
+ "spt_n30": "R",
+ "spt_lithology": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)",
+ "spt_ma_tests": [
+  {
+   "test_id": "SPT-1",
+   "location": "S-1",
+   "depth_range": "-1.00 a -1.20",
+   "n30": "R",
+   "lithology": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)"
+  }
+ ],
+ "lab_sample_id": "",
+ "lab_location": "",
+ "lab_depth": "-1.0 a -1.2",
+ "lab_tests_text": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+ "_narr_lab_tests": {
+  "value": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+  "source": "sulfats sol: «1 assaig de…» (Castellar, Bell-lloc)",
+  "candidates": [
+   {
+    "value": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+    "source": "sulfats sol: «1 assaig de…» (Castellar, Bell-lloc)"
+   },
+   {
+    "value": "Determinació del contingut en ió sulfat en sòls UNE 83963 / 08",
+    "source": "línies literals del GTL"
+   }
+  ],
+  "notes": []
+ },
+ "materials_level_1": "El nivell 1 està format per substrat rocós. bretxes amb intercalacions de lutites i gresos vermells., de coloracions marrons a vermelloses. Aquests materials presenten una composició silícia típica dels dipòsits del Vallès-Penedès, amb components procedents de l'erosió de les serralades adjacents. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials eocè, unitat PEcg segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.60 m, amb un gruix de 1.60 m. Aquests materials presenten un valor mitjà de N20 de 23 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+ "materials_intro": "A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+ "seismic_ab_text": "0,04",
+ "radon_zone": "1",
+ "radon_zone_description": "",
+ "radon_sentence": "La parcel·la concreta d'estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+ "csn_radon_text": "",
+ "geology_para_1": "Historia geològica de Castellar del Vallès",
+ "geology_para_2": "En primer lloc s’ha procedit a la consulta de la bibliografia geològica-geotècnica de les diferents cartografies existents sobre la zona.",
+ "geology_para_3": "La cartografia geològica utilitzada és el plànol geològic 1:50.000 de Sabadell, nº392, 36-15 publicat per l’Institut Geològic i Miner d’Espanya.",
+ "geology_para_4": "La zona d’estudi es troba situada a l’extrem nord-oriental del municipi de Castellar del Vallès, al cantó oriental del naixement del riu Tort i els torrents afluents.",
+ "geology_para_5": "Geomorfològicament, la zona d’estudi es troba situada entre dues grans unitats morfològiques: La Depressió del Vallès i la Serralada Prelitoral.",
+ "geology_para_6": "Més en concret es localitza a la Depressió del Vallès. Aquesta depressió és una fosa d’origen tectònic producte de la fase distensiva a la que va ser sotmesa la Serralada Costera Catalana des de l’Oligocè fins el Miocè superior.",
+ "geology_paragraphs": [
+  "Historia geològica de Castellar del Vallès",
+  "En primer lloc s’ha procedit a la consulta de la bibliografia geològica-geotècnica de les diferents cartografies existents sobre la zona.",
+  "La cartografia geològica utilitzada és el plànol geològic 1:50.000 de Sabadell, nº392, 36-15 publicat per l’Institut Geològic i Miner d’Espanya.",
+  "La zona d’estudi es troba situada a l’extrem nord-oriental del municipi de Castellar del Vallès, al cantó oriental del naixement del riu Tort i els torrents afluents.",
+  "Geomorfològicament, la zona d’estudi es troba situada entre dues grans unitats morfològiques: La Depressió del Vallès i la Serralada Prelitoral.",
+  "Més en concret es localitza a la Depressió del Vallès. Aquesta depressió és una fosa d’origen tectònic producte de la fase distensiva a la que va ser sotmesa la Serralada Costera Catalana des de l’Oligocè fins el Miocè superior.",
+  "Aquesta depressió ha estat reomplerta de materials miocens i neògens producte de l’erosió de les unitats estructurals limitants. Aquests materials, en la zona d’estudi, estan formats per roques sedimentàries d’antics sistemes al·luvials en règim torrencial, del tipus: argil·lites, limonites, gresos i conglomerats.",
+  "Per sobre d’aquests materials es dipositen sediments quaternaris formats per les lleres del riu Ripoll, el seu afluent el riu Tort, i dipòsits de peu de mont en les zones limítrofes amb les zones de relleus elevats de St Llorenç-La Mola.",
+  "Els materials quaternaris són argiles, llims, sorres i graves que sovint es presenten compactats i cimentats. Generalment quan més antics són aquests sediments de terrasses fluvials més compactació presenten.",
+  "La zona d’estudi es localitza just en el límit septentrional de la falla principal de l’extrem nord de la Fossa del Vallès, i s’associen amb aquesta, unes falles de secundàries que rejuguen. Aquest complex de falles permet aflorar prop de superfície un enclavament de roca plutònica paleozoica, que es correspon a un granit alcalí.",
+  "Aquests granits es troben en la seva part superficial meteoritzats per l’acció dels agents climatològics externs. Aquesta meteorització ha donat lloc a la formació del “sauló”, que visualment té un aspecte d’una sorra sense cohesió.",
+  "L’erosió del granit i el transport va donar lloc a la formació de ventalls al·luvials amb graves amb còdols de granit i matriu de sorra de sauló. Aquests al·luvials formats durant el Miocè superior, actualment estan consolidats i els trobem com conglomerats i arenisques.",
+  "Per sobre d’aquests materials s’han format sòls quaternaris i actuals, formats per la meteorització dels materials de substrat, l’acumulació de sediments dels torrents  (graves, argiles i llims) que des de la Mola van a desembocar al riu Ripoll i restes de matèria orgànica.",
+  "En concret, i segons l'Institut Cartogràfic i Geològic de Catalunya (ICGC), afloren els materials de la unitat PEcg, corresponents a conglomerats heteromètrics del Eocè."
+ ],
+ "_narr_radon": {
+  "value": "La parcel·la concreta d'estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "source": "zona 1 (RD 732/2019, apèndix B)",
+  "candidates": [
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+    "source": "signat: Castellar, Bell-lloc, Alcoletge"
+   },
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
+    "source": "signat: Rubí"
+   }
+  ],
+  "notes": []
+ },
+ "materials_depth_text": "",
+ "materials_geomech_text": "",
+ "conclusions_level_1": "El nivell 1 està format per substrat rocós. bretxes amb intercalacions de lutites i gresos vermells., de coloracions marrons a vermelloses. Aquests materials presenten una composició silícia típica dels dipòsits del Vallès-Penedès, amb components procedents de l'erosió de les serralades adjacents. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials eocè, unitat PEcg segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.60 m, amb un gruix de 1.60 m. Aquests materials presenten un valor mitjà de N20 de 23 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+ "soil_levels": [
+  {
+   "description": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "description_short": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "ordinal": "1er",
+   "materials_text": "El nivell 1 està format per substrat rocós. bretxes amb intercalacions de lutites i gresos vermells., de coloracions marrons a vermelloses. Aquests materials presenten una composició silícia típica dels dipòsits del Vallès-Penedès, amb components procedents de l'erosió de les serralades adjacents. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials eocè, unitat PEcg segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.60 m, amb un gruix de 1.60 m. Aquests materials presenten un valor mitjà de N20 de 23 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.60 m de profunditat, amb potències estudiades de 1.60 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 23 cops, assolint rebuig a la penetració pels trams més profunds."
+  }
+ ],
+ "conclusions_levels_detected": "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+ "soil_level_rows": [
+  {
+   "name": "1er nivell.",
+   "material": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "material_short": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+  }
+ ],
+ "perm_rows": [
+  {
+   "name": "1er nivell",
+   "k_value": "10^-3 a 10^-5",
+   "material": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "material_short": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+  }
+ ],
+ "sulfate_level_name": "1er nivell",
+ "sulfate_value": "0.0",
+ "sulfate_baumann": "---",
+ "sulfate_classification": "No Agressius",
+ "seismic_rows": [
+  {
+   "num": "1",
+   "terrain_type": "Tipus II",
+   "thickness": "1.60",
+   "c_coeff": "1.3"
+  }
+ ],
+ "geotech_rows": [
+  {
+   "name": "1er nivell. Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "material_short": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "nb": "27-R",
+   "n": "R",
+   "density": "2.20",
+   "cohesion": "1.00",
+   "phi": "35°",
+   "E": ">500"
+  }
+ ],
+ "geotech_level_name": "1er nivell. Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+ "geotech_nb": "27-R",
+ "geotech_n": "R",
+ "geotech_density": "2.20",
+ "geotech_cohesion": "1.00",
+ "geotech_phi": "35°",
+ "geotech_E": ">500",
+ "_calc_E": "CTE D.23 N20=23 | Rang Eva: >500-800",
+ "_calc_phi": "Schmertmann Nb=27 | Rang Eva: 30-35",
+ "_calc_gamma": "CTE D.27 rock | Rang Eva: 2.20",
+ "_calc_cohesion": "Rang Eva: 1.0",
+ "soil_level_name": "1er nivell.",
+ "soil_level_material": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+ "perm_level_name": "1er nivell",
+ "perm_k_value": "10^-3 a 10^-5",
+ "perm_material": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+ "k30_value": "8.0",
+ "_calc_k30": "E/60 = 500/60 (roca, c=1.0)",
+ "qa_value": "3.00",
+ "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+ "_calc_settlement": "Schmertmann Es=68 (2.5×Nb 27.2), B=1 m → 2.30 cm · règim roca → frase genèrica «menyspreables o bé inferiors a 1.0 cm» | alt: Es=500 (E del criteri) → 0.30 cm · nivell portant roca: Schmertmann és per a granulars → frase genèrica (7/7 signats)",
+ "_calc_Es": "Es=68 (2.5×Nb 27.2) · 2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat) | alt: Es=500 (E del criteri) → 0.30 cm",
+ "settlement": "2.30",
+ "_calc_qa": "Nb/12=23/12=1.88 = 27.20 | Cap: 3.00 (4.0-4.5)",
+ "conclusions_geologia_summary": "Segons els resultats dels assaigs de penetració realitzats, s'ha identificat un únic nivell geotècnic fins a la fondària investigada. Aquest nivell correspon a substrat rocós. bretxes amb intercalacions de lutites i gresos vermells. amb un valor mitjà de N20 de 23 cops.",
+ "conclusions_water_statement": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+ "conclusions_aggressivity_statement": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+ "empentes_paragraph": "",
+ "ka_value": "",
+ "kp_value": "",
+ "estabilitat_paragraph": "",
+ "expansivitat_paragraph": "",
+ "project": {
+  "project": {
+   "expedient": "3001621",
+   "municipality": "Castellar del Vallès",
+   "report_date": "2026-09-09"
+  },
+  "client": {
+   "company_name": "WOOD COMFORT PROMOCIONS SLU",
+   "contact_name": "",
+   "nif": "",
+   "address": null
+  },
+  "architect": {
+   "name": "WOOD COMFORT PROMOCIONS SLU",
+   "company": ""
+  },
+  "building": {
+   "type": "Habitatge unifamiliar aïllat",
+   "num_floors": "PB+1",
+   "superficie_parcela_m2": "1284.0",
+   "superficie_cadastral_m2": "",
+   "superficie_construida_m2": "",
+   "has_basement": false,
+   "has_retaining_walls": false
+  },
+  "location": {
+   "street_address": "Carrer Arbrells, Nº 18A-18B-20, Castellar del Vallès (Barcelona)",
+   "utm_x": 423167.0,
+   "utm_y": 4609608.0
+  },
+  "descriptions": {
+   "site_description": "",
+   "access_description": "",
+   "cota_referencia": "+570.90",
+   "field_work_dates": [
+    "2025-10-24"
+   ],
+   "field_work_dates_text": "24 d'octubre de 2025",
+   "lab_company": "",
+   "lab_company_alias": "",
+   "lab_description": ""
+  },
+  "sondeig_tests": [
+   {
+    "test_id": "S-1",
+    "total_depth_m": 1.2,
+    "num_geological_levels": 1,
+    "layers": [
+     {
+      "depth_from_m": 0.0,
+      "depth_to_m": 0.5,
+      "description": "Terra argilosa amb llims sense graves",
+      "geological_level": 1,
+      "uscs_classification": null,
+      "color": null,
+      "moisture": null,
+      "consistency": null,
+      "density": null,
+      "confidence": 0.55,
+      "note": "Description partially legible from rotated/angled handwritten sheet. Depth 0 to 0.50m inferred from 'Cota 0' and '0.50' entries in depth column."
+     },
+     {
+      "depth_from_m": 0.5,
+      "depth_to_m": 1.2,
+      "description": "Roca / material dur (roca pochimada / fora pochimada)",
+      "geological_level": 1,
+      "uscs_classification": null,
+      "color": null,
+      "moisture": null,
+      "consistency": "dura",
+      "density": null,
+      "confidence": 0.45,
+      "note": "Description very difficult to read due to sheet rotation and handwriting quality. Text appears to read 'fora pochimada' or similar — possibly 'roca pochimada' indicating encountered rock/hard material. Depth 0.50 to 1.20m inferred from '0.12' visible in depth column (interpreted as 1.20m total). Corroborated by Albarà page 4 noting 0.50m in soils and 0.70m in rock/concrete (0.50+0.70=1.20m total)."
+     }
+    ],
+    "spt_results": [],
+    "elevation_z": null,
+    "water_level_m": null,
+    "rock_detected": true,
+    "rock_depth_m": 0.5,
+    "extraction_notes": "Sheet photographed at an angle/rotated making reading difficult. Total depth of 1.20m corroborated by Albarà delivery note (page 4): 0.50m in soils + 0.70m in rock/concrete = 1.20m. No 'Unitat litològica' column visible; num_geological_levels set to 1 by default. Entruba column appears to show 'Hd W.6'. Mostres column references 'C/Arbrells -4m'. No SPT tests recorded (Albarà page 4 confirms 'No' Assaigs SPT). Operator: Daniel Fernandez. Equipment: ML76A."
+   }
+  ],
+  "spt_data": null,
+  "lab_tests": [
+   {
+    "type": "Contingut en sulfats solubles UNE 83963:2008",
+    "sample_id": "",
+    "location": "",
+    "depth": "-1.0 a -1.2",
+    "value": 0.0,
+    "unit": "",
+    "standard": ""
+   }
+  ],
+  "site": {
+   "adjacent_parcels": {
+    "north": "parcel·la buida",
+    "south": "Carrer dels Arbrells",
+    "east": "parcel·la on existeix un edifici aïllat en planta baixa, amb piscina",
+    "west": "parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb soterrani i piscina"
+   },
+   "position": "centre",
+   "shape": "rectangular",
+   "is_urban": true,
+   "is_sloped": false,
+   "slope_percent": null,
+   "slope_direction": null,
+   "slope_height_m": null,
+   "is_anthropized": null
+  },
+  "tests": {
+   "has_dpsh": true,
+   "num_dpsh_tests": 4,
+   "has_sondeig": true,
+   "has_spt": false,
+   "water_detected": false
+  },
+  "lab": {
+   "sulfate_mg_kg": 0.0,
+   "aggressivity_class": ""
+  },
+  "cte": {
+   "building_class": "C-1",
+   "soil_class": "T-1"
+  },
+  "soil_levels": [
+   {
+    "level_number": 1,
+    "description": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "thickness_m": 1.6,
+    "thickness_open": false,
+    "n20_average": 22.555555555555557,
+    "depth_from_m": 0.0,
+    "depth_to_m": 1.6,
+    "n20_min": 8,
+    "n20_max": 46,
+    "soil_type": "rock"
+   }
+  ],
+  "geotechnical_params": {
+   "gamma_g_cm3": 2.2,
+   "cohesion_kg_cm2": 1.0,
+   "phi_deg": 35,
+   "E_kg_cm2": 500
+  },
+  "terzaghi": {
+   "inputs": {
+    "phi_deg": 35,
+    "cohesion_kg_cm2": 1.0,
+    "gamma_g_cm3": 2.2,
+    "B_m": 1.0,
+    "Df_m": 0.3,
+    "L_m": null,
+    "shape": "square"
+   },
+   "factors": {
+    "Nc": 57.8,
+    "Nq": 41.4,
+    "Ngamma": 42.4,
+    "sc": 1.3,
+    "sq": 1.0,
+    "sgamma": 0.8
+   },
+   "results": {
+    "qu_kg_cm2": 81.604,
+    "safety_factor": 3.0,
+    "Qa_kg_cm2": 3.0,
+    "Qa_uncapped_kg_cm2": 27.2,
+    "settlement_cm": 2.3,
+    "settlement_type": "diferit",
+    "Es_used_kg_cm2": 67.9,
+    "qa_terzaghi_peck_kg_cm2": null,
+    "Fw": null,
+    "Fd_tp": null,
+    "qa_governs": "cap"
+   }
+  },
+  "conditional_sections": {
+   "include_expansivity": false,
+   "include_earth_pressure": false,
+   "include_slope_stability": false,
+   "include_geothermal": false,
+   "show_granulometric": false
+  },
+  "dpsh": {
+   "expedient": "3001621",
+   "source_file": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001621 CASTELLAR DEL VALLES/ANNEXES/3001621_DPSH.xls",
+   "num_tests": 4,
+   "test_ids": [
+    "P-1",
+    "P-2",
+    "P-3",
+    "P-4"
+   ],
+   "overall_average_n20": 18.72,
+   "any_water_detected": false,
+   "tests": [
+    {
+     "test_id": "P-1",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.0,
+     "average_n20": 33.4,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.2,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 38,
+       "nb": 45.78,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-2",
+     "correction_factor": 0.83,
+     "depth_reached_m": 0.4,
+     "average_n20": 57.5,
+     "refusal_reached": true,
+     "refusal_depth_m": 0.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 15,
+       "nb": 18.07,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-3",
+     "correction_factor": 0.83,
+     "depth_reached_m": 0.6,
+     "average_n20": 54.0,
+     "refusal_reached": true,
+     "refusal_depth_m": 0.8,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 16,
+       "nb": 19.28,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 46,
+       "nb": 55.42,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-4",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.4,
+     "average_n20": 29.14,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 27,
+       "nb": 32.53,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 21,
+       "nb": 25.3,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 28,
+       "nb": 33.73,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "fig_spt_cullera_image": "<InlineImage>",
+ "photo_site_image_1": "",
+ "photo_site_image_2": "",
+ "photo_dpsh_image": "<InlineImage>",
+ "photo_sondeig_image": "<InlineImage>",
+ "photo_materials_image": "<InlineImage>",
+ "fig_situacio_image_1": "<InlineImage>",
+ "fig_situacio_image_2": "",
+ "fig_assaigs_image": "<InlineImage>",
+ "fig_projecte_image_1": "",
+ "fig_projecte_caption_1": "",
+ "fig_projecte_image_2": "",
+ "fig_projecte_caption_2": "",
+ "has_plan_crops": true,
+ "fig_cadastre_image": "<InlineImage>",
+ "fig_location_image": "<InlineImage>",
+ "fig_main_plan_image": "<InlineImage>",
+ "fig_building_image": "<InlineImage>",
+ "fig_geological_image": "<InlineImage>",
+ "fig_correlation_image": "<InlineImage>"
+}
