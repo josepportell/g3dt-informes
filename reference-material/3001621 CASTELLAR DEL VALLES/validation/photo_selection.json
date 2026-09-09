@@ -5,27 +5,35 @@
  "dpsh": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
  "sondeig": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
  "materials": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+ "materials_per_punt": [
+  {
+   "punt": "S-1",
+   "rel": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg"
+  }
+ ],
  "_lector": {
-  "data": "2026-09-07 19:02",
+  "data": "2026-09-09 13:35",
   "model": "sonnet",
   "effort": "medium",
-  "elapsed_s": 51.1,
+  "elapsed_s": 57.7,
   "exclude_slug": "castellar",
   "raons": {
-   "dpsh": "màquina DPSH sencera, neta, primera foto de l'annex (F-1, 'P-1'); les 4 fotos de l'annex (1,6,2,3) són equivalents, tria la primera",
-   "sondeig": "màquina compacta amb operari dret al costat i pal elèctric al fons, carpeta SONDEIG/ i àlies maquina_sondeig.jpg; no és cap dels punts DPSH (P1-P4) i no és a l'annex de l'Eva, com als exemplars (Anciles, Bell-lloc)",
-   "materials": "caixa de testimonis S-1 0,00-1,20 amb el cartell ben llegible; segons la nota del criteri, a Castellar l'Eva va triar la caixa SENSE la bossa de mostra a dins (candidat 8 en té, descartat)"
+   "dpsh": "màquina DPSH sencera al solar, és F-1 de l'annex («P-1»); les altres 3 fotos DPSH (2,3,6) són equivalents però l'Eva no té regla fixa i F-1 és la primera",
+   "sondeig": "màquina compacta amb operari, carpeta S1, rol SmartScan photo_sondeig_equipment; no és cap dels punts P1-P4 de l'annex ni hi és; és la foto de màquina que queda un cop identificades les 4 DPSH",
+   "materials": "capsa blava de testimonis amb els nuclis i el cartell del sondeig, carpeta S1; entre les dues fotos gairebé iguals (7 i 8) triada la que ensenya millor el conjunt sense la bossa tapant"
   },
   "confianca": {
-   "dpsh": 0.7,
-   "sondeig": 0.85,
-   "materials": 0.9
+   "dpsh": 0.9,
+   "sondeig": 0.75,
+   "materials": 0.7,
+   "site_1": 1.0,
+   "site_2": 1.0
   },
   "cap_font": [
    "site_1",
    "site_2"
   ],
-  "notes": "L'annex de fotografies de l'Eva (F-1 a F-4) només conté les 4 fotos de la màquina DPSH (P-1 a P-4), aparellades amb els candidats 1, 6, 2 i 3; cap foto de sondeig, materials ni vista general hi surt. Candidats 4 i 5 són fulls de camp escrits a mà (no van a l'informe).",
+  "notes": "Les 4 fotos DPSH de l'annex (F-1..F-4) corresponen a P-1..P-4; no n'hi ha cap altra amb la màquina DPSH. Els PNG ALTRES (mapes, ortofotos, croquis, tall) mai van a un forat de foto: cap és una vista de camp del solar sense marques, per això site_1 i site_2 queden null. WhatsApp 09.37.01 i 10.02.53 (índex 4 i 5) són fulls de camp / croquis, no van a l'informe.",
   "warnings": []
  }
 }

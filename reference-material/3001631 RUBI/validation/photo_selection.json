@@ -1,32 +1,30 @@
 {
  "source": "lector",
- "site_1": null,
+ "site_1": "ANNEXES/Altres/F3 VG.png",
  "site_2": null,
  "dpsh": "FOTOGRAFIES/P1.jpg",
  "sondeig": null,
  "materials": "FOTOGRAFIES/SPT1.jpg",
  "_lector": {
-  "data": "2026-09-07 18:39",
+  "data": "2026-09-09 13:42",
   "model": "sonnet",
   "effort": "medium",
-  "elapsed_s": 33.2,
+  "elapsed_s": 36.6,
   "exclude_slug": "rubi",
   "raons": {
-   "dpsh": "màquina DPSH sencera al solar, assaig P-1 = F-1, primera foto de l'annex de l'Eva; P-1/P-2/P-3 són equivalents (mateixa màquina, diferents punts) i l'Eva no té regla fixa, així que es tria F-1",
-   "materials": "SPT1.jpg = F-4 de l'annex, peu exacte «detall dels materials recuperats en l'assaig SPT»",
-   "sondeig": "el projecte no té sondeig a rotació"
+   "site_1": "F3 VG.png és una vista general del solar sense màquina (carrer, tanca, casa veïna, cel), rol photo_site_overview; l'Eva hi posa aquest tipus de captura quan no té foto de camp equivalent",
+   "dpsh": "màquina DPSH sencera i neta al solar; és la primera de l'annex (F-1, «vista general de la màquina en l'assaig P-1»); les 3 fotos de màquina (#3, #4, #5) són equivalents, així que es tria la primera",
+   "materials": "SPT1.jpg és la cullera/testimoni recuperat en l'assaig SPT, exactament el peu de l'annex F-4 («detall dels materials recuperats en l'assaig SPT»)"
   },
   "confianca": {
+   "site_1": 0.6,
    "dpsh": 0.85,
-   "sondeig": 1.0,
    "materials": 0.95
   },
   "cap_font": [
-   "sondeig",
-   "site_1",
-   "site_2"
+   "sondeig"
   ],
-  "notes": "El projecte no té sondeig a rotació (sondeig=null no és error). Idx1 (Imatge WhatsApp ...11.17.54) és la llibreta/full de camp amb el full PENETROS escrit a mà, no va a l'informe. Idx2 (Imatge WhatsApp ...11.49.21) és un altre tub de mostra similar a SPT1 però no apareix a l'annex de l'Eva (F-4 ja cobreix materials amb SPT1.jpg), es descarta. Cap candidat és una vista general del solar sense màquina, per això site_1 i site_2 queden null.",
+  "notes": "el projecte no té sondeig a rotació, per això 'sondeig' queda null; els candidats #1 i #2 (WhatsApp) són un full de camp en maleta i un testimoni/tub solts, no encaixen a cap forat i es descarten; #7,#8,#10,#11,#12-16 són mapes/plànol/tall/ortofotos, no fotos de camp",
   "warnings": []
  }
 }
