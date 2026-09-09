@@ -5972,3 +5972,222 @@ Cadastre viu; per a les imatges, `2026-09-09-m341-tall`.
 - Preguntes 30-34, 36-38 amb el Josep; workflow `ALTRES` amb l'Eva.
 
 *Fi entrada 2026-09-09 (3). Acció 3: estudi del retall del tall; `_ink_rects`, blanc = 5 mm, finestra ≥ 40 mm; `fig_tall` 3 → 4 M; dues C estètiques es queden.*
+
+## 2026-09-09 (4) — IMATGES, acció 4: les alternatives dels lectors VISIBLES al wizard sense clicar (zona fixa dalt-dreta, hover → 2-3 candidats amb raó, tria en un clic amb `source: user`); de pas, la pestanya d'imatges llegeix `figure_selection.json`, troba `FOTOGRAFIA` en singular i ja no ensenya figures d'un altre projecte
+
+### Context
+
+- Decisió del Josep (tarda, handoff 1430 §3 (4), «el més important»): si tot depèn que l'Eva cliqui un botó petit per
+  veure les alternatives, se n'oblidarà; cal una zona fixa sempre visible (~30vw × 30vh, dalt a la dreta,
+  `z-index: 10000`, flotant) que en fer hover sobre un camp mostri automàticament les 2-3 candidates del lector amb la
+  raó i «cap font», amb tria en un clic; ranura canviable; la situació doble com a alternativa; es desa amb
+  `source: user`. Memòria `project_wizard_alternatives_visibles_2026-09-09`.
+- L'anàlisi de discrepàncies (§2.1, §2.6, §2.7): la majoria de les 27 són tries estètiques de l'Eva entre imatges
+  vàlides; el guany potencial és «fins a +10 si l'Eva clica», i la satisfacció de triar entre coses vàlides.
+- Baseline: `2026-09-09-m341-tall` (imatges 31 M · 3 C · 15 X · 7 ND).
+
+### Decisions arquitectòniques clau
+
+**D1. Els lectors escriuen `alternatives` per ranura, i el que ja escrivien no canvia.** Skills `g3dt-llegir-fotos` i
+`g3dt-llegir-figures`: pas nou al procediment («fins a 3 candidats MÉS per forat/ranura, per ordre de preferència,
+amb raó curta; mai el triat») i camp `alternatives` a la sortida. `validate_selection` dels dos lectors els neteja
+(índex → candidat; fora el triat del mateix forat, els repetits i els que no són candidats; màxim 3; a figures, el
+mateix (candidat, retall) que el triat tampoc) i `write_selection` els desa a `photo_selection.json` /
+`figure_selection.json` com a clau `alternatives` (els consumidors existents la ignoren: `apply_selection` i
+`_load_user_photo_selection` només llegeixen les ranures). La proposta de situació doble del lector (`situacio`, ja
+existent) és l'alternativa de la ranura de situació: només s'aplica quan l'Eva la tria (`user`), com des de la 7b.
+
+**D2. Un endpoint per ranura, amb la tria actual, les alternatives i la raó: `GET /api/alternatives/{p}`.** Fotos
+(5 forats) de `photo_selection.json`; figures (`fig_assaigs`, `fig_projecte_1/2`, `fig_situacio`) de
+`figure_selection.json`. Per figura, cada candidat es renderitza amb `lector_figures.render_entry` a la mateixa cau
+`figsel_*` que fa servir el generador (tag `alt`), i la miniatura surt per `/api/figure-preview`; les fotos per
+`/api/thumbnail`. `_entry_ok` només accepta entrades amb `src` dins el projecte o dins la cau d'imatges (cap camí
+arbitrari des del navegador). Quan l'Eva ja ha triat, la raó del lector no es mostra sota una tria que no és la seva, i
+la tria del lector torna com a primera alternativa («la tria del lector: …»): mai desapareix del tot.
+`POST …/choose` desa UNA ranura amb `source: user`, conserva la resta (alternatives, `_lector`) i guarda la tria
+original del lector a `_lector_selection` la primera vegada. Regles: una foto només en un forat (si va a `site_1`
+surt de `dpsh`); el mateix (candidat, retall) no s'imprimeix dues vegades (si va a assaigs surt del projecte);
+`fig_projecte_k` sense peu rep «Detall del projecte. Font: Projecte.»; `entry: null` = cap imatge (o la composició
+automàtica a la situació).
+
+**D3. La zona és filla directa de `<body>` i només és visible a la pestanya d'imatges.** Primera prova: dins el
+contenidor de pestanyes la zona amidava 0 × 0 (`#dataContent` és `display: none` fins que es tria projecte, i un
+`position: fixed` dins d'un avantpassat amagat no es pinta). Ara és fora de tot. Es mostra amb la pestanya
+«Fotografies» i s'amaga a les altres: un requadre de 30vw × 30vh dalt a la dreta taparia camps de les pestanyes de
+dades. Contingut: capçalera (ranura + insígnia «Tria del lector» / «Tria de l'Eva» / «Automàtic»), l'actual amb
+miniatura, peu i raó; l'avís «El lector no ha trobat cap imatge vàlida per a aquest forat» quan `cap_font`; les
+alternatives com a targetes (miniatura 240 px, peu, raó) que es trien amb un clic; a les figures, un selector «Posa
+l'alternativa com a» (assaigs / projecte 1 / projecte 2); «Cap imatge en aquesta ranura» i, a la situació,
+«Composició automàtica del full». Sense hover, un resum per ranura amb el nombre d'alternatives. Cada targeta de
+ranura de la pestanya porta `onmouseenter="showAlternatives(...)"`; després d'una tria es refresca tot.
+
+**D4. El calaix de figures llegeix la selecció, i la cau global es filtra per projecte.** `_collect_figure_previews`
+posa primer el que `apply_selection` aplicaria (assaigs, projecte 1-2, situació doble de l'Eva), amb «cap figura»
+explícit quan la selecció diu cap; les claus de ranura són les de la plantilla de la 7a (`fig_situacio`,
+`fig_projecte_1/2`, `fig_assaigs`; `REPORT_SLOTS` també). Per a la resta de prefixos (`situacio_*`, `tall_crop2_*`,
+`geological_composite_*`…) només valen els fitxers d'AQUEST projecte: el hash de contingut (10 hex) dels PDF font o
+els parells UTM dels JSON de `validation/` han de ser al nom. Vist amb Tulipa: el calaix li ensenyava el retall
+d'assaigs d'ANCILES (`plan_crop_4001679…`, «el més recent» del prefix): la cau compartida del bloc 4, encara viva al
+wizard. I `list_photos` fa la mateixa cerca de carpeta que el lector (`find_photos_dir`): amb `FOTOGRAFIA/` en
+singular no llistava cap foto ni trobava la seleccionada.
+
+**D5. Cap passada nova dels lectors sobre el corpus.** Repetir-los als 7 per tenir-hi `alternatives` mouria tries
+per variància i embrutaria la mesura sense guany (regla: no repetir passades). Verificació end-to-end amb un
+projecte real FORA del corpus (Tulipa, dues cases): lector de fotos amb alternatives (DPSH ×3, materials ×3, amb
+raons com «F-2 de l'annex, l'altra lectura del mateix punt»), servidor amb `G3DT_PROJECTS_DIR` e2e, Playwright:
+hover → zona amb l'actual i 3 alternatives; clic → `photo_selection.json` amb `source: user`, `dpsh` = l'alternativa,
+`_lector_selection` amb la tria del lector; pestanya a «Selecció manual»; la zona passa a «Tria de l'Eva» amb la tria
+del lector com a primera alternativa. El lector de figures no troba candidats a Tulipa (estructura amb dues cases):
+la via de figures queda coberta pels tests d'API. Les alternatives dels 7 del corpus arribaran amb la propera passada
+que es faci per un altre motiu.
+
+### Implementació
+
+- `automation/imatges/lector_fotos.py` (`validate_alternatives`, `MAX_ALTERNATIVES`, `write_selection`),
+  `automation/imatges/lector_figures.py` (`validate_selection`, `write_selection`); skills ×2.
+- `web/api.py`: `list_alternatives`, `choose_alternative` (`AlternativeChoice`), `_entry_ok`, `_fig_thumb_url`,
+  `_figures_from_selection`, `_project_cache_keys`, `_SELECTION_SLOTS`, `_CACHE_PREFIX_TO_SLOT` amb les claus noves,
+  `list_photos` amb `find_photos_dir`.
+- `templates/validation/review.html`: `#altZone` (CSS + HTML sota `<body>`), `REPORT_SLOTS`, hover a les ranures,
+  «cap figura» en gris, `loadAlternatives` / `updateAltBadges` / `showSlotAlternatives` / `hideAltZone` / `chooseAlternative`,
+  `switchTab` mostra/amaga la zona.
+- Tests: `tests/test_alternatives_api.py` (6: llista, tria de foto, tria de figura amb ranura canviable i situació
+  doble, calaix amb selecció, `FOTOGRAFIA`, filtre de cau per projecte), +1 a `test_peca2_lector_fotos.py`, +1 a
+  `test_peca7b_lector_figures.py`.
+
+### Validació empírica
+
+- Run `2026-09-09-m341-accio4` vs `2026-09-09-m341-tall`: **titulars, escalars per projecte i imatges IDÈNTICS** (el
+  codi de l'acció 4 no toca cap cel·la; la contaminació del Cadastre és la mateixa als dos).
+- End-to-end Tulipa (D5): 13 fotos llistades (abans 0), figures del calaix: només la cullera estàtica (abans el retall
+  d'Anciles); hover i tria verificats amb Playwright; JSON resultant comprovat a mà.
+
+### Tests
+
++8. Suite: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` + 21 de `test_cadastre_progressive` (avaria del Cadastre 15:15-19:00) / 2513 verds / 5 omesos (231 s).
+
+### Latència / cost
+
+- Tulipa: lector de fotos 145 s (13 candidats, 2 annexos de fotografies; primera crida amb `alternatives`), 0 tokens
+  per a la resta. `GET /api/alternatives` renderitza cada alternativa de figura una vegada (cau `figsel_alt_*`).
+
+### Limitacions conegudes
+
+- Les seleccions dels 7 del corpus NO tenen `alternatives` (D5): a la zona hi surt l'actual amb la raó i «Cap
+  alternativa del lector»; les tindran a la propera passada.
+- La zona només és visible a la pestanya d'imatges (D3). Si el Josep la vol a tot el wizard, és una línia
+  (`switchTab`), però taparia camps.
+- La ranura de situació no té alternatives pròpies més enllà de la proposta d'insets del lector; l'automàtica es
+  descriu amb text («Els dos mapes del full de situació»), sense miniatura pròpia a la zona (la té a la pestanya).
+- `_project_cache_keys` llegeix els PDF font del projecte a cada `GET /api/photos` (hash de contingut): desenes de
+  ms; sense cau. Els mapes geològics només s'identifiquen si algun JSON de `validation/` porta `utm_x`/`utm_y`.
+- Cas límit del camí antic: `ImageManager.select_photos_ai` només respecta `source: user`; si la selecció del lector
+  té tots els forats a `null` (`_load_user_photo_selection` → `None`) i la cau IA no s'entén, la selecció IA la
+  REESCRIU i es perden `alternatives` i `_lector`. PENDENTS §3 #9.
+- «Restablir selecció IA» de la pestanya continua esborrant `photo_selection.json` sencer (també les alternatives del
+  lector); `_lector_selection` només serveix a l'endpoint. Pendent: «tornar a la tria del lector» a la zona.
+
+### GO/NO-GO
+
+- ✅ Alternatives visibles amb un clic; tria en un clic amb `source: user`; la tria del lector es conserva.
+- ✅ Mesura idèntica; 7 tests d'API + 2 dels lectors; skills neutres (`grep` dels 7 noms = 0).
+- ✅ **Re-mesura amb el Cadastre viu, `2026-09-09-m341-nit` (nit): escalars IDÈNTICS a `altres-b` (315 M · 44 C ·
+  120 X · 31 ND → 75 %; `adjacent_intro` torna a 2 M · 5 C) i imatges IDÈNTIQUES a `-tall` (31 · 3 · 15 · 7, 69 %).
+  És la REFERÈNCIA per a les dues coses.** Suite: 31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2534 verds / 5 omesos (182 s, Cadastre viu). Commitejat `06d7541` (codi) · `9f9bc91` (mesura) · docs al tancament, GO del Josep.
+- ✅ Provat pel Josep amb Bell-lloc (set correccions aplicades el mateix vespre). ⏳ Que l'Eva ho provi (és per a ella).
+
+### Següents passos
+
+- Passada dels lectors amb `alternatives` quan toqui (p. ex. amb les respostes de l'Eva a les preguntes 30-38).
+- «Tornar a la tria del lector» a la zona; miniatura de la composició automàtica de situació.
+- Re-mesura d'escalars i els 21 tests del Cadastre quan torni (avaria 15:15-19:00).
+
+### Correcció del Josep (nit), després de veure-ho en local
+
+- **La zona apareixia abans de triar projecte i tapava «Començar»**, i la pestanya d'imatges pintava el que trobava
+  als JSON abans de llançar el pipeline. «Entenc que és perquè tenim memòria, però no té sentit.» Ara: `imagesReadyFor`
+  s'omple en LLANÇAR el pipeline del projecte en aquesta sessió (`onProjectChange`: triar el projecte és llançar-lo,
+  per les dues vies; també a `showWizardContent` / `renderData`) — no en acabar, perquè un pipeline que falli a mig
+  camí (Cadastre caigut) no amagui les imatges; abans d'això la pestanya d'imatges mostra «Les imatges de l'informe es
+  mostren un cop llançat el pipeline del projecte (Començar)» i la zona no existeix.
+- **Hover no; clic.** El hover era indicació seva, però ell mateix el retira: en anar del camp a la zona flotant el
+  hover s'acaba i «s'apagaria» (la meva implementació no l'apagava, però el model mental és el que compta). Ara cada
+  ranura porta un botó **«Alternatives (n)»** a la capçalera (el recompte es veu sense clicar: «(3)», «(cap)»,
+  «(cap font)»; amagat a les ranures automàtiques) i la zona s'obre en clicar-lo. D3 queda substituït en el
+  disparador; el contingut de la zona no canvia.
+- **Aspa per tancar.** `✕` a la capçalera de la zona (`hideAltZone`); també es tanca en canviar de pestanya o de
+  projecte. Cap hover a `review.html` (`grep onmouseenter="showAlternatives` = 0).
+- **Col·lisió de noms trobada en verificar-ho:** `review.html` ja tenia `showAlternatives(field, alts, anchor)` (el
+  popup «+N» dels candidats de text, peça 3 de la narrativa) i la meva funció homònima la trepitjava (la declaració
+  posterior guanya): el «+N» dels camps de text hauria obert la zona d'imatges, i la zona sortia oberta en carregar.
+  Ara la de les ranures es diu `showSlotAlternatives`. Abans d'afegir una funció global a `review.html` (9.000 línies),
+  `grep "function <nom>("`.
+- **La pestanya no es veia.** Producció v1 (2026-05-04) amaga per CSS totes les pestanyes que no són el Wizard,
+  la de fotografies inclosa (`#tab-photos { display: none }`): l'Eva no hi hauria arribat mai. Ara és visible i es
+  diu «Imatges» (hi ha figures i fotos). Les altres (SmartScan, Explicació, Dev, Pipeline, AI) continuen amagades.
+- **«A imatges sí que hi ha popup, no a la pestanya wizard.»** La indicació original era «el camp del formulari del
+  wizard»: ara el formulari té una secció **«Imatges de l'informe»** (abans de «Guardar Dades»), una fila per ranura
+  amb la miniatura de l'actual (o «cap imatge» / «cap font» / «automàtic»), la font (tria del lector / de l'Eva), el
+  peu i la raó, i el mateix botó «Alternatives (n)» que obre la mateixa zona flotant (`renderWizardImages`; la zona
+  també és vàlida a la pestanya Wizard). La pestanya «Imatges» queda com a vista completa (totes les fotos del
+  projecte, figures automàtiques).
+- **«Quan escullo una alternativa, totes les imatges es categoritzen com "tria de l'Eva".»** La font es desa per
+  fitxer (`source: user`) i l'endpoint la retornava igual a totes les ranures. Ara la font és PER RANURA: «tria de
+  l'Eva» només on el que hi ha no és el que va triar el lector (`_lector_selection`, que es guarda a la primera tria);
+  la resta continua «tria del lector» amb la seva raó. La situació doble és sempre «tria de l'Eva» quan és activa (la
+  proposta del lector no s'aplica sola) i «automàtic» si no.
+- **«A la pestanya wizard apareix la seleccionada anterior; alguna cosa es trenca amb "cap imatge".»** Una sola
+  causa: `loadPhotos` cridava `loadAlternatives()` sense `await`, i `renderWizardImages` es pintava amb `altData`
+  antic; el canvi es veia a la SEGÜENT acció (per això «cap imatge» a vista 1 semblava aplicar-se en clicar a
+  vista 2). Ara `loadPhotos` espera les alternatives i `chooseAlternative` buida `altData` abans de refrescar. Hi
+  contribuïa la regla «una foto només pot anar a un forat»: l'alternativa de vista 1 i la de vista 2 eren la mateixa
+  foto, i triar-la per a vista 2 la treia de vista 1 sense dir res; ara la resposta porta `cleared` i el missatge
+  ho diu («s'ha tret de "Foto vista general 1"»).
+- **«A "Figura - Projecte 2" no em deixa seleccionar cap de les dues ofertes.»** Les figures del projecte són una
+  LLISTA ORDENADA (la 2 va darrere de la 1): amb la 1 buida, la tria per a la 2 quedava a la posició 1 sense dir-ho, i
+  l'altra «oferta» era la mateixa figura de la 1, que no feia res. Ara la resposta porta `placed` i el missatge diu
+  «Posada com a "Figura del projecte 1": les figures del projecte van per ordre»; triar la figura de l'altra posició
+  les intercanvia (només s'ofereix quan les dues són plenes); les alternatives ja usades no es repeteixen.
+- **Per veure el canvi cal `Ctrl+F5`**: `review.html` se serveix estàtic amb ETag i el navegador el pot tenir en
+  memòria cau; amb la versió antiga el Josep veia «el desplegable de sempre» (el «+N» dels camps de text) i cap botó.
+- Sense canvis de Python: la suite no es repeteix. Verificat en local amb Playwright: càrrega neta sense zona; projecte
+  sense pipeline → placeholder; pipeline fet → ranures amb «Alternatives (3)», clic → zona, ✕ → tancada.
+
+*Fi entrada 2026-09-09 (4). Acció 4: alternatives dels lectors al wizard (botó «Alternatives (n)» per ranura, zona flotant amb aspa, només després del pipeline); calaix per selecció; `FOTOGRAFIA` i cau per projecte arreglats.*
+
+## 2026-09-09 (5) — Wizard: el stepper marcava «Llest» quan tots els passos havien COMENÇAT, no quan havien ACABAT (la visió continuava)
+
+### Context
+
+Josep, en llançar Bell-lloc (nit): «El botó d'estat "Llest" s'activa abans que el Visió acabi; és una incongruència.
+Llest només es mostra activat quan tots els anteriors han acabat.»
+
+### Decisions arquitectòniques clau
+
+**D1. `finishStepper` respecta una visió en marxa.** El SSE del pipeline envia `prefills` quan la part Python ha
+acabat, però la visió (Fase 1, per API o `claude -p`) pot continuar en segon pla; el gestor de `prefills` cridava
+`finishStepper()`, que marcava els 5 passos com a fets. Ara, si `step-vision` és `active` en arribar `prefills`,
+«Visió» es queda activa, «Llest» queda pendent i el connector Visió → Llest no s'encén; si els prefills ja porten
+`_vision_status` complet (planol, dpsh, sondeig, docs), la visió es dona per acabada. Alternativa descartada: esperar
+a mostrar el wizard fins que la visió acabi (l'Eva perdria minuts sense res a la pantalla).
+
+**D2. Qui tanca «Llest» és qui sap que la visió ha acabat.** `markVisionDone()` (Visió i Llest fets, connector
+encès) es crida des del sondeig `checkVisionFiles` quan el procés de visió ha acabat (`process.running` fals amb
+codi de retorn). Si a `prefills` la visió encara corre, s'arrenca aquest sondeig (`startVisionPolling`) també des del
+flux del pipeline, no només des del botó manual.
+
+### Implementació
+
+`templates/validation/review.html`: `finishStepper`, `markVisionDone`, gestor de `prefills`, `checkVisionFiles`.
+Sense Python. Verificació: amb Bell-lloc en local (el Josep) després de `Ctrl+F5`.
+
+### Limitacions conegudes
+
+- Si el procés de visió mor sense codi de retorn (`_process` absent), el sondeig arriba al temps màxim (300 s) i
+  «Llest» es queda pendent amb l'avís de temps màxim: és el comportament honest, no un defecte.
+
+### GO/NO-GO
+
+- ⏳ Que el Josep ho vegi amb un projecte on la visió trigui més que els prefills. ✅ Commitejat amb l'acció 4 (`06d7541`).
+
+*Fi entrada 2026-09-09 (5). Stepper: «Llest» només quan la visió ha acabat.*

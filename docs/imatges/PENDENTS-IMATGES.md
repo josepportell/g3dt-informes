@@ -94,6 +94,11 @@ que resta és judici de l'Eva (preguntes 30-32, 34, 37, 38) i opcions al wizard,
 **`2026-09-09-m341-altres-b`**: imatges **30 M · 4 C · 15 X · 7 ND → 69 %**, `fix` 81 M · 21 X → 79 %, escalars 315 M
 (75 %), taules intactes; cap altra cel·la moguda.
 
+**Acció 4 FETA (2026-09-09 tarda-4, DECISION-LOG 2026-09-09 (4)):** zona fixa del wizard amb les alternatives dels
+lectors (hover → 2-3 candidats amb raó, tria en un clic amb `source: user`); el calaix de figures llegeix
+`figure_selection.json`; `FOTOGRAFIA` en singular i cau global filtrada per projecte. Mesura idèntica
+(`2026-09-09-m341-accio4` = `-tall`). Pendents §3 #7-#8.
+
 **Acció 3 FETA (2026-09-09 tarda, DECISION-LOG 2026-09-09 (3)):** estudi del retall del tall als 7 (rectangle de
 l'Eva per NCC vs el nostre, mm a mm): 2 C estètiques (marge blanc) i 2 defectes nostres (§0 #12-#13). Run
 **`2026-09-09-m341-tall`**: `fig_tall` 3 M · 4 C → **4 M · 3 C**, imatges **31 M · 3 C · 15 X · 7 ND (69 %)**; escalars
@@ -210,6 +215,9 @@ només mouen `adjacent_intro` ×2 per l'avaria del Cadastre (referència d'escal
 | 3 | **Descripció textual dels exemplars** | La llibreria `docs/imatges/veritat/` té les imatges i el peu, però no la descripció per exemplar que el pas 2 va decidir (què s'hi veu, com està compost). El lector de fotos ja funciona sense, però les figures compostes la necessitaran. | S |
 | 4 | **Text fix de Rubí a la plantilla** | Dins el bucle de nivells s'imprimeix a TOTS els projectes: «Aquest materials s'associa als materials de la unitat **NMgo**, amb un tram superficial alterat…». És la mateixa família de risc que el pastís de granulometria (ja tret): text d'un projecte imprès a tots. No és una imatge, però va sortir mirant-les. | S |
 | 5 | **Barra d'escala al tall** | Mesurat 2026-09-09 (acció 3): la figura de l'Eva arriba a la barra només a Vilanova (+6,7 mm a baix); el nostre retall no la inclou mai (és a més de 5 mm de la secció). Estètic: sempre igual. | — |
+| 7 | **`alternatives` als 7 del corpus** | Acció 4 (2026-09-09): els lectors ja escriuen 2-3 candidats per ranura, però les seleccions dels 7 signats són d'abans (no es repeteixen passades per variància). A la zona del wizard hi surt l'actual amb la raó i «Cap alternativa del lector». Les tindran a la propera passada que es faci per un altre motiu. | 0 |
+| 8 | **«Tornar a la tria del lector» a la zona** | `POST /api/alternatives/{p}/choose` guarda `_lector_selection` la primera vegada que l'Eva canvia una ranura, i la tria del lector torna com a alternativa; però «Restablir selecció IA» de la pestanya esborra `photo_selection.json` sencer (alternatives incloses). Un botó que restauri `_lector_selection` i torni a `source: lector`. | S |
+| 9 | **`select_photos_ai` pot reescriure la selecció del lector** | Només respecta `source: user`. Si la del lector té tots els forats a `null` i la cau IA no s'entén, la selecció IA antiga la reescriu (es perden `alternatives` i `_lector`). Tractar `lector` com `user` allà, o retirar el camí IA antic quan el lector sigui al pipeline. | S |
 | 6 | **`fig_situacio_num` a la veritat** (abans `fig_cadastre_num`) | A Castellar i Rubí l'extractor de numeració no aparella el peu de la situació (ratio < 0,5 per la cua entre parèntesis amb la font). Límit de l'extractor del bloc 4, no de les imatges. Igual amb els noms de la peça 7a. | S |
 
 ## 4. Bloqueigs de fons

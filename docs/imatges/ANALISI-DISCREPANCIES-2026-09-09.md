@@ -202,7 +202,7 @@ per figura, i que l'agregat el mostri al costat del hash. Cost S. No canvia el p
 | 1 | PNG d'`ALTRES` com a candidats del lector de fotos — ✅ **FETA 2026-09-09** (DECISION-LOG 2026-09-09 (2): +1 vista de Rubí; de pas, aparellament amb l'annex invariant a la rotació) | 2.3 | XS | +1 (Rubí vista) | no |
 | 2 | Plantilla: una foto de materials per punt | 2.2 | S-M | +2 ND → M | confirmar (33) |
 | 3 | Estudi del retall del tall als 7 (rectangle de l'Eva vs el nostre) — ✅ **FETA 2026-09-09** (DECISION-LOG 2026-09-09 (3): 2 C eren defecte nostre → M; 2 C són el marge blanc de l'Eva, es queden; Bell-lloc M → C per «(msnm)» sencer) | 2.4 | M, 0 tokens | fins a +4 C → M | no |
-| 4 | Wizard: pestanya de figures i fotos amb els candidats del lector (2-3 per ranura), ranura canviable, «cap font» | 2.1, 2.6, 2.7 | M-L | fins a +10 si ella clica | sí (és ella qui tria) |
+| 4 | Wizard: pestanya de figures i fotos amb els candidats del lector (2-3 per ranura), ranura canviable, «cap font» — ✅ **FETA 2026-09-09** (DECISION-LOG 2026-09-09 (4): zona fixa amb hover; el guany depèn que l'Eva la faci servir) | 2.1, 2.6, 2.7 | M-L | fins a +10 si ella clica | sí (és ella qui tria) |
 | 5 | Workflow amb l'Eva: desar a `ALTRES` el geològic i qualsevol figura composta (com ja fa a 3 de 7) | 2.5 | 0 | +4-5 | sí |
 | 6 | Preguntes 30-34, 37-38 amb el Josep | 2.1, 2.5, 2.6, 2.7 | 0 | desbloqueja regles o confirma que no n'hi ha | sí |
 | 7 | Retall pel marc dibuixat (situació) i retall ajustat (lector) | 2.4 | S | +1-3 X → C/M | no |
