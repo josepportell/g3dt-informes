@@ -1,0 +1,191 @@
+{
+ "rows": [
+  {
+   "n": 1,
+   "slot_eva": "fig_situacio",
+   "caption": "Figura 1. Vista de la zona en estudio. Fuente: Sede electrónica del catastro.",
+   "file_eva": "01_fig_situacio_figura-1-vista-de-la-zona-en-estudio-fue.png",
+   "ours_slot": "fig_situacio_image_1",
+   "file_ours": "situacio_4001679_plano de situación_ecd73dd4b5.png",
+   "status": "MATCH",
+   "phash_d": 10,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 2,
+   "slot_eva": "fig_projecte",
+   "caption": "Figura 2. Detalle del plano topográfico del emplazamiento facilitado. Fuente: Proyecto.",
+   "file_eva": "02_fig_projecte_figura-2-detalle-del-plano-topografico-d.png",
+   "ours_slot": "fig_projecte_image_1",
+   "file_ours": "figsel_projecte1_IV_PLANOS_p25_949006971c_0.030-0.140-0.840-0.480.jpg",
+   "status": "MISMATCH",
+   "phash_d": 30,
+   "ncc": 0.232,
+   "psr": 4.9,
+   "ncc_raw": 0.284,
+   "scale": 0.225,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 3,
+   "slot_eva": "fig_projecte",
+   "caption": "Figura 3. Detalle de las viviendas prevista. Fuente: Proyecto.",
+   "file_eva": "03_fig_projecte_figura-3-detalle-de-las-viviendas-previs.png",
+   "ours_slot": null,
+   "file_ours": null,
+   "status": "NO_DATA",
+   "phash_d": null,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": null
+  },
+  {
+   "n": 4,
+   "slot_eva": "fig_assaigs",
+   "caption": "Figura 4. Situación de los ensayos realizados.",
+   "file_eva": "04_fig_assaigs_figura-4-situacion-de-los-ensayos-realiz.png",
+   "ours_slot": "fig_assaigs_image",
+   "file_ours": "figsel_assaigs_plan_crop_4001679_plano de sit_p0_325851510a_sencer.jpg",
+   "status": "MATCH",
+   "phash_d": 6,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 5,
+   "slot_eva": "foto_dpsh",
+   "caption": "Fotografía 1. Detalle del emplazamiento de la máquina realizando uno de los ensayos de pen",
+   "file_eva": "05_foto_dpsh_fotografia-1-detalle-del-emplazamiento-d.jpeg",
+   "ours_slot": "photo_dpsh_image",
+   "file_ours": "P1.jpeg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 6,
+   "slot_eva": "foto_sondeig",
+   "caption": "Fotografía 2. Detalle del emplazamiento de la máquina realizando uno d ellos sondeos a rot",
+   "file_eva": "06_foto_sondeig_fotografia-2-detalle-del-emplazamiento-d.jpeg",
+   "ours_slot": "photo_sondeig_image",
+   "file_ours": "EMPL S1.jpeg",
+   "status": "MISMATCH",
+   "phash_d": 30,
+   "ncc": 0.231,
+   "psr": 3.7,
+   "ncc_raw": 0.374,
+   "scale": 0.308,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 8,
+   "slot_eva": "fig_geologic",
+   "caption": "Figura 6. Mapa geológico a escala 1:1.000.000 de la zona de estudio: Fuente IGME.",
+   "file_eva": "08_fig_geologic_figura-6-mapa-geologico-a-escala-1-1-000.png",
+   "ours_slot": null,
+   "file_ours": null,
+   "status": "NO_DATA",
+   "phash_d": null,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": null
+  },
+  {
+   "n": 9,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografía 3. Detalle de los materiales recuperados durante la realización del sondeo S-1.",
+   "file_eva": "09_foto_materials_fotografia-3-detalle-de-los-materiales-r.jpeg",
+   "ours_slot": "photo_materials_image",
+   "file_ours": "S1.jpeg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 10,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografía 4. Detalle de los materiales recuperados durante la realización del sondeo S-2.",
+   "file_eva": "10_foto_materials_fotografia-4-detalle-de-los-materiales-r.jpeg",
+   "ours_slot": null,
+   "file_ours": null,
+   "status": "NO_DATA",
+   "phash_d": null,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": null
+  },
+  {
+   "n": 11,
+   "slot_eva": "fig_tall",
+   "caption": "Figura 7. Corte de correlación de los materiales descritos en el estudio geotécnico.",
+   "file_eva": "11_fig_tall_figura-7-corte-de-correlacion-de-los-mat.png",
+   "ours_slot": "fig_correlation_image",
+   "file_ours": "tall_crop2_tall_539cdef6e4.jpg",
+   "status": "MATCH",
+   "phash_d": 4,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  }
+ ],
+ "sobrants": [],
+ "sobrants_n": 0,
+ "totals": {
+  "MATCH": 5,
+  "MISMATCH": 2,
+  "NO_DATA": 3,
+  "CLOSE": 0
+ },
+ "by_slot": {
+  "fig_situacio": {
+   "MATCH": 1
+  },
+  "fig_projecte": {
+   "MISMATCH": 1,
+   "NO_DATA": 1
+  },
+  "fig_assaigs": {
+   "MATCH": 1
+  },
+  "foto_dpsh": {
+   "MATCH": 1
+  },
+  "foto_sondeig": {
+   "MISMATCH": 1
+  },
+  "fig_geologic": {
+   "NO_DATA": 1
+  },
+  "foto_materials": {
+   "MATCH": 1,
+   "NO_DATA": 1
+  },
+  "fig_tall": {
+   "MATCH": 1
+  }
+ },
+ "ours_paths": {
+  "fig_situacio_image_1": "/home/josep/g3dt-prod-cache/images/situacio_4001679_plano de situación_ecd73dd4b5.png",
+  "fig_assaigs_image": "/home/josep/g3dt-prod-cache/images/figsel_assaigs_plan_crop_4001679_plano de sit_p0_325851510a_sencer.jpg",
+  "fig_projecte_image_1": "/home/josep/g3dt-prod-cache/images/figsel_projecte1_IV_PLANOS_p25_949006971c_0.030-0.140-0.840-0.480.jpg",
+  "fig_correlation_image": "/home/josep/g3dt-prod-cache/images/tall_crop2_tall_539cdef6e4.jpg",
+  "photo_dpsh_image": "/home/josep/g3dt-e2e/projectes/4001679 ANCILES/FOTOGRAFIES/P1.jpeg",
+  "photo_sondeig_image": "/home/josep/g3dt-e2e/projectes/4001679 ANCILES/FOTOGRAFIES/EMPL S1.jpeg",
+  "photo_materials_image": "/home/josep/g3dt-e2e/projectes/4001679 ANCILES/FOTOGRAFIES/S1.jpeg"
+ }
+}
