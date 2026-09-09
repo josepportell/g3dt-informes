@@ -1,0 +1,32 @@
+{
+ "source": "lector",
+ "assaigs": {
+  "idx": 1,
+  "kind": "annex_crop",
+  "rel": "plan_crop_3001631_plànol de situació_114b0a5148.jpg",
+  "page": null,
+  "src": "/home/josep/g3dt-prod-cache/images/plan_crop_3001631_plànol de situació_114b0a5148.jpg",
+  "crop": null
+ },
+ "projecte": [],
+ "situacio": null,
+ "_lector": {
+  "data": "2026-09-09 12:01",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 37.4,
+  "exclude_slug": "rubi",
+  "lang": "ca",
+  "raons": {
+   "assaigs": "candidat 1 (plan_crop_3001631_plànol de situació…, annex_crop): el retall del full de l'Eva porta P-1, P-2 i P-3 marcats sobre l'ortofoto amb la parcel·la delimitada",
+   "projecte": "candidats 2 i 3 (IMG-20251104-WA0015/16, project_image): només planta i fonamentació del model estàndard 'Mediterráneo' (fulls fotografiats en paper, sense terreny ni cotes de carener/forjat); no hi ha secció, emplaçament sense punts, topogràfic ni diverses tipologies — cap aporta res que la figura d'assaigs no mostri ja"
+  },
+  "confianca": {
+   "assaigs": 0.95,
+   "projecte": 0.85
+  },
+  "cap_font": [],
+  "notes": "és un habitatge unifamiliar (model de catàleg 'Mediterráneo'); els únics documents del projecte són fotos de planta i cimentació en paper, sense secció ni topogràfic — no calen figures del projecte. Situació sempre null (camí determinista).",
+  "warnings": []
+ }
+}

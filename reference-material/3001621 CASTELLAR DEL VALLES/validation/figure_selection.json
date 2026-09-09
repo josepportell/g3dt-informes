@@ -1,0 +1,33 @@
+{
+ "source": "lector",
+ "assaigs": {
+  "idx": 1,
+  "kind": "annex_crop",
+  "rel": "plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+  "page": null,
+  "src": "/home/josep/g3dt-prod-cache/images/plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+  "crop": null
+ },
+ "projecte": [],
+ "situacio": null,
+ "_lector": {
+  "data": "2026-09-09 12:00",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 44.9,
+  "exclude_slug": "castellar",
+  "lang": "ca",
+  "raons": {
+   "assaigs": "candidat 1 (plan_crop_3001621_plànol de situació_7d495516ac.jpg, annex_crop): el retall del full de l'Eva porta P-1, P-2, P-3, P-4 i S-1 marcats sobre l'ortofoto amb la zona d'estudi i les cotes; és el full que ella dibuixa abans del wizard",
+   "projecte": "no hi ha cap plànol del projecte de l'arquitecte a la carpeta: els candidats 2-3 són fotos de camp/expedient (troncs tallats, vista de la parcel·la des de fora) i els candidats 4-15 són PNG compostos per l'Eva (mapes topogràfics i geològics de l'ICGC, ANNEXES/ALTRES), no dibuixos de l'arquitecte; cap aporta una secció, emplaçament o topogràfic facilitat pel projecte"
+  },
+  "confianca": {
+   "assaigs": 0.95
+  },
+  "cap_font": [
+   "projecte"
+  ],
+  "notes": "Aquest projecte no té documentació de l'arquitecte a la carpeta (només fotos de camp i els mapes que l'Eva mateixa ha compost amb ICGC); per tant cap figura de projecte. La situació la fa el camí determinista, no cal decidir-la aquí.",
+  "warnings": []
+ }
+}

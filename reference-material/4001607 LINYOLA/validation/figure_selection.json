@@ -1,0 +1,49 @@
+{
+ "source": "lector",
+ "assaigs": {
+  "idx": 1,
+  "kind": "annex_crop",
+  "rel": "plan_crop_4001607_plànol de situació_a08feb2ffa.jpg",
+  "page": null,
+  "src": "/home/josep/g3dt-prod-cache/images/plan_crop_4001607_plànol de situació_a08feb2ffa.jpg",
+  "crop": null
+ },
+ "projecte": [
+  {
+   "idx": 6,
+   "kind": "project_page",
+   "rel": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+   "page": 2,
+   "src": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/4001607 LINYOLA/validation/_lector_figures/pages/src_2_02B_DG_Silvia_Jaume_7df29e1f09_p2.png",
+   "crop": [
+    0.03,
+    0.03,
+    0.98,
+    0.94
+   ],
+   "caption": "Detall de l'emplaçament de l'habitatge a l'interior de la parcel·la. Font: Projecte."
+  }
+ ],
+ "situacio": null,
+ "_lector": {
+  "data": "2026-09-09 12:03",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 80.2,
+  "exclude_slug": "linyola",
+  "lang": "ca",
+  "raons": {
+   "assaigs": "candidat 1 (plan_crop_4001607_plànol de situació_a08feb2ffa.jpg, annex_crop): el retall del full de l'Eva porta P-1, P-2 i P-3 sobre la planta de l'habitatge, amb cotes; sencer, sense caixetí",
+   "projecte": "candidat 6 (2_02B_DG_Silvia_Jaume.pdf, pàgina 2, 'EMPLAÇAMENT - PARCEL·LA'): la figura d'assaigs (candidat 1) només mostra la planta interior de l'habitatge amb els punts, no la parcel·la sencera; aquest plànol hi afegeix el contorn de l'edifici (magenta) dins la parcel·la, la referència cadastral i la superfície — exactament el cas previst per la regla de l'emplaçament"
+  },
+  "confianca": {
+   "assaigs": 0.95,
+   "projecte": 0.75
+  },
+  "cap_font": [
+   "situacio"
+  ],
+  "notes": "descartades les seccions/alçats (candidats 7-15, plantes 11-12 amb tall vertical i cotes de carener/forjat): informatives però la parcel·la sencera (que l'assaigs no mostra) pesa més i la regla de sobrietat limita a UNA figura de projecte; candidat 16 (Punts de Sondeig, plànol de l'arquitecte amb punts propis) descartat perquè la font d'assaigs ha de ser el retall determinista de l'Eva (candidat 1), no un altre plànol amb punts",
+  "warnings": []
+ }
+}
