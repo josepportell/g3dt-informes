@@ -1,0 +1,8 @@
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+-- spt_ma_tests: or 1 files / prod 1 files · alineades per clau
+ALERTA   spt_ma_tests[0].id prod puja a segur ('SPT-1'); or candidats
+BUIT     spt_ma_tests[0].n30 (or=segur 'R (rebuig)'; prod no_trobat)
+-- soil_levels: or 2 files / prod 3 files
+BUIT     soil_levels[1].a (or=candidats '-1,20'; prod no_trobat)
+TOTALS: {'OK': 26, 'ALERTA': 1, 'BUIT': 2}

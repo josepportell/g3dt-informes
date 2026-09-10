@@ -1,0 +1,27 @@
+cel·les: 59 | iguals (estat+valor): 34 | diferents: 25
+segur: net 37 / referència 38
+  fields.building_type: net=('candidats', 'Habitatge unifamiliar aïllat') | ref=('segur', 'Habitatge unifamiliar aïllat')
+  fields.cota_referencia: net=('candidats', '-4 m (respecte el carrer)') | ref=('candidats', '570,90 msnm (segons el plànol ICGC)')
+  fields.lab_depth: net=('segur', '1,0 - 1,2') | ref=('segur', '-1,00 a -1,20 m')
+  fields.lab_location: net=('candidats', 'S1') | ref=('segur', 'S-1')
+  fields.lab_sample_id: net=('candidats', 'MA1 S1') | ref=('segur', 'MA1 S1')
+  fields.lab_testing_company: net=('segur', 'TPS, Prospecció del Subsòl, SL') | ref=('segur', 'TPS, Prospecció del Subsòl, SL (B64803075)')
+  fields.num_floors: net=('segur', 'PB + 1') | ref=('candidats', 'PB+1')
+  fields.street_address: net=('candidats', 'C/ARBRELLS 18A-18B-20') | ref=('candidats', 'Carrer Arbrells, Nº 18A-18B-20, Castellar del Vallès (Barcelona)')
+  tables.dpsh_tests[0].cota_inici: net=('segur', '-4 m (respecte el carrer)') | ref=('segur', '-4,0 m (respecte el carrer)')
+  tables.dpsh_tests[2].cota_inici: net=('segur', '-4 m (respecte el carrer)') | ref=('segur', '-4,0 m (respecte el carrer)')
+  tables.dpsh_tests[3].cota_inici: net=('segur', '-4 m (respecte el carrer)') | ref=('segur', '-4,0 m (respecte el carrer)')
+  tables.soil_levels[0].a: net=('segur', '0.50') | ref=('segur', '0,50')
+  tables.soil_levels[0].de: net=('segur', '0.00') | ref=('segur', '0,00')
+  tables.soil_levels[1].a: net=('no_trobat', 'None') | ref=('candidats', "fins al fons d'investigació (rebuig DPSH: -1,08/-0,48/-0,76/-1,55 m per punt; sondeig S-1: -1,20 m)")
+  tables.soil_levels[1].de: net=('segur', '0.50') | ref=('segur', '0,50')
+  tables.soil_levels[2].a: net=('candidats', "fins al fons d'investigació (rebuig DPSH: -1,08/-0,48/-0,76/-1,55 m per punt; sondeig S-1: -1,20 m)") | ref=None
+  tables.soil_levels[2].de: net=('candidats', '0,50') | ref=None
+  tables.soil_levels[2].litologia: net=('candidats', 'Roca fracturada') | ref=None
+  tables.soil_levels[2].mostra_del_nivell: net=('candidats', 'True') | ref=None
+  tables.sondeig_tests[0].cota: net=('candidats', '-4 m (respecte el carrer)') | ref=('candidats', '-4 m')
+  tables.sondeig_tests[0].profunditat_assolida: net=('segur', '-1.20') | ref=('segur', '-1,20 m')
+  tables.spt_ma_tests[0].id: net=('segur', 'SPT-1') | ref=('candidats', 'SPT-1')
+  tables.spt_ma_tests[0].litologia: net=('candidats', 'Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.') | ref=('candidats', 'Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)')
+  tables.spt_ma_tests[0].n30: net=('no_trobat', 'None') | ref=('candidats', 'R')
+  tables.spt_ma_tests[0].profunditat: net=('segur', '-1,00 a -1,20') | ref=('segur', '-1,00 a -1,20 m')
