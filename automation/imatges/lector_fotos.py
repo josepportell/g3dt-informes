@@ -487,8 +487,12 @@ def write_selection(project: Path, clean: dict, meta: dict) -> Path:
 
 
 def run(project: Path, *, exclude_slug: str | None = None, model: str | None = None, effort: str = "medium",
-        timeout: int = 420, claude_path: str | None = None, has_sondeig: bool | None = None, dry_run: bool = False) -> dict:
-    """Inventari → fulls → prompt → `claude -p` → validació → `photo_selection.json` (source lector). Retorna un resum."""
+        timeout: int = 420, claude_path: str | None = None, has_sondeig: bool | None = None, dry_run: bool = False,
+        should_cancel=None, extra_meta: dict | None = None) -> dict:
+    """Inventari → fulls → prompt → `claude -p` → validació → `photo_selection.json` (source lector). Retorna un resum.
+
+    `should_cancel` (callable → bool) va al runner: el job del wizard mata la crida en aturar. `extra_meta` s'afegeix a
+    `_lector` del fitxer de selecció (el servei hi guarda l'empremta del projecte per no repetir la crida)."""
     project = Path(project)
     work = project / "validation" / SUBDIR; work.mkdir(parents=True, exist_ok=True)
     inv = inventory(project, work)
@@ -512,9 +516,13 @@ def run(project: Path, *, exclude_slug: str | None = None, model: str | None = N
         out_json.unlink()
     t0 = time.monotonic()
     call = R._run_claude(claude_path=cpath, prompt=prompt, timeout=timeout, log_path=work / "claude.log",
-                         should_cancel=None, model=cfg_model, effort=effort)
-    summary.update({"rc": call.get("rc"), "timeout": call.get("timeout"), "elapsed_s": round(time.monotonic() - t0, 1),
+                         should_cancel=should_cancel, model=cfg_model, effort=effort)
+    summary.update({"rc": call.get("rc"), "timeout": call.get("timeout"), "cancelled": bool(call.get("cancelled")),
+                    "elapsed_s": round(time.monotonic() - t0, 1),
                     "model": cfg_model, "effort": effort, "cli": call.get("cli")})
+    if call.get("cancelled"):
+        summary["error"] = "aturat"
+        return summary
     raw = None
     if out_json.exists():
         raw = parse_json_text(out_json.read_text(encoding="utf-8", errors="replace"))
@@ -530,6 +538,7 @@ def run(project: Path, *, exclude_slug: str | None = None, model: str | None = N
     meta = {"data": time.strftime("%Y-%m-%d %H:%M"), "model": cfg_model, "effort": effort, "elapsed_s": summary["elapsed_s"],
             "exclude_slug": exclude_slug, "raons": raw.get("raons"), "confianca": raw.get("confianca"),
             "cap_font": raw.get("cap_font"), "notes": raw.get("notes"), "warnings": warnings}
+    meta.update(extra_meta or {})
     summary["selection"] = clean
     summary["path"] = str(write_selection(project, clean, meta))
     return summary

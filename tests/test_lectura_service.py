@@ -80,6 +80,16 @@ def fake_project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[str, 
 
 
 @pytest.fixture(autouse=True)
+def _no_real_image_lectors(monkeypatch: pytest.MonkeyPatch):
+    """Els lectors d'imatges (2026-09-10) corren dins el job després de la lectura;
+    aquí, per defecte, «sense candidats» — cap `claude -p`, cap full de contacte."""
+    import automation.imatges.lector_figures as LG
+    import automation.imatges.lector_fotos as LF
+    monkeypatch.setattr(LF, "run", lambda project, **kw: {"skipped": "test", "n_candidats": 0})
+    monkeypatch.setattr(LG, "run", lambda project, **kw: {"skipped": "test", "n_candidats": 0})
+
+
+@pytest.fixture(autouse=True)
 def _no_real_llm_or_vision(monkeypatch: pytest.MonkeyPatch):
     """Xarxa de seguretat: buida ANTHROPIC_API_KEY perquè
     `_synthesize_with_llm` (cridada dins `_merge_prefills`, real als tests)
@@ -1132,3 +1142,196 @@ def test_a_sync_that_fails_outright_is_still_a_404(network_project, monkeypatch)
     r = TestClient(app).post(f"/api/jobs/{network_project[2]}", params={"button": "enllestir"})
 
     assert r.status_code == 404
+
+
+# ---------------------------------------------------------------------------
+# (N) Lectors d'imatges dins el job (2026-09-10, preparació del llançament §10.3b):
+# una crida per lector després de la lectura i abans del merge; l'Eva mana;
+# mateix contingut = cap crida nova; un lector que falla no atura el job.
+# ---------------------------------------------------------------------------
+
+
+def _install_fake_lectors(monkeypatch, *, fotos: str = "ok", figures: str = "ok") -> list:
+    """`ok` escriu el fitxer de selecció amb `source: lector` (+ `extra_meta` a `_lector`),
+    `raise` llança, `cancelled` torna com el runner quan el mata l'aturada."""
+    import automation.imatges.lector_figures as LG
+    import automation.imatges.lector_fotos as LF
+    calls: list = []
+
+    def _mk(name, module, behaviour):
+        def _fake(project, **kw):
+            calls.append((name, kw))
+            if behaviour == "raise":
+                raise RuntimeError(f"{name} boom")
+            if behaviour == "cancelled":
+                return {"cancelled": True, "error": "aturat"}
+            vdir = Path(project) / "validation"
+            vdir.mkdir(exist_ok=True)
+            sel = vdir / module.SELECTION
+            sel.write_text(json.dumps({"source": "lector", "_lector": dict(kw.get("extra_meta") or {})}), encoding="utf-8")
+            return {"path": str(sel), "n_candidats": 3}
+        return _fake
+
+    monkeypatch.setattr(LF, "run", _mk("fotos", LF, fotos))
+    monkeypatch.setattr(LG, "run", _mk("figures", LG, figures))
+    return calls
+
+
+def _happy_lectura(monkeypatch):
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: None)
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+    monkeypatch.setattr(lectura_service, "run_lectura", _make_fake_run_lectura(decisions=_load_escalars_fixture()))
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+
+
+def test_image_lectors_run_after_lectura_and_before_prefills(fake_project, monkeypatch):
+    project_name, project_path = fake_project
+    (project_path / "FOTOS").mkdir()
+    (project_path / "FOTOS" / "a.jpg").write_bytes(b"x" * 10)
+    _happy_lectura(monkeypatch)
+    calls = _install_fake_lectors(monkeypatch)
+
+    events = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))
+    names = [n for n, _ in events]
+
+    # Ordre: lectura_fi < lector fotos < lector figures < merge_inici < prefills.
+    i_fi, i_merge, i_pref = names.index("lectura_fi"), names.index("merge_inici"), names.index("prefills")
+    inicis = [i for i, n in enumerate(names) if n == "lector_imatges_inici"]
+    fis = [i for i, n in enumerate(names) if n == "lector_imatges_fi"]
+    assert len(inicis) == 2 and len(fis) == 2
+    assert i_fi < inicis[0] < fis[0] < inicis[1] < fis[1] < i_merge < i_pref
+
+    payloads = [p for n, p in events if n == "lector_imatges_fi"]
+    assert [p["lector"] for p in payloads] == ["fotos", "figures"]
+    assert all(p["status"] == "ok" and p["n_candidats"] == 3 and "elapsed_s" in p for p in payloads)
+    assert [p["n"] for n, p in events if n == "lector_imatges_inici"] == [1, 2]
+    assert all(p["of"] == 2 for n, p in events if n == "lector_imatges_inici")
+
+    # Cada lector: UNA crida, amb l'esforç mesurat, el topall propi, l'aturada i l'empremta.
+    assert [c[0] for c in calls] == ["fotos", "figures"]
+    for name, kw in calls:
+        assert kw["effort"] == "medium"
+        assert kw["timeout"] == (420 if name == "fotos" else 600)
+        assert callable(kw["should_cancel"])
+        assert kw["extra_meta"]["fingerprint"] == lectura_service._project_fingerprint(project_path)
+    assert json.loads((project_path / "validation" / "photo_selection.json").read_text())["source"] == "lector"
+    assert json.loads((project_path / "validation" / "figure_selection.json").read_text())["source"] == "lector"
+
+
+def test_image_lectors_skip_when_eva_has_chosen(fake_project, monkeypatch):
+    project_name, project_path = fake_project
+    (project_path / "validation").mkdir()
+    (project_path / "validation" / "photo_selection.json").write_text(json.dumps({"source": "user", "site_1": "x.jpg"}))
+    _happy_lectura(monkeypatch)
+    calls = _install_fake_lectors(monkeypatch)
+
+    events = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))
+    payloads = {p["lector"]: p for n, p in events if n == "lector_imatges_fi"}
+
+    assert payloads["fotos"]["status"] == "skipped" and payloads["fotos"]["reason"] == "user"
+    assert payloads["figures"]["status"] == "ok"
+    assert [c[0] for c in calls] == ["figures"]
+    # La tria de l'Eva no s'ha tocat.
+    assert json.loads((project_path / "validation" / "photo_selection.json").read_text())["source"] == "user"
+
+
+def test_image_lectors_skip_when_project_content_unchanged_and_rerun_when_it_changes(fake_project, monkeypatch):
+    project_name, project_path = fake_project
+    (project_path / "PENETROS.pdf").write_bytes(b"%PDF")
+    _happy_lectura(monkeypatch)
+    calls = _install_fake_lectors(monkeypatch)
+
+    list(lectura_service.get_lectura_streaming(project_name))          # Preparar (avui)
+    events2 = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))   # Enllestir (demà)
+    payloads2 = [p for n, p in events2 if n == "lector_imatges_fi"]
+    assert all(p["status"] == "skipped" and p["reason"] == "cache" for p in payloads2)
+    assert len(calls) == 2
+
+    # El que hi ha a `validation/` és feina nostra: no compta com a canvi del projecte.
+    (project_path / "validation" / "user_data.json").write_text("{}")
+    list(lectura_service.get_lectura_streaming(project_name))
+    assert len(calls) == 2
+
+    # Un fitxer nou de l'Eva sí.
+    (project_path / "SONDEIG.pdf").write_bytes(b"%PDF")
+    events4 = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))
+    assert all(p["status"] == "ok" for n, p in events4 if n == "lector_imatges_fi")
+    assert len(calls) == 4
+
+
+def test_image_lector_failure_does_not_block_prefills(fake_project, monkeypatch):
+    project_name, _ = fake_project
+    _happy_lectura(monkeypatch)
+    _install_fake_lectors(monkeypatch, fotos="raise")
+
+    events = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))
+    names = [n for n, _ in events]
+    payloads = {p["lector"]: p for n, p in events if n == "lector_imatges_fi"}
+
+    assert payloads["fotos"]["status"] == "error" and "fotos boom" in payloads["fotos"]["error"]
+    assert payloads["figures"]["status"] == "ok"
+    assert names.count("prefills") == 1
+    assert "error_event" not in names
+
+
+def test_image_lectors_not_called_without_claude_or_when_disabled(fake_project, monkeypatch):
+    project_name, _ = fake_project
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: None)
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+    monkeypatch.setattr(lectura_service, "run_lectura", lambda *a, **k: None)
+    calls = _install_fake_lectors(monkeypatch)
+
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: None)
+    names = [n for n, _ in _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))]
+    assert "lector_imatges_inici" not in names and calls == []
+    assert "prefills" in names
+
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+    monkeypatch.setattr(lectura_service, "run_lectura", _make_fake_run_lectura(decisions=_load_escalars_fixture()))
+    monkeypatch.setenv("G3DT_LECTURA_IMATGES", "false")
+    names = [n for n, _ in _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))]
+    assert "lector_imatges_inici" not in names and calls == []
+    assert "merge_inici" in names and "prefills" in names
+
+
+def test_image_lectors_stop_when_eva_cancels_between_them(fake_project, monkeypatch):
+    project_name, project_path = fake_project
+    _happy_lectura(monkeypatch)
+    calls = _install_fake_lectors(monkeypatch, fotos="cancelled")
+
+    emitted: list[tuple[str, dict]] = []
+    lectura_service.run_lectura_job(
+        project_name, project_path, lambda n, d: emitted.append((n, d)),
+        should_cancel=lambda: any(c[0] == "fotos" for c in calls),
+    )
+    names = [n for n, _ in emitted]
+    assert names[-1] == "cancelled" and emitted[-1][1] == {"phase": "imatges"}
+    assert "prefills" not in names and "merge_inici" not in names
+    assert [c[0] for c in calls] == ["fotos"]
+
+
+def test_usage_limit_ends_the_job_in_error_not_in_silent_fallback(fake_project, monkeypatch):
+    """§10.2 (2026-09-10): la lectura aturada pel límit d'ús NO cau a via B en silenci —
+    `error_event` amb codi propi i motiu, cap prefills, cap lector d'imatges."""
+    project_name, _ = fake_project
+    vision_calls: list = []
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: vision_calls.append(1))
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+    calls = _install_fake_lectors(monkeypatch)
+
+    def _limited(project_path, *, out_dir=None, on_event=None, should_cancel=None, force=False):
+        return LecturaResult(decisions=None, per_doc=[{"doc": "a.pdf", "status": "failed", "systemic": "usage limit"}],
+                             degraded=True, mode="document", telemetry_path=None, docs_failed=["a.pdf"],
+                             systemic="You've hit your usage limit. Your limit resets at 3pm")
+    monkeypatch.setattr(lectura_service, "run_lectura", _limited)
+
+    events = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))
+    names = [n for n, _ in events]
+    assert names[-1] == "error_event"
+    err = events[-1][1]
+    assert err["code"] == "usage_limit" and "resets at 3pm" in err["reason"]
+    assert "Preparar" in err["message"] and "es conserven" in err["message"]
+    assert "prefills" not in names and "lectura_fallback" not in names
+    assert "lector_imatges_inici" not in names and calls == []
+    assert vision_calls == []

@@ -97,12 +97,28 @@ def test_transitions_happy_path_reading_consolidating_merging_ready(tmp_path):
     job.emit("lectura_fi", {"n_docs": 3, "by_status": {"ok": 3}, "elapsed_s_total": 1.2, "degraded": False})
     on_disk = _read_job(job.job_path)
     assert on_disk["state"] == jobs.MERGING
-    assert on_disk["step"]["index"] == 4
+    assert on_disk["step"]["index"] == 5
+
+    # Lectors d'imatges (2026-09-10): pas 4 de 5, entre la consolidació i el merge.
+    job.emit("lector_imatges_inici", {"lector": "fotos", "n": 1, "of": 2})
+    on_disk = _read_job(job.job_path)
+    assert on_disk["state"] == jobs.IMATGES
+    assert on_disk["step"] == {"index": 4, "total": 5}
+    assert on_disk["estimate_s"]["remaining"] == int(2 * jobs._DEFAULT_LECTOR_S + 60)
+    job.emit("lector_imatges_fi", {"lector": "fotos", "status": "ok", "elapsed_s": 40.0})
+    job.emit("lector_imatges_inici", {"lector": "figures", "n": 2, "of": 2})
+    assert _read_job(job.job_path)["estimate_s"]["remaining"] == int(jobs._DEFAULT_LECTOR_S + 60)
+    job.emit("lector_imatges_fi", {"lector": "figures", "status": "ok", "elapsed_s": 50.0})
+
+    job.emit("merge_inici", {})
+    on_disk = _read_job(job.job_path)
+    assert on_disk["state"] == jobs.MERGING
+    assert on_disk["step"]["index"] == 5
 
     job.emit("prefills", {"client_name": {"value": "x", "source": "lectura"}})
     on_disk = _read_job(job.job_path)
     assert on_disk["state"] == jobs.READY
-    assert on_disk["step"]["index"] == 4
+    assert on_disk["step"]["index"] == 5
     assert on_disk["result"] == {"ok": True, "degraded": False, "fallback": None}
     assert on_disk["finished_at"] is not None
 
@@ -392,7 +408,7 @@ def test_estimate_remaining_default_basis_with_no_telemetry(tmp_path):
     result = jobs.estimate_remaining(job, [], concurrency=2)
 
     assert result["basis"].startswith("default")
-    assert result["remaining"] == 3 * 270 + 600 + 60  # ceil(5/2)=3 blocs
+    assert result["remaining"] == 3 * 270 + 600 + 2 * jobs._DEFAULT_LECTOR_S + 60  # ceil(5/2)=3 blocs + 2 lectors
 
 
 def test_estimate_remaining_median_from_five_samples(tmp_path):
@@ -434,7 +450,7 @@ def test_estimate_remaining_blocks_ceiling_with_concurrency(tmp_path):
 
     result = jobs.estimate_remaining(job, [], concurrency=3)
 
-    assert result["remaining"] == 3 * 270 + 600 + 60  # ceil(7/3)=3 blocs
+    assert result["remaining"] == 3 * 270 + 600 + 2 * jobs._DEFAULT_LECTOR_S + 60  # ceil(7/3)=3 blocs + 2 lectors
 
 
 def test_estimate_remaining_terminal_state_is_zero(tmp_path):
@@ -468,3 +484,12 @@ def test_write_is_atomic_leaves_no_tmp_files(tmp_path):
     job_dir = job.job_path.parent
     assert list(job_dir.glob("*.tmp")) == []
     assert job.job_path.exists()
+
+
+def test_error_event_keeps_its_code_for_the_usage_limit(tmp_path):
+    job = _fresh_job(tmp_path)
+    job.write()
+    job.emit("error_event", {"code": "usage_limit", "reason": "resets at 3pm", "message": "La lectura s'ha aturat"})
+    on_disk = _read_job(job.job_path)
+    assert on_disk["state"] == jobs.ERROR
+    assert on_disk["error"] == {"code": "usage_limit", "detail": "La lectura s'ha aturat"}

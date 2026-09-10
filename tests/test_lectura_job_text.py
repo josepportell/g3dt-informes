@@ -105,6 +105,14 @@ def test_error_row_says_eficients_has_been_told():
     assert row["accio"] == "error"
 
 
+def test_usage_limit_row_is_not_a_breakdown_and_says_how_to_resume():
+    row = JT.row(_job("error", step=2, error={"code": "usage_limit", "detail": "La lectura s'ha aturat"}), now=NOW)
+    assert row["pas"] == "✗"
+    assert "límit d'ús" in row["titol"]
+    assert "prem Preparar" in row["detall"] and "es conserven" in row["detall"]
+    assert row["viu"] is False
+
+
 def test_cancelled_row_is_owned_by_eva():
     row = JT.row(_job("cancelled"), now=NOW)
     assert row["titol"] == "Aturat per tu"
@@ -115,7 +123,8 @@ def test_cancelled_row_is_owned_by_eva():
     ("queued", 0, "En cua"),
     ("syncing", 1, "Copiant fitxers de la xarxa"),
     ("consolidating", 3, "Consolidant el que ha llegit"),
-    ("merging", 4, "Preparant el formulari"),
+    ("imatges", 4, "Triant les imatges de l'informe"),
+    ("merging", 5, "Preparant el formulari"),
 ])
 def test_every_live_state_has_its_own_sentence(state, step, titol):
     row = JT.row(_job(state, step=step), now=NOW)

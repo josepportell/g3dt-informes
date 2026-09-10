@@ -208,6 +208,15 @@ if MODE == "timeout" and restricted:
 if MODE == "rc" and restricted:
     sys.exit(1)
 
+if MODE == "usage_limit" and restricted:
+    # El CLI real amb `--output-format json` quan el pla no dona mes: envolupant amb is_error
+    # i el text del limit al `result`, rc 1.
+    print(json.dumps({"type": "result", "subtype": "error_during_execution", "is_error": True,
+                      "duration_ms": 900, "duration_api_ms": 800, "num_turns": 1,
+                      "result": "You've hit your usage limit. Your limit resets at 3pm (Europe/Madrid).",
+                      "total_cost_usd": 0.0, "usage": {}, "modelUsage": {}}))
+    sys.exit(1)
+
 safe = safe_doc_name(only)
 src_path = pathlib.Path(project_path) / only
 md5 = hashlib.md5(src_path.read_bytes()).hexdigest() if src_path.exists() else "unknown"
@@ -1042,3 +1051,52 @@ def test_T2_llm_pass_gets_only_field_conflicts_and_is_skipped_over_the_cap():
     sent, why = lectura_runner.llm_conflict_paths([f"fields.f{i}" for i in range(9)], cfg)
     assert sent == [] and "topall 8" in why
 
+
+
+# ---------------------------------------------------------------------------
+# 2026-09-10 (preparació del llançament §10.2): límit d'ús del pla / sessió
+# caducada = causa SISTÈMICA — cap reintent, cap document més, cap consolidació;
+# el resultat ho diu (`systemic`) i el servei ho converteix en error visible.
+# ---------------------------------------------------------------------------
+
+
+def test_usage_limit_stops_launching_more_docs_and_returns_systemic(synth_project, base_env, monkeypatch):
+    monkeypatch.setenv("MOCK_CLAUDE_MODE", "usage_limit")
+    monkeypatch.setenv("G3DT_LECTURA_CONCURRENCY", "1")   # ordre determinista: el 2n document no s'ha d'enviar
+    spawn_log = base_env   # la fixture retorna el fitxer de spawns del mock
+
+    events: list[tuple[str, dict]] = []
+    out_dir = synth_project / "validation" / "lectura"
+    result = lectura_runner.run_lectura(synth_project, out_dir=out_dir, on_event=lambda k, d: events.append((k, d)))
+
+    statuses = {d["doc"]: d for d in result.per_doc if d["status"] != "skipped_duplicate"}
+    failed = [d for d in statuses.values() if d["status"] == "failed"]
+    skipped = [d for d in statuses.values() if d["status"] == "skipped_systemic"]
+    assert len(failed) == 1 and failed[0]["attempts"] == 1          # cap reintent
+    assert "usage limit" in failed[0]["systemic"].lower()
+    assert len(skipped) == 1                                          # el segon no s'ha enviat
+
+    spawns = [l.split("\t")[0] for l in spawn_log.read_text(encoding="utf-8").splitlines()]
+    assert spawns == ["only"]                                         # 1 spawn en total, cap consolidació
+
+    assert result.systemic and "usage limit" in result.systemic.lower()
+    assert result.decisions is None and result.degraded is True
+    assert sorted(result.docs_failed) == sorted(statuses)
+
+    names = [k for k, _ in events]
+    assert "lectura_systemic" in names and "lectura_fi" in names
+    err = [d for k, d in events if k == "lectura_doc_error"]
+    assert len(err) == 1 and "usage limit" in err[0]["systemic"].lower()
+    fi = [d for k, d in events if k == "lectura_fi"][0]
+    assert fi["degraded"] is True and "usage limit" in fi["systemic"].lower()
+
+
+def test_systemic_reason_only_on_failed_calls():
+    ok_call = {"rc": 0, "timeout": False, "cancelled": False, "cli": {"is_error": False, "result_head": "usage limit of the DPSH is 20 blows"}}
+    assert lectura_runner.systemic_reason(ok_call) is None
+    bad = {"rc": 1, "timeout": False, "cancelled": False, "cli": {"is_error": True, "result_head": "Credit balance is too low"}}
+    assert "credit balance" in lectura_runner.systemic_reason(bad).lower()
+    timeout = {"rc": None, "timeout": True, "cancelled": False, "cli": {"cli_json_ok": False}}
+    assert lectura_runner.systemic_reason(timeout) is None
+    plain_fail = {"rc": 1, "timeout": False, "cancelled": False, "cli": {"is_error": True, "result_head": "JSON invalid at line 3"}}
+    assert lectura_runner.systemic_reason(plain_fail) is None
