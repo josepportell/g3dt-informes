@@ -18,6 +18,8 @@ Projecte: Automatització de la generació d'informes geotècnics
 
 **Excepció (2026-08-23):** la línia de treball "nivell A" (alternativa D de `docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md`) viu a la branca **`experiment/nivell-a-2026-08`**, creada des de `review/prod-audit-2026-08` (`b091f5e`), també in-place a `g3dt-prod/`. Trobar-la aquí és l'estat esperat. **Mai proposar pull/merge a l'Eva** (memòria `feedback_no_pull_eva_success_criterion`).
 
+**Excepció (2026-09-10):** la preparació del llançament a l'ordinador de l'Eva viu al worktree **`clients/g3dt-release/`** sobre la branca **`release/2026-09`** (creada des de `production/g3dt-eva-v1` `123b4f2` amb el merge d'`experiment/nivell-a-2026-08` `5c3b088`). Trobar `release/*` dins de `g3dt-release/` és l'estat esperat. `production/g3dt-eva-v1` **no s'avança fins al dia de la visita** (`git merge --ff-only release/2026-09`, just abans del pull presencial). Procediment i abast: `docs/_FOR-NEW-YOU-PREPARACIO-RELEASE-20260910-2000.md` (§10 mana sobre §2-§4: el llançament inclou Claude Code).
+
 ## Resum
 
 G3DT genera informes geotècnics per a projectes de construcció. Cada informe inclou:
