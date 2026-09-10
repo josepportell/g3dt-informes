@@ -1424,6 +1424,65 @@ def _is_upload_rel(rel: str | None) -> bool:
     return isinstance(rel, str) and rel.replace("\\", "/").startswith("/".join(_UPLOAD_IMG_SUBDIR) + "/")
 
 
+def _referenced_upload_rels(project_path: Path) -> set[str]:
+    """Els camins de pujada que apareixen, com a cadena i a qualsevol nivell, a les dues seleccions."""
+    found: set[str] = set()
+
+    def walk(x) -> None:
+        if isinstance(x, str):
+            if _is_upload_rel(x):
+                found.add(x.replace("\\", "/"))
+        elif isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    for name in ("photo_selection.json", "figure_selection.json"):
+        walk(_read_json_file(project_path / "validation" / name) or {})
+    return found
+
+
+def _sweep_unreferenced_uploads(project_path: Path) -> list[str]:
+    """#12 (2026-09-10): una pujada que ja no és a cap ranura no existeix: fora el fitxer, la seva entrada de l'índex i
+    els renders `figsel_*` que en depenen. L'original continua a l'ordinador de l'Eva; tornar-la a pujar és un clic.
+    Es crida després de cada escriptura de les seleccions (`/choose`, `/upload`, «Guardar» de la pestanya, «Restablir»)."""
+    import json as _json
+    d = _uploads_dir(project_path)
+    if not d.is_dir():
+        return []
+    keep = _referenced_upload_rels(project_path)
+    idx_path = d / _UPLOAD_IMG_INDEX
+    idx = _read_json_file(idx_path) or {}
+    removed: list[str] = []
+    for f in sorted(d.iterdir()):
+        if not f.is_file() or f.suffix.lower() not in _IMAGE_EXTENSIONS:
+            continue
+        rel = f.relative_to(project_path).as_posix()
+        if rel in keep:
+            continue
+        try:
+            f.unlink()
+        except OSError as exc:
+            logger.warning("neteja de pujades: %s: %s", f.name, exc)
+            continue
+        idx.pop(f.name, None)
+        removed.append(rel)
+        for c in _FIGURE_CACHE_DIR.glob(f"figsel_*_{f.stem[:30]}_*"):
+            try:
+                c.unlink()
+            except OSError:
+                pass
+    if removed:
+        if idx:
+            idx_path.write_text(_json.dumps(idx, ensure_ascii=False, indent=1), encoding="utf-8")
+        elif idx_path.exists():
+            idx_path.unlink()
+        logger.info("neteja de pujades: %s", removed)
+    return removed
+
+
 def _read_json_file(path: Path) -> dict | None:
     import json as _json
     try:
@@ -1615,6 +1674,7 @@ def _apply_alternative_choice(project_path: Path, req: AlternativeChoice) -> dic
         sel[req.slot] = req.rel
         payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
         path.write_text(_json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+        _sweep_unreferenced_uploads(project_path)
         return {"status": "saved", "slot": req.slot, "rel": req.rel, "cleared": cleared}
 
     if req.slot in _FIGURE_SLOT_LABELS:
@@ -1640,9 +1700,12 @@ def _apply_alternative_choice(project_path: Path, req: AlternativeChoice) -> dic
             k = int(req.slot[-1])
             if e:
                 ent = {kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crop")}
-                ent["caption"] = (e.get("caption") or "Detall del projecte. Font: Projecte.")[:200]
+                caption = str(e.get("caption") or "").strip()[:200]
+                ent["caption"] = caption or (_UPLOAD_PROJECT_CAPTION if e.get("kind") == "upload" else "Detall del projecte. Font: Projecte.")
                 j = next((i for i, x in enumerate(proj) if same(x, e)), None)
                 if j is not None:
+                    if caption:                          # #10 (2026-09-10): el peu de la figura que ja hi és s'edita al lloc
+                        proj[j]["caption"] = caption
                     if j != k - 1 and len(proj) >= k:
                         proj[j], proj[k - 1] = proj[k - 1], proj[j]
                 else:
@@ -1670,6 +1733,7 @@ def _apply_alternative_choice(project_path: Path, req: AlternativeChoice) -> dic
         sel["projecte"] = proj[:2]
         payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
         path.write_text(_json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+        _sweep_unreferenced_uploads(project_path)
         return {"status": "saved", "slot": req.slot, "placed": placed or req.slot}
 
     raise HTTPException(status_code=400, detail=f"Ranura desconeguda: {req.slot}")
@@ -1686,7 +1750,8 @@ def choose_alternative(project_name: str, req: AlternativeChoice):
 
 
 @router.post("/alternatives/{project_name:path}/upload")
-async def upload_slot_image(project_name: str, file: UploadFile = File(...), slot: str = Form(...)):
+async def upload_slot_image(project_name: str, file: UploadFile = File(...), slot: str = Form(...),
+                            caption: str | None = Form(None)):
     """Pujada d'una imatge de l'Eva per a una ranura de l'informe (2026-09-10): si el pipeline no ha trobat la que vol,
     sigui a la carpeta o no, la puja des de la finestreta i entra a la ranura amb la mateixa lògica que una
     alternativa (`source: user`). Es desa normalitzada a `validation/uploads/imatges/` amb un nom que és un ID."""
@@ -1710,7 +1775,7 @@ async def upload_slot_image(project_name: str, file: UploadFile = File(...), slo
     else:
         entry: dict = {"kind": "upload", "rel": rel}          # sense `src`: el camí absolut no sobreviu la còpia
         if slot.startswith("fig_projecte_"):
-            entry["caption"] = _UPLOAD_PROJECT_CAPTION
+            entry["caption"] = (caption or "").strip()[:200] or _UPLOAD_PROJECT_CAPTION   # #10: el peu que escriu l'Eva
         req = AlternativeChoice(slot=slot, entry=entry)
     out = _apply_alternative_choice(project_path, req)
     out["rel"] = rel
@@ -1749,10 +1814,19 @@ def select_photos(project_name: str, req: PhotoSelectionRequest):
 
         selection[slot] = rel_path
 
+    # #11 (2026-09-10): «Guardar» de la pestanya conserva la resta del fitxer (alternatives, raons del lector,
+    # `materials_per_punt`) i guarda la tria del lector a `_lector_selection` la primera vegada, com fa `/choose`.
+    # Abans reescrivia el fitxer només amb les 5 ranures i la tria del lector deixava de tornar com a alternativa.
     sel_dir = project_path / 'validation'
     sel_dir.mkdir(exist_ok=True)
     sel_path = sel_dir / 'photo_selection.json'
-    sel_path.write_text(_json.dumps(selection, indent=2, ensure_ascii=False), encoding='utf-8')
+    sel = _read_json_file(sel_path) or {}
+    if sel.get("source") == "lector" and "_lector_selection" not in sel:
+        sel["_lector_selection"] = {s: sel.get(s) for s in _PHOTO_SLOTS}
+    sel.update(selection)
+    payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
+    sel_path.write_text(_json.dumps(payload, indent=2, ensure_ascii=False), encoding='utf-8')
+    _sweep_unreferenced_uploads(project_path)
 
     return {"status": "saved"}
 
@@ -1768,6 +1842,7 @@ def reset_photos(project_name: str):
     sel_path = project_path / 'validation' / 'photo_selection.json'
     if sel_path.exists():
         sel_path.unlink()
+    _sweep_unreferenced_uploads(project_path)      # #12: les pujades que només eren a ranures de foto ja no són enlloc
 
     return {"status": "reset"}
 

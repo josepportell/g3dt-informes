@@ -328,3 +328,68 @@ def test_upload_rebutja_el_que_no_es_una_imatge(tmp_path, monkeypatch):
     # `_entry_ok`: una entrada que no és pàgina de PDF ha d'apuntar a una imatge (abans: 200 i miniatura buida)
     assert c.post(_CH, json={"slot": "fig_assaigs", "entry": {"kind": "img", "rel": "25.9999/PROJECTE.pdf"}}).status_code == 400
     assert c.post(_CH, json={"slot": "fig_assaigs", "entry": {"kind": "img", "rel": "FOTOGRAFIES/P1.jpg"}}).status_code == 200
+
+
+# --- Pendents #10 (peu de la figura), #11 («Guardar» conserva el lector) i #12 (neteja de pujades) — 2026-09-10 ---
+
+def test_peu_de_la_figura_pujada_i_edicio_al_lloc(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    r = c.post(_UP, data={"slot": "fig_projecte_1", "caption": "  Vista del carrer. Font: Google Street View.  "},
+               files={"file": ("v.jpg", _img_bytes(), "image/jpeg")})
+    assert r.status_code == 200, r.text
+    assert _fsel(p)["projecte"][0]["caption"] == "Vista del carrer. Font: Google Street View."
+    c.post(_UP, data={"slot": "fig_projecte_2", "caption": "   "}, files={"file": ("w.jpg", _img_bytes(), "image/jpeg")})
+    assert _fsel(p)["projecte"][1]["caption"] == "Detall del projecte. Font: G3DT."          # buit → el defecte de la pujada
+    # editar el peu de la figura que ja hi és: mateixa posició, cap duplicat, `source` user
+    cur = c.get(_AL).json()["slots"]["fig_projecte_1"]["current"]["entry"]
+    r = c.post(_CH, json={"slot": "fig_projecte_1", "entry": {**cur, "caption": "Façana principal. Font: G3DT."}})
+    assert r.status_code == 200 and r.json()["placed"] == "fig_projecte_1"
+    d = _fsel(p)
+    assert len(d["projecte"]) == 2 and d["projecte"][0]["rel"] == cur["rel"] and d["projecte"][0]["caption"] == "Façana principal. Font: G3DT."
+    assert d["projecte"][1]["caption"] == "Detall del projecte. Font: G3DT."               # l'altra no es toca
+    from automation.imatges.lector_figures import apply_selection
+    assert apply_selection(p, cache)["fig_projecte_caption_1"] == "Façana principal. Font: G3DT."
+    # una entrada del lector triada sense peu conserva el defecte antic («Font: Projecte.»)
+    alt = c.get(_AL).json()["slots"]["fig_assaigs"]["alternatives"][0]["entry"]
+    c.post(_CH, json={"slot": "fig_projecte_2", "entry": {k: v for k, v in alt.items() if k != "caption"}})
+    assert _fsel(p)["projecte"][1]["caption"] == "Detall del projecte. Font: Projecte."
+
+
+def test_guardar_de_la_pestanya_conserva_la_tria_del_lector(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    r = c.post("/api/photos/4009999%20PROVA/select", json={"site_1": "FOTOGRAFIES/P2.jpg", "dpsh": "FOTOGRAFIES/P1.jpg", "materials": None})
+    assert r.status_code == 200, r.text
+    d = json.loads((p / "validation" / "photo_selection.json").read_text(encoding="utf-8"))
+    assert d["source"] == "user" and d["site_1"] == "FOTOGRAFIES/P2.jpg" and d["materials"] is None and d["sondeig"] is None
+    assert d["_lector_selection"] == {"site_1": None, "site_2": None, "dpsh": "FOTOGRAFIES/P1.jpg", "sondeig": None, "materials": "FOTOGRAFIES/SPT1.jpg"}
+    assert d["alternatives"]["dpsh"][0]["rel"] == "FOTOGRAFIES/P2.jpg" and d["_lector"]["raons"]["dpsh"]       # abans es perdien
+    s = c.get(_AL).json()["slots"]
+    assert s["dpsh"]["source"] == "lector" and s["site_1"]["source"] == "user" and s["materials"]["source"] == "user"
+    assert s["materials"]["alternatives"][0]["rel"] == "FOTOGRAFIES/SPT1.jpg"                # la tria del lector torna com a alternativa
+    # un segon «Guardar» no reescriu la instantània del lector
+    c.post("/api/photos/4009999%20PROVA/select", json={"site_1": None, "dpsh": "FOTOGRAFIES/P1.jpg"})
+    assert json.loads((p / "validation" / "photo_selection.json").read_text(encoding="utf-8"))["_lector_selection"]["materials"] == "FOTOGRAFIES/SPT1.jpg"
+    assert c.post("/api/photos/4009999%20PROVA/select", json={"site_1": "../x.jpg"}).status_code == 403
+    assert c.post("/api/photos/4009999%20PROVA/select", json={"site_1": "FOTOGRAFIES/NO.jpg"}).status_code == 404
+
+
+def test_neteja_de_les_pujades_que_no_son_a_cap_ranura(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    up = p / "validation" / "uploads" / "imatges"
+    r1 = c.post(_UP, data={"slot": "materials"}, files={"file": ("a.jpg", _img_bytes(), "image/jpeg")}).json()["rel"]
+    r2 = c.post(_UP, data={"slot": "fig_projecte_1"}, files={"file": ("b.png", _img_bytes(fmt="PNG"), "image/png")}).json()["rel"]
+    c.get(_AL)                                                                             # renderitza la miniatura de r2 a la cau
+    assert (p / r1).is_file() and (p / r2).is_file() and list(cache.glob(f"figsel_*_{Path(r2).stem}_*"))
+    # materials torna a la tria del lector: r1 desapareix (fitxer + índex); r2 continua referenciada
+    c.post(_CH, json={"slot": "materials", "rel": "FOTOGRAFIES/SPT1.jpg"})
+    idx = json.loads((up / "pujades.json").read_text(encoding="utf-8"))
+    assert not (p / r1).exists() and (p / r2).is_file() and Path(r1).name not in idx and Path(r2).name in idx
+    assert [x["relative_path"] for x in c.get("/api/photos/4009999%20PROVA").json()["photos"] if x["kind"] == "upload"] == [r2]
+    # una pujada moguda a una altra ranura de foto sobreviu; «Guardar» de la pestanya sense ella la treu
+    r3 = c.post(_UP, data={"slot": "site_1"}, files={"file": ("c.jpg", _img_bytes(), "image/jpeg")}).json()["rel"]
+    c.post(_CH, json={"slot": "site_2", "rel": r3}); assert (p / r3).is_file()
+    c.post("/api/photos/4009999%20PROVA/select", json={"site_2": None, "dpsh": "FOTOGRAFIES/P1.jpg"}); assert not (p / r3).exists()
+    # la figura: tornar a «cap» esborra r2, els seus renders de la cau i l'índex buit
+    c.post(_CH, json={"slot": "fig_projecte_1", "entry": None})
+    assert not (p / r2).exists() and not list(cache.glob(f"figsel_*_{Path(r2).stem}_*")) and not (up / "pujades.json").exists()
+    assert (p / "FOTOGRAFIES" / "P1.jpg").is_file()                                           # les fotos de l'Eva no es toquen mai

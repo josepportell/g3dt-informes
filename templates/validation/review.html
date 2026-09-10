@@ -8006,6 +8006,16 @@
             } else {
                 html += `<div class="alt-none">${d.auto ? 'Figura automàtica: si en vols una altra, puja-la.' : (d.type === 'photo' ? 'Cap alternativa del lector; a sota hi ha totes les fotos del projecte.' : 'Cap alternativa del lector.')}</div>`;
             }
+            if (slotKey.startsWith('fig_projecte_')) {
+                // #10 (2026-09-10): el peu de la figura del projecte (inclou la font) l'escriu l'Eva: val per a la figura
+                // actual («Desa el peu») i per a la que pugi ara mateix (viatja amb la pujada)
+                const capNow = (d.current && d.current.caption) ? d.current.caption : UPLOAD_PROJECT_CAPTION;
+                html += `<div style="margin-top:8px; display:flex; gap:6px; align-items:flex-end; flex-wrap:wrap;">` +
+                        `<label style="font-size:11px; color:#555; flex:1; min-width:180px;">Peu de la figura (inclou la font)` +
+                        `<input id="altCaption" type="text" maxlength="200" value="${escapeHtml(capNow)}" style="display:block; width:100%; font-size:11px; padding:3px 5px; box-sizing:border-box; margin-top:2px;"></label>` +
+                        (d.current ? `<button class="alt-btn" onclick="saveCaption('${escapeHtml(slotKey)}')" title="Desa aquest peu per a la figura actual">Desa el peu</button>` : '') +
+                        `</div>`;
+            }
             html += `<div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">`;
             html += altUploadButton(slotKey);                       // pujada (2026-09-10): sempre, també amb 0 alternatives
             if (d.type === 'figure' && slotKey !== 'fig_situacio' && d.alternatives.length) {
@@ -8068,8 +8078,30 @@
         // Si el pipeline no ha trobat la imatge que l'Eva vol (a la carpeta o no), la puja des de la mateixa finestreta
         // i entra a la ranura com una alternativa més (`source: user`). El servidor la valida, la normalitza i la desa
         // amb un nom que és un ID a `validation/uploads/imatges/`; la resposta és la de `/choose`.
+        const UPLOAD_PROJECT_CAPTION = 'Detall del projecte. Font: G3DT.';   // el mateix defecte que el servidor (#10)
+
         function isUploaded(item) {
             return !!item && (item.kind === 'upload' || (!!item.entry && item.entry.kind === 'upload'));
+        }
+
+        async function saveCaption(slotKey) {
+            // #10 (2026-09-10): el peu de la figura del projecte actual; `/choose` amb la mateixa entrada i el peu nou
+            // l'edita al lloc (mateixa posició, cap duplicat)
+            const d = altData && altData.slots[slotKey];
+            if (!d || !d.current || !d.current.entry) return;
+            const input = document.getElementById('altCaption');
+            const caption = (input ? input.value : '').trim().slice(0, 200);
+            if (!caption) { showMessage('El peu de la figura no pot quedar buit.', 'error'); return; }
+            const entry = Object.assign({}, d.current.entry, { caption });
+            try {
+                const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}/choose`, {
+                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ slot: slotKey, entry })
+                });
+                if (!resp.ok) throw new Error(await resp.text());
+                await afterChoiceSaved(await resp.json(), slotKey, 'Peu de la figura desat');
+            } catch (err) {
+                showMessage('Error desant el peu: ' + err.message, 'error');
+            }
         }
 
         function autoFigurePreview(slotKey) {
@@ -8106,6 +8138,8 @@
                 const form = new FormData();
                 form.append('file', file);
                 form.append('slot', slotKey);
+                const cap = document.getElementById('altCaption');          // #10: només a les figures del projecte
+                if (cap && slotKey.startsWith('fig_projecte_')) form.append('caption', cap.value.trim().slice(0, 200));
                 const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}/upload`, { method: 'POST', body: form });
                 let body = null;
                 try { body = await resp.json(); } catch (_) { body = null; }
