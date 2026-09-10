@@ -36,6 +36,28 @@ Si els PDFs ja s'han llegit anteriorment, apareix "Visió completada (3/3)" en m
 2. Prem **"Guardar"** → desa user_data.json
 3. Prem **"Generar Informe"** → descarrega el .docx complet
 
+### Pas C bis — Les imatges de l'informe (opcional)
+
+*(Des del 2026-09-10 a la branca de desenvolupament; arribarà a producció amb la propera actualització.)*
+
+Al Wizard, la secció **«Imatges de l'informe»** ensenya la imatge triada per a cada lloc de l'informe (fotos del solar,
+DPSH, sondeig, materials; figures de situació, projecte, assaigs, mapa geològic, tall i cullera) i qui l'ha triada
+(automàtic, el lector, o tu). La pestanya **«Imatges»** té el mateix, amb totes les fotos del projecte a sota.
+
+Per canviar-ne una, clica **«Alternatives (n)»** (o **«Canviar la imatge»** a les figures automàtiques): s'obre una
+finestreta a dalt a la dreta amb la imatge actual i les alternatives que el sistema ha trobat.
+
+- Clica una alternativa: queda posada i desada.
+- **«Puja una imatge»**: tria un fitxer del teu ordinador (JPG o PNG) i queda posat en aquell lloc. Serveix quan el
+  sistema no ha trobat la imatge que vols, sigui a la carpeta del projecte o no. La còpia es desa dins el projecte
+  (`validation/uploads/imatges/`) amb un nom automàtic; l'original no es toca.
+- A les **figures del projecte** pots escriure el **peu de la figura** (amb la font) abans de pujar-la, o canviar-lo
+  després amb **«Desa el peu»**.
+- **«Tornar a l'automàtic»**, **«Composició automàtica del full»** o **«Cap imatge en aquesta ranura»** desfan la tria.
+- Una foto només pot anar a un lloc: si la poses en un altre, surt del primer. Una imatge pujada que ja no és enlloc
+  s'esborra sola (la tens sempre al teu ordinador).
+- La finestreta es tanca amb la creu. Les imatges només apareixen un cop llançat el pipeline del projecte.
+
 ## 3. Resum visual del flux
 
 ```

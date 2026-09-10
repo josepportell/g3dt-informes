@@ -170,7 +170,7 @@ clients/g3dt/
 ├── templates/
 │   ├── g3dt-jinja-template.docx  # Plantilla Word principal
 │   └── validation/
-│       └── review.html       # UI web: 4 pestanyes (DPSH, Sondeig, Plànol, Wizard)
+│       └── review.html       # UI web: 5 pestanyes (DPSH, Sondeig, Plànol, Imatges, Wizard)
 ├── docs/                     # Documentació tècnica
 │   ├── ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md  # Disseny concepte/format
 │   └── REFERENCE-EXTRACTOR.md                  # Enginyeria inversa informes Eva
@@ -279,6 +279,7 @@ Plànol de l'arquitecte amb dades del projecte:
 | DPSH | PENETROS.pdf vs Excel | Revisar discrepàncies N20 |
 | Sondeig | SONDEIG.pdf | Revisar capes sòl (baixa confiança) |
 | Plànol | A.01.pdf | Revisar dades extretes del plànol |
+| Imatges | Fotos del projecte + calaix de figures | Tria d'imatges de l'informe (2026-09-09/10): per ranura, «Alternatives (n)» obre la finestreta amb l'actual, les alternatives dels lectors, «Puja una imatge» (qualsevol ranura, també geològic/tall/cullera), el peu de les figures del projecte i la tornada a l'automàtic. La mateixa finestreta s'obre des de la secció «Imatges de l'informe» del Wizard. Res abans de llançar el pipeline. |
 | Wizard | Tots els prefills | Revisar/ajustar tots els camps + generar |
 
 ## Web Wizard (FastAPI)
@@ -294,7 +295,7 @@ Interfície principal d'Eva. Claude Code serveix el wizard en segon pla.
 **Arquitectura:**
 - `web/api.py` — Endpoints REST (`/api/projects`, `/api/prefills/{p}`, `/api/wizard/{p}`, `/api/generate/{p}`, `/api/report/{p}`, `/api/user-data/{p}`, `/api/geolocalitzar/{p}`)
 - `web/wizard_service.py` — Capa de servei: auto_extract + wizard prefills + geocodificació + cache
-- `templates/validation/review.html` — UI amb 4 pestanyes
+- `templates/validation/review.html` — UI amb 5 pestanyes (DPSH, Sondeig, Plànol, Imatges, Wizard)
 
 **Flux al seleccionar projecte:**
 1. Eva selecciona projecte → crida `/api/prefills/{p}`
