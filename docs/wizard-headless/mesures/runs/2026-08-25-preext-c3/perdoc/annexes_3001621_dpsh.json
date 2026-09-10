@@ -1,0 +1,140 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Full Excel amb els registres N20 (colpeig DPSH) per fondària de cada punt de penetròmetre dinàmic (P-1 a P-4), amb fondària de rebuig i factor de correcció NB per punt.",
+ "issuer": "no consta al document (sense capçalera de projecte); transcripció de camp associada a G3/TPS",
+ "date": "no consta al document",
+ "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4 (80 files x 7 columnes cadascun)",
+ "context": {
+  "who_made_it": "Eva (G3) transcriu manualment els valors de camp dels assaigs DPSH realitzats per TPS a aquest Excel (coneixement previ del projecte via CLAUDE.md, no llegit dins d'aquest document)",
+  "for_whom": "ús intern G3: font de dades brutes que alimenta la taula 'Penetròmetres dinàmics DPSH' de l'informe i el PDF imprès PDF/ANNEXES/3001621_DPSH.pdf",
+  "why": "registrar el colpeig N20 cada 20 cm de fondària per punt, per determinar la fondària de rebuig i el perfil de resistència",
+  "expected_fields": [
+   "colpeig N20 per fondària de 20cm",
+   "fondària de rebuig (Rebuig a X m)",
+   "columna N.F. (nivell freàtic)",
+   "columna Nivells",
+   "factor de correcció NB"
+  ],
+  "not_expected": [
+   "expedient",
+   "adreça de l'obra",
+   "municipi",
+   "client",
+   "arquitecte",
+   "data de camp",
+   "cota d'inici absoluta"
+  ],
+  "relation_to_others": "font bruta d'origen de PDF/ANNEXES/3001621_DPSH.pdf (impressió amb capçalera 'Cota inici'/'OBRA'/'POBLACIÓ'/'DATA' per pàgina, fora d'abast d'aquesta lectura --only); complementa el full de camp manuscrit i la fitxa 'DADES PER ANAR A CAMP' (previsió vs execució)",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "fulls P-1, P-2, P-3, P-4 (dades executades a la columna C des de la fila 17)",
+   "quote": "noms de full P-1 / P-2 / P-3 / P-4, cadascun amb colpeig > 0 i peu 'Rebuig a' a la columna C",
+   "confidence": 0.85,
+   "note": "4 fulls amb dades executades (colpeig>0 i peu de rebuig complet); coincideix amb els 4 punts llistats a l'inventari de fulls del document"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-1!B80 (peu de rebuig); P-1!C22:C23 (colpeig)",
+    "quote": "Rebuig  a -1,08 m",
+    "extra": {
+     "n20_maxim": 100,
+     "fondaria_n20_max_m": -1.2,
+     "factor_correccio_nb": 0.83,
+     "nivell_marcat_c79": "'Nivell 1' a la cel·la C79, sota la columna 'Colpeig DPSH' (no la columna G 'Nivells') — posició atípica, probablement etiqueta de peu comuna a la plantilla"
+    },
+    "note": "columna N.F. buida en text; color de cel·la NO verificable en mode preext (sense fitxer de formatació) — vegeu reading_notes"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-2!B80 (peu de rebuig); P-2!C19:C20 (colpeig)",
+    "quote": "Rebuig  a -0,48 m",
+    "extra": {
+     "n20_maxim": 100,
+     "fondaria_n20_max_m": -0.6,
+     "factor_correccio_nb": 0.83,
+     "nivell_marcat_c79": "'Nivell 1' a la cel·la C79, sota la columna 'Colpeig DPSH' — mateixa observació que P-1"
+    },
+    "note": "columna N.F. buida en text; color de cel·la NO verificable en mode preext — vegeu reading_notes"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-3!B80 (peu de rebuig); P-3!C19:C21 (colpeig)",
+    "quote": "Rebuig  a -0,76 m",
+    "extra": {
+     "n20_maxim": 100,
+     "fondaria_n20_max_m": -0.8,
+     "factor_correccio_nb": 0.83,
+     "nivell_marcat_c79": "'Nivell 1' a la cel·la C79, sota la columna 'Colpeig DPSH' — mateixa observació que P-1"
+    },
+    "note": "columna N.F. buida en text; color de cel·la NO verificable en mode preext — vegeu reading_notes"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-4!B80 (peu de rebuig); P-4!C19:C25 (colpeig)",
+    "quote": "Rebuig  a -1,55 m",
+    "extra": {
+     "n20_maxim": 100,
+     "fondaria_n20_max_m": -1.6,
+     "factor_correccio_nb": 0.83,
+     "nivell_marcat_c79": "'Nivell 1' a la cel·la C79, sota la columna 'Colpeig DPSH' — mateixa observació que P-1"
+    },
+    "note": "columna N.F. buida en text; color de cel·la NO verificable en mode preext — vegeu reading_notes"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura en mode preext (--only): només s'han llegit sheet-0..3.cells.txt/csv (text de cel·la ja extret), sense obrir el fitxer amb xlrd/openpyxl. La columna N.F. (nivell freàtic, F) i la columna Nivells (G) apareixen buides de TEXT a les 4 fulles P-1..P-4; el protocol d'or (Pas 3b) exigeix comprovar també el COLOR de cel·la (xlrd formatting_info=True) abans de concloure 'no detectat', comprovació que el mode preext no permet (no s'ha generat cap fitxer de formatació/colors per a aquest document). Per tant nivell_freatic queda 'no_trobat' amb aquesta limitació explícita, no com a buit confirmat — recomanat re-verificar amb lectura fitz/xlrd completa (formatting_info=True) si es necessita confirmació ferma. La cel·la 'Nivell 1' apareix idèntica a C79 a les 4 fulles, sota la columna 'Colpeig DPSH' (C) en lloc de la columna 'Nivells' (G) — sembla una etiqueta de peu comuna a la plantilla, no una marca per fila; s'anota com a observació feble, NO com a autoritat per a num_soil_levels (aquest document no n'és font segons el Pas 2/3 — l'autoritat és l'annex de sondeig/tall). Cap capçalera de projecte (expedient, obra, client, cota d'inici) dins d'aquest Excel, consistent amb la regla del Pas 2 ('Cap metadada de projecte dins'). Els valors de 'Rebuig a' (P-1 -1,08 / P-2 -0,48 / P-3 -0,76 / P-4 -1,55) i el recompte de 4 fulls executats coincideixen amb els valors documentats com a verificats per a aquest mateix projecte (Castellar) al v0.7 d'aquest skill."
+}

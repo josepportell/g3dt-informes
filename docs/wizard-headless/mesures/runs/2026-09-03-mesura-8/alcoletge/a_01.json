@@ -1,0 +1,126 @@
+{
+ "source_path": "A.01.pdf",
+ "source_md5": "68e0df362820f293092e4a06439c4395",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol de situació en la parcel·la per a un projecte de tancament de porxo en un habitatge unifamiliar existent",
+ "issuer": "2 Graus — David Graus Robinat, arquitecte tècnic col·legiat núm. 699 (Mollerussa)",
+ "date": "Juny 2022",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "David Graus Robinat (despatx '2 Graus'), arquitecte tècnic col·legiat núm. 699, seu a Avinguda del Canal, Nº 8 B, Baixos, (25230) Mollerussa",
+  "for_whom": "Albert Sans Bonvehí, promotor de l'obra (etiqueta 'Promotor:' del caixetí)",
+  "why": "Situar en la parcel·la un projecte de tancament de porxo en un habitatge unifamiliar existent (títol del projecte al caixetí)",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "building_type"
+  ],
+  "not_expected": [
+   "field_date",
+   "num_dpsh_tests",
+   "cota_referencia",
+   "lab_testing_company",
+   "cte_edificacio"
+  ],
+  "relation_to_others": "Mateix md5 que 26.0049/A.01.pdf i 26.0049/PLANO 2.pdf (duplicats exactes segons _inventory.json); una sola font independent, no en compten tres",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols, Nº7, Urbanització el Roser",
+   "location": "caixetí, bloc 'Situació:'",
+   "quote": "Situació: CARRER GIRASOLS, Nº7 Urbanització el Roser, (25660) ALCOLETGE",
+   "confidence": 0.9,
+   "note": "Bloc etiquetat 'Situació' — autoritat A per a l'adreça de l'obra"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Girasols",
+    "nom_via_alternatives": [],
+    "portals": [
+     "7"
+    ],
+    "municipi": "Alcoletge",
+    "municipi_alternatives": []
+   },
+   "location": "caixetí, bloc 'Situació:'",
+   "quote": "CARRER GIRASOLS, Nº7 Urbanització el Roser, (25660) ALCOLETGE",
+   "confidence": 0.9,
+   "note": "extra_concept (no és un dels 15 camps de nivell A)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "caixetí, bloc 'Situació:'",
+   "quote": "(25660) ALCOLETGE",
+   "confidence": 0.9,
+   "note": "Codi postal 25660 + nom en majúscules; normalitzat a 'Alcoletge'"
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Albert Sans Bonvehí",
+   "location": "caixetí, bloc 'Promotor:'",
+   "quote": "Promotor: ALBERT SANS BONVEHI",
+   "confidence": 0.9,
+   "note": "Etiqueta 'Promotor' = client de l'informe; coincideix amb l'assumpte del correu 'Ampliació Albert Sans'"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "David Graus Robinat",
+   "location": "caixetí, bloc d'autoria (inferior esquerre)",
+   "quote": "DAVID GRAUS ROBINAT ARQUITECTE TÈCNIC COL.LEGIAT  Nº 699",
+   "confidence": 0.8,
+   "note": "És 'Arquitecte Tècnic' (no 'Arquitecte' superior) — matís anotat; despatx '2 Graus', Avinguda del Canal Nº8B Baixos, Mollerussa, tel. 649158020, david@davidgraus.com"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "2 Graus",
+   "location": "caixetí, logotip inferior dret del bloc d'autoria",
+   "quote": "2 GRAUS",
+   "confidence": 0.75,
+   "note": "Nom comercial/logotip del despatx de David Graus Robinat"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Projecte de tancament de porxo en habitatge unifamiliar",
+   "location": "caixetí, bloc 'Projecte:'",
+   "quote": "PROJECTE DE TANCAMENT DE PORXO EN HABITATGE UNIFAMILIAR.",
+   "confidence": 0.7,
+   "note": "Redacció pròpia d'aquest plànol (tancament/ampliació sobre habitatge EXISTENT, no obra nova); l'informe sol redactar només 'habitatge unifamiliar' — comparació CLOSE, candidat"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF és brossa (Acrobat Distiller 10.1.4 / PScript5.dll, sense ToUnicode) — meta.json text_ok=false, halves_pages=[1]; llegit visualment amb page-1.png (150dpi) i confirmat amb page-1-left.png / page-1-right.png (220dpi) per al caixetí. Únic full: plànol 'Situació en la parcel·la' (escala 1/200), sense planta ni alçats — per això num_floors no hi consta. La data del caixetí (JUNY 2022) és la data del projecte arquitectònic, NO una data de camp geotècnic — no s'ha fet servir com a candidat de field_date. Duplicat exacte (mateix md5) de 26.0049/A.01.pdf i 26.0049/PLANO 2.pdf segons _inventory.json — no compta com a font independent addicional."
+}

@@ -42,7 +42,7 @@ References:
 
 import math
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, Literal
 from enum import Enum
 
@@ -112,6 +112,13 @@ class BearingCapacityResult:
     qa_governs: str = "terzaghi"  # Which method governs: "terzaghi" or "terzaghi_peck"
     qa_cap_reason: Optional[str] = None  # Diagnostic only: "rock" | "dense_granular" | "soil"
 
+    # Assentament per criteri (automation/settlement_criteria.py, 2026-09-06): omplert pel generador/wizard
+    settlement_generic: bool = False      # frase genèrica «menyspreables o bé inferiors a 1.0 cm»
+    settlement_regime: str = ""           # granular | roca | cohesiu
+    Es_source: str = ""                   # procedència de l'Es del defecte
+    Es_candidates: list = field(default_factory=list)   # [{value, display, source, settlement_cm}, …]
+    settlement_sentence: str = ""         # la frase impresa (plantilla: {{ settlement_sentence }})
+
     def to_dict(self) -> dict:
         return {
             'inputs': {
@@ -151,7 +158,9 @@ class BearingCapacityResult:
         return f"Qa= {self.Qa:.1f} Kg/cm²  amb un factor de seguretat inclòs de F={int(self.safety_factor)}"
 
     def format_settlement_for_report(self) -> str:
-        """Format settlement as it appears in G3DT reports."""
+        """Format settlement as it appears in G3DT reports (frase per criteri si el generador l'ha calculada)."""
+        if self.settlement_sentence:
+            return self.settlement_sentence
         if self.settlement_cm is None:
             return ""
         return (
@@ -409,11 +418,14 @@ class TerzaghiCalculator:
         # Professional practice cap (verified against 7 Eva reports):
         # Classification from DPSH data (Nb value + cohesion + soil_type):
         # - Rock (c >= 0.5): cap 3.0 (Castellar c=1.0, Linyola L2 c=1.0)
-        # - Dense granular (soil_type='granular', c < 0.5, Nb >= 25): cap 3.5
-        #   (Rubí Nb=47, Alcoletge Nb=30). Explicitly requires soil_type=granular
-        #   so a cohesive with low c (e.g. Linyola llims: c=0.05, Nb>25) does
-        #   NOT get the dense-granular ceiling — cohesives stay on cap 3.0.
+        # - Dense granular (soil_type granular/grava/arena, c < 0.5, Nb >= 25): cap 3.5
+        #   (Rubí Nb=47 «Graves i sorres»). Requires a GRANULAR type so a cohesive
+        #   or transitional soil with low c (Linyola llims: c=0.05, Nb>25;
+        #   arena_limosa) does NOT get the dense-granular ceiling — cap 3.0.
+        #   P6 (2026-09-07): abans només `'granular'` literal; el detector diu
+        #   `grava` a Rubí i el topall no disparava (3,0; signat 3,5).
         # - Soft soil / cohesive / unknown type: cap 3.0 (default)
+        from .geotech_criteria import GRANULAR_TYPES
         QA_CAP_ROCK = 3.0
         QA_CAP_DENSE_GRANULAR = 3.5
         QA_CAP_SOIL = 3.0
@@ -422,7 +434,7 @@ class TerzaghiCalculator:
             qa_cap = QA_CAP_ROCK
             qa_cap_reason = "rock"
         elif (nspt is not None and nspt >= NB_DENSE_THRESHOLD
-              and (soil_type or '').lower() == 'granular'):
+              and (soil_type or '').lower() in GRANULAR_TYPES):
             qa_cap = QA_CAP_DENSE_GRANULAR
             qa_cap_reason = "dense_granular"
         else:

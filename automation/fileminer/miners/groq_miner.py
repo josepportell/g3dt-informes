@@ -99,7 +99,6 @@ TARGET_VARIABLES: dict[str, str] = {
     "expedient": "Project reference number (e.g. '4001679')",
     "field_date": "Date of field work (any format found)",
     "report_date": "Report issue date",
-    "lab_company": "Laboratory company name (NOT G3)",
 }
 
 EXTRACTION_SCHEMA: dict[str, Any] = {
@@ -143,7 +142,7 @@ class GroqMiner(BaseMiner):
     @classmethod
     def get_usage_summary(cls) -> dict:
         """Return usage stats and estimated costs for the current session."""
-        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
+        model = config.live_groq_model(os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT))
         in_price, out_price = GROQ_PRICING.get(model, (0.59, 0.79))
         cost_usd = (
             cls._total_input_tokens * in_price
@@ -370,7 +369,7 @@ class GroqMiner(BaseMiner):
             logger.debug("Groq: no API key, skipping")
             return None
 
-        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
+        model = config.live_groq_model(os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT))
 
         # Qwen3 thinking mode: disable to get clean JSON
         if "qwen3" in model.lower():
@@ -391,6 +390,9 @@ class GroqMiner(BaseMiner):
             "max_tokens": GROQ_MAX_TOKENS,
             "response_format": {"type": "json_object"},
         }
+        # Groq-native reasoning switch (the "/no_think" suffix above is the
+        # legacy Qwen3 convention; qwen3.6 honours reasoning_effort="none").
+        payload.update(config.groq_payload_extras(model))
 
         logger.debug(
             "Groq API call for %s: %d chars, model=%s",
@@ -423,11 +425,15 @@ class GroqMiner(BaseMiner):
                     return None
 
                 if resp.status_code != 200:
+                    # 4xx is deterministic (404 model_not_found, 400 bad JSON):
+                    # retrying returns the same answer. Retry 5xx only (F4c).
+                    retry = resp.status_code >= 500 and attempt < MAX_RETRIES
                     logger.warning(
-                        "Groq API error for %s: HTTP %d %s (attempt %d/%d)",
+                        "Groq API error for %s: HTTP %d %s (attempt %d/%d%s)",
                         rel_path, resp.status_code, resp.text[:200], attempt, MAX_RETRIES,
+                        "" if retry else ", not retrying",
                     )
-                    if attempt < MAX_RETRIES:
+                    if retry:
                         delay = RETRY_BASE_DELAY * (2 ** (attempt - 1))
                         time.sleep(delay)
                         continue
@@ -482,6 +488,10 @@ class GroqMiner(BaseMiner):
             source_quote = str(item.get("source_quote", ""))
 
             if not variable or not value:
+                continue
+
+            if variable not in TARGET_VARIABLES:
+                logger.info("Groq: EXCLUDED unknown variable %s=%r (not requested)", variable, value)
                 continue
 
             # Check if this is G3 internal data
@@ -556,7 +566,7 @@ class GroqMiner(BaseMiner):
 
     @staticmethod
     def _file_hash(file_path: Path) -> str:
-        model = os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT)
+        model = config.live_groq_model(os.environ.get("GROQ_MODEL", GROQ_MODEL_DEFAULT))
         h = hashlib.sha256()
         h.update(file_path.read_bytes())
         h.update(model.encode())

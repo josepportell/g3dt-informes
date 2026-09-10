@@ -1,0 +1,14 @@
+-- dpsh_tests: or 3 files / prod 3 files · alineades per clau
+-- sondeig_tests: or 0 files / prod 0 files
+-- spt_ma_tests: or 1 files / prod 1 files · alineades per clau
+CAUTELA  spt_ma_tests[0].id or segur, prod candidats (bo dins): 'SPT-1'
+BUIT     spt_ma_tests[0].n30 (or=segur 'R (rebuig; registre: 50 cops al primer tram de 15 cm)'; prod no_trobat)
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+ALERTA   soil_levels[0].de or segur '0,0 m (superfície, cota +245 msnm)' NO entre candidats ['245 msnm (superfície, escala del tall)']
+CAUTELA  soil_levels[0].a candidats disjunts: or=['~-1,4 m a P-1 (contacte ~243,6 msnm)', '~-1,35 m a P-3 (contacte ~243,65 msnm; marca N=R al contacte)', '~-0,2/-0,25 m a P-2 (contacte ~244,75 msnm)'] prod=["≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2 (contacte Nivell 1/Nivell 2, s'aprima cap a P-2)"]
+BUIT     soil_levels[0].mostra_del_nivell (or=candidats "No (la mostra s'assigna al 2on nivell pel material)"; prod no_trobat)
+CAUTELA  soil_levels[0].litologia candidats disjunts: or=['Llims argilosos i sorrencs'] prod=['Llims argilsoso i sorrencs']
+CAUTELA  soil_levels[1].de candidats disjunts: or=['~-1,4 m a P-1 / ~-1,35 m a P-3 / ~-0,2-0,25 m a P-2 (contacte per punt)'] prod=["mateix contacte que 'a' del Nivell 1 (≈243,6 a ≈244,7 msnm segons el punt)"]
+BUIT     soil_levels[1].a (or=segur "fins al fons d'investigació (rebuig DPSH: -2,90/-2,15/-1,75 m per punt)"; prod no_trobat)
+BUIT     soil_levels[1].mostra_del_nivell (or=candidats 'Si — SPT-1 (P-3, 1,0-1,15 m): material de la mostra = lutita (litologia del nivell 2); N=R del tall al contacte de P-3'; prod no_trobat)
+TOTALS: {'OK': 16, 'CAUTELA': 4, 'BUIT': 4, 'ALERTA': 1}

@@ -1,0 +1,221 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_sondeig.pdf",
+ "source_md5": "2295eafdfbaf24a22d916a124ea308d0",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Fitxa de sondeig a rotació amb bateria contínua S-1 (plantilla G3), amb columna litològica, mostra SPT-1 i 2 fotografies de camp.",
+ "issuer": "G3 (Eva Vázquez Marcet, geòloga col. 4302); execució de camp per TPS (sondista Sr. Daniel Fernández).",
+ "date": "24/10/25 (data d'inici = data de fi)",
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 (Eva Vázquez Marcet, geòloga col. 4302), documentant el sondeig a rotació executat en camp per TPS (sondista Sr. Daniel Fernández).",
+  "for_whom": "L'informe geotècnic de G3 per al client de l'obra (WOOD COMFORT PROM.).",
+  "why": "Registre tècnic de la columna litològica, cotes i mostra SPT del sondeig S-1, per redactar l'apartat de nivells del sòl i mostres de l'informe.",
+  "expected_fields": [
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "field_date",
+   "utm_x",
+   "utm_y"
+  ],
+  "not_expected": [
+   "expedient",
+   "superficie_parcela",
+   "num_floors",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Font principal per a num_soil_levels i litologia de nivells (regla Pas 3b, annex de sondeig). Cota (Z) candidata per a cota_referencia junt amb l'annex DPSH ('Cota inici'); si l'Excel DPSH del projecte usa cotes relatives, la cota d'aquest annex (absoluta, 570,90 msnm) NO ha de copiar-se directament a la taula de sondeig (vegeu nota a tables.sondeig_tests).",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "building_type",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x",
+   "utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROM.",
+   "location": "caixetí, camp 'Client:'",
+   "quote": "WOOD COMFORT PROM.",
+   "confidence": 0.3,
+   "note": "Camp 'Client:' de l'annex de sondeig (redactat per G3) = sol·licitant, no necessàriament promotor final; conté 'PROM.' (probable abreviatura de Promotora/Promotor). Candidat, mai segur des d'un sol document."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells, Nº 18A-18B-20",
+   "location": "caixetí, camp 'Obra:'",
+   "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.6,
+   "note": null
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès (Barcelona)",
+   "location": "caixetí, camp 'Obra:'",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.7,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, camp 'Obra:'",
+   "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.6,
+   "note": null
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "caixetí, camps 'Data d'inici' / 'Data de fi'",
+   "quote": "Data d'inici: 24/10/25 · Data de fi: 24/10/25",
+   "confidence": 0.5,
+   "note": "Candidat 2 (dia del sondeig, no necessàriament el primer dia de camp; el DPSH pot ser un altre dia)."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "570,90 msnm (segons el plànol ICGC)",
+   "location": "caixetí, camp 'Cota (Z):'",
+   "quote": "570.90 msnm  (segons el plànol ICGC)",
+   "confidence": 0.6,
+   "note": "Font vàlida (annex sondeig z:) però única en aquesta lectura; creuar amb la cota d'inici de l'annex DPSH (Pas 3)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "columna 'Unitat litològica', tram 0,50-1,20 m",
+   "quote": "NIVELL 1",
+   "confidence": 0.55,
+   "note": "Terreny Vegetal (0,00-0,50 m) no porta número a la llegenda — no compta com a nivell (regla cobertura). Candidat amb una sola font; creuar amb la llegenda del tall."
+  },
+  {
+   "concept_id": "utm_x",
+   "value": "423182.0",
+   "location": "caixetí, camp 'UTM:'",
+   "quote": "423182.0 E(x)",
+   "confidence": 0.6,
+   "note": "Candidat; prioritat és COORDENADES.txt si existeix."
+  },
+  {
+   "concept_id": "utm_y",
+   "value": "4609623.0",
+   "location": "caixetí, camp 'UTM:'",
+   "quote": "4609623.0 N(y)",
+   "confidence": 0.6,
+   "note": "Candidat; prioritat és COORDENADES.txt si existeix."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS",
+   "location": "caixetí, camp 'Empresa:'",
+   "quote": "TPS",
+   "confidence": 0.6,
+   "note": null
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "taula 'Mostres i assaigs in-situ', columna 'Tipus de mostra'",
+   "quote": "SPT-1",
+   "confidence": 0.6,
+   "note": null
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1,00 a -1,20 m",
+   "location": "taula 'Mostres i assaigs in-situ', columna 'Prof. de extracció (m)'",
+   "quote": "-1,00 a -1,20",
+   "confidence": 0.6,
+   "note": null
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "caixetí, camp 'Sondeig nº:'",
+   "quote": "S-1",
+   "confidence": 0.5,
+   "note": "Punt d'assaig d'on surt la mostra SPT-1."
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Terreny Vegetal (cobertura, sense número)",
+    "litologia": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "de": "0,00",
+    "a": "0,50",
+    "mostra_del_nivell": false,
+    "location": "columna 'Descripció dels materials' i 'Columna litològica', tram superior",
+    "quote": "0.00-0.50 -Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "note": "Confirmat per zoom (render_clip.py, 500dpi): sense etiqueta 'NIVELL' a la columna 'Unitat litològica' per a aquest tram."
+   },
+   {
+    "nom": "NIVELL 1",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "de": "0,50",
+    "a": "1,20",
+    "mostra_del_nivell": true,
+    "location": "columna 'Unitat litològica' i 'Descripció dels materials', tram inferior",
+    "quote": "0.50-1.20 - Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "note": "Redacció literal candidata, mai segur (regla Pas 3b: l'Eva sol re-redactar la litologia a l'informe). Conté la mostra SPT-1 (-1,00 a -1,20)."
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "570,90 msnm (segons el plànol ICGC)",
+    "profunditat_assolida": "-1,20 m",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "caixetí (Cota Z) + taula de mostres (SPT-1, -1,00 a -1,20, Registre R) + Fotografia 2",
+    "quote": "Cota (Z): 570.90 msnm (segons el plànol ICGC) / SPT-1 Prof. de extracció -1,00 a -1,20 Registre: R / Fotografia 2: 'Material recuperat en el sondeig S-1 entre les cotes de 0.00 a -1.20 metres de profunditat.'",
+    "note": "ATENCIÓ (lliçó coneguda del skill, v0.7 — cas d'ERR ja documentat per aquest mateix projecte): si l'Excel DPSH d'aquest projecte (ANNEXES/3001621_DPSH.xls) usa cotes relatives ('respecte el carrer'), la cota d'aquesta fila ha de seguir el mateix sistema (relativa), NO l'absoluta 570,90 msnm d'aquest annex — encara que sigui l'única font llegida en aquesta crida --only. Verificar contra el DPSH abans de fixar 'segur'. Columna 'Nivell freàtic' buida (sense text ni traç) a tot el tram llegit → No detectat. Rebuig confirmat pel 'R' al tram -1,00/-1,20 (sondeig aturat a 1,20 m)."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,20 m",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)",
+    "n30": {
+     "registre": "R"
+    },
+    "location": "taula 'Mostres i assaigs in-situ', fila SPT-1",
+    "quote": "SPT-1 / Prof. de extracció: -1,00 a -1,20 / Registre: R",
+    "note": "n30 mai segur (regla del contracte); aquí ni tan sols hi ha xifra de colpeig, només la marca 'R' de rebuig."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF FreeHand->Distiller (PScript5.dll): text de les 2 pàgines és brossa (text_ok=false ambdues pàgines segons meta.json), lectura 100% visual sobre page-1.png i page-2.png (150dpi) + 3 retalls amb scripts/render_clip.py (400-500dpi) per confirmar el límit exacte de 'NIVELL 1' (comença just després de la línia discontínua a 0,50m, no abans, confirmant la regla de cobertura sense número) i la cel·la Registre='R' de SPT-1. Columna 'Nivell freàtic' buida (sense text ni traç visible). Columna 'Testimoni recuperat' mostrada ombrejada gairebé al 100% de l'escala 20-80% per al tram 0,00-1,00 m (no forma part de cap concepte del nivell A ni de les taules Pas 3b, no reportat com a camp). Pàgina 2 = fotografies de camp amb el mateix caixetí (repetició de dades, no font independent nova); confirma visualment el rang 0,00 a -1,20 m a l'etiqueta manuscrita de la caixa de mostres."
+}

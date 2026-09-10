@@ -1,0 +1,67 @@
+{
+ "source_path": "ANNEXES/COORDENADES.txt (+ DTE.txt arrel)",
+ "document_type": "coordenades_gps",
+ "what_it_is": "COORDENADES.txt: un sol punt GPS de camp, P-1: X 308781,86 ; Y 4613950.63 ; Z 198.9 (UTM, sense fus explícit; Catalunya → ETRS89 31N). DTE.txt: nota administrativa de facturació (informe descomptat/facturat el 02/03 per 1016,40 € = 840 + 21 % IVA, venciment 30/03/26), sense dades del nivell A.",
+ "issuer": "G3 (camp, GPS) / G3 administració (DTE.txt)",
+ "date": "COORDENADES.txt: sense data (presa de camp 16/02/2026 segons annex DPSH); DTE.txt: 02/03/2026",
+ "pages_or_sheets": "3 línies + 1 línia",
+ "context": {
+  "who_made_it": "l'equip de camp de G3 (GPS de mà) per a COORDENADES.txt; administració G3 per a DTE.txt",
+  "for_whom": "l'Eva, per a la taula de coordenades de l'informe i el plànol de situació",
+  "why": "situar els punts d'assaig en UTM",
+  "expected_fields": [
+   "utm_x_utm_y (per punt)",
+   "cota_referencia (Z GPS, candidat feble: l'Eva no l'usa)"
+  ],
+  "not_expected": [
+   "tots els altres camps"
+  ],
+  "relation_to_others": "NOMÉS P-1 (els 3 penetròmetres es van fer; P-2 i P-3 no hi tenen coordenades: caldrà el plànol de situació de l'annex o croquis). Z 198,9 GPS DISCREPA 10,7 m amb la cota d'inici de l'annex DPSH (+188,20 msnm ICGC) i amb l'escala del tall (186-189 msnm): error d'altitud GPS (o alçada el·lipsoïdal); mai usar Z com a cota. DTE.txt: '02/03' és data de facturació, NO data de camp.",
+  "authority_for": [
+   "utm_x_utm_y (P-1)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "utm_x_utm_y",
+   "value": "P-1: X 308781,86 ; Y 4613950,63 (UTM 31N, fus no indicat)",
+   "location": "ANNEXES/COORDENADES.txt línies 2-3",
+   "quote": "Coordenades UTM (X);(Y);(Z);\nP-1\n308781,86 ; 4613950.63 ; 198.9",
+   "confidence": 0.85,
+   "note": "un sol punt (P-1). Separadors decimals barrejats (',' a X, '.' a Y/Z). Coherent amb l'enllaç Google Maps del correu (41,6545 N / 0,7035 E ≈ X 308,7 km / Y 4.613,9 km al fus 31N). P-2 i P-3 sense coordenades en cap fitxer de text."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "198,9 (Z GPS) — DESCARTAR",
+   "location": "ANNEXES/COORDENADES.txt línia 3",
+   "quote": "198.9",
+   "confidence": 0.1,
+   "note": "Z GPS. L'annex DPSH diu 'Cota inici: +188,20 msnm segons el plànol topogràfic de l'ICGC' i el tall té l'escala 186-189 msnm: diferència de 10,7 m (molt més que els ~0,6 m habituals). El criteri de l'Eva és l'ICGC: 188,20."
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": "2026-03-02 (facturació)",
+   "location": "DTE.txt",
+   "quote": "EN DATA 02/03 DTO AQUEST INFORME PER UN IMPORT DE 1016,40€ - VCT: 30/03/26",
+   "confidence": 1.0,
+   "note": "nota administrativa (import 1016,40 = 840 × 1,21; venciment 30/03/26). No és data de camp ni cap camp del nivell A."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "num_soil_levels",
+  "num_dpsh_tests (només 1 punt llistat de 3 executats)",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "cat -A: COORDENADES.txt 64 B, 3 línies CRLF; DTE.txt 76 B, 1 línia, '€' en UTF-8. Cap fus UTM ni sistema de referència indicat."
+}

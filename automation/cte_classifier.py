@@ -117,6 +117,12 @@ def parse_floor_count(floors_str: str) -> int:
         p_num_match = re.search(r'\+p(\d+)', normalized)
         if p_num_match:
             total_floors += int(p_num_match.group(1))
+        else:
+            # "Pb+1", "PB + 2": el número sol després del «+» són plantes pis (la lectura del
+            # plànol de Castellar dona «PB+1» on l'Eva escriu «Pb+1Pp»; signat C-1). CTE 2026-09-07.
+            plus_num = re.search(r'\+(\d+)(?![\d]*ps)', normalized)
+            if plus_num and "pb" in normalized:
+                total_floors += int(plus_num.group(1))
 
     # Count basement floors (Ps = planta soterrani)
     ps_match = re.search(r"(\d+)ps", normalized)
@@ -201,60 +207,29 @@ def classify_soil(
     """
     Classify soil per CTE DB SE-C Table 3.2.
 
-    Classification criteria:
+    Classification criteria (CTE DB SE-C Table 3.2):
     - T-1 (Favorable): Uniform natural soil, no fill, good bearing capacity
     - T-2 (Intermediate): Some variability or moderate bearing capacity
     - T-3 (Unfavorable): Heterogeneous, fill present, poor bearing capacity
 
-    The classification uses N20 values from DPSH tests as an indicator:
-    - N20 >= 20: Good bearing capacity (favors T-1)
-    - N20 10-20: Moderate bearing capacity (T-2)
-    - N20 < 10: Poor bearing capacity (T-2 or T-3)
-
     Args:
-        dpsh_data: DPSHData object from dpsh_extractor (optional)
-        has_fill: Whether fill material is present (forces T-3)
-        average_n20: Direct N20 value (use if dpsh_data not available)
+        dpsh_data: DPSHData object from dpsh_extractor (kept for API; not a decider)
+        has_fill: Whether fill material is present (kept for API; not a decider)
+        average_n20: Direct N20 value (kept for API; not a decider)
 
     Returns:
-        Soil classification: "T-1", "T-2", or "T-3"
+        Soil classification: "T-1" (default; T-2/T-3 are the geologist's call)
 
-    Note:
-        Fill presence always results in T-3 classification per CTE.
-        Without DPSH data, returns T-2 as conservative default.
+    Note (criteri de l'Eva, 2026-09-07):
+        L'Eva escriu **T-1 a 6/6 informes signats amb taula CTE** (Castellar, Rubí, Bell-lloc, Linyola,
+        Alcoletge, Vilanova), també amb rebliment antròpic al primer nivell (Alcoletge) i amb N20 mitjà
+        < 10 (Alcoletge 7,8). La classe de terreny del CTE és una decisió de reconeixement, no un
+        resultat del DPSH: el defecte és T-1 i T-2/T-3 només si l'Eva ho canvia. Els arguments es
+        conserven per compatibilitat i traçabilitat; no decideixen. Abans: T-2 per N20 < 20, T-3 amb
+        rebliment (`cte_sol` 1/6 encerts a M341).
     """
-    # Fill always means T-3 (unfavorable)
-    if has_fill:
-        return "T-3"
-
-    # Get N20 value from dpsh_data or parameter
-    avg_n20: float | None = None
-    if dpsh_data is not None:
-        avg_n20 = dpsh_data.overall_average_n20
-    elif average_n20 is not None:
-        avg_n20 = average_n20
-
-    # Without N20 data, use conservative T-2
-    if avg_n20 is None:
-        return "T-2"
-
-    # Very low N20 (< 4) indicates extremely soft/loose soil - unfavorable
-    if avg_n20 < 4:
-        return "T-3"
-
-    # Classification based on N20 values
-    # These thresholds are based on typical geotechnical practice
-    if avg_n20 >= 20:
-        # Good bearing capacity - favorable
-        return "T-1"
-    elif avg_n20 >= 10:
-        # Moderate bearing capacity - intermediate
-        return "T-2"
-    else:
-        # Poor bearing capacity - note: not automatically T-3
-        # T-3 requires other factors (variability, water, etc.)
-        # Being conservative with low N values
-        return "T-2"
+    _ = (dpsh_data, has_fill, average_n20)  # conservats per API; el criteri no en depèn
+    return "T-1"
 
 
 def get_cte_classification(

@@ -1,0 +1,20 @@
+{
+  "source_path": "PDF/ANNEXES/4001612_tall de correlació.pdf (+ tall.pdf a l'arrel: mateix dibuix imprès amb 'Microsoft Print To PDF' el 24/10/2025, text llegible)",
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació d'Eva: perfil P-1 / S-1 / P-2 en cotes absolutes (msnm 196-200), llegenda (sòls vegetals; 1er nivell: graves amb sorres; cota de fonamentació ≈199,0), croquis de planta amb els punts i caixetí.",
+  "issuer": "Eva (G3)",
+  "date": "Octubre 2025",
+  "pages_or_sheets": 1,
+  "tier_a": [
+    {"concept_id": "num_soil_levels", "value": "1", "location": "llegenda", "quote": "1er nivell: Graves amb sorres", "confidence": 0.9, "note": "un sol nivell geotècnic sota els sòls vegetals (no comptats)"},
+    {"concept_id": "cota_referencia", "value": "≈199,5 msnm (superfície a la línia 199,5; escala 196-200)", "location": "eix vertical (msnm) + línia de superfície", "quote": "200 / 199 / 198 / 197 / 196 ; superfície dibuixada a ~199,5", "confidence": 0.7, "note": "lectura gràfica; l'annex del sondeig i l'annex DPSH ho donen numèricament (199,50)"},
+    {"concept_id": "expedient", "value": "4001612", "location": "caixetí 'Exp:'", "quote": "Exp: 4001612", "confidence": 1.0, "note": "a tall.pdf (text). A l'annex FreeHand cal visió."},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí TÍTOL DEL PROJECTE", "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER  LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.95, "note": ""},
+    {"concept_id": "street_address", "value": "entre el Carrer Antoni Bellet i Carrer Mestre Ramon Ortiz", "location": "caixetí", "quote": "SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC", "confidence": 0.95, "note": ""},
+    {"concept_id": "municipality", "value": "BELL-LLOC", "location": "caixetí", "quote": "DE BELL-LLOC", "confidence": 0.95, "note": ""},
+    {"concept_id": "num_dpsh_tests", "value": "2 (P-1, P-2) + 1 sondeig (S-1)", "location": "etiquetes del perfil", "quote": "P-1 | S-1 | P-2", "confidence": 0.95, "note": ""},
+    {"concept_id": "field_date", "value": "Octubre 2025", "location": "caixetí 'Data:'", "quote": "Data:Octubre 2025", "confidence": 0.3, "note": "només mes; és la data del dibuix, no del camp"}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "utm_x/utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Dues còpies: la FreeHand (text brossa, cal visió) i tall.pdf (Print To PDF, text net amb blocs). El caixetí del tall.pdf diu 'Plànol de situació' (plantilla reutilitzada) tot i ser el tall. Valors Nb=27/R (P-1), N=58 (S-1), Nb=22/56/R (P-2) són nivell B."
+}

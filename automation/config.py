@@ -25,8 +25,13 @@ __all__ = [
     "VISION_MODEL_OPENAI",
     "VISION_MODEL_ANTHROPIC",
     "VISION_MODEL_GROQ",
+    "GROQ_REASONING_EFFORT",
+    "GROQ_MAX_IMAGES",
     # Text models
     "TEXT_MODEL_GROQ",
+    "RETIRED_GROQ_MODELS",
+    "live_groq_model",
+    "groq_payload_extras",
     "TEXT_MODEL_ANTHROPIC",
     # Fallback orders
     "VISION_FALLBACK_ORDER",
@@ -45,6 +50,7 @@ __all__ = [
     "G3DT_ENABLE_AI_PIPELINE",
     "G3DT_DEV_MODE",
     "G3DT_PROD_USE_CLAUDECODE_VISION",
+    "G3DT_USE_LECTURA_HEADLESS",
     # Production paths (workflow xarxa + workspace local + copy-back)
     "G3DT_NETWORK_PROJECTS",
     "G3DT_LOCAL_WORKSPACE",
@@ -70,7 +76,7 @@ def _load_env() -> None:
     env_path = _PROJECT_ROOT / ".env"
     if not env_path.exists():
         return
-    for line in env_path.read_text().splitlines():
+    for line in env_path.read_text(encoding="utf-8", errors="replace").splitlines():
         line = line.strip()
         if line and not line.startswith("#") and "=" in line:
             key, _, value = line.partition("=")
@@ -122,13 +128,60 @@ GROQ_API_KEY: str = _env("GROQ_API_KEY")
 
 VISION_MODEL_OPENAI: str = _env("OPENAI_VISION_MODEL", "gpt-4.1-mini")
 VISION_MODEL_ANTHROPIC: str = _env("ANTHROPIC_VISION_MODEL", "claude-sonnet-4-6")
-VISION_MODEL_GROQ: str = _env("GROQ_VISION_MODEL", "qwen/qwen3.6-27b")
+# Groq retires models without notice (llama-4-scout 2026-07-17, qwen3-32b by
+# 2026-08). A stale `.env` on Eva's PC (written 2026-05-04) then yields HTTP 404
+# model_not_found on every call. Map retired ids to their live successor so an
+# old .env degrades to "works" instead of "silent 404 × N files". Verified
+# against GET https://api.groq.com/openai/v1/models on 2026-08-22.
+RETIRED_GROQ_MODELS: dict[str, str] = {
+    "meta-llama/llama-4-scout-17b-16e-instruct": "qwen/qwen3.6-27b",
+    "qwen/qwen3-32b": "qwen/qwen3.6-27b",
+    "llama-3.3-70b-versatile": "qwen/qwen3.6-27b",
+    "llama-3.1-8b-instant": "qwen/qwen3.6-27b",
+}
+
+
+def live_groq_model(model: str) -> str:
+    """Return `model`, or its live successor if Groq retired it."""
+    return RETIRED_GROQ_MODELS.get((model or "").strip(), model)
+
+
+def groq_payload_extras(model: str | None = None) -> dict:
+    """Extra chat-completions fields every Groq call must merge into its payload.
+
+    Single place for the qwen3 reasoning switch (F4, 2026-08-22): the 9 Groq
+    call sites in this repo each build their own httpx payload; without
+    ``reasoning_effort="none"`` a reasoning model burns the output budget
+    thinking and Groq answers HTTP 400 ``json_validate_failed``. Gated on the
+    model name so non-reasoning models never receive the parameter.
+    """
+    m = (model or VISION_MODEL_GROQ or "").lower()
+    if "qwen3" in m and GROQ_REASONING_EFFORT:
+        return {"reasoning_effort": GROQ_REASONING_EFFORT}
+    return {}
+
+
+VISION_MODEL_GROQ: str = live_groq_model(_env("GROQ_VISION_MODEL", "qwen/qwen3.6-27b"))
+# F4 (2026-08-22): qwen/qwen3.6-27b is a reasoning model. Without
+# reasoning_effort="none" it spends 1.5-4k output tokens "thinking" on a
+# 100-char classification JSON (6× slower, frequent HTTP 400 "Failed to
+# generate JSON", truncation at max_tokens). Groq docs: Qwen 3.6 27B accepts
+# "none" | "default". Set GROQ_REASONING_EFFORT="" to omit the parameter
+# (e.g. for a model that rejects it).
+GROQ_REASONING_EFFORT: str = _env("GROQ_REASONING_EFFORT", "none")
+# Max images per Groq vision request. llama-4-scout accepted 5; qwen/qwen3.6-27b
+# answers HTTP 400 "This model supports up to 3 images" (Tulipa run 2026-08-22).
+GROQ_MAX_IMAGES: int = max(1, int(_env("GROQ_MAX_IMAGES", "3")))
 
 # ---------------------------------------------------------------------------
 # Text models
 # ---------------------------------------------------------------------------
 
-TEXT_MODEL_GROQ: str = _env("GROQ_TEXT_MODEL", "qwen/qwen3-32b")
+# F4c (2026-08-22): qwen/qwen3-32b retired on Groq (HTTP 404 model_not_found,
+# 3 retries × every mined file in Eva's openings). Live list via GET /models:
+# qwen/qwen3.6-27b is the only remaining Qwen3-family text model (the code
+# already has the qwen3 no-think handling); reasoning is disabled per request.
+TEXT_MODEL_GROQ: str = live_groq_model(_env("GROQ_TEXT_MODEL", "qwen/qwen3.6-27b"))
 TEXT_MODEL_ANTHROPIC: str = _env("ANTHROPIC_TEXT_MODEL", "claude-sonnet-4-6")
 
 # ---------------------------------------------------------------------------
@@ -223,6 +276,15 @@ G3DT_DEV_MODE: bool = _env_bool("G3DT_DEV_MODE", False)
 # instal·lat a l'ordinador del usuari final. Independent de G3DT_DEV_MODE
 # perquè volem poder activar-lo a producció sense passar a dev mode.
 G3DT_PROD_USE_CLAUDECODE_VISION: bool = _env_bool("G3DT_PROD_USE_CLAUDECODE_VISION", False)
+
+# Wizard headless (via A, disseny 2026-08-24 §5): activa la lectura per
+# `claude -p` des del wizard (`web/lectura_service.py` + `automation/lectura/`).
+# Defecte False — la via B (Groq/Anthropic API, `/api/prefills-stream`) segueix
+# sent el comportament de producció mentre no s'activi explícitament. Les
+# altres variables `G3DT_LECTURA_*` (timeouts, concurrència, mode, binari
+# `claude`) es llegeixen directament de l'entorn dins `automation/lectura/runner.py`
+# — decisió presa de no duplicar-les aquí (disseny §5).
+G3DT_USE_LECTURA_HEADLESS: bool = _env_bool("G3DT_USE_LECTURA_HEADLESS", False)
 
 MAX_PAGES_TIER3: int = max(1, int(_env("G3DT_TIER3_MAX_PAGES", "10")))
 

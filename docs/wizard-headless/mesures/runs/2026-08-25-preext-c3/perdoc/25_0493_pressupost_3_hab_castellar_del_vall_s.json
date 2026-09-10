@@ -1,0 +1,115 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (Eva Vazquez a Dolors Maqueda) relaint una sol·licitud rebuda per WhatsApp del contacte ROC (GRUP ALMA) demanant pressupost per a un geotècnic PB+1 de 120 m2 a Carrer Arbrells 18A, Castellar del Vallès.",
+ "issuer": "Eva Vázquez Marcet (G3, Dept. Geologia), relaint un WhatsApp de ROC (GRUP ALMA)",
+ "date": "2025-06-25 11:14:44+02:00",
+ "pages_or_sheets": "1 missatge (sense fils RE/FW)",
+ "context": {
+  "who_made_it": "Eva Vázquez (G3, geòloga) escriu internament a Dolors Maqueda (G3) per demanar que es prepari un pressupost, copiant el text d'un WhatsApp rebut del client",
+  "for_whom": "Dolors Maqueda (G3, gestiona pressupostos), no el client",
+  "why": "Sol·licitud inicial de pressupost geotècnic; origen de l'encàrrec abans que existeixi cap pressupost formal",
+  "expected_fields": [
+   "client_name (sol·licitant)",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_floors",
+   "superficie_construida"
+  ],
+  "not_expected": [
+   "expedient",
+   "architect_name",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "Precursor de PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf i de la seva versió MODF; el CLIENT indicat aquí (GRUP ALMA) és susceptible de ser substituït per un client posterior al pressupost MODF (regla coneguda: Castellar GRUP ALMA -> WOOD COMFORT al MODF) - a verificar contra aquell document",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_floors"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "GRUP ALMA",
+   "location": "cos del missatge, línia 23",
+   "quote": "CLIENT: GRUP ALMA",
+   "confidence": 0.4,
+   "note": "Sol·licitant citat en correu d'encàrrec (contacte ROC, 615 55 74 50), no és font independent del pressupost. Possiblement superseït per WOOD COMFORT al pressupost MODF (regla coneguda del skill) - candidat, mai segur des d'aquest sol document"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A",
+   "location": "cos del missatge, línies 37-39",
+   "quote": "La direcció és :\n\nCarrer Arbrells 18A",
+   "confidence": 0.6,
+   "note": "Explícita al correu d'encàrrec; sense número de municipi annex, cal creuar amb altres documents"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del missatge, línia 35 + assumpte del correu",
+   "quote": "haig de fer un geotecnic  a Castellar del Vallès.",
+   "confidence": 0.6,
+   "note": "Coincideix amb l'assumpte 'PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS'"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge PB+1, sense soterrani, estructura d'entramat lleuger de fusta",
+   "location": "cos del missatge, línies 47-53",
+   "quote": "PB + 1\n\n- Sense soterrani\n\n- 120 m2 construits\n\n- Estructura d'entremat lleuger de fusta.",
+   "confidence": 0.5,
+   "note": "Descripció del client al correu d'encàrrec, no redacció final de l'informe"
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1 (2 plantes)",
+   "location": "cos del missatge, línia 47",
+   "quote": "PB + 1",
+   "confidence": 0.6,
+   "note": "Explícit al correu d'encàrrec"
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": "120 m2 construïts (PB+1, sense desglossar per planta)",
+    "total": "120",
+    "etiqueta_font": "segons correu d'encàrrec (sol·licitud WhatsApp relaiada per Eva)"
+   }
+  ],
+  "__nota": "Només bloc superficie_construida; el document no aporta dades de DPSH, sondeig, SPT/MA ni nivells de sòl"
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "architect_company",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Correu text pla, cap imatge a renderitzar. L'única adjunta (PLAN_COST) ja és solta a la carpeta (already_in_folder), no llegida aquí. Nota de context no extreta com a dada: el client indica que la setmana següent comprarà 2 parcel·les més i pregunta pel preu de 3 estudis geotècnics alhora (línia 57) - explica el '3 HAB' de l'assumpte, però aquest expedient (3001621, carpeta única) sembla correspondre a 1 sol habitatge (el descrit, PB+1/120m2), no als 3; sense subcarpetes casa_1/casa_2 com a Tulipa."
+}

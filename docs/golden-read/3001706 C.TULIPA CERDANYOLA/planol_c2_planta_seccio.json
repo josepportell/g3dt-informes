@@ -1,0 +1,71 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf",
+ "document_type": "planol",
+ "what_it_is": "Plànol vectorial de l'arquitecte (planta d'emplaçament amb topogràfic, planta baixa moblada de la casa i 'SECCIÓ B' del terreny des del Carrer Tosca fins al Camí Antic de Sant Cugat) de la parcel·la de CASA 2; sense caixetí.",
+ "issuer": "Arquitecte (despatx no identificat al full: no hi ha caixetí). Metadades PDF: title '\\\\DISKSTATION\\Actuals\\408 REPARCEL·LACIO JORDI GENE TOSCA 16\\GEOTECNIC\\GEOTECNIC CONJUNT\\ENVIO G3\\PLANTA I SECCIO Model (1)', creator PScript5.dll, Acrobat Distiller 10.1.16. A la mateixa carpeta hi ha 'geotecnic  carrer Tosca 16.msg' i 'PLANTA I SECCIO.dwg' (mateix nom) — el plànol va arribar adjunt a aquest correu (correu no llegit en aquesta passada).",
+ "date": "PDF creat 2026-05-06 10:37 (metadades); cap data al full",
+ "pages_or_sheets": "1 pàgina A3 apaïsat (1191x842 pt, rot=270), 0 text, 0 imatges, ~60.900 traçats vectorials",
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tosca (nº 16 segons metadades)",
+   "location": "etiqueta de carrer a l'W de la parcel·la + title de les metadades PDF",
+   "quote": "Carrer Tosca | Camí Antic | title: '408 REPARCEL·LACIO JORDI GENE TOSCA 16'",
+   "confidence": 0.8,
+   "note": "La parcel·la (línia discontínua vermella) dona front al 'Carrer Tosca' a l'W i al 'Camí Antic' (secció: 'CAMI ANTIC DE SANT CUGAT') a l'E. Parcel·la en cantonada/passant entre dos vials: dues adreces possibles, la del projecte és Tosca 16. El número 16 només surt a la ruta del fitxer de l'arquitecte (metadades) i al nom del .msg, no al dibuix."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "JORDI GENE (?)",
+   "location": "metadades PDF, 'title' (ruta de carpeta del despatx)",
+   "quote": "\\\\DISKSTATION\\Actuals\\408 REPARCEL·LACIO JORDI GENE TOSCA 16\\GEOTECNIC\\...",
+   "confidence": 0.3,
+   "note": "Nom de carpeta del despatx de l'arquitecte ('408 REPARCEL·LACIO JORDI GENE TOSCA 16'): típicament el nom del client/promotor del despatx, però no és una etiqueta 'Promotor'. Candidat feble, a contrastar amb ACCEPTACIO/DADES CLIENT.txt i el pressupost. Conflicte potencial amb 'SR.ALEIX SUBIÀ FELIP' (Client: dels annexos de l'Eva = sol·licitant)."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1 (2 plantes)",
+   "location": "SECCIÓ B (part inferior del full): volum de la casa sobre la cota 201.25",
+   "quote": "201.25 (cota de planta baixa a la secció i a la planta)",
+   "confidence": 0.6,
+   "note": "A la secció el volum edificat mostra dos nivells de forjat sobre la llosa de 201.25 (planta baixa + una planta pis); la planta dibuixada és la baixa (sala-menjador, cuina, bany, dormitori, escala). Comptat visualment; cap text de 'PB+1'. No es veu soterrani."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "201.25 (planta baixa de la casa); Carrer Tosca 196.30 (secció) / 196.11 i 196.70 (cantonades W de la parcel·la, planta); Camí Antic 201.30 (secció), 202.55 / 202.39 (vorera E, planta); punt alt del terreny 203.75–204.00",
+   "location": "planta (cotes a les cantonades de la parcel·la) i SECCIÓ B (eix de cotes 196.00–203.75)",
+   "quote": "196.11 | 196.70 | 201.25 | 202.55 | 202.39 | SECCIÓ B 196.30 … 203.70 … 204.00 … 201.30 | CAMI ANTIC DE SANT CUGAT 201.30 | CARRER TOSCA | linia virtual terreny natural",
+   "confidence": 0.7,
+   "note": "Cotes absolutes de l'arquitecte (probablement del topogràfic propi), coherents amb les ICGC del plànol de situació de l'Eva (CASA 2: 201,?–204,19). La cota 199.0 del sondeig S-1 és de CASA 1, no d'aquesta parcel·la. Terreny puja de ~196.3 (C/ Tosca) a ~203.75–204.0 (zona B) i baixa a 201.3 al Camí Antic."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar (casa aïllada amb piscina)",
+   "location": "planta moblada + secció",
+   "quote": "",
+   "confidence": 0.5,
+   "note": "Inferit del dibuix (un sol habitatge, piscina a l'W, jardí). Cap text al full."
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": null,
+   "location": "planta: parcel·la (línia discontínua vermella) amb dues zones 'A' (casa) i 'B' (est), franja ratllada blava a l'E; cota '20.00' en taronja a la cantonada SE",
+   "quote": "A | B | 20.00",
+   "confidence": 0.0,
+   "note": "Cap superfície numèrica ni taula de planejament. Les lletres 'A' i 'B' marquen dues zones/sub-parcel·les (la ruta de l'arquitecte parla de 'REPARCEL·LACIO'). El '20.00' sembla una amplada/distància a la cantonada SE, no una superfície."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name (sense caixetí; despatx indicat pel Josep com 'Factoria d'Arquitectura', NO verificat en aquest document)",
+  "municipality (no escrit; 'Camí Antic de Sant Cugat' suggereix l'entorn de Cerdanyola/Sant Cugat)",
+  "field_date",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "PDF 100% vectorial sense text extraïble (0 caràcters; els textos són traçats). Llegit visualment a 100 dpi sencer i a 250 dpi amb crops (NW: cantonada Carrer Tosca; NE: Camí Antic; centre: planta baixa; secció esquerra i dreta; secció de la casa). Sense caixetí ni llegenda en tot el full — títol del dibuix només a les metadades. Planta: vial 'Carrer Tosca' a l'W (amb fanal), 'Camí Antic' a l'E, parcel·la trapezoïdal en línia discontínua vermella amb cotes de cantonada 196.11 (NW), 196.70 (SW), 202.55 / 202.39 (vorera NE); línia de SECCIÓ B E-W passant per la casa a cota 201.25; zona 'A' amb casa i piscina (ratllada blava), zona 'B' a l'E amb rectangle discontinu blau i franja ratllada blava al límit E; rampa/escales d'accés al N amb cotes 196.25…198.25 i 197.57; cota '198.37' i '198.50' prop de la casa; corbes de nivell 197.00, 198.00, 199.00, 202.00, 203.00, 204.00 (etiquetes petites, llegides amb dificultat); 'SECCIÓ B' marcat amb fletxes a tots dos costats; rosa dels vents (el nord apunta cap a l'W-SW del full). Secció: 'SECCIÓ B', cotes d'eix 196.30, 197.00…203.00, 203.70, 204.00, 204.00, 203.00, 202.00, 201.30; etiquetes 'CARRER TOSCA', 'linia virtual terreny natural', 'CAMI ANTIC DE SANT CUGAT 201.30'; acotacions en vermell 1.50 / 1.00 / 3.00 / 1.25 (piscina) / 2.?0 (mur E); línia verda = terreny natural, línia blava puntejada = línia virtual. Any text smaller than ~6 pt remains uncertain even at 250 dpi."
+}

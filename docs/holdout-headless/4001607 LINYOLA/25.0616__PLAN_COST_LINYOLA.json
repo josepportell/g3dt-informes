@@ -1,0 +1,24 @@
+{
+  "source_path": "25.0616/PLAN_COST_LINYOLA.xlsx",
+  "document_type": "plan_cost_g3",
+  "what_it_is": "Full intern de planificació de costos de G3 ('Plan Cost'!B2 = 'PLAN COST  |  G3 DT')",
+  "issuer": "G3 (oficina tècnica)",
+  "date": "no consta (associat a l'oferta 25·0616, agost 2025)",
+  "pages_or_sheets": "Plan Cost, OFERTA, FACTURA M, Material Cost (lab), Material Cost, Cost Center, Technicians",
+  "context": {
+    "who_made_it": "G3, per calcular el marge de l'oferta",
+    "for_whom": "ús intern G3",
+    "why": "planificar cost/subcontractació de l'estudi ofert",
+    "expected_fields": ["municipality + building_type via E9 (títol)", "num_dpsh_tests via OFERTA!B21 (previstos)"],
+    "not_expected": ["tota la resta: SOIL-ASSAIG, TPS, LLEIDA i preus són plantilla, mai senyal"],
+    "relation_to_others": "Quantitats = les del pressupost 25·0616 (mateix origen, no independent). No s'actualitza si el pressupost canvia: última font per a quantitats.",
+    "authority_for": ["municipality (suport)", "building_type (suport, 'HAB UNIF')"]
+  },
+  "tier_a": [
+    {"concept_id": "municipality", "value": "Linyola", "location": "'Plan Cost'!E9", "quote": "DESCRIPCIÓ TITÒL = 'EG HAB UNIF LINYOLA'", "confidence": 0.7, "note": "tercera aparició (pressupost, fitxa, PLAN_COST) però totes del mateix encàrrec"},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar (HAB UNIF)", "location": "'Plan Cost'!E9", "quote": "EG HAB UNIF LINYOLA", "confidence": 0.6, "note": "expandir HAB UNIF; coherent amb comanda 'CONSTR HABITATGE'"},
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "OFERTA!B21", "quote": "unitat de penetració dinàmica DPSH · UNITATS = 3", "confidence": 0.5, "note": "previstos; mateix origen que el pressupost"}
+  ],
+  "not_present": ["expedient", "client_name", "architect_name", "street_address (J8 'LLEIDA' és plantilla)", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "cte", "utm_x_utm_y", "referencia_catastral", "lab_*"],
+  "reading_notes": "openpyxl data_only. OFERTA!B22=1 'ml previ al SPT', B23=1 'Assaig SPT' → l'SPT es fa amb la màquina de penetració (cap ml de sondeig a rotació pressupostat: fila 6 buida). E21 tècnic = 'Eva Vázquez Marcet' (autora G3, no camp del nivell A). Subcontractació 'TPS' (sondeos) i 'SOIL-ASSAIG' (laboratori) són etiquetes de plantilla segons el skill — no s'usen com a senyal de lab_testing_company."
+}

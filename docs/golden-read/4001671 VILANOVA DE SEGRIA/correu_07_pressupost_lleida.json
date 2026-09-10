@@ -1,0 +1,28 @@
+{
+ "source_path": "26.0050/PRESSUPOST LLEIDA.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu d'encàrrec intern (Loli/Dolors Maqueda, administració G3 → Eva, 27/01/2026 11:37) amb totes les dades de l'encàrrec: client (Grupo Cuenca Guerrero SL + NIF), ARQUITECTE (jordi carner, ROCAR arquitectura i enginyeria), adreça de l'obra, tipologia (habitatge unifamiliar aïllat) i previsió del client ('pb 100m2... 7 més'). Adjunta el plànol 1.0.pdf.",
+ "issuer": "Dolors (Loli) Maqueda, Dep. Administració G3",
+ "date": "2026-01-27 11:37",
+ "pages_or_sheets": "1 correu + 6 adjunts (1.0.pdf i 5 imatges de signatura)",
+ "context": {
+  "who_made_it": "administració de G3, transcrivint el que el client (Toni, tel. 625298919) i l'arquitecte li han comunicat",
+  "for_whom": "Eva (geòloga), perquè prepari el pressupost 26·0050 (fet el mateix dia a les 15:35)",
+  "why": "traspassar l'encàrrec: aquest correu és la FONT de tot el que G3 sap del projecte el dia zero",
+  "expected_fields": ["client_name", "architect_name", "street_address", "municipality", "building_type", "num_floors (via superfícies)", "referencia_catastral (si adjunta consulta)"],
+  "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests (encara no pressupostats)", "lab"],
+  "relation_to_others": "el pressupost 26·0050, la fitxa de camp i el PLAN_COST deriven d'aquest correu → les seves mencions de client/adreça NO són fonts independents d'aquest. L'adjunt 1.0.pdf (md5 8af7e4a3...) és IDÈNTIC al 26.0050/1.0.pdf solt de la carpeta (dedup). RE_ PRESSUPOST LLEIDA.msg és la resposta d'Eva.",
+  "authority_for": ["architect_name (única font del projecte!)", "building_type", "num_floors", "client_name (corroboració amb NIF)"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "Grupo Cuenca Guerrero SL (NIF B26604942)", "location": "cos, bloc CLIENT:", "quote": "CLIENT: / Grupo Cuenca guerrero sl / Calle Merce rodureda número 9 / Vilanova del segria / 25133 / Lleida / NIF B26604942", "confidence": 0.8, "note": "mateix NIF que el formulari p.5 signat → corrobora. És el sol·licitant I qui l'acceptació designa per a factura+informe. 'Toni' (625298919) = persona de contacte = ANTONIO CUENCA LARA de l'acceptació (mateix telèfon). Grafia del correu 'Merce rodureda' (sic)."},
+  {"concept_id": "architect_name", "value": "Jordi Carner (arquitecte tècnic, ROCAR arquitectura i enginyeria)", "location": "cos, bloc ARQUITECTE:", "quote": "ARQUITECTE: / jordi carner / arquitecte tècnic rocar arquitectura i enginyeria / www.rocarassociats.com", "confidence": 0.75, "note": "ÚNICA font del projecte que anomena l'arquitecte (cap PDF/Excel el porta; el mapa de veritat deia 'no apareix en cap document de text' — sí que apareix en aquest .msg). És 'arquitecte tècnic' (aparellador), no arquitecte superior: anotar tal qual. Minúscules al correu; normalitzat 'Jordi Carner'."},
+  {"concept_id": "street_address", "value": "C. Santa Gemma, 4, Urb. La Serra", "location": "cos, bloc DREÇA OBRA (sic)", "quote": "Emplaçament / D'UN HABITATGE UNIFAMILIAR AÏLLAT C. Santa Gemma, 4 Urb. La Serra Vilanova del Segrià", "confidence": 0.8, "note": "coincideix amb el bloc OBRA del pressupost; frase d'emplaçament que semblarà a l'informe"},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "cos, bloc DREÇA OBRA", "quote": "Vilanova del Segrià", "confidence": 0.8, "note": "grafia del correu 'Vilanova del segria/del Segrià' (sic, amb 'del'); forma oficial: Vilanova de Segrià"},
+  {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "cos, bloc DREÇA OBRA", "quote": "D'UN HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.85, "note": "més específic que la comanda ('CONSTR HAB UNIF'): AÏLLAT. En castellà a l'informe: 'vivienda unifamiliar aislada'."},
+  {"concept_id": "num_floors", "value": "PB (planta baixa, ~100 m²)", "location": "cos, frase final", "quote": "El client Toni 625298919 diu que serà pb 100m2, començen fen una pero tenen en men fer-ne 7 mès.", "confidence": 0.7, "note": "'pb 100m2' = planta baixa de 100 m² → PB (1 planta). Coherent amb CTE C0 (< 300 m², < 4 plantes). NOTA: en fan una ara i en tenen 7 més en ment (promoció de 8 a la urbanització) — context, no camp."},
+  {"concept_id": "superficie_construida", "value": "~100 m² (PB)", "location": "cos, frase final", "quote": "pb 100m2", "confidence": 0.5, "note": "superfície CONSTRUÏDA prevista, NO superficie_parcela (que no consta enlloc del correu)"}
+ ],
+ "not_present": ["expedient (encara no assignat)", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab", "cte (el correu no diu 'és un C0')"],
+ "reading_notes": "Extret amb extract_msg. Adjunt 1.0.pdf (211.554 bytes, md5 8af7e4a33e71f95d9f31fbc8d5d25880) = idèntic al 26.0050/1.0.pdf de la carpeta → una sola font. image001-005 (158-8.569 bytes) = signatura corporativa, ignorades. El cos és el text nou sencer (no és RE:). Ortografia informal ('rodureda', 'DREÇA', 'fen', 'mès'): transcripció d'administració, normalitzar contra documents impresos."
+}

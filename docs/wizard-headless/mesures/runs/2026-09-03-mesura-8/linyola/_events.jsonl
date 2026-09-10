@@ -1,0 +1,49 @@
+{"t": 18.3, "ev": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/linyola/_preext", "n_docs": 21, "n_errors": 0, "elapsed_s": 14.734}
+{"t": 18.3, "ev": "lectura_inventari", "n_files": 45}
+{"t": 20.3, "ev": "templates_fields", "n_documents": 6}
+{"t": 20.3, "ev": "lectura_doc", "doc": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf", "skipped_duplicate": true}
+{"t": 20.3, "ev": "lectura_inici", "n_claude": 20, "n_python": 4}
+{"t": 20.3, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf"}
+{"t": 20.3, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/RV_ Realització geotècnic.msg"}
+{"t": 197.6, "ev": "lectura_doc", "doc": "ACCEPTACIO/RV_ Realització geotècnic.msg", "cached": false, "attempt": 1}
+{"t": 197.6, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_DPSH.pdf"}
+{"t": 223.1, "ev": "lectura_doc", "doc": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf", "cached": false, "attempt": 1}
+{"t": 223.1, "ev": "lectura_doc_inici", "doc": "ANNEXES/4001607_DPSH.xls"}
+{"t": 449.2, "ev": "lectura_doc", "doc": "ANNEXES/4001607_DPSH.xls", "cached": false, "attempt": 1}
+{"t": 449.2, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_tall de correlació.pdf"}
+{"t": 472.3, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001607_DPSH.pdf", "cached": false, "attempt": 1}
+{"t": 472.3, "ev": "lectura_doc_inici", "doc": "tall.pdf"}
+{"t": 748.8, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001607_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"t": 748.8, "ev": "lectura_doc_inici", "doc": "4672-GTL-25 Linyola.pdf"}
+{"t": 797.6, "ev": "lectura_doc", "doc": "tall.pdf", "cached": false, "attempt": 1}
+{"t": 797.6, "ev": "lectura_doc_inici", "doc": "25.0616/25·0616.pdf"}
+{"t": 969.6, "ev": "lectura_doc", "doc": "25.0616/25·0616.pdf", "cached": false, "attempt": 1}
+{"t": 969.6, "ev": "lectura_doc_inici", "doc": "25.0616/2_02B_DG_Silvia_Jaume.pdf"}
+{"t": 991.4, "ev": "lectura_doc", "doc": "4672-GTL-25 Linyola.pdf", "cached": false, "attempt": 1}
+{"t": 991.4, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_fotografies.pdf"}
+{"t": 1208.8, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001607_fotografies.pdf", "cached": false, "attempt": 1}
+{"t": 1208.8, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/lab-sig.pdf"}
+{"t": 1250.5, "ev": "lectura_doc", "doc": "25.0616/2_02B_DG_Silvia_Jaume.pdf", "cached": false, "attempt": 1}
+{"t": 1250.5, "ev": "lectura_doc_inici", "doc": "Punts de Sondeig_Silvia_Jaume (1).pdf"}
+{"t": 1466.6, "ev": "lectura_doc", "doc": "Punts de Sondeig_Silvia_Jaume (1).pdf", "cached": false, "attempt": 1}
+{"t": 1466.6, "ev": "lectura_doc_inici", "doc": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"}
+{"t": 1566.6, "ev": "lectura_doc", "doc": "PDF/ANNEXES/lab-sig.pdf", "cached": false, "attempt": 1}
+{"t": 1566.6, "ev": "lectura_doc_inici", "doc": "pl situ.pdf"}
+{"t": 1649.7, "ev": "lectura_doc", "doc": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf", "cached": false, "attempt": 1}
+{"t": 1649.7, "ev": "lectura_doc_inici", "doc": "PENETROS.pdf"}
+{"t": 1807.9, "ev": "lectura_doc", "doc": "pl situ.pdf", "cached": false, "attempt": 1}
+{"t": 1807.9, "ev": "lectura_doc_inici", "doc": "25.0616/RE_ pressupost geotècnic.msg"}
+{"t": 1989.6, "ev": "lectura_doc", "doc": "25.0616/RE_ pressupost geotècnic.msg", "cached": false, "attempt": 1}
+{"t": 1989.6, "ev": "lectura_doc_inici", "doc": "25.0616/RV_ pressupost geotècnic.msg"}
+{"t": 2155.8, "ev": "lectura_doc", "doc": "PENETROS.pdf", "cached": false, "attempt": 1}
+{"t": 2155.8, "ev": "lectura_doc_inici", "doc": "25.0616/pressupost geotècnic.msg"}
+{"t": 2209.3, "ev": "lectura_doc", "doc": "25.0616/RV_ pressupost geotècnic.msg", "cached": false, "attempt": 1}
+{"t": 2209.3, "ev": "lectura_doc_inici", "doc": "RV_ Realització geotècnic.msg"}
+{"t": 2331.4, "ev": "lectura_doc", "doc": "25.0616/pressupost geotècnic.msg", "cached": false, "attempt": 1}
+{"t": 2331.4, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001607_plànol de situació.pdf"}
+{"t": 2366.9, "ev": "lectura_doc", "doc": "RV_ Realització geotècnic.msg", "cached": false, "attempt": 1}
+{"t": 2571.8, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001607_plànol de situació.pdf", "cached": false, "attempt": 1}
+{"t": 2571.9, "ev": "consolidacio_inici", "consolidator": "python"}
+{"t": 2572.2, "ev": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 0, "elapsed_s": 0.312}
+{"t": 2572.2, "ev": "lectura_fi", "n_docs": 21, "elapsed_s_total": 4655.555913252232, "degraded": false}
+DONE 4001607 LINYOLA: 42.9 min, degraded=False, mode=document, decisions=OK, docs=21

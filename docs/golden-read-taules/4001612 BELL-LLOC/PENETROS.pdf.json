@@ -1,0 +1,66 @@
+{
+ "source_path": "PENETROS.pdf",
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escaneig NAPS2 de 2 pàgines: p.1 albarà TPS de Bell-lloc; p.2 full de camp DPSH manuscrit d'UN ALTRE PROJECTE (LINYOLA)",
+ "issuer": "TPS (operari SINY, equip ML 60A); escanejat per G3 2025-10-01",
+ "date": "1-10-25 (albarà i full)",
+ "pages_or_sheets": "2 pàgines escanejades (0 text)",
+ "context": {
+  "who_made_it": "TPS emet l'albarà del dia de camp; G3 l'escaneja",
+  "for_whom": "G3 (DADES CLIENT: Empresa G3 / Responsable EVA = relació subcontractista->G3, cap rol al projecte)",
+  "why": "justificar la feina del dia (2 penetròmetres, ml perforats)",
+  "expected_fields": [
+   "nº penetròmetres realitzats",
+   "ml totals",
+   "data",
+   "N.F. (del full de camp)"
+  ],
+  "not_expected": [
+   "client de l'informe",
+   "litologies"
+  ],
+  "relation_to_others": "l'Excel DPSH és la versió digital revisada -> mana pels valors; ATENCIÓ: la p.2 NO és de Bell-lloc",
+  "authority_for": [
+   "corroboració num_dpsh_tests i profunditats (ml totals)",
+   "field_date (candidat)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "p.1 albarà, 'Nº de penetròmetres realitzats'",
+   "quote": "2",
+   "confidence": 0.8,
+   "note": "coincideix amb l'Excel"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "01/10/2025",
+   "location": "p.1 albarà, Data",
+   "quote": "1-10-25",
+   "confidence": 0.8,
+   "note": "coincideix amb annex DPSH i fotos WhatsApp 2025-10-01"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "(total)",
+    "cota_inici": null,
+    "profunditat_assolida": "3,8 ml totals",
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "p.1 albarà, 'Ml de penetròmetre (5 mínims)'",
+    "quote": "3,8",
+    "rule": "Corroboració aritmètica: 1,35 + 2,45 = 3,80 ml = el total facturat per TPS. 'Assaigs SPT o MI: NO' = criteri de facturació del penetrometrista (els SPT van amb el sondeig), no contradicció."
+   }
+  ],
+  "__nota": "SORPRESA ESTRUCTURAL: la p.2 ('Full de Camp Penetròmetre Dinàmic') és de LINYOLA — 'Adreça de l'obra: LINYOLA', punt 0 'Carrer Clot de la Llacuna', 3 punts P1-P3, cotes inici -0,15, valors que NO coincideixen amb l'Excel de Bell-lloc. Escaneig del mateix dia (01-10-25, mateix operari SINY): full barrejat d'un altre expedient. El full de camp manuscrit REAL de Bell-lloc NO és a la carpeta. El 'NIVELL FREÀTIC: NO' de la p.2 és de Linyola i NO s'usa per a Bell-lloc."
+ },
+ "not_present": [
+  "full de camp manuscrit de Bell-lloc (la p.2 és de Linyola)",
+  "N.F. de Bell-lloc (es resol amb la columna N.F. buida de l'Excel)"
+ ],
+ "reading_notes": "Escaneig sense text -> lectura visual a 110 dpi. p.1: ML 60A, operari SINY, Bell-Lloch, 1 desplaçament, 2 penetròmetres, 3,8 ml, SPT No. p.2 descartada per pertànyer a un altre projecte."
+}

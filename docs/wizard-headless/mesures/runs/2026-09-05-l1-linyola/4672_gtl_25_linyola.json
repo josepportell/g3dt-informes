@@ -1,0 +1,162 @@
+{
+ "source_path": "4672-GTL-25 Linyola.pdf",
+ "source_md5": "62053f5f67782b4e7e6448cf34175b19",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL) de TPS sobre una mostra de roca (SPT1 P3) del projecte de Linyola",
+ "issuer": "TPS, Prospecció del Subsòl, SL (marca comercial de portada 'Soilassaig'), B64803075",
+ "date": "30/10/2025 (data d'expedició)",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl SL (laboratori, marca 'Soilassaig'), signat digitalment per Pere Cervós Flinch (Cap d'àrea d'assaig GTL, geòleg col. 5326) i Pere Farrés Bori (Director tècnic, geòleg col. 3481)",
+  "for_whom": "G3 Desenvolupament Territorial SL — és el client DEL LABORATORI (qui encarrega l'assaig), no el promotor/client del projecte",
+  "why": "Reportar els resultats dels assaigs de laboratori (límits d'Atterberg, contingut en ió sulfat, assaig Lambe) sobre la mostra de roca SPT1 extreta al punt P-3 del projecte de Linyola",
+  "expected_fields": [
+   "expedient (dins el camp 'Obra / Projecte')",
+   "lab_testing_company (emissor)",
+   "lab_sample_id (camp 'Mostra')",
+   "lab_depth (camp 'Cota d'extracció')",
+   "lab_location (punt dins la referència de mostra)",
+   "situació de l'obra (adreça + municipi, camp 'Situació')"
+  ],
+  "not_expected": [
+   "architect_name",
+   "client_name (promotor real)",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia (cota global del projecte)",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Complementa la comanda de laboratori (comanda laboratori_4001607_LINYOLA.xls) i l'Excel DPSH (ANNEXES/4001607_DPSH.xls, fulls P-1/P-2/P-3): la mostra SPT1 P3 prové del punt P-3 del DPSH. El bloc 'DADES DEL CLIENT' (p.1) i 'DADES DEL SOL·LICITANT' (p.2) d'aquest document és G3 (client del laboratori), no el client del projecte — regla existent 'G3 mai és client'.",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "p.2 bloc 'DADES INICIALS' camp 'Obra / Projecte'",
+   "quote": "Obra / Projecte: Linyola. Carrer Clot de la Llacuna. 4001607",
+   "confidence": 0.7,
+   "note": "El camp barreja municipi + carrer + expedient en una sola línia; el número coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL",
+   "location": "p.1 bloc 'DADES DEL CLIENT'; p.2 i p.7 bloc 'DADES DEL SOL·LICITANT'/'DADES DEL CLIENT'",
+   "quote": "Nom: G3 Desenvolupament Territorial, SL / NIF: B25364589 / Adreça: C/ Vallbona núm. 22 - 25268 Els Omells de Na Gaia (Lleida)",
+   "confidence": 0.0,
+   "note": "Descartat com a client_name: és G3 (client del laboratori), no el promotor de l'obra — regla 'G3 mai és client'"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna",
+   "location": "p.1 i p.7 bloc 'MATERIAL A ASSAJAR' camp 'Situació'",
+   "quote": "Situació: Linyola. Carrer Clot de la Llacuna.",
+   "confidence": 0.5,
+   "note": "Camp no esperat en un GTL però present explícitament amb etiqueta 'Situació'; sense número de portal en aquest document"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "p.1 i p.7 bloc 'MATERIAL A ASSAJAR' camp 'Situació'; p.2 camp 'Obra / Projecte'",
+   "quote": "Situació: Linyola. Carrer Clot de la Llacuna.",
+   "confidence": 0.55,
+   "note": null
+  },
+  {
+   "concept_id": "field_date",
+   "value": "01/10/2025",
+   "location": "p.2 bloc 'DADES INICIALS' camp 'Data extracció'",
+   "quote": "Data extracció: 01/10/2025",
+   "confidence": 0.35,
+   "note": "Data d'extracció de la mostra SPT1 al punt P-3 (verificada visualment); no necessàriament el primer dia de camp del DPSH — candidat 2, mai preferent sobre la fitxa de camp o l'annex DPSH"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "location": "capçalera i peu de totes les pàgines",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.9,
+   "note": "El logo de portada és 'Soilassaig' (marca comercial), però l'entitat legal a la capçalera/peu és sempre TPS B64803075"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 P3",
+   "location": "p.2 bloc 'DADES INICIALS' camp 'Mostra'; p.6 'Referència del client'",
+   "quote": "Mostra: SPT1 P3",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,15",
+   "location": "p.2 bloc 'DADES INICIALS' camp 'Cota d'extracció (m)'",
+   "quote": "Cota d'extracció (m): 1,0 - 1,15",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "p.2 camp 'Mostra' (SPT1 P3)",
+   "quote": "Mostra: SPT1 P3",
+   "confidence": 0.75,
+   "note": "Punt d'assaig d'on prové la mostra, extret de l'etiqueta 'SPT1 P3'"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 i p.7 camp 'Situació'",
+   "quote": "Linyola. Carrer Clot de la Llacuna.",
+   "confidence": 0.5,
+   "note": "Sense número de portal en aquest document"
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P-3",
+    "profunditat": "1,0 - 1,15",
+    "litologia": "Lutita gresosa",
+    "n30": null,
+    "location": "p.2 blocs 'DADES INICIALS' i 'DESCRIPCIÓ DEL MATERIAL'",
+    "quote": "Mostra: SPT1 P3 / Tipus de mostra: SPT / Cota d'extracció (m): 1,0 - 1,15 / Tipus de material: Roca / DESCRIPCIÓ DEL MATERIAL: Lutita gresosa",
+    "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name (promotor real)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura íntegra de les 7 pàgines via text pla (text_ok=true a totes 7); l'extracció de text ve desordenada per columnes (disseny de formulari generat des d'Excel) — verificat visualment amb page-1.png i page-2.png per confirmar l'aparellament etiqueta/valor de 'Situació', 'Mostra', 'Cota d'extracció' i les 3 dates ('Data extracció'/'Data recepció'/'Data obertura'). Pàgines 3-6 (resultats d'assaigs: límits d'Atterberg, contingut en sulfats, assaig Lambe) no aporten camps addicionals del nivell A. Aquest projecte no té annex de sondeig a rotació (només DPSH), per això 'SPT1 P3' és la mostra SPT presa al punt P-3 del DPSH."
+}

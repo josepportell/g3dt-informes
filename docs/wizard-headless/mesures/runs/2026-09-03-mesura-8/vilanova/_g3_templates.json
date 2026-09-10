@@ -1,0 +1,791 @@
+{
+ "project": "4001671 VILANOVA DE SEGRIA",
+ "read_on": "2026-09-04T18:40:31",
+ "reader": "automation.g3_templates (Fase 4a, determinista)",
+ "documents": [
+  {
+   "document_type": "fitxa_camp_g3",
+   "tier_a": [
+    {
+     "concept_id": "contact_phone",
+     "value": "TEL.",
+     "location": "fitxa!F8",
+     "quote": "TEL.",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "previsio_camp",
+     "value": "PENETROS I MOSTRA",
+     "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+     "quote": "PENETROS I MOSTRA",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "edificacio_existent",
+     "value": "SI",
+     "location": "fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+     "quote": "SI",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_field_company",
+     "value": "TPS ERUGA",
+     "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+     "quote": "TPS ERUGA",
+     "confidence": 0.8
+    }
+   ],
+   "warnings": [
+    "F38 (data de camp) buit: usar annex DPSH / comanda / albarà / fotos"
+   ],
+   "source_path": "26.0050/DADES PER ANAR A CAMP_v1.xlsx"
+  },
+  {
+   "document_type": "plan_cost_g3",
+   "tier_a": [
+    {
+     "concept_id": "building_type",
+     "value": "EG VILANOVA SEGRIÀ",
+     "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG VILANOVA SEGRIÀ",
+     "confidence": 0.6,
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "concept_id": "municipality",
+     "value": "VILANOVA SEGRIÀ",
+     "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG VILANOVA SEGRIÀ",
+     "confidence": 0.6,
+     "note": "«VILANOVA SEGRIÀ» és, sense les preposicions, «Vilanova de Segrià» segons el padró de municipis; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "tecnic",
+     "value": "Eva Vázquez Marcet",
+     "location": "'Plan Cost'!E21",
+     "quote": "Eva Vázquez Marcet",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 3,
+     "location": "OFERTA!B21",
+     "quote": "3",
+     "confidence": 0.6,
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "TPS",
+     "location": "OFERTA!G3",
+     "quote": "TPS",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "SOIL-ASSAIG",
+     "location": "OFERTA!G27",
+     "quote": "SOIL-ASSAIG",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    }
+   ],
+   "warnings": [],
+   "source_path": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20260127155847+01'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "GRUPO CUENCA GUERRERO SL.",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "GRUPO CUENCA GUERRERO SL. / C/MERCE RODOREDA 9 / 25133 VILANOVA DE SEGRIA",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "VILANOVA DE SEGRIA",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "26·0050",
+     "location": "p.1 peu / capçaleres",
+     "quote": "26·0050",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "cte_edificacio",
+     "value": "C0",
+     "location": "p.2",
+     "quote": "Tipo de Edificio. C0",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "cte_sol",
+     "value": "T1",
+     "location": "p.2",
+     "quote": "Tipo de terreno: T1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 3,
+     "location": "p.2 campanya",
+     "quote": "3 ensayos de penetración dinámica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    }
+   ],
+   "warnings": [],
+   "source_path": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20260127155847+01'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "GRUPO CUENCA GUERRERO SL.",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "GRUPO CUENCA GUERRERO SL. / C/MERCE RODOREDA 9 / 25133 VILANOVA DE SEGRIA",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "VILANOVA DE SEGRIA",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "26·0050",
+     "location": "p.1 peu / capçaleres",
+     "quote": "26·0050",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "cte_edificacio",
+     "value": "C0",
+     "location": "p.2",
+     "quote": "Tipo de Edificio. C0",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "cte_sol",
+     "value": "T1",
+     "location": "p.2",
+     "quote": "Tipo de terreno: T1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 3,
+     "location": "p.2 campanya",
+     "quote": "3 ensayos de penetración dinámica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    }
+   ],
+   "warnings": [],
+   "source_path": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf"
+  },
+  {
+   "document_type": "dpsh_excel",
+   "tier_a": [
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 3,
+     "location": "fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2', 'P-3']",
+     "confidence": 0.95,
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -1,48 m",
+     "location": "P-1!B80",
+     "quote": "Rechazo a la penetración: -1,48 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -2,18 m",
+     "location": "P-2!B80",
+     "quote": "Rechazo a la penetración: -2,18 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rechazo a la penetración: -3,78 m",
+     "location": "P-3!B80",
+     "quote": "Rechazo a la penetración: -3,78 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "expedient",
+     "value": "4001671",
+     "location": "nom del fitxer",
+     "quote": "4001671_DPSH.xls",
+     "confidence": 0.7
+    }
+   ],
+   "warnings": [],
+   "source_path": "ANEXOS/4001671_DPSH.xls"
+  },
+  {
+   "document_type": "comanda_lab_g3",
+   "tier_a": [
+    {
+     "concept_id": "expedient",
+     "value": "4001671",
+     "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001671.0",
+     "confidence": 0.95
+    },
+    {
+     "concept_id": "building_type",
+     "value": "CONSTR HAB UNIF",
+     "location": "Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR HAB UNIF",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ STA GEMMA",
+     "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C/ STA GEMMA",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "VILANOVA DE SEGRIÀ",
+     "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "VILANOVA DE SEGRIÀ",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2026-02-19",
+     "location": "Hoja1!N23 (DATA DE PRESA)",
+     "quote": "46072.0",
+     "confidence": 0.7,
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "concept_id": "data_sollicitud_lab",
+     "value": "2026-02-27",
+     "location": "Hoja1!AH23",
+     "quote": "46080.0",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_sample_id",
+     "value": "SPT1 (P3)",
+     "location": "Hoja1!C35",
+     "quote": "SPT1 (P3)",
+     "confidence": 0.7,
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "concept_id": "lab_depth",
+     "value": "0.8 - 1.4",
+     "location": "Hoja1!J35/L35",
+     "quote": "INICIAL 0.8 / FINAL 1.4",
+     "confidence": 0.7,
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "concept_id": "lab_location",
+     "value": "P3",
+     "location": "Hoja1!C35 (parèntesi)",
+     "quote": "SPT1 (P3)",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_tests_note",
+     "value": "NOMÉS SULFATS",
+     "location": "Hoja1!AD35",
+     "quote": "NOMÉS SULFATS",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "NOT_client_name",
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "confidence": 1.0,
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    }
+   ],
+   "warnings": [],
+   "source_path": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls"
+  }
+ ],
+ "concepts": {
+  "contact_phone": [
+   {
+    "concept_id": "contact_phone",
+    "value": "TEL.",
+    "location": "fitxa!F8",
+    "quote": "TEL.",
+    "confidence": 0.8,
+    "source": "26.0050/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "concept_id": "previsio_camp",
+    "value": "PENETROS I MOSTRA",
+    "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "confidence": 0.7,
+    "source": "26.0050/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "concept_id": "edificacio_existent",
+    "value": "SI",
+    "location": "fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "confidence": 0.6,
+    "source": "26.0050/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "concept_id": "lab_field_company",
+    "value": "TPS ERUGA",
+    "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "confidence": 0.8,
+    "source": "26.0050/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "building_type": [
+   {
+    "concept_id": "building_type",
+    "value": "CONSTR HAB UNIF",
+    "location": "Hoja1!N18 (G18 OBRA)",
+    "quote": "CONSTR HAB UNIF",
+    "confidence": 0.7,
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "building_type",
+    "value": "EG VILANOVA SEGRIÀ",
+    "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+    "quote": "EG VILANOVA SEGRIÀ",
+    "confidence": 0.6,
+    "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi",
+    "source": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "municipality": [
+   {
+    "concept_id": "municipality",
+    "value": "VILANOVA DE SEGRIÀ",
+    "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+    "quote": "VILANOVA DE SEGRIÀ",
+    "confidence": 0.9,
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "VILANOVA DE SEGRIA",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "VILANOVA DE SEGRIA",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "VILANOVA SEGRIÀ",
+    "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+    "quote": "EG VILANOVA SEGRIÀ",
+    "confidence": 0.6,
+    "note": "«VILANOVA SEGRIÀ» és, sense les preposicions, «Vilanova de Segrià» segons el padró de municipis; la forma oficial llarga mana (regla municipi)",
+    "source": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "tecnic": [
+   {
+    "concept_id": "tecnic",
+    "value": "Eva Vázquez Marcet",
+    "location": "'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "confidence": 0.6,
+    "source": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_dpsh_tests": [
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 3,
+    "location": "fulls amb dades a la columna C",
+    "quote": "sheets: ['P-1', 'P-2', 'P-3']",
+    "confidence": 0.95,
+    "note": "EXECUTATS (autoritat sobre els previstos)",
+    "source": "ANEXOS/4001671_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 3,
+    "location": "p.2 campanya",
+    "quote": "3 ensayos de penetración dinámica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 3,
+    "location": "p.2 campanya",
+    "quote": "3 ensayos de penetración dinámica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 3,
+    "location": "OFERTA!B21",
+    "quote": "3",
+    "confidence": 0.6,
+    "note": "unitats DPSH ofertades (previstes)",
+    "source": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "TPS",
+    "location": "OFERTA!G3",
+    "quote": "TPS",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "SOIL-ASSAIG",
+    "location": "OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "client_name": [
+   {
+    "concept_id": "client_name",
+    "value": "GRUPO CUENCA GUERRERO SL.",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "GRUPO CUENCA GUERRERO SL. / C/MERCE RODOREDA 9 / 25133 VILANOVA DE SEGRIA",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "GRUPO CUENCA GUERRERO SL.",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "GRUPO CUENCA GUERRERO SL. / C/MERCE RODOREDA 9 / 25133 VILANOVA DE SEGRIA",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   }
+  ],
+  "street_address": [
+   {
+    "concept_id": "street_address",
+    "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/ STA GEMMA",
+    "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+    "quote": "C/ STA GEMMA",
+    "confidence": 0.9,
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "concept_id": "expedient_comercial",
+    "value": "26·0050",
+    "location": "p.1 peu / capçaleres",
+    "quote": "26·0050",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "expedient_comercial",
+    "value": "26·0050",
+    "location": "p.1 peu / capçaleres",
+    "quote": "26·0050",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   }
+  ],
+  "cte_edificacio": [
+   {
+    "concept_id": "cte_edificacio",
+    "value": "C0",
+    "location": "p.2",
+    "quote": "Tipo de Edificio. C0",
+    "confidence": 0.9,
+    "source": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "cte_edificacio",
+    "value": "C0",
+    "location": "p.2",
+    "quote": "Tipo de Edificio. C0",
+    "confidence": 0.9,
+    "source": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   }
+  ],
+  "cte_sol": [
+   {
+    "concept_id": "cte_sol",
+    "value": "T1",
+    "location": "p.2",
+    "quote": "Tipo de terreno: T1",
+    "confidence": 0.9,
+    "source": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   },
+   {
+    "concept_id": "cte_sol",
+    "value": "T1",
+    "location": "p.2",
+    "quote": "Tipo de terreno: T1",
+    "confidence": 0.9,
+    "source": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20260127155847+01'00'"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -1,48 m",
+    "location": "P-1!B80",
+    "quote": "Rechazo a la penetración: -1,48 m",
+    "confidence": 0.8,
+    "source": "ANEXOS/4001671_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -2,18 m",
+    "location": "P-2!B80",
+    "quote": "Rechazo a la penetración: -2,18 m",
+    "confidence": 0.8,
+    "source": "ANEXOS/4001671_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rechazo a la penetración: -3,78 m",
+    "location": "P-3!B80",
+    "quote": "Rechazo a la penetración: -3,78 m",
+    "confidence": 0.8,
+    "source": "ANEXOS/4001671_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "expedient": [
+   {
+    "concept_id": "expedient",
+    "value": "4001671",
+    "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+    "quote": "4001671.0",
+    "confidence": 0.95,
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "expedient",
+    "value": "4001671",
+    "location": "nom del fitxer",
+    "quote": "4001671_DPSH.xls",
+    "confidence": 0.7,
+    "source": "ANEXOS/4001671_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "field_date": [
+   {
+    "concept_id": "field_date",
+    "value": "2026-02-19",
+    "location": "Hoja1!N23 (DATA DE PRESA)",
+    "quote": "46072.0",
+    "confidence": 0.7,
+    "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp",
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "concept_id": "data_sollicitud_lab",
+    "value": "2026-02-27",
+    "location": "Hoja1!AH23",
+    "quote": "46080.0",
+    "confidence": 0.6,
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_sample_id": [
+   {
+    "concept_id": "lab_sample_id",
+    "value": "SPT1 (P3)",
+    "location": "Hoja1!C35",
+    "quote": "SPT1 (P3)",
+    "confidence": 0.7,
+    "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe",
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_depth": [
+   {
+    "concept_id": "lab_depth",
+    "value": "0.8 - 1.4",
+    "location": "Hoja1!J35/L35",
+    "quote": "INICIAL 0.8 / FINAL 1.4",
+    "confidence": 0.7,
+    "note": "el GTL mana si discrepa",
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_location": [
+   {
+    "concept_id": "lab_location",
+    "value": "P3",
+    "location": "Hoja1!C35 (parèntesi)",
+    "quote": "SPT1 (P3)",
+    "confidence": 0.7,
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "concept_id": "lab_tests_note",
+    "value": "NOMÉS SULFATS",
+    "location": "Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "confidence": 0.6,
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "NOT_client_name": [
+   {
+    "concept_id": "NOT_client_name",
+    "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+    "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+    "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+    "confidence": 1.0,
+    "note": "G3 = sol·licitant del laboratori, mai client",
+    "source": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ]
+ }
+}

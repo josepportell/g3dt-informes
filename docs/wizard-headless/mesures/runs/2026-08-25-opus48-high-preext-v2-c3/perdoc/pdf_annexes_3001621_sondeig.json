@@ -1,0 +1,219 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_sondeig.pdf",
+ "source_md5": "2295eafdfbaf24a22d916a124ea308d0",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex de sondeig a rotació S-1 (plantilla G3 «Sondeig a rotació amb bateria continua», FreeHand→PDF): p.1 log litològic, p.2 fotografies.",
+ "issuer": "G3 (geòloga Eva Vázquez Marcet, col. 4302); sondeig executat per TPS (sondista Daniel Fernández)",
+ "date": "24/10/2025",
+ "pages_or_sheets": "2 pàgines (p.1 log, p.2 foto)",
+ "context": {
+  "who_made_it": "G3 / Eva Vázquez Marcet (geòloga col. 4302). El sondeig físic el va fer TPS (màquina ML76A, sondista Daniel Fernández).",
+  "for_whom": "Annex intern de l'informe geotècnic de G3 del projecte de Castellar del Vallès. La casella 'Client: WOOD COMFORT PROM.' és el sol·licitant/promotor de l'encàrrec, no és el rol de client d'aquest document.",
+  "why": "Documentar el sondeig a rotació S-1: litologia, cota de referència, mostra SPT i rebuig del substrat.",
+  "expected_fields": [
+   "cota_referencia",
+   "num_soil_levels",
+   "litologia",
+   "sondeig_tests",
+   "spt_ma_tests",
+   "lab_sample_id",
+   "lab_depth",
+   "field_date (dia del sondeig)",
+   "utm_x/utm_y",
+   "street_address (redacció)",
+   "municipality",
+   "building_type (redacció)"
+  ],
+  "not_expected": [
+   "expedient",
+   "num_dpsh_tests",
+   "superficie_parcela",
+   "num_floors",
+   "referencia_catastral",
+   "lab_testing_company",
+   "cte"
+  ],
+  "relation_to_others": "Versió FreeHand→PDF (text brossa); font PRINCIPAL de nivells i litologia. Es creua amb el tall (nombre de nivells), l'Excel DPSH (cota relativa 'respecte el carrer') i el GTL 4687-GTL-25 (mostra/cota). p.2 (foto) corrobora c/Arbrells, municipi i profunditat.",
+  "authority_for": [
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "570.90 msnm",
+   "location": "p.1 caixetí, Cota (Z)",
+   "quote": "Cota (Z): 570.90 msnm (segons el plànol ICGC)",
+   "confidence": 0.8,
+   "note": "z absolut de l'annex de sondeig (criteri Eva, ICGC) = cota_referencia escalar. ATENCIÓ: a Castellar els annexos DPSH usen cota RELATIVA ('respecte el carrer', ~-4 m); el consolidador ho ha de creuar. La cel·la de cota de la FILA de sondeig segueix el sistema del projecte (pot ser relativa), NO aquest z absolut (regla ERR golden-read)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "p.1 columna Unitat litològica",
+   "quote": "NIVELL 1",
+   "confidence": 0.6,
+   "note": "Només 1 NIVELL etiquetat (substrat rocós, 0,50-1,20). El terreny vegetal (0-0,50) no porta número. La 'Descripció dels materials' té 2 trams → confirmar amb el tall (candidats 1|2)."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.1 bloc Mostres i assaigs in-situ, Tipus de mostra",
+   "quote": "SPT-1",
+   "confidence": 0.85,
+   "note": "Etiqueta de la mostra segons l'annex de l'Eva (autoritat per a l'etiqueta > GTL > comanda)."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1.00 a -1.20 m",
+   "location": "p.1 columna Prof. de extracció (m)",
+   "quote": "-1.00 a -1.20",
+   "confidence": 0.8,
+   "note": "Profunditat de la mostra SPT-1; per a la profunditat la prioritat és GTL > Excel/annex, creuar amb el GTL."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.1 caixetí Sondeig nº",
+   "quote": "S-1",
+   "confidence": 0.85,
+   "note": "Punt d'assaig d'on surt la mostra SPT-1."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells nº 18A-18B-20",
+   "location": "p.1 caixetí Obra (+ p.2 etiqueta manuscrita de la caixa)",
+   "quote": "...PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.7,
+   "note": "Bloc OBRA de l'annex; corroborat per l'etiqueta manuscrita de la caixa a p.2 ('c/Arbrells - Castellar del Vallès'). Aquesta frase és la redacció que l'informe pot reproduir."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "p.1 caixetí Obra",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.75,
+   "note": "Forma llarga."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "p.1 caixetí Obra",
+   "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.7,
+   "note": "Redacció de l'obra a l'annex."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/2025",
+   "location": "p.1 Data d'inici / Data de fi",
+   "quote": "Data d'inici: 24/10/25 · Data de fi: 24/10/25",
+   "confidence": 0.5,
+   "note": "Dia del SONDEIG (candidat 2 de field_date; el primer dia de camp sol ser el dels DPSH). Inici i fi el mateix dia."
+  },
+  {
+   "concept_id": "utm_x",
+   "value": "423182.0",
+   "location": "p.1 caixetí UTM",
+   "quote": "423182.0 E(x)",
+   "confidence": 0.6,
+   "note": "De l'annex de sondeig; COORDENADES.txt té prioritat."
+  },
+  {
+   "concept_id": "utm_y",
+   "value": "4609623.0",
+   "location": "p.1 caixetí UTM",
+   "quote": "4609623.0 N(y)",
+   "confidence": 0.6,
+   "note": "De l'annex de sondeig; COORDENADES.txt té prioritat."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROM.",
+   "location": "p.1 caixetí Client",
+   "quote": "WOOD COMFORT PROM.",
+   "confidence": 0.45,
+   "note": "La casella 'Client' de l'annex = SOL·LICITANT, no és autoritat. 'PROM.' = promotora → possible promotor real (coincideix amb el nom del pressupost MODF). Candidat, mai segur des d'aquí."
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "570.90 (absoluta, ICGC)",
+    "profunditat_assolida": "-1.20",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "no detectat",
+    "matis": null,
+    "location": "p.1 caixetí + log S-1",
+    "quote": "Cota (Z): 570.90 msnm; SPT-1 -1.00 a -1.20 Registre R; profunditat 0.00 a -1.20 (p.2)",
+    "note": "CANDIDATS per a la cota, MAI segur l'absoluta: la cel·la de cota de la fila segueix el sistema del projecte i a Castellar els DPSH són relatius ('respecte el carrer') → [relativa-del-sistema | 570.90 absoluta] (regla ERR golden-read Castellar). NF no detectat (columna buida). Rebuig al substrat rocós.",
+    "extra": {
+     "maquina": "ML76A",
+     "empresa": "TPS",
+     "sondista": "Sr. DANIEL FERNÁNDEZ",
+     "diametre_bateria": "BW 101"
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1.00 a -1.20",
+    "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "n30": {
+     "value": "R",
+     "registre": "R",
+     "note": "Rebuig (Registre = R) dins el substrat rocós. n30='R' seria segur per rebuig (regla Castellar/Linyola), però el validador de _decisions no permet n30 segur → emetre com a candidats."
+    },
+    "location": "p.1 bloc Mostres i assaigs in-situ",
+    "quote": "SPT-1 · Prof. de extracció -1.00 a -1.20 · Registre: R"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Terreny vegetal (0,00-0,50)",
+    "litologia_candidats": [
+     "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels."
+    ],
+    "de": "0.00",
+    "a": "0.50",
+    "mostra_del_nivell": false,
+    "note": "Capa superficial; NO numerada a la columna Unitat litològica."
+   },
+   {
+    "nom": "NIVELL 1 — Substrat rocós (0,50-1,20)",
+    "litologia_candidats": [
+     "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+    ],
+    "de": "0.50",
+    "a": "1.20",
+    "mostra_del_nivell": true,
+    "note": "Únic NIVELL etiquetat. Conté la mostra SPT-1 (-1,00 a -1,20) i la fondària de rebuig. Litologia re-redactable per l'Eva → candidats, mai segur la cadena literal."
+   }
+  ],
+  "__nota": "Annex de sondeig: alimenta sondeig_tests (S-1), spt_ma_tests (SPT-1 en rebuig) i soil_levels. Sense files DPSH ni superficie_construida en aquest document."
+ },
+ "not_present": [
+  "expedient — el caixetí no porta número d'expedient/informe",
+  "architect_name — cap etiqueta 'Arquitecte'; 'Client: WOOD COMFORT PROM.' és promotora/sol·licitant, no arquitecte",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests — annex de sondeig, no de DPSH",
+  "referencia_catastral",
+  "lab_testing_company — no consta l'emissor del GTL aquí; TPS és el sondista, no el laboratori d'assaigs",
+  "cte_edificacio / cte_sol"
+ ],
+ "reading_notes": "Text del PDF brossa (FreeHand→Acrobat Distiller/PScript5, meta.text_ok=false a les 2 pàgines); lectura visual de page-1.png i de les meitats esquerra/dreta (220 dpi). p.2 és la pàgina de fotografies (corrobora c/Arbrells, Castellar del Vallès i profunditat 0,00 a -1,20, caixa nº1). Nivell freàtic: columna buida → no detectat. Cap execució de codi (només Read de les imatges de preext)."
+}

@@ -1,0 +1,100 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+ "source_md5": "3f3035ff2113238d74e3e22e5cffb26a",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic estàndard G3 (7 p., plantilla m4PRO) en la seva versió SIGNADA/ACCEPTADA pel client, arxivada a la carpeta ACCEPTACIO/.",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "p.1: 07/10/25 (data del pressupost); PDF modDate 2025-10-08T10:25:18+02:00",
+ "pages_or_sheets": "7 pàgines PDF",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. redacta el pressupost; el client WOOD COMFORT PROMOCIONS SLU omple i signa la secció d'acceptació de p.5 a mà (tinta vermella/blava).",
+  "for_whom": "El sol·licitant/client de l'estudi geotècnic.",
+  "why": "Pressupost de l'Estudi Geotècnic per a l'obra 'C/Arbrells 18A-18B-20, Castellar del Vallès', en la seva versió SIGNADA i ACCEPTADA pel client. És la contrapart signada del pressupost comercial 25·0493.",
+  "expected_fields": [
+   "client_name (p.1 bloc CLIENT: + p.5 formulari signat)",
+   "street_address / municipality (p.1 bloc OBRA:)",
+   "num_dpsh_tests i num. sondeigs previstos (p.2 text + p.4 taula de preus)",
+   "preu, forma de pagament, format/idioma de l'informe, signatura d'acceptació"
+  ],
+  "not_expected": [
+   "architect_name",
+   "building_type detallat",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "dades de laboratori (mostra/cota)",
+   "UTM / referència cadastral"
+  ],
+  "relation_to_others": "Mateix codi comercial 25·0493 que '25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf' (client imprès: GRUP ALMA CONSTRUCCIONS, mod_date 2025-06-25, SENSE signar) i '25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf' (client imprès: WOOD COMFORT PROMOCIONS SLU, mod_date 2025-10-07, SENSE signar). Aquest document (ACCEPTACIO/) té el modDate PDF més recent (2025-10-08) i és l'ÚNIC amb el formulari p.5 omplert i signat pel client -> mana per a client_name (regla Pas 3: el client va canviar de GRUP ALMA a WOOD COMFORT). Curiositat: les pàgines de CONDICIONS (p.5-7, capçalera interna 'Pàg. 2 de 2') porten la data '25/06/25', la mateixa de la versió GRUP ALMA original -> sembla full de condicions no actualitzat en refer el pressupost; no afecta els camps de nivell A llegits aquí.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.5 del PDF (capçalera interna 'Pàg. 2 de 2'), secció 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', camp NOM I COGNOMS (manuscrit, tinta vermella)",
+   "quote": "NOM I COGNOMS: WOOD COMFORT PROMOCIONS SLU [manuscrit]",
+   "confidence": 0.92,
+   "note": "Formulari p.5 omplert i signat = autoritat A per a client_name (regla Pas 3, 'Pressupost signat p.5'). Coincideix amb el N.I.F./C.I.F. imprès B19935212 (mateixa secció) i amb el bloc CLIENT: de p.1. Signatura 'El client' present a sota, en tinta vermella."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.1 bloc CLIENT: (imprès)",
+   "quote": "CLIENT:\nWOOD COMFORT PROMOCIONS SLU\nC/FERRAN VALLS I TABERNER 14 BIS 1-2\n08006    BARCELONA\nTel:",
+   "confidence": 0.35,
+   "note": "Bloc CLIENT: = sol·licitant (regla Pas 3); NO és per si sol autoritat de client_name. Aquí coincideix amb el formulari p.5 signat, que sí ho és."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "location": "p.1 bloc OBRA:",
+   "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ARBRELLS 18A-18B-20\nCASTELLAR DEL VALLES",
+   "confidence": 0.75,
+   "note": "Bloc OBRA: del pressupost (Pas 3); confirmar amb comanda de laboratori / fitxa de camp / annex de sondeig."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1 bloc OBRA:",
+   "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ARBRELLS 18A-18B-20\nCASTELLAR DEL VALLES",
+   "confidence": 0.7,
+   "note": "Forma curta G3; la forma oficial llarga (Cadastre/GTL/plànol) mana si discrepa (regla municipi)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "p.2 text de la campanya de camp; taula de preus p.4, línia '002.001 UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH'",
+   "quote": "4 assaigs de penetració dinàmica DPSH / UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH ... 4,00",
+   "confidence": 0.4,
+   "note": "Valor PREVIST, no executat. L'Excel DPSH (ANNEXES/3001621_DPSH.xls) mana si discrepa (regla Pas 3)."
+  }
+ ],
+ "not_present": [
+  "expedient (només hi consta el codi comercial 25·0493, que NO és l'expedient — regla Pas 3)",
+  "architect_name (cap etiqueta ARQUITECTE omplerta; checkbox 'ARQUITECTE' de p.5 sense marcar ni nom)",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol (aquesta plantilla de pressupost NO porta la línia 'Tipus d'edifici'/'Tipus de Terreny', a diferència d'altres pressupostos G3 — situació coneguda per a Castellar, Pas 3b)"
+ ],
+ "reading_notes": "Extracció de text amb PyMuPDF (fitz); a p.1 els blocs es van ordenar per (y,x) per separar correctament CLIENT: (y=203) de OBRA: (y=394), ja que l'ordre de lectura natural del PDF els intercala amb altres etiquetes. p.5 (índex 4) renderitzada a 200dpi per llegir visualment el formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', omplert a mà en tinta vermella i blava (NOM I COGNOMS, ADREÇA, CP I POBLACIÓ, DADES BANCÀRIES, email 'rocflats@hotmail.com', checkboxes de format/idioma marcats amb X, dues signatures: 'Resp. Oficina Tècnica' i 'El client'). El camp N.I.F./C.I.F.: B19935212 és text digital imprès (no manuscrit), no manuscrit com la resta de la secció. Discrepància de dates internes al mateix PDF: p.1 'DATA: 07/10/25' vs full de condicions p.5-7 'DATA 25/06/25' (vegeu context.relation_to_others)."
+}

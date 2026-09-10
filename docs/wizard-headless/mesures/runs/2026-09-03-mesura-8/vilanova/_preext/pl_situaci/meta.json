@@ -1,0 +1,28 @@
+{
+ "source_path": "pl situació.pdf",
+ "source_md5": "5d7b9d737ac4e00bd49228eb9a057d03",
+ "kind": "pdf",
+ "generated": "2026-09-04T16:36:36",
+ "elapsed_s": 2.539,
+ "dir": "pl_situaci",
+ "files": [
+  "pl_situaci/page-1.txt",
+  "pl_situaci/page-1.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   1190.52,
+   841.92
+  ]
+ ],
+ "producer": "Microsoft: Print To PDF",
+ "creator": "",
+ "creationDate": "D:20260316101511+01'00'",
+ "modDate": "D:20260316101511+01'00'",
+ "text_ok": {
+  "1": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

@@ -1,0 +1,79 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_tall de correlació.pdf (== CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf, render píxel-idèntic)",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació A-A' ÚNIC per a tot l'expedient: secció que travessa les dues cases (P-1.1, P-1.2, S-1 | P-2.1, P-2.2) amb els 3 nivells, cotes msnm i Nb mitjans per punt i nivell.",
+ "issuer": "G3 (Eva)",
+ "date": "caixetí: Maig 2026",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "annex dels DOS informes",
+  "why": "síntesi estratigràfica: correlaciona el sondeig de casa 1 sota casa 2",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia (llegenda)",
+   "cotes de transició",
+   "NF"
+  ],
+  "not_expected": [
+   "superfícies",
+   "promotor"
+  ],
+  "relation_to_others": "síntesi de S-1 + els 4 DPSH; les dues còpies (una per carpeta de casa) rendericen píxel-idèntiques → 1 sol document. El caixetí confirma l'encàrrec doble.",
+  "authority_for": [
+   "num_soil_levels (el tall mana pel NOMBRE)",
+   "soil_levels.litologia (candidat 2)",
+   "soil_levels de/a sota casa 2 (única font)",
+   "spt_ma_tests.n30 (N=18, N=64 impresos)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Sorres llimoses disgregades amb graves."
+    ],
+    "location": "LLEGENDA",
+    "quote": "Nivell 1: Sorres llimoses disgregades amb graves."
+   },
+   {
+    "nom": "Nivell 2",
+    "litologia_candidats": [
+     "Llims argilosos cohesius."
+    ],
+    "location": "LLEGENDA",
+    "quote": "Nivell 2: Llims argilosos cohesius."
+   },
+   {
+    "nom": "Nivell 3",
+    "litologia_candidats": [
+     "Substrat alterat."
+    ],
+    "location": "LLEGENDA",
+    "quote": "Nivell 3: Substrat alterat."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "n30": "18",
+    "location": "anotació 'N=18' al costat del log S-1 (dins Nivell 2)",
+    "quote": "N=18"
+   },
+   {
+    "id": "SPT-2",
+    "n30": "64",
+    "location": "anotació 'N=64' al costat del log S-1 (dins Nivell 3)",
+    "quote": "N=64"
+   }
+  ],
+  "__nota": "Nb mitjans llegits per punt (input Tier B, es transcriuen com a lectura): P-1.1: 12/22/39+R | P-1.2: 8/18/R | P-2.1: 9/21/R | P-2.2: 14/24/35+R (Nivell 1/2/3). Superfícies del terreny: casa 1 ~198 (pla), S-1 ~199, P-2.1 ~201,2, P-2.2 ~203. 'Base Pb' (línia discontínua) a ~201,2 sota casa 2; 'Fonamentació' (vermell discontinu) dins el Nivell 2. Transicions sota casa 2 NOMÉS gràfiques (lectura ±0,3 m): N1/N2 ~199,8 msnm a P-2.1 i ~201,4 msnm a P-2.2; N2/N3 ~199,2 msnm a P-2.1 i ~200,6 msnm a P-2.2. Cap marca de nivell freàtic. Caixetí: 'Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16 de Cerdanyola del Vallès' | Exp: 3001706 | Data: Maig 2026."
+ },
+ "not_present": [
+  "nivell freàtic",
+  "superfície construïda"
+ ],
+ "reading_notes": "Text Distiller brossa: lectura visual a 150 dpi + clip 300 dpi de la meitat de casa 2 per a les cotes de transició. Croquis de situació (cantó superior esquerre): S-1 dins la parcel·la CASA 1."
+}

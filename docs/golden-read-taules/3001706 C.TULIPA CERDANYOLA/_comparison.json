@@ -1,0 +1,14 @@
+{
+ "compared_by": "sessió principal",
+ "eva_truth": "N/A — Tulipa no té informe de l'Eva (descobert a la lectura d'or d'escalars; la 'referència' era un informe generat nostre)",
+ "date": "2026-08-24",
+ "status": "n/a per a la mètrica ERR — només revisió de coherència interna",
+ "consistency": [
+  "Estructura 2 cases aplicada per blocs (casa_1_*, casa_2_*) sense ajuda: dpsh per casa, sondeig compartit replicat en candidats a casa 2 — regla estructural de v0.7 funcionant en re-execució.",
+  "Peu de rebuig a B81 també aquí (2a ocurrència) — reforça la regla de zona B79-B82 (v0.9).",
+  "Les DUES còpies del mateix annex de sondeig discrepen de redacció al NIVELL 2 ('Argiles coheives' vs 'Llims argilosos coheisus') → la regla 'litologia mai segura' queda també justificada per variància INTERNA dels annexos d'Eva.",
+  "Registres SPT llegits amb N del tall imprès com a corroboració (6/9/9/9→18=tall; 19/31/33/50R→64=tall): a Tulipa el criteri trams centrals SÍ quadra amb el tall.",
+  "superficie_construida casa 1 en candidats amb la cita 'encara s'està definint' (correu VUA) — prudència correcta; casa 2 no_trobat amb 5 fonts comprovades."
+ ],
+ "totals": {"OK": 0, "CAND": 0, "ERR": 0, "NT": 0, "n/a": "tot el projecte"}
+}

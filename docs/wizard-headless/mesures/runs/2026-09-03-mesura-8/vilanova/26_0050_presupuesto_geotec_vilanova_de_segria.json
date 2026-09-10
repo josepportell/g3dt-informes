@@ -1,0 +1,148 @@
+{
+ "source_path": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+ "source_md5": "69d8daec3cf0fa9932cbcf086097c5ab",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost (proposta econòmica) de G3 per a l'estudi geotècnic de l'obra a Vilanova de Segrià, còpia sense signar",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "27/01/26",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (geotècnica), emissor del pressupost",
+  "for_whom": "GRUPO CUENCA GUERRERO SL., el sol·licitant que ha d'acceptar i signar",
+  "why": "Proposta econòmica per a l'estudi geotècnic (DPSH + SPT) amb classificació CTE i condicions, prèvia a l'acceptació",
+  "expected_fields": [
+   "adreça i municipi de l'obra",
+   "sol·licitant (bloc CLIENTE)",
+   "classificació CTE (edificació/terreny)",
+   "nombre d'assaigs DPSH/SPT previstos",
+   "codi comercial",
+   "data del pressupost",
+   "import"
+  ],
+  "not_expected": [
+   "expedient real del projecte",
+   "data de camp",
+   "cota de referència",
+   "dades de laboratori (GTL)",
+   "coordenades UTM",
+   "referència cadastral",
+   "dades de l'arquitecte"
+  ],
+  "relation_to_others": "Versió NO signada. Existeix còpia amb el mateix contingut a 'ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf' (probablement amb el formulari p.5/6 de dades de facturació omplert a mà — no llegida en aquesta crida). En aquest exemplar el formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' és en blanc.",
+  "authority_for": [
+   "cte_edificacio",
+   "cte_sol",
+   "num_dpsh_tests",
+   "street_address",
+   "municipality",
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "GRUPO CUENCA GUERRERO SL.",
+   "location": "p.1 bloc CLIENTE",
+   "quote": "CLIENTE:\nGRUPO CUENCA GUERRERO SL. \nC/MERCE RODOREDA 9 \n25133    VILANOVA DE SEGRIA \nTel: 625298919",
+   "confidence": 0.4,
+   "note": "Bloc 'CLIENTE' del pressupost = sol·licitant (regla Pas 3), no promotor confirmat. Cap bloc de promotor/arquitecte en aquest document; en projectes sense arquitecte l'Eva sol posar el client també com a arquitecte (a confirmar en consolidació)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Sta. Gemma 4, Urb. La Serra",
+   "location": "p.1 bloc OBRA",
+   "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ STA. GEMMA 4, URB.LA SERRA\nVILANOVA DE SEGRIA",
+   "confidence": 0.75,
+   "note": "Bloc OBRA (adreça de l'obra, no del client)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [
+     "Sta. Gemma"
+    ],
+    "portals": [
+     "4"
+    ],
+    "municipi": "Vilanova de Segrià",
+    "municipi_alternatives": [
+     "VILANOVA DE SEGRIA"
+    ]
+   },
+   "location": "p.1 bloc OBRA",
+   "quote": "C/ STA. GEMMA 4, URB.LA SERRA VILANOVA DE SEGRIA",
+   "confidence": 0.7,
+   "note": "Urbanització 'La Serra' no inclosa a l'struct (sense camp per urbanització al schema); portal '4' és l'únic número imprès."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova de Segrià",
+   "location": "p.1 bloc OBRA",
+   "quote": "VILANOVA DE SEGRIA",
+   "confidence": 0.7,
+   "note": "Grafia G3 sense accent; apareix igual al bloc CLIENTE (municipi del sol·licitant, coincident)."
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0",
+   "location": "p.2 bloc 'Clasificación CTE'",
+   "quote": "Clasificación CTE \n\nTipo de Edificio. C0",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2 bloc 'Clasificación CTE'",
+   "quote": "Tipo de terreno: T1",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.2 (redacció) i p.4 (taula VALORACIÓN, ref 001.001)",
+   "quote": "3 ensayos de penetración dinámica DPSH / UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH 3,00",
+   "confidence": 0.5,
+   "note": "Previstos al pressupost; regla Pas 3: manen els executats de l'Excel DPSH si hi ha discrepància."
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "26·0050",
+   "location": "p.1, p.4 i p.5 (capçalera/peu)",
+   "quote": "26·0050\nP#",
+   "confidence": 0.0,
+   "note": "Codi comercial de G3, NO és l'expedient del projecte (regla Pas 3). L'expedient (4001671) no apareix en aquest document."
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": "27/01/26",
+   "location": "p.1 i p.5",
+   "quote": "FECHA: 27/01/26",
+   "confidence": 0.0,
+   "note": "Data d'emissió del pressupost, no data de camp (regla Pas 3: mai la data del pressupost com a field_date)."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location"
+ ],
+ "reading_notes": "Pre-extracció (--only, v1.4): text net (creator G3, Acrobat Distiller, text_ok=true a les 7 pàgines) — cap PNG ni clip necessari. Blocs OBRA/CLIENTE de la p.1 ja venien en ordre net (OBRA abans de CLIENTE), sense necessitat de reordenar per (y,x). Formulari de facturació (p.5, 'DATOS QUE HAN DE CONSTAR...') en blanc: aquest exemplar és la còpia NO signada (la signada és un altre fitxer, no llegit aquí). _inventory.json consultat per al Pas 0 de context creuat."
+}

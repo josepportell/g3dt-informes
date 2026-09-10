@@ -1,0 +1,72 @@
+{
+ "source_path": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3: 1 mostra SPT1 (P3) 0,8-1,4 m, només sulfats",
+ "issuer": "G3 (Eva Vázquez)",
+ "date": "DATA DE PRESA 19/02/2026; DATA DE SOL.LICITUD 27/02/2026",
+ "pages_or_sheets": "Hoja1",
+ "context": {
+  "who_made_it": "G3 (bloc DADES DEL SOL.LICITANT = G3, B25364589: cap rol al projecte)",
+  "for_whom": "laboratori (TPS habitualment; el nom del lab NO consta a la comanda)",
+  "why": "encarregar els assaigs de la mostra presa al camp",
+  "expected_fields": [
+   "expedient",
+   "adreça/municipi de l'obra",
+   "mostra, cotes, assaigs"
+  ],
+  "not_expected": [
+   "promotor, arquitecte, plantes"
+  ],
+  "relation_to_others": "única font de laboratori: NO hi ha GTL a la carpeta (arriba setmanes després)",
+  "authority_for": [
+   "lab_sample_id (etiqueta)",
+   "lab_depth",
+   "spt_ma_tests (mostra enviada)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 (P3)",
+   "location": "Hoja1!C35",
+   "quote": "SPT1 (P3)",
+   "confidence": 0.7,
+   "note": "sense annex de l'Eva ni GTL que fixin l'etiqueta de l'informe"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,8 - 1,4 m",
+   "location": "Hoja1!J35/L35 (INICIAL/FINAL)",
+   "quote": "0.8 / 1.4",
+   "confidence": 0.9
+  },
+  {
+   "concept_id": "field_date",
+   "value": "19/02/2026",
+   "location": "Hoja1!N23",
+   "quote": "DATA DE PRESA: 19/02/2026 (serial 46072)",
+   "confidence": 0.6,
+   "note": "dia de presa de la mostra = mateix dia dels DPSH aquí"
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1 (P3)",
+    "punt": "P-3",
+    "profunditat": "0,8 - 1,4 m",
+    "assaigs": "Agressivitat sòls (X) - 'NOMÉS SULFATS'",
+    "litologia": "columna LITOLOGIA (AJ35) buida",
+    "location": "Hoja1 fila 35",
+    "quote": "SPT1 (P3) | 0.8 | 1.4 | X | NOMÉS SULFATS"
+   }
+  ],
+  "__nota": "només 1 de les 2 mostres SPT del camp s'envia a laboratori (la de P-1 no hi consta)"
+ },
+ "not_present": [
+  "nom del laboratori",
+  "litologia de la mostra",
+  "segona mostra SPT (P-1)"
+ ],
+ "reading_notes": "xlrd; dos blocs amb les mateixes etiquetes: files 11-15 sol·licitant (G3, ignorat), files 18-23 obra; dates en serial Excel convertides (46072→19/02/2026, 46080→27/02/2026)"
+}

@@ -1,0 +1,134 @@
+{
+ "source_path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori: obra 'CONSTR 3 HAB UNIF', expedient 3001621, C Arbrells, Castellar del Vallès, presa 24/10/2025, sol·licitud 24/10/2025; 1 mostra 'MA (S1)' 1,0-1,2 m, 'Agressivitat sòls' amb observació 'NOMÉS SULFATS'.",
+ "issuer": "G3 (EVA VÁZQUEZ)",
+ "date": "2025-10-24",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "G3 (Eva)",
+  "for_whom": "el laboratori (nom no consta a la comanda; el GTL 4687-GTL-25 de la carpeta és de TPS)",
+  "why": "demanar l'assaig de sulfats sobre la mostra alterada (MA) recuperada al sondeig S1",
+  "expected_fields": [
+   "expedient (N19)",
+   "tipus obra (N18)",
+   "adreça/municipi obra (N20/N21)",
+   "data de presa (N23)",
+   "mostres i cotes (fila 35)"
+  ],
+  "not_expected": [
+   "client de l'informe (el sol·licitant és G3)",
+   "plantes",
+   "cota de referència",
+   "nivells",
+   "arquitecte"
+  ],
+  "relation_to_others": "Precedeix el GTL 4687-GTL-25 (present a la carpeta). 'DATA DE PRESA' 24/10/2025 = fitxa F38 (campanya d'un sol dia: 4 DPSH + sondeig S1 amb TPS ERUGA). Bloc files 11-15 (SOL.LICITANT) = G3, ignorat. N18 'CONSTR 3 HAB UNIF' confirma PLAN_COST 'EG 3 HAB UNIF' i el '3HAB.' del pressupost v1.",
+  "authority_for": [
+   "expedient",
+   "street_address (parcial: sense número)",
+   "municipality",
+   "building_type",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "field_date (candidat, dia de la mostra)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "Hoja1!N19",
+   "quote": "NÚM. D'EXPEDIENT | 3001621.0",
+   "confidence": 1.0,
+   "note": "= nom de la carpeta '3001621 CASTELLAR DEL VALLES' = nom del fitxer"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "3 habitatges unifamiliars",
+   "location": "Hoja1!N18",
+   "quote": "CONSTR 3 HAB UNIF",
+   "confidence": 0.8,
+   "note": "'CONSTR 3 HAB UNIF' = construcció de 3 habitatges unifamiliars; coincideix amb PLAN_COST 'EG 3 HAB UNIF' (mateixa autora, no independent) i amb les 3 parcel·les 18A-18B-20. Un sol expedient/una sola comanda → un sol informe per als 3 habitatges (no hi ha subcarpetes CASA 1/2/3)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C ARBRELLS",
+   "location": "Hoja1!N20",
+   "quote": "C ARBRELLS",
+   "confidence": 0.6,
+   "note": "sense número. Els números (18A-18B-20) els dona la MODF/acceptació; la fitxa diu 18A."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLÈS",
+   "location": "Hoja1!N21",
+   "quote": "CASTELLAR DEL VALLÈS",
+   "confidence": 0.95,
+   "note": "amb accent (forma oficial)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-24",
+   "location": "Hoja1!N23 'DATA DE PRESA'",
+   "quote": "datetime(2025,10,24)",
+   "confidence": 0.85,
+   "note": "dia de presa de la mostra del sondeig S1 = fitxa F38 (24/10/2025) = noms de fotos WhatsApp 2025-10-24. Campanya d'un dia → també és el dia dels DPSH. AH23 'DATA DE SOL.LICITUD' = mateix dia."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA (S1)",
+   "location": "Hoja1!C35",
+   "quote": "MA (S1)",
+   "confidence": 0.95,
+   "note": "UNA mostra alterada (MA) del sondeig S1. ATENCIÓ: no és 'SPT' — comprovar com l'anomena el GTL ('Mostra:')."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0-1,2 m",
+   "location": "Hoja1!J35/L35 (J31 'INICIAL', L31 'FINAL')",
+   "quote": "1.0 | 1.2",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "Hoja1!C35",
+   "quote": "(S1)",
+   "confidence": 0.95,
+   "note": "sondeig S1"
+  },
+  {
+   "concept_id": "lab_tests",
+   "value": "Agressivitat sòls 'NOMÉS SULFATS'",
+   "location": "fila 35",
+   "quote": "AA35='X' AD35='NOMÉS SULFATS'",
+   "confidence": 0.9,
+   "note": "nivell B. Només sulfats (no granulometria ni Atterberg, malgrat la previsió del PLAN_COST)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL / B25364589 / C/ Vallbona, 22 / ELS OMELLS DE NA GAIA",
+   "location": "N11-N14",
+   "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589 | C/ Vallbona, 22 | ELS OMELLS DE NA GAIA",
+   "confidence": 1.0,
+   "note": "sol·licitant = G3; la seva adreça/població NO són de l'obra"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "Identificada per Hoja1!C3 == \"PETICIÓ D'ASSAIGS DE LABORATORI\". Dos blocs amb etiquetes idèntiques (NOM/NIF/ADREÇA/POBLACIÓ files 11-14 vs OBRA/EXPEDIENT/ADREÇA/POBLACIÓ files 18-21): només el segon és del projecte. C57 'OBSERVACIONS' buit. O65 'NÚM. D'INFORME' i O66 'DATA RECEPCIÓ MOSTRES' buits (els omple el laboratori)."
+}

@@ -1,0 +1,22 @@
+{
+  "source_path": "CASA 1- TULIPA/260507_EVA G3_PLANOLS PER GEOTÈCNIC.zip",
+  "document_type": "planol",
+  "what_it_is": "ZIP de VUA amb els plànols de la casa 1 — tots tres en DWG, cap de llegible aquí.",
+  "issuer": "VUA (nom del zip: '260507_EVA G3_PLANOLS PER GEOTÈCNIC' → preparat per enviar a Eva el 07-05-2026)",
+  "date": "2026-05-07 (prefix 260507 del nom)",
+  "pages_or_sheets": "3 fitxers: 2024 07 26 Cerdanyola Carrer Tulipan 1 TOP.dwg (1,0 MB), PARAMETRES URBANISTICS.dwg (0,2 MB), PLANTA PROPOSTA.dwg (23 MB)",
+  "context": {
+    "who_made_it": "VUA (arquitecte casa 1)",
+    "for_whom": "G3/Eva",
+    "why": "topogràfic + paràmetres urbanístics + planta proposta de la casa 1",
+    "expected_fields": ["superficie_parcela (PARAMETRES URBANISTICS: taula de planejament)", "num_floors (PLANTA PROPOSTA)", "topografia (TOP)"],
+    "not_expected": [],
+    "relation_to_others": "els DWG contenen probablement la taula de planejament que falta (superficie_parcela casa 1) i les plantes definitives; el correu de març en dona les superfícies provisionals",
+    "authority_for": []
+  },
+  "tier_a": [
+    {"concept_id": "street_address", "value": "'Carrer Tulipan 1'(?) al nom del TOP.dwg", "location": "nom de fitxer dins el zip", "quote": "2024 07 26 Cerdanyola Carrer Tulipan 1 TOP.dwg", "confidence": 0.15, "note": "el nom diu 'Tulipan 1' (topogràfic de 2024, potser d'una fase prèvia o numeració antiga); tots els documents G3 i el correu diuen Tulipa 3 → indici feble, no competeix"}
+  ],
+  "not_present": ["superficie_parcela, num_floors, i tota la resta: NO LLEGIBLE (DWG)"],
+  "reading_notes": "no llegible: DWG (×3). Proposta: convertir amb LibreDWG dwg2dxf. Llistat fet amb zipfile (sense unzip). superficie_parcela i plantes definitives de la casa 1 depenen d'aquesta conversió o del correu."
+}

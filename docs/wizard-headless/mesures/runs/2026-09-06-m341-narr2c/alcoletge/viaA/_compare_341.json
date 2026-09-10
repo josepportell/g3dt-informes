@@ -1,0 +1,384 @@
+[
+ {
+  "var": "access_street",
+  "grup": "narr",
+  "eva": "Carrer existent al nord",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "adjacent_east_fmt",
+  "grup": "narr",
+  "eva": "Per la part est amb tres parcel·les ocupades per edificis aïllats de fins a dos plantes sobre rasant i una amb soterrani i piscina.",
+  "gen": "Per la part est amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_intro",
+  "grup": "narr",
+  "eva": "La parcel·la objecte d’estudi es situa al nord-est del municipi de l’Alcoletge, concretament a la Urbanització El Roser, pren una morfologia rectangular, i limita:",
+  "gen": "La parcel·la objecte d'estudi es situa al est del municipi de Alcoletge, pren una morfologia quasi rectangular i limita:",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "adjacent_north_fmt",
+  "grup": "narr",
+  "eva": "Per la part nord amb el camí d’accés.",
+  "gen": "Per la part nord amb una parcel·la on existeix un edifici aïllat en planta baixa, amb soterrani i piscina.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_south_fmt",
+  "grup": "narr",
+  "eva": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+  "gen": "Per la part sud amb una parcel·la on existeix un edifici aïllat en planta baixa.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_west_fmt",
+  "grup": "narr",
+  "eva": "I finalment, per la part oest, amb un solar buit.",
+  "gen": "I finalment, per la part oest, amb una parcel·la buida.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_name_upper",
+  "grup": "A",
+  "eva": "ALBERT SANS BONVEHI",
+  "gen": "DAVID GRAUS ROBINAT",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "building_structure_desc",
+  "grup": "narr",
+  "eva": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
+  "gen": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "building_type_lower",
+  "grup": "A",
+  "eva": "l'ampliació d'un edifici en planta baixa",
+  "gen": "tancament de porxo en casa unifamiliar (ampliació d'habitatge existent)",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client",
+  "grup": "A",
+  "eva": "SR. ALBERT SANS BONVEHI",
+  "gen": "ALBERT SANS BONVEHÍ",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_aggressivity_statement",
+  "grup": "narr",
+  "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+  "gen": "No s'han realitzat assaigs de laboratori per determinar l'agressivitat dels materials del subsòl al formigó.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_levels_detected",
+  "grup": "narr",
+  "eva": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "gen": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_water_statement",
+  "grup": "narr",
+  "eva": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats. Cal destacar però, que es detecta humitat en els materials del subsòl a partir de la cota de -1.00 m de profunditat, respecte la boca dels assaigs.",
+  "gen": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "cota_referencia",
+  "grup": "A",
+  "eva": "+188.20",
+  "gen": "+188,20 msnm",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-0",
+  "gen": "C-1",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-3",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "16 de febrer de 2026",
+  "gen": "16 de febrer de 2026",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_signatura_text",
+  "grup": "resta",
+  "eva": "16 de març de 2026",
+  "gen": "06 de setembre de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "expedient",
+  "grup": "A",
+  "eva": "4001670",
+  "gen": "4001670",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "geo_p",
+  "grup": "resta",
+  "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "geomech_E",
+  "grup": "calc",
+  "eva": "50",
+  "gen": 450,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_cohesion",
+  "grup": "calc",
+  "eva": "0.00",
+  "gen": 0.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_gamma",
+  "grup": "calc",
+  "eva": "1.80",
+  "gen": 2.0,
+  "status": "CLOSE",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_phi",
+  "grup": "calc",
+  "eva": "28",
+  "gen": 38,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "lab_depth",
+  "grup": "A",
+  "eva": "Profunditat:  -0.80  a -1.40 m",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_field_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_field_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_location",
+  "grup": "A",
+  "eva": "Punt: P-3",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_sample_id",
+  "grup": "A",
+  "eva": "Mostra : SPT-1",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_testing_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_testing_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_tests_text",
+  "grup": "narr",
+  "eva": "Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93\nContingut en sulfats solubles dels sòl UNE 83963/08",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "materials_intro",
+  "grup": "narr",
+  "eva": "A partir dels assaigs in situ realitzats, s’ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "gen": "A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "municipality",
+  "grup": "A",
+  "eva": "A la zona d’estudi, en el municipi d’Alcoletge, s’estableix una acceleració sísmica bàsica de:",
+  "gen": "Alcoletge",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "num_dpsh_tests",
+  "grup": "A",
+  "eva": "3 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "plantes",
+  "grup": "A",
+  "eva": "Pb",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "qa_value",
+  "grup": "calc",
+  "eva": "3.50",
+  "gen": "3.00",
+  "status": "CLOSE",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "radon_sentence",
+  "grup": "narr",
+  "eva": "La parcel·la concreta d’estudi es localitza al terme municipal d’ALCOLETGE i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "gen": "La parcel·la concreta d'estudi es localitza al terme municipal d'ALCOLETGE i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "radon_zone",
+  "grup": "calc",
+  "eva": "1",
+  "gen": "1",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "seismic_ab_text",
+  "grup": "calc",
+  "eva": "0,04",
+  "gen": "0,04",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "settlement",
+  "grup": "calc",
+  "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreable o bé menors a 1.0 cm.",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "site_condition",
+  "grup": "narr",
+  "eva": "Com que es tracta d’un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+  "gen": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_description",
+  "grup": "narr",
+  "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer existent al nord.\nEl solar està actualment ocupat per una zona explanada i un edifici en planta baixa a la meitat nord.\nL’ampliació d’aquest edifici es preveu realitzar a la part posterior, zona on es pot accedir sense problemes amb la maquinaria prevista.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "sulfate_classification",
+  "grup": "calc",
+  "eva": "No Agressius",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "sulfate_level_name",
+  "grup": "calc",
+  "eva": "2on nivell",
+  "gen": "1er nivell",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_value",
+  "grup": "calc",
+  "eva": "297.9",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "100",
+  "gen": "100",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_parcela",
+  "grup": "A",
+  "eva": "1167",
+  "gen": "1167.0",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "table_dpsh_range",
+  "grup": "calc",
+  "eva": "3 i 4",
+  "gen": "3, 4 i 5",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ }
+]

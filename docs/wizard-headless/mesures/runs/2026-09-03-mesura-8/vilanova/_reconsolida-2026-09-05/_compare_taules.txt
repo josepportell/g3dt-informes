@@ -1,0 +1,17 @@
+-- dpsh_tests: or 3 files / prod 3 files · alineades per clau
+ALERTA   dpsh_tests[2].nivell_freatic prod puja a segur ('No detectat'); or candidats
+-- sondeig_tests: or 0 files / prod 0 files
+-- spt_ma_tests: or 2 files / prod 2 files · alineades per clau
+NOMES-OR spt_ma_tests: lab (2 cel·les de l'or que prod no emet a cap fila: no compten)
+ALERTA   spt_ma_tests[0].id prod puja a segur ('SPT-1'); or candidats
+CAUTELA  spt_ma_tests[0].litologia candidats disjunts: or=['Argila llimosa i sorrenca, amb algunes graves', 'Arcilla limosa y arenosa con algunas gravas (Nivel 1)'] prod=['Argila limosa i sorrenca, amb algunes graves']
+ALERTA   spt_ma_tests[1].id prod puja a segur ('SPT1'); or candidats
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+NOMES-OR soil_levels: nom (2 cel·les de l'or que prod no emet a cap fila: no compten)
+BUIT     soil_levels[0].de (or=segur '0,00 m (superfície; cota +321,69 msnm)'; prod no_trobat)
+BUIT     soil_levels[0].a (or=candidats 'transició INCLINADA per punt: ≈ -0,85 m a P-1 (cota ≈320,9) / ≈ -1,6 m a P-2 (≈320,1) / ≈ -2,4 m a P-3 (≈319,3)'; prod no_trobat)
+BUIT     soil_levels[0].mostra_del_nivell (or=segur True; prod no_trobat)
+BUIT     soil_levels[1].de (or=candidats 'la mateixa transició inclinada (≈ -0,85 / -1,6 / -2,4 m per P-1/P-2/P-3)'; prod no_trobat)
+BUIT     soil_levels[1].a (or=candidats 'fins a la profunditat investigada: rebuig a -3,78 m (P-3); base del tall dibuixada ≈318,0 msnm'; prod no_trobat)
+BUIT     soil_levels[1].mostra_del_nivell (or=segur False; prod no_trobat)
+TOTALS: {'OK': 20, 'ALERTA': 3, 'NOMES_OR': 4, 'CAUTELA': 1, 'BUIT': 6}

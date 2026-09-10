@@ -1,0 +1,109 @@
+{
+ "source_path": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "Full de costos intern de G3 per a l'oferta: títol 'EG 3 HAB UNIF CASTELLAR DEL VALLÈS', tècnica Eva Vázquez Marcet, oferta 1.280 €, subcontractació TPS 740,99 €; OFERTA: 4 DPSH, 1 sondeig, 5 ml, 3 SPT, 1 partida de laboratori (granulometria + Atterberg + sulfats).",
+ "issuer": "G3 (Eva)",
+ "date": "sense data (cap cel·la de data)",
+ "pages_or_sheets": "7 fulls: 'Plan Cost', 'OFERTA', 'FACTURA M', 'Material Cost (lab)', 'Material Cost', 'Cost Center', 'Technicians' (els 5 últims són plantilla)",
+ "context": {
+  "who_made_it": "G3 (Eva) per a la direcció/administració de G3",
+  "for_whom": "ús intern G3 (marge, costos, hores)",
+  "why": "calcular el cost i el marge de l'oferta 25·0493 (1.280 €)",
+  "expected_fields": [
+   "building_type + municipality (E9 DESCRIPCIÓ TITÒL)",
+   "num_dpsh_tests previst (OFERTA!B21 / B49)",
+   "ml sondeig (OFERTA!B6) i SPT (OFERTA!B14)"
+  ],
+  "not_expected": [
+   "client_name (B8 'CLIENT / UBICACIÓ OBRA' buit; J8 'BCN' = centre)",
+   "expedient (I7 NUM INF buit)",
+   "adreça",
+   "data de camp",
+   "cota",
+   "nivells",
+   "arquitecte"
+  ],
+  "relation_to_others": "Conserva el títol de la 1a versió del pressupost ('3 HAB'), que la MODF va treure. No s'actualitza després de l'acceptació: última font per a quantitats. Coincideix amb les quantitats del pressupost (4 DPSH, 1 sondeig, 1.280 €). El nom del fitxer té una errata ('CATELLAR').",
+  "authority_for": [
+   "building_type (candidat)",
+   "municipality",
+   "num_dpsh_tests (previst)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "3 habitatges unifamiliars",
+   "location": "'Plan Cost'!E9 'DESCRIPCIÓ TITÒL'",
+   "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+   "confidence": 0.7,
+   "note": "'EG 3 HAB UNIF' = estudi geotècnic, 3 habitatges unifamiliars. Coherent amb '3HAB.' del pressupost v1 i amb les 3 parcel·les 18A-18B-20 de la MODF. L'informe pot redactar 'tres habitatges unifamiliars' (CLOSE). Confirmar amb comanda N18 i correu."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLÈS",
+   "location": "'Plan Cost'!E9",
+   "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+   "confidence": 0.9,
+   "note": "amb accent (forma oficial)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "OFERTA!B21 (i OFERTA!B49 bloc C0-C1)",
+   "quote": "unitat de penetració dinàmica DPSH | 4",
+   "confidence": 0.6,
+   "note": "previstos; mana l'Excel DPSH"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "1 sondeig a rotació, 5 ml, 3 SPT previstos",
+   "location": "OFERTA!B6 / B14 / B54",
+   "quote": "ml de perforació en sòls fins a 20 m | 5 ; Assaig SPT | 3 ; Sondeig a rotació, inclòs desplaçament i SPT'S | 1",
+   "confidence": 0.5,
+   "note": "previsió; les cotes reals de la mostra surten de la comanda/GTL"
+  },
+  {
+   "concept_id": "lab_tests",
+   "value": "granulometria + límits d'Atterberg + contingut en sulfats (1 mostra)",
+   "location": "OFERTA!B26-B35",
+   "quote": "Obertura de mostra 1 | Analisi granulomètric per tamissat 1 | assaig de Limits d'Atterberg 1 | contingut en sulfats 1",
+   "confidence": 0.6,
+   "note": "nivell B; previst. Comparar amb la comanda de laboratori."
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0-C1 (indici)",
+   "location": "OFERTA!A45/A47 bloc usat (D65=1219, E65=1280)",
+   "quote": "PRESSUPOSTOS GEOTÈCCNICS C0-C1 | ESTUDIS C0-C1",
+   "confidence": 0.3,
+   "note": "el bloc de tarifa 'C0-C1' és el que dona el total 1.280 € de l'oferta → l'edifici és C0 o C1, no C2. No discrimina entre C0 i C1. El pressupost NO porta la línia 'Tipus d’edifici'. Candidat feble."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": null,
+   "location": "'Plan Cost'!B8 'CLIENT / UBICACIÓ OBRA'",
+   "quote": "B8='CLIENT / UBICACIÓ OBRA' (sense valor) | J8='BCN'",
+   "confidence": 1.0,
+   "note": "buit; 'BCN' és l'oficina/centre, no el client"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "expedient",
+  "street_address",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "cte_sol"
+ ],
+ "reading_notes": "Identificat per 'Plan Cost'!B2 == 'PLAN COST  |  G3 DT'. Només E9, E21, OFERTA!B6/B14/B21/B26-B35/B49/B54 són senyal; la resta (preus, 'TPS', 'Cataluña', 'Lab. Valdemoro', full 'ZONA DE ROTONDA') és plantilla. Imatge incrustada a B2 = logo. B7 'NUM D'OFERTA' i I7 'NUM INF' buits. E21 'Eva Vázquez Marcet' = tècnica responsable (nivell B)."
+}

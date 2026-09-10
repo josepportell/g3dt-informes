@@ -1,0 +1,26 @@
+{
+  "source_path": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost geotècnic G3 (m4PRO ERP) versió inicial 25/06/25, codi comercial 25·0493",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+  "date": "2025-06-25 (creationDate D:20250625163430; DATA p.1 25/06/25)",
+  "pages_or_sheets": "7 pàgines",
+  "context": {
+    "who_made_it": "G3 (oficina tècnica) amb l'ERP m4PRO",
+    "for_whom": "GRUP ALMA CONSTRUCCIONS (sol·licitant inicial del geotècnic)",
+    "why": "Oferta econòmica per a l'estudi geotècnic de 3 habitatges a C/Arbrells, Castellar del Vallès",
+    "expected_fields": ["street_address (bloc OBRA)", "municipality", "building_type (títol OBRA)", "num_dpsh_tests (previstos)", "cte (línia Tipus d'edifici/Terreny, si hi és)"],
+    "not_expected": ["expedient (25·0493 és codi comercial, NO expedient)", "field_date", "cota_referencia", "num_soil_levels", "utm", "referencia_catastral"],
+    "relation_to_others": "SUBSTITUÏT per PRESSUPOST GEOTEC.MODF (creationDate 2025-10-07, mateix codi 25·0493): el CLIENT canvia (GRUP ALMA → WOOD COMFORT) i l'adreça de l'obra s'amplia (18A → 18A-18B-20). Pàgines 2-7 idèntiques byte a byte al MODF. No és font independent del MODF.",
+    "authority_for": ["cap camp en estat vigent — versió antiga; només corrobora municipality i building_type"]
+  },
+  "tier_a": [
+    {"concept_id": "street_address", "value": "C/ARBRELLS 18A", "location": "p.1 bloc OBRA", "quote": "ESTUDI GEOTECNIC 3HAB. | C/ARBRELLS 18A | CASTELLAR DEL VALLES", "confidence": 0.2, "note": "Versió antiga: el MODF amplia a 18A-18B-20. No usar com a vigent."},
+    {"concept_id": "municipality", "value": "CASTELLAR DEL VALLES", "location": "p.1 bloc OBRA", "quote": "CASTELLAR DEL VALLES", "confidence": 0.6, "note": "Forma curta G3 sense accent."},
+    {"concept_id": "building_type", "value": "3 habitatges (3HAB)", "location": "p.1 bloc OBRA, títol de l'encàrrec", "quote": "ESTUDI GEOTECNIC 3HAB.", "confidence": 0.5, "note": "Indica 3 habitatges; el MODF perd el '3HAB' del títol però amplia l'adreça a 3 números (18A-18B-20)."},
+    {"concept_id": "num_dpsh_tests", "value": 4, "location": "p.2 pla de treball / p.4 valoració 002.001", "quote": "4 assaigs de penetració dinàmica DPSH", "confidence": 0.4, "note": "Previstos, no executats. Idèntic al MODF."},
+    {"concept_id": "NOT_client_name", "value": "GRUP ALMA CONSTRUCCIONS", "location": "p.1 bloc CLIENT", "quote": "GRUP ALMA CONSTRUCCIONS", "confidence": 0.0, "note": "Sol·licitant de la versió ANTIGA del pressupost, substituït pel MODF (WOOD COMFORT). Descartat com a client vigent."}
+  ],
+  "not_present": ["expedient", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab", "cte (aquest pressupost NO porta la línia 'Tipus d'edifici'/'Tipus de Terreny')"],
+  "reading_notes": "Blocs ordenats per (y,x) per no barrejar CLIENT i OBRA. Comparació byte a byte amb el MODF: només canvia la p.1. Formulari p.5 en blanc."
+}

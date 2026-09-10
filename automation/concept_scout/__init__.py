@@ -54,6 +54,15 @@ _ADDRESS_CONCEPTS = {'street_address', 'site_address'}
 # projecte PDFs do not hit this class of error.
 _HANDWRITTEN_DOC_TYPES = {'field_sheet'}
 
+# Map/site-photo numbers are parcel or block identifiers, never m² areas (Fix C,
+# 2026-08-31; see vision_probe._NO_AREA_DOC_TYPES/_AREA_CONCEPTS for the primary
+# guard). Repeated here because this function also processes ConceptSource
+# entries loaded straight from a project's cached `concept_map.json` — a stale
+# entry from before this rule existed carries the concept_id under its `_m2`
+# wizard-field alias, not the bare concept id, so both are checked.
+_NO_AREA_DOC_TYPES = {'map', 'site_photo'}
+_AREA_CONCEPT_IDS = {'superficie_parcela', 'superficie_parcela_m2', 'superficie_construida', 'superficie_construida_m2'}
+
 # Hedged vision previews are prose, not values — e.g. Rubí's num_floors
 # returned "appears to be 2-3 levels" at confidence 0.8 which then won
 # competition since no text signal existed. The prompt asks for a VALUE;
@@ -115,6 +124,12 @@ def concept_sources_to_signals(
                 )
                 continue
             doc_type = method.split(':', 1)[1] if ':' in method else ''
+            if doc_type in _NO_AREA_DOC_TYPES and concept_id in _AREA_CONCEPT_IDS:
+                logger.debug(
+                    "Dropping area signal from %s document "
+                    f"({concept_id} from {source.file}, doc_type={doc_type!r})"
+                )
+                continue
             source_type = _VISION_DOC_TYPE_TO_SOURCE_TYPE.get(
                 doc_type, _VISION_PROBE_FALLBACK_SOURCE_TYPE,
             )

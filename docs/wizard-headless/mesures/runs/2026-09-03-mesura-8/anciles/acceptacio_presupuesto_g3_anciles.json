@@ -1,0 +1,120 @@
+{
+ "source_path": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+ "source_md5": "facc75f307f41e899566791f2272b75d",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic de G3 per a l'obra d'Anciles (Osca), versió ACCEPTACIO amb signatura digital de la sol·licitant (2026-02-05).",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "18/11/24 (pressupost) — acceptat/signat digitalment 2026-02-05 23:47:17",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (creator del PDF, plantilla estàndard de pressupost geotècnic)",
+  "for_whom": "El sol·licitant de l'estudi geotècnic (bloc CLIENTE p.1: 'RETRATERIA, ALBA BARRAU CASTAN, ARQUITECTA')",
+  "why": "Proposta econòmica per a l'estudi geotècnic (5 DPSH + 2 sondeigs a rotació + assaig de laboratori + informe), amb condicions específiques, per obtenir l'acceptació signada del client",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name (p.5 formulari)",
+   "architect_name (candidat, bloc CLIENTE)",
+   "num_dpsh_tests (previst)"
+  ],
+  "not_expected": [
+   "expedient numèric G3",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "superficie_parcela",
+   "num_floors",
+   "building_type",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "dades de lab (empresa/mostra/cota)",
+   "cte_edificacio/cte_sol"
+  ],
+  "relation_to_others": "Mateixa plantilla/import (1.585,00€, data pressupost 18/11/24) que '24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf' (no llegit en aquesta crida): sembla la mateixa proposta, aquí amb el formulari p.5 omplert i signatura digital d'acceptació. No és una versió amb preu/abast diferent.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Maria Alba Barrau Castán",
+   "location": "p.5 bloc 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' → NOMBRE Y APELLIDO / N.I.F.",
+   "quote": "NOMBRE Y APELLIDO: MARIA ALBA BARRAU CASTÁN / CALLE LA PAUL 3 B3 / 22467 VILLANOVA (HUESCA) / N.I.F./C.I.F.: 18037382T",
+   "confidence": 0.75,
+   "note": "Autoritat A per a client_name (regla Pas 3: el formulari p.5 mana). El bloc CLIENTE de la p.1 etiqueta la mateixa persona 'ARQUITECTA' (possible autopromotora, o 'RETRATERIA' com a raó social prèvia al seu nom — ambigu, no verificable només amb aquest document). Coincideix amb la nota estructural ja coneguda del projecte Anciles: p.5 = Alba Barrau, mentre que IV_PLANOS (no llegit en aquesta crida) declararia un promotor diferent (PICO DE OLA S.L.)."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Alba Barrau Castán",
+   "location": "p.1 bloc CLIENTE (sol·licitant)",
+   "quote": "CLIENTE: RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+   "confidence": 0.5,
+   "note": "Bloc CLIENTE = sol·licitant, no autoritat independent (deriva de l'encàrrec); conté 'ARQUITECTA' → candidat, mai segur per aquest sol (regla Pas 3). 'RETRATERIA' precedeix el nom: podria ser raó social/nom comercial, ambigu."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer General Ferraz, 20",
+   "location": "p.1 bloc OBRA",
+   "quote": "OBRA: ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA)",
+   "confidence": 0.85,
+   "note": "Bloc etiquetat OBRA (adreça de l'obra), autoritat directa."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "p.1 bloc OBRA",
+   "quote": "ANCILES (HUESCA)",
+   "confidence": 0.85,
+   "note": "Bloc OBRA; '(HUESCA)' és la província, no el municipi."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "General Ferraz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Anciles",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 bloc OBRA",
+   "quote": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+   "confidence": 0.85,
+   "note": "Concepte extra (address_struct), no és cap dels 15 camps del nivell A."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "5",
+   "location": "p.3 text del pla de treball + p.4 taula de valoració, línia 001.001",
+   "quote": "5 ensayos de penetración dinámica DPSH ... UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH ... 5,00",
+   "confidence": 0.4,
+   "note": "Previst al pressupost, no executat. L'Excel DPSH (ANEJOS/4001679_DPSH.xls, no llegit en aquesta crida) té prioritat si el nombre executat discrepa."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela",
+  "num_floors",
+  "building_type",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (Acrobat Distiller 15.0, no és FreeHand). Ordre de blocs de la p.1 ja correcte (OBRA abans de CLIENTE), sense necessitat de reordenar per (y,x). Els camps del formulari p.5 ('DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' i 'DIRECCIÓN DONDE SE TIENE QUE ENVIAR EL INFORME') són camps de formulari PDF omplerts digitalment (no manuscrits): el text surt agrupat al final del flux d'extracció, separat de les etiquetes; s'ha aparellat per ordre conegut de la plantilla (NOMBRE Y APELLIDO / DIRECCIÓN / CP Y POBLACIÓN / NIF / TELF., dos cops per als dos blocs). La signatura digital Adobe ('BARRAU CASTAN MARIA ALBA', 18037382T, 2026-02-05 23:47:17) coincideix exactament amb el modDate del PDF: confirma que és la còpia acceptada/signada. 'P#' que apareix diverses vegades és un placeholder de plantilla buit (número de projecte/oferta no substituït), no una dada. '24·0807' és el codi comercial de G3 (no l'expedient numèric — l'expedient és '4001679', nom de la carpeta del projecte, no present en aquest document)."
+}

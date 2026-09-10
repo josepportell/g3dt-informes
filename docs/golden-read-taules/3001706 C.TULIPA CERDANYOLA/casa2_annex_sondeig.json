@@ -1,0 +1,39 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+ "document_type": "annex_sondeig",
+ "what_it_is": "Còpia Distiller del MATEIX annex de sondeig S-1 (capçalera idèntica: Tulipa nº3, client Subià, z +199,0) inclosa a la carpeta de casa 2 perquè el sondeig es replica al seu informe.",
+ "issuer": "G3 (Eva)",
+ "date": "modDate 2026-06-04 15:24",
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "annex de l'informe de casa 2",
+  "why": "replicar el sondeig compartit",
+  "expected_fields": [
+   "els mateixos que la còpia de casa 1"
+  ],
+  "not_expected": [],
+  "relation_to_others": "duplicat (mateix dibuix) de CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf; NO compta com a font independent. ÚNICA diferència trobada: la redacció del tram -1.10/-2.20.",
+  "authority_for": [
+   "soil_levels.litologia (variant de redacció del NIVELL 2)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "NIVELL 2 (variant de redacció)",
+    "de": "-1,10",
+    "a": "-2,20",
+    "litologia_candidats": [
+     "Llims argilosos coheisus amb indicis de precipitat de calci"
+    ],
+    "location": "p.1 'Descripció dels materials' (lectura visual, text Distiller brossa)",
+    "quote": "-1.10 a -2.20 m: Llims argilosos coheisus amb indicis de precipitat de calci."
+   }
+  ],
+  "__nota": "Tota la resta (NIVELL 1 i 3, SPT, z, dates, NF) és idèntica a la còpia de casa 1. La llegenda del tall ('Llims argilosos cohesius') coincideix amb AQUESTA redacció, no amb la de la còpia de casa 1 ('Argiles coheives') → discrepància de còpia dels annexos d'Eva: litologia del NIVELL 2 mai segura, candidats."
+ },
+ "not_present": [],
+ "reading_notes": "Text Distiller sense ToUnicode (brossa): lectura 100% visual a 150 dpi, contrastada línia a línia amb la còpia Print To PDF."
+}

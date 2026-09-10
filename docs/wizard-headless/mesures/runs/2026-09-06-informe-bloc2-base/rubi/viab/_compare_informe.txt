@@ -1,0 +1,18 @@
+
+## rubi/viab
+| taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
+|---|--:|--:|--:|---|---|
+| plantes | 2 | 2 | 2 |  | fila0[1] CLOS «Pb»↔«PB + Porxo»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la (m2)»; fila1[1] MISM «1414»↔«951»; fila2[1] MISM «64»↔«92» |
+| cte_edificacio | 4 | 0 | 0 |  |  |
+| dpsh | 9 | 0 | 6 |  | p-1[1] MISM «+211.90»↔«+212.50»; p-1[2] MISM «-4.60»↔«-4.55»; p-2[1] MISM «+211.90»↔«+212.50»; p-2[2] MISM «-3.60»↔«-3.58»; p-3[1] MISM «+211.90»↔«+212.50»; p-3[2] MISM «-3.20»↔«-3.13» |
+| spt_ma | 3 | 0 | 2 |  | spt-1[3] MISM «36»↔«40»; spt-1[4] MISM «»↔«Graves i sorres» |
+| mostra_lab | 3 | 1 | 1 |  | fila0[2] CLOS «Profunditat: -0.6 a -1.2»↔«Profunditat:  -0.60  a -1.20 m»; fila1[1] MISM «Contingut en sulfats solubles UNE 83963:2008»↔«Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
+Determinació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93
+Assaig de contingut en sulfats UNE 83963 : 2008» |
+| soil_levels | 1 | 0 | 1 |  | 1r[1] MISM «Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)»↔«Graves i sorres, carbonatades» |
+| permeabilitat | 1 | 1 | 1 |  | 1r[1] CLOS «10^-3 a 10^-5»↔«10-10-1»; 1r[2] MISM «Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)»↔«Graves i sorres, carbonatades» |
+| sulfats | 4 | 0 | 0 |  |  |
+| sismica | 3 | 0 | 1 |  | 1[2] MISM «4.60»↔«4.55» |
+| geotecnica | 0 | 0 | 7 |  | 1r[0] MISM «1er nivell. Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2).»↔«1er nivell. Graves i sorres.»; 1r[1] MISM «52-R»↔«47-R»; 1r[2] MISM «43»↔«40»; 1r[3] MISM «2.20»↔«2.0»; 1r[4] MISM «1.00»↔«0.05»; 1r[5] MISM «35°»↔«39º»; 1r[6] MISM «500»↔«450» |
+
+**rubi/viab: 30 MATCH · 4 CLOSE · 21 MISMATCH · 0 files extra · 0 files absents → 62 % (M+C)/comparables**

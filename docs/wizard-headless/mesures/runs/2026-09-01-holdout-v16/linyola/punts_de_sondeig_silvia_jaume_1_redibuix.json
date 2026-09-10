@@ -1,0 +1,129 @@
+{
+ "source_path": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+ "source_md5": "aea7363d09156b57bfb49a4cc1d5c739",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol de planta general de la parcel·la (arquitecte), full 03, amb marcatge dels 3 punts de sondeig i cotes de replanteig respecte als murs — versió redibuixada (AutoCAD) del plànol 'Punts de Sondeig_Silvia_Jaume'.",
+ "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P (representat per Josep Bunyesc Palacín, Dr. Arquitecte)",
+ "date": "AGOST 2025 (data impresa al caixetí, data del projecte); metadades PDF: creationDate 2025-08-19, modDate 2025-09-30 (redibuix posterior)",
+ "pages_or_sheets": "1 pàgina (full 03, A3, escala 1:100)",
+ "context": {
+  "who_made_it": "BUNYESC ARQUITECTURA EFICIENT, S.L.P (arquitecte Josep Bunyesc Palacín), redactor del projecte bàsic de l'habitatge",
+  "for_whom": "Per a G3/Eva, com a base per situar físicament els punts de sondeig sobre la planta de l'edifici projectat",
+  "why": "Marcar la posició dels 3 punts de sondeig amb cotes de replanteig respecte als murs de l'edifici, per preparar la campanya de camp",
+  "expected_fields": [
+   "client_name (promotors)",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type",
+   "distàncies de replanteig dels punts de sondeig"
+  ],
+  "not_expected": [
+   "expedient G3",
+   "field_date de camp",
+   "cota_referencia",
+   "num_floors",
+   "superficie_parcela",
+   "num_soil_levels",
+   "lab",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte"
+  ],
+  "relation_to_others": "Probable redraw AutoCAD del plànol 'Punts de Sondeig_Silvia_Jaume.pdf' (present per duplicat a l'inventari a '25.0616/Punts de Sondeig_Silvia_Jaume.pdf' i 'Punts de Sondeig_Silvia_Jaume (1).pdf', mateix md5 296c5aa75d57fe64ec2f5cbfb96fe57f, NO llegit en aquesta crida --only): mateix nom base + sufix '_REDIBUIX', md5 diferent (aea7363d...), consistent amb ser una versió vectorial/neta del mateix plànol de punts de sondeig, no un duplicat binari. No confirmat perquè no s'ha obert l'altre fitxer (mode --only).",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró i Jaume Nadal Andreu",
+   "location": "caixetí, bloc PROMOTORS",
+   "quote": "SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU",
+   "confidence": 0.8,
+   "note": "Bloc 'PROMOTORS' amb dos noms (parella/matrimoni); caixetí de plànol amb etiqueta Promotor és la font de màxima prioritat per client_name (regla Pas 3), però en aquesta crida és font única (no creuada amb ACCEPTACIO/DADES CLIENT ni amb l'altre plànol)."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Josep Bunyesc Palacín",
+   "location": "caixetí, bloc REDACTOR/S",
+   "quote": "representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+   "confidence": 0.6,
+   "note": "Regla coneguda i explícita per aquest projecte (Pas 3, cas Linyola): al mateix caixetí hi ha forma persona i forma despatx → candidats [persona | despatx], mai segur."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Bunyesc Arquitectura Eficient, S.L.P",
+   "location": "caixetí, bloc REDACTOR/S",
+   "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+   "confidence": 0.6,
+   "note": "Forma despatx, mateixa font que architect_name; veure nota d'aquell camp."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C. Clot de la Llacuna, 16",
+   "location": "caixetí, bloc EMPLAÇAMENT",
+   "quote": "C. Clot de la Llacuna, 16",
+   "confidence": 0.85,
+   "note": "Etiqueta EMPLAÇAMENT (= Situació); coincideix amb el que s'espera del nom de carpeta/projecte."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "caixetí, bloc EMPLAÇAMENT",
+   "quote": "Linyola  (25240)",
+   "confidence": 0.9,
+   "note": "Codi postal 25240 confirma; forma coincideix amb el nom d'expedient G3 (carpeta '4001607 LINYOLA')."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "caixetí, bloc TÍTOL DEL PROJECTE",
+   "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85,
+   "note": "L'informe sol redactar 'un habitatge unifamiliar' — comparació CLOSE esperada (article/adjectiu, regla existent)."
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "13/52/04",
+   "location": "caixetí, bloc EXPEDIENT",
+   "quote": "EXPEDIENT: 13/52/04",
+   "confidence": 0.0,
+   "note": "Codi d'expedient INTERN de l'arquitecte (Bunyesc), no l'expedient G3 (4001607). Descartat expressament, no és candidat."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "planta, 3 marques 'PUNT SONDEIG' (1r/2n/3r) amb cotes de replanteig",
+   "quote": "1r PUNT SONDEIG / 2n PUNT SONDEIG / 3r PUNT SONDEIG",
+   "confidence": 0.4,
+   "note": "Corrobora, NO és autoritat: mana l'Excel DPSH executat (3 fulls P-1/P-2/P-3, coincideix). Plànol de PLANIFICACIÓ dels punts, no d'execució; 'sondeig' és el terme genèric del despatx d'arquitectura, no confirma tipus d'assaig."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela",
+  "num_floors",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (AutoCAD, cap renderitzat addicional necessari per al caixetí); s'ha mirat la imatge sencera (150 dpi) per confirmar el layout dels 3 punts de sondeig i llegir les cotes de replanteig en vermell (0.69/0.92/3.21/7.89/12.20/12.42/4.80 m) — aquestes cotes són de replanteig respecte a murs, no corresponen a cap camp del nivell A ni a cap taula definida (Pas 3b), no transcrites com a dada. Blocs del caixetí llegits d'esquerra a dreta: REDACTOR/S, TÍTOL DEL PROJECTE, EMPLAÇAMENT, PROMOTORS, DATA, EXPEDIENT (arquitecte), NOM DEL PLÀNOL, ESCALA."
+}

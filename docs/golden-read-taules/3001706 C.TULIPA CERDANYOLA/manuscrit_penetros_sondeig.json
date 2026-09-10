@@ -1,0 +1,118 @@
+{
+ "source_path": "PENETROS + SONDEIG.pdf",
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escaneig (Print To PDF, 5 p.) dels fulls de camp TPS: albarà penetròmetres, full DPSH 'Casa 1', full DPSH 'Casa 2', albarà sondeig i full de camp del sondeig S-1.",
+ "issuer": "TPS (operari/sondista Daniel Fernández)",
+ "date": "7-5-2026 (el full del sondeig p.5 porta '7-6-2025', lapsus manuscrit: tota la resta de documents diu 07/05/2026)",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "TPS (subcontractista) per a G3",
+  "for_whom": "G3 (les caselles DADES CLIENT: Empresa G3 / Responsable Eva són la relació TPS→G3, cap rol al projecte)",
+  "why": "registre de camp i albarans de facturació",
+  "expected_fields": [
+   "colpeigs bruts",
+   "rebuigs",
+   "NF",
+   "cotes relatives punt 0",
+   "croquis",
+   "recompte de punts i SPT"
+  ],
+  "not_expected": [
+   "plantes",
+   "promotor",
+   "cota absoluta"
+  ],
+  "relation_to_others": "original de camp dels 2 Excels DPSH (l'Excel, revisat per Eva, mana per als valors) i de l'annex de sondeig. L'albarà del sondeig factura 3,60 ml (arrodoniment); l'annex i les mostres diuen -3,54.",
+  "authority_for": [
+   "dpsh_tests.nivell_freatic (corroboració: caselles NF en blanc)",
+   "recompte 4 penetròmetres + 2 SPT",
+   "cotes relatives del punt 0"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P1 (Casa 1) = P-1.1",
+    "cota_inici": "+/- 0 (relativa)",
+    "rebuig": "Si",
+    "profunditat_assolida": "-3,70",
+    "nivell_freatic": "cap (casella NIVELL FREÀTIC en blanc)",
+    "location": "p.2 columna P1 + peu",
+    "quote": "R: 3,70"
+   },
+   {
+    "punt": "P2 (Casa 1) = P-1.2",
+    "cota_inici": "+/- 0 (relativa)",
+    "rebuig": "Si",
+    "profunditat_assolida": "-2,19",
+    "nivell_freatic": "cap",
+    "location": "p.2 columna P2",
+    "quote": "R: 2,19"
+   },
+   {
+    "punt": "P1 (Casa 2) = P-2.1",
+    "cota_inici": "+2,20 (relativa)",
+    "rebuig": "Si",
+    "profunditat_assolida": "-4,13",
+    "nivell_freatic": "cap",
+    "location": "p.3 columna P1",
+    "quote": "Cota Inici + 2,20 | R: 4,13"
+   },
+   {
+    "punt": "P2 (Casa 2) = P-2.2",
+    "cota_inici": "+2,50 (relativa)",
+    "rebuig": "Si",
+    "profunditat_assolida": "-5,11",
+    "nivell_freatic": "cap",
+    "location": "p.3 columna P2",
+    "quote": "Cota Inici + 2,50 | R: 5,11"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "'C/Tulipan +1 m' (cota 0 = carrer +1 m; coherent amb 198+1=199 de l'annex)",
+    "profunditat": "mostres fins a 3,54; albarà factura 'Ml de perf. en sòls entre 0-20 m: 3,60'",
+    "nivell_freatic": "cap (casella 'Nivell Freàtic — posar No si no n'hi ha' en blanc)",
+    "location": "p.5 capçalera + p.4 albarà sondeig",
+    "quote": "Descriure cota 0 o cota referència: C/Tulipan +1m | Assaigs SPT: 2"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "S.P.T-1",
+    "punt": "S-1",
+    "profunditat": "1,00 a 1,60",
+    "registre": "6/9/9/9",
+    "location": "p.5 bloc Mostres",
+    "quote": "1,00 a 1,60 | S.P.T-1 | 6 9 9 9"
+   },
+   {
+    "id": "S.P.T-2",
+    "punt": "S-1",
+    "profunditat": "3,00 a 3,54",
+    "registre": "19/31/33/50",
+    "location": "p.5 bloc Mostres",
+    "quote": "3,00 a 3,54 | S.P.T-2 | 19 31 33 50"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "(trams de material del sondista — NO són nivells)",
+    "litologia_candidats": [
+     "limos arenosos con gravilla (tram superior)",
+     "lutita (tram inferior fins a 3,00)"
+    ],
+    "location": "p.5 columna 'Cota d'inici respecte cota 0' (fondàries parcialment il·legibles)",
+    "quote": "limos arenosos con gravilla | lutita"
+   }
+  ],
+  "__nota": "p.1 albarà penetròmetres: 'Nº de penetròmetres realitzats: 4' | 'Ml de penetròmetre (5 mínims): 20,11' | 'Assaigs SPT o MI: 2' | equip ML76A. Croquis p.2: parcel·la casa 1 amb P1, S1, P2 i distàncies; croquis p.3: parcel·la casa 2 entre C/Tulipan, Camí Antic i C/ de Tosca. Els colpeigs manuscrits coincideixen amb els Excels als 4 punts."
+ },
+ "not_present": [
+  "nivell freàtic (blanc a les 3 caselles)",
+  "cota absoluta"
+ ],
+ "reading_notes": "Escaneig sense text: lectura visual a 110 dpi de les 5 pàgines. Data del full del sondeig (p.5) llegida '7-6-2025': lapsus del sondista (contradiu p.1-4 i tots els altres documents)."
+}

@@ -1,0 +1,29 @@
+{
+  "source_path": "PENETROS.pdf",
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "Escaneig NAPS2 de 3 fulls TPS: albarà + full de camp del penetròmetre (P1-P3) + full d'assaig SPT",
+  "issuer": "TPS (operari 'SINY', sonda ML60A)",
+  "date": "01-10-25 (a les 3 pàgines)",
+  "pages_or_sheets": "3 pàgines escanejades (0 text → visió a 150 dpi)",
+  "context": {
+    "who_made_it": "l'operari de TPS a camp",
+    "for_whom": "G3 (albarà de la feina subcontractada) — 'DADES CLIENT: Empresa G3 / Responsable Eva' és la relació TPS→G3, MAI client del projecte",
+    "why": "registrar la feina feta (albarà) i el colpeig cru (fulls de camp)",
+    "expected_fields": ["field_date", "num_dpsh_tests realitzats", "N.F.", "punt 0 / cota referència", "croquis", "mostra SPT"],
+    "not_expected": ["client_name", "architect_name", "plantes", "superfícies", "expedient (casella Informe: BUIDA)"],
+    "relation_to_others": "Versió manuscrita del que l'Excel DPSH recull revisat (l'Excel mana per als valors N20; coincideixen: rebuigs 2,90/2,15/1,75). El croquis coincideix amb el REDIBUIX i el plànol de situació. 'Cota Inici -0,15' als 3 punts = el criteri '-0,15 m carrer' de l'annex DPSH.",
+    "authority_for": ["field_date (candidat 3)", "num_dpsh_tests (realitzats, candidat 2)", "nivell freàtic (NO)", "lab_sample_id/lab_depth (candidats)"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "p.1 albarà 'Data:' + p.2/p.3 'Data:'", "quote": "1-10-25 / 01-10-25", "confidence": 0.7, "note": "concordant amb fitxa F38, annex DPSH i correu"},
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "p.1 albarà 'Nº de penetròmetres realitzats'", "quote": "[3] Nº de penetròmetres realitzats · 6,8 Ml de penetròmetre · [1] Assaigs SPT o MI", "confidence": 0.8, "note": "REALITZATS (no previstos); coincideix amb l'Excel"},
+    {"concept_id": "cota_referencia", "value": "-0,15 respecte del carrer (punt 0 = Carrer Clot de la Llacuna)", "location": "p.2 'Descriure punt 0 o cota referencia' + fila 'Cota Inici'", "quote": "Carrer Clot de la Llacuna · Cota Inici: -0,15 / -0,15 / -0,15", "confidence": 0.6, "note": "corrobora el criteri de l'annex '+245 msnm segons ICGC (-0,15m carrer)'; el valor absolut (245) surt de l'annex, no d'aquí"},
+    {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna", "location": "p.1 albarà 'Adreça' + p.2 punt 0", "quote": "Carrer Clot de la Llacuna / Població: LINYOLA", "confidence": 0.5, "note": "manuscrit; sense número"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "p.1 'Població' + p.2/p.3 'Adreça de l'obra'", "quote": "LINYOLA", "confidence": 0.5, "note": "manuscrit"},
+    {"concept_id": "lab_sample_id", "value": "SPT1 P3", "location": "p.3 'Assaig de referència'", "quote": "SPT1 P3", "confidence": 0.5, "note": "concordant amb comanda i GTL"},
+    {"concept_id": "lab_depth", "value": "1,0 fins a 1,15 m (grafia dubtosa: podria llegir-se 1,75)", "location": "p.3 'Cota d'extracció'", "quote": "de la cota de: 1,0 / fins a la cota: 1,15[?]", "confidence": 0.3, "note": "manuscrit ambigu; GTL (1,0-1,15) mana per a la profunditat; colpeig SPT anotat: 50"},
+    {"concept_id": "NOT_client_name", "value": "G3 / Eva", "location": "p.1 albarà 'DADES CLIENT'", "quote": "Empresa: G3 · Responsable: Eva", "confidence": 0.0, "note": "client del subcontractista TPS, mai del projecte"}
+  ],
+  "not_present": ["expedient (casella 'Informe:' buida a les 3 pàgines)", "client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "num_soil_levels (trams de material del full de camp NO són nivells)", "cte", "utm_x_utm_y", "referencia_catastral", "lab_testing_company (TPS és qui fa el camp; el lab surt del GTL)"],
+  "reading_notes": "Render 150 dpi + visió. p.2: N.F. = 'NO' explícit; colpeigs manuscrits coincideixen amb l'Excel (P1 rebuig R 2,9; P2 R 2,15; P3 R 1,75); croquis amb mides 0,92, 3,21, 8,89, 12,20, 11,42 i 'casa vecina'. p.3: descripció materials SPT 'lutita marró i tram d'argila amb graves' (lliga amb GTL 'Lutita gresosa'). Hores 8:30-12:30. Cap incidència anotada."
+}

@@ -1,0 +1,25 @@
+{
+  "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_plànol de situació_CASA 1.pdf",
+  "document_type": "annex_planol_situacio",
+  "what_it_is": "Plànol de situació de l'informe de la CASA 1: parcel·la casa 1 ressaltada en vermell, punts P-1.1, P-1.2, S-1.",
+  "issuer": "G3 (Eva)",
+  "date": "caixetí Data: Maig 2026; modDate 2026-06-04",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva sobre base topogràfica ICGC + ortofoto + mapa de situació",
+    "for_whom": "l'informe de la casa 1",
+    "why": "situar la parcel·la i els punts d'assaig",
+    "expected_fields": ["expedient (caixetí)", "street (carrerer: 'Carrer de la Tulipa')", "municipality", "posició relativa dels punts"],
+    "not_expected": ["field_date", "client", "cota de referència exacta", "lab"],
+    "relation_to_others": "mateixa base que el plànol de situació CASA 2 (només canvia el ressaltat i l'Exp del caixetí); el topogràfic de fons porta cotes de carrer 195,9–198,7 i de parcel·la 197,88–204,19",
+    "authority_for": ["expedient (variant _CASA 1)", "street_address (corroboració via carrerer)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001706 (casa 1: 3001706_CASA 1)", "location": "caixetí", "quote": "Exp: 3001706_CASA 1", "confidence": 0.8, "note": ""},
+    {"concept_id": "street_address", "value": "Carrer de la Tulipa (casa 1, façana nord)", "location": "carrerer del topogràfic", "quote": "Carrer de la Tulipa", "confidence": 0.6, "note": "el carrerer diu 'Carrer de la Tulipa'; els documents G3 escriuen 'C/ Tulipa 3'"},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "caixetí TÍTOL + mapa de situació ('Cerdanyola del Vallès')", "quote": "…de Cerdanyola del Vallès", "confidence": 0.7, "note": ""},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar (casa 1)", "location": "caixetí TÍTOL", "quote": "…construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 de Cerdanyola del Vallès", "confidence": 0.6, "note": ""}
+  ],
+  "not_present": ["client_name", "architect_name", "field_date", "cota_referencia (cotes topogràfiques disperses, cap marcada com a referència)", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "FreeHand/Distiller → render 150 dpi. 2 parcel·les dibuixades: casa 1 (vermell, façana a Carrer de la Tulipa) i casa 2 (groc, interior/sud-est amb porxo i piscina veïns)."
+}

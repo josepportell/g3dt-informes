@@ -520,28 +520,28 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
             if _get_val('access_description'):
                 break
 
-    # Site description: generate from shape, area, anthropized state
+    # Estat del solar per CRITERI (peça 3, 2026-09-07): la mateixa implementació que el generador
+    # (`narrative_criteria.site_description_sentence`): construcció pròpia al Cadastre (DNPRC de les referències del
+    # projecte) + pendent ICGC → «El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del
+    # carrer.» / «…Topogràficament, el solar presenta pendent.» / «El solar està actualment ocupat per una zona explanada
+    # i un edifici en planta baixa.», amb les variants dels signats com a candidats. Abans: «parcel·la de forma rectangular
+    # amb superfície de 571 m2» («plantilla generada»), text que l'Eva no escriu mai.
     if not _get_val('site_description'):
-        parts = []
-        shape = _get_val('parcel_shape') or 'rectangular'
-        area = _get_val('superficie_parcela_m2') or _get_val('superficie_cadastral_m2')
-        if area:
-            try:
-                parts.append(
-                    f"parcel\u00b7la de forma {shape} amb superf\u00edcie de {int(float(area))} m2"
-                )
-            except (ValueError, TypeError):
-                parts.append(f"parcel\u00b7la de forma {shape}")
-
-        is_anthropized = _get_val('is_anthropized')
-        if is_anthropized and is_anthropized.lower() not in ('false', '0', ''):
-            parts.append("El terreny es presenta antropitzat")
-
-        if parts:
-            merged['site_description'] = {
-                'value': '. '.join(parts),
-                'source': 'plantilla generada',
-            }
+        from automation.narrative_criteria import site_description_sentence
+        from automation.parcel_context import own_parcel_buildings
+        lang = _get_project_language(merged)
+        own = None
+        try:
+            own = own_parcel_buildings(_get_val('cadastral_refs') or _get_val('cadastral_ref') or None)
+        except Exception as e:
+            logger.debug("DNPRC parcel·la pròpia: %s", e)
+        choice = site_description_sentence(_get_val('slope_percent'), own, lang)
+        merged['site_description'] = {
+            'value': choice.value,
+            'source': f'computed ({choice.source})',
+            'candidates': [c.value for c in choice.candidates],
+            'candidate_sources': [c.source for c in choice.candidates],
+        }
 
     # Site condition: erosion observation sentence
     # Uses slope (ICGC) + adjacents (Cadastre) to determine qualifier.
@@ -551,60 +551,23 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
     # "Pla" = default when flat and no special condition observed.
     # Spanish projects get a simpler fixed sentence.
     if not _get_val('site_condition'):
+        # Una sola implementació del criteri (2026-09-06): `narrative_criteria.site_condition_sentence`, la mateixa que
+        # fa servir el generador. `is_anthropized` només compta si ve d'una font real (no del defecte).
+        from automation.narrative_criteria import site_condition_sentence
         lang = _get_project_language(merged)
-        if lang == 'es':
-            site_cond = (
-                "En la zona de estudio no se han detectado marcas de inicios "
-                "de procesos de erosión relacionados con la escorrentía "
-                "hídrica superficial."
-            )
-            source = 'computed (ES template)'
-        else:
-            slope_pct = _get_val('slope_percent')
-            try:
-                slope_val = float(slope_pct) if slope_pct else 0.0
-            except (ValueError, TypeError):
-                slope_val = 0.0
-
-            is_anthro_entry = merged.get('is_anthropized', {})
-            anthro_source = is_anthro_entry.get('source', '') if isinstance(is_anthro_entry, dict) else ''
-
-            # Only trust is_anthropized if it comes from a REAL source (not default)
-            if 'default' in anthro_source:
-                # Don't use default — determine from slope only
-                if slope_val > 10:
-                    qualifier = "Tot i no ser un solar pla"
-                else:
-                    qualifier = "Com que es tracta d'un solar pla"
-            else:
-                # We have real anthropization data (from ortho, user, etc.)
-                is_anthro = _get_val('is_anthropized')
-                if not is_anthro or is_anthro.lower() in ('none', ''):
-                    # No decision made — use slope only
-                    if slope_val > 10:
-                        qualifier = "Tot i no ser un solar pla"
-                    else:
-                        qualifier = "Com que es tracta d'un solar pla"
-                else:
-                    anthro = str(is_anthro).lower() not in ('false', '0')
-                    if slope_val > 10 and not anthro:
-                        qualifier = "Es tracta d'un solar no antropitzat"
-                    elif slope_val > 10:
-                        qualifier = "Tot i no ser un solar pla"
-                    elif anthro:
-                        qualifier = "Degut a que es tracta d'un solar antropitzat"
-                    else:
-                        qualifier = "Com que es tracta d'un solar pla"
-
-            site_cond = (
-                f"{qualifier}, no s'han detectat marques i/o indicis de processos "
-                f"d'erosió relacionats amb l'escolament hídric superficial, "
-                f"ni es preveu que apareguin."
-            )
-            source = f'computed (slope {slope_val:.0f}%)'
+        slope_pct = _get_val('slope_percent')
+        try:
+            slope_val = float(slope_pct) if slope_pct else 0.0
+        except (ValueError, TypeError):
+            slope_val = 0.0
+        is_anthro_entry = merged.get('is_anthropized', {})
+        anthro_source = is_anthro_entry.get('source', '') if isinstance(is_anthro_entry, dict) else ''
+        is_anthro = None if 'default' in anthro_source else (_get_val('is_anthropized') or None)
+        choice = site_condition_sentence(slope_val, is_anthro, lang)
         merged['site_condition'] = {
-            'value': site_cond,
-            'source': source,
+            'value': choice.value,
+            'source': 'computed (ES template)' if lang == 'es' else f'computed (slope {slope_val:.0f}%)',
+            'candidates': [c.value for c in choice.candidates],
         }
 
 
@@ -620,6 +583,25 @@ def _clear_stale_user_data(project_path: Path) -> None:
         backup_path = project_path / '_user_data_prev.json'
         user_data_path.rename(backup_path)
         logger.info("Backed up stale user_data.json -> _user_data_prev.json")
+
+
+def bearing_note(bearing_idx: int | None, description: str, n_layers: int, df: float, df_source: str | None) -> str:
+    """Text del wizard (P2b UI, 2026-09-06): quin nivell portant s'ha triat i amb quina Df.
+
+    «Nivell portant: 1/2 «Graves carbonatades» · Df = 0,30 m» + avís quan la Df és el prefill per defecte (l'Eva no
+    l'ha escrita: la regla «primer competent que la sabata assoleix a Df + 0,2 m» depèn d'aquest valor; Linyola/Anciles
+    amb pous només encerten el 2n nivell si l'Eva hi posa la Df dels pous). Mateixa Df que Qa (`_df_for_bearing`).
+    """
+    df_txt = f"{df:.2f}".replace(".", ",")
+    if bearing_idx is None or n_layers <= 0:
+        return f"Nivell portant: únic (sense capes de sondeig) · Df = {df_txt} m"
+    desc = (description or "").strip()
+    desc = (desc[:70] + "…") if len(desc) > 70 else desc
+    txt = f"Nivell portant: {bearing_idx + 1}/{n_layers} «{desc}» · Df = {df_txt} m (primer competent que la sabata assoleix a Df + 0,2 m)"
+    src = (df_source or "").lower()
+    if not src or "default" in src or "estandard" in src or "defecte" in src:
+        txt += " · ⚠ Df per defecte: escriu la fondària real de la sabata o del pou i torna a carregar els prefills"
+    return txt
 
 
 def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any) -> None:
@@ -654,6 +636,18 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
             sondeig_layers = tests[0]['layers']
     except Exception:
         pass
+
+    # P5 (2026-09-07): sense sondeig, primer la geometria del tall LLEGIT (`soil_levels` de/a de la via A),
+    # com fa `build_report_data`; el segmentador només si la lectura no dona contactes.
+    if not sondeig_layers and getattr(dpsh, 'tests', None):
+        try:
+            from automation.report_data import lectura_sondeig_layers
+            sondeig_layers = lectura_sondeig_layers({}, project_path, dpsh)
+            if sondeig_layers:
+                logger.info("P5 (wizard): %d sondeig_layers des de la lectura.", len(sondeig_layers))
+        except Exception as exc:
+            logger.warning("P5 (wizard) lectura layers failed: %s", exc)
+            sondeig_layers = []
 
     # Fallback: no sondeig file or empty extraction → synthesize layers from
     # DPSH N20 step-change (mirrors build_report_data's Fix α fallback so the
@@ -690,10 +684,16 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         _v = (_e['value'] if isinstance(_e, dict) else _e) or ''
         soil_types_list.append(str(_v).lower())
 
+    # Df per triar el nivell portant (mateix camp que Terzaghi més avall)
+    from automation.report_data import foundation_depth_from_user_data
+    _df_entry = merged.get('foundation_depth_m')
+    _df_for_bearing, _ = foundation_depth_from_user_data(
+        {'foundation_depth_m': (_df_entry['value'] if isinstance(_df_entry, dict) else _df_entry)}
+    )
     try:
         from automation.report_data import _bearing_stratum_n20
         if sondeig_layers:
-            avg_n20 = _bearing_stratum_n20(dpsh, sondeig_layers, soil_types_list)
+            avg_n20 = _bearing_stratum_n20(dpsh, sondeig_layers, soil_types_list, _df_for_bearing)
         else:
             avg_n20 = getattr(dpsh, 'overall_average_n20', None)
     except Exception:
@@ -709,7 +709,7 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     # bicapa picks a middle layer or num_levels was user-merged.
     try:
         from automation.report_data import _select_bearing_layer_idx
-        bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list) if sondeig_layers else 0
+        bearing_idx = _select_bearing_layer_idx(sondeig_layers, soil_types_list, _df_for_bearing) if sondeig_layers else 0
     except Exception:
         bearing_idx = max(0, len(sondeig_layers) - 1) if sondeig_layers else 0
 
@@ -734,15 +734,16 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
     desc_entry = merged.get(desc_key, merged.get('sondeig_layer_desc_1'))
     description = (desc_entry['value'] if isinstance(desc_entry, dict) else (desc_entry or '')) if desc_entry else ''
 
-    # Compute geomech params (same logic as report_generator)
-    if soil_type == 'rock' or is_rock(avg_n20, description):
-        rock = rock_params_default()
-        gamma, phi, E, cohesion = rock['gamma'], rock['phi'], rock['E'], rock['cohesion']
-    else:
-        gamma = nspt_to_gamma_g_cm3(avg_n20, soil_type)
-        phi = nspt_to_phi(nb, soil_type)
-        E = nspt_to_E_kg_cm2(avg_n20)
-        cohesion = soil_type_to_cohesion(soil_type)
+    # P3 (2026-09-06): paràmetres per criteri amb candidats (mateix mòdul que el generador)
+    from automation.geotech_criteria import geotech_by_criteria, alternatives_for_wizard
+    from automation.report_data import _bearing_stratum_has_refusal
+    try:
+        _refusal = _bearing_stratum_has_refusal(dpsh, sondeig_layers, soil_types_list, _df_for_bearing) \
+            if sondeig_layers else any(r.n20 >= 100 for t in dpsh.tests for r in t.readings)
+    except Exception:
+        _refusal = False
+    crit = geotech_by_criteria(nb, avg_n20, soil_type, description, _refusal)
+    gamma, phi, E, cohesion = crit.gamma, crit.phi, crit.E, crit.cohesion
 
     is_granular = cohesion < 0.5
     soil_cat = 'rock' if cohesion >= 0.5 else ('cohesive' if soil_type == 'cohesive' else 'granular')
@@ -755,24 +756,41 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
             return
         merged[key] = {'value': value, 'source': source}
 
-    # Geomech prefills (populate expert override fields)
-    _set('geomech_gamma', gamma, f'CTE D.27 ({soil_type})')
-    _set('geomech_cohesion', cohesion, f'soil_type={soil_type}')
-    _set('geomech_phi', round(phi, 1), f'Schmertmann Nb={nb:.0f}')
-    _set('geomech_E', round(E), f'CTE D.23 N20={avg_n20:.0f}')
+    # Geomech prefills (populate expert override fields) — defecte de cada criteri, amb la seva font
+    _src = {k: v[0].source for k, v in crit.candidates.items() if v}
+    _set('geomech_gamma', gamma, _src.get('gamma', f'CTE D.27 ({soil_type})'))
+    _set('geomech_cohesion', cohesion, _src.get('cohesion', f'soil_type={soil_type}'))
+    _set('geomech_phi', round(phi, 1), _src.get('phi', f'Schmertmann Nb={nb:.0f}'))
+    _set('geomech_E', round(E), _src.get('E', f'CTE D.23 N20={avg_n20:.0f}'))
+    # Candidats que no són el defecte → badge «+N» del wizard (mateix mecanisme que FileMiner)
+    _alts = alternatives_for_wizard(crit)
+    if _alts:
+        existing_alts = merged.get('_alternatives')
+        alt_map = dict(existing_alts.get('value') or {}) if isinstance(existing_alts, dict) else {}
+        for k, v in _alts.items():
+            alt_map.setdefault(k, []).extend(v)
+        merged['_alternatives'] = {'value': alt_map, 'source': 'system'}
 
-    # Calc transparency notes
+    # Calc transparency notes (règim + procedència del defecte + candidats)
     n20_src = f"N20={avg_n20:.0f}"
-    _set('_calc_gamma', f"CTE D.27 {soil_type} | Rang Eva: {ranges['gamma']}", 'system')
-    _set('_calc_phi', f"Schmertmann Nb={nb:.0f} | Rang Eva: {ranges['phi']}", 'system')
-    _set('_calc_E', f"CTE D.23 {n20_src} | Rang Eva: {ranges['E']}", 'system')
-    _set('_calc_cohesion', f"Rang Eva: {ranges['c']}", 'system')
+    _cands = lambda k: ' | alt: ' + ', '.join(c.display for c in crit.candidates.get(k, [])[1:]) if len(crit.candidates.get(k, [])) > 1 else ''
+    _set('_calc_gamma', f"{_src.get('gamma', 'CTE D.27')} | Rang Eva: {ranges['gamma']}{_cands('gamma')}", 'system')
+    _set('_calc_phi', f"règim {crit.regime}, Nb={nb:.0f} · {_src.get('phi', '')} | Rang Eva: {ranges['phi']}{_cands('phi')}", 'system')
+    _set('_calc_E', f"{_src.get('E', 'CTE D.23')} ({n20_src}) | Rang Eva: {ranges['E']}{_cands('E')}", 'system')
+    _set('_calc_cohesion', f"{_src.get('cohesion', '')} | Rang Eva: {ranges['c']}{_cands('cohesion')}", 'system')
+    _set('_calc_regime', f"{crit.regime} · sísmic {crit.seismic_type} (C={crit.seismic_C})" + (f" · rebuig al portant" if _refusal else ''), 'system')
 
     # Diagnostic-only stamps (underscore prefix => filtered out of variable
     # comparison loop in scripts/diagnostic_trace.py:363). Used by
     # _format_calc_trace to surface the bicapa pick + Crespo fines branch
     # that drove the qa_value computation.
     _set('_calc_bearing_idx', bearing_idx, 'system')
+    # P2b UI (2026-09-06): nivell portant i Df visibles al wizard (badge sota «Profunditat fonamentacio»)
+    _df_src = _df_entry.get('source') if isinstance(_df_entry, dict) else None
+    _set('_calc_bearing', bearing_note(
+        bearing_idx if sondeig_layers else None,
+        (sondeig_layers[bearing_idx].get('description', '') if sondeig_layers and bearing_idx < len(sondeig_layers) else ''),
+        len(sondeig_layers), _df_for_bearing, _df_src), 'system')
     # Stash bearing-filtered N20 so _compute_lookup_prefills (cte_sol) can
     # consume it without re-deriving. Underscore prefix keeps it out of the
     # diagnostic variable comparison loop.
@@ -821,8 +839,44 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
         _set('qa_value', f"{tr.Qa:.2f}", 'Terzaghi-Peck')
         if tr.qa_cap_reason is not None:
             _set('qa_cap_reason', tr.qa_cap_reason, 'Terzaghi-Peck')
-        if tr.settlement_cm is not None:
-            _set('settlement', f"{tr.settlement_cm:.2f}", 'Schmertmann')
+
+        # Assentament per CRITERI (2026-09-06, mateix mòdul que el generador): règim del nivell portant
+        # (granular → valor; roca/cohesiu o < 1,0 → frase genèrica) i Es amb candidats (badge «+N»).
+        from automation.settlement_criteria import (
+            settlement_by_criteria, settlement_regime, parse_spt_n, calc_note,
+            alternatives_for_wizard as _es_alternatives,
+        )
+        from automation.geotech_criteria import _classify, lith_flags
+        from automation.spt_n_column import assign_spt_n30
+        _klass = _classify(soil_type, lith_flags(description), cohesion >= 0.5)
+        _regime = settlement_regime(_klass, cohesion, crit.regime)
+        _levels = [{'level_number': i + 1, 'description': l.get('description', ''),
+                    'depth_from_m': l.get('depth_from_m'), 'depth_to_m': l.get('depth_to_m')}
+                   for i, l in enumerate(sondeig_layers)] or [{'level_number': 1, 'description': description,
+                                                                'depth_from_m': 0.0, 'depth_to_m': None}]
+        _v = lambda k: (merged.get(k) or {}).get('value') if isinstance(merged.get(k), dict) else merged.get(k)
+        _spt_rows = [{'test_id': _v('spt_test_id'), 'location': _v('spt_location'), 'depth_range': _v('spt_depth_range'),
+                      'n30': _v('spt_n30'), 'lithology': _v('spt_lithology')}] if _v('spt_n30') else []
+        try:
+            _n_by_level, _ = assign_spt_n30(_spt_rows, _levels)
+        except Exception:
+            _n_by_level = {}
+        _n_spt = parse_spt_n(_n_by_level.get((bearing_idx + 1) if sondeig_layers else 1))
+        sc = settlement_by_criteria(q_net=tr.Qa, B=B, Df=Df, gamma=gamma, nb=nb, n_spt=_n_spt, E=E,
+                                    regime=_regime, Es_override=Es_override)
+        if sc.settlement_cm is not None:
+            _set('settlement', f"{sc.settlement_cm:.2f}", sc.Es_source or 'Schmertmann')
+        _set('settlement_sentence', sc.sentence, 'system')
+        _set('_calc_settlement_regime', sc.regime, 'system')
+        _s_note, _es_note = calc_note(sc, B)
+        _set('_calc_settlement', _s_note, 'system')
+        _set('_calc_Es', _es_note, 'system')
+        _es_alts = _es_alternatives(sc)
+        if _es_alts:
+            existing_alts = merged.get('_alternatives')
+            alt_map = dict(existing_alts.get('value') or {}) if isinstance(existing_alts, dict) else {}
+            alt_map.setdefault('Es_settlement', []).extend(_es_alts)
+            merged['_alternatives'] = {'value': alt_map, 'source': 'system'}
 
         # K30 ballast coefficient
         if cohesion and cohesion > 0:
@@ -845,21 +899,6 @@ def _compute_geotech_prefills(merged: dict, project_path: Path, auto_result: Any
                 _set('_calc_qa', f"{formula} = {tr.Qa_uncapped:.2f} | Cap: {tr.Qa:.2f} ({ranges['Qa_cap']})", 'system')
             else:
                 _set('_calc_qa', f"{formula} = {tr.Qa:.2f} | Rang Eva: {ranges['Qa_cap']}", 'system')
-
-        # Settlement transparency with sensitivity
-        if tr.settlement_cm and tr.Es_used:
-            Es = tr.Es_used
-            base = tr.settlement_cm
-            Es_low = Es * 0.75
-            Es_high = Es * 1.25
-            s_low = base * Es / Es_high
-            s_high = base * Es / Es_low
-            _set('_calc_settlement',
-                 f"Schmertmann Es={Es:.0f}, B={B}m \u2192 {base:.2f} cm"
-                 f" | Si Es={Es_low:.0f}: {s_high:.2f} cm"
-                 f" | Si Es={Es_high:.0f}: {s_low:.2f} cm",
-                 'system')
-            _set('_calc_Es', f"Es={Es:.0f} (2.5\u00d7Nb) | \u00b125%: {Es_low:.0f}-{Es_high:.0f}", 'system')
 
     except Exception as exc:
         logger.warning("Geotech prefill calc failed: %s", exc)
@@ -961,13 +1000,14 @@ def _compute_narrative_prefills(
                 'computed',
             )
 
-        # table_dpsh_range: table numbering depends on test count
-        if num_tests <= 2:
-            range_str = '3 y 4' if lang == 'es' else '3 i 4'
-        else:
-            range_str = '3, 4 y 5' if lang == 'es' else '3, 4 i 5'
-
-        _set('table_dpsh_range', range_str, 'computed')
+        # table_dpsh_range: l'Eva compta TAULES (DPSH + sondeig si n'hi ha + SPT/MA), no assaigs (7/7 signats)
+        from automation.report_generator import insitu_table_range
+        _hs = merged.get('has_sondeig')
+        has_sondeig = bool(_hs.get('value') if isinstance(_hs, dict) else _hs) or \
+            bool(getattr(auto_result, 'has_sondeig', False)) or \
+            (project_path / 'validation' / 'sondeig_extracted.json').exists()
+        range_str, _ = insitu_table_range(has_sondeig, lang=lang)
+        _set('table_dpsh_range', range_str, 'computed (taules: DPSH + sondeig + SPT)')
 
     # --- building_structure_desc ---
     num_floors = _get_val('num_floors').strip()
@@ -977,24 +1017,78 @@ def _compute_narrative_prefills(
         bval = has_basement_entry.get('value') if isinstance(has_basement_entry, dict) else has_basement_entry
         has_basement = str(bval).lower() in ('true', '1', 'yes', 'sí', 'si')
 
-    # Detect basement from num_floors notation (Ps / PS = planta soterrani)
-    import re
+    # Clàusula sencera per criteri (2026-09-06): `narrative_criteria.building_structure_clause`, la mateixa que el
+    # generador (abans el wizard deia «en planta baixa» i la plantilla hi afegia una cua fixa que no sempre era la de l'Eva).
     if num_floors:
-        if re.search(r'\bP[Ss]\b', num_floors):
-            has_basement = True
-        # Ground-floor only: "Pb" or "PB" with no upper floors (no "Pp")
-        is_ground_only = bool(
-            re.search(r'\bP[Bb]\b', num_floors)
-        ) and not re.search(r'\bP[Pp]\b', num_floors) and not re.search(r'\d+\s*P[Pp]', num_floors, re.IGNORECASE)
+        from automation.narrative_criteria import building_structure_clause
+        choice = building_structure_clause(num_floors, has_basement, lang)
+        _set('building_structure_desc', choice.value, 'computed')
+        entry = merged.get('building_structure_desc')
+        if isinstance(entry, dict):
+            entry['candidates'] = [c.value for c in choice.candidates]
+            entry['candidate_sources'] = [c.source for c in choice.candidates]
 
-        if has_basement:
-            desc = 'con nivel de sótano' if lang == 'es' else 'amb nivell de soterrani'
-        elif is_ground_only:
-            desc = 'en planta baja' if lang == 'es' else 'en planta baixa'
-        else:
-            desc = 'sin nivel de sótano' if lang == 'es' else 'sense nivell de soterrani'
+    # --- access_street (peça 3, 2026-09-07): el costat que és carrer, com el generador ---
+    from automation.adjacent_formatter import access_street_from_adjacents
+    adj = {d: _get_val(f'adjacent_{d}') for d in ('north', 'south', 'east', 'west')}
+    street_1 = _get_val('street_address').split(',', 1)[0].strip()
+    acc_default, acc_cands = access_street_from_adjacents(adj, street_1, lang)
+    if acc_default:
+        _set('access_street', acc_default, 'computed (costat carrer dels adjacents)')
+        entry = merged.get('access_street')
+        if isinstance(entry, dict) and entry.get('source') != 'user':
+            entry['candidates'] = acc_cands
+            entry['candidate_sources'] = ['defecte (Castellar, Linyola)', 'variant «Carrer existent al…» (Alcoletge)',
+                                          'nom de la via (Rubí)'][:len(acc_cands)]
 
-        _set('building_structure_desc', desc, 'computed')
+    # --- lab_tests_text (peça 3): el bloc «ASSAIGS REALITZATS» del GTL amb el vocabulari de l'Eva ---
+    lab_entry = merged.get('lab_tests_text')
+    lab_raw = _get_val('lab_tests_text')
+    lab_source = lab_entry.get('source', '') if isinstance(lab_entry, dict) else ''
+    if lab_raw and lab_source != 'user' and not lab_source.startswith('computed'):
+        from automation.narrative_criteria import lab_tests_lines
+        choice = lab_tests_lines(lab_raw, lang)
+        if choice.value:
+            merged['lab_tests_text'] = {
+                'value': choice.value,
+                'source': f'computed (GTL: {choice.source})',
+                'candidates': [c.value for c in choice.candidates],
+                'candidate_sources': [c.source for c in choice.candidates],
+            }
+
+    # --- num_site_photos (peça 3): vistes generals només si l'Eva les ha triat a la pestanya de fotos ---
+    n_site = 0
+    sel_path = project_path / 'validation' / 'photo_selection.json'
+    if sel_path.exists():
+        try:
+            sel = json.loads(sel_path.read_text(encoding='utf-8'))
+            if isinstance(sel, dict) and sel.get('source') in ('user', 'lector'):   # peça 2: el lector compta com a tria
+                n_site = sum(1 for k in ('site_1', 'site_2') if sel.get(k))
+        except Exception:
+            n_site = 0
+    _set('num_site_photos', n_site, 'computed (fotos triades)' if n_site else 'default (sense vistes generals: 4/7 signats)')
+
+    # --- data_signatura (bloc 1, 2026-09-07): la data que l'Eva signa; defecte avui, editable al wizard ---
+    from datetime import date as _date
+    _set('data_signatura', _date.today().isoformat(), 'default (avui)')
+
+    # --- Candidats narratius → «+N» del wizard (mateix mecanisme que FileMiner i els geotècnics) ---
+    alt_map: dict[str, list[dict]] = {}
+    for key in ('site_condition', 'building_structure_desc', 'access_street', 'lab_tests_text', 'site_description'):
+        entry = merged.get(key)
+        if not isinstance(entry, dict) or entry.get('source') == 'user':
+            continue
+        cands = [c for c in (entry.get('candidates') or []) if c and c != entry.get('value')]
+        srcs = entry.get('candidate_sources') or []
+        if cands:
+            src_of = {v: srcs[i] for i, v in enumerate(entry.get('candidates') or []) if i < len(srcs)}
+            alt_map[key] = [{'value': c, 'source': src_of.get(c, 'criteri'), 'confidence': 0.5} for c in cands]
+    if alt_map:
+        existing_alts = merged.get('_alternatives')
+        cur = dict(existing_alts.get('value') or {}) if isinstance(existing_alts, dict) else {}
+        for k, v in alt_map.items():
+            cur[k] = v
+        merged['_alternatives'] = {'value': cur, 'source': 'system'}
 
 
 def _compute_lookup_prefills(merged: dict[str, Any], auto_result: Any) -> None:
@@ -1965,6 +2059,165 @@ def _compute_mapping_prefills(
                 pass
 
 
+# -- Fase 13(a): quan una execucio NO s'ha de desar a la cache de disc -------
+#
+# `auto_result_cache.save()` desa qualsevol resultat i despres el serveix fins a
+# 30 dies. Una caiguda de deu minuts d'ICGC/Cadastre/Nominatim/Groq deixa els
+# prefills coixos i, sense aquesta comprovacio, aquella tarda dolenta es
+# repeteix durant un mes: `auto_extract` s'empassa les fallades a `steps_skipped`
+# i el resultat degradat te el mateix aspecte que un de bo.
+#
+# NOMES els passos que depenen d'un servei extern. La resta de `steps_skipped`
+# son condicions estructurals del projecte ("fitxer no trobat", "sense municipi
+# al nom de carpeta") que tornarien a saltar igual en re-executar: si tambe
+# vetessin la cache, gairebe cap projecte no la faria servir mai i tornariem als
+# 43-141 s per obertura.
+#
+# `ConceptScout` hi es perque la seva sonda visual (`concept_scout/vision_probe.py`)
+# crida Groq/OpenAI/Anthropic: una tarda de 429/503 deixa el `concept_map` coix i,
+# sense veto, aquell mapa incomplet es serviria 30 dies.
+#
+# `Deep folder classify` (Fase 0.46), pel mateix motiu: fa visio amb OpenAI
+# (`auto_extractor.py:975`) per classificar els fitxers de subcarpetes i adjunts.
+# Un 429 alli deixa rols sense assignar — fitxers que existeixen i que el sistema
+# no veu — i el resultat te el mateix aspecte que un de bo.
+#
+# `FileMiner` i `Contingut` NO hi son a posta, encara que el seu motiu tambe sigui
+# un `str(exc)`: llegeixen fitxers locals. Un error alli (PDF corrupte, permisos)
+# tornara a passar igual en re-executar, i vetar la cache per qualsevol motiu amb
+# forma d'excepcio la deixaria inservible per a projectes amb un fitxer dolent.
+_EXTERNAL_SKIP_STEPS = frozenset({
+    'ICGC geologia', 'ICGC elevació', 'ICGC pendent',
+    'Cadastre adjacents', 'Groq Deep Mine', 'Ortho enrichment',
+    'Geocodificació', 'ConceptScout', 'Deep folder classify',
+})
+
+# Motius d'aquests passos que NO son una caiguda del servei sino una condicio
+# del projecte (cadenes literals d'`automation/auto_extractor.py`).
+#
+# `Geocodificació: no s'han trobat coordenades` NO hi es, decidit a consciencia
+# (2026-09-01): un projecte rural que no geocodifica mai pagara els 43-141 s a
+# cada obertura, que es una queixa real de l'Eva. Pero sense UTM cau TOTA la
+# Fase 3 (ICGC geologia/elevacio/pendent + Cadastre), i un resultat sense
+# territori te exactament el mateix aspecte que un de bo: 30 dies de prefills
+# coixos que l'Eva no pot distingir pesen mes que 90 s d'espera que si que veu.
+# El dia que hi arribi qualsevol fitxer nou, l'empremta canvia i la cache es
+# torna a poblar igualment.
+_STRUCTURAL_SKIP_REASONS = {
+    'Ortho enrichment': ('sense ref. cadastral', 'sense polígon'),
+    'Geocodificació': ('sense adreça disponible', 'sense municipi (nom carpeta)'),
+    # La Fase 0.46 no te on escriure els rols perque la Fase 0 no ha deixat cap
+    # `file_mapping`: es tornara a repetir igual, no es una caiguda de servei.
+    'Deep folder classify': ('no file_mapping',),
+}
+_STRUCTURAL_SKIP_PREFIXES = {
+    'Geocodificació': ('adreça interna G3:', 'mòdul no disponible:'),
+}
+
+
+def _external_service_failures(result: Any) -> list[str]:
+    """Passos saltats per una fallada d'un servei extern (`_EXTERNAL_SKIP_STEPS`)."""
+    failures: list[str] = []
+    for entry in getattr(result, 'steps_skipped', None) or []:
+        if not isinstance(entry, (tuple, list)) or len(entry) < 2:
+            continue
+        step, reason = str(entry[0]), str(entry[1])
+        if step not in _EXTERNAL_SKIP_STEPS:
+            continue
+        if reason in _STRUCTURAL_SKIP_REASONS.get(step, ()):
+            continue
+        if any(reason.startswith(p) for p in _STRUCTURAL_SKIP_PREFIXES.get(step, ())):
+            continue
+        failures.append(f'{step}: {reason}')
+    return failures
+
+
+def _safe_inputs_fingerprint(project_path: Path) -> str | None:
+    """Empremta dels fitxers d'entrada, o `None` si no s'ha pogut calcular.
+
+    Mai llança: la cache es una optimitzacio i cap error seu pot deixar l'Eva
+    sense prefills (mateixa regla que `automation/auto_result_cache.py`).
+    """
+    from automation import auto_result_cache
+    try:
+        return auto_result_cache.inputs_fingerprint(project_path)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("auto_result cache: no s'ha pogut calcular l'empremta (%s)", exc)
+        return None
+
+
+def _auto_extract_cached(
+    project_path: Path,
+    *,
+    force_refresh: bool = False,
+    on_progress: Any = None,
+) -> Any:
+    """`auto_extract()` amb la cache de disc de la Fase 13(a) al davant.
+
+    Envoltant, mai a dins (disseny de l'annex §7.1 i §9): `auto_extractor.py` és
+    via B i no es toca. En un encert, els events de progrés que va emetre
+    l'execució original es reprodueixen tal qual, perquè la UI de TEMPS 1 no es
+    quedi sense senyal només perquè la feina ja estigui feta.
+
+    `force_refresh=True` salta la lectura de la cache però igualment DESA el
+    resultat nou (l'usuari ha demanat re-executar, no desactivar la cache).
+
+    Dues execucions NO es desen (vegeu `_EXTERNAL_SKIP_STEPS`):
+
+    1. **Degradada** — un servei extern ha fallat. Desar-la la serviria fins a
+       30 dies i «Actualitzar prefills» hi tornaria a encertar.
+    2. **Fitxers canviats a mig cami** — `auto_result_cache.save()` calcula
+       l'empremta DESPRES de l'extraccio; un `A.01.pdf` que arriba durant els
+       43-141 s que dura quedaria dins de l'empremta sense que el resultat
+       l'hagi vist mai (entrada rancia amb aspecte de valida). Per aixo aqui
+       l'empremta es calcula abans i es compara despres.
+    """
+    from automation import auto_result_cache
+
+    if not force_refresh:
+        cached = auto_result_cache.load(project_path)
+        if cached is not None:
+            if on_progress:
+                for event_type, detail in cached.events:
+                    on_progress(event_type, detail)
+            return cached.result
+
+    from automation.auto_extractor import auto_extract
+
+    recorded: list[tuple[str, dict]] = []
+
+    def _record(event_type: str, detail: dict) -> None:
+        recorded.append((event_type, detail))
+        if on_progress:
+            on_progress(event_type, detail)
+
+    cache_on = auto_result_cache.is_enabled()
+    fingerprint_before = _safe_inputs_fingerprint(project_path) if cache_on else None
+
+    result = auto_extract(project_path, on_progress=_record)
+
+    if cache_on:
+        failures = _external_service_failures(result)
+        fingerprint_after = _safe_inputs_fingerprint(project_path)
+        if failures:
+            logger.warning(
+                "auto_result cache: execucio degradada (%s) — no es desa",
+                '; '.join(failures),
+            )
+        elif (
+            fingerprint_before is not None
+            and fingerprint_after is not None
+            and fingerprint_before != fingerprint_after
+        ):
+            logger.info(
+                "auto_result cache: els fitxers del projecte han canviat durant "
+                "l'extraccio — no es desa",
+            )
+        else:
+            auto_result_cache.save(project_path, result, recorded)
+    return result
+
+
 def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str, Any]:
     """Run auto_extract + vision + wizard prefill chain for a project.
 
@@ -1977,16 +2230,46 @@ def get_prefills(project_name: str, *, force_refresh: bool = False) -> dict[str,
     project_path = _resolve_project(project_name)
     _clear_stale_user_data(project_path)
 
-    # Phase 0-3: auto_extract (DPSH, lab, ICGC, cadastre — Python only, ~3-5s)
-    from automation.auto_extractor import auto_extract
-    auto_result = auto_extract(project_path)
+    # Phase 0-3: auto_extract (DPSH, lab, ICGC, cadastre — Python only, ~3-5s),
+    # amb la cache de disc de la Fase 13(a) al davant.
+    auto_result = _auto_extract_cached(project_path, force_refresh=force_refresh)
 
     return _merge_prefills(project_name, project_path, auto_result)
 
 
-def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> dict[str, Any]:
-    """Merge auto_extract result with vision + wizard prefills. Shared by sync and streaming paths."""
-    _run_vision_phase(project_path, force_refresh=False)
+def _read_file_mapping(project_path: Path) -> dict[str, Any] | None:
+    """Read ``file_mapping.json`` (always UTF-8) or return None if missing/unreadable.
+
+    F1 (2026-08): reading without ``encoding`` uses cp1252 on Windows,
+    but ``file_scanner`` writes UTF-8 (``ensure_ascii=False``). A file name with
+    a byte outside cp1252 (e.g. ``Í`` → 0xC3 0x8D) raised ``UnicodeDecodeError``
+    here and left the wizard empty (Can Mir Rubí, 4/4 attempts). Never crash on
+    this file: a corrupt mapping must not blank the wizard.
+    """
+    fm_path = project_path / 'file_mapping.json'
+    if not fm_path.exists():
+        return None
+    try:
+        data = json.loads(fm_path.read_text(encoding='utf-8'))
+    except Exception as exc:
+        logger.warning("file_mapping.json unreadable (%s): %s", fm_path, exc)
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _merge_prefills(
+    project_name: str, project_path: Path, auto_result: Any, *, skip_vision: bool = False,
+) -> dict[str, Any]:
+    """Merge auto_extract result with vision + wizard prefills. Shared by sync and streaming paths.
+
+    `skip_vision` (via A, wizard headless, 2026-08-24): when the headless
+    lectura pipeline (`web/lectura_service.py`) has already produced valid
+    decisions, the API-vision phase is redundant and gets skipped. Default
+    False keeps every existing caller (`get_prefills`, `get_prefills_streaming`
+    — via B) byte-for-byte unchanged.
+    """
+    if not skip_vision:
+        _run_vision_phase(project_path, force_refresh=False)
 
     from automation.wizard import UserDataWizard
     wizard = UserDataWizard(str(project_path))
@@ -2144,13 +2427,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
 
     # Terrain observation from field photos (for is_anthropized decision)
     if not merged.get('terrain_observation'):
-        fm_path = project_path / 'file_mapping.json'
-        fm_roles = {}
-        if fm_path.exists():
-            try:
-                fm_roles = json.loads(fm_path.read_text()).get('roles', {})
-            except Exception:
-                pass
+        fm_roles = (_read_file_mapping(project_path) or {}).get('roles', {})
         obs = _observe_terrain_photos(project_path, fm_roles)
         if obs:
             merged['terrain_observation'] = {
@@ -2166,10 +2443,7 @@ def _merge_prefills(project_name: str, project_path: Path, auto_result: Any) -> 
         detections = []
 
         # Get file_mapping for role lookups
-        fm_path = project_path / "file_mapping.json"
-        file_mapping = None
-        if fm_path.exists():
-            file_mapping = json.loads(fm_path.read_text())
+        file_mapping = _read_file_mapping(project_path)
 
         if file_mapping and "roles" in file_mapping:
             for role_name, role_info in file_mapping["roles"].items():
@@ -2285,7 +2559,7 @@ def _enrich_prefills_with_missing_summary(merged: dict[str, Any]) -> None:
     }
 
 
-def get_prefills_streaming(project_name: str):
+def get_prefills_streaming(project_name: str, *, force_refresh: bool = False):
     """Generator yielding SSE events during auto_extract, then final prefills.
 
     Suporta cancel·lació via `mark_cancelled(project_name)` (cridat des de
@@ -2293,6 +2567,11 @@ def get_prefills_streaming(project_name: str):
     auto_extract → check → vision → check → merge. Si Eva ha aturat, salta
     les fases pendents i emet un event `cancelled`. Les crides API ja en
     vol acaben (no avortables des de fora) però ens estalviem les futures.
+
+    `force_refresh=True` salta la cache de disc de la Fase 13(a): és el que fa
+    el botó «Actualitzar prefills», que si no torna a encertar la mateixa
+    entrada. Hi arriba des de la UI per `?refresh=true` a `/api/prefills-stream`
+    i `/api/lectura-stream` (`web/api.py`).
     """
     project_path = _resolve_project(project_name)
     _clear_stale_user_data(project_path)
@@ -2309,8 +2588,9 @@ def get_prefills_streaming(project_name: str):
 
     def run_extract():
         try:
-            from automation.auto_extractor import auto_extract
-            result = auto_extract(project_path, on_progress=progress_callback)
+            result = _auto_extract_cached(
+                project_path, force_refresh=force_refresh, on_progress=progress_callback,
+            )
             auto_result_holder.append(result)
         except Exception as e:
             error_holder.append(e)
@@ -2592,21 +2872,230 @@ def _run_vision_phase(project_path: Path, force_refresh: bool, on_progress=None)
 
 
 def load_user_data(project_name: str) -> dict[str, Any]:
-    """Read existing user_data.json for a project, or empty dict."""
+    """Read existing user_data.json for a project, or empty dict.
+
+    Excepcio: `lectura_selections` es busca TAMBE al backup
+    `_user_data_prev.json`. Cada arrencada del pipeline reanomena
+    `user_data.json` (`_clear_stale_user_data`), de manera que la UI rebia `{}`
+    i pintava el candidat 1 mentre `save_wizard` congelava la tria recuperada
+    del backup: l'Eva veia una cosa i l'informe en portava una altra.
+
+    Vinguin del fitxer o del backup, es retornen ja validades contra el
+    `_decisions.json` d'ARA — exactament les mateixes que congelara
+    `save_wizard`. Validar NOMES el cami del backup deixava passar les tries
+    mortes que encara viuen dins de `user_data.json`: els desplegables s'auto-
+    curen (les taules ja venen validades) pero les cel·les pintades per
+    `_lecturaCellBadgeSpan` (fondaries, cota, rebuig) es quedaven mudes amb el
+    valor mort i el tornaven a enviar al desat seguent.
+
+    La resta del desat anterior NO es recupera, a posta: les pre-preguntes i
+    els camps vells han de tornar a sortir del pipeline (`_clear_stale_user_data`).
+    """
     project_path = _resolve_project(project_name)
     ud_path = project_path / 'user_data.json'
-    if not ud_path.exists():
-        return {}
+    data: dict[str, Any] = {}
+    if ud_path.exists():
+        try:
+            loaded = json.loads(ud_path.read_text(encoding='utf-8'))
+        except (json.JSONDecodeError, OSError):
+            loaded = None
+        if isinstance(loaded, dict):
+            data = loaded
+    selections = data.get('lectura_selections')
+    if not _has_selections(selections):
+        selections = _previous_lectura_selections(project_path)
+    validated = _validated_lectura_selections(project_path, selections)
+    if validated:
+        data['lectura_selections'] = validated
+    else:
+        # Cap tria viva: la clau ha de desapareixer, no quedar-se amb el
+        # contingut mort del fitxer.
+        data.pop('lectura_selections', None)
+    return data
+
+
+#: Clau reservada dins de `lectura_selections`: llista de claus el valor de les
+#: quals es text lliure escrit per l'Eva («altre…» del desplegable de litologia).
+#: Per definicio no casa amb cap candidat, i sense la marca es indistingible
+#: d'una tria morta d'una lectura anterior.
+_FREE_TEXT_MARK = '_lliure'
+
+
+def _has_selections(selections: Any) -> bool:
+    """Hi ha cap tria de debo (la marca de text lliure, sola, no en es cap)."""
+    if not isinstance(selections, dict):
+        return False
+    return any(key != _FREE_TEXT_MARK for key in selections)
+
+
+def _previous_lectura_selections(project_path: Path) -> dict[str, Any] | None:
+    """Tries de l'Eva congelades en un desat anterior, si n'hi ha.
+
+    Es miren dos fitxers: `user_data.json` i el seu backup. Cada arrencada del
+    pipeline reanomena `user_data.json` -> `_user_data_prev.json`
+    (`_clear_stale_user_data`), de manera que despres d'una recarrega de pagina
+    les tries nomes viuen al backup.
+
+    Per que cal: si la UI envia `{}` (recarrega sense restaurar-les), reconstruir
+    les taules sense tries fa que `resolve_cell` caigui al candidat 1 i la tria
+    validada per l'Eva reverteixi en silenci al `.docx`.
+
+    El que torna NO es utilitzable tal qual: ha de passar per
+    `_validated_lectura_selections()`, perque son tries d'una lectura que ja no
+    te per que ser la d'ara.
+    """
+    for name in ('user_data.json', '_user_data_prev.json'):
+        path = project_path / name
+        if not path.exists():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        previous = data.get('lectura_selections')
+        if _has_selections(previous):
+            return previous
+    return None
+
+
+def _load_decisions(project_path: Path) -> dict[str, Any] | None:
+    """`validation/lectura/_decisions.json` del projecte, o `None`."""
+    path = project_path / 'validation' / 'lectura' / '_decisions.json'
     try:
-        return json.loads(ud_path.read_text(encoding='utf-8'))
-    except (json.JSONDecodeError, OSError):
+        data = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _decision_cell(decisions: dict[str, Any], key: str) -> Any:
+    """Cel·la que ARA li correspon a una clau de tria, o `None` si ja no hi es."""
+    from automation.lectura.tables_report import SELECTION_KEY_RE
+
+    raw_tables = decisions.get('tables')
+    tables = raw_tables if isinstance(raw_tables, dict) else {}
+    match = SELECTION_KEY_RE.match(key)
+    if match:
+        block = tables.get(match.group('block'))
+        rows = block.get('rows') if isinstance(block, dict) else block
+        if not isinstance(rows, list):
+            return None
+        index = int(match.group('index'))
+        if index >= len(rows) or not isinstance(rows[index], dict):
+            return None
+        return rows[index].get(match.group('cell'))
+    # Claus escalars: camps de la lectura (`fields`) o blocs amb nom propi
+    # (`superficie_construida`).
+    fields = decisions.get('fields')
+    if isinstance(fields, dict) and key in fields:
+        return fields[key]
+    return tables.get(key)
+
+
+def _cell_values(cell: Any) -> set[str]:
+    """Valors que la lectura d'ARA admet per a una cel·la (candidats + valor)."""
+    values: set[str] = set()
+
+    def _add(value: Any) -> None:
+        if value in (None, '') or isinstance(value, (dict, list, tuple)):
+            return
+        values.add(str(value).strip())
+
+    for item in (cell if isinstance(cell, (list, tuple)) else [cell]):
+        if isinstance(item, dict):
+            for cand in item.get('candidates') or []:
+                _add(cand.get('value') if isinstance(cand, dict) else cand)
+            _add(item.get('value'))
+            _add(item.get('total'))
+        else:
+            _add(item)
+    return values
+
+
+def _validated_lectura_selections(
+    project_path: Path,
+    selections: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Tries que segueixen casant amb el `_decisions.json` d'ARA.
+
+    Les claus son POSICIONALS (`{bloc}.{index}.{cel·la}`). Quan arriba un
+    document nou i la lectura reordena o afegeix files, la tria d'ahir aterra
+    sobre una altra fila; `tables_report._selected` la retorna crua i mana
+    sense comprovar res, de manera que sense aquest filtre l'informe surt amb
+    el valor d'una lectura morta estampat sobre una fila que no li correspon —
+    i justament quan la lectura acaba de millorar.
+
+    Regla: es conserva la tria nomes si el valor es un dels candidats (o el
+    valor) de la cel·la d'ara. El text lliure de l'Eva no casa amb cap candidat
+    per definicio i nomes sobreviu si ve MARCAT (`_lliure`) i la cel·la encara
+    existeix; sense marca es descarta. Val mes el candidat 1 honest que un
+    valor mort amb aparenca de validat.
+    """
+    if not _has_selections(selections):
         return {}
+    decisions = _load_decisions(project_path)
+    if decisions is None:
+        # Sense lectura de la via A no hi ha taules on estampar res.
+        return {}
+
+    marked = selections.get(_FREE_TEXT_MARK)
+    free_keys = {str(k) for k in marked} if isinstance(marked, list) else set()
+
+    kept: dict[str, Any] = {}
+    kept_free: list[str] = []
+    for key, value in selections.items():
+        if key == _FREE_TEXT_MARK or value in (None, ''):
+            continue
+        cell = _decision_cell(decisions, key)
+        if key in free_keys:
+            if cell is not None:
+                kept[key] = value
+                kept_free.append(key)
+            continue
+        if str(value).strip() in _cell_values(cell):
+            kept[key] = value
+    if kept_free:
+        kept[_FREE_TEXT_MARK] = kept_free
+    return kept
+
+
+def _build_lectura_block(
+    project_path: Path,
+    lectura_selections: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Fase 8b — `lectura_tables` (+ les tries crues) per a `user_data.json`.
+
+    Retorna `{}` quan el projecte no té lectura de la via A: a la via B
+    `validation/lectura/_decisions.json` no existeix i `user_data.json` queda
+    exactament com abans.
+    """
+    try:
+        from automation.lectura.tables_report import load_project_tables
+        tables = load_project_tables(project_path, lectura_selections)
+    except Exception:
+        logger.exception("Fase 8b: no s'han pogut construir les taules de lectura")
+        return {}
+    if not tables:
+        return {}
+    # `lectura_selections` hi va SEMPRE, encara que buida. `save_wizard_data`
+    # fa `existing.update(extra)`, que nomes toca les claus presents: ometre-la
+    # quan la validacio les ha descartat totes deixava viva la del desat
+    # anterior, i el fitxer acabava dient dues coses contradictories (taules
+    # validades + tries mortes). Crues, per poder re-resoldre o auditar què va
+    # triar Eva.
+    return {
+        "lectura_tables": tables,
+        "lectura_selections": dict(lectura_selections or {}),
+    }
 
 
 def save_wizard(
     project_name: str,
     wizard_fields: dict[str, Any],
     expert_overrides: dict[str, Any] | None = None,
+    lectura_selections: dict[str, Any] | None = None,
 ) -> Path:
     """Save wizard data to user_data.json."""
     project_path = _resolve_project(project_name)
@@ -2643,8 +3132,29 @@ def save_wizard(
             elif _is_changed(field, new_val):
                 current_sources[field] = 'user'
 
+    # -- Fase 8b: taules llegides (+ tries d'Eva) -> user_data --------------
+    # Es congelen aqui, no al generador: el que Eva ha vist i validat al
+    # wizard es el que ha de sortir a l'informe, encara que una re-lectura
+    # posterior canvii `_decisions.json`.
+    #
+    # Entrada buida != "l'Eva no ha triat res": tambe es el que envia una UI que
+    # no ha pogut restaurar les tries. Abans de reconstruir les taules sense cap
+    # tria (i fer-les caure al candidat 1) es recuperen les del desat anterior.
+    #
+    # Vinguin d'on vinguin, es validen contra el `_decisions.json` d'ARA: una
+    # tria que ja no casa amb cap candidat de la seva cel·la es d'una lectura
+    # morta i, com que les claus son posicionals, s'estamparia sobre una fila
+    # que no li correspon.
+    if not _has_selections(lectura_selections):
+        lectura_selections = _previous_lectura_selections(project_path)
+    lectura_selections = _validated_lectura_selections(project_path, lectura_selections)
+    lectura_block = _build_lectura_block(project_path, lectura_selections)
+
     from automation.wizard import save_wizard_data
-    result = save_wizard_data(project_path, wizard_fields, expert_overrides, sources=current_sources)
+    result = save_wizard_data(
+        project_path, wizard_fields, expert_overrides,
+        sources=current_sources, extra=lectura_block,
+    )
 
     # -- Format learning: save confirmed format if learning was active ---
     if cached.get("_format_learning"):

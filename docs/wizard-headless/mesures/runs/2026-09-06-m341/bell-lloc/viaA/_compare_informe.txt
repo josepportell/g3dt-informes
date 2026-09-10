@@ -1,0 +1,17 @@
+
+## bell-lloc/viaA
+| taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
+|---|--:|--:|--:|---|---|
+| plantes | 5 | 0 | 1 |  | fila2[1] MISM «397»↔«280+86» |
+| cte_edificacio | 3 | 0 | 1 |  | fila1[1] MISM «T-2»↔«T-1» |
+| dpsh | 10 | 0 | 0 |  |  |
+| sondeig | 4 | 0 | 1 |  | s-1[3] MISM «1/0»↔«1/--» |
+| spt_ma | 2 | 2 | 1 |  | fila0[0] CLOS «SPT1 S1»↔«SPT-1»; fila0[3] MISM «62»↔«54»; fila0[4] CLOS «Grava amb matriu sorrenca»↔«Graves en matriu sorrenca» |
+| mostra_lab | 3 | 2 | 0 |  | fila0[2] CLOS «Profunditat: -1.0 a -1.6»↔«Profunditat:  -1.0  a -1.60 m»; fila1[1] CLOS «Contingut en sulfats solubles UNE 83963:2008»↔«1 assaig de contingut en sulfats UNE 83963 : 2008» |
+| soil_levels | 1 | 0 | 1 |  | 1r[1] MISM «Graves amb sorres»↔«Graves en matriu sorrenca carbonatades» |
+| permeabilitat | 1 | 1 | 1 |  | 1r[1] CLOS «10^-2 a 10^-4»↔«10 – 10-2»; 1r[2] MISM «Graves amb sorres»↔«Graves en matriu sorrenca carbonatades» |
+| sulfats | 4 | 0 | 0 |  |  |
+| sismica | 3 | 0 | 1 |  | 1[2] MISM «2.60»↔«2.45» |
+| geotecnica | 3 | 1 | 3 |  | 1r[0] CLOS «1er nivell. Graves amb sorres.»↔«1er nivell. Graves en matriu sorrenca»; 1r[1] MISM «23-R»↔«25-R»; 1r[2] MISM «62»↔«54»; 1r[6] MISM «450»↔«650» |
+
+**bell-lloc/viaA: 39 MATCH · 6 CLOSE · 10 MISMATCH · 0 files extra · 0 files absents → 82 % (M+C)/comparables**

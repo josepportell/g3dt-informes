@@ -1,0 +1,11 @@
+NOU      architect_company      prod=no_trobat
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatge unifamiliar aïllat (vivienda unifamiliar)'
+CAUTELA  client_name            or segur, prod candidats (bo dins): 'Grupo Cuenca Guerrero SL'
+CAUTELA  cte_edificacio         or segur, prod candidats (bo dins): 'C-0'
+CAUTELA  cte_sol                or segur, prod candidats (bo dins): 'T-1'
+ERR      municipality           segur discrepant: or='Vilanova de Segrià' prod='Vilanova del Segrià'
+CAUTELA  num_floors             or segur, prod candidats (bo dins): 'PB (~100 m²)'
+ALERTA   referencia_catastral   estat or=no_trobat prod=candidats (or value='mançana 86067 (parcial)')
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'C/ Santa Gemma, 4 (Urb. La Serra)'
+FORA     superficie_parcela     fora de la carpeta: '406' (Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 4 = 8606709CG9280N (406 m²))
+TOTALS: {'NOU': 1, 'OK': 12, 'CAUTELA': 6, 'ERR': 1, 'ALERTA': 1, 'FORA': 1}

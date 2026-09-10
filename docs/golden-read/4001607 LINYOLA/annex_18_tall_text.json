@@ -1,0 +1,28 @@
+{
+ "source_path": "tall.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació de l'Eva (Print To PDF de '4001607_tall de correlació.FH11', 27/10/2025): dos perfils AA' (P-1, P-3) i BB' (P-1, P-2) a escala 241-245 msnm, amb Nb per tram, 2 nivells ('Nivell 1: Llims argilosos i sorrencs', 'Nivell 2: Lutites i sorrenques, Substrat') i línia de fonamentació; caixetí 'Exp: 4001607', títol 'Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola', 'Data: Octubre 2023' (typo, hauria de ser 2025).",
+ "issuer": "G3 (Eva)",
+ "date": "2025-10-27 (PDF); caixetí 'Octubre 2023' erroni",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "l'Eva (FreeHand), abans d'obrir el wizard",
+  "for_whom": "annex de l'informe 4001607",
+  "why": "correlacionar els 3 DPSH i definir els nivells geotècnics i la cota de fonamentació",
+  "expected_fields": ["num_soil_levels (llegenda 'Nivell 1/2')", "expedient (Exp:)", "redacció de l'adreça/municipi/tipus d'edifici (títol)", "cotes absolutes (escala msnm) → coherència amb cota_referencia"],
+  "not_expected": ["client", "arquitecte", "data de camp (la 'Data' del caixetí és la de l'informe, i aquí és errònia)", "lab", "UTM"],
+  "relation_to_others": "Còpia 'Print To PDF' (text net) de ANNEXES/4001607_tall de correlació.FH11 = PDF/ANNEXES/4001607_tall de correlació.pdf (Distiller, text brossa; agent visual). Cap annex de sondeig a rotació en aquest projecte (només DPSH + SPT) → el tall és l'ÚNICA font de num_soil_levels. Escala 241-245 msnm coherent amb cota d'inici +245 de l'annex DPSH.",
+  "authority_for": ["num_soil_levels", "building_type (redacció de l'Eva)", "street_address (redacció de l'Eva)", "expedient (corroboració)"]
+ },
+ "tier_a": [
+  {"concept_id": "num_soil_levels", "value": "2", "location": "llegenda del tall", "quote": "Nivell 1: Llims argilsoso i sorrencs. | Nivell 2: Lutites i sorrenques, Substrat.", "confidence": 0.9, "note": "sense annex de sondeig (no n'hi ha): la llegenda del tall és la millor font. Typo 'argilsoso' (= argilosos). Nivell 2 = substrat (lutites, coherent amb GTL 'Lutita gresosa' / 'Roca')."},
+  {"concept_id": "expedient", "value": "4001607", "location": "caixetí 'Exp:'", "quote": "Exp: 4001607", "confidence": 0.9, "note": ""},
+  {"concept_id": "building_type", "value": "un habitatge", "location": "caixetí TÍTOL DEL PROJECTE", "quote": "Estudi Geològic / Geotècnic per a la construcció d'un | habitatge al Carrer Clot de la Llacuna nº16 de Linyola", "confidence": 0.8, "note": "redacció de l'Eva per al títol de l'informe ('un habitatge', sense 'unifamiliar')"},
+  {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna nº16", "location": "caixetí TÍTOL", "quote": "al Carrer Clot de la Llacuna nº16 de Linyola", "confidence": 0.9, "note": "redacció de l'informe; no esmenta el Carrer Sitjar → no és cantonada a efectes de l'informe"},
+  {"concept_id": "municipality", "value": "Linyola", "location": "caixetí TÍTOL", "quote": "de Linyola", "confidence": 0.95, "note": ""},
+  {"concept_id": "cota_referencia", "value": "≈245 msnm (escala del tall 241-245)", "location": "eix vertical '(msnm)'", "quote": "(msnm) | 244 | 245 | 243 | 242 | 241", "confidence": 0.5, "note": "corroboració de l'annex DPSH (+245); el valor exacte de la superfície no es llegeix del text → agent visual"},
+  {"concept_id": "NOT_field_date", "value": "Octubre 2023", "location": "caixetí 'Data:'", "quote": "Data: Octubre 2023", "confidence": 1.0, "note": "ERROR de còpia del caixetí FreeHand (any 2023; el projecte és d'octubre 2025). Mai usar."}
+ ],
+ "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "field_date", "num_dpsh_tests (hi surten P-1, P-2, P-3 però com a perfils)", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "Microsoft Print To PDF: text net (431 chars). Nb per tram (R, 11, 38, 15, 24) i la posició de la línia de fonamentació són nivell B i requereixen lectura visual."
+}

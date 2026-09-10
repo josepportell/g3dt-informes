@@ -1,0 +1,86 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf i CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annexos DPSH (des d'Excel, text net, author 'Loli', 04/06/2026): casa 1 P-1.1 (rebuig −3,70) i P-1.2 (−2,19), cota inici 198 msnm; casa 2 P-2.1 (−4,13, cota 201,25) i P-2.2 (−5,11, cota 202,85). Peu 'Nivell 1 / Nivell 3 / Nivell 2'.",
+ "issuer": "G3 (Loli)",
+ "date": "2026-06-04",
+ "pages_or_sheets": "2 + 2",
+ "context": {
+  "who_made_it": "G3 (Loli) des de l'Excel",
+  "for_whom": "l'informe (annex)",
+  "why": "presentar els DPSH amb cota i gràfica",
+  "expected_fields": [
+   "cota inici",
+   "obra",
+   "població",
+   "rebuig",
+   "nivells (colors)"
+  ],
+  "not_expected": [
+   "client",
+   "plantes"
+  ],
+  "relation_to_others": "= Excel DPSH + capçalera; la capçalera pot variar (Bell-lloc tenia DATA, aquí no)",
+  "authority_for": [
+   "cota_referencia",
+   "street_address (casa 2)",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "casa 1: 198 msnm ; casa 2: 201,25 (P-2.1) / 202,85 (P-2.2)",
+   "location": "capçalera de cada pàgina",
+   "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC | Cota inici: 201,25 msnm … | Cota inici: 202,85 msnm …",
+   "confidence": 0.8,
+   "note": "CONFLICTE casa 1: l'annex de sondeig diu z +199.0. Casa 2: cota diferent per punt (parcel·la en pendent)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "casa 1: C/ TULIPA 3 ; casa 2: C/TOSCA 16",
+   "location": "capçalera 'OBRA:'",
+   "quote": "OBRA: C/ TULIPA 3 | OBRA: C/TOSCA 16",
+   "confidence": 0.95,
+   "note": "única font G3 amb l'adreça de la casa 2 escrita en text"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA DEL VALLÈS",
+   "location": "capçalera 'POBLACIÓ:'",
+   "quote": "POBLACIÓ: CERDANYOLA DEL VALLÈS",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2 per casa (P-1.1, P-1.2 | P-2.1, P-2.2)",
+   "location": "títols",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1.1 … P-2.2",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "3",
+   "location": "peu (etiquetes de la llegenda de colors)",
+   "quote": "Nivell 1 ⏎ Nivell 3 ⏎ Nivell 2",
+   "confidence": 0.7,
+   "note": "coincideix amb l'annex de sondeig (NIVELL 1-3)"
+  }
+ ],
+ "not_present": [
+  "expedient (no hi ha 'NÚMERO D´INFORME' aquest cop)",
+  "field_date (no hi ha 'DATA:' aquest cop)",
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "utm",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "La capçalera de l'annex DPSH NO és estable entre projectes: Bell-lloc tenia DATA i NÚMERO D'INFORME; Tulipa no. Llegir per etiqueta, no per posició, i no assumir camps."
+}

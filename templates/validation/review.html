@@ -1214,6 +1214,38 @@
             z-index: 9999;
             cursor: pointer;
         }
+        /* Acció 4 (2026-09-09): zona FIXA amb les alternatives del lector — sempre visible a la pestanya d'imatges,
+           s'omple sola en fer hover sobre una ranura (l'Eva no ha de clicar cap botó per veure-les) */
+        #altZone {
+            position: fixed; top: 8px; right: 8px; width: 30vw; height: 30vh; min-width: 300px; min-height: 220px;
+            z-index: 10000; background: #fff; border: 2px solid #3498db; border-radius: 8px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.25); display: none; flex-direction: column; overflow: hidden;
+            font-size: 12px;
+        }
+        #altZone .alt-head { padding: 6px 10px; background: #eaf3fb; border-bottom: 1px solid #cfe2f3; display: flex; justify-content: space-between; align-items: center; }
+        #altZone .alt-body { padding: 8px 10px; overflow: auto; flex: 1; }
+        #altZone .alt-cur { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+        #altZone .alt-cur img { height: 64px; border: 2px solid #27ae60; border-radius: 4px; }
+        #altZone .alt-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        #altZone .alt-card { width: 118px; cursor: pointer; border: 2px solid #e5e7eb; border-radius: 6px; padding: 4px; background: #fafafa; }
+        #altZone .alt-card:hover { border-color: #3498db; background: #f0f7fd; }
+        #altZone .alt-card img { width: 100%; height: 60px; object-fit: cover; border-radius: 3px; display: block; }
+        #altZone .alt-card .alt-rao { font-size: 10px; color: #555; margin-top: 3px; line-height: 1.25; max-height: 3.8em; overflow: hidden; }
+        #altZone .alt-none { color: #7f8c8d; font-style: italic; }
+        #altZone .alt-btn { font-size: 11px; padding: 3px 8px; border: 1px solid #bbb; background: #fff; border-radius: 4px; cursor: pointer; }
+        #altZone .alt-btn:hover { background: #f3f4f6; }
+        #altZone .alt-badge { font-size: 10px; padding: 1px 6px; border-radius: 3px; color: #fff; }
+        .wizard-images { margin: 18px 0; padding: 14px 16px; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .wizard-images h4 { margin: 0 0 10px; font-size: 14px; color: #2c3e50; }
+        .wizard-images .wi-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; border-top: 1px solid #eee; }
+        .wizard-images .wi-row:first-of-type { border-top: none; }
+        .wizard-images .wi-thumb { width: 96px; height: 64px; object-fit: cover; border-radius: 4px; border: 2px solid #27ae60; background: #fff; flex: none; }
+        .wizard-images .wi-none { width: 96px; height: 64px; border-radius: 4px; border: 1px dashed #bbb; color: #999; font-size: 11px; display: flex; align-items: center; justify-content: center; text-align: center; flex: none; }
+        .wizard-images .wi-label { min-width: 190px; font-weight: 600; font-size: 13px; color: #2c3e50; }
+        .wizard-images .wi-meta { color: #7f8c8d; font-size: 11px; flex: 1; }
+        .alt-open { font-size: 12px; padding: 3px 10px; border: 1px solid #3498db; color: #2c3e50; background: #eaf3fb; border-radius: 12px; cursor: pointer; margin-left: 10px; }
+        .alt-open:hover { background: #d6e9f8; }
+        .alt-open[data-n="0"] { border-color: #ccc; color: #7f8c8d; background: #f3f4f6; }
         .evidence-expanded-overlay img {
             max-width: 90%;
             max-height: 90%;
@@ -1617,6 +1649,203 @@
         }
         .alt-badge:hover {
             background: #fde68a;
+        }
+        /* === LECTURA HEADLESS (Fase 7) — badges 3 estats, mini-badges de taula, chips n30, popup === */
+        .estat-badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            margin-left: 4px;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .estat-badge.mini {
+            font-size: 9px;
+            padding: 0 4px;
+            margin-left: 3px;
+        }
+        .estat-badge.segur {
+            background: #dbeafe;
+            color: #1e40af;
+            border-color: #bfdbfe;
+        }
+        .estat-badge.candidats {
+            background: #fef3c7;
+            color: #92400e;
+            border-color: #fde68a;
+        }
+        .estat-badge.no_trobat {
+            background: #f3f4f6;
+            color: #6b7280;
+            border-color: #e5e7eb;
+        }
+        .estat-badge:hover {
+            filter: brightness(0.96);
+        }
+        .lectura-degraded-banner {
+            background: #fff3cd;
+            border: 1px solid #f0ad4e;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #92400e;
+        }
+        #lectura-progress {
+            display: none;
+            font-size: 12px;
+            color: #0369a1;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 6px;
+            padding: 6px 12px;
+            margin-bottom: 12px;
+        }
+        #lectura-progress.visible {
+            display: block;
+        }
+        #lectura-extra-fields {
+            display: none;
+            margin-bottom: 16px;
+        }
+        #lectura-extra-fields.visible {
+            display: block;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .lectura-extra-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .lectura-extra-row:last-child {
+            border-bottom: none;
+        }
+        .lectura-extra-row .lex-key {
+            color: #6b7280;
+        }
+        .lectura-extra-row .lex-value {
+            font-weight: 500;
+            flex: 1;
+            text-align: right;
+            padding: 0 8px;
+        }
+        .lectura-table-wrap {
+            overflow-x: auto;
+            margin-bottom: 16px;
+        }
+        .lectura-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .lectura-table th, .lectura-table td {
+            padding: 5px 8px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            vertical-align: top;
+        }
+        .lectura-table thead th {
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .lectura-table h4 {
+            font-size: 13px;
+            margin: 12px 0 6px;
+            color: #2c3e50;
+        }
+        .n30-registre {
+            font-family: monospace;
+            color: #374151;
+            font-size: 11px;
+            margin-right: 6px;
+        }
+        .n30-chip {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            margin: 2px 4px 2px 0;
+            border-radius: 12px;
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            cursor: pointer;
+        }
+        .n30-chip:hover {
+            background: #fde68a;
+        }
+        .n30-chip.selected {
+            background: #d1fae5;
+            color: #065f46;
+            border-color: #6ee7b7;
+        }
+        .lectura-select-lit {
+            width: 100%;
+            font-size: 12px;
+            padding: 3px 4px;
+            margin-bottom: 3px;
+        }
+        .lectura-popup {
+            display: none;
+            position: absolute;
+            z-index: 200;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            padding: 6px 0;
+            min-width: 300px;
+            max-width: 440px;
+        }
+        .lectura-popup.visible {
+            display: block;
+        }
+        .lectura-popup-item {
+            padding: 7px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .lectura-popup-item:last-child {
+            border-bottom: none;
+        }
+        .lectura-popup-item:hover {
+            background: #f0f9ff;
+        }
+        .lectura-popup-item .lp-value {
+            font-weight: 600;
+            font-size: 12px;
+            color: #1f2937;
+        }
+        .lectura-popup-item .lp-font {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 1px;
+        }
+        .lectura-popup-item .lp-quote {
+            font-size: 11px;
+            font-style: italic;
+            color: #4b5563;
+            margin-top: 2px;
+        }
+        .lectura-popup-footer {
+            padding: 6px 12px 2px;
+            font-size: 10.5px;
+            color: #9ca3af;
+            border-top: 1px solid #f3f4f6;
+            margin-top: 2px;
+        }
+        .lectura-popup-sources {
+            padding: 4px 12px;
+            font-size: 11px;
+            color: #6b7280;
         }
         .alt-dropdown {
             display: none;
@@ -2071,18 +2300,64 @@
 
         /* Production v1 (2026-05-04): hide non-Wizard tabs from end users.
            Tabs queden al DOM (perquè el JS interaccioni si cal) però no
-           es renderitzen visualment. Reactivable trient aquesta regla. */
+           es renderitzen visualment. Reactivable trient aquesta regla.
+           Acció 4 (2026-09-09): la pestanya d'IMATGES torna a ser visible: és on l'Eva tria entre les
+           alternatives dels lectors (botó «Alternatives (n)» per ranura). */
         #tab-smartscan,
-        #tab-photos,
         #tab-explicacio,
         #tab-dev,
         #tab-pipeline,
         #tab-ai-pipeline {
             display: none;
         }
+        /* === TRES BOTONS + TAULA D'ESTAT (Fase 14a) === */
+        /* Bloc autocontingut: el panell nomes es mostra si `GET /api/jobs`
+           respon 200 (flag G3DT_USE_LECTURA_HEADLESS ON). Amb el flag apagat
+           l'endpoint fa 404 i aquesta UI no existeix. */
+        #jobsPanel { display: none; margin: 12px 0 18px; }
+        .jobs-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+        .jobs-btn {
+            padding: 9px 16px; border: 1px solid #cfd6dd; border-radius: 6px; background: #fff;
+            color: #2c3e50; font-size: 0.92em; cursor: pointer; line-height: 1.2;
+        }
+        .jobs-btn:hover:not(:disabled) { border-color: #7f8c8d; }
+        .jobs-btn:disabled { opacity: .5; cursor: default; }
+        .jobs-btn.primary { background: #27ae60; border-color: #27ae60; color: #fff; font-weight: 600; }
+        .jobs-btn-quiet { margin-left: auto; color: #7f8c8d; }
+        .jobs-btn.primary:hover:not(:disabled) { background: #229954; }
+        .jobs-btn small { display: block; font-size: 0.78em; opacity: .8; font-weight: 400; }
+        .jobs-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+        .jobs-table th {
+            text-align: left; padding: 6px 8px; border-bottom: 1px solid #e1e6ea;
+            color: #7f8c8d; font-weight: 600; font-size: 0.9em;
+        }
+        .jobs-table td { padding: 8px; border-bottom: 1px solid #f0f3f5; vertical-align: top; }
+        .jobs-table tr.is-live { background: #f4faf6; }
+        .jobs-pas { width: 42px; text-align: center; color: #7f8c8d; white-space: nowrap; }
+        .jobs-project { font-weight: 600; color: #2c3e50; }
+        .jobs-detall { color: #7f8c8d; font-size: 0.92em; }
+        .jobs-comptador { font-weight: 700; color: #2c3e50; }
+        .jobs-empty { color: #95a5a6; padding: 10px 8px; font-style: italic; }
+        .jobs-row-btn {
+            padding: 4px 10px; border: 1px solid #cfd6dd; border-radius: 4px;
+            background: #fff; color: #2c3e50; font-size: 0.9em; cursor: pointer;
+        }
+        .jobs-row-btn:hover { border-color: #7f8c8d; }
+        .jobs-error-detail { color: #c0392b; font-size: 0.9em; margin-top: 4px; white-space: pre-wrap; }
     </style>
 </head>
 <body>
+    <!-- Acció 4 (2026-09-09): zona fixa amb les alternatives del lector; filla directa de <body> perquè cap contenidor amagat ni cap transform la tapi -->
+    <div id="altZone" aria-live="polite">
+        <div class="alt-head">
+            <strong id="altTitle">Alternatives del lector</strong>
+            <span style="display:flex; gap:8px; align-items:center;">
+                <span id="altSource" class="alt-badge" style="background:#7f8c8d;"></span>
+                <button class="alt-btn" onclick="hideAltZone()" title="Tanca" aria-label="Tanca" style="line-height:1;">✕</button>
+            </span>
+        </div>
+        <div class="alt-body" id="altBody"><span class="alt-none">Clica «Alternatives» en una imatge de l'informe per veure-les aquí.</span></div>
+    </div>
     <div class="container">
         <header>
             <h1>G3DT - Revisio de Dades de Camp</h1>
@@ -2126,6 +2401,32 @@
                 Pots baixar tants nivells com calgui.
             </div>
             <div id="nbError" style="display:none;"></div>
+        </div>
+
+        <!-- Tres botons + taula d'estat dels jobs (Fase 14a, disseny §5).
+             Ocult fins que `GET /api/jobs` respon 200. -->
+        <div id="jobsPanel">
+            <div class="jobs-actions" id="jobsActions">
+                <button type="button" class="jobs-btn primary" id="jobsBtnPreparar" onclick="jobsRun('preparar')">
+                    Preparar informe «per demà»<small>Prem, tanca la pestanya i torna quan t'avisin</small>
+                </button>
+                <button type="button" class="jobs-btn" id="jobsBtnEnllestir" onclick="jobsRun('enllestir')">
+                    Enllestir informe preparat<small>Comprova què ha canviat i obre el formulari</small>
+                </button>
+                <button type="button" class="jobs-btn" id="jobsBtnZero" onclick="jobsRun('desde_zero')">
+                    Fer un informe des de zero<small>Tot seguit, amb la pestanya oberta</small>
+                </button>
+                <button type="button" class="jobs-btn jobs-btn-quiet" id="jobsBtnActualitzar"
+                        onclick="jobsRefresh(true)" title="Torna a mirar la xarxa ara mateix">
+                    ↻ Actualitzar<small>Mira la xarxa ara; no copia res</small>
+                </button>
+            </div>
+            <table class="jobs-table" id="jobsTable">
+                <thead>
+                    <tr><th class="jobs-pas"></th><th>Projecte</th><th>Estat</th><th style="width:110px;">Acció</th></tr>
+                </thead>
+                <tbody id="jobsTableBody"></tbody>
+            </table>
         </div>
 
         <div id="message" class="message"></div>
@@ -2241,7 +2542,7 @@
             <div class="tabs" id="tabNav">
                 <button class="tab" id="tab-smartscan" data-tab="smartscan" onclick="switchTab('smartscan')">SmartScan</button>
                 <button class="tab" id="tab-wizard" data-tab="wizard" onclick="switchTab('wizard')">Wizard</button>
-                <button class="tab" id="tab-photos" data-tab="photos" onclick="switchTab('photos')">Fotografies</button>
+                <button class="tab" id="tab-photos" data-tab="photos" onclick="switchTab('photos')">Imatges</button>
                 <button class="tab disabled" id="tab-explicacio" data-tab="explicacio" onclick="switchTab('explicacio')">Explicacio</button>
                 <button class="tab" id="tab-dev" data-tab="dev" onclick="switchTab('dev')">Dev</button>
                 <button class="tab" id="tab-pipeline" data-tab="pipeline" onclick="switchTab('pipeline')">Pipeline</button>
@@ -2290,6 +2591,9 @@
                 <div id="wizardInstructions" class="wizard-instructions" style="display:none;"></div>
                 <div id="wizardForm" style="display:none;">
                     <div class="wizard-form">
+                        <!-- Lectura headless (Fase 7): progres SSE + camps sense id de wizard -->
+                        <div id="lectura-progress"></div>
+                        <div id="lectura-extra-fields"></div>
                         <!-- Format Learning Banner -->
                         <div id="formatLearningBanner" class="format-learning-banner">
                             <h3 id="flTitle">Format nou detectat</h3>
@@ -2351,6 +2655,10 @@
                                 <div class="wizard-field">
                                     <label>Plantes (ex: Pb + 1Pp) <span class="source-badge" id="src-num_floors"></span></label>
                                     <input type="text" id="wiz-num_floors" data-field="num_floors" onchange="markWizardDirty(event)">
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Data de signatura <span class="source-badge" id="src-data_signatura"></span></label>
+                                    <input type="date" id="wiz-data_signatura" data-field="data_signatura" onchange="markWizardDirty(event)">
                                 </div>
                                 <div class="wizard-field">
                                     <label>Superficie construida (m2) <span class="source-badge" id="src-superficie_construida_m2"></span></label>
@@ -2457,6 +2765,51 @@
                             </div>
                         </div>
 
+                        <!-- Group: Lectura headless (Fase 7) — taules DPSH / Sondeig -->
+                        <!-- NOTA: el disseny (§8.2) parla de "pestanya DPSH"/"pestanya Sondeig", pero
+                             review.html NOMES te una pestanya "Wizard" activa avui (les branques
+                             currentTab==='dpsh'/'sondeig' de mes avall son restes de codi mort). Es
+                             col·loquen aqui, dins el Wizard, com a grup propi. Vegeu FASE7-UI-NOTES.md. -->
+                        <div class="wizard-group" id="lectura-tables-group">
+                            <div class="wizard-group-header">Lectura headless — assaigs de camp (DPSH / Sondeig)</div>
+                            <div class="wizard-group-body single-col">
+                                <div id="lectura-dpsh-tables"></div>
+                                <div id="lectura-sondeig-tables"></div>
+                            </div>
+                        </div>
+
+                        <!-- Group 2b: Narrativa per criteri (peça 3, 2026-09-07): frases senceres editables amb candidats «+N» -->
+                        <div class="wizard-group">
+                            <div class="wizard-group-header">Narrativa (frases de l'informe)</div>
+                            <div class="wizard-group-body">
+                                <div class="wizard-field full-width">
+                                    <label>Acces al solar («…a traves del ___.») <span class="source-badge" id="src-access_street"></span></label>
+                                    <input type="text" id="wiz-access_street" data-field="access_street" placeholder="carrer adjacent situat al sud" onchange="markWizardDirty(event)">
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Estat del solar (2.1.2, frase sencera) <span class="source-badge" id="src-site_condition"></span></label>
+                                    <textarea id="wiz-site_condition" data-field="site_condition" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Estructura prevista («…construccio d'una estructura ___») <span class="source-badge" id="src-building_structure_desc"></span></label>
+                                    <textarea id="wiz-building_structure_desc" data-field="building_structure_desc" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Assaigs de laboratori realitzats (una linia per assaig) <span class="source-badge" id="src-lab_tests_text"></span></label>
+                                    <textarea id="wiz-lab_tests_text" data-field="lab_tests_text" onchange="markWizardDirty(event)"></textarea>
+                                </div>
+                                <div class="wizard-field">
+                                    <label>Fotografies de vista general <span class="source-badge" id="src-num_site_photos"></span></label>
+                                    <select id="wiz-num_site_photos" data-field="num_site_photos" onchange="markWizardDirty(event)">
+                                        <option value="0">0 — sense bloc de vistes generals (la Fotografia 1 es la maquina)</option>
+                                        <option value="1">1 — «Fotografia 1. Vista general de la zona d'estudi.»</option>
+                                        <option value="2">2 — «Fotografia 1 i Fotografia 2. Vistes generals…»</option>
+                                    </select>
+                                    <div style="font-size:11px;color:#6b7280;margin-top:2px">Les fotos son les de la pestanya Fotos (vista general 1 i 2).</div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Group 3: Parametres -->
                         <div class="wizard-group">
                             <div class="wizard-group-header">Parametres</div>
@@ -2491,6 +2844,7 @@
                                 <div class="wizard-field">
                                     <label>Profunditat fonamentacio (m) <span class="source-badge" id="src-foundation_depth_m"></span></label>
                                     <input type="number" step="0.1" id="wiz-foundation_depth_m" data-field="foundation_depth_m" oninput="recalcGeomech('Df')" onchange="markWizardDirty(event)">
+                                    <small class="calc-note" id="calc-bearing" style="color:#888;font-size:11px;display:block"></small>
                                 </div>
                                 <div class="wizard-field">
                                     <label>Cota referencia <span class="source-badge" id="src-cota_referencia"></span></label>
@@ -2533,6 +2887,7 @@
                                     <label>phi angle friccio (graus) <span class="source-badge" id="src-geomech_phi"></span></label>
                                     <input type="number" step="0.1" id="wiz-geomech_phi" placeholder="ex: 35" oninput="recalcGeomech('phi')" onchange="markWizardDirty(event)">
                                     <small class="calc-note" id="calc-phi" style="color:#888;font-size:11px;display:block"></small>
+                                    <small class="calc-note" id="calc-regime" style="color:#888;font-size:11px;display:block"></small>
                                     <div class="geomech-dep-hint">&#8594; afecta Qa (Nc, Nq, N&#947;)</div>
                                 </div>
                                 <div class="wizard-field">
@@ -2610,6 +2965,9 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Acció 4 (2026-09-09): imatges de l'informe dins el formulari (Josep: «el camp del formulari del wizard») -->
+                        <div id="wizardImages" class="wizard-images" style="display:none;"></div>
 
                         <!-- Actions -->
                         <div class="wizard-actions">
@@ -2984,6 +3342,10 @@
         let selectedProject = '';
         let wizardPrefills = {};
         let wizardUserData = {};
+        // De quin projecte es `wizardUserData` (les respostes de
+        // `/api/user-data/...` arriben despres que l'Eva pugui haver canviat de
+        // projecte al desplegable).
+        let wizardUserDataProject = null;
         let wizardDataLoaded = false;
         let smartscanLoaded = false;
         let wizardDirty = false;
@@ -3032,12 +3394,28 @@
         }
 
         function finishStepper() {
+            // «Llest» només quan TOTS els anteriors han ACABAT (Josep, 2026-09-09): si la visió encara corre (el SSE
+            // ha enviat «prefills» abans que acabi), «Visió» es queda activa i «Llest» pendent; `markVisionDone()`
+            // els tanca quan la visió acaba de debò.
+            const visionRunning = document.getElementById('step-vision').classList.contains('active');
             PIPELINE_STEPS.forEach((s, i) => {
+                if (visionRunning && s === 'vision') return;               // es queda activa
+                if (visionRunning && s === 'ready') { setStepState('ready', ''); return; }
                 setStepState(s, 'done');
-                if (i < PIPELINE_STEPS.length - 1) {
+                if (i < PIPELINE_STEPS.length - 1 && !(visionRunning && s === 'extract')) {
                     document.getElementById(`conn-${i + 1}`).className = 'step-connector done';
                 }
             });
+            if (visionRunning) {
+                document.getElementById('conn-4').className = 'step-connector';   // Visió → Llest, encara no
+                document.getElementById('conn-3').className = 'step-connector done';
+            }
+        }
+
+        function markVisionDone() {
+            setStepState('vision', 'done');
+            document.getElementById('conn-4').className = 'step-connector done';
+            setStepState('ready', 'done');
         }
 
         function hideStepper() {
@@ -3108,6 +3486,7 @@
                 content.classList.remove('active');
             });
             document.getElementById(`${tabName}-content`).classList.add('active');
+            if (tabName !== 'photos' && tabName !== 'wizard') hideAltZone();
 
             // Lazy-load data on first switch
             if (tabName === 'smartscan' && selectedProject && !smartscanLoaded) {
@@ -3117,7 +3496,8 @@
                 loadWizardData();
             }
             if (tabName === 'photos' && selectedProject && !photosLoaded) {
-                loadPhotos();
+                if (imagesReadyFor === selectedProject) loadPhotos();
+                else renderPhotosPlaceholder();      // abans de llançar el pipeline no es mostra res «de memòria»
             }
             if (tabName === 'dev' && !devLoaded && selectedProject) {
                 loadDevAnalysis();
@@ -3167,6 +3547,7 @@
         function renderData() {
             if (!currentData) return;
 
+            imagesReadyFor = selectedProject;
             emptyState.style.display = 'none';
             dataContent.style.display = 'block';
 
@@ -4545,6 +4926,12 @@
 
         async function onProjectChange(projectName) {
             selectedProject = projectName;
+            // Triar el projecte és llançar-ne el pipeline (les dues vies acaben a loadProjectData): a partir d'aquí la
+            // pestanya d'imatges i la zona d'alternatives poden mostrar-se; abans, res «de memòria» (Josep, 2026-09-09).
+            imagesReadyFor = projectName; altData = null; altSlotShown = null; hideAltZone();
+            // Lectura headless: cap decisio ni cap tria del projecte anterior
+            // pot sobreviure al canvi de projecte (no hi ha recarrega de pagina).
+            _lecturaResetState();
             wizardDataLoaded = false;
             smartscanLoaded = false;
             devLoaded = false;
@@ -4586,10 +4973,21 @@
 
             // Fetch user_data FIRST to decide on pre-questions
             // (must happen before pipeline starts, which deletes user_data.json)
+            // `proj`: l'Eva pot tornar a canviar de projecte mentre la resposta
+            // viatja. Sense aquesta marca, el user_data d'A (i les seves tries
+            // de lectura) aterrava al projecte B, que ja te el seu propi flux.
+            const proj = selectedProject;
+            let userData = {};
             try {
-                const r = await fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`);
-                wizardUserData = r.ok ? await r.json() : {};
-            } catch { wizardUserData = {}; }
+                const r = await fetch(`/api/user-data/${encodeURIComponent(proj)}`);
+                userData = r.ok ? await r.json() : {};
+            } catch { userData = {}; }
+            if (proj !== selectedProject) return;
+            wizardUserData = userData;
+            wizardUserDataProject = proj;
+            // Tries congelades en desats anteriors (el pipeline reanomena
+            // user_data.json tot seguit: aquest es l'unic moment segur).
+            _lecturaRestoreSelections(wizardUserData, proj);
 
             if (shouldShowPreQuestions()) {
                 showPreQuestions();
@@ -4601,7 +4999,11 @@
             loadProjectData();
         }
 
-        async function loadProjectData() {
+        // El primer argument (el projecte) sempre es `selectedProject` i no
+        // s'usa: es conserva perque tots els punts de crida ja el passen.
+        // `opts.refresh` nomes arriba des de "Actualitzar prefills".
+        async function loadProjectData(_project, opts) {
+            const refresh = !!(opts && opts.refresh);
             // Close previous SSE connection if any
             if (activeEventSource) {
                 activeEventSource.close();
@@ -4613,14 +5015,28 @@
             // Load user_data in parallel — skip if already loaded by pre-questions flow
             // (pipeline deletes user_data.json, so re-fetching would lose pre-question answers)
             if (Object.keys(wizardUserData).length === 0) {
-                fetch(`/api/user-data/${encodeURIComponent(selectedProject)}`)
+                // Mateixa cursa que a `onProjectChange`: la resposta pot arribar
+                // quan l'Eva ja es a un altre projecte.
+                const udProject = selectedProject;
+                fetch(`/api/user-data/${encodeURIComponent(udProject)}`)
                     .then(r => r.ok ? r.json() : {})
-                    .then(d => { wizardUserData = d; })
-                    .catch(() => { wizardUserData = {}; });
+                    .then(d => {
+                        if (udProject !== selectedProject) return;
+                        wizardUserData = d;
+                        wizardUserDataProject = udProject;
+                    })
+                    .catch(() => { if (udProject === selectedProject) wizardUserData = {}; });
             }
 
+            // Lectura headless (Fase 7, disseny §2): prova primer l'stream nou;
+            // si no hi es (flag G3DT_USE_LECTURA_HEADLESS off -> 404, o error
+            // immediat) cau al cami existent sense cap mes canvi.
+            const _attachOnce = _jobsAttachNext;
+            _jobsAttachNext = false;
+            if (await openLecturaStream(selectedProject, { attach: _attachOnce, refresh })) return;
+
             // SSE stream for prefills with real-time progress
-            const es = new EventSource(`/api/prefills-stream/${encodeURIComponent(selectedProject)}`);
+            const es = new EventSource(`/api/prefills-stream/${encodeURIComponent(selectedProject)}${refresh ? '?refresh=true' : ''}`);
             activeEventSource = es;
 
             es.addEventListener('step', (e) => {
@@ -4671,8 +5087,19 @@
                 if (visionStep && !visionStep.classList.contains('done') && !visionStep.classList.contains('active')) {
                     setStepState('vision', 'done');
                 }
+                // Visió acabada abans dels prefills (tots els JSON de visió hi són): tanca-la; si no, «Llest» espera
+                const vsNow = wizardPrefills._vision_status ? wizardPrefills._vision_status.value : null;
+                if (vsNow && ['planol', 'dpsh', 'sondeig', 'docs'].every(k => vsNow[k])) setStepState('vision', 'done');
                 finishStepper();
                 showWizardContent();
+                if (visionStep && visionStep.classList.contains('active')) startVisionPolling();   // per tancar «Llest» quan acabi
+                // Lectura headless (Fase 7): via B no hauria de portar `_lectura`
+                // avui, pero es defensiu (robustesa disseny §7 punt 6) per si
+                // el merge canvia. Sense _lectura -> no fa res.
+                if (typeof _lecturaUnwrap === 'function') {
+                    const L = _lecturaUnwrap(wizardPrefills);
+                    if (L) applyLecturaDecisions(L.decisions, L.degraded);
+                }
                 // Pipeline finalitzat: navegador torna a IDLE (per si l'usuari
                 // vol triar un altre projecte des d'aquesta mateixa pestanya).
                 if (typeof nbSetState === 'function') nbSetState('IDLE');
@@ -4941,6 +5368,7 @@
                         clearInterval(visionPollTimer);
                         visionPollTimer = null;
                         visionRunning = false;
+                        markVisionDone();                                   // stepper: Visió i Llest, ara sí
 
                         if (newFiles > 0) {
                             showMessage(`Visio completada! ${newFiles} fitxer(s) extrets. Actualitzant...`, 'success');
@@ -5253,6 +5681,7 @@
         }
 
         function showWizardContent() {
+            imagesReadyFor = selectedProject;        // acció 4: les imatges i la zona d'alternatives, només a partir d'aquí
             detectAvailableTabs();
             updateTabVisibility();
             dataContent.style.display = 'block';
@@ -5260,6 +5689,7 @@
             renderWizardForm();
             renderInstructions(wizardPrefills);
             loadEvidence(selectedProject);
+            renderWizardImages();
             wizardDataLoaded = true;
             wizardDirty = false;
             document.getElementById('wizardLoading').style.display = 'none';
@@ -5610,9 +6040,12 @@
             alts.forEach(alt => {
                 const item = document.createElement('div');
                 item.className = 'alt-item';
-                const valStr = String(alt.value || '').substring(0, 60);
+                const full = String(alt.value || '');
+                const valStr = full.length > 220 ? full.substring(0, 217) + '…' : full;
                 const srcStr = (alt.source || '').split('/').pop();
-                item.innerHTML = `<div class="alt-value">${valStr}</div><div class="alt-source">${srcStr} (conf: ${(alt.confidence || 0).toFixed(2)})</div>`;
+                const confStr = (typeof alt.confidence === 'number' && alt.confidence !== 0.5) ? ` (conf: ${alt.confidence.toFixed(2)})` : '';
+                item.innerHTML = `<div class="alt-value" style="white-space:pre-wrap">${valStr.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div><div class="alt-source">${srcStr}${confStr}</div>`;
+                item.title = full;
                 item.onclick = () => {
                     // Apply this alternative value to the field
                     const el = document.getElementById(`wiz-${field}`);
@@ -5621,7 +6054,12 @@
                 };
                 dd.appendChild(item);
             });
-            // Position relative to anchor
+            // Position relative to anchor (frases senceres → desplegable ample)
+            const target = document.getElementById(`wiz-${field}`);
+            if (target && (target.tagName === 'TEXTAREA' || (alts[0] && String(alts[0].value || '').length > 60))) {
+                dd.style.maxWidth = '640px';
+                dd.style.minWidth = '420px';
+            }
             anchor.style.position = 'relative';
             anchor.parentNode.style.position = 'relative';
             anchor.parentNode.appendChild(dd);
@@ -5643,6 +6081,8 @@
                 'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
                 'foundation_depth_m', 'cota_referencia',
                 'utm_x', 'utm_y',
+                'access_street', 'site_condition', 'building_structure_desc', 'lab_tests_text', 'num_site_photos',
+                'data_signatura',
             ];
             textFields.forEach(field => {
                 const { value, source } = getWizardValue(field);
@@ -5748,12 +6188,22 @@
             const calcNoteKeys = {
                 'gamma': '_calc_gamma', 'phi': '_calc_phi', 'E': '_calc_E',
                 'cohesion': '_calc_cohesion', 'Es': '_calc_Es',
+                'bearing': '_calc_bearing', 'regime': '_calc_regime',  // P2b UI: nivell portant + Df; règim + sísmica
             };
             Object.entries(calcNoteKeys).forEach(([field, key]) => {
                 const pf = wizardPrefills[key];
                 const note = pf ? (typeof pf === 'object' ? pf.value : pf) : '';
                 const el = document.getElementById(`calc-${field}`);
-                if (el && note) el.textContent = note;
+                if (el && note) {
+                    el.textContent = note;
+                    // Df per defecte → avís en ambre (la tria del nivell portant depèn de la Df)
+                    if (field === 'bearing') el.style.color = note.includes('\u26a0') ? '#b45309' : '#888';
+                    // Es del defecte com a placeholder del camp (l'Eva el veu sense escriure'l)
+                    if (field === 'Es') {
+                        const esInput = document.getElementById('wiz-Es_settlement');
+                        if (esInput) esInput.placeholder = 'auto: ' + note.split(' · ')[0];
+                    }
+                }
             });
             // Results panel (Qa, K30, settlement)
             const resultNotes = [
@@ -6661,6 +7111,12 @@
                     const s_m = C1 * Qa * Iz_integral / Es;
                     settlement = (s_m * 100).toFixed(2);
                     settlGov = 'Schmertmann';
+                    // Criteri (2026-09-06): roca/cohesiu o < 1,0 cm → frase genèrica «menyspreables o bé inferiors a 1.0 cm»
+                    const regimeS = ((wizardPrefills._calc_settlement_regime || {}).value) || (c >= 0.5 ? 'roca' : 'granular');
+                    if (regimeS !== 'granular' || parseFloat(settlement) < 1.0) {
+                        settlement = '< 1,0';
+                        settlGov = 'frase genèrica (' + regimeS + ')';
+                    }
                 }
             }
 
@@ -6815,10 +7271,15 @@
              'adjacent_north', 'adjacent_south', 'adjacent_east', 'adjacent_west',
              'adjacent_north_fmt', 'adjacent_south_fmt', 'adjacent_east_fmt', 'adjacent_west_fmt',
              'cota_referencia',
+             'access_street', 'site_condition', 'building_structure_desc', 'lab_tests_text',
+             'data_signatura',
             ].forEach(field => {
                 const el = document.getElementById(`wiz-${field}`);
                 if (el) fields[field] = el.value;
             });
+            // Vistes generals (0/1/2): enter
+            const nsp = document.getElementById('wiz-num_site_photos');
+            if (nsp) fields.num_site_photos = parseInt(nsp.value) || 0;
 
             // Numeric fields
             ['foundation_depth_m', 'utm_x', 'utm_y'].forEach(field => {
@@ -6929,7 +7390,9 @@
             // Stop vision polling if running
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
 
-            loadProjectData(selectedProject);
+            // `refresh: true` — l'unic cami que salta la cache de prefills.
+            // Obrir un projecte NO el passa (hi ha d'encertar: son 43-141 s).
+            loadProjectData(selectedProject, { refresh: true });
         }
 
         async function saveWizard() {
@@ -6943,6 +7406,11 @@
                 const body = {
                     wizard_fields: collectWizardFields(),
                     expert_overrides: collectExpertOverrides(),
+                    // Fase 8b: les tries de l'Eva sobre cel·les de taula (i sobre
+                    // camps de lectura sense input al wizard). El backend les
+                    // resol contra `_decisions.json` i les congela a user_data,
+                    // que es d'on el generador munta les taules del .docx.
+                    lectura_selections: getLecturaSelections(),
                 };
 
                 const res = await fetch(`/api/wizard/${encodeURIComponent(selectedProject)}`, {
@@ -7192,10 +7660,11 @@
         let lastPhotosData = null;
 
         const REPORT_SLOTS = [
-            // Figures (report order)
-            { key: 'fig_cadastre', label: 'Figura 1 - Situacio (cadastre)', size: '70mm', type: 'figure' },
-            { key: 'fig_aerea', label: 'Figura 2 - Vista aeria', size: '70mm', type: 'figure' },
-            { key: 'fig_main_plan', label: 'Figura 3 - Planol planta', size: '150mm', type: 'figure' },
+            // Figures (report order; claus de la plantilla de la peça 7a)
+            { key: 'fig_situacio', label: 'Figura - Situacio (1.1)', size: '150mm', type: 'figure' },
+            { key: 'fig_projecte_1', label: 'Figura - Projecte 1 (1.1)', size: '150mm, 0-2', type: 'figure' },
+            { key: 'fig_projecte_2', label: 'Figura - Projecte 2 (1.1)', size: '150mm, 0-2', type: 'figure' },
+            { key: 'fig_assaigs', label: 'Figura - Assaigs (2.2)', size: '150mm', type: 'figure' },
             // Field photos
             { key: 'site_1', label: 'Foto vista general 1', size: '70mm costat', type: 'photo' },
             { key: 'site_2', label: 'Foto vista general 2', size: '70mm costat', type: 'photo' },
@@ -7254,6 +7723,7 @@
                 document.getElementById('photosLoading').style.display = 'none';
                 document.getElementById('photosContent').style.display = 'block';
                 photosLoaded = true;
+                await loadAlternatives();         // esperada: el formulari i la zona es pinten amb les dades noves
 
             } catch(err) {
                 document.getElementById('photosLoading').style.display = 'none';
@@ -7278,7 +7748,8 @@
                 if (slot.type === 'figure') {
                     // --- Figure slot: preview-only, no alternatives ---
                     const fig = figures[slot.key];
-                    const hasFig = !!fig;
+                    const noneChosen = !!(fig && !fig.thumbnail_url);          // la selecció diu «cap figura»
+                    const hasFig = !!fig && !noneChosen;
                     const borderColor = hasFig ? '#8e44ad' : '#dee2e6';
 
                     html += `<div style="margin-bottom:28px; padding:16px; background:#f5f0f8; border-radius:8px; border-left:4px solid ${borderColor};">`;
@@ -7287,9 +7758,12 @@
                     html += `<strong style="font-size:14px; color:#2c3e50;">${escapeHtml(slot.label)}</strong>`;
                     html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
                     html += `<span style="background:#8e44ad; color:white; font-size:10px; padding:1px 6px; border-radius:3px; margin-left:8px;">Figura</span>`;
+                    html += altOpenButton(slot.key);
                     html += `</div>`;
                     if (hasFig) {
                         html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(fig.source)}</span>`;
+                    } else if (noneChosen) {
+                        html += `<span style="color:#7f8c8d; font-size:12px;">${escapeHtml(fig.source)}</span>`;
                     } else {
                         html += `<span style="color:#e74c3c; font-size:12px;">Imatge pendent</span>`;
                     }
@@ -7300,6 +7774,8 @@
                         html += `<img src="${escapeHtml(fig.thumbnail_url)}&size=300" style="max-height:200px; display:block;" loading="lazy" alt="${escapeHtml(fig.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:30px;text-align:center;color:#aaa;font-size:11px\\'>Error carregant</div>'">`;
                         html += `</div>`;
                         html += `<div style="color:#7f8c8d; font-size:11px; margin-top:4px;">${escapeHtml(fig.filename)}</div>`;
+                    } else if (noneChosen) {
+                        html += `<div style="padding:14px; color:#7f8c8d; font-size:13px; background:#f3f4f6; border-radius:4px; display:inline-block;">Cap figura en aquesta ranura (passa el ratolí per veure alternatives)</div>`;
                     } else {
                         html += `<div style="padding:20px; color:#e74c3c; font-size:13px; background:#fdf0f0; border-radius:4px; display:inline-block;">Imatge pendent (es generara al executar el pipeline)</div>`;
                     }
@@ -7318,9 +7794,11 @@
                     html += `<div>`;
                     html += `<strong style="font-size:14px; color:#2c3e50;">${escapeHtml(slot.label)}</strong>`;
                     html += `<span style="color:#95a5a6; font-size:12px; margin-left:8px;">${escapeHtml(slot.size)}</span>`;
+                    html += altOpenButton(slot.key);
                     html += `</div>`;
                     if (selectedPhoto) {
-                        html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(selectedPhoto.filename)}</span>`;
+                        const evaTag = selectedPhoto.kind === 'eva_png' ? ' (PNG de l\'Eva, ALTRES)' : (selectedPhoto.kind === 'upload' ? ' (pujada per l\'Eva)' : '');
+                        html += `<span style="color:#27ae60; font-size:12px;">${escapeHtml(selectedPhoto.filename + evaTag)}</span>`;
                     } else {
                         html += `<span style="color:#e74c3c; font-size:12px;">Cap foto seleccionada</span>`;
                     }
@@ -7355,7 +7833,8 @@
 
                             html += `<div style="cursor:pointer; border:${border}; border-radius:4px; opacity:${opacity}; transition:all 0.15s; position:relative;" `;
                             html += `onclick="selectPhotoForSlot('${escapeHtml(slot.key)}', '${escapeHtml(photo.relative_path)}')" `;
-                            html += `title="${escapeHtml(photo.filename)}${usedInKey ? ' (usat a ' + escapeHtml(usedLabel) + ')' : ''}">`;
+                            const evaAlt = photo.kind === 'eva_png' ? ' (PNG de l\'Eva, ALTRES)' : (photo.kind === 'upload' ? ' (pujada per l\'Eva)' : '');
+                            html += `title="${escapeHtml(photo.filename + evaAlt)}${usedInKey ? ' (usat a ' + escapeHtml(usedLabel) + ')' : ''}">`;
                             html += `<img src="${escapeHtml(photo.thumbnail_url)}" style="height:70px; width:90px; object-fit:cover; border-radius:3px; display:block;" loading="lazy" alt="${escapeHtml(photo.filename)}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding:15px;text-align:center;color:#aaa;font-size:9px\\'>Error</div>'">`;
                             if (usedInKey) {
                                 html += `<div style="position:absolute; bottom:2px; left:2px; background:rgba(0,0,0,0.6); color:white; font-size:9px; padding:1px 4px; border-radius:2px;">${escapeHtml(usedLabel)}</div>`;
@@ -7372,6 +7851,307 @@
             }
 
             slotsDiv.innerHTML = html;
+        }
+
+        // --- Acció 4 (2026-09-09): les alternatives del lector en una zona flotant que s'obre amb un clic al camp ---
+        // Correcció del Josep (nit): la zona NO apareix sola (tapava «Començar»), s'obre en clicar «Alternatives (n)»
+        // d'una ranura i es tanca amb l'aspa; ni la zona ni les imatges surten abans de llançar el pipeline del projecte.
+        let altData = null;
+        let altSlotShown = null;
+        let imagesReadyFor = null;                   // projecte del qual s'ha llançat el pipeline en aquesta sessió
+
+        function renderPhotosPlaceholder() {
+            document.getElementById('photosLoading').style.display = 'none';
+            document.getElementById('photosContent').style.display = 'none';
+            const e = document.getElementById('photosEmpty');
+            e.innerHTML = `<p>Les imatges de l'informe es mostren un cop llançat el pipeline del projecte (<strong>Començar</strong>).</p>`;
+            e.style.display = 'block';
+        }
+
+        function altOpenButton(slotKey) {
+            return `<button class="alt-open" data-slot="${escapeHtml(slotKey)}" data-n="" onclick="showSlotAlternatives('${escapeHtml(slotKey)}')" title="Veure les alternatives del lector per a aquesta ranura">Alternatives</button>`;
+        }
+
+        function updateAltBadges() {
+            document.querySelectorAll('.alt-open[data-slot]').forEach(b => {
+                const d = altData && altData.slots[b.dataset.slot];
+                if (!d) { b.style.display = 'none'; return; }
+                const n = d.alternatives.length;
+                b.style.display = ''; b.dataset.n = String(n);
+                b.textContent = n ? `Alternatives (${n})` : (d.auto ? 'Canviar la imatge' : (d.cap_font ? 'Alternatives (cap font)' : 'Alternatives (cap)'));
+            });
+        }
+
+        function hideAltZone() {
+            const z = document.getElementById('altZone');
+            if (z) z.style.display = 'none';
+        }
+
+        function altSourceLabel(src) {
+            return ({ user: "tria de l'Eva", lector: 'tria del lector', ia: 'cau IA antiga' })[src] || 'automàtic';
+        }
+
+        async function renderWizardImages() {
+            // Secció «Imatges de l'informe» del formulari: l'actual de cada ranura + «Alternatives (n)» → la mateixa zona
+            const box = document.getElementById('wizardImages');
+            if (!box) return;
+            if (!selectedProject || imagesReadyFor !== selectedProject) { box.style.display = 'none'; return; }
+            // el calaix de figures (`/api/photos`) dona la vista prèvia de les ranures automàtiques; també carrega les alternatives
+            if (!lastPhotosData && !photosLoaded) { try { await loadPhotos(); } catch (_) { /* la vista prèvia és opcional */ } }
+            if (!altData) await loadAlternatives();
+            if (!altData) { box.style.display = 'none'; return; }
+            let html = `<h4>Imatges de l'informe <span style="font-weight:400; color:#7f8c8d; font-size:12px;">(la tria de cada ranura; les alternatives del lector s'obren amb el botó)</span></h4>`;
+            for (const slot of REPORT_SLOTS) {
+                const d = altData.slots[slot.key];
+                if (!d) continue;                                   // cullera, geològic i tall: automàtics, sense tria
+                const cur = d.current;
+                let thumb;
+                if (cur && cur.thumbnail_url) {
+                    thumb = `<img class="wi-thumb" src="${escapeHtml(cur.thumbnail_url)}&size=200" alt="">` +
+                            (cur.thumbnail_url_2 ? `<img class="wi-thumb" src="${escapeHtml(cur.thumbnail_url_2)}&size=200" alt="">` : '');
+                } else if (d.type === 'figure' && d.is_default) {
+                    const auto = autoFigurePreview(slot.key);            // el que hi posarà el generador (calaix de figures)
+                    thumb = auto ? `<img class="wi-thumb" src="${escapeHtml(auto)}&size=200" alt="">`
+                                 : `<div class="wi-none">${escapeHtml(d.default_label || 'automàtic')}</div>`;
+                } else {
+                    thumb = `<div class="wi-none">${d.cap_font ? 'cap font' : 'cap imatge'}</div>`;
+                }
+                const meta = [altSourceLabel(d.source), isUploaded(cur) ? "pujada per l'Eva" : '', cur && cur.caption ? cur.caption : '', d.rao || ''].filter(Boolean).join(' · ');
+                html += `<div class="wi-row"><span class="wi-label">${escapeHtml(slot.label)}</span>${thumb}<span class="wi-meta">${escapeHtml(meta)}</span>${altOpenButton(slot.key)}</div>`;
+            }
+            box.innerHTML = html;
+            box.style.display = 'block';
+            updateAltBadges();
+        }
+
+        async function loadAlternatives() {
+            try {
+                const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}`);
+                if (!resp.ok) throw new Error(await resp.text());
+                altData = await resp.json();
+            } catch (err) {
+                altData = null;
+                document.getElementById('altBody').innerHTML = `<span class="alt-none">No s'han pogut carregar les alternatives: ${escapeHtml(err.message)}</span>`;
+                return;
+            }
+            updateAltBadges();
+            const z = document.getElementById('altZone');
+            if (z && z.style.display !== 'none' && altSlotShown) showSlotAlternatives(altSlotShown);
+        }
+
+        function altSourceBadge(src) {
+            const map = { user: ['Tria de l\'Eva', '#27ae60'], lector: ['Tria del lector', '#3498db'], ia: ['Cau IA antiga', '#95a5a6'] };
+            const [txt, col] = map[src] || ['Automàtic', '#7f8c8d'];
+            const el = document.getElementById('altSource'); el.textContent = txt; el.style.background = col;
+        }
+
+        function renderAltSummary() {
+            document.getElementById('altTitle').textContent = 'Alternatives del lector';
+            altSourceBadge(altData ? (altData.photo_source || altData.figure_source) : null);
+            if (!altData) return;
+            const lines = [];
+            for (const s of REPORT_SLOTS) {
+                const d = altData.slots[s.key]; if (!d) continue;
+                const n = d.alternatives.length;
+                const state = d.current ? '' : (d.cap_font ? ' · cap font' : (d.is_default ? ' · automàtic' : ' · buida'));
+                lines.push(`<div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px dotted #eee;"><span>${escapeHtml(s.label)}${state}</span><span style="color:${n ? '#2c3e50' : '#bbb'};">${n ? n + ' alternativa' + (n > 1 ? 's' : '') : '—'}</span></div>`);
+            }
+            document.getElementById('altBody').innerHTML = `<div style="color:#7f8c8d; margin-bottom:6px;">Passa el ratolí per sobre d'una imatge de l'informe per veure'n les alternatives.</div>` + lines.join('');
+        }
+
+        function altThumb(item) {
+            let h = `<img src="${escapeHtml(item.thumbnail_url)}&size=240" loading="lazy" alt="">`;      // els dos endpoints accepten `size`
+            if (item.thumbnail_url_2) h += `<img src="${escapeHtml(item.thumbnail_url_2)}&size=240" loading="lazy" alt="" style="margin-top:2px;">`;
+            return h;
+        }
+
+        function showSlotAlternatives(slotKey) {      // (no `showAlternatives`: ja existeix per al popup «+N» dels camps de text)
+            altSlotShown = slotKey;
+            const z = document.getElementById('altZone');
+            if (z) z.style.display = 'flex';
+            const slotDef = REPORT_SLOTS.find(s => s.key === slotKey);
+            document.getElementById('altTitle').textContent = slotDef ? slotDef.label : slotKey;
+            if (!altData) {                      // encara no ha arribat la resposta: es refresca sola quan arribi
+                document.getElementById('altBody').innerHTML = `<span class="alt-none">Carregant les alternatives…</span>`;
+                altSourceBadge(null); return;
+            }
+            if (!altData.slots[slotKey]) {
+                document.getElementById('altBody').innerHTML = `<span class="alt-none">Aquesta ranura és automàtica (sense alternatives del lector).</span>`;
+                altSourceBadge(null); return;
+            }
+            const d = altData.slots[slotKey];
+            altSourceBadge(d.source);
+            let html = '';
+            if (d.current) {
+                html += `<div class="alt-cur">${altThumb(d.current)}<div><div style="color:#27ae60; font-weight:600;">Actual${isUploaded(d.current) ? " · pujada per l'Eva" : ''}</div>`;
+                if (d.current.caption) html += `<div style="color:#555;">${escapeHtml(d.current.caption)}</div>`;
+                if (d.rao) html += `<div style="color:#7f8c8d; font-size:11px;">${escapeHtml(d.rao)}</div>`;
+                html += `</div></div>`;
+            } else if (d.type === 'figure' && d.is_default) {
+                const auto = autoFigurePreview(slotKey);         // el que hi posarà el generador, si el calaix ja el té
+                html += `<div class="alt-cur">${auto ? `<img src="${escapeHtml(auto)}&size=240" loading="lazy" alt="">` : ''}<div><div style="color:#27ae60; font-weight:600;">Actual: automàtic</div><div style="color:#7f8c8d; font-size:11px;">${escapeHtml(d.default_label || '')}</div></div></div>`;
+            } else {
+                html += `<div class="alt-cur"><div><div style="color:#7f8c8d; font-weight:600;">Actual: cap imatge</div>` + (d.rao ? `<div style="color:#7f8c8d; font-size:11px;">${escapeHtml(d.rao)}</div>` : '') + `</div></div>`;
+            }
+            if (d.cap_font) html += `<div style="color:#c0392b; margin-bottom:6px;">El lector no ha trobat cap imatge vàlida per a aquest forat.</div>`;
+            html += `<div style="font-weight:600; margin:4px 0;">Alternatives (${d.alternatives.length})</div>`;
+            if (d.alternatives.length) {
+                html += `<div class="alt-list">`;
+                d.alternatives.forEach((a, i) => {
+                    html += `<div class="alt-card" onclick="chooseAlternative('${escapeHtml(slotKey)}', ${i})" title="${escapeHtml(a.rao || '')}">${altThumb(a)}`;
+                    if (a.caption) html += `<div class="alt-rao" style="color:#2c3e50;">${escapeHtml(a.caption)}</div>`;
+                    html += `<div class="alt-rao">${escapeHtml(a.rao || (a.rel ? a.rel.split('/').pop() : ''))}</div></div>`;
+                });
+                html += `</div>`;
+            } else {
+                html += `<div class="alt-none">${d.auto ? 'Figura automàtica: si en vols una altra, puja-la.' : (d.type === 'photo' ? 'Cap alternativa del lector; a sota hi ha totes les fotos del projecte.' : 'Cap alternativa del lector.')}</div>`;
+            }
+            if (slotKey.startsWith('fig_projecte_')) {
+                // #10 (2026-09-10): el peu de la figura del projecte (inclou la font) l'escriu l'Eva: val per a la figura
+                // actual («Desa el peu») i per a la que pugi ara mateix (viatja amb la pujada)
+                const capNow = (d.current && d.current.caption) ? d.current.caption : UPLOAD_PROJECT_CAPTION;
+                html += `<div style="margin-top:8px; display:flex; gap:6px; align-items:flex-end; flex-wrap:wrap;">` +
+                        `<label style="font-size:11px; color:#555; flex:1; min-width:180px;">Peu de la figura (inclou la font)` +
+                        `<input id="altCaption" type="text" maxlength="200" value="${escapeHtml(capNow)}" style="display:block; width:100%; font-size:11px; padding:3px 5px; box-sizing:border-box; margin-top:2px;"></label>` +
+                        (d.current ? `<button class="alt-btn" onclick="saveCaption('${escapeHtml(slotKey)}')" title="Desa aquest peu per a la figura actual">Desa el peu</button>` : '') +
+                        `</div>`;
+            }
+            html += `<div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">`;
+            html += altUploadButton(slotKey);                       // pujada (2026-09-10): sempre, també amb 0 alternatives
+            if (d.type === 'figure' && slotKey !== 'fig_situacio' && d.alternatives.length) {
+                html += `<label style="font-size:11px; color:#555;">Posa l'alternativa com a <select id="altTarget" class="alt-btn">` +
+                    ['fig_assaigs', 'fig_projecte_1', 'fig_projecte_2'].map(k => `<option value="${k}" ${k === slotKey ? 'selected' : ''}>${escapeHtml((REPORT_SLOTS.find(s => s.key === k) || {label: k}).label)}</option>`).join('') + `</select></label>`;
+            }
+            if (d.type === 'figure' && slotKey === 'fig_situacio' && !d.is_default) {
+                html += `<button class="alt-btn" onclick="chooseAlternative('fig_situacio', -1)">Composició automàtica del full</button>`;
+            } else if (d.auto) {
+                // geològic, tall, cullera: sempre hi ha figura; l'única tornada és a l'automàtica
+                if (!d.is_default) html += `<button class="alt-btn" onclick="chooseAlternative('${escapeHtml(slotKey)}', -1)">Tornar a l'automàtic</button>`;
+            } else if (d.current || (d.type === 'figure' && !d.is_default)) {
+                html += `<button class="alt-btn" onclick="chooseAlternative('${escapeHtml(slotKey)}', -1)">Cap imatge en aquesta ranura</button>`;
+            }
+            html += `</div>`;
+            document.getElementById('altBody').innerHTML = html;
+        }
+
+        async function chooseAlternative(slotKey, index) {
+            if (!altData || !altData.slots[slotKey]) return;
+            const d = altData.slots[slotKey];
+            const alt = index >= 0 ? d.alternatives[index] : null;
+            let target = slotKey;
+            const sel = document.getElementById('altTarget');
+            if (alt && sel && d.type === 'figure') target = sel.value;
+            const body = { slot: target };
+            if (d.type === 'photo') body.rel = alt ? alt.rel : null;
+            else body.entry = alt ? alt.entry : null;
+            try {
+                const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}/choose`, {
+                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
+                });
+                if (!resp.ok) throw new Error(await resp.text());
+                await afterChoiceSaved(await resp.json(), target);
+            } catch (err) {
+                showMessage('Error desant la tria: ' + err.message, 'error');
+            }
+        }
+
+        async function afterChoiceSaved(saved, target, okMessage) {
+            // El mateix «després de desar» per a una alternativa triada i per a una imatge pujada (2026-09-10)
+            const labelOf = k => (REPORT_SLOTS.find(s => s.key === k) || {label: k}).label;
+            const cleared = (saved.cleared || []).map(labelOf);
+            if (saved.placed && saved.placed !== target) {
+                showMessage(`Posada com a «${labelOf(saved.placed)}»: les figures del projecte van per ordre, la 2 darrere de la 1.`, 'info');
+                target = saved.placed;
+            } else {
+                showMessage(cleared.length
+                    ? `Tria desada. Una foto només pot anar a un forat: s'ha tret de «${cleared.join('», «')}».`
+                    : (okMessage || 'Tria desada (mana sobre el lector)'), 'success');
+            }
+            altSlotShown = target;
+            altData = null;                  // res de dades antigues: es tornen a demanar
+            photosLoaded = false;
+            await loadPhotos();              // refresca la pestanya d'imatges, les alternatives i la zona
+            await renderWizardImages();      // i la secció del formulari, ja amb les dades noves
+        }
+
+        // --- Pujada d'una imatge des de la finestreta (2026-09-10) ---
+        // Si el pipeline no ha trobat la imatge que l'Eva vol (a la carpeta o no), la puja des de la mateixa finestreta
+        // i entra a la ranura com una alternativa més (`source: user`). El servidor la valida, la normalitza i la desa
+        // amb un nom que és un ID a `validation/uploads/imatges/`; la resposta és la de `/choose`.
+        const UPLOAD_PROJECT_CAPTION = 'Detall del projecte. Font: G3DT.';   // el mateix defecte que el servidor (#10)
+
+        function isUploaded(item) {
+            return !!item && (item.kind === 'upload' || (!!item.entry && item.entry.kind === 'upload'));
+        }
+
+        async function saveCaption(slotKey) {
+            // #10 (2026-09-10): el peu de la figura del projecte actual; `/choose` amb la mateixa entrada i el peu nou
+            // l'edita al lloc (mateixa posició, cap duplicat)
+            const d = altData && altData.slots[slotKey];
+            if (!d || !d.current || !d.current.entry) return;
+            const input = document.getElementById('altCaption');
+            const caption = (input ? input.value : '').trim().slice(0, 200);
+            if (!caption) { showMessage('El peu de la figura no pot quedar buit.', 'error'); return; }
+            const entry = Object.assign({}, d.current.entry, { caption });
+            try {
+                const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}/choose`, {
+                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ slot: slotKey, entry })
+                });
+                if (!resp.ok) throw new Error(await resp.text());
+                await afterChoiceSaved(await resp.json(), slotKey, 'Peu de la figura desat');
+            } catch (err) {
+                showMessage('Error desant el peu: ' + err.message, 'error');
+            }
+        }
+
+        function autoFigurePreview(slotKey) {
+            // la figura que hi posarà el generador (la del calaix de figures), per ensenyar-la com a «actual: automàtic»
+            const f = lastPhotosData && lastPhotosData.figures && lastPhotosData.figures[slotKey];
+            return (f && f.thumbnail_url) ? f.thumbnail_url : '';
+        }
+
+        function altUploadButton(slotKey) {
+            return `<button class="alt-btn" onclick="pickUploadForSlot('${escapeHtml(slotKey)}')" title="Puja una imatge teva per a aquesta ranura (si el pipeline no ha trobat la que vols)">📁 Puja una imatge</button>` +
+                   `<span id="altUploadStatus" style="font-size:11px; color:#7f8c8d;"></span>`;
+        }
+
+        function pickUploadForSlot(slotKey) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = () => {
+                const file = input.files && input.files[0];
+                if (file) uploadImageForSlot(slotKey, file);
+            };
+            input.click();
+        }
+
+        async function uploadImageForSlot(slotKey, file) {
+            if (!selectedProject || !altData || !altData.slots[slotKey]) return;
+            const status = document.getElementById('altUploadStatus');
+            const say = (t, isErr) => { if (status) { status.textContent = t; status.style.color = isErr ? '#c0392b' : '#7f8c8d'; } };
+            const mb = (file.size / 1024 / 1024).toFixed(1);
+            if (file.type && !/^image\//.test(file.type)) { say('Cal una imatge (JPG o PNG).', true); return; }
+            if (file.size > 25 * 1024 * 1024) { say(`Massa gran (${mb} MB; màxim 25 MB).`, true); return; }
+            say(`Pujant ${file.name} (${mb} MB)…`);
+            try {
+                const form = new FormData();
+                form.append('file', file);
+                form.append('slot', slotKey);
+                const cap = document.getElementById('altCaption');          // #10: només a les figures del projecte
+                if (cap && slotKey.startsWith('fig_projecte_')) form.append('caption', cap.value.trim().slice(0, 200));
+                const resp = await fetch(`/api/alternatives/${encodeURIComponent(selectedProject)}/upload`, { method: 'POST', body: form });
+                let body = null;
+                try { body = await resp.json(); } catch (_) { body = null; }
+                if (!resp.ok) {
+                    const detail = body && body.detail;
+                    throw new Error(typeof detail === 'string' ? detail : (detail ? JSON.stringify(detail) : `HTTP ${resp.status}`));
+                }
+                await afterChoiceSaved(body, slotKey, 'Imatge pujada i posada a la ranura (mana sobre el lector)');
+            } catch (err) {
+                say('Error: ' + err.message, true);
+                showMessage('Error pujant la imatge: ' + err.message, 'error');
+            }
         }
 
         function selectPhotoForSlot(slotKey, photoPath) {
@@ -8996,6 +9776,1280 @@
                 </p>
             `;
         }
+
+        /* === LECTURA HEADLESS (Fase 7) === */
+        // Bloc autocontingut. Consumeix l'stream nou `GET /api/lectura-stream/{p}`
+        // (disseny §2) i el payload `_lectura` de l'event `prefills` existent.
+        // Robustesa (disseny §7 punt 6): si l'endpoint no hi es (flag
+        // G3DT_USE_LECTURA_HEADLESS off -> 404) o `_lectura` no arriba mai, tot
+        // el comportament d'avui es queda intacte — cap error a consola.
+
+        // decisions.fields[clau] -> id de camp del wizard (`wiz-{id}` / `src-{id}`).
+        // Confirmat amb grep de review.html (disseny §8.3). Claus de `fields`
+        // SENSE entrada aqui (expedient, field_date, lab_*, cte_*,
+        // referencia_catastral, num_dpsh_tests) no tenen camp al wizard: viatgen
+        // a la llista compacta `#lectura-extra-fields` (LECTURA_EXTRA_KEYS).
+        const LECTURA_MAPPING = {
+            client_name: 'client_name',
+            municipality: 'site_municipality',
+            street_address: 'street_address',
+            architect_name: 'architect_name',
+            architect_company: 'architect_company',
+            building_type: 'building_type',
+            num_floors: 'num_floors',
+            superficie_parcela: 'superficie_parcela_m2',
+            cota_referencia: 'cota_referencia',
+            num_soil_levels: 'num_soil_levels',
+            utm_x: 'utm_x',
+            utm_y: 'utm_y',
+        };
+
+        // Claus de `fields` sense id de camp al wizard -> etiqueta per a la
+        // llista compacta. Cap camp nou inventat (disseny, "sense inventar camps").
+        const LECTURA_EXTRA_KEYS = {
+            expedient: 'Expedient',
+            field_date: 'Data de camp',
+            num_dpsh_tests: 'Núm. assaigs DPSH',
+            referencia_catastral: 'Referència cadastral',
+            lab_testing_company: 'Laboratori',
+            lab_sample_id: 'Mostra (lab)',
+            lab_depth: 'Profunditat mostra (lab)',
+            lab_location: 'Ubicació mostra (lab)',
+            cte_edificacio: 'CTE — edificació',
+            cte_sol: 'CTE — sòl',
+        };
+
+        // `selectionsProject` marca de quin projecte son les tries de
+        // `selections`. El desplegable canvia de projecte SENSE recarregar la
+        // pagina: sense aquesta marca, les tries del projecte A viatjaven al
+        // desat del projecte B i, com que les claus son generiques
+        // (`{bloc}.{index}.{cel-la}`), el backend les casava contra el
+        // `_decisions.json` de B i hi congelava valors d'A.
+        //
+        // `freeText` marca les claus el valor de les quals ha escrit l'Eva a ma
+        // ("altre..."): son les uniques que poden sobreviure sense casar amb cap
+        // candidat. Viatgen al backend sota la clau `_lliure` de `lectura_selections`.
+        let lecturaState = {
+            decisions: null, degraded: false, selections: {}, freeText: {}, selectionsProject: null,
+        };
+        let _lecturaDocsTotal = 0;
+        let _lecturaDocsDone = 0;
+
+        // -- Helpers ------------------------------------------------------------
+
+        // Buida les tries si son d'un altre projecte. Tota lectura i tota
+        // escriptura hi passa: la fuita entre projectes queda impossible per
+        // construccio, no nomes per disciplina de reinicialitzar.
+        function _lecturaEnsureProject() {
+            if (lecturaState.selectionsProject !== selectedProject) {
+                lecturaState.selections = {};
+                lecturaState.freeText = {};
+                lecturaState.selectionsProject = selectedProject;
+            }
+        }
+
+        // `free`: el valor l'ha escrit l'Eva a ma. La marca viatja amb el valor
+        // — si torna a un candidat, deixa de ser text lliure.
+        function _lecturaSetSelection(key, value, free) {
+            _lecturaEnsureProject();
+            lecturaState.selections[key] = value;
+            if (free) lecturaState.freeText[key] = true;
+            else delete lecturaState.freeText[key];
+        }
+
+        // Tria que ja no casa amb cap candidat de la lectura d'ara: s'esborra.
+        // Deixar-la muda al mapa es el pitjor dels casos — no es marca enlloc
+        // (l'Eva no la veu) pero s'envia igual i el backend la congela.
+        function _lecturaClearSelection(key) {
+            _lecturaEnsureProject();
+            delete lecturaState.selections[key];
+            delete lecturaState.freeText[key];
+        }
+
+        function _lecturaSelectionFor(key) {
+            _lecturaEnsureProject();
+            return lecturaState.selections[key];
+        }
+
+        function _lecturaIsFreeText(key) {
+            _lecturaEnsureProject();
+            return !!lecturaState.freeText[key];
+        }
+
+        // Canvi de projecte al desplegable: res del projecte anterior sobreviu.
+        function _lecturaResetState() {
+            lecturaState = {
+                decisions: null,
+                degraded: false,
+                selections: {},
+                freeText: {},
+                selectionsProject: selectedProject,
+            };
+            const banner = document.getElementById('lectura-degraded-notice');
+            if (banner) banner.remove();
+            // Avis del delta-sync (`_jobsRenderSyncWarnings`): parla dels
+            // documents del projecte anterior. Es treu per id, sense dependre
+            // del bloc dels jobs — qui l'ha posat el torna a posar despres
+            // d'aquest reinici (vegeu `jobsRun`).
+            const syncBanner = document.getElementById('sync-warning-notice');
+            if (syncBanner) syncBanner.remove();
+        }
+
+        // Tries ja congelades en un desat anterior (`user_data.lectura_selections`).
+        // Sense aixo, despres d'una recarrega el mapa arrenca buit, el desat
+        // seguent envia `{}` i el backend torna a resoldre cada cel-la pel
+        // candidat 1 — desfent la tria validada per l'Eva.
+        //
+        // `project`: de quin projecte son aquestes dades. `wizardUserData` es una
+        // global sense marca, i una resposta tardana de `/api/user-data/A` (l'Eva
+        // ja ha triat B al desplegable) hi injectaria les tries d'A: la mateixa
+        // fuita entre projectes que tanca `_lecturaEnsureProject`, per una altra
+        // porta. Les tries no es restauren si no son del projecte que es veu.
+        function _lecturaRestoreSelections(userData, project) {
+            const from = project === undefined ? wizardUserDataProject : project;
+            if (from !== null && from !== undefined && from !== selectedProject) return;
+            const saved = userData && userData.lectura_selections;
+            if (!saved || typeof saved !== 'object') return;
+            _lecturaEnsureProject();
+            // `_lliure`: claus amb text escrit per l'Eva (vegeu `lecturaState.freeText`).
+            const free = Array.isArray(saved._lliure) ? saved._lliure : [];
+            for (const key in saved) {
+                if (key === '_lliure') continue;
+                const value = saved[key];
+                if (value === null || value === undefined || value === '') continue;
+                if (key in lecturaState.selections) continue;  // la tria viva mana
+                _lecturaSetSelection(key, value, free.indexOf(key) >= 0);
+            }
+        }
+
+        function _lecturaTruncate(text, n) {
+            const s = String(text === null || text === undefined ? '' : text);
+            return s.length > n ? s.slice(0, n - 1) + '…' : s;
+        }
+
+        function _lecturaFieldEl(wizardKey) {
+            return document.getElementById(`wiz-${wizardKey}`);
+        }
+
+        function _lecturaIsUserSourced(wizardKey) {
+            const src = document.getElementById(`src-${wizardKey}`);
+            return !!(src && src.classList.contains('user'));
+        }
+
+        // `data._lectura` a l'event `prefills` arriba embolcallat com la resta
+        // de claus de sistema del merged: {value: {decisions, degraded,
+        // per_doc}, source: "system"}. L'event `decisions` del stream arriba
+        // SENSE embolcall: {decisions, degraded, per_doc}. Es gestionen totes
+        // dues formes.
+        function _lecturaUnwrap(prefillsData) {
+            const raw = prefillsData && prefillsData._lectura;
+            if (!raw) return null;
+            const L = raw.value || raw;
+            if (!L || !L.decisions) return null;
+            return L;
+        }
+
+        function _lecturaCellDisplayValue(cell) {
+            if (cell === null || cell === undefined || cell === '') return '—';
+            // Els identificadors de fila (punt, sondeig, nom) son text pla per
+            // contracte: sense aquesta branca es veien tots com a "—".
+            if (typeof cell !== 'object') return String(cell);
+            if (cell.value !== null && cell.value !== undefined && cell.value !== '') return cell.value;
+            if (cell.n_spt !== undefined || cell.n_tp !== undefined || cell.n_ma !== undefined) {
+                return `${cell.n_spt || 0} SPT / ${cell.n_tp || 0} TP / ${cell.n_ma || 0} MA`;
+            }
+            return '—';
+        }
+
+        function _lecturaBadgeClassAndLabel(cell, degraded, mini) {
+            const estat = (cell && cell.estat) || 'no_trobat';
+            if (degraded) {
+                return { cls: 'degraded', label: 'revisió (degradat)', mini: '!' };
+            }
+            const nCand = (cell && cell.candidates && cell.candidates.length) || 1;
+            const labels = { segur: 'lectura', candidats: `${nCand} candidats`, no_trobat: 'no trobat' };
+            const minis = { segur: 'S', candidats: `${nCand}c`, no_trobat: '?' };
+            return { cls: estat, label: labels[estat] || estat, mini: minis[estat] || '?' };
+        }
+
+        // -- Popup (extensió visual de showAlternatives, l.~5605) ----------------
+
+        function showLecturaPopup(key, cell, anchor) {
+            document.querySelectorAll('.lectura-popup, .alt-dropdown').forEach((d) => d.remove());
+            if (!cell) return;
+            const pop = document.createElement('div');
+            pop.className = 'lectura-popup visible';
+
+            const estat = cell.estat || 'no_trobat';
+            const candidates = cell.candidates || [];
+
+            if (estat === 'no_trobat') {
+                const box = document.createElement('div');
+                box.className = 'lectura-popup-sources';
+                const title = document.createElement('div');
+                title.style.marginBottom = '4px';
+                const strong = document.createElement('strong');
+                strong.textContent = 'No trobat.';
+                title.appendChild(strong);
+                const sources = cell.sources_checked || [];
+                title.appendChild(document.createTextNode(' Fonts revisades: ' + (sources.join(', ') || '—')));
+                box.appendChild(title);
+                // El MOTIU quan el sistema ha descartat un valor a posta (p. ex. el veto pels
+                // punts d'assaig del Cadastre): `decide()` recull el `note` dels senyals sense
+                // valor. Sense pintar-lo, l'Eva veu un blanc sense explicació i la conclusió
+                // que en treu és sobre el sistema, no sobre la dada.
+                if (cell.note) {
+                    const why = document.createElement('div');
+                    why.className = 'lp-why';
+                    why.style.margin = '4px 0';
+                    why.textContent = cell.note;
+                    box.appendChild(why);
+                }
+                const action = document.createElement('div');
+                action.textContent = "Afegeix el document a la carpeta o omple el camp a mà.";
+                box.appendChild(action);
+                pop.appendChild(box);
+            } else if (candidates.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'lectura-popup-sources';
+                empty.textContent = 'Sense candidats disponibles.';
+                pop.appendChild(empty);
+            } else {
+                candidates.forEach((cand) => {
+                    const item = document.createElement('div');
+                    item.className = 'lectura-popup-item';
+                    const valDiv = document.createElement('div');
+                    valDiv.className = 'lp-value';
+                    valDiv.textContent = _lecturaTruncate(cand.value, 120);
+                    item.appendChild(valDiv);
+                    if (cand.font) {
+                        const fontDiv = document.createElement('div');
+                        fontDiv.className = 'lp-font';
+                        fontDiv.textContent = cand.font;
+                        item.appendChild(fontDiv);
+                    }
+                    if (cand.quote) {
+                        const quoteDiv = document.createElement('div');
+                        quoteDiv.className = 'lp-quote';
+                        quoteDiv.textContent = '"' + _lecturaTruncate(cand.quote, 160) + '"';
+                        quoteDiv.title = cand.quote;
+                        item.appendChild(quoteDiv);
+                    }
+                    item.onclick = () => {
+                        // Valor -> camp del wizard si n'hi ha (marca font 'user',
+                        // com fa avui showAlternatives); si no n'hi ha (cel·la de
+                        // taula o clau sense id de camp), es desa a
+                        // lecturaState.selections (backend a la Fase 8).
+                        const el = _lecturaFieldEl(key);
+                        if (el) {
+                            el.value = cand.value;
+                            el.dispatchEvent(new Event('change'));
+                        } else {
+                            _lecturaSetSelection(key, cand.value);
+                        }
+                        pop.remove();
+                    };
+                    pop.appendChild(item);
+                });
+            }
+
+            if (cell.rule) {
+                const foot = document.createElement('div');
+                foot.className = 'lectura-popup-footer';
+                foot.textContent = cell.rule;
+                pop.appendChild(foot);
+            }
+
+            anchor.style.position = 'relative';
+            anchor.parentNode.style.position = 'relative';
+            anchor.parentNode.appendChild(pop);
+            setTimeout(() => {
+                document.addEventListener('click', function close() {
+                    pop.remove();
+                    document.removeEventListener('click', close);
+                });
+            }, 10);
+        }
+
+        // -- Badge d'un camp del wizard (blau/ambre/gris) ------------------------
+
+        function _lecturaRenderFieldBadge(wizardKey, cell, degraded) {
+            const src = document.getElementById(`src-${wizardKey}`);
+            if (!src || !src.parentNode) return null;
+            const container = src.parentNode;
+            let badge = container.querySelector(`.estat-badge[data-lectura-key="${wizardKey}"]`);
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'estat-badge';
+                badge.dataset.lecturaKey = wizardKey;
+                container.appendChild(badge);
+            }
+            const { cls, label } = _lecturaBadgeClassAndLabel(cell, degraded);
+            badge.className = `estat-badge ${cls}`;
+            badge.textContent = label;
+            badge.title = degraded ? 'Lectura degradada — revisió recomanada' : '';
+            badge.onclick = (e) => {
+                e.stopPropagation();
+                showLecturaPopup(wizardKey, cell, badge);
+            };
+            return badge;
+        }
+
+        // -- Mini-badge de cel·la de taula (sense id de camp al wizard) ----------
+
+        function _lecturaCellBadgeSpan(cellKey, cell) {
+            const wrap = document.createElement('span');
+            wrap.style.display = 'inline-flex';
+            wrap.style.alignItems = 'center';
+            wrap.style.gap = '4px';
+            const valSpan = document.createElement('span');
+            valSpan.textContent = _lecturaCellDisplayValue(cell);
+            wrap.appendChild(valSpan);
+            if (cell && cell.matis) {
+                const matisSpan = document.createElement('span');
+                matisSpan.style.cssText = 'font-size:10px;color:#6b7280;';
+                matisSpan.textContent = `(${cell.matis})`;
+                wrap.appendChild(matisSpan);
+            }
+            if (cell && cell.estat) {
+                const { cls, mini, label } = _lecturaBadgeClassAndLabel(cell, lecturaState.degraded);
+                const badge = document.createElement('span');
+                badge.className = `estat-badge mini ${cls}`;
+                badge.textContent = mini;
+                badge.title = label;
+                badge.onclick = (e) => {
+                    e.stopPropagation();
+                    showLecturaPopup(cellKey, cell, badge);
+                };
+                wrap.appendChild(badge);
+            }
+            return wrap;
+        }
+
+        // Litologia de soil_levels: dropdown amb les redaccions candidates +
+        // "altre…" en text lliure (disseny §8.2). Selecció -> lecturaState.selections.
+        function _lecturaLitologiaSelect(key, cell) {
+            const wrap = document.createElement('span');
+            const candidates = (cell && cell.candidates) || [];
+            if (!candidates.length) {
+                wrap.appendChild(_lecturaCellBadgeSpan(key, cell));
+                return wrap;
+            }
+            const select = document.createElement('select');
+            select.className = 'lectura-select-lit';
+            candidates.forEach((c, idx) => {
+                const opt = document.createElement('option');
+                opt.value = String(idx);
+                opt.textContent = _lecturaTruncate(c.value, 60);
+                select.appendChild(opt);
+            });
+            const altOpt = document.createElement('option');
+            altOpt.value = 'altre';
+            altOpt.textContent = 'altre…';
+            select.appendChild(altOpt);
+
+            const freeInput = document.createElement('input');
+            freeInput.type = 'text';
+            freeInput.style.cssText = 'display:none; width:100%; font-size:12px; margin-top:3px;';
+            freeInput.placeholder = 'litologia (text lliure)';
+
+            select.onchange = () => {
+                if (select.value === 'altre') {
+                    freeInput.style.display = 'block';
+                    freeInput.focus();
+                } else {
+                    freeInput.style.display = 'none';
+                    _lecturaSetSelection(key, candidates[Number(select.value)].value);
+                }
+            };
+            freeInput.oninput = () => {
+                _lecturaSetSelection(key, freeInput.value, true);
+            };
+            // Tria ja congelada (desat anterior o clic previ) > candidat 1 per
+            // defecte (disseny D3: mai en blanc, mai fals-segur). Sense la
+            // primera branca, tornar a pintar la taula desfeia la tria de l'Eva.
+            const previous = _lecturaSelectionFor(key);
+            const hasPrevious = previous !== null && previous !== undefined && previous !== '';
+            const matched = hasPrevious
+                ? candidates.findIndex((c) => String(c.value) === String(previous))
+                : -1;
+            if (matched >= 0) {
+                select.value = String(matched);
+                _lecturaSetSelection(key, candidates[matched].value);
+            } else if (hasPrevious && _lecturaIsFreeText(key)) {
+                // Text lliure de l'Eva (marcat): es recupera a "altre…".
+                select.value = 'altre';
+                freeInput.value = previous;
+                freeInput.style.display = 'block';
+                _lecturaSetSelection(key, previous, true);
+            } else {
+                // Sense tria, o tria d'una lectura anterior que ja no casa amb
+                // cap candidat d'aquesta fila. Les claus son POSICIONALS: quan
+                // arriba un document nou i les files es reordenen, aquell valor
+                // aterra sobre una fila que no li correspon. Es descarta i mana
+                // el candidat 1 — un candidat honest val mes que un valor mort.
+                _lecturaSetSelection(key, candidates[0].value);
+            }
+
+            const badge = document.createElement('span');
+            const { cls, mini, label } = _lecturaBadgeClassAndLabel(cell, lecturaState.degraded);
+            badge.className = `estat-badge mini ${cls}`;
+            badge.textContent = mini;
+            badge.title = label;
+            badge.onclick = (e) => {
+                e.stopPropagation();
+                showLecturaPopup(key, cell, badge);
+            };
+
+            wrap.appendChild(select);
+            wrap.appendChild(badge);
+            wrap.appendChild(freeInput);
+            return wrap;
+        }
+
+        // n30: registre segur (nomes lectura) + chips ambre dels candidats de la
+        // suma; MAI pre-seleccionat (disseny §8.2 / regla 5 del contracte).
+        function _lecturaN30Cell(rowKey, row) {
+            const wrap = document.createElement('span');
+            // Contracte v1.1: el registre va DINS de n30 (n30.registre); germà = forma antiga dels fixtures.
+            const registre = row && ((row.n30 && row.n30.registre) || row.registre);
+            if (registre && Array.isArray(registre.value)) {
+                const reg = document.createElement('span');
+                reg.className = 'n30-registre';
+                reg.textContent = registre.value.join('/');
+                reg.title = 'Registre (segur, només lectura)';
+                wrap.appendChild(reg);
+            }
+            const n30 = row && row.n30;
+            const candidates = (n30 && n30.candidates) || [];
+            // Chip ja triat en un desat anterior: es torna a marcar (la tria NO
+            // es torna a escriure — ja hi es — pero l'Eva ha de veure-la).
+            const n30Key = `${rowKey}.n30`;
+            const previous = _lecturaSelectionFor(n30Key);
+            const hasPrevious = previous !== null && previous !== undefined && previous !== '';
+            let matchedChip = false;
+            candidates.forEach((c) => {
+                const chip = document.createElement('span');
+                chip.className = 'n30-chip';
+                chip.textContent = c.font ? `${c.value} · ${_lecturaTruncate(c.font, 22)}` : String(c.value);
+                if (c.quote) chip.title = c.quote;
+                if (hasPrevious && String(previous) === String(c.value)) {
+                    chip.className = 'n30-chip selected';
+                    matchedChip = true;
+                }
+                chip.onclick = () => {
+                    wrap.querySelectorAll('.n30-chip').forEach((x) => x.classList.remove('selected'));
+                    chip.classList.add('selected');
+                    _lecturaSetSelection(n30Key, c.value);
+                };
+                wrap.appendChild(chip);
+            });
+            // Tria d'una lectura anterior que ja no casa amb cap chip: s'esborra.
+            // Si es queda, no es veu marcada enlloc pero s'envia igual, i les
+            // claus son posicionals: acabaria a la fila equivocada.
+            if (hasPrevious && !matchedChip) _lecturaClearSelection(n30Key);
+            if (n30 && n30.rule) wrap.title = n30.rule;
+            return wrap;
+        }
+
+        function _lecturaTable(container, headers, rows) {
+            container.innerHTML = '';
+            if (!rows || !rows.length) return;
+            const wrap = document.createElement('div');
+            wrap.className = 'lectura-table-wrap';
+            const table = document.createElement('table');
+            table.className = 'lectura-table';
+            const thead = document.createElement('thead');
+            const trh = document.createElement('tr');
+            headers.forEach((h) => {
+                const th = document.createElement('th');
+                th.textContent = h;
+                trh.appendChild(th);
+            });
+            thead.appendChild(trh);
+            table.appendChild(thead);
+            const tbody = document.createElement('tbody');
+            rows.forEach((cells) => {
+                const tr = document.createElement('tr');
+                cells.forEach((c) => {
+                    const td = document.createElement('td');
+                    if (c instanceof Node) td.appendChild(c);
+                    else td.textContent = c;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+            wrap.appendChild(table);
+            container.appendChild(wrap);
+        }
+
+        // -- Aplicar templates_fields (TEMPS 1a, provisional) --------------------
+
+        function applyTemplatesFields(payload) {
+            if (!payload || typeof payload !== 'object') return;
+            for (const conceptId in LECTURA_MAPPING) {
+                const wizardKey = LECTURA_MAPPING[conceptId];
+                const sig = payload[conceptId];
+                if (!sig || sig.value === null || sig.value === undefined || sig.value === '') continue;
+                const el = _lecturaFieldEl(wizardKey);
+                if (el && (!el.value || !_lecturaIsUserSourced(wizardKey))) {
+                    el.value = sig.value;
+                }
+                const cell = {
+                    estat: 'segur',
+                    value: sig.value,
+                    candidates: [{ value: sig.value, font: sig.location || 'plantilla G3', quote: sig.quote || '' }],
+                    rule: 'Plantilla G3 (provisional — pendent de consolidació final).',
+                };
+                const badge = _lecturaRenderFieldBadge(wizardKey, cell, false);
+                if (badge) badge.title = 'Provisional (plantilles G3) — es confirmarà en consolidar';
+            }
+        }
+
+        // -- Aplicar decisions (escalars + taules) --------------------------------
+
+        function applyLecturaDecisions(decisions, degraded) {
+            if (!decisions || typeof decisions !== 'object') return;
+            lecturaState.decisions = decisions;
+            lecturaState.degraded = !!degraded;
+
+            const fields = decisions.fields || {};
+            for (const decisionKey in LECTURA_MAPPING) {
+                const wizardKey = LECTURA_MAPPING[decisionKey];
+                const cell = fields[decisionKey];
+                if (!cell || typeof cell !== 'object') continue;
+                const el = _lecturaFieldEl(wizardKey);
+                const estat = cell.estat;
+
+                if (el && estat === 'segur') {
+                    // Mateixa guarda que la branca `candidats`: la consolidacio
+                    // (TEMPS 3) mana sobre el valor provisional que
+                    // `applyTemplatesFields` (TEMPS 1a) ja ha escrit a l'input.
+                    // Amb la guarda antiga ("nomes si el camp es buit") l'input
+                    // es quedava amb el provisional mentre el badge i el popup
+                    // deien el valor consolidat. Font 'user' = mai es trepitja.
+                    if (cell.value !== null && cell.value !== undefined && cell.value !== ''
+                        && (!el.value || !_lecturaIsUserSourced(wizardKey))) {
+                        el.value = cell.value;
+                    }
+                } else if (el && estat === 'candidats') {
+                    const first = cell.candidates && cell.candidates[0] ? cell.candidates[0].value : cell.value;
+                    if (first !== null && first !== undefined && (!el.value || !_lecturaIsUserSourced(wizardKey))) {
+                        el.value = first;
+                    }
+                }
+                // no_trobat: mai escriu (regla 4 del contracte).
+                _lecturaRenderFieldBadge(wizardKey, cell, lecturaState.degraded);
+            }
+
+            renderLecturaExtraFields(fields);
+            if (decisions.tables) renderLecturaTables(decisions.tables);
+
+            const progress = document.getElementById('lectura-progress');
+            if (progress) {
+                let banner = document.getElementById('lectura-degraded-notice');
+                if (lecturaState.degraded) {
+                    if (!banner) {
+                        banner = document.createElement('div');
+                        banner.id = 'lectura-degraded-notice';
+                        banner.className = 'lectura-degraded-banner';
+                        progress.parentNode.insertBefore(banner, progress.nextSibling);
+                    }
+                    banner.textContent = 'Lectura degradada: la consolidació automàtica ha fallat parcialment — revisa els candidats abans de generar l’informe.';
+                } else if (banner) {
+                    banner.remove();
+                }
+            }
+        }
+
+        function renderLecturaExtraFields(fields) {
+            const container = document.getElementById('lectura-extra-fields');
+            if (!container) return;
+            container.innerHTML = '';
+            let any = false;
+            for (const key in LECTURA_EXTRA_KEYS) {
+                const label = LECTURA_EXTRA_KEYS[key];
+                const cell = fields[key];
+                if (!cell || typeof cell !== 'object') continue;
+                any = true;
+                const row = document.createElement('div');
+                row.className = 'lectura-extra-row';
+                const keySpan = document.createElement('span');
+                keySpan.className = 'lex-key';
+                keySpan.textContent = label;
+                row.appendChild(keySpan);
+                const valSpan = document.createElement('span');
+                valSpan.className = 'lex-value';
+                const estat = cell.estat || 'no_trobat';
+                valSpan.textContent = (cell.value !== null && cell.value !== undefined && cell.value !== '')
+                    ? cell.value : (estat === 'no_trobat' ? '—' : '');
+                row.appendChild(valSpan);
+                const { cls, mini, label: badgeLabel } = _lecturaBadgeClassAndLabel(cell, lecturaState.degraded);
+                const badge = document.createElement('span');
+                badge.className = `estat-badge mini ${cls}`;
+                badge.textContent = mini;
+                badge.title = badgeLabel;
+                badge.onclick = (e) => {
+                    e.stopPropagation();
+                    showLecturaPopup(key, cell, badge);
+                };
+                row.appendChild(badge);
+                container.appendChild(row);
+            }
+            container.classList.toggle('visible', any);
+        }
+
+        // -- Taules (pestanya Wizard: grup "Lectura headless") -------------------
+
+        function renderLecturaTables(tables) {
+            if (!tables || typeof tables !== 'object') return;
+            // Defensiu: si `wizardUserData` ha arribat despres del canvi de
+            // projecte (cami asincron de `loadProjectData`), aqui encara som a
+            // temps de recuperar les tries congelades abans de pintar-les.
+            // Sense projecte explicit: mana `wizardUserDataProject`, i si el
+            // user_data es d'un altre projecte no es restaura res.
+            _lecturaRestoreSelections(wizardUserData);
+
+            const dpshContainer = document.getElementById('lectura-dpsh-tables');
+            if (dpshContainer) {
+                const dpsh = tables.dpsh_tests;
+                const rows = (dpsh && Array.isArray(dpsh.rows)) ? dpsh.rows : [];
+                if (rows.length) {
+                    const h = document.createElement('h4');
+                    h.textContent = 'Assaigs DPSH';
+                    dpshContainer.innerHTML = '';
+                    dpshContainer.appendChild(h);
+                    const div = document.createElement('div');
+                    _lecturaTable(div,
+                        ['Punt', 'Cota inici', 'Profunditat assolida', 'Rebuig', 'Nivell freàtic'],
+                        rows.map((row, i) => [
+                            _lecturaCellBadgeSpan(`dpsh_tests.${i}.punt`, row.punt),
+                            _lecturaCellBadgeSpan(`dpsh_tests.${i}.cota_inici`, row.cota_inici),
+                            _lecturaCellBadgeSpan(`dpsh_tests.${i}.profunditat_assolida`, row.profunditat_assolida),
+                            _lecturaCellBadgeSpan(`dpsh_tests.${i}.rebuig`, row.rebuig),
+                            _lecturaCellBadgeSpan(`dpsh_tests.${i}.nivell_freatic`, row.nivell_freatic),
+                        ]));
+                    dpshContainer.appendChild(div);
+                } else {
+                    dpshContainer.innerHTML = '';
+                }
+            }
+
+            const sondeigContainer = document.getElementById('lectura-sondeig-tables');
+            if (sondeigContainer) {
+                sondeigContainer.innerHTML = '';
+
+                const sondeig = tables.sondeig_tests;
+                const sRows = (sondeig && Array.isArray(sondeig.rows)) ? sondeig.rows : [];
+                if (sRows.length) {
+                    const h = document.createElement('h4');
+                    h.textContent = 'Assaigs de sondeig';
+                    sondeigContainer.appendChild(h);
+                    const div = document.createElement('div');
+                    _lecturaTable(div,
+                        ['Sondeig', 'Cota', 'Profunditat assolida', 'SPT / TP / MA', 'Nivell freàtic'],
+                        sRows.map((row, i) => [
+                            _lecturaCellBadgeSpan(`sondeig_tests.${i}.sondeig`, row.sondeig),
+                            _lecturaCellBadgeSpan(`sondeig_tests.${i}.cota`, row.cota),
+                            _lecturaCellBadgeSpan(`sondeig_tests.${i}.profunditat_assolida`, row.profunditat_assolida),
+                            _lecturaCellBadgeSpan(`sondeig_tests.${i}.spt_ma`, row.spt_ma),
+                            _lecturaCellBadgeSpan(`sondeig_tests.${i}.nivell_freatic`, row.nivell_freatic),
+                        ]));
+                    sondeigContainer.appendChild(div);
+                }
+
+                const soil = tables.soil_levels;
+                const soilRows = (soil && Array.isArray(soil.rows)) ? soil.rows : [];
+                if (soilRows.length) {
+                    const h = document.createElement('h4');
+                    h.textContent = 'Nivells de sòl';
+                    sondeigContainer.appendChild(h);
+                    const div = document.createElement('div');
+                    _lecturaTable(div,
+                        ['Nom', 'Litologia', 'De', 'A'],
+                        soilRows.map((row, i) => [
+                            _lecturaCellBadgeSpan(`soil_levels.${i}.nom`, row.nom),
+                            _lecturaLitologiaSelect(`soil_levels.${i}.litologia`, row.litologia),
+                            _lecturaCellBadgeSpan(`soil_levels.${i}.de`, row.de),
+                            _lecturaCellBadgeSpan(`soil_levels.${i}.a`, row.a),
+                        ]));
+                    sondeigContainer.appendChild(div);
+                }
+
+                const spt = tables.spt_ma_tests;
+                const sptRows = (spt && Array.isArray(spt.rows)) ? spt.rows : [];
+                if (sptRows.length) {
+                    const h = document.createElement('h4');
+                    h.textContent = 'Assaigs SPT / MA';
+                    sondeigContainer.appendChild(h);
+                    const div = document.createElement('div');
+                    _lecturaTable(div,
+                        ['Id', 'Punt', 'Fondària', 'Litologia', 'N30'],
+                        sptRows.map((row, i) => [
+                            _lecturaCellBadgeSpan(`spt_ma_tests.${i}.id`, row.id),
+                            _lecturaCellBadgeSpan(`spt_ma_tests.${i}.punt`, row.punt),
+                            _lecturaCellBadgeSpan(`spt_ma_tests.${i}.profunditat`, row.profunditat),
+                            _lecturaCellBadgeSpan(`spt_ma_tests.${i}.litologia`, row.litologia),
+                            _lecturaN30Cell(`spt_ma_tests.${i}`, row),
+                        ]));
+                    sondeigContainer.appendChild(div);
+                }
+            }
+
+            // superficie_construida: camp ja existent al wizard, sense taula propia.
+            const sc = tables.superficie_construida;
+            if (sc) {
+                const totalTxt = (sc.components && sc.components.length)
+                    ? `${sc.components.join('+')} (${sc.total !== undefined ? sc.total : '?'})`
+                    : sc.value;
+                const cell = {
+                    estat: sc.estat || sc.estat_bloc || 'candidats',
+                    value: totalTxt,
+                    candidates: sc.candidates || [],
+                    rule: sc.rule,
+                };
+                _lecturaRenderFieldBadge('superficie_construida_m2', cell, lecturaState.degraded);
+            }
+        }
+
+        // -- Progres (barra de text a #lectura-progress) --------------------------
+
+        function updateLecturaProgress(evt, payload) {
+            const el = document.getElementById('lectura-progress');
+            if (!el) return;
+            el.classList.add('visible');
+            payload = payload || {};
+            // El formulari del wizard (on viu #lectura-progress) resta ocult fins al `prefills`:
+            // es replica el text a l'stepper visible (pas Visió) perquè l'Eva vegi el progrés.
+            const setText = (s) => { el.textContent = s; const m = document.getElementById('step-files-vision'); if (m) m.textContent = s; };
+            if (evt === 'lectura_inici') {
+                _lecturaDocsTotal = payload.n_claude || (payload.docs || []).length || 0;
+                _lecturaDocsDone = 0;
+                setText(`Llegint documents… 0/${_lecturaDocsTotal}`);
+            } else if (evt === 'lectura_doc_inici') {
+                setText(`Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal}${payload.doc ? ' · ' + payload.doc : ''}`);
+            } else if (evt === 'lectura_doc') {
+                _lecturaDocsDone += 1;
+                setText(`Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal}${payload.doc ? ' · ' + payload.doc : ''}${payload.cached ? ' (cache)' : ''}`);
+            } else if (evt === 'lectura_doc_error') {
+                _lecturaDocsDone += 1;
+                setText(`Llegint documents… ${_lecturaDocsDone}/${_lecturaDocsTotal} · ${payload.doc || ''} (error)`);
+            } else if (evt === 'consolidacio_inici') {
+                setText('Consolidant lectura…');
+            } else if (evt === 'consolidacio_fallback') {
+                lecturaState.degraded = true;
+                setText('Consolidació degradada — candidats sense prioritzar.');
+            } else if (evt === 'decisions') {
+                setText('Lectura consolidada.');
+            } else if (evt === 'lectura_fallback') {
+                setText(`Lectura headless no disponible (${payload.reason || 'motiu desconegut'}) — utilitzant via B.`);
+            } else if (evt === 'lectura_fi') {
+                setText('Lectura completada.');
+                setTimeout(() => { el.classList.remove('visible'); }, 4000);
+            }
+        }
+
+        function getLecturaSelections() {
+            // Mai les tries d'un altre projecte (vegeu `_lecturaEnsureProject`).
+            if (lecturaState.selectionsProject !== selectedProject) return {};
+            const out = Object.assign({}, lecturaState.selections);
+            // El backend descarta tota tria que ja no casi amb cap candidat del
+            // `_decisions.json` d'ara. El text lliure de l'Eva no en casa cap per
+            // definicio: nomes sobreviu si va marcat.
+            const free = Object.keys(lecturaState.freeText || {}).filter((k) => k in out);
+            if (free.length) out._lliure = free;
+            return out;
+        }
+
+        // -- Stream nou (`GET /api/lectura-stream/{p}`, disseny §2) --------------
+        //
+        // Retorna una Promise<boolean>: true si l'stream nou ha pres el
+        // control complet (l'endpoint existeix i ha emes almenys un event),
+        // false si cal caure al cami existent (`/api/prefills-stream`, sense
+        // cap canvi — 404 quan G3DT_USE_LECTURA_HEADLESS esta off, o error de
+        // connexio abans de cap event).
+        function openLecturaStream(project, opts) {
+            const attach = !!(opts && opts.attach);
+            const refresh = !!(opts && opts.refresh);
+            return new Promise((resolve) => {
+                let es;
+                try {
+                    // `attach=true` (Fase 14a, disseny §5.2): NOMES subscriu a un
+                    // job ja viu — l'Eva ha tornat i ha clicat la fila.
+                    // `refresh=true`: nomes des de "Actualitzar prefills" (salta
+                    // la cache); enganxar-se a un job viu no la pot rebobinar.
+                    const qs = attach ? '?attach=true' : (refresh ? '?refresh=true' : '');
+                    es = new EventSource(`/api/lectura-stream/${encodeURIComponent(project)}${qs}`);
+                } catch (err) {
+                    resolve(false);
+                    return;
+                }
+
+                let settled = false;
+                let succeeded = false;
+
+                const bail = () => {
+                    if (settled) return;
+                    settled = true;
+                    try { es.close(); } catch (err) { /* noop */ }
+                    if (activeEventSource === es) activeEventSource = null;
+                    resolve(false);
+                };
+                const markSucceeded = () => {
+                    if (succeeded) return;
+                    succeeded = true;
+                    settled = true;
+                    clearTimeout(failTimer);
+                    resolve(true);
+                };
+                // 404 (flag off) o error de connexio abans de cap event -> cami existent.
+                const failTimer = setTimeout(bail, 2500);
+
+                activeEventSource = es;
+
+                // TEMPS 1b: auto_extract() INTACTE, mateix vocabulari que via B.
+                es.addEventListener('step', (e) => {
+                    markSucceeded();
+                    const d = JSON.parse(e.data);
+                    setStepState(d.step, d.status);
+                });
+                es.addEventListener('file', (e) => {
+                    markSucceeded();
+                    const d = JSON.parse(e.data);
+                    if (PRIORITY_ROLES.has(d.role)) appendStepFile('scan', ROLE_LABELS[d.role] || d.name, 'ok');
+                });
+                es.addEventListener('source', (e) => {
+                    markSucceeded();
+                    const d = JSON.parse(e.data);
+                    appendStepFile('extract', d.name, d.ok ? 'ok' : 'skip');
+                });
+                es.addEventListener('groq', (e) => {
+                    markSucceeded();
+                    const d = JSON.parse(e.data);
+                    appendStepFile('mine', d.name, d.ok ? 'ok' : 'skip');
+                });
+
+                // TEMPS 1a: g3_templates() -> camps segurs provisionals.
+                es.addEventListener('templates_fields', (e) => {
+                    markSucceeded();
+                    applyTemplatesFields(JSON.parse(e.data));
+                });
+
+                // TEMPS 2: lectura headless incremental (vocabulari nou §2).
+                es.addEventListener('lectura_inici', (e) => {
+                    markSucceeded();
+                    updateLecturaProgress('lectura_inici', JSON.parse(e.data));
+                });
+                es.addEventListener('lectura_doc_inici', (e) => {
+                    markSucceeded();
+                    updateLecturaProgress('lectura_doc_inici', JSON.parse(e.data));
+                });
+                es.addEventListener('lectura_doc', (e) => {
+                    markSucceeded();
+                    updateLecturaProgress('lectura_doc', JSON.parse(e.data));
+                });
+                es.addEventListener('lectura_doc_error', (e) => {
+                    markSucceeded();
+                    updateLecturaProgress('lectura_doc_error', JSON.parse(e.data));
+                });
+                es.addEventListener('consolidacio_inici', (e) => {
+                    markSucceeded();
+                    let d = {};
+                    try { d = e.data ? JSON.parse(e.data) : {}; } catch (err) { d = {}; }
+                    updateLecturaProgress('consolidacio_inici', d);
+                });
+                es.addEventListener('consolidacio_fallback', (e) => {
+                    markSucceeded();
+                    updateLecturaProgress('consolidacio_fallback', JSON.parse(e.data));
+                });
+                es.addEventListener('decisions', (e) => {
+                    markSucceeded();
+                    const d = JSON.parse(e.data);
+                    applyLecturaDecisions(d.decisions, d.degraded);
+                    updateLecturaProgress('decisions', d);
+                });
+                es.addEventListener('lectura_fallback', (e) => {
+                    markSucceeded();
+                    updateLecturaProgress('lectura_fallback', JSON.parse(e.data));
+                });
+                es.addEventListener('lectura_fi', (e) => {
+                    markSucceeded();
+                    updateLecturaProgress('lectura_fi', {});
+                });
+
+                // Merge final — mateix nom d'event que la via B.
+                es.addEventListener('prefills', (e) => {
+                    markSucceeded();
+                    if (activeEventSource !== es) return;
+                    wizardPrefills = JSON.parse(e.data);
+                    es.close();
+                    activeEventSource = null;
+                    const visionStep = document.getElementById('step-vision');
+                    if (visionStep && !visionStep.classList.contains('done') && !visionStep.classList.contains('active')) {
+                        setStepState('vision', 'done');
+                    }
+                    finishStepper();
+                    showWizardContent();
+                    const L = _lecturaUnwrap(wizardPrefills);
+                    if (L) applyLecturaDecisions(L.decisions, L.degraded);
+                    if (typeof nbSetState === 'function') nbSetState('IDLE');
+                });
+
+                es.addEventListener('cancelled', (e) => {
+                    if (activeEventSource !== es) return;
+                    es.close();
+                    activeEventSource = null;
+                    hideStepper();
+                    if (typeof nbAfterCancel === 'function') nbAfterCancel();
+                });
+
+                es.addEventListener('error_event', (e) => {
+                    if (activeEventSource !== es) return;
+                    const d = JSON.parse(e.data);
+                    es.close();
+                    activeEventSource = null;
+                    hideStepper();
+                    emptyState.style.display = 'block';
+                    showMessage('Error carregant dades: ' + d.message, 'error');
+                    if (typeof nbSetState === 'function') nbSetState('IDLE');
+                });
+
+                es.onerror = () => {
+                    if (!succeeded) {
+                        bail();
+                        return;
+                    }
+                    // Ja haviem entrat a l'stream nou; si es trenca a mig cami,
+                    // cau al fallback existent (fetch pla via B) — mateix
+                    // comportament que fa avui `es.onerror` de via B.
+                    try { es.close(); } catch (err) { /* noop */ }
+                    if (activeEventSource === es) activeEventSource = null;
+                    loadProjectDataFallback();
+                };
+            });
+        }
+        /* === TRES BOTONS + TAULA D'ESTAT (Fase 14a) === */
+        // Bloc autocontingut, com el de la Fase 7. Regla del disseny §5.1: amb
+        // `G3DT_USE_LECTURA_HEADLESS=false` la UI d'avui no canvia — i aixi es:
+        // `GET /api/jobs` fa 404 amb el flag apagat, `jobsInit()` surt i el
+        // panell es queda ocult. Cap altre cami del fitxer en depen.
+        //
+        // Repartiment deliberat: el TEXT de cada fila (§3.3) el redacta el
+        // backend (`automation/lectura/job_text.py`, cobert amb pytest) i aqui
+        // nomes es pinta. Aquest fitxer fa 10.000 linies i no te cap test:
+        // com menys regles hi visquin, millor.
+
+        let _jobsAttachNext = false;      // seguent obertura d'stream = attach
+        let _jobsTimer = null;
+        let _jobsEnabled = false;
+        let _jobsBusy = false;
+
+        function _jobsEl(id) { return document.getElementById(id); }
+
+        async function jobsInit() {
+            let data;
+            try {
+                // Sonda dedicada (200 sempre) en lloc de llegir un 404: amb el
+                // flag apagat la consola ha de quedar neta, no amb una linia
+                // vermella de `fetch` que el codi ja gestiona.
+                const probe = await fetch('/api/lectura/enabled');
+                if (!probe.ok) return;           // servit fora de FastAPI
+                const { enabled } = await probe.json();
+                if (!enabled) return;            // flag apagat: no toquem res
+                const r = await fetch('/api/jobs');
+                if (!r.ok) return;
+                data = await r.json();
+            } catch (err) {
+                return;                          // servit fora de FastAPI
+            }
+            _jobsEnabled = true;
+            _jobsEl('jobsPanel').style.display = 'block';
+            // El boto unic d'avui es queda per al seu altre paper ("Aturar
+            // pipeline" mentre corre); mentre no corre res, manen els tres.
+            _jobsSyncButtons(typeof nbState === 'string' ? nbState : 'IDLE');
+            _jobsWrapSetState();
+            _jobsRender(data.jobs || []);
+        }
+
+        // Embolcall de `nbSetState` en lloc d'editar-la: aixi el bloc segueix
+        // sent autocontingut i, si algu treu aquest bloc, no queda cap rastre.
+        function _jobsWrapSetState() {
+            if (typeof nbSetState !== 'function' || nbSetState._jobsWrapped) return;
+            const orig = nbSetState;
+            const wrapped = function(state) { orig(state); _jobsSyncButtons(state); };
+            wrapped._jobsWrapped = true;
+            window.nbSetState = wrapped;
+        }
+
+        function _jobsSyncButtons(state) {
+            if (!_jobsEnabled) return;
+            const running = (state === 'RUNNING' || state === 'CANCELLING' || state === 'SYNCING');
+            const startBtn = _jobsEl('nbStartBtn');
+            if (startBtn) startBtn.style.display = running ? '' : 'none';
+            _jobsEl('jobsActions').style.display = running ? 'none' : 'flex';
+        }
+
+        function _jobsSetBusy(busy) {
+            _jobsBusy = busy;
+            ['jobsBtnPreparar', 'jobsBtnEnllestir', 'jobsBtnZero', 'jobsBtnActualitzar'].forEach((id) => {
+                const b = _jobsEl(id);
+                if (b) b.disabled = busy;
+            });
+        }
+
+        // -- Avisos del delta-sync (`POST /api/jobs` -> `warnings`) -------------
+        //
+        // El sincronitzador pot prendre decisions prudents EN SILENCI: si no ha
+        // pogut llegir la carpeta de xarxa sencera, o si de cop hi han
+        // desaparegut molts documents, copia el que veu i no aparta res. Fins
+        // ara l'avis es quedava al log del servidor i l'Eva podia estar llegint
+        // una copia incompleta convencuda que tot era normal.
+        //
+        // El TEXT el redacta el backend (`automation/sync_workspace.py`), que es
+        // qui sap que ha passat i que ha fet — i que no acusa la xarxa, perque
+        // pot haver estat ella reorganitzant la carpeta. Aqui nomes s'emmarca.
+        // Es informatiu: no bloqueja res, mateix ambre que la resta d'avisos.
+        function _jobsRenderSyncWarnings(project, warnings) {
+            const list = (Array.isArray(warnings) ? warnings : []).filter(Boolean);
+            let banner = document.getElementById('sync-warning-notice');
+            if (!list.length) {
+                if (banner) banner.remove();      // el projecte d'ara no en te
+                return;
+            }
+            const panel = _jobsEl('jobsPanel');
+            if (!panel) return;
+            if (!banner) {
+                banner = document.createElement('div');
+                banner.id = 'sync-warning-notice';
+                banner.className = 'lectura-degraded-banner';
+                panel.appendChild(banner);
+            }
+            banner.textContent = '';
+            const head = document.createElement('strong');
+            head.textContent = `Documents de «${project}»: `;
+            banner.appendChild(head);
+            banner.appendChild(document.createTextNode(list.join(' ')));
+            banner.appendChild(document.createTextNode(
+                ' Pots continuar: no s\'ha esborrat res. Si et sembla que hi falta algun ' +
+                'document, mira la carpeta del projecte abans de generar l\'informe.'));
+        }
+
+        // -- Taula ------------------------------------------------------------
+        function _jobsRender(jobs) {
+            const body = _jobsEl('jobsTableBody');
+            if (!body) return;
+            body.innerHTML = '';
+            if (!jobs.length) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 4;
+                td.className = 'jobs-empty';
+                td.textContent = 'Encara no has preparat cap informe.';
+                tr.appendChild(td);
+                body.appendChild(tr);
+                _jobsSchedule(false);
+                return;
+            }
+            let anyLive = false;
+            jobs.forEach((job) => {
+                const eva = job.eva || {};
+                if (eva.viu) anyLive = true;
+                const tr = document.createElement('tr');
+                if (eva.viu) tr.className = 'is-live';
+
+                const tdPas = document.createElement('td');
+                tdPas.className = 'jobs-pas';
+                tdPas.textContent = eva.pas || '';
+                tr.appendChild(tdPas);
+
+                const tdProj = document.createElement('td');
+                tdProj.className = 'jobs-project';
+                tdProj.textContent = job.project || eva.project || '';
+                tr.appendChild(tdProj);
+
+                const tdEstat = document.createElement('td');
+                tdEstat.appendChild(document.createTextNode(eva.titol || ''));
+                if (eva.comptador) {
+                    tdEstat.appendChild(document.createTextNode(' · '));
+                    const strong = document.createElement('strong');
+                    strong.className = 'jobs-comptador';
+                    strong.textContent = eva.comptador;
+                    tdEstat.appendChild(strong);
+                }
+                if (eva.detall) {
+                    const div = document.createElement('div');
+                    div.className = 'jobs-detall';
+                    div.textContent = eva.detall;
+                    tdEstat.appendChild(div);
+                }
+                if (job.state === 'error' && job.error) {
+                    const div = document.createElement('div');
+                    div.className = 'jobs-error-detail';
+                    div.textContent = String(job.error).slice(0, 400);
+                    div.style.display = 'none';
+                    div.id = `jobs-err-${jobs.indexOf(job)}`;
+                    tdEstat.appendChild(div);
+                }
+                tr.appendChild(tdEstat);
+
+                const tdAccio = document.createElement('td');
+                if (eva.accio_text) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'jobs-row-btn';
+                    btn.textContent = eva.accio_text;
+                    const project = job.project || eva.project;
+                    const accio = eva.accio;
+                    btn.onclick = () => jobsRowAction(accio, project, jobs.indexOf(job));
+                    tdAccio.appendChild(btn);
+                }
+                tr.appendChild(tdAccio);
+                body.appendChild(tr);
+            });
+            _jobsSchedule(anyLive);
+        }
+
+        // Refresc cada 5 s NOMES mentre hi hagi un job viu (disseny §5.2).
+        function _jobsSchedule(anyLive) {
+            if (_jobsTimer) { clearTimeout(_jobsTimer); _jobsTimer = null; }
+            if (!anyLive) return;
+            _jobsTimer = setTimeout(jobsRefresh, 5000);
+        }
+
+        // `force=true` (botó Actualitzar, Fase 14b): salta la cache d'un minut
+        // del `network_delta` i torna a mirar la xarxa ara. Segueix sense copiar
+        // ni moure res, i sense arrencar cap job.
+        async function jobsRefresh(force) {
+            if (!_jobsEnabled) return;
+            const btn = _jobsEl('jobsBtnActualitzar');
+            if (force && btn) btn.disabled = true;
+            try {
+                const r = await fetch('/api/jobs' + (force ? '?refresh=true' : ''));
+                if (!r.ok) return;
+                const data = await r.json();
+                _jobsRender(data.jobs || []);
+            } catch (err) {
+                _jobsSchedule(true);   // xarxa intermitent: es torna a provar
+            } finally {
+                if (force && btn) btn.disabled = false;
+            }
+        }
+
+        // -- Accions ----------------------------------------------------------
+        // Resol la carpeta seleccionada -> nom de projecte (`leaf`). En mode
+        // xarxa passa pel mateix `/api/network/select` que el boto d'avui; en
+        // mode dev el projecte ja el dona el desplegable.
+        async function _jobsResolveProject() {
+            const browser = _jobsEl('networkBrowser');
+            const usesNetwork = browser && browser.style.display !== 'none';
+            if (!usesNetwork) return selectedProject || null;
+
+            const path = _jobsEl('nbSelectedPath').value;
+            const r = await fetch('/api/network/select', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ path: path, refresh: false, allow_no_markers: false }),
+            });
+            if (!r.ok) {
+                const body = await r.json().catch(() => ({}));
+                const detail = body.detail;
+                const message = (detail && typeof detail === 'object')
+                    ? (detail.message || JSON.stringify(detail))
+                    : (typeof detail === 'string' ? detail : (r.statusText || 'Error desconegut'));
+                if (typeof nbShowError === 'function') nbShowError(r.status, message);
+                return null;
+            }
+            const data = await r.json();
+            return data.leaf || null;
+        }
+
+        async function jobsRun(button) {
+            if (_jobsBusy) return;
+            _jobsSetBusy(true);
+            try {
+                const project = await _jobsResolveProject();
+                if (!project) return;
+
+                const r = await fetch(
+                    `/api/jobs/${encodeURIComponent(project)}?button=${encodeURIComponent(button)}`,
+                    { method: 'POST' },
+                );
+                // 202 = job nou · 409 = ja n'hi havia un de viu i ens hi
+                // enganxem (disseny §3.4: mai dos `run_lectura` alhora).
+                if (!r.ok && r.status !== 409) {
+                    const body = await r.json().catch(() => ({}));
+                    showMessage('No s\'ha pogut arrencar: ' + (body.detail || r.statusText), 'error');
+                    return;
+                }
+                const payload = await r.json().catch(() => ({}));
+
+                if (button === 'preparar') {
+                    // Ningu espera: no s'obre cap stream. La taula es la veritat
+                    // (§6.1) i el refresc de 5 s ja ensenya el progres real, aixi
+                    // que tancar la pestanya no costa res.
+                    showMessage('Preparant «' + project + '». Pots tancar la pestanya: t\'avisarem.', 'success');
+                    _jobsRenderSyncWarnings(project, payload.warnings);
+                    await jobsRefresh();
+                    _jobsSchedule(true);
+                    return;
+                }
+                // Enllestir / des de zero: el formulari s'obre al final, com avui.
+                _jobsAttachNext = !!payload.attach;
+                if (typeof nbSetState === 'function') nbSetState('RUNNING');
+                onProjectChange(project);
+                // Sempre DESPRES d'`onProjectChange`: el canvi de projecte neteja
+                // els avisos del projecte anterior (i s'enduria aquest).
+                _jobsRenderSyncWarnings(project, payload.warnings);
+                _jobsSchedule(true);
+            } catch (err) {
+                showMessage('No s\'ha pogut arrencar: ' + err, 'error');
+            } finally {
+                _jobsSetBusy(false);
+            }
+        }
+
+        // Boto de la fila: enganxar-se a un job viu, continuar-ne un
+        // d'interromput, enllestir-ne un de preparat o veure l'error.
+        async function jobsRowAction(accio, project, index) {
+            if (!project) return;
+            if (accio === 'error') {
+                const box = _jobsEl(`jobs-err-${index}`);
+                if (box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
+                return;
+            }
+            if (accio === 'attach') {
+                selectedProject = project;
+                _jobsAttachNext = true;
+                if (typeof nbSetState === 'function') nbSetState('RUNNING');
+                onProjectChange(project);
+                _jobsSchedule(true);
+                return;
+            }
+            // `preparar` (Continuar) i `enllestir`: el mateix cami que els botons.
+            const r = await fetch(
+                `/api/jobs/${encodeURIComponent(project)}?button=${encodeURIComponent(accio)}`,
+                { method: 'POST' },
+            ).catch(() => null);
+            if (!r) return;
+            const payload = await r.json().catch(() => ({}));
+            if (accio === 'preparar') {
+                showMessage('Reprenent «' + project + '» — els documents ja llegits no es tornen a llegir.', 'success');
+                _jobsRenderSyncWarnings(project, payload.warnings);
+                await jobsRefresh();
+                _jobsSchedule(true);
+                return;
+            }
+            selectedProject = project;
+            _jobsAttachNext = !!payload.attach;
+            if (typeof nbSetState === 'function') nbSetState('RUNNING');
+            onProjectChange(project);
+            // Vegeu `jobsRun`: sempre despres d'`onProjectChange`.
+            _jobsRenderSyncWarnings(project, payload.warnings);
+            _jobsSchedule(true);
+        }
+
+        jobsInit();
     </script>
 <div id="formatToast" class="format-toast"></div>
 </body>

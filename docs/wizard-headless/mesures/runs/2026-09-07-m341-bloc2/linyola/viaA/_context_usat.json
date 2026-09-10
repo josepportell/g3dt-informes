@@ -1,0 +1,898 @@
+{
+ "fig_cadastre_num": 1,
+ "fig_aerea_num": 2,
+ "fig_main_plan_num": 3,
+ "fig_spt_cullera_num": 4,
+ "fig_geological_num": 5,
+ "fig_correlation_num": 6,
+ "fig_location_num": 1,
+ "fig_building_num": 3,
+ "photo_site_text": "",
+ "_num_site_photos": 0,
+ "photo_dpsh_num": 1,
+ "photo_sondeig_num": "",
+ "photo_materials_num": 2,
+ "table_dpsh_range": "3 i 4",
+ "table_lab_num": 5,
+ "table_permeability_num": 6,
+ "table_lab_values_num": 7,
+ "table_seismic_num": 8,
+ "table_soil_chars_num": 9,
+ "section1": "<Section1Content>",
+ "section2": "<Section2Content>",
+ "section3": "<Section3Content>",
+ "section4": "<Section4Content>",
+ "client": "SRA. SÍLVIA EROLES BALAGUERÓ",
+ "client_de": "de la SRA. SÍLVIA EROLES BALAGUERÓ",
+ "expedient": "4001607",
+ "street_address": "C/ Clot de la Llacuna, 16, Linyola (25240)",
+ "municipality": "Linyola",
+ "municipality_de": "de Linyola",
+ "data_camp_text": "1 d'octubre de 2025",
+ "data_camp_inici_text": "1 d'octubre de 2025",
+ "data_signatura_text": "29 d'octubre de 2025",
+ "architect_name": "Josep Bunyesc Palacín",
+ "architect_company": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+ "architect_name_upper": "JOSEP BUNYESC PALACÍN",
+ "building_type": "Habitatge unifamiliar aïllat",
+ "building_type_lower": "un habitatge unifamiliar aïllat",
+ "building_type_de": "d'un habitatge unifamiliar aïllat",
+ "num_floors": "Pb",
+ "report_language": "ca",
+ "building_structure_desc": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+ "_narr_building_structure": {
+  "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+  "source": "només planta baixa (Rubí, Bell-lloc)",
+  "candidates": [
+   {
+    "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+    "source": "només planta baixa (Rubí, Bell-lloc)"
+   },
+   {
+    "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+    "source": "variant (b) dels signats"
+   },
+   {
+    "value": "amb nivell de soterrani, i per tant, es preveu una excavació general fins a la cota de fonamentació del soterrani, a més del sanejament i l'anivellació.",
+    "source": "amb soterrani"
+   }
+  ],
+  "notes": []
+ },
+ "municipality_upper": "LINYOLA",
+ "street_1": "C/ Clot de la Llacuna",
+ "street_2": ", Linyola (25240)",
+ "cte_building_class": "C-0",
+ "cte_soil_class": "T-1",
+ "cte_edificacio": "C-0",
+ "cte_sol": "T-1",
+ "plantes": "Pb",
+ "superficie_parcela": "571",
+ "superficie_cadastral": "",
+ "superficie_parcela_planol": "571",
+ "superficie_construida": "250,91",
+ "access_description": "",
+ "site_description": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+ "lab_field_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_field_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_testing_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "cota_referencia": "+245.00",
+ "_parcel_rcs": [
+  "5098344CG2159N"
+ ],
+ "adjacent_north": "parcel·la buida",
+ "adjacent_south": "parcel·la buida",
+ "adjacent_east": "parcel·la buida",
+ "adjacent_west": "Carrer Clot de la Llacuna",
+ "adjacent_nearest_street": "Carrer Clot de la Llacuna",
+ "location_sentence": "al C/ Clot de la Llacuna de Linyola",
+ "adjacent_north_fmt": "Per la part nord, sud i est amb parcel·les buides.",
+ "adjacent_south_fmt": "",
+ "adjacent_east_fmt": "",
+ "adjacent_west_fmt": "I finalment, per la part oest, amb el Carrer Clot de la Llacuna.",
+ "access_street": "carrer adjacent situat al oest",
+ "_narr_access": {
+  "value": "carrer adjacent situat al oest",
+  "candidates": [
+   "carrer adjacent situat al oest",
+   "Carrer existent al oest",
+   "carrer Clot de la Llacuna"
+  ]
+ },
+ "adjacent_intro": "La parcel·la objecte d'estudi es situa al oest del municipi de Linyola, pren una morfologia rectangular i limita:",
+ "_narr_parcel": {
+  "position": "oest",
+  "shape": "rectangular",
+  "centroid": [
+   324939.4105015089,
+   4619561.989032348
+  ],
+  "rcs": [
+   "5098344CG2159N"
+  ]
+ },
+ "is_sloped": false,
+ "slope_percent": "0.4",
+ "slope_direction": "S",
+ "site_condition": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+ "_narr_site_condition": {
+  "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "source": "pendent 0 % ≤ 10 %, no antropitzat (Linyola, Alcoletge)",
+  "candidates": [
+   {
+    "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Com que es tracta d'un solar pla»"
+   },
+   {
+    "value": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Tot i no ser un solar pla»"
+   },
+   {
+    "value": "Degut a que es tracta d'un solar antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Degut a que es tracta d'un solar antropitzat»"
+   },
+   {
+    "value": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Es tracta d'un solar no antropitzat»"
+   }
+  ],
+  "notes": [
+   "antropitzat sense font (no derivable del Cadastre ni de l'ICGC): revisar"
+  ]
+ },
+ "_narr_site_description": {
+  "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+  "source": "sense edifici al Cadastre i pendent 0 % (Bell-lloc, Linyola)",
+  "candidates": [
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+    "source": "sense edifici al Cadastre i pendent 0 % (Bell-lloc, Linyola)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer, i amb vegetació de petita alçada.",
+    "source": "variant amb vegetació (Bell-lloc)"
+   },
+   {
+    "value": "La parcel·la es localitza explanada, sense pavimentar, i amb vegetació puntual de petita alçada.",
+    "source": "variant «explanada» (Linyola)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+    "source": "cap «buit pendent»"
+   },
+   {
+    "value": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+    "source": "cap «construit»"
+   }
+  ],
+  "notes": [
+   "vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita"
+  ]
+ },
+ "_own_parcel_building": {
+  "has_building": false,
+  "num_floors_above": 0,
+  "num_floors_below": 0,
+  "has_pool": false,
+  "total_built_m2": 0.0,
+  "refs": [
+   "5098344CG2159N"
+  ]
+ },
+ "has_sondeig": false,
+ "section_sondeig_num": "",
+ "section_spt_num": "2.4.2",
+ "section_resum_num": "2.4.3",
+ "include_geothermal": false,
+ "include_expansivity": false,
+ "include_earth_pressure": false,
+ "include_slope_stability": false,
+ "show_granulometric": false,
+ "section_excavabilitat_num": "3.5",
+ "section_sismica_num": "3.6",
+ "section_rado_num": "3.7",
+ "section_fonamentacio_num": "4.3",
+ "section_empentes_num": "",
+ "section_estabilitat_num": "",
+ "num_dpsh_tests": 3,
+ "dpsh_test_ids": "P-1,P-2,P-3",
+ "dpsh_avg_n20": "38",
+ "dpsh_tests": [
+  {
+   "test_id": "P-1",
+   "cota": "+245.00",
+   "depth": "-2.90",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-2",
+   "cota": "+245.00",
+   "depth": "-2.15",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-3",
+   "cota": "+245.00",
+   "depth": "-1.75",
+   "refusal": "Si",
+   "water": "No detectat"
+  }
+ ],
+ "sondeig_tests": [],
+ "spt_test_id": "SPT-1",
+ "spt_location": "P-3",
+ "spt_depth_range": "-1.00 a -1.15",
+ "spt_n30": "R",
+ "spt_lithology": "Lutita gresosa",
+ "spt_ma_tests": [
+  {
+   "test_id": "SPT-1",
+   "location": "P-3",
+   "depth_range": "-1.00 a -1.15",
+   "n30": "R",
+   "lithology": "Lutita gresosa"
+  }
+ ],
+ "lab_sample_id": "SPT-1",
+ "lab_location": "P-3",
+ "lab_depth": "-1.0 a -1.15",
+ "lab_tests_text": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig d'expansivitat Lambe UNE 103600/96\nAssaig de contingut en sulfats UNE 83963 : 2008",
+ "_narr_lab_tests": {
+  "value": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig d'expansivitat Lambe UNE 103600/96\nAssaig de contingut en sulfats UNE 83963 : 2008",
+  "source": "llista en ordre canònic (Rubí, Linyola)",
+  "candidates": [
+   {
+    "value": "Assaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig d'expansivitat Lambe UNE 103600/96\nAssaig de contingut en sulfats UNE 83963 : 2008",
+    "source": "llista en ordre canònic (Rubí, Linyola)"
+   },
+   {
+    "value": "Determinació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93\nAssaig d'expansivitat Lambe UNE 103600/96\nAssaig de contingut en sulfats UNE 83963 : 2008",
+    "source": "variant «Determinació de Límits d'Atterberg d'un sòl» (Rubí)"
+   },
+   {
+    "value": "Determinació del límit líquid d'un sòl UNE 103103 / 94\nDeterminació del límit plàstic d'un sòl UNE 103104 / 93\nAssaig Lambe UNE 103600 / 96\nDeterminació del contingut en ió sulfat en sòls UNE 83963 / 08",
+    "source": "línies literals del GTL"
+   }
+  ],
+  "notes": [
+   "Lambe: norma del GTL (UNE 103600/96); Linyola signat «UNE 103500/94» és errata"
+  ]
+ },
+ "materials_level_1": "El nivell 1 està format per llims argilsoso i sorrencs, de coloracions marrons a grisenques. Aquests materials presenten una plasticitat variable i són típics dels dipòsits de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc3 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m, amb un gruix de 1.40 m. Aquests materials presenten un valor mitjà de N20 de 13 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter cohesiu, amb una consistència mitja i una capacitat portant mitja.",
+ "materials_intro": "A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+ "seismic_ab_text": "0,04",
+ "radon_zone": "0",
+ "radon_zone_description": "",
+ "radon_sentence": "La parcel·la concreta d'estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l'apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+ "csn_radon_text": "",
+ "geology_para_1": "En primer lloc s’ha procedit a la consulta de les diferents cartografies geològiques existents sobre la zona:",
+ "geology_para_2": "Full 33: Segrià, del Mapa geològic comarcal de Catalunya, 1:50000 de l’ICC, 2006.",
+ "geology_para_3": "Hoja 388: Lleida; Hoja 358: Balaguer, del Mapa geológico de España, 1:50000 de l’IGME, 1998.",
+ "geology_para_4": "La zona que engloba aquest estudi es troba situada dins la Depressió de l’Ebre, en el seu extrem oriental, que rep el nom de Depressió Central Catalana. Aquesta és una unitat morfoestructural que forma l’avantpaís del Pirineus, i alhora és una conca sedimentària d’edat terciària. Està delimitada al N pels Pirineus, i al S per la Cadena Costanera Catalana o Catalànids.",
+ "geology_para_5": "La conca de l’Ebre està relacionada amb l’evolució de l’orogen pirinenc i es desenvolupa com a resposta de l’apropament de la placa Ibèrica sota la placa Europea, amb inici de subducció de la primera respecte la segona. D’aquesta manera, aquesta conca esdevé una cubeta sedimentària durant el Terciari, actuant com a centre de deposició dels materials, primer marins, durant el Terciari inferior i mig, i posteriorment continentals, procedents del desmantellament de les serralades circumdants.",
+ "geology_para_6": "Durant l’Eocè, la conca de l’Ebre estava connectada amb l’oceà Atlàntic per l’oest. Fruit de la col·lisió entre les dues plaques tectòniques, s’inicia la col·locació de làmines encavalcants o mantells de corriment, d’origen pirinenc, empeses cap al sud. L’emplaçament d’aquests mantells va reduir considerablement l’espai que inicialment ocupava la Conca de l’Ebre, i va fer perdre la comunicació amb el mar obert.",
+ "geology_paragraphs": [
+  "En primer lloc s’ha procedit a la consulta de les diferents cartografies geològiques existents sobre la zona:",
+  "Full 33: Segrià, del Mapa geològic comarcal de Catalunya, 1:50000 de l’ICC, 2006.",
+  "Hoja 388: Lleida; Hoja 358: Balaguer, del Mapa geológico de España, 1:50000 de l’IGME, 1998.",
+  "La zona que engloba aquest estudi es troba situada dins la Depressió de l’Ebre, en el seu extrem oriental, que rep el nom de Depressió Central Catalana. Aquesta és una unitat morfoestructural que forma l’avantpaís del Pirineus, i alhora és una conca sedimentària d’edat terciària. Està delimitada al N pels Pirineus, i al S per la Cadena Costanera Catalana o Catalànids.",
+  "La conca de l’Ebre està relacionada amb l’evolució de l’orogen pirinenc i es desenvolupa com a resposta de l’apropament de la placa Ibèrica sota la placa Europea, amb inici de subducció de la primera respecte la segona. D’aquesta manera, aquesta conca esdevé una cubeta sedimentària durant el Terciari, actuant com a centre de deposició dels materials, primer marins, durant el Terciari inferior i mig, i posteriorment continentals, procedents del desmantellament de les serralades circumdants.",
+  "Durant l’Eocè, la conca de l’Ebre estava connectada amb l’oceà Atlàntic per l’oest. Fruit de la col·lisió entre les dues plaques tectòniques, s’inicia la col·locació de làmines encavalcants o mantells de corriment, d’origen pirinenc, empeses cap al sud. L’emplaçament d’aquests mantells va reduir considerablement l’espai que inicialment ocupava la Conca de l’Ebre, i va fer perdre la comunicació amb el mar obert.",
+  "A partir de finals de l’Eocè i durant tot l’Oligocè, la conca de l’Ebre actua com a conca endorreica, tancada, on la sedimentació que es produeix és d’origen continental. Els sediments continentals tenen diversos orígens, entre els que cal destacar els dipòsits de torrenteres, de rius més o menys ben desenvolupats, de dipòsits de plana d’inundació, i finalment, dipòsits d'origen lacustre o palustre. Cada un d’aquests dipòsits donarà origen a diferents tipus de roques sedimentàries que són les que es troben a sota aquestes contrades.  Així apareixen conglomerats, gresos i argiles d’origen tant fluvial, com al·luvial, com lacustre, i també nivells de carbonats d’origen lacustre.",
+  "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+  "El present estudi s’ha realitzat principalment sobre ventalls al·luvials del Plistocè superior, caracteritzats per nivells d’argiles, sorres i graves.",
+  "En concret, i segons l'Institut Cartogràfic i Geològic de Catalunya (ICGC), afloren els materials de la unitat POmgc3, corresponents a lutites amb intercalacions de gresos i microconglomerats del Oligocè."
+ ],
+ "_narr_radon": {
+  "value": "La parcel·la concreta d'estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l'apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+  "source": "zona 0 (Linyola)",
+  "candidates": [
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal de LINYOLA i, segons la taula existent a l'apèndix B del RD 732/2019, no pertany a cap municipi amb concentracions inadequades de gas radó en edificis tancats.",
+    "source": "signat: Linyola"
+   }
+  ],
+  "notes": []
+ },
+ "materials_depth_text": "",
+ "materials_geomech_text": "",
+ "conclusions_level_1": "El nivell 1 està format per llims argilsoso i sorrencs, de coloracions marrons a grisenques. Aquests materials presenten una plasticitat variable i són típics dels dipòsits de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc3 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m, amb un gruix de 1.40 m. Aquests materials presenten un valor mitjà de N20 de 13 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter cohesiu, amb una consistència mitja i una capacitat portant mitja.",
+ "soil_levels": [
+  {
+   "description": "Llims argilsoso i sorrencs",
+   "description_short": "Llims argilsoso i sorrencs",
+   "ordinal": "1er",
+   "materials_text": "El nivell 1 està format per llims argilsoso i sorrencs, de coloracions marrons a grisenques. Aquests materials presenten una plasticitat variable i són típics dels dipòsits de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc3 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m, amb un gruix de 1.40 m. Aquests materials presenten un valor mitjà de N20 de 13 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter cohesiu, amb una consistència mitja i una capacitat portant mitja.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 1.40 m de profunditat, amb potències estudiades de 1.40 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter cohesiu, amb una consistència i una capacitat portant mitja. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 13 cops."
+  },
+  {
+   "description": "Lutites i sorrenques, Substrat",
+   "description_short": "Lutites i sorrenques, Substrat",
+   "ordinal": "2n",
+   "materials_text": "El nivell 2 està format per lutites i sorrenques, substrat, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. \n\nAquest nivell s'ha identificat com a materials oligocè, unitat POmgc3 segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta a partir de 1.40 m i fins a la cota de finalització dels assaigs, amb un gruix estudiat de 1.50 m. Aquests materials presenten un valor mitjà de N20 de 31 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta a partir de 1.40 m i fins a la cota de finalització dels assaigs (rebuig a la penetració), amb potències estudiades de com a mínim 1.50 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 31 cops, assolint rebuig a la penetració pels trams més profunds."
+  }
+ ],
+ "conclusions_levels_detected": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+ "soil_level_rows": [
+  {
+   "name": "1er nivell.",
+   "material": "Llims argilsoso i sorrencs",
+   "material_short": "Llims argilsoso i sorrencs"
+  },
+  {
+   "name": "2n nivell.",
+   "material": "Lutites i sorrenques, Substrat",
+   "material_short": "Lutites i sorrenques, Substrat"
+  }
+ ],
+ "perm_rows": [
+  {
+   "name": "1er nivell",
+   "k_value": "10^-5 a 10^-7",
+   "material": "Llims argilsoso i sorrencs",
+   "material_short": "Llims argilsoso i sorrencs"
+  },
+  {
+   "name": "2n nivell",
+   "k_value": "10^-3 a 10^-5",
+   "material": "Lutites i sorrenques, Substrat",
+   "material_short": "Lutites i sorrenques, Substrat"
+  }
+ ],
+ "sulfate_level_name": "1er nivell",
+ "sulfate_value": "0.0",
+ "sulfate_baumann": "---",
+ "sulfate_classification": "No Agressius",
+ "seismic_rows": [
+  {
+   "num": "1",
+   "terrain_type": "Tipus IV",
+   "thickness": "1.40",
+   "c_coeff": "2.0"
+  },
+  {
+   "num": "2",
+   "terrain_type": "Tipus II",
+   "thickness": "1.50*",
+   "c_coeff": "1.3"
+  }
+ ],
+ "geotech_rows": [
+  {
+   "name": "1er nivell. Llims argilsoso i sorrencs.",
+   "material_short": "Llims argilsoso i sorrencs",
+   "nb": "16",
+   "n": "--",
+   "density": "1.90",
+   "cohesion": "0.05",
+   "phi": "28°",
+   "E": "100"
+  },
+  {
+   "name": "2n nivell. Lutites i sorrenques, Substrat.",
+   "material_short": "Lutites i sorrenques, Substrat",
+   "nb": "38-R",
+   "n": "R",
+   "density": "2.20",
+   "cohesion": "1.00",
+   "phi": "30°",
+   "E": ">500"
+  }
+ ],
+ "geotech_level_name": "2n nivell. Lutites i sorrenques, Substrat.",
+ "geotech_nb": "38-R",
+ "geotech_n": "R",
+ "geotech_density": "2.20",
+ "geotech_cohesion": "1.00",
+ "geotech_phi": "30°",
+ "geotech_E": ">500",
+ "_calc_E": "CTE D.23 N20=31 | Rang Eva: >500-800",
+ "_calc_phi": "Schmertmann Nb=38 | Rang Eva: 30-35",
+ "_calc_gamma": "CTE D.27 rock | Rang Eva: 2.20",
+ "_calc_cohesion": "Rang Eva: 1.0",
+ "soil_level_name": "1er nivell.",
+ "soil_level_material": "Llims argilsoso i sorrencs",
+ "perm_level_name": "1er nivell",
+ "perm_k_value": "10^-5 a 10^-7",
+ "perm_material": "Llims argilsoso i sorrencs",
+ "k30_value": "8.0",
+ "_calc_k30": "E/60 = 500/60 (roca, c=1.0)",
+ "qa_value": "3.00",
+ "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+ "_calc_settlement": "Schmertmann Es=94 (2.5×Nb 37.8), B=1 m → 1.60 cm · règim roca → frase genèrica «menyspreables o bé inferiors a 1.0 cm» | alt: Es=500 (E del criteri) → 0.30 cm · nivell portant roca: Schmertmann és per a granulars → frase genèrica (7/7 signats)",
+ "_calc_Es": "Es=94 (2.5×Nb 37.8) · 2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat) | alt: Es=500 (E del criteri) → 0.30 cm",
+ "settlement": "1.60",
+ "_calc_qa": "Nb/12=23/12=1.89 = 19.50 | Cap: 3.00 (4.0-4.5)",
+ "conclusions_geologia_summary": "Segons els resultats dels assaigs de penetració realitzats, s'han identificat 2 nivells geotècnics diferenciats:\n\n- Nivell 1: Llims argilsoso i sorrencs (de 1.40 m de gruix, N20 mitjà = 13)\n- Nivell 2: Lutites i sorrenques, Substrat (de 1.50 m de gruix, N20 mitjà = 31)",
+ "conclusions_water_statement": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+ "conclusions_aggressivity_statement": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+ "empentes_paragraph": "",
+ "ka_value": "",
+ "kp_value": "",
+ "estabilitat_paragraph": "",
+ "expansivitat_paragraph": "",
+ "project": {
+  "project": {
+   "expedient": "4001607",
+   "municipality": "Linyola",
+   "report_date": "2026-09-07"
+  },
+  "client": {
+   "company_name": "Sílvia Eroles Balagueró",
+   "contact_name": "",
+   "nif": "",
+   "address": null
+  },
+  "architect": {
+   "name": "Josep Bunyesc Palacín",
+   "company": "BUNYESC ARQUITECTURA EFICIENT, S.L.P"
+  },
+  "building": {
+   "type": "Habitatge unifamiliar aïllat",
+   "num_floors": "PB (planta baixa, 1 nivell)",
+   "superficie_parcela_m2": "571.0",
+   "superficie_cadastral_m2": "",
+   "superficie_construida_m2": "",
+   "has_basement": false,
+   "has_retaining_walls": false
+  },
+  "location": {
+   "street_address": "C/ Clot de la Llacuna, 16, Linyola (25240)",
+   "utm_x": 324935.0,
+   "utm_y": 4619561.0
+  },
+  "descriptions": {
+   "site_description": "",
+   "access_description": "",
+   "cota_referencia": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+   "field_work_dates": [
+    "2025-10-01"
+   ],
+   "field_work_dates_text": "1 d'octubre de 2025",
+   "lab_company": "",
+   "lab_company_alias": "",
+   "lab_description": ""
+  },
+  "sondeig_tests": null,
+  "spt_data": null,
+  "lab_tests": [
+   {
+    "type": "Contingut en sulfats solubles UNE 83963:2008",
+    "sample_id": "SPT-1",
+    "location": "P-3",
+    "depth": "-1.0 a -1.15",
+    "value": 0.0,
+    "unit": "",
+    "standard": ""
+   }
+  ],
+  "site": {
+   "adjacent_parcels": {
+    "north": "parcel·la buida",
+    "south": "parcel·la buida",
+    "east": "parcel·la buida",
+    "west": "Carrer Clot de la Llacuna"
+   },
+   "position": "centre",
+   "shape": "rectangular",
+   "is_urban": true,
+   "is_sloped": false,
+   "slope_percent": null,
+   "slope_direction": null,
+   "slope_height_m": null,
+   "is_anthropized": null
+  },
+  "tests": {
+   "has_dpsh": true,
+   "num_dpsh_tests": 3,
+   "has_sondeig": false,
+   "has_spt": true,
+   "water_detected": false
+  },
+  "lab": {
+   "sulfate_mg_kg": 0.0,
+   "aggressivity_class": ""
+  },
+  "cte": {
+   "building_class": "C-0",
+   "soil_class": "T-1"
+  },
+  "soil_levels": [
+   {
+    "level_number": 1,
+    "description": "Llims argilsoso i sorrencs",
+    "thickness_m": 1.4,
+    "thickness_open": false,
+    "n20_average": 12.944444444444445,
+    "depth_from_m": 0.0,
+    "depth_to_m": 1.4,
+    "n20_min": 4,
+    "n20_max": 21,
+    "soil_type": "limo"
+   },
+   {
+    "level_number": 2,
+    "description": "Lutites i sorrenques, Substrat",
+    "thickness_m": 1.5,
+    "thickness_open": true,
+    "n20_average": 31.357142857142858,
+    "depth_from_m": 1.4,
+    "depth_to_m": null,
+    "n20_min": 4,
+    "n20_max": 90,
+    "soil_type": "rock"
+   }
+  ],
+  "geotechnical_params": {
+   "gamma_g_cm3": 2.2,
+   "cohesion_kg_cm2": 1.0,
+   "phi_deg": 30,
+   "E_kg_cm2": 500
+  },
+  "terzaghi": {
+   "inputs": {
+    "phi_deg": 30,
+    "cohesion_kg_cm2": 1.0,
+    "gamma_g_cm3": 2.2,
+    "B_m": 1.0,
+    "Df_m": 1.7,
+    "L_m": null,
+    "shape": "square"
+   },
+   "factors": {
+    "Nc": 37.2,
+    "Nq": 22.5,
+    "Ngamma": 19.7,
+    "sc": 1.3,
+    "sq": 1.0,
+    "sgamma": 0.8
+   },
+   "results": {
+    "qu_kg_cm2": 58.509,
+    "safety_factor": 3.0,
+    "Qa_kg_cm2": 3.0,
+    "Qa_uncapped_kg_cm2": 19.5,
+    "settlement_cm": 1.6,
+    "settlement_type": "diferit",
+    "Es_used_kg_cm2": 94.4,
+    "qa_terzaghi_peck_kg_cm2": null,
+    "Fw": null,
+    "Fd_tp": null,
+    "qa_governs": "cap"
+   }
+  },
+  "conditional_sections": {
+   "include_expansivity": false,
+   "include_earth_pressure": false,
+   "include_slope_stability": false,
+   "include_geothermal": false,
+   "show_granulometric": false
+  },
+  "dpsh": {
+   "expedient": "4001607",
+   "source_file": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/4001607 LINYOLA/ANNEXES/4001607_DPSH.xls",
+   "num_tests": 3,
+   "test_ids": [
+    "P-1",
+    "P-2",
+    "P-3"
+   ],
+   "overall_average_n20": 18.8,
+   "any_water_detected": false,
+   "tests": [
+    {
+     "test_id": "P-1",
+     "correction_factor": 0.83,
+     "depth_reached_m": 3.0,
+     "average_n20": 29.29,
+     "refusal_reached": true,
+     "refusal_depth_m": 3.0,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 9,
+       "nb": 10.84,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 18,
+       "nb": 21.69,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 7,
+       "nb": 8.43,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 7,
+       "nb": 8.43,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 22,
+       "nb": 26.51,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 57,
+       "nb": 68.67,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 26,
+       "nb": 31.33,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 43,
+       "nb": 51.81,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 90,
+       "nb": 108.43,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-2",
+     "correction_factor": 0.83,
+     "depth_reached_m": 2.2,
+     "average_n20": 33.3,
+     "refusal_reached": true,
+     "refusal_depth_m": 2.2,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 20,
+       "nb": 24.1,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 20,
+       "nb": 24.1,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 21,
+       "nb": 25.3,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 14,
+       "nb": 16.87,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 11,
+       "nb": 13.25,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 19,
+       "nb": 22.89,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 26,
+       "nb": 31.33,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 29,
+       "nb": 34.94,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 73,
+       "nb": 87.95,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-3",
+     "correction_factor": 0.83,
+     "depth_reached_m": 1.8,
+     "average_n20": 23.75,
+     "refusal_reached": true,
+     "refusal_depth_m": 1.8,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 16,
+       "nb": 19.28,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 17,
+       "nb": 20.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "fig_spt_cullera_image": "<InlineImage>",
+ "photo_site_image_1": "",
+ "photo_site_image_2": "",
+ "photo_dpsh_image": "<InlineImage>",
+ "photo_sondeig_image": "[Imatge pendent]",
+ "photo_materials_image": "<InlineImage>",
+ "fig_cadastre_image": "<InlineImage>",
+ "fig_aerea_image": "<InlineImage>",
+ "fig_main_plan_image": "<InlineImage>",
+ "has_plan_crops": true,
+ "fig_location_image": "<InlineImage>",
+ "fig_building_image": "<InlineImage>",
+ "fig_geological_image": "<InlineImage>",
+ "fig_correlation_image": "<InlineImage>"
+}

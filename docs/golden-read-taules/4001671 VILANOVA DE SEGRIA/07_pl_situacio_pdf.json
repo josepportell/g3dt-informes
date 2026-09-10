@@ -1,0 +1,33 @@
+{
+ "source_path": "pl situació.pdf (duplicat net de PDF/ANEJOS/4001671_plano de situación.pdf)",
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació de l'annex: zona d'estudi i posició dels 3 punts DPSH",
+ "issuer": "G3 (Eva, FreeHand)",
+ "date": "caixetí: 'Fecha: Marzo 2025' (mateix error de còpia que el tall)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "annex de l'informe",
+  "why": "situar la zona d'estudi i els punts d'assaig",
+  "expected_fields": [
+   "punts d'assaig",
+   "títol del projecte amb adreça/municipi"
+  ],
+  "not_expected": [
+   "data de camp fiable",
+   "cotes"
+  ],
+  "relation_to_others": "mateix dibuix que la versió ANEJOS (text brossa)",
+  "authority_for": [
+   "num_dpsh_tests (corroboració visual)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "corrobora 3 punts DPSH (llegenda 'Ensayo de penetración dinámica DPSH' + 3 símbols); títol: 'ESTUDIO GEOLÓGICO/GEOTÉCNICO ... CALLE SANTA GEMMA Nº4 ... VILANOVA DE SEGRIÀ' amb Exp: 4001671"
+ },
+ "not_present": [
+  "cotes, nivells, superfícies"
+ ],
+ "reading_notes": "text net al duplicat Print To PDF; lectura visual no necessària per a taules"
+}

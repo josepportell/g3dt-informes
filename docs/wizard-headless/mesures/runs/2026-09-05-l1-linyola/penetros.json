@@ -1,0 +1,195 @@
+{
+ "source_path": "PENETROS.pdf",
+ "source_md5": "2bc914934f482f98dffa7725545b8be2",
+ "skill_version": "1.8",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Full de camp manuscrit de TPS (subcontractista de sondeigs) amb l'albarà de la visita, el registre N20 dels 3 penetròmetres dinàmics DPSH (P1/P2/P3) i l'assaig SPT/MA de la mostra extreta al punt P3.",
+ "issuer": "TPS, prospecció del subsòl — operari SiNy, equip penetròmetre ML60A",
+ "date": "01-10-2025",
+ "pages_or_sheets": "3 pàgines: p.1 ALBARÀ, p.2 Full de Camp Penetròmetre Dinàmic (Fitxa 01), p.3 Full d'assaig SPT/MI/Mostra alterada",
+ "context": {
+  "who_made_it": "TPS (subcontractista de sondeigs de G3), operari SiNy, mateix dia de camp per als 3 penetròmetres i l'assaig SPT/MA",
+  "for_whom": "G3 (responsable Eva), que li ha encarregat els DPSH d'aquest projecte",
+  "why": "Registrar en camp els colps N20 dels 3 punts de penetròmetre dinàmic i l'assaig SPT/MA de la mostra recollida a P3, més l'albarà facturable de la visita",
+  "expected_fields": [
+   "adreça i població de l'obra",
+   "data de camp",
+   "nombre de penetròmetres realitzats",
+   "cota d'inici per punt (relativa)",
+   "colpeig N20 per fondària i marca de rebuig per punt",
+   "si hi ha nivell freàtic",
+   "esquema de situació dels punts",
+   "assaig SPT/MA: punt, interval de cota, colpeig 15/30/45/60, descripció del material"
+  ],
+  "not_expected": [
+   "expedient/número d'informe (camp 'Informe:' en blanc a p.2 i p.3)",
+   "client/promotor real del projecte (el 'DADES CLIENT' de l'albarà és G3, client de TPS, no del projecte)",
+   "arquitecte",
+   "tipus d'edifici, plantes, superfície",
+   "cota de referència absoluta en msnm",
+   "referència cadastral, UTM"
+  ],
+  "relation_to_others": "La versió digitalitzada d'aquest full és l'Excel DPSH (ANNEXES/4001607_DPSH.xls, no llegit en aquesta crida --only): l'Excel mana per als valors N20 i per a la fondària de rebuig exacta (peu 'Rebuig a -X,XX m'). Aquest manuscrit es llegeix pel que l'Excel no té: la referència de punt 0 (adreça), el nivell freàtic declarat, l'esquema de situació dels punts, la data de camp, i el full d'assaig SPT/MA de la p.3 (colpeig per trams 15/30/45/60, no present a l'Excel). La fitxa 'DADES PER ANAR A CAMP_v1.xlsx' (25.0616/, no llegida aquí) és una altra font candidata per a field_date.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna",
+   "location": "p.1 ALBARÀ, bloc DADES OBRA / p.2 Full de Camp, camp 'Descriure punt 0 o cota referència'",
+   "quote": "Carrer Clot de la Llacuna",
+   "confidence": 0.7,
+   "note": "Manuscrit, però escrit de forma clarament llegible i idèntica a dues caselles diferents del mateix document (albarà i full de camp). Coincideix amb l'exemple documentat al skill (nom_via 'Clot de la Llacuna', municipi Linyola)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Linyola",
+    "municipi_alternatives": [
+     "LINYOLA"
+    ]
+   },
+   "location": "p.1 ALBARÀ bloc DADES OBRA + p.2 camp 'Descriure punt 0'",
+   "quote": "Adreça: Carrer Clot de la Llacuna / Població: LINYOLA",
+   "confidence": 0.7,
+   "note": "Cap número de portal escrit en aquest document."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "p.1 ALBARÀ bloc DADES OBRA / p.2 i p.3 camp 'Adreça de l'obra'",
+   "quote": "Població: LINYOLA (p.1); Adreça de l'obra: LiNYOLA (p.2, p.3)",
+   "confidence": 0.9,
+   "note": "Grafia consistent a les 3 pàgines."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "01-10-2025",
+   "location": "p.1 ALBARÀ camp 'Data' / p.2 Full de Camp camp 'Data' / p.3 Full d'assaig camp 'Data'",
+   "quote": "Data: 1-10-25 (p.1); Data: 01-10-25 (p.2 i p.3)",
+   "confidence": 0.85,
+   "note": "Mateix dia per als 3 penetròmetres i per a l'assaig SPT/MA (hores 8:30-12:30 al full DPSH, 11:30-12:30 a l'assaig SPT/MA, totes dins la mateixa jornada). El primer dígit a p.1 podria confondre's amb un '7', però p.2 i p.3 l'escriuen clarament com '0' inicial + '1'."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "-0,15",
+   "location": "p.2 Full de Camp, capçalera 'Cota Inici' de P1, P2 i P3",
+   "quote": "Cota Inici: -0,15 (repetit igual a P1, P2 i P3)",
+   "confidence": 0.4,
+   "note": "Cota RELATIVA al 'punt 0' descrit ('Carrer Clot de la Llacuna'), NO en msnm: aquest document no dona cap valor absolut. Els tres punts comparteixen la mateixa cota d'inici, coherent amb un origen comú (probablement el nivell del carrer). Candidat feble per a cota_referencia; l'annex DPSH/sondeig (no llegits aquí) haurien de donar el valor absolut."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.1 ALBARÀ, camp 'Nº de penetròmetres realitzats' / p.2 Full de Camp, 3 columnes P1/P2/P3 + esquema de situació",
+   "quote": "3 | Nº de penetròmetres realitzats",
+   "confidence": 0.85,
+   "note": "Coincideix amb els 3 punts (P1, P2, P3) del full de camp i de l'esquema de situació dels punts. L'Excel DPSH (no llegit en aquesta crida) hauria de confirmar-ho amb els executats."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, primer bloc, camp 'Assaig de referència'",
+   "quote": "Assaig de referència: SPT1 P3",
+   "confidence": 0.6,
+   "note": "Id i punt escrits junts a la mateixa casella ('SPT1 P3'). El requadre 'Assaig tipus: SPT / MI / MA' no té cap creu marcada, tot i que el nom 'SPT1' ho suggereix fortament."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, mateix camp 'Assaig de referència'",
+   "quote": "Assaig de referència: SPT1 P3",
+   "confidence": 0.6,
+   "note": "Mateix punt que el penetròmetre dinàmic P3 del full de camp (p.2)."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,00 a 1,75",
+   "location": "p.3, camp 'Cota d'extracció: de la cota de / fins a la cota'",
+   "quote": "de la cota de: 1,0 / fins a la cota: 1,75",
+   "confidence": 0.65,
+   "note": "Interval en cotes relatives al mateix 'punt 0' del full de camp (p.2), no en msnm."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS (prospecció del subsòl)",
+   "location": "capçalera/logo repetit a p.1, p.2 i p.3",
+   "quote": "tps · prospecció del subsòl",
+   "confidence": 0.4,
+   "note": "És l'empresa de camp (albarà + fulls manuscrits), no un GTL de laboratori amb NIF; candidat feble comparat amb la banda de registre mercantil d'un GTL (memòria del projecte: el laboratori és sempre TPS B64803075)."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P1",
+    "cota_inici": "-0,15",
+    "profunditat_assolida": "-3,2",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, columna P1",
+    "quote": "R 29 (a la fila -3,2)"
+   },
+   {
+    "punt": "P2",
+    "cota_inici": "-0,15",
+    "profunditat_assolida": "-2,15",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, columna P2",
+    "quote": "R 2,15 (a la fila -2,4)"
+   },
+   {
+    "punt": "P3",
+    "cota_inici": "-0,15",
+    "profunditat_assolida": "-1,75",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, columna P3",
+    "quote": "R 1,75 (a la fila -2)"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P3",
+    "profunditat": "1,00 a 1,75",
+    "litologia": "Llim marró i tram d'argila amb graves",
+    "n30": {
+     "registre": [
+      50,
+      null,
+      null,
+      null
+     ],
+     "value_candidates": [
+      "R"
+     ],
+     "note": "Una sola casella (tram 0-15 cm) amb 50 cops i la resta buides = rebuig al primer tram (regla d'or Pas 3b); mai 'segur' per contracte."
+    },
+    "location": "p.3 Full d'assaig SPT/MI/Mostra alterada, primer bloc",
+    "quote": "Colpeig: 50 [buit] [buit] [buit]; Descripció dels materials: LLIM MARRÓ I TRAM D'ARGILA AMB GRAVES"
+   }
+  ],
+  "__nota": "sondeig_tests i soil_levels: aquest document no en conté (no hi ha annex de sondeig; és un full DPSH + assaig SPT/MA)"
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Document escanejat amb NAPS2, sense text incrustat a cap de les 3 pàgines (text_ok=false); llegit visualment amb les PNG senceres de la pre-extracció (150 dpi) i, per a caselles concretes (data, adreça, 'Assaig de referència', 'Cota d'extracció', 'Colpeig', 'Descripció dels materials'), amb scripts/render_clip.py a 400-700 dpi. Anomalia detectada i NO resolta amb aquest sol document: la notació 'R + número' de rebuig al full de camp (p.2) és inconsistent entre punts — P2 (R 2,15) i P3 (R 1,75) semblen fondàries exactes en metres (coma decimal, magnitud coherent amb la fila on són escrites), però P1 (R 29) no té coma i el valor no encaixa amb aquest patró (podria ser un recompte de colps parcial, no una fondària). S'ha reportat profunditat_assolida de P1 com '-3,2' (la fila on hi ha la marca R) amb aquesta reserva explícita; cal contrastar amb el peu 'Rebuig a -X,XX m' de l'Excel DPSH (ANEXES/4001607_DPSH.xls, no llegit en aquesta crida --only). La fila spt_ma_tests s'ha emès sempre, tal com exigeix la v1.8 d'aquest skill per a aquest projecte concret (Linyola): n30.registre=[50,null,null,null] amb candidat 'R', mai 'segur'."
+}

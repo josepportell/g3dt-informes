@@ -1,0 +1,3236 @@
+{
+ "schema_version": 1,
+ "project": "4001679 ANCILES",
+ "generated": "2026-09-05T23:00:02",
+ "skill_version": "1.6",
+ "consolidation": {
+  "consolidator": "python-1.0",
+  "elapsed_s": 0.031,
+  "n_docs": 14,
+  "n_conflicts": 0,
+  "docs_skill_versions": [
+   "1.0",
+   "1.6"
+  ],
+  "llm_only_fields": null
+ },
+ "fields": {
+  "architect_company": {
+   "estat": "candidats",
+   "value": "A+M ARQUITECTURA",
+   "candidates": [
+    {
+     "value": "A+M ARQUITECTURA",
+     "font": "24.0807/SITE_prop A.pdf logo, cantonada inferior dreta del caixetí",
+     "quote": "A + M ARQUITECTURA",
+     "note": "només logo gràfic, sense etiqueta de text explícita; candidat feble per a architect_company"
+    },
+    {
+     "value": "Retratería",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1, bloc CLIENTE:",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "note": "Paraula que precedeix el nom de l'arquitecta al mateix bloc; podria ser el nom del despatx/estudi o un error de transcripció. Sense confirmació creuada en aquest document"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "pl situ.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/SITE_prop A.pdf"
+   ],
+   "note": "només logo gràfic, sense etiqueta de text explícita; candidat feble per a architect_company"
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+   "candidates": [
+    {
+     "value": "ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+     "font": "24.0807/SITE_prop A.pdf caixetí, camp 'Arquitectura'",
+     "quote": "Arquitectura / ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+     "note": "etiqueta explícita 'Arquitectura' amb número de col·legiat per a totes dues persones — el senyal més fort d'aquest document per a architect_name. Dues firmants; no hi ha manera de triar-ne només una amb aquest document sol. El logo 'A+M ARQUITECTURA' al peu probablement és el despatx conjunt (candidat per a architect_company)"
+    },
+    {
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc CLIENT",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    },
+    {
+     "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA (ESTUDIO DE DETALLE)",
+     "font": "24.0807/A01_TIPOL.pdf marge esquerre, text vertical 'ESTUDIO DE DETALLE'",
+     "quote": "ESTUDIO DE DETALLE / ANDRÉS AMAT y ENRIQUE M. GARDETA",
+     "note": "Nom del despatx/estudi redactor d'aquest 'Estudio de Detalle - Avance'; no porta nºCol., pot ser l'estudi redactor del document i no necessàriament l'arquitecte oficial del projecte."
+    }
+   ],
+   "rule": "contradiccio: RETRATERIA, ALBA BARRAU CASTAN,ARQUITEC… (1 doc, conf max 0.50)",
+   "altres": [
+    {
+     "value": "MIRIAM CASTEL, nºCol. 6.703",
+     "font": "24.0807/IV_PLANOS.pdf Caixetí, camp 'Arquitectura' (totes les pàgines)",
+     "quote": "Arquitectura  ALBA BARRAU, nºCol. 6.408  MIRIAM CASTEL, nºCol. 6.703",
+     "note": "Segona arquitecta co-signant; si el camp de l'informe admet un sol nom, Alba Barrau sembla la principal per l'ordre visual del caixetí."
+    },
+    {
+     "value": "ALBA BARRAU, nºCol. 6.408",
+     "font": "24.0807/IV_PLANOS.pdf Caixetí, camp 'Arquitectura' (totes les pàgines, p.ex. p.1/gO1)",
+     "quote": "Arquitectura  ALBA BARRAU, nºCol. 6.408  MIRIAM CASTEL, nºCol. 6.703",
+     "note": "Dues arquitectes co-signants (A+M Arquitectos); Alba Barrau apareix primera al caixetí visual (confirmat amb render de p.3 i p.7). El text-layer del PDF les etiqueta erròniament com si fossin el 'Promotor' — vegeu nota de client_name."
+    },
+    {
+     "value": "Alba Barrau Castán",
+     "font": "24.0807/Presupuesto Parcela Anciles.msg peu de signatura del correu",
+     "quote": "Alba Barrau Castán, arquitecta.",
+     "note": "Sol·licitant del pressupost (correu d'encàrrec); identificada explícitament com a arquitecta al peu de signatura, despatx RETRATERIA (Benasque). Font única d'aquest document: candidat, no segur."
+    },
+    {
+     "value": "MIRIAM CASTEL",
+     "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Promotor' (però amb nºCol. d'arquitecte)",
+     "quote": "MIRIAM CASTEL, nºCol. 6.703",
+     "note": "El 'nºCol.' és típic d'arquitecte col·legiat. Hipòtesi principal: el caixetí ha intercanviat les etiquetes 'Promotor'/'Arquitecte'. No hi ha cap camp separat etiquetat 'Arquitecte' en aquest full."
+    },
+    {
+     "value": "ALBA BARRAU",
+     "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Promotor' (però amb nºCol. d'arquitecte)",
+     "quote": "ALBA BARRAU, nºCol. 6.408",
+     "note": "Mateixa anomalia que Miriam Castel."
+    },
+    {
+     "value": "Alba Barrau Castán",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1, bloc CLIENTE:",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "note": "Bloc CLIENTE: del pressupost = sol·licitant, no promotor (Pas 0/3). El nom conté 'ARQUITECTA' → candidat a architect_name, mai a client_name"
+    },
+    {
+     "value": "Alba Barrau Castán",
+     "font": "24.0807/RE_ Presupuesto Parcela Anciles.msg signatura del correu original d'Alba Barrau (línia 119, sota 'Un saludo')",
+     "quote": "Alba Barrau Castán, arquitecta.",
+     "note": "Signatura de correu amb despatx (RETRATERIA) i telèfons, però SENSE número de col·legiat -- prioritat més baixa que caixetí de plànol o signatura amb col·legiat. Candidat, no segur amb aquesta única font."
+    },
+    {
+     "value": "Alba Barrau Castán",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc CLIENTE (sol·licitant)",
+     "quote": "CLIENTE: RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+     "note": "Bloc CLIENTE = sol·licitant, no autoritat independent (deriva de l'encàrrec); conté 'ARQUITECTA' → candidat, mai segur per aquest sol (regla Pas 3). 'RETRATERIA' precedeix el nom: podria ser raó social/nom comercial, ambigu."
+    },
+    {
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1 bloc CLIENT",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    }
+   ],
+   "sources_checked": [
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf"
+   ],
+   "note": "El 'nºCol.' és típic d'arquitecte col·legiat. Hipòtesi principal: el caixetí ha intercanviat les etiquetes 'Promotor'/'Arquitecte'. No hi ha cap camp separat etiquetat 'Arquitecte' en aquest full."
+  },
+  "building_type": {
+   "estat": "candidats",
+   "value": "vivienda adosada (7 unitats)",
+   "candidates": [
+    {
+     "value": "vivienda adosada (7 unitats)",
+     "font": "tall.pdf peu de pagina, titol del projecte",
+     "quote": "CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS"
+    },
+    {
+     "value": "CASA GRANDE HCS - ANCILES",
+     "font": "24.0807/SITE_prop A.pdf títol del plànol / caixetí",
+     "quote": "C A S A  G R A N D E  H C S  -  A N C I L E S",
+     "note": "és el NOM del projecte/estudi de detall, no una descripció de tipus d'edifici (no diu 'vivienda unifamiliar' ni similar); candidat molt feble per a building_type, útil sobretot com a identificador del projecte. 'HCS' probablement 'Huerto Casa Sort' (nom de la parcel·la, vegeu llegenda 'PARCELA: HUERTO CASA SORT')"
+    },
+    {
+     "value": "7 adosados (residencial), PB+1PP+BC",
+     "font": "24.0807/Presupuesto Parcela Anciles.msg cos del correu",
+     "quote": "El proyecto consiste en 7 adosados de PB+1PP+BC.  /  Tipo edificio: 7 ADOSADOS (RESIDENCIAL)",
+     "note": "Descripció del sol·licitant a l'encàrrec inicial, anterior al pressupost i al projecte definitiu. Comparació CLOSE amb la redacció final de l'informe esperable."
+    }
+   ],
+   "rule": "contradiccio: EG 7 VIVIENDAS ANCILES (2 doc, conf max 0.60); 7 adosados (residencial), PB+1PP+BC (1 doc, conf max 0.65); Conjunt de 7 vivendes (Tipologia 1, 2 i… (1 doc, conf max 0.45)",
+   "altres": [
+    {
+     "value": "Conjunt de 7 vivendes (Tipologia 1, 2 i 3) en filera — promoció 'CASA GRANDE / HUERTO DE CASA SORT'",
+     "font": "24.0807/IV_PLANOS.pdf p.1 (portada), p.2 (índex), p.9/AO1 'Tipologías Viviendas Propuestas'",
+     "quote": "PROYECTO BÁSICO REVISADO / CASA GRANDE / HUERTO DE CASA SORT – ANCILES ... TIPOLOGÍAS VIVIENDAS PROPUESTAS ... vivienda 1 TIPO 2 / vivienda 2 TIPO 3 / vivienda 3 TIPO 1 / vivienda 4 TIPO 1 / vivienda 5 TIPO 1 / vivienda 6 TIPO 2 / vivienda 7 TIPO 2",
+     "note": "No hi ha cap etiqueta explícita 'tipo de edificio'. És un conjunt residencial de 7 vivendes en filera amb 3 tipologies constructives (adossades), no una vivenda unifamiliar aïllada — divergeix del patró habitual dels projectes G3 d'una sola casa."
+    },
+    {
+     "value": "Habitatges — 'Tipologías Viviendas Propuestas' (projecte 'Casa Grande HCS - Anciles')",
+     "font": "24.0807/A01_TIPOL.pdf títol del full / bloc 'Plano'",
+     "quote": "AO1 TIPOLOGÍAS VIVIENDAS PROPUESTAS ... Arquitectura ... C A S A  G R A N D E  H C S  -  A N C I L E S",
+     "note": "Document d'avanç que proposa 3 tipologies (T1, T2, T3, amb variants a/b/c = 9 unitats) per a la mateixa parcel·la; no queda clar quina tipologia concreta és la de l'habitatge de l'informe geotècnic. Candidat feble i genèric."
+    },
+    {
+     "value": "7 viviendas adosadas",
+     "font": "pl situ.pdf requadre de títol",
+     "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS",
+     "note": "font secundària (títol del plànol); no hi ha PLAN_COST ni comanda llegits encara en aquesta crida per contrastar"
+    },
+    {
+     "value": "CONSTR GRUPO DE VIVIENDAS",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR GRUPO DE VIVIENDAS"
+    },
+    {
+     "value": "7 ADOSADOS (RESIDENCIAL)",
+     "font": "24.0807/RE_ Presupuesto Parcela Anciles.msg cos de la sol·licitud original, línia 'Tipo edificio'",
+     "quote": "Tipo edificio: 7 ADOSADOS (RESIDENCIAL)",
+     "note": "Instrucció del client en el correu d'encàrrec (font primerenca, anterior a tots els annexos). Candidat 1."
+    },
+    {
+     "value": "EG 7 VIVIENDAS ANCILES",
+     "font": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx 'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG 7 VIVIENDAS ANCILES",
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    }
+   ],
+   "sources_checked": [
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "comanda laboratori_4001679_ANCILES.xls",
+    "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "pl situ.pdf",
+    "tall.pdf"
+   ],
+   "note": "font secundària (títol del plànol); no hi ha PLAN_COST ni comanda llegits encara en aquesta crida per contrastar"
+  },
+  "client_name": {
+   "estat": "segur",
+   "value": "Maria Alba Barrau Castán",
+   "candidates": [
+    {
+     "value": "Maria Alba Barrau Castán",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.5 bloc 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' → NOMBRE Y APELLIDO / N.I.F.",
+     "quote": "NOMBRE Y APELLIDO: MARIA ALBA BARRAU CASTÁN / CALLE LA PAUL 3 B3 / 22467 VILLANOVA (HUESCA) / N.I.F./C.I.F.: 18037382T",
+     "note": "Autoritat A per a client_name (regla Pas 3: el formulari p.5 mana). El bloc CLIENTE de la p.1 etiqueta la mateixa persona 'ARQUITECTA' (possible autopromotora, o 'RETRATERIA' com a raó social prèvia al seu nom — ambigu, no verificable només amb aquest document). Coincideix amb la nota estructural ja coneguda del projecte Anciles: p.5 = Alba Barrau, mentre que IV_PLANOS (no llegit en aquesta crida) declararia un promotor diferent (PICO DE OLA S.L.)."
+    },
+    {
+     "value": "Alba Barrau Castán",
+     "font": "24.0807/RE_ Presupuesto Parcela Anciles.msg mateixa signatura; és qui sol·licita el pressupost ('CLIENT:' implícit de l'encàrrec)",
+     "quote": "quería pedir si me podéis hacer un presupuesto y dar disponibilidad para el estudio geotécnico para una obra nueva en una parcela en Anciles. [...] Alba Barrau Castán, arquitecta.",
+     "note": "Regla Pas 3: el sol·licitant d'un correu d'encàrrec és candidat a client_name pero MAI segur si el nom conté 'arquitecta' -- aquí ho conté explícitament. Requereix creuar amb ACCEPTACIO/p.5 i el caixetí de IV_PLANOS (no llegits en aquesta crida) per resoldre si és promotora autopromotora o merament sol·licitant."
+    },
+    {
+     "value": "Alba Barrau",
+     "font": "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg body.txt capçalera 'From:' (línia 2) + text nou línies 6-7",
+     "quote": "From: Alba Barrau <abarrau@retrateria.com> ... reenvío aceptación.",
+     "note": "corrobora (no és autoritat primària): és el nom del remitent que reenvia l'acceptació, no una casella etiquetada 'Client' d'un formulari. L'autoritat real és el formulari p.5 del PDF adjunt ja present a la carpeta (ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf), llegit com a document separat. Coincideix amb aquell (mateix nom)."
+    }
+   ],
+   "rule": "autoritat de camp (R5): pressupost_g3 declara el valor (conf ≥ 0.5) sense contradiccio",
+   "altres": [
+    {
+     "value": "MARIA ALBA BARRAU CASTÁN",
+     "font": "24.0807/DADES PER ANAR A CAMP_v1.xlsx fitxa!C6 (CLIENT)",
+     "quote": "MARIA ALBA BARRAU CASTÁN 616523792",
+     "note": "telèfon 616523792 separat del nom (L3); = sol·licitant (regla G3); NO autoritat de client_name"
+    },
+    {
+     "value": "ALBA BARRAU",
+     "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Promotor'",
+     "quote": "ALBA BARRAU, nºCol. 6.408",
+     "note": "Mateixa anomalia que Miriam Castel: nºCol. sota l'etiqueta 'Promotor'."
+    },
+    {
+     "value": "Alba Barrau",
+     "font": "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg capçalera/signatura del correu (missatges de 2026-02-05 23:51 i 23:54)",
+     "quote": "El jue, 5 feb 2026 a las 23:51, Alba Barrau (<abarrau@retrateria.com>) escribió: Hola, reenvío aceptación.",
+     "note": "Sol·licitant que reprèn el projecte i tramet l'acceptació — correu d'encàrrec/seguiment: candidat, MAI segur per aquesta sola font (Pas 3). Cap paraula 'ARQUITECT' al fil, així que no es descarta com a client. Creuar amb el formulari p.5 d'ACCEPTACIO (autoritat A per a client_name) i amb el promotor que consti al plànol IV_PLANOS."
+    },
+    {
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440 BENASQUE",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA",
+     "font": "24.0807/SITE_prop A.pdf caixetí, camp 'Promotor'",
+     "quote": "Promotor / ANDRÉS AMAT y ENRIQUE M. GARDETA",
+     "note": "etiqueta explícita 'Promotor', sense número de col·legiat (a diferència dels noms sota 'Arquitectura'), coherent amb ser els promotors/clients. ATENCIÓ lectura: l'ordre del text pla extret del PDF (page-1.txt) barreja aquest bloc amb el d''Arquitectura' — el renderitzat visual (page-1.png) és la font correcta usada aquí per aparellar etiqueta i valor (vegeu reading_notes). No contrastat amb altres documents del projecte en aquesta crida --only"
+    },
+    {
+     "value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L.",
+     "font": "24.0807/IV_PLANOS.pdf Caixetí, camp 'Promotor' (totes les pàgines, p.ex. p.1/gO1 i p.7/gO5)",
+     "quote": "Promotor  PICO DE OLA ARQUITECTURA Y PROMOCION S.L.",
+     "note": "El text-layer del PDF surt desordenat (l'extracció posa els noms dels arquitectes just després de l'etiqueta 'Promotor'); confirmat visualment amb render de p.3 i p.7 que el valor real del camp 'Promotor' és 'PICO DE OLA ARQUITECTURA Y PROMOCION S.L.'. Regla del Pas 3 dona autoritat A al caixetí 'Promotor', però per aquest projecte concret (Anciles) el formulari p.5 de l'acceptació ha manat en revisions prèvies (Alba Barrau) — deixar com a candidat, mai segur amb aquesta sola font, i creuar amb ACCEPTACIO al consolidat."
+    },
+    {
+     "value": "MIRIAM CASTEL",
+     "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Promotor'",
+     "quote": "Promotor MIRIAM CASTEL, nºCol. 6.703",
+     "note": "El camp diu 'Promotor' però el nom porta 'nºCol.' (número de col·legiat), propi d'arquitecte, no de promotor — possible anomalia/reaprofitament del bloc del caixetí. Candidat feble; cal contrastar amb el formulari d'acceptació (p.5) o altres fonts, no llegides en aquesta crida."
+    }
+   ],
+   "sources_checked": [
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "pl situ.pdf",
+    "tall.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg"
+   ],
+   "note": "telèfon 616523792 separat del nom (L3); = sol·licitant (regla G3); NO autoritat de client_name",
+   "descartats": [
+    {
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    },
+    {
+     "value": "Alba Barrau Castán (Retratería), sol·licitant",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1, bloc CLIENTE:",
+     "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA",
+     "note": "Descartat com client_name: és el sol·licitant/arquitecta que demana el pressupost (nom conté ARQUITECTA), no el promotor/propietari de l'obra. Regla Pas 3"
+    },
+    {
+     "value": "Alba Barrau Castán",
+     "font": "24.0807/Presupuesto Parcela Anciles.msg peu de signatura del correu",
+     "quote": "Alba Barrau Castán, arquitecta.",
+     "note": "Descartada com a client_name des d'aquest document: és la sol·licitant/emissora del correu d'encàrrec i signa explícitament com a 'arquitecta' (regla Pas 3: el CLIENT: d'un correu d'encàrrec és el sol·licitant, candidat a architect_name, mai a client_name si el nom conté ARQUITECT). No es descarta que sigui també autopromotora — no verificable des d'aquest únic document; cap promotor alternatiu hi consta."
+    },
+    {
+     "value": "Dolors Maqueda / G3DT",
+     "font": "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg signatura, tot el fil",
+     "quote": "Loli Maqueda / Dep. Administració / www.g3dt.com",
+     "note": "G3 mai és client (regla del Pas 3): és personal de G3DT (Dep. Administració) responent l'encàrrec, no el sol·licitant."
+    },
+    {
+     "value": "G3 / Eva",
+     "font": "PENETROS + SONDEIGS.pdf Albarà DPSH p.1, bloc 'DADES CLIENT' (Empresa/Responsable); Albarà sondeig p.4 i fulls de sondeig p.5/p.6, camp 'Empresa/Client'",
+     "quote": "Empresa: G3 / Responsable: Eva (p.1); Empresa/Client: G3 - Eva (p.4, p.5, p.6)",
+     "note": "Descartat per la regla del Pas 3/Pas 0: en un albarà o full de camp TPS, el bloc 'client' es refereix a la relació TPS→G3 (el subcontractista factura a G3), no al promotor de l'obra. G3/Eva mai és client_name."
+    }
+   ]
+  },
+  "cota_referencia": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf"
+   ]
+  },
+  "cte_edificacio": {
+   "estat": "candidats",
+   "value": "C1",
+   "candidates": [
+    {
+     "value": "C1",
+     "font": "(derivat: regla Eva C0 < 300 m² / C1 > 300 m² sobre superficie construida 1165.84 m²) ← 24.0807/IV_PLANOS.pdf",
+     "quote": "1165.84",
+     "note": "derivat de la superficie construida, no llegit (Pas 3): sempre candidats; D5: edificacio adossada/plurifamiliar = un sol edifici → superficie TOTAL de l'encarrec (1165.84 m², 24.0807/IV_PLANOS.pdf); el candidat 1 de la taula (186.18 m²) es per unitat/tipologia"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf"
+   ],
+   "note": "derivat de la superficie construida, no llegit (Pas 3): sempre candidats; D5: edificacio adossada/plurifamiliar = un sol edifici → superficie TOTAL de l'encarrec (1165.84 m², 24.0807/IV_PLANOS.pdf); el candidat 1 de la taula (186.18 m²) es per unitat/tipologia"
+  },
+  "cte_sol": {
+   "estat": "candidats",
+   "value": "T-1",
+   "candidates": [
+    {
+     "value": "T-1",
+     "font": "(coneixement previ: T-1 a tots els pressupostos G3 que porten la linia CTE)",
+     "quote": "",
+     "note": "cap document de la carpeta ho diu: confirmar"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf"
+   ],
+   "note": "cap document de la carpeta ho diu: confirmar"
+  },
+  "expedient": {
+   "estat": "segur",
+   "value": "4001679",
+   "candidates": [
+    {
+     "value": "4001679",
+     "font": "tall.pdf peu de pagina, cel·la Exp:",
+     "quote": "Exp: 4001679"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "4001679",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001679.0"
+    },
+    {
+     "value": "4001679",
+     "font": "ANEJOS/4001679_DPSH.xls nom del fitxer",
+     "quote": "4001679_DPSH.xls"
+    },
+    {
+     "value": "4001679",
+     "font": "pl situ.pdf capçalera del plànol i requadre de títol, cantonada inferior esquerra",
+     "quote": "Exp: 4001679",
+     "note": "coincideix amb el nom de la carpeta '4001679 ANCILES'"
+    },
+    {
+     "value": "4001679",
+     "font": "nom de la carpeta del projecte",
+     "quote": "4001679 ANCILES",
+     "note": "regla Pas 3: nom de la carpeta = NNNNNNN MUNICIPI"
+    }
+   ],
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "comanda laboratori_4001679_ANCILES.xls",
+    "ANEJOS/4001679_DPSH.xls",
+    "pl situ.pdf",
+    "tall.pdf",
+    "(carpeta)"
+   ],
+   "note": "coincideix amb el nom de la carpeta '4001679 ANCILES'"
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2026-02-19",
+   "candidates": [
+    {
+     "value": "2026-02-19",
+     "font": "24.0807/DADES PER ANAR A CAMP_v1.xlsx fitxa!F38 (E38 'dies de camp')",
+     "quote": "datetime.datetime(2026, 2, 19, 0, 0)",
+     "note": "primer dia de camp (autoritat A)"
+    },
+    {
+     "value": "19-2-2026",
+     "font": "PENETROS + SONDEIGS.pdf Full de Camp Penetròmetre Dinàmic, Fitxa 01 (p.2), camp 'Data'; repetit a p.1 (albarà DPSH), p.3 (Fitxa 01 cont.), p.4 (albarà sondeig, 'Data inici'/'Data final'), p.5 (full de camp S-1, 'Data inici'), p.6 (full de camp S-2, 'Data inici'; 'Data finalització' en blanc)",
+     "quote": "Data: 19-2-2026",
+     "note": "Coincideix a 6 aparicions independents dins del mateix document (mateix full de camp, no fonts independents entre elles). És la data dels assaigs DPSH i del sondeig; candidat fort a 'primer dia de camp' si no hi ha cap altra data anterior a la fitxa 'DADES PER ANAR A CAMP' (no llegida en aquesta crida)."
+    },
+    {
+     "value": "Febrero 2026",
+     "font": "pl situ.pdf requadre de títol",
+     "quote": "Fecha: Febrero 2026",
+     "note": "només mes/any (sense dia); és la data d'emissió del plànol, no necessàriament el primer dia de camp"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "2026-02-19",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!N23 (DATA DE PRESA)",
+     "quote": "46072.0",
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "value": "2026-02-19",
+     "font": "Confirmación visita jueves 19 y plano.msg cos del correu",
+     "quote": "Te confirmo que estaré a partir de las 0930 en la parcela de Anciles con plano ... para abrir y asistir al técnico.",
+     "note": "Correu de coordinació d'obertura de parcel·la, NO fitxa de camp ni albarà ni Excel DPSH (fonts d'autoritat per a field_date). 'Jueves 19' interpretat com 2026-02-19 (dijous més proper al 19, mateix mes que la data del correu 2026-02-17); no queda declarat si aquesta visita és el primer dia de camp (DPSH) o una altra activitat (p. ex. sondeig). Candidat feble, mai segur."
+    }
+   ],
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "tall.pdf",
+    "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "comanda laboratori_4001679_ANCILES.xls",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf"
+   ],
+   "note": "primer dia de camp (autoritat A)"
+  },
+  "lab_depth": {
+   "estat": "candidats",
+   "value": "2.8 - 3.0",
+   "candidates": [
+    {
+     "value": "2.8 - 3.0",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!J35/L35",
+     "quote": "INICIAL 2.8 / FINAL 3.0",
+     "note": "el GTL mana si discrepa"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "pl situ.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001679_ANCILES.xls"
+   ],
+   "note": "el GTL mana si discrepa"
+  },
+  "lab_location": {
+   "estat": "candidats",
+   "value": "S-2",
+   "candidates": [
+    {
+     "value": "S-2",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!C35 (parèntesi)",
+     "quote": "MA (S-2)"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "pl situ.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001679_ANCILES.xls"
+   ]
+  },
+  "lab_sample_id": {
+   "estat": "candidats",
+   "value": "MA (S-2)",
+   "candidates": [
+    {
+     "value": "MA (S-2)",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!C35",
+     "quote": "MA (S-2)",
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "pl situ.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001679_ANCILES.xls"
+   ],
+   "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+  },
+  "lab_testing_company": {
+   "estat": "candidats",
+   "value": "TPS, Prospecció del Subsòl, SL",
+   "candidates": [
+    {
+     "value": "TPS, Prospecció del Subsòl, SL",
+     "font": "PENETROS + SONDEIGS.pdf Capçalera/logo de totes les pàgines (p.1-6)",
+     "quote": "tps — prospecció del subsòl",
+     "note": "Aquest document és emès per TPS com a executora dels assaigs de camp (DPSH + sondeig a rotació), no és un GTL de laboratori. Confirma TPS com a empresa que executa els assaigs in situ i pren les mostres; la identitat exacta de qui signa el GTL de laboratori s'ha de confirmar amb la comanda de laboratori/GTL (no llegits en aquesta crida)."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "pl situ.pdf",
+    "tall.pdf",
+    "PENETROS + SONDEIGS.pdf"
+   ],
+   "note": "Aquest document és emès per TPS com a executora dels assaigs de camp (DPSH + sondeig a rotació), no és un GTL de laboratori. Confirma TPS com a empresa que executa els assaigs in situ i pren les mostres; la identitat exacta de qui signa el GTL de laboratori s'ha de confirmar amb la comanda de laboratori/GTL (no llegits en aquesta crida)."
+  },
+  "municipality": {
+   "estat": "segur",
+   "value": "ANCILES",
+   "candidates": [
+    {
+     "value": "ANCILES",
+     "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "ANCILES"
+    },
+    {
+     "value": "ANCILES (HUESCA)",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "ANCILES - BENASQUE (HUESCA)",
+     "font": "24.0807/SITE_prop A.pdf caixetí, camp 'Situación'",
+     "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+     "note": "el document escriu 'ANCILES - BENASQUE (HUESCA)': Anciles sembla ser el nucli/entitat de població i Benasque el terme municipal que l'engloba (Anciles és un nucli del municipi de Benasque, Osca). El nom de l'expedient és '4001679 ANCILES' (forma curta del nucli). Candidat, no segur: cal contrastar amb comanda/pressupost/PLAN_COST per veure quina forma fa servir G3"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "Benasque",
+     "font": "tall.pdf peu de pagina, titol del projecte",
+     "quote": "ADOSADAS EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+     "note": "El municipi legible es 'BENASQUE'; 'ARCILES' sembla ser una localitat/pedania dins de Benasque (possible errata d'impremta per 'Anciles', que es el nom real d'aquest nucli i coincideix amb el nom de la carpeta del projecte '4001679 ANCILES'). Creuar amb altres documents del projecte."
+    },
+    {
+     "value": "Benasque (Huesca)",
+     "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Situación'",
+     "quote": "ANCILES - BENASQUE (HUESCA)",
+     "note": "El text uneix el nucli 'Anciles' i el terme municipal 'Benasque'. Candidat principal per ser el municipi oficial."
+    },
+    {
+     "value": "ANCILES (HUESCA)",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "ANCILES",
+     "font": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx 'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG 7 VIVIENDAS ANCILES",
+     "note": "«ANCILES» no consta al padró de municipis de Catalunya: o és de fora de Catalunya, o no és un municipi (pot ser un llogaret o una entitat): verificar"
+    },
+    {
+     "value": "Anciles",
+     "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Situación'",
+     "quote": "ANCILES - BENASQUE (HUESCA)",
+     "note": "Nucli de població, no municipi oficial en si; coincideix amb el nom de la carpeta/expedient del projecte (4001679 ANCILES)."
+    },
+    {
+     "value": "Benasque (Huesca)",
+     "font": "24.0807/IV_PLANOS.pdf Caixetí 'Situación' + mapa comarcal p.3/gO1 ('EMPLAZAMIENTO. ANCILES (Valle de Benasque)')",
+     "quote": "ANCILES - BENASQUE (HUESCA)",
+     "note": "Benasque és el municipi legal/administratiu; Anciles n'és un nucli/entitat menor annexionat (com es veu a l'ortofoto p.3: 'ANCILES CASCO ANTIGUO' dins del terme de Benasque). Candidat pel municipi oficial (Cadastre/registre)."
+    },
+    {
+     "value": "Anciles",
+     "font": "24.0807/IV_PLANOS.pdf Caixetí 'Situación'; ortofoto p.3/gO1 ('ANCILES CASCO ANTIGUO'); nom de carpeta del projecte '4001679 ANCILES'",
+     "quote": "ANCILES - BENASQUE (HUESCA)",
+     "note": "Nom del nucli/poble on se situa la parcel·la; candidat si l'informe reporta el nucli en lloc del municipi legal (pràctica habitual d'Eva de citar el poble)."
+    },
+    {
+     "value": "Anciles (Huesca)",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1, bloc OBRA:",
+     "quote": "ANCILES (HUESCA)",
+     "note": "Forma del document en majúscules sense accent; possible forma oficial 'Ancilés' (Vall de Benasc, Osca) — confirmar amb padró/Cadastre"
+    },
+    {
+     "value": "Anciles",
+     "font": "24.0807/Presupuesto Parcela Anciles.msg cos del correu",
+     "quote": "una obra nueva en una parcela en Anciles",
+     "note": "Forma curta, sense terme municipal oficial (el terme és Benasque; Anciles n'és nucli/entitat de població). Candidat, creuar amb comanda/pressupost/PLAN_COST per a la forma oficial."
+    },
+    {
+     "value": "Anciles",
+     "font": "24.0807/RE_ Presupuesto Parcela Anciles.msg cos de la sol·licitud original",
+     "quote": "para el estudio geotécnico para una obra nueva en una parcela en Anciles",
+     "note": "Únic esment de municipi/localitat en aquest document; forma curta, no confirmada com a forma oficial. Candidat, creuar amb comanda/pressupost/PLAN_COST."
+    },
+    {
+     "value": "Anciles",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc OBRA",
+     "quote": "ANCILES (HUESCA)",
+     "note": "Bloc OBRA; '(HUESCA)' és la província, no el municipi."
+    },
+    {
+     "value": "Anciles",
+     "font": "PENETROS + SONDEIGS.pdf Albarà DPSH p.1 (camps 'Adreça'/'Població'), Fitxes DPSH p.2/p.3 (camp 'Adreça de l'obra'), Albarà sondeig p.4 (camps 'Adreça'/'Població'), Fulls de sondeig p.5/p.6 (camp 'Adreça de l'obra')",
+     "quote": "Adreça: Anciles / Població: Anciles (p.1); Adreça de l'obra: Anciles (p.2, p.3, p.5, p.6)",
+     "note": "Repetit idènticament 6 cops al document, però només com a nom de poble: el camp 'Adreça' i el camp 'Població' porten exactament el mateix text, sense cap carrer diferenciat. No és una de les fonts primàries del Pas 3 (comanda/pressupost/PLAN_COST, no llegides en aquesta crida); es dona com a suport addicional, no com a font independent forta."
+    },
+    {
+     "value": "Benasque",
+     "font": "pl situ.pdf requadre de títol",
+     "quote": "DE ARCILES, BENASQUE",
+     "note": "Benasque és el municipi oficial; 'ARCILES' del mateix títol és amb tota probabilitat un error tipogràfic de 'ANCILES', el nucli/entitat de població dins Benasque on és la parcel·la (vegeu candidat separat)"
+    },
+    {
+     "value": "Anciles",
+     "font": "pl situ.pdf mapa cadastral base i ortofoto, rètols del nucli (clip 0.02,0.08,0.34,0.42 @400dpi)",
+     "quote": "Anciles / ANCILES",
+     "note": "coincideix amb el nom de la carpeta del projecte ('4001679 ANCILES', pràctica G3 de nomenar per nucli/localitat); el títol del mateix document l'escriu 'ARCILES' (typo) i dona 'BENASQUE' com a terme municipal — dues formes reals, no variants ortogràfiques del mateix nivell administratiu, per això van com a candidats separats i no com a alternatives"
+    }
+   ],
+   "sources_checked": [
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "comanda laboratori_4001679_ANCILES.xls",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf"
+   ],
+   "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+  },
+  "num_dpsh_tests": {
+   "estat": "candidats",
+   "value": 6,
+   "candidates": [
+    {
+     "value": 6,
+     "font": "ANEJOS/4001679_DPSH.xls fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2', 'P-3', 'P-4', 'P-5', 'P-6']",
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    },
+    {
+     "value": 5,
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.2 campanya",
+     "quote": "5 ensayos de penetración dinámica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    }
+   ],
+   "rule": "contradiccio: 5 (3 doc, conf max 0.70)",
+   "altres": [
+    {
+     "value": 6,
+     "font": "ANEJOS/4001679_DPSH.xls Noms de full P-1..P-6, cadascun amb dades a la columna C (Golpeo DPSH) files 17-77",
+     "quote": "fulls 'P-1','P-2','P-3','P-4','P-5','P-6', tots amb valors a la columna C fins al golpeig 100 (rebuig)",
+     "note": "6 fulls, els 6 amb dades executades (columna C no buida). P-5 i P-6 porten a C17 el text 'Sondeo S-2'/'Sondeo S-1' en lloc d'un colpeig a fondària 0 -- són punts DPSH associats a un sondeig a rotació del mateix projecte (S-1, S-2); el colpeig hi comença més avall (-2,6/-3,2 m) però compten igualment com a assaig executat."
+    },
+    {
+     "value": 6,
+     "font": "PENETROS + SONDEIGS.pdf Albarà DPSH, p.1, bloc 'ML DE PERFORACIÓ', camp 'Nº de penetròmetres realitzats'",
+     "quote": "N° de penetròmetres realitzats: 6",
+     "note": "Coincideix amb els 6 punts identificats a les fitxes de camp (P1, P2, P3 a p.2; P4, S-2-P5, S1-P6 a p.3) i al croquis d'emplaçament (p.7). És el nombre EXECUTAT segons l'albarà TPS (no el previst del pressupost, no llegit en aquesta crida)."
+    },
+    {
+     "value": 6,
+     "font": "pl situ.pdf plànol de planta, llegenda blava 'Ensayo de penetración dinámica DPSH'",
+     "quote": "P-1, P-2, P-3, P-4, P-5, P-6 (6 marcadors blaus)",
+     "note": "recompte visual de punts marcats al plànol; no distingeix previstos vs. executats (per això mana l'Excel DPSH, no aquest document)"
+    },
+    {
+     "value": "6",
+     "font": "tall.pdf grafic del tall, capcaleres de columna",
+     "quote": "P-5, P-1, P-2, P-3, P-4, P-6",
+     "note": "Recompte de punts DPSH (P-i) visibles en aquesta seccio; candidat/corroboracio, no font primaria (l'Excel DPSH mana)."
+    },
+    {
+     "value": 5,
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.2 campanya",
+     "quote": "5 ensayos de penetración dinámica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "value": 5,
+     "font": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx OFERTA!B21",
+     "quote": "5",
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "value": "5",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.2 (Plan de trabajo) i p.4 (Valoración, partida 001.001)",
+     "quote": "5 ensayos de penetración dinámica DPSH",
+     "note": "Previstos al pressupost, no executats. L'Excel DPSH (ANEJOS/4001679_DPSH.xls, no llegit en aquesta crida) mana si difereix"
+    },
+    {
+     "value": "5",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.3 text del pla de treball + p.4 taula de valoració, línia 001.001",
+     "quote": "5 ensayos de penetración dinámica DPSH ... UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH ... 5,00",
+     "note": "Previst al pressupost, no executat. L'Excel DPSH (ANEJOS/4001679_DPSH.xls, no llegit en aquesta crida) té prioritat si el nombre executat discrepa."
+    }
+   ],
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "ANEJOS/4001679_DPSH.xls",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf"
+   ],
+   "note": "EXECUTATS (autoritat sobre els previstos)"
+  },
+  "num_floors": {
+   "estat": "candidats",
+   "value": "PB+1PP amb dos semisòtans",
+   "candidates": [
+    {
+     "value": "PB+1PP amb dos semisòtans",
+     "font": "24.0807/RE_ Presupuesto Parcela Anciles.msg cos de la sol·licitud original",
+     "quote": "El proyecto consiste en 7 adosados de PB+1PP+BC. Habría dos semisótanos. [...] Plantas: SÓTANO, PLANTA BAJA y PLANTA 1 [...] Sótano: SÍ",
+     "note": "Dues formulacions dins el mateix correu ('PB+1PP+BC' amb 2 semisòtans, i més avall 'SÓTANO, PLANTA BAJA y PLANTA 1' amb 'Sótano: SÍ') -- no del tot coherents (semisòtan vs sòtan). Candidat, cal creuar amb caixetí del plànol/projecte de l'arquitecte."
+    },
+    {
+     "value": "SÓTANO, PLANTA BAJA y PLANTA 1",
+     "font": "24.0807/Presupuesto Parcela Anciles.msg cos del correu",
+     "quote": "Plantas: SÓTANO, PLANTA BAJA y PLANTA 1 / Sótano: SÍ  —  (vegeu també: \"7 adosados de PB+1PP+BC\")",
+     "note": "Dues descripcions no idèntiques dins el mateix correu (una explicita SÓTANO, l'altra escriu BC sense esmentar sòtan). A més, 'Habría dos semisótanos' indica que només 2 de les 7 unitats adossades tenen semisòtan — no és un valor únic per a tot l'expedient. Candidats, mai segur."
+    },
+    {
+     "value": "Volum de planta variable: PB+P1+APBC (planta baixa+primera+sotacoberta) en un tram; PB+APBC (planta baixa+sotacoberta) en un altre tram; Planta Sòtan (98,42 m², no computable) sota part de l'edifici",
+     "font": "24.0807/IV_PLANOS.pdf p.7/gO5 'Justificación Ordenación Propuesta' (etiquetes 'PB+P1+APBC', 'PB+APBC', 'PLANTA SÓTANO ... no computa'); índex p.2 (A02 Planta Semisótano, A03 Planta Baja, A04 Planta Primera, A05 Planta Bajo Cubierta, A06 Planta Cubierta)",
+     "quote": "PLANTA SÓTANO 98.42 m2 (no computa) / EDIFICABILIDAD PLANTA BAJA 522.61 m2 / EDIFICABILIDAD PLANTA PRIMERA 454.70 m2 / EDIFICABILIDAD PLANTA BAJO CUBIERTA 188.53 m2 (solo computa altura > 1,50 m)",
+     "note": "L'alçada del conjunt NO és uniforme (part PB+P1+APBC, part només PB+APBC, a més d'un sòtan parcial no computable) — mai segur com un únic nombre de plantes; el generador hauria de triar el màxim (PB+1+APBC) amb nota o desglossar per tram."
+    }
+   ],
+   "rule": "contradiccio: SÓTANO, PLANTA BAJA y PLANTA 1 (1 doc, conf max 0.45); Volum de planta variable: PB+P1+APBC (p… (1 doc, conf max 0.40)",
+   "altres": [
+    {
+     "value": "Fins a 4 nivells segons tipologia: Planta Semisótano, Planta Baja, Planta Primera, Planta Bajo Cubierta (no totes les tipologies tenen els 4)",
+     "font": "24.0807/A01_TIPOL.pdf llegenda de plantes del full",
+     "quote": "N PLANTA SEMISÓTANO / PLANTA BAJA / PLANTA PRIMERA / PLANTA BAJO CUBIERTA",
+     "note": "Llegenda de nivells dibuixats al full, compartida per les 3 tipologies. De les àrees per planta es dedueix que T1 (a/b/c) no té Ps, T2 (a/b) no té P1, T3 (a/b) no té Ps — el nombre de plantes real depèn de quina tipologia és la construïda. No es pot fixar un valor únic sense saber quina tipologia és la del projecte concret."
+    }
+   ],
+   "sources_checked": [
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg"
+   ],
+   "note": "Dues formulacions dins el mateix correu ('PB+1PP+BC' amb 2 semisòtans, i més avall 'SÓTANO, PLANTA BAJA y PLANTA 1' amb 'Sótano: SÍ') -- no del tot coherents (semisòtan vs sòtan). Candidat, cal creuar amb caixetí del plànol/projecte de l'arquitecte."
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": "2",
+   "candidates": [
+    {
+     "value": "2",
+     "font": "tall.pdf requadre LEYENDA",
+     "quote": "1er nivel: Arcillas arenosas con puntualmente bolos. / 2do nivel: Bolos y gravas en matriz arenosa y arcillosa.",
+     "note": "El tall mana per al nombre de nivells (regla del skill). Cap capa de cobertura numerada a la llegenda."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf"
+   ],
+   "note": "El tall mana per al nombre de nivells (regla del skill). Cap capa de cobertura numerada a la llegenda."
+  },
+  "referencia_catastral": {
+   "estat": "segur",
+   "value": "6184504BH9158N0000SS",
+   "candidates": [
+    {
+     "value": "6184504BH9158N0000SS",
+     "font": "24.0807/Presupuesto Parcela Anciles.msg cos del correu",
+     "quote": "Referencia catastral: 6184504BH9158N0000SS",
+     "note": "Única referència cadastral explícita d'aquest document. Font única: candidat, no segur sense consulta pròpia del Cadastre (regla Pas 3)."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "6184504BH9158N0000SS",
+     "font": "24.0807/RE_ Presupuesto Parcela Anciles.msg cos de la sol·licitud original d'Alba Barrau, línia 'Datos:'",
+     "quote": "Referencia catastral: 6184504BH9158N0000SS",
+     "note": "Única font (aportada per l'arquitecta al correu d'encàrrec, no consulta pròpia del Cadastre) -- candidat, mai segur sense consulta del Cadastre."
+    },
+    {
+     "value": "61845",
+     "font": "pl situ.pdf mapa cadastral rústic (base), etiqueta lila sobre la parcel·la marcada en taronja (clip 0.02,0.08,0.34,0.42 @400dpi)",
+     "quote": "61845",
+     "note": "és un número curt de parcel·la del mapa base (cadastre rústic/SIGPAC), NO el format complet de referència cadastral (20 caràcters alfanumèrics amb dígits de control); necessita consulta oficial del Cadastre per confirmar-se, mai segur amb aquesta sola font"
+    }
+   ],
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "tall.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "pl situ.pdf"
+   ],
+   "note": "Única referència cadastral explícita d'aquest document. Font única: candidat, no segur sense consulta pròpia del Cadastre (regla Pas 3)."
+  },
+  "street_address": {
+   "estat": "segur",
+   "value": "C/GENERAL FERRAZ 20",
+   "candidates": [
+    {
+     "value": "C/GENERAL FERRAZ 20",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO"
+    },
+    {
+     "value": "Carrer General Ferraz, 20",
+     "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc OBRA",
+     "quote": "OBRA: ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA)",
+     "note": "Bloc etiquetat OBRA (adreça de l'obra), autoritat directa."
+    },
+    {
+     "value": "C/ General Ferraz 20",
+     "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Situación'",
+     "quote": "Situación C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+     "note": "Etiqueta 'Situación' = ubicació de l'obra segons la regla del skill; única font dins d'aquest document, sense contradicció interna."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+     "font": "24.0807/DADES PER ANAR A CAMP_v1.xlsx fitxa!C7 (ADREÇA OBRA)",
+     "quote": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+     "note": "C7 porta adreça + municipi a la mateixa cel·la"
+    },
+    {
+     "value": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+     "font": "24.0807/IV_PLANOS.pdf Caixetí, camp 'Situación' (totes les pàgines, p.ex. p.1/gO1)",
+     "quote": "Situación  C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+     "note": "Única font dins d'aquest document, repetida idènticament a les 35 pàgines. Falta creuar amb comanda/pressupost per confirmar segur."
+    },
+    {
+     "value": "Calle Gral Ferraz nº20, Arciles (Benasque)",
+     "font": "tall.pdf peu de pagina, titol del projecte",
+     "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+     "note": "'ARCILES' probablement errata d'impremta per 'ANCILES' (nom de la carpeta del projecte); no hi ha cap altre document llegit encara en aquesta crida que ho confirmi."
+    },
+    {
+     "value": "Calle General Ferraz nº 20",
+     "font": "pl situ.pdf requadre de títol / capçalera del plànol",
+     "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+     "note": "font secundària (títol del plànol, no un bloc OBRA/ADREÇA dedicat); el nom del carrer es confirma visualment al mapa cadastral base com 'CALLE GENERAL FERRAZ'"
+    },
+    {
+     "value": "C/GENERAL FERRAZ 20",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1 bloc OBRA",
+     "quote": "ESTUDIO GEOTECNICO / C/GENERAL FERRAZ 20 / ANCILES (HUESCA) / PRESUPUESTO GEOTECNICO"
+    },
+    {
+     "value": "C/General Ferraz 20",
+     "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1, bloc OBRA:",
+     "quote": "C/GENERAL FERRAZ 20",
+     "note": "Bloc OBRA (adreça de l'obra), no del client/sol·licitant"
+    },
+    {
+     "value": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+     "font": "24.0807/SITE_prop A.pdf caixetí, camp 'Situación'",
+     "quote": "Situación / C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+     "note": "etiqueta 'Situación' explícita (autoritat A per street_address, Pas 3); únic document llegit en aquesta crida --only, sense contrastar amb altres fonts del projecte"
+    }
+   ],
+   "sources_checked": [
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/IV_PLANOS.pdf",
+    "24.0807/SITE_prop A.pdf",
+    "pl situ.pdf",
+    "tall.pdf"
+   ],
+   "note": "C7 porta adreça + municipi a la mateixa cel·la"
+  },
+  "superficie_parcela": {
+   "estat": "segur",
+   "value": "1655.01 m²",
+   "candidates": [
+    {
+     "value": "1655.01 m²",
+     "font": "24.0807/IV_PLANOS.pdf p.5/gO3 'Topográfico Parcela' (rètol 'Superfície Finca'); p.7/gO5 taula 'Parámetros Parcela 28 Huerto Casa Sort', fila 'TOTAL PARCELA', columnes PEPRI i PROPUESTA",
+     "quote": "Superfície Finca = 1655.01 m² ... TOTAL PARCELA 1655.01 1655.01",
+     "note": "Dues aparicions internes coincidents dins del mateix document (aixecament topogràfic + taula normativa); és una única font externa (el projecte) sense contradicció interna — falta creuar amb Cadastre per confirmar segur."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+    "24.0807/Presupuesto Parcela Anciles.msg",
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+    "24.0807/SITE_prop A.pdf",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+    "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "Confirmación visita jueves 19 y plano.msg",
+    "PENETROS + SONDEIGS.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "24.0807/IV_PLANOS.pdf"
+   ],
+   "note": "Dues aparicions internes coincidents dins del mateix document (aixecament topogràfic + taula normativa); és una única font externa (el projecte) sense contradicció interna — falta creuar amb Cadastre per confirmar segur."
+  },
+  "utm_x": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "pl situ.pdf"
+   ]
+  },
+  "utm_y": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+    "pl situ.pdf"
+   ]
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-3,58 m",
+      "candidates": [
+       {
+        "value": "-3,58 m",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-1', peu B80; columna G 'Niveles' files 17-35",
+        "quote": "Rechazo a la penetración: -3,58 m",
+        "note": "Columna N.F. (F) buida en text i en color a tot el full -> 'No detectat' comprovat. Columna G colorejada: vermell #FF8080 ('Nivel 1', llegenda C79) files 17-26 (fondària 0 a -1,8 m), groc #FFFF99 ('Nivel 2', llegenda F79) files 27-35 (-2,0 a -3,6 m) -> transició de nivell entre -1,8 i -2,0 m. Evidència NO autoritativa (ve del full DPSH, no de l'annex de sondeig ni del tall): candidat feble per a num_soil_levels/soil_levels, a creuar amb altres documents."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-3,58 m",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P1'",
+        "quote": "R:3,58"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Columna N.F. (F) buida en text i en color a tot el full -> 'No detectat' comprovat. Columna G colorejada: vermell #FF8080 ('Nivel 1', llegenda C79) files 17-26 (fondària 0 a -1,8 m), groc #FFFF99 ('Nivel 2', llegenda F79) files 27-35 (-2,0 a -3,6 m) -> transició de nivell entre -1,8 i -2,0 m. Evidència NO autoritativa (ve del full DPSH, no de l'annex de sondeig ni del tall): candidat feble per a num_soil_levels/soil_levels, a creuar amb altres documents."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-1', peu B80; columna G 'Niveles' files 17-35",
+        "quote": "Rechazo a la penetración: -3,58 m",
+        "note": "Columna N.F. (F) buida en text i en color a tot el full -> 'No detectat' comprovat. Columna G colorejada: vermell #FF8080 ('Nivel 1', llegenda C79) files 17-26 (fondària 0 a -1,8 m), groc #FFFF99 ('Nivel 2', llegenda F79) files 27-35 (-2,0 a -3,6 m) -> transició de nivell entre -1,8 i -2,0 m. Evidència NO autoritativa (ve del full DPSH, no de l'annex de sondeig ni del tall): candidat feble per a num_soil_levels/soil_levels, a creuar amb altres documents."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P1'",
+        "quote": "R:3,58"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf grafic tall, columna P-1",
+        "quote": "Nb=6 / Nb=33 / Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Columna N.F. (F) buida en text i en color a tot el full -> 'No detectat' comprovat. Columna G colorejada: vermell #FF8080 ('Nivel 1', llegenda C79) files 17-26 (fondària 0 a -1,8 m), groc #FFFF99 ('Nivel 2', llegenda F79) files 27-35 (-2,0 a -3,6 m) -> transició de nivell entre -1,8 i -2,0 m. Evidència NO autoritativa (ve del full DPSH, no de l'annex de sondeig ni del tall): candidat feble per a num_soil_levels/soil_levels, a creuar amb altres documents."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-1', peu B80; columna G 'Niveles' files 17-35",
+        "quote": "Rechazo a la penetración: -3,58 m",
+        "note": "Columna N.F. (F) buida en text i en color a tot el full -> 'No detectat' comprovat. Columna G colorejada: vermell #FF8080 ('Nivel 1', llegenda C79) files 17-26 (fondària 0 a -1,8 m), groc #FFFF99 ('Nivel 2', llegenda F79) files 27-35 (-2,0 a -3,6 m) -> transició de nivell entre -1,8 i -2,0 m. Evidència NO autoritativa (ve del full DPSH, no de l'annex de sondeig ni del tall): candidat feble per a num_soil_levels/soil_levels, a creuar amb altres documents.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P1'",
+        "quote": "R:3,58",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf grafic tall, columna P-1",
+        "quote": "Nb=6 / Nb=33 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Columna N.F. (F) buida en text i en color a tot el full -> 'No detectat' comprovat. Columna G colorejada: vermell #FF8080 ('Nivel 1', llegenda C79) files 17-26 (fondària 0 a -1,8 m), groc #FFFF99 ('Nivel 2', llegenda F79) files 27-35 (-2,0 a -3,6 m) -> transició de nivell entre -1,8 i -2,0 m. Evidència NO autoritativa (ve del full DPSH, no de l'annex de sondeig ni del tall): candidat feble per a num_soil_levels/soil_levels, a creuar amb altres documents.",
+      "matis": null
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-4,59 m",
+      "candidates": [
+       {
+        "value": "-4,59 m",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-2', peu B80; columna G 'Niveles' files 17-40",
+        "quote": "Rechazo a la penetración: -4,59 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-26 (0 a -1,8 m), groc files 27-40 (-2,0 a -4,6 m) -> transició -1,8/-2,0 m. Mateix matís que P-1: evidència feble, no autoritativa."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-4,59 m",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P2'",
+        "quote": "R:4,59"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-26 (0 a -1,8 m), groc files 27-40 (-2,0 a -4,6 m) -> transició -1,8/-2,0 m. Mateix matís que P-1: evidència feble, no autoritativa."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-2', peu B80; columna G 'Niveles' files 17-40",
+        "quote": "Rechazo a la penetración: -4,59 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-26 (0 a -1,8 m), groc files 27-40 (-2,0 a -4,6 m) -> transició -1,8/-2,0 m. Mateix matís que P-1: evidència feble, no autoritativa."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P2'",
+        "quote": "R:4,59"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf grafic tall, columna P-2",
+        "quote": "Nb=6 / Nb=44 / Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-26 (0 a -1,8 m), groc files 27-40 (-2,0 a -4,6 m) -> transició -1,8/-2,0 m. Mateix matís que P-1: evidència feble, no autoritativa."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-2', peu B80; columna G 'Niveles' files 17-40",
+        "quote": "Rechazo a la penetración: -4,59 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-26 (0 a -1,8 m), groc files 27-40 (-2,0 a -4,6 m) -> transició -1,8/-2,0 m. Mateix matís que P-1: evidència feble, no autoritativa.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P2'",
+        "quote": "R:4,59",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf grafic tall, columna P-2",
+        "quote": "Nb=6 / Nb=44 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-26 (0 a -1,8 m), groc files 27-40 (-2,0 a -4,6 m) -> transició -1,8/-2,0 m. Mateix matís que P-1: evidència feble, no autoritativa.",
+      "matis": null
+     }
+    },
+    {
+     "punt": "P-3",
+     "cota_inici": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-3,77 m",
+      "candidates": [
+       {
+        "value": "-3,77 m",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-3', peu B80; columna G 'Niveles' files 17-36",
+        "quote": "Rechazo a la penetración: -3,77 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-29 (0 a -2,4 m), groc files 30-36 (-2,6 a -3,8 m) -> transició -2,4/-2,6 m. Evidència feble, no autoritativa."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-3,77 m",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P3'",
+        "quote": "R:3,77"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-29 (0 a -2,4 m), groc files 30-36 (-2,6 a -3,8 m) -> transició -2,4/-2,6 m. Evidència feble, no autoritativa."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-3', peu B80; columna G 'Niveles' files 17-36",
+        "quote": "Rechazo a la penetración: -3,77 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-29 (0 a -2,4 m), groc files 30-36 (-2,6 a -3,8 m) -> transició -2,4/-2,6 m. Evidència feble, no autoritativa."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P3'",
+        "quote": "R:3,77"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf grafic tall, columna P-3",
+        "quote": "Nb=4 / Nb=13 / Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-29 (0 a -2,4 m), groc files 30-36 (-2,6 a -3,8 m) -> transició -2,4/-2,6 m. Evidència feble, no autoritativa."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-3', peu B80; columna G 'Niveles' files 17-36",
+        "quote": "Rechazo a la penetración: -3,77 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-29 (0 a -2,4 m), groc files 30-36 (-2,6 a -3,8 m) -> transició -2,4/-2,6 m. Evidència feble, no autoritativa.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic, p.2, columna 'P3'",
+        "quote": "R:3,77",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf grafic tall, columna P-3",
+        "quote": "Nb=4 / Nb=13 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-29 (0 a -2,4 m), groc files 30-36 (-2,6 a -3,8 m) -> transició -2,4/-2,6 m. Evidència feble, no autoritativa.",
+      "matis": null
+     }
+    },
+    {
+     "punt": "P-4",
+     "cota_inici": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-5,92 m",
+      "candidates": [
+       {
+        "value": "-5,92 m",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-4', peu B80; columna G 'Niveles' files 17-47",
+        "quote": "Rechazo a la penetración: -5,92 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-27 (0 a -2,0 m), groc files 28-47 (-2,2 a -6,0 m) -> transició -2,0/-2,2 m. Evidència feble, no autoritativa."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-5,92 m",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'P4'",
+        "quote": "R:5,92"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-27 (0 a -2,0 m), groc files 28-47 (-2,2 a -6,0 m) -> transició -2,0/-2,2 m. Evidència feble, no autoritativa."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-4', peu B80; columna G 'Niveles' files 17-47",
+        "quote": "Rechazo a la penetración: -5,92 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-27 (0 a -2,0 m), groc files 28-47 (-2,2 a -6,0 m) -> transició -2,0/-2,2 m. Evidència feble, no autoritativa."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'P4'",
+        "quote": "R:5,92"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf grafic tall, columna P-4",
+        "quote": "Nb=5 / Nb=32 / Nb=17 / Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-27 (0 a -2,0 m), groc files 28-47 (-2,2 a -6,0 m) -> transició -2,0/-2,2 m. Evidència feble, no autoritativa."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-4', peu B80; columna G 'Niveles' files 17-47",
+        "quote": "Rechazo a la penetración: -5,92 m",
+        "note": "N.F. buida (text+color). Columna G: vermell files 17-27 (0 a -2,0 m), groc files 28-47 (-2,2 a -6,0 m) -> transició -2,0/-2,2 m. Evidència feble, no autoritativa.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'P4'",
+        "quote": "R:5,92",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf grafic tall, columna P-4",
+        "quote": "Nb=5 / Nb=32 / Nb=17 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "N.F. buida (text+color). Columna G: vermell files 17-27 (0 a -2,0 m), groc files 28-47 (-2,2 a -6,0 m) -> transició -2,0/-2,2 m. Evidència feble, no autoritativa.",
+      "matis": null
+     }
+    },
+    {
+     "punt": "P-5",
+     "cota_inici": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-4,18 m",
+      "candidates": [
+       {
+        "value": "-4,18 m",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-5', C17 (etiqueta), peu B80; columna C files 33-38; columna G files 33-38",
+        "quote": "C17: 'Sondeo S-2' | B80: 'Rechazo a la penetración: -4,18 m'",
+        "note": "A diferència de P-1..P-4, la columna C (Golpeo DPSH) NO porta dades des de fondària 0: està buida de -0,2 a -3,0 m i comença a -3,2 m (C33=18) fins al rebuig a -4,2 m (C38=100). N.F. buida. Columna G només colorejada de groc (#FFFF99, 'Nivel 2') a files 33-38 (-3,2 a -4,2 m); no hi ha cap fila vermella ('Nivel 1') colorejada per a aquest punt -- pot ser que el tram superior no s'hagi acolorit (dada no introduïda) més que absència real del Nivell 1. No treure conclusió de nivells d'aquest punt sol."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-4,18 m",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S-2-P5'",
+        "quote": "R:4,18",
+        "note": "Columna ratllada amb l'anotació manuscrita 'Sondejos' (verticalment, entre -2,2 i -3 m aprox.); el valor de rebuig roman llegible sota el ratllat. P5 coincideix amb l'emplaçament del sondeig S-2 (croquis p.7 etiqueta el mateix punt 'S2 / P5')."
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "A diferència de P-1..P-4, la columna C (Golpeo DPSH) NO porta dades des de fondària 0: està buida de -0,2 a -3,0 m i comença a -3,2 m (C33=18) fins al rebuig a -4,2 m (C38=100). N.F. buida. Columna G només colorejada de groc (#FFFF99, 'Nivel 2') a files 33-38 (-3,2 a -4,2 m); no hi ha cap fila vermella ('Nivel 1') colorejada per a aquest punt -- pot ser que el tram superior no s'hagi acolorit (dada no introduïda) més que absència real del Nivell 1. No treure conclusió de nivells d'aquest punt sol."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-5', C17 (etiqueta), peu B80; columna C files 33-38; columna G files 33-38",
+        "quote": "C17: 'Sondeo S-2' | B80: 'Rechazo a la penetración: -4,18 m'",
+        "note": "A diferència de P-1..P-4, la columna C (Golpeo DPSH) NO porta dades des de fondària 0: està buida de -0,2 a -3,0 m i comença a -3,2 m (C33=18) fins al rebuig a -4,2 m (C38=100). N.F. buida. Columna G només colorejada de groc (#FFFF99, 'Nivel 2') a files 33-38 (-3,2 a -4,2 m); no hi ha cap fila vermella ('Nivel 1') colorejada per a aquest punt -- pot ser que el tram superior no s'hagi acolorit (dada no introduïda) més que absència real del Nivell 1. No treure conclusió de nivells d'aquest punt sol."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S-2-P5'",
+        "quote": "R:4,18",
+        "note": "Columna ratllada amb l'anotació manuscrita 'Sondejos' (verticalment, entre -2,2 i -3 m aprox.); el valor de rebuig roman llegible sota el ratllat. P5 coincideix amb l'emplaçament del sondeig S-2 (croquis p.7 etiqueta el mateix punt 'S2 / P5')."
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf grafic tall, columna S-2/P-5",
+        "quote": "N=6 / Nb=38 / Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "A diferència de P-1..P-4, la columna C (Golpeo DPSH) NO porta dades des de fondària 0: està buida de -0,2 a -3,0 m i comença a -3,2 m (C33=18) fins al rebuig a -4,2 m (C38=100). N.F. buida. Columna G només colorejada de groc (#FFFF99, 'Nivel 2') a files 33-38 (-3,2 a -4,2 m); no hi ha cap fila vermella ('Nivel 1') colorejada per a aquest punt -- pot ser que el tram superior no s'hagi acolorit (dada no introduïda) més que absència real del Nivell 1. No treure conclusió de nivells d'aquest punt sol."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-5', C17 (etiqueta), peu B80; columna C files 33-38; columna G files 33-38",
+        "quote": "C17: 'Sondeo S-2' | B80: 'Rechazo a la penetración: -4,18 m'",
+        "note": "A diferència de P-1..P-4, la columna C (Golpeo DPSH) NO porta dades des de fondària 0: està buida de -0,2 a -3,0 m i comença a -3,2 m (C33=18) fins al rebuig a -4,2 m (C38=100). N.F. buida. Columna G només colorejada de groc (#FFFF99, 'Nivel 2') a files 33-38 (-3,2 a -4,2 m); no hi ha cap fila vermella ('Nivel 1') colorejada per a aquest punt -- pot ser que el tram superior no s'hagi acolorit (dada no introduïda) més que absència real del Nivell 1. No treure conclusió de nivells d'aquest punt sol.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S-2-P5'",
+        "quote": "R:4,18",
+        "note": "Columna ratllada amb l'anotació manuscrita 'Sondejos' (verticalment, entre -2,2 i -3 m aprox.); el valor de rebuig roman llegible sota el ratllat. P5 coincideix amb l'emplaçament del sondeig S-2 (croquis p.7 etiqueta el mateix punt 'S2 / P5').",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf grafic tall, columna S-2/P-5",
+        "quote": "N=6 / Nb=38 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "A diferència de P-1..P-4, la columna C (Golpeo DPSH) NO porta dades des de fondària 0: està buida de -0,2 a -3,0 m i comença a -3,2 m (C33=18) fins al rebuig a -4,2 m (C38=100). N.F. buida. Columna G només colorejada de groc (#FFFF99, 'Nivel 2') a files 33-38 (-3,2 a -4,2 m); no hi ha cap fila vermella ('Nivel 1') colorejada per a aquest punt -- pot ser que el tram superior no s'hagi acolorit (dada no introduïda) més que absència real del Nivell 1. No treure conclusió de nivells d'aquest punt sol.",
+      "matis": null
+     }
+    },
+    {
+     "punt": "P-6",
+     "cota_inici": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-5,70 m",
+      "candidates": [
+       {
+        "value": "-5,70 m",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-6', C17 (etiqueta), peu B80; columna C files 30-46; columna G files 17-46",
+        "quote": "C17: 'Sondeo S-1' | B80: 'Rechazo a la penetración: -5,70 m'",
+        "note": "Igual que P-5, la columna C no porta dades des de fondària 0: buida de -0,2 a -2,4 m, comença a -2,6 m (C30=28) fins a -5,8 m (C46=100; el peu diu -5,70 m, que mana). N.F. buida. Columna G SÍ colorejada des de fondària 0: vermell files 17-37 (0 a -4,0 m), groc files 38-46 (-4,2 a -5,8 m) -> transició -4,0/-4,2 m, molt més profunda que als altres 4 punts (que transicionen entre -1,8 i -2,6 m). Discrepància notable a creuar amb l'annex de sondeig/tall si n'hi ha."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-5,70 m",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S1-P6'",
+        "quote": "R:5,70",
+        "note": "Mateix ratllat 'Sondejos' que P5. P6 coincideix amb l'emplaçament del sondeig S-1 (croquis p.7 etiqueta el mateix punt 'S1-P6')."
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Igual que P-5, la columna C no porta dades des de fondària 0: buida de -0,2 a -2,4 m, comença a -2,6 m (C30=28) fins a -5,8 m (C46=100; el peu diu -5,70 m, que mana). N.F. buida. Columna G SÍ colorejada des de fondària 0: vermell files 17-37 (0 a -4,0 m), groc files 38-46 (-4,2 a -5,8 m) -> transició -4,0/-4,2 m, molt més profunda que als altres 4 punts (que transicionen entre -1,8 i -2,6 m). Discrepància notable a creuar amb l'annex de sondeig/tall si n'hi ha."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-6', C17 (etiqueta), peu B80; columna C files 30-46; columna G files 17-46",
+        "quote": "C17: 'Sondeo S-1' | B80: 'Rechazo a la penetración: -5,70 m'",
+        "note": "Igual que P-5, la columna C no porta dades des de fondària 0: buida de -0,2 a -2,4 m, comença a -2,6 m (C30=28) fins a -5,8 m (C46=100; el peu diu -5,70 m, que mana). N.F. buida. Columna G SÍ colorejada des de fondària 0: vermell files 17-37 (0 a -4,0 m), groc files 38-46 (-4,2 a -5,8 m) -> transició -4,0/-4,2 m, molt més profunda que als altres 4 punts (que transicionen entre -1,8 i -2,6 m). Discrepància notable a creuar amb l'annex de sondeig/tall si n'hi ha."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S1-P6'",
+        "quote": "R:5,70",
+        "note": "Mateix ratllat 'Sondejos' que P5. P6 coincideix amb l'emplaçament del sondeig S-1 (croquis p.7 etiqueta el mateix punt 'S1-P6')."
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf grafic tall, columna S-1/P-6",
+        "quote": "N=6 / Nb=14 / Nb=26 / Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Igual que P-5, la columna C no porta dades des de fondària 0: buida de -0,2 a -2,4 m, comença a -2,6 m (C30=28) fins a -5,8 m (C46=100; el peu diu -5,70 m, que mana). N.F. buida. Columna G SÍ colorejada des de fondària 0: vermell files 17-37 (0 a -4,0 m), groc files 38-46 (-4,2 a -5,8 m) -> transició -4,0/-4,2 m, molt més profunda que als altres 4 punts (que transicionen entre -1,8 i -2,6 m). Discrepància notable a creuar amb l'annex de sondeig/tall si n'hi ha."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANEJOS/4001679_DPSH.xls Full 'P-6', C17 (etiqueta), peu B80; columna C files 30-46; columna G files 17-46",
+        "quote": "C17: 'Sondeo S-1' | B80: 'Rechazo a la penetración: -5,70 m'",
+        "note": "Igual que P-5, la columna C no porta dades des de fondària 0: buida de -0,2 a -2,4 m, comença a -2,6 m (C30=28) fins a -5,8 m (C46=100; el peu diu -5,70 m, que mana). N.F. buida. Columna G SÍ colorejada des de fondària 0: vermell files 17-37 (0 a -4,0 m), groc files 38-46 (-4,2 a -5,8 m) -> transició -4,0/-4,2 m, molt més profunda que als altres 4 punts (que transicionen entre -1,8 i -2,6 m). Discrepància notable a creuar amb l'annex de sondeig/tall si n'hi ha.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S1-P6'",
+        "quote": "R:5,70",
+        "note": "Mateix ratllat 'Sondejos' que P5. P6 coincideix amb l'emplaçament del sondeig S-1 (croquis p.7 etiqueta el mateix punt 'S1-P6').",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf grafic tall, columna S-1/P-6",
+        "quote": "N=6 / Nb=14 / Nb=26 / Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANEJOS/4001679_DPSH.xls",
+       "PENETROS + SONDEIGS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Igual que P-5, la columna C no porta dades des de fondària 0: buida de -0,2 a -2,4 m, comença a -2,6 m (C30=28) fins a -5,8 m (C46=100; el peu diu -5,70 m, que mana). N.F. buida. Columna G SÍ colorejada des de fondària 0: vermell files 17-37 (0 a -4,0 m), groc files 38-46 (-4,2 a -5,8 m) -> transició -4,0/-4,2 m, molt més profunda que als altres 4 punts (que transicionen entre -1,8 i -2,6 m). Discrepància notable a creuar amb l'annex de sondeig/tall si n'hi ha.",
+      "matis": null
+     }
+    }
+   ],
+   "sources_checked": [
+    "ANEJOS/4001679_DPSH.xls",
+    "PENETROS + SONDEIGS.pdf",
+    "tall.pdf"
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "sondeig": "S-1",
+     "cota": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "candidats",
+      "value": "2,40 m",
+      "candidates": [
+       {
+        "value": "2,40 m",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig a rotació S1, p.5",
+        "quote": "Sondeig: S1; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+        "note": "El camp 'Nivell Freàtic' del full és una casella dedicada que ha quedat completament en blanc (ni cota, ni 'No' marcat); es tracta amb la mateixa convenció que una cel·la buida ('No detectat'). Camp 'Descriure cota 0 o cota referència' també en blanc."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "El camp 'Nivell Freàtic' del full és una casella dedicada que ha quedat completament en blanc (ni cota, ni 'No' marcat); es tracta amb la mateixa convenció que una cel·la buida ('No detectat'). Camp 'Descriure cota 0 o cota referència' també en blanc."
+     },
+     "spt_ma": {
+      "estat": "candidats",
+      "value": "1/0",
+      "candidates": [
+       {
+        "value": "1/0",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig a rotació S1, p.5",
+        "quote": "Sondeig: S1; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+        "note": "El camp 'Nivell Freàtic' del full és una casella dedicada que ha quedat completament en blanc (ni cota, ni 'No' marcat); es tracta amb la mateixa convenció que una cel·la buida ('No detectat'). Camp 'Descriure cota 0 o cota referència' també en blanc.",
+        "extra": {
+         "counts": {
+          "n_spt": 1,
+          "n_tp": 0,
+          "n_ma": 0
+         }
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "El camp 'Nivell Freàtic' del full és una casella dedicada que ha quedat completament en blanc (ni cota, ni 'No' marcat); es tracta amb la mateixa convenció que una cel·la buida ('No detectat'). Camp 'Descriure cota 0 o cota referència' també en blanc.",
+      "counts": {
+       "n_spt": 1,
+       "n_tp": 0,
+       "n_ma": 0
+      }
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig a rotació S1, p.5",
+        "quote": "Sondeig: S1; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+        "note": "El camp 'Nivell Freàtic' del full és una casella dedicada que ha quedat completament en blanc (ni cota, ni 'No' marcat); es tracta amb la mateixa convenció que una cel·la buida ('No detectat'). Camp 'Descriure cota 0 o cota referència' també en blanc.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "El camp 'Nivell Freàtic' del full és una casella dedicada que ha quedat completament en blanc (ni cota, ni 'No' marcat); es tracta amb la mateixa convenció que una cel·la buida ('No detectat'). Camp 'Descriure cota 0 o cota referència' també en blanc.",
+      "matis": null
+     },
+     "extra": {
+      "PENETROS + SONDEIGS.pdf": {
+       "materials_log": [
+        {
+         "de": "0,00",
+         "a": "1,00",
+         "litologia": "Limos con un bolillo",
+         "corones": "101 W.B"
+        },
+        {
+         "de": "1,60",
+         "a": "2,20",
+         "litologia": "Limos",
+         "corones": "86 W.B"
+        },
+        {
+         "de": "2,20",
+         "a": "2,30",
+         "litologia": "Limos con grava",
+         "corones": "86 W.B"
+        },
+        {
+         "de": "2,30",
+         "a": "2,40",
+         "litologia": "Granito",
+         "corones": "86 W.B"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "sondeig": "S-2",
+     "cota": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "candidats",
+      "value": "3,00 m",
+      "candidates": [
+       {
+        "value": "3,00 m",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig a rotació S2, p.6",
+        "quote": "Sondeig: S-2; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+        "note": "Camp 'Nivell Freàtic' en blanc, mateixa convenció que S-1. Camp 'Descriure cota 0 o cota referència' també en blanc."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Camp 'Nivell Freàtic' en blanc, mateixa convenció que S-1. Camp 'Descriure cota 0 o cota referència' també en blanc."
+     },
+     "spt_ma": {
+      "estat": "candidats",
+      "value": "1/1",
+      "candidates": [
+       {
+        "value": "1/1",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig a rotació S2, p.6",
+        "quote": "Sondeig: S-2; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+        "note": "Camp 'Nivell Freàtic' en blanc, mateixa convenció que S-1. Camp 'Descriure cota 0 o cota referència' també en blanc.",
+        "extra": {
+         "counts": {
+          "n_spt": 1,
+          "n_tp": 0,
+          "n_ma": 1
+         }
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Camp 'Nivell Freàtic' en blanc, mateixa convenció que S-1. Camp 'Descriure cota 0 o cota referència' també en blanc.",
+      "counts": {
+       "n_spt": 1,
+       "n_tp": 0,
+       "n_ma": 1
+      }
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig a rotació S2, p.6",
+        "quote": "Sondeig: S-2; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+        "note": "Camp 'Nivell Freàtic' en blanc, mateixa convenció que S-1. Camp 'Descriure cota 0 o cota referència' també en blanc.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Camp 'Nivell Freàtic' en blanc, mateixa convenció que S-1. Camp 'Descriure cota 0 o cota referència' també en blanc.",
+      "matis": null
+     },
+     "extra": {
+      "PENETROS + SONDEIGS.pdf": {
+       "materials_log": [
+        {
+         "de": "0,00",
+         "a": "1,00",
+         "litologia": "Limos",
+         "corones": "101 W.B"
+        },
+        {
+         "de": "1,60",
+         "a": "1,70",
+         "litologia": "Arenas",
+         "corones": "86 W.B"
+        },
+        {
+         "de": "1,70",
+         "a": "1,90",
+         "litologia": "Arenas con bola",
+         "corones": "86 W.B"
+        },
+        {
+         "de": "1,90",
+         "a": "2,10",
+         "litologia": "Pizarra",
+         "corones": "86 W.B"
+        },
+        {
+         "de": "2,10",
+         "a": "2,60",
+         "litologia": "Arenas con gravilla",
+         "corones": "86 W.B"
+        },
+        {
+         "de": "2,60",
+         "a": "2,80",
+         "litologia": "Granito",
+         "corones": "86 W.B"
+        },
+        {
+         "de": "2,80",
+         "a": "3,00",
+         "litologia": "Graves",
+         "corones": "86 W.B"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "PENETROS + SONDEIGS.pdf"
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "id": {
+      "estat": "candidats",
+      "value": "SPT-1",
+      "candidates": [
+       {
+        "value": "SPT-1",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-1, p.5, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura."
+       }
+      ],
+      "rule": "Pas 3: annex de l'Eva > GTL > comanda per a l'etiqueta; si discrepen, candidats (annex primer), mai segur",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura."
+     },
+     "punt": {
+      "estat": "candidats",
+      "value": "S-1",
+      "candidates": [
+       {
+        "value": "S-1",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-1, p.5, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura."
+     },
+     "profunditat": {
+      "estat": "candidats",
+      "value": "1,00 a 1,60 m",
+      "candidates": [
+       {
+        "value": "1,00 a 1,60 m",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-1, p.5, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura."
+     },
+     "litologia": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ]
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": 6,
+      "candidates": [
+       {
+        "value": 6,
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-1, p.5, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura.",
+        "extra": {
+         "registre": {
+          "estat": "segur",
+          "value": [
+           2,
+           3,
+           3,
+           3
+          ],
+          "font": "Full de camp sondeig S-1, p.5, columna 'Colpeig'",
+          "quote": "2 | 3 | 3 | 3"
+         }
+        }
+       },
+       {
+        "value": 11,
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-1, p.5, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura.",
+        "extra": {
+         "registre": {
+          "estat": "segur",
+          "value": [
+           2,
+           3,
+           3,
+           3
+          ],
+          "font": "Full de camp sondeig S-1, p.5, columna 'Colpeig'",
+          "quote": "2 | 3 | 3 | 3"
+         }
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura.",
+      "registre": {
+       "estat": "candidats",
+       "value": {
+        "estat": "segur",
+        "value": [
+         2,
+         3,
+         3,
+         3
+        ],
+        "font": "Full de camp sondeig S-1, p.5, columna 'Colpeig'",
+        "quote": "2 | 3 | 3 | 3"
+       },
+       "candidates": [
+        {
+         "value": {
+          "estat": "segur",
+          "value": [
+           2,
+           3,
+           3,
+           3
+          ],
+          "font": "Full de camp sondeig S-1, p.5, columna 'Colpeig'",
+          "quote": "2 | 3 | 3 | 3"
+         },
+         "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-1, p.5, bloc 'Mostres'",
+         "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3"
+        }
+       ],
+       "sources_checked": [
+        "PENETROS + SONDEIGS.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      }
+     }
+    },
+    {
+     "id": {
+      "estat": "candidats",
+      "value": "SPT-1",
+      "candidates": [
+       {
+        "value": "SPT-1",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta."
+       }
+      ],
+      "rule": "Pas 3: annex de l'Eva > GTL > comanda per a l'etiqueta; si discrepen, candidats (annex primer), mai segur",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta."
+     },
+     "punt": {
+      "estat": "candidats",
+      "value": "S-2",
+      "candidates": [
+       {
+        "value": "S-2",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta."
+     },
+     "profunditat": {
+      "estat": "candidats",
+      "value": "1,00 a 1,60 m",
+      "candidates": [
+       {
+        "value": "1,00 a 1,60 m",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta."
+     },
+     "litologia": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ]
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": 6,
+      "candidates": [
+       {
+        "value": 6,
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta.",
+        "extra": {
+         "registre": {
+          "estat": "segur",
+          "value": [
+           2,
+           3,
+           3,
+           3
+          ],
+          "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+          "quote": "2 | 3 | 3 | 3"
+         }
+        }
+       },
+       {
+        "value": 11,
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+        "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta.",
+        "extra": {
+         "registre": {
+          "estat": "segur",
+          "value": [
+           2,
+           3,
+           3,
+           3
+          ],
+          "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+          "quote": "2 | 3 | 3 | 3"
+         }
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta.",
+      "registre": {
+       "estat": "candidats",
+       "value": {
+        "estat": "segur",
+        "value": [
+         2,
+         3,
+         3,
+         3
+        ],
+        "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+        "quote": "2 | 3 | 3 | 3"
+       },
+       "candidates": [
+        {
+         "value": {
+          "estat": "segur",
+          "value": [
+           2,
+           3,
+           3,
+           3
+          ],
+          "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+          "quote": "2 | 3 | 3 | 3"
+         },
+         "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+         "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3"
+        }
+       ],
+       "sources_checked": [
+        "PENETROS + SONDEIGS.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      }
+     }
+    },
+    {
+     "id": {
+      "estat": "candidats",
+      "value": "MA-1",
+      "candidates": [
+       {
+        "value": "MA-1",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1",
+        "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+       }
+      ],
+      "rule": "Pas 3: annex de l'Eva > GTL > comanda per a l'etiqueta; si discrepen, candidats (annex primer), mai segur",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+     },
+     "punt": {
+      "estat": "candidats",
+      "value": "S-2",
+      "candidates": [
+       {
+        "value": "S-2",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1",
+        "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+     },
+     "profunditat": {
+      "estat": "candidats",
+      "value": "2,80 a 3,00 m",
+      "candidates": [
+       {
+        "value": "2,80 a 3,00 m",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1",
+        "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "Graves",
+      "candidates": [
+       {
+        "value": "Graves",
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1",
+        "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+     },
+     "n30": {
+      "estat": "no_trobat",
+      "value": null,
+      "rule": "L3 (Pas 3b): per a MA, n30 = no_trobat amb nota; el generador escriu «--»",
+      "sources_checked": [
+       "PENETROS + SONDEIGS.pdf"
+      ],
+      "note": "mostra alterada (MA): sense N30 a l'informe (l'Eva escriu «--»); colpeig anotat al full ({'estat': 'candidats', 'value': [1, 1, 1, 1], 'font': \"Full de camp sondeig S-2, p.6, columna 'Colpeig'\", 'quote': '1 | 1 | 1(?) | 1', 'note': \"Tercer valor de lectura incerta al manuscrit (traç feble); llegit com '1' amb confiança baixa.\"}) conservat a `registre`",
+      "registre": {
+       "estat": "candidats",
+       "value": {
+        "estat": "candidats",
+        "value": [
+         1,
+         1,
+         1,
+         1
+        ],
+        "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+        "quote": "1 | 1 | 1(?) | 1",
+        "note": "Tercer valor de lectura incerta al manuscrit (traç feble); llegit com '1' amb confiança baixa."
+       },
+       "candidates": [
+        {
+         "value": {
+          "estat": "candidats",
+          "value": [
+           1,
+           1,
+           1,
+           1
+          ],
+          "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+          "quote": "1 | 1 | 1(?) | 1",
+          "note": "Tercer valor de lectura incerta al manuscrit (traç feble); llegit com '1' amb confiança baixa."
+         },
+         "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+         "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1"
+        }
+       ],
+       "sources_checked": [
+        "PENETROS + SONDEIGS.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      },
+      "altres": [
+       {
+        "value": 2,
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1",
+        "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és.",
+        "extra": {
+         "registre": {
+          "estat": "candidats",
+          "value": [
+           1,
+           1,
+           1,
+           1
+          ],
+          "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+          "quote": "1 | 1 | 1(?) | 1",
+          "note": "Tercer valor de lectura incerta al manuscrit (traç feble); llegit com '1' amb confiança baixa."
+         }
+        }
+       },
+       {
+        "value": 4,
+        "font": "PENETROS + SONDEIGS.pdf Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+        "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1",
+        "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és.",
+        "extra": {
+         "registre": {
+          "estat": "candidats",
+          "value": [
+           1,
+           1,
+           1,
+           1
+          ],
+          "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+          "quote": "1 | 1 | 1(?) | 1",
+          "note": "Tercer valor de lectura incerta al manuscrit (traç feble); llegit com '1' amb confiança baixa."
+         }
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "sources_checked": [
+    "PENETROS + SONDEIGS.pdf"
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "nom": "1er nivell",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Arcillas arenosas con puntualmente bolos",
+      "candidates": [
+       {
+        "value": "Arcillas arenosas con puntualmente bolos",
+        "font": "tall.pdf requadre LEYENDA",
+        "quote": "1er nivel: Arcillas arenosas con puntualmente bolos."
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "segur",
+      "value": "0,00",
+      "sources_checked": [
+       "tall.pdf"
+      ],
+      "candidates": [
+       {
+        "value": "0,00",
+        "font": "(definició: el primer nivell arrenca a la superfície)",
+        "quote": ""
+       }
+      ],
+      "rule": "1.4/D1: sense capa de cobertura, el primer nivell comença a 0,00 per definició (precedent E2b)"
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "tall.pdf"
+      ]
+     }
+    },
+    {
+     "nom": "2on nivell",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Bolos y gravas en matriz arenosa y arcillosa",
+      "candidates": [
+       {
+        "value": "Bolos y gravas en matriz arenosa y arcillosa",
+        "font": "tall.pdf requadre LEYENDA",
+        "quote": "2do nivel: Bolos y gravas en matriz arenosa y arcillosa."
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "candidats",
+      "value": "fins al fons d'investigació (rebuig DPSH: -3,58/-4,59/-3,77/-5,92/-4,18/-5,70 m per punt; sondeigs S-1: -2,40 m, S-2: -3,00 m)",
+      "sources_checked": [
+       "tall.pdf"
+      ],
+      "candidates": [
+       {
+        "value": "fins al fons d'investigació (rebuig DPSH: -3,58/-4,59/-3,77/-5,92/-4,18/-5,70 m per punt; sondeigs S-1: -2,40 m, S-2: -3,00 m)",
+        "font": "(derivat: la base de l'últim nivell és el fons d'investigació) ← ANEJOS/4001679_DPSH.xls Full 'P-1', peu B80; columna G 'Niveles' files 17-35; ANEJOS/4001679_DPSH.xls Full 'P-2', peu B80; columna G 'Niveles' files 17-40; ANEJOS/4001679_DPSH.xls Full 'P-3', peu B80; columna G 'Niveles' files 17-36 …",
+        "quote": "Rechazo a la penetración: -3,58 m",
+        "note": "1.4/D3: cap document dona la base de l'últim nivell (el substrat no es travessa): el límit conegut és fins on arriba el reconeixement"
+       }
+      ],
+      "rule": "1.4/D3: la base de l'últim nivell no la dona cap document → el fons d'investigació (rebuig DPSH per punt / fondària del sondeig), candidats, mai segur"
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "tall.pdf"
+      ]
+     }
+    }
+   ],
+   "sources_checked": [
+    "tall.pdf"
+   ]
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "value": 186.18,
+   "candidates": [
+    {
+     "value": 186.18,
+     "font": "24.0807/A01_TIPOL.pdf",
+     "quote": "",
+     "extra": {
+      "components": [
+       {
+        "planta": "Pbc",
+        "value": 40.04
+       },
+       {
+        "planta": "P1",
+        "value": 73.07
+       },
+       {
+        "planta": "Pb",
+        "value": 73.07
+       }
+      ],
+      "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+     }
+    },
+    {
+     "value": 187.37,
+     "font": "24.0807/A01_TIPOL.pdf",
+     "quote": "",
+     "extra": {
+      "components": [
+       {
+        "planta": "Pbc",
+        "value": 40.04
+       },
+       {
+        "planta": "P1",
+        "value": 73.66
+       },
+       {
+        "planta": "Pb",
+        "value": 73.67
+       }
+      ],
+      "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+     }
+    },
+    {
+     "value": 187.38,
+     "font": "24.0807/A01_TIPOL.pdf",
+     "quote": "",
+     "extra": {
+      "components": [
+       {
+        "planta": "Pbc",
+        "value": 40.04
+       },
+       {
+        "planta": "P1",
+        "value": 73.67
+       },
+       {
+        "planta": "Pb",
+        "value": 73.67
+       }
+      ],
+      "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+     }
+    }
+   ],
+   "rule": "Pas 3b: l'Eva escriu de vegades la suma i de vegades els sumands; multi-habitatge pot ser per casa → sempre candidats",
+   "altres": [
+    {
+     "value": 169.5,
+     "font": "24.0807/A01_TIPOL.pdf",
+     "quote": "",
+     "extra": {
+      "components": [
+       {
+        "planta": "Pbc",
+        "value": 17.34
+       },
+       {
+        "planta": "Pb",
+        "value": 102.21
+       },
+       {
+        "planta": "Ps",
+        "value": 49.95
+       }
+      ],
+      "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+     }
+    },
+    {
+     "value": 199.34,
+     "font": "24.0807/A01_TIPOL.pdf",
+     "quote": "",
+     "extra": {
+      "components": [
+       {
+        "planta": "Pbc",
+        "value": 40.43
+       },
+       {
+        "planta": "Pb",
+        "value": 109.32
+       },
+       {
+        "planta": "Ps",
+        "value": 49.59
+       }
+      ],
+      "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+     }
+    },
+    {
+     "value": 169.69,
+     "font": "24.0807/A01_TIPOL.pdf",
+     "quote": "",
+     "extra": {
+      "components": [
+       {
+        "planta": "P1",
+        "value": 89.66
+       },
+       {
+        "planta": "Pbc",
+        "value": 42.0
+       },
+       {
+        "planta": "Pb",
+        "value": 38.03
+       }
+      ],
+      "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+     }
+    },
+    {
+     "value": 174.35,
+     "font": "24.0807/A01_TIPOL.pdf",
+     "quote": "",
+     "extra": {
+      "components": [
+       {
+        "planta": "P1",
+        "value": 92.39
+       },
+       {
+        "planta": "Pbc",
+        "value": 42.0
+       },
+       {
+        "planta": "Pb",
+        "value": 39.96
+       }
+      ],
+      "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+     }
+    },
+    {
+     "value": 1165.84,
+     "font": "24.0807/IV_PLANOS.pdf",
+     "quote": "",
+     "note": "Total = suma de Baja+Primera+Bajo Cubierta (98.42 del sòtan queda fora perquè 'no computa'); la mateixa taula dona un total PEPRI de referència de 1173.04 m² (no aplicable, és el màxim normatiu, no la proposta).",
+     "extra": {
+      "components": [
+       {
+        "planta": "Sótano",
+        "computa": false,
+        "nota": "no computa edificabilitat; 20% ocupación",
+        "value": 98.42
+       },
+       {
+        "planta": "Baja",
+        "computa": true,
+        "value": 522.61
+       },
+       {
+        "planta": "Primera",
+        "computa": true,
+        "value": 454.7
+       },
+       {
+        "planta": "Bajo Cubierta",
+        "computa": true,
+        "nota": "només computa l'àrea amb alçada > 1,50 m",
+        "value": 188.53
+       }
+      ],
+      "etiqueta_font": "Edificabilitat per plantes (columna PROPUESTA), plànol p.7/gO5 'Justificación Ordenación Propuesta', taula 'EDIFICABILIDAD PARCELA 28 HUERTO CASA SORT'"
+     }
+    }
+   ],
+   "sources_checked": [
+    "24.0807/A01_TIPOL.pdf"
+   ],
+   "components": [
+    {
+     "doc": "24.0807/A01_TIPOL.pdf",
+     "components": [
+      {
+       "planta": "Pbc",
+       "value": 40.04
+      },
+      {
+       "planta": "P1",
+       "value": 73.07
+      },
+      {
+       "planta": "Pb",
+       "value": 73.07
+      }
+     ],
+     "total": 186.18
+    },
+    {
+     "doc": "24.0807/A01_TIPOL.pdf",
+     "components": [
+      {
+       "planta": "Pbc",
+       "value": 40.04
+      },
+      {
+       "planta": "P1",
+       "value": 73.66
+      },
+      {
+       "planta": "Pb",
+       "value": 73.67
+      }
+     ],
+     "total": 187.37
+    },
+    {
+     "doc": "24.0807/A01_TIPOL.pdf",
+     "components": [
+      {
+       "planta": "Pbc",
+       "value": 40.04
+      },
+      {
+       "planta": "P1",
+       "value": 73.67
+      },
+      {
+       "planta": "Pb",
+       "value": 73.67
+      }
+     ],
+     "total": 187.38
+    },
+    {
+     "doc": "24.0807/A01_TIPOL.pdf",
+     "components": [
+      {
+       "planta": "Pbc",
+       "value": 17.34
+      },
+      {
+       "planta": "Pb",
+       "value": 102.21
+      },
+      {
+       "planta": "Ps",
+       "value": 49.95
+      }
+     ],
+     "total": 169.5
+    },
+    {
+     "doc": "24.0807/A01_TIPOL.pdf",
+     "components": [
+      {
+       "planta": "Pbc",
+       "value": 40.43
+      },
+      {
+       "planta": "Pb",
+       "value": 109.32
+      },
+      {
+       "planta": "Ps",
+       "value": 49.59
+      }
+     ],
+     "total": 199.34
+    },
+    {
+     "doc": "24.0807/A01_TIPOL.pdf",
+     "components": [
+      {
+       "planta": "P1",
+       "value": 89.66
+      },
+      {
+       "planta": "Pbc",
+       "value": 42.0
+      },
+      {
+       "planta": "Pb",
+       "value": 38.03
+      }
+     ],
+     "total": 169.69
+    },
+    {
+     "doc": "24.0807/A01_TIPOL.pdf",
+     "components": [
+      {
+       "planta": "P1",
+       "value": 92.39
+      },
+      {
+       "planta": "Pbc",
+       "value": 42.0
+      },
+      {
+       "planta": "Pb",
+       "value": 39.96
+      }
+     ],
+     "total": 174.35
+    },
+    {
+     "doc": "24.0807/IV_PLANOS.pdf",
+     "components": [
+      {
+       "planta": "Sótano",
+       "computa": false,
+       "nota": "no computa edificabilitat; 20% ocupación",
+       "value": 98.42
+      },
+      {
+       "planta": "Baja",
+       "computa": true,
+       "value": 522.61
+      },
+      {
+       "planta": "Primera",
+       "computa": true,
+       "value": 454.7
+      },
+      {
+       "planta": "Bajo Cubierta",
+       "computa": true,
+       "nota": "només computa l'àrea amb alçada > 1,50 m",
+       "value": 188.53
+      }
+     ],
+     "total": 1165.84
+    }
+   ],
+   "etiqueta_font": "suma calculada pel lector a partir dels components impresos (no hi ha total imprès)"
+  }
+ },
+ "conflicts": [],
+ "extra_concepts": {
+  "contact_person": [
+   {
+    "value": "ENRIQUE",
+    "font": "24.0807/DADES PER ANAR A CAMP_v1.xlsx fitxa!C8 (PERSONA DE CONTACTE)",
+    "quote": "ENRIQUE",
+    "doc": "24.0807/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "contact_phone": [
+   {
+    "value": "TEL.608333896",
+    "font": "24.0807/DADES PER ANAR A CAMP_v1.xlsx fitxa!F8",
+    "quote": "TEL.608333896",
+    "doc": "24.0807/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "value": "PENETROS I SONDEIG PETIT",
+    "font": "24.0807/DADES PER ANAR A CAMP_v1.xlsx fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I SONDEIG PETIT",
+    "doc": "24.0807/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "value": "TPS ERUGA",
+    "font": "24.0807/DADES PER ANAR A CAMP_v1.xlsx fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "doc": "24.0807/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "tecnic": [
+   {
+    "value": "Eva Vázquez Marcet",
+    "font": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx 'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "doc": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx"
+   }
+  ],
+  "sondeig_ml": [
+   {
+    "value": 10,
+    "font": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx OFERTA!B6",
+    "quote": "10",
+    "note": "ml de perforació",
+    "doc": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "value": "TPS",
+    "font": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx OFERTA!G3",
+    "quote": "TPS",
+    "note": "plantilla: mai senyal fort",
+    "doc": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx"
+   },
+   {
+    "value": "SOIL-ASSAIG",
+    "font": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "note": "plantilla: mai senyal fort",
+    "doc": "24.0807/PLAN_COST_V03. ReV_ANCILES.xlsx"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "value": "24·0807",
+    "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 peu / capçaleres",
+    "quote": "24·0807",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf"
+   },
+   {
+    "value": "24·0807",
+    "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.1 peu / capçaleres",
+    "quote": "24·0807",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf"
+   }
+  ],
+  "num_sondeigs": [
+   {
+    "value": 2,
+    "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.2 campanya",
+    "quote": "2 sondeo a rotación",
+    "note": "previstos",
+    "doc": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf"
+   },
+   {
+    "value": 2,
+    "font": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf p.2 campanya",
+    "quote": "2 sondeo a rotación",
+    "note": "previstos",
+    "doc": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "value": "Rechazo a la penetración: -3,58 m",
+    "font": "ANEJOS/4001679_DPSH.xls P-1!B80",
+    "quote": "Rechazo a la penetración: -3,58 m",
+    "doc": "ANEJOS/4001679_DPSH.xls"
+   },
+   {
+    "value": "Rechazo a la penetración: -4,59 m",
+    "font": "ANEJOS/4001679_DPSH.xls P-2!B80",
+    "quote": "Rechazo a la penetración: -4,59 m",
+    "doc": "ANEJOS/4001679_DPSH.xls"
+   },
+   {
+    "value": "Rechazo a la penetración: -3,77 m",
+    "font": "ANEJOS/4001679_DPSH.xls P-3!B80",
+    "quote": "Rechazo a la penetración: -3,77 m",
+    "doc": "ANEJOS/4001679_DPSH.xls"
+   },
+   {
+    "value": "Rechazo a la penetración: -5,92 m",
+    "font": "ANEJOS/4001679_DPSH.xls P-4!B80",
+    "quote": "Rechazo a la penetración: -5,92 m",
+    "doc": "ANEJOS/4001679_DPSH.xls"
+   },
+   {
+    "value": "Rechazo a la penetración: -4,18 m",
+    "font": "ANEJOS/4001679_DPSH.xls P-5!B80",
+    "quote": "Rechazo a la penetración: -4,18 m",
+    "doc": "ANEJOS/4001679_DPSH.xls"
+   },
+   {
+    "value": "Rechazo a la penetración: -5,70 m",
+    "font": "ANEJOS/4001679_DPSH.xls P-6!B80",
+    "quote": "Rechazo a la penetración: -5,70 m",
+    "doc": "ANEJOS/4001679_DPSH.xls"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "value": "2026-02-27",
+    "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!AH23",
+    "quote": "46080.0",
+    "doc": "comanda laboratori_4001679_ANCILES.xls"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "value": "NOMÉS SULFATS",
+    "font": "comanda laboratori_4001679_ANCILES.xls Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "doc": "comanda laboratori_4001679_ANCILES.xls"
+   }
+  ],
+  "street_address_struct": [
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "General Ferraz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "20"
+     ],
+     "municipi": "Benasque",
+     "municipi_alternatives": [
+      "Anciles"
+     ]
+    },
+    "font": "24.0807/A01_TIPOL.pdf caixetí, bloc 'Situación'",
+    "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+    "note": "Municipi oficial candidat: Benasque (terme municipal). 'Anciles' és el nucli/pedania citat al mateix bloc i coincideix amb el nom de la carpeta del projecte — alternativa, no lloc diferent.",
+    "doc": "24.0807/A01_TIPOL.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "General Ferraz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "20"
+     ],
+     "municipi": "Benasque",
+     "municipi_alternatives": []
+    },
+    "font": "24.0807/IV_PLANOS.pdf Caixetí, camp 'Situación' (totes les pàgines)",
+    "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+    "note": "municipi fixat a 'Benasque' (municipi legal segons el mapa comarcal de p.3/gO1); 'Anciles' és el nucli/entitat menor annexionat, no una grafia alternativa del mateix municipi, per això NO s'inclou a municipi_alternatives (regla: alternatives només per llocs idèntics). Projecte a Osca/Aragó: el padró intern de 947 municipis (Catalunya) no cobreix aquesta zona — vegeu nota de 'municipality'.",
+    "doc": "24.0807/IV_PLANOS.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "General Ferraz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "20"
+     ],
+     "municipi": "Anciles",
+     "municipi_alternatives": []
+    },
+    "font": "24.0807/SITE_prop A.pdf caixetí, camp 'Situación'",
+    "quote": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)",
+    "note": "municipi normalitzat a 'Anciles' (coincideix amb el nom de la carpeta de l'expedient '4001679 ANCILES'); el document original escriu 'ANCILES - BENASQUE (HUESCA)' — vegeu el tier_a de 'municipality' per al matís nucli/terme municipal",
+    "doc": "24.0807/SITE_prop A.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "General Ferraz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "20"
+     ],
+     "municipi": "Anciles",
+     "municipi_alternatives": []
+    },
+    "font": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.1 bloc OBRA",
+    "quote": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)",
+    "note": "Concepte extra (address_struct), no és cap dels 15 camps del nivell A.",
+    "doc": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "calle",
+     "nom_via": "General Ferraz",
+     "nom_via_alternatives": [
+      "Gral Ferraz"
+     ],
+     "portals": [
+      "20"
+     ],
+     "municipi": "Benasque",
+     "municipi_alternatives": []
+    },
+    "font": "pl situ.pdf títol + mapa cadastral base (clip 0.02,0.08,0.34,0.42 @400dpi)",
+    "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE / 'CALLE GENERAL FERRAZ' (rètol del mapa)",
+    "note": "portal 20 només consta al text del títol, no s'ha pogut confirmar sobre el mapa",
+    "doc": "pl situ.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Gral Ferraz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "20"
+     ],
+     "municipi": "Benasque",
+     "municipi_alternatives": []
+    },
+    "font": "tall.pdf peu de pagina, titol del projecte",
+    "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+    "note": "No s'ha inclos 'Arciles/Anciles' com a alternativa de municipi perque sembla una localitat/pedania dins de Benasque, no una grafia alternativa del mateix municipi.",
+    "doc": "tall.pdf"
+   }
+  ]
+ },
+ "sources_read": [
+  "_g3_templates.json",
+  "24.0807/A01_TIPOL.pdf",
+  "24.0807/IV_PLANOS.pdf",
+  "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+  "24.0807/Presupuesto Parcela Anciles.msg",
+  "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+  "24.0807/RE_ Presupuesto Parcela Anciles.msg",
+  "24.0807/SITE_prop A.pdf",
+  "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+  "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+  "ANEJOS/4001679_DPSH.xls",
+  "Confirmación visita jueves 19 y plano.msg",
+  "PENETROS + SONDEIGS.pdf",
+  "pl situ.pdf",
+  "tall.pdf"
+ ],
+ "notes_estructurals": [
+  "_decisions.json generat per consolidacio Python-first (Fase 12, python-1.0): 14 documents llegits, 6 plantilles G3, 0 conflictes A-vs-A"
+ ]
+}

@@ -1,0 +1,24 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "kind": "msg",
+ "generated": "2026-09-03T16:04:56",
+ "elapsed_s": 1.456,
+ "dir": "25_0493_pressupost_3_hab_castellar_del_vall_s",
+ "files": [
+  "25_0493_pressupost_3_hab_castellar_del_vall_s/body.txt"
+ ],
+ "subject": "PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS",
+ "from": "Eva Vazquez <eva@g3dt.com>",
+ "to": "Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2025-06-25 11:14:44+02:00",
+ "attachments": [
+  {
+   "name": "plan_cost_catellar_del_vall_s.xlsx",
+   "size": 112072,
+   "md5": "8418e65b89940a0b1ae42104be279547",
+   "already_in_folder": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+   "preext_dir": null
+  }
+ ]
+}

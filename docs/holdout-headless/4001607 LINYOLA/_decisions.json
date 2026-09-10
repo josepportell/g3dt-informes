@@ -1,0 +1,205 @@
+{
+  "project": "4001607 LINYOLA",
+  "mode": "holdout-headless (primera obertura simulada; sense Pas 6)",
+  "skill_version": "0.4",
+  "generated": "2026-08-23",
+  "files_inventoried": 30,
+  "files_read": 25,
+  "files_excluded": "informe/generated/PORTADA/LLETRA (sortides), 3 .FH11 (font FreeHand), validation/ (hold-out), Thumbs.db x2, .~lock",
+  "decisions": {
+    "expedient": {
+      "status": "segur",
+      "value": "4001607",
+      "rule": "expedient = nom de carpeta = comanda N19 = annex DPSH NÚMERO D'INFORME = GTL Obra/Projecte; mai el codi comercial ni els números del laboratori o de l'arquitecte",
+      "candidates": [
+        {"value": "4001607", "source": "comanda laboratori_4001607_LINYOLA.xls Hoja1!N19", "quote": "NÚM. D'EXPEDIENT = 4001607"},
+        {"value": "4001607", "source": "PDF/ANNEXES/4001607_DPSH.pdf capçalera", "quote": "NÚMERO D'NFORME: 4001607"},
+        {"value": "4001607", "source": "4672-GTL-25 Linyola.pdf p.2", "quote": "Obra / Projecte: Linyola. Carrer Clot de la Llacuna. 4001607"}
+      ],
+      "rejected": ["25·0616 (codi comercial G3)", "13/52/04 (expedient de l'arquitecte)", "4672-GTL-25 / GTL-8200-25 (laboratori)"]
+    },
+    "client_name": {
+      "status": "segur",
+      "value": "Sílvia Eroles Balagueró",
+      "rule": "formulari p.3/p.5 del pressupost signat ('DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME') mana fins i tot sobre el bloc PROMOTORS del projecte vigent; amb 2 promotors, l'informe va a nom de qui signa l'acceptació",
+      "candidates": [
+        {"value": "Sílvia Eroles Balagueró (NIF 47697437Z)", "source": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.3", "quote": "NOM I COGNOMS: SÍLVIA EROLES BALAGUERÓ · N.I.F.: 47697437Z"},
+        {"value": "Sílvia Eroles Balagueró i Jaume Nadal Andreu", "source": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí", "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU", "note": "2 promotors al projecte; Jaume només en CC dels correus i al caixetí — no signa l'acceptació"}
+      ],
+      "concordant": ["fitxa!B47 'silvia la propietària'", "correu d'encàrrec bloc 'Dades Clienta'", "correus 23/30-09 (emissora serolesba@gmail.com)"],
+      "rejected": ["BUNYESC ARQUITECTURA EFICIENT, SLP (sol·licitant del pressupost/fitxa)", "G3 / Eva (albarà TPS, comanda, GTL)"]
+    },
+    "street_address": {
+      "status": "segur",
+      "value": "Carrer Clot de la Llacuna, 16",
+      "rule": "només blocs etiquetats OBRA/ADREÇA OBRA/EMPLAÇAMENT; mai l'adreça del client (C/ Llibertat 13) ni del sol·licitant (C/ Arboretum 17)",
+      "candidates": [
+        {"value": "Carrer Clot de la Llacuna, 16", "source": "25.0616/25·0616.pdf p.1 bloc OBRA", "quote": "OBRA: Clot de la Llacuna, 16 -25240- Linyola"},
+        {"value": "C/ Clot de la Llacuna, 16", "source": "projecte 2_02B_DG caixetí EMPLAÇAMENT", "quote": "C/ Clot de la Llacuna,16 · LINYOLA (25240)"},
+        {"value": "C/ CLOT DE LA LLACUNA 16", "source": "PDF/ANNEXES/4001607_DPSH.pdf capçalera OBRA", "quote": "OBRA : C/ CLOT DE LA LLACUNA 16"}
+      ],
+      "note": "parcel·la de cantonada (projecte p.2 mostra CARRER SITJAR; plànol de situació de l'Eva retola CARRER FONT), però cap document dona una segona adreça per a l'obra → no hi ha competició"
+    },
+    "municipality": {
+      "status": "segur",
+      "value": "Linyola",
+      "rule": "comanda N21 + pressupost p.1 + PLAN_COST E9 (les '3 fonts de sempre') + GTL/annexos/projecte; forma oficial = forma curta aquí (cap divergència)",
+      "candidates": [
+        {"value": "Linyola", "source": "comanda Hoja1!N21", "quote": "POBLACIÓ = LINYOLA"},
+        {"value": "Linyola", "source": "projecte caixetí + p.1", "quote": "LINYOLA (25240) · municipi: LINYOLA · comarca: PLA URGELL · província: LLEIDA"},
+        {"value": "Linyola", "source": "GTL p.1 Situació", "quote": "Linyola. Carrer Clot de la Llacuna."}
+      ]
+    },
+    "architect_name": {
+      "status": "candidats",
+      "rule": "quan existeixen persona i despatx (i aquí una segona persona signant del correu), candidats i MAI segur; caixetí REDACTOR/S > signatura correu > CLIENT del pressupost",
+      "candidates": [
+        {"value": "Josep Bunyesc Palacín (Dr. Arquitecte)", "source": "projecte 2_02B_DG caixetí REDACTOR/S (11 pàgines)", "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte"},
+        {"value": "BUNYESC ARQUITECTURA EFICIENT, SLP", "source": "pressupost p.1 bloc CLIENT / fitxa C6", "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT, SLP", "note": "forma-despatx; el skill documenta que a Linyola l'Eva va escriure el despatx — però això és coneixement del skill, no d'aquesta carpeta"},
+        {"value": "Laia Alarcón (arquitecta)", "source": "correu d'encàrrec, signatura", "quote": "Laia Alarcón / arquitecta / laia.alarcon@bunyesc.com", "note": "signant de l'encàrrec i contacte ('la truqueu, Laia'); probablement arquitecta col·laboradora del despatx"}
+      ]
+    },
+    "building_type": {
+      "status": "segur",
+      "value": "habitatge unifamiliar aïllat",
+      "rule": "títol del projecte > PLAN_COST HAB UNIF (expandit) > comanda CONSTR HABITATGE > correu; l'informe ho redacta (comparació CLOSE)",
+      "candidates": [
+        {"value": "habitatge unifamiliar aïllat", "source": "projecte caixetí TÍTOL", "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT"},
+        {"value": "habitatge unifamiliar", "source": "correu d'encàrrec", "quote": "projecte bàsic per un habitatge unifamiliar a Linyola"},
+        {"value": "HAB UNIF / CONSTR HABITATGE", "source": "PLAN_COST E9 / comanda N18", "quote": "EG HAB UNIF LINYOLA · CONSTR HABITATGE"}
+      ]
+    },
+    "num_floors": {
+      "status": "segur",
+      "value": "PB (planta baixa única)",
+      "rule": "taula de planejament > correu > projecte; aquí no hi ha taula 'N. plantes' ni el correu ho diu → derivat del projecte sencer (1 font A sense cap contradicció)",
+      "candidates": [
+        {"value": "PB (1 planta)", "source": "projecte 2_02B_DG plànols 02-11", "quote": "PB HABITATGE / PB GARATGE / PB PORXO · 'Superfície construïda TOTAL PBaixa: 250.91 m²' · seccions amb Carener +4,35 m i cap planta pis", "note": "tot el programa (3 habitacions, banys, garatge) en PB; plànol 06 ja és la coberta"}
+      ],
+      "note": "confiança 0.75: cap casella explícita 'N. plantes'; derivació de lectura de plànols, sense cap indici de planta pis enlloc de la carpeta"
+    },
+    "superficie_parcela": {
+      "status": "segur",
+      "value": "571 m²",
+      "rule": "taula/plànol de parcel·la del projecte > suma cadastral > una parcel·la; 1 font A sense contradicció (cap consulta cadastral a la carpeta per contrastar)",
+      "candidates": [
+        {"value": "571 m²", "source": "projecte 2_02B_DG plànol 02 EMPLAÇAMENT-PARCEL·LA", "quote": "PARCEL·LA ref: 5098344CG2159N0000US · 571 m²"}
+      ],
+      "note": "única font; proposta de verificació: consulta cadastral de 5098344CG2159N0000US"
+    },
+    "field_date": {
+      "status": "segur",
+      "value": "2025-10-01",
+      "rule": "primer dia de camp: fitxa F38 > annex DPSH DATA > albarà TPS > noms de fotos WhatsApp; la DATA DE PRESA de la comanda i el GTL (mateix dia aquí) són candidats-sondeig; mai la data del pressupost/acceptació/GTL-expedició",
+      "candidates": [
+        {"value": "2025-10-01", "source": "fitxa DADES PER ANAR A CAMP F38", "quote": "F38 = 2025-10-01 ('dies de camp')"},
+        {"value": "01/10/2025", "source": "PDF/ANNEXES/4001607_DPSH.pdf capçalera", "quote": "DATA: 01/10/2025"},
+        {"value": "1-10-25", "source": "PENETROS.pdf albarà + fulls TPS; fotos 'Imagen de WhatsApp 2025-10-01…'; correu 30-09 'venieu demà'", "quote": "Data: 1-10-25"}
+      ],
+      "rejected": ["21/08/25 (pressupost)", "23-09 (acceptació)", "10/10/2025 (sol·licitud lab / recepció)", "30/10/2025 (expedició GTL)", "'Octubre 2023' del caixetí del tall (error de còpia)"]
+    },
+    "cota_referencia": {
+      "status": "segur",
+      "value": "+245 msnm (segons plànol topogràfic de l'ICGC, -0,15 m respecte del carrer)",
+      "rule": "annex DPSH 'Cota inici' primer (criteri Eva ICGC -0,15 carrer) > COORDENADES.txt z (GPS, l'Eva no l'usa) > ICGC",
+      "candidates": [
+        {"value": "+245 msnm", "source": "PDF/ANNEXES/4001607_DPSH.pdf capçalera (3 pàgines)", "quote": "Cota d'inici: +245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)"},
+        {"value": "244,9 (z GPS P-1)", "source": "ANNEXES/ALTRES/COORDENADES.txt", "quote": "P-1: 324935.0 ; 4619561.0 ; 244.9", "note": "coherent; candidat inferior per regla"}
+      ],
+      "concordant": ["full de camp TPS 'Cota Inici -0,15' als 3 punts", "escala del tall 241-245 msnm"],
+      "rejected": ["'altitud: 720m' del caixetí p.1 del projecte (plantilla de l'arquitecte, errònia)"]
+    },
+    "num_soil_levels": {
+      "status": "segur",
+      "value": 2,
+      "rule": "columna 'Unitat litològica' de l'annex de sondeig > llegenda del tall; sense sondeig a rotació en aquest projecte, la llegenda del tall (síntesi de l'Eva) és la font canònica; els trams del full de camp no són nivells",
+      "candidates": [
+        {"value": 2, "source": "tall.pdf (= PDF/ANNEXES/4001607_tall de correlació.pdf)", "quote": "Nivell 1: Llims argilsoso i sorrencs. / Nivell 2: Lutites i sorrenques, Substrat."}
+      ],
+      "concordant": ["GTL 'Lutita gresosa' (material del nivell 2)", "patró DPSH: colpeig baix fins ~-1,8/-2,8 i refús (substrat)"],
+      "note": "una sola còpia efectiva del tall (les dues versions PDF són el mateix dibuix) — corroborat indirectament per GTL i DPSH"
+    },
+    "num_dpsh_tests": {
+      "status": "segur",
+      "value": 3,
+      "rule": "Excel DPSH (executats) > albarà TPS 'Nº de penetròmetres realitzats' > pressupost (previstos) > fitxa N(P); previstos = executats = 3",
+      "candidates": [
+        {"value": 3, "source": "ANNEXES/4001607_DPSH.xls", "quote": "fulls P-1, P-2, P-3 amb dades (rebuig -2,90 / -2,15 / -1,75)"},
+        {"value": 3, "source": "PENETROS.pdf albarà", "quote": "[3] Nº de penetròmetres realitzats"},
+        {"value": 3, "source": "pressupost p.2 / fitxa F13 / correu ('plànol dels 3 punts de sondeig')", "quote": "UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH 3,00"}
+      ]
+    },
+    "utm_x_utm_y": {
+      "status": "segur",
+      "value": "X 324935 ; Y 4619561 (P-1, ETRS89 UTM 31N)",
+      "rule": "ANNEXES/ALTRES/COORDENADES.txt, punt P-1 = UTM de l'informe; no geocodificar aquí",
+      "candidates": [
+        {"value": "324935.0 ; 4619561.0 ; 244.9", "source": "ANNEXES/ALTRES/COORDENADES.txt bloc P-1", "quote": "P-1\\n324935.0 ; 4619561.0 ; 244.9"},
+        {"value": "P-2: 324943;4619564;244.9 · P-3: 324950;4619561;245.1", "source": "mateix fitxer", "quote": "(punts restants, per al plànol)"}
+      ]
+    },
+    "referencia_catastral": {
+      "status": "candidats",
+      "rule": "font canònica = consultes del Cadastre a la carpeta o adjunts .msg (no n'hi ha); la referència impresa al plànol del projecte és lectura vàlida però única font no-cadastral → candidats, mai inferir de l'adreça",
+      "candidates": [
+        {"value": "5098344CG2159N0000US", "source": "projecte 2_02B_DG plànol 02", "quote": "PARCEL·LA ref: 5098344CG2159N0000US · 571 m²", "note": "proposta: verificar amb consulta cadastral (cap Certificación Descriptiva y Gráfica a la carpeta)"}
+      ]
+    },
+    "lab": {
+      "lab_testing_company": {
+        "status": "segur",
+        "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+        "rule": "laboratori = emissor del GTL (banda amb registre mercantil), mai el 'client' del GTL (G3)",
+        "candidates": [
+          {"value": "TPS, Prospecció del Subsòl, SL", "source": "4672-GTL-25 Linyola.pdf, banda de capçalera", "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL B64803075 … Golmés (Lleida)"}
+        ]
+      },
+      "lab_sample_id": {
+        "status": "segur",
+        "value": "SPT-1",
+        "rule": "etiqueta de l'informe = annex de l'Eva > GTL > comanda; aquí coincideixen (SPT-1 / SPT1 P3 / SPT 1 (P3)) → cap discrepància",
+        "candidates": [
+          {"value": "SPT-1", "source": "PDF/ANNEXES/4001607_DPSH.pdf p.3 (P-3)", "quote": "SPT-1 · 1,0 a 1,5 · R"},
+          {"value": "SPT1 P3 (ref. lab GTL-8200-25)", "source": "GTL p.2", "quote": "Mostra: SPT1 P3"},
+          {"value": "SPT 1 (P3)", "source": "comanda Hoja1!C35", "quote": "SPT 1 (P3)"}
+        ]
+      },
+      "lab_depth": {
+        "status": "segur",
+        "value": "1,00 - 1,15 m",
+        "rule": "GTL > Excel/annex sondeig > comanda per a la profunditat; GTL i comanda coincideixen",
+        "candidates": [
+          {"value": "1,0 - 1,15", "source": "GTL p.2", "quote": "Cota d'extracció (m): 1,0 - 1,15"},
+          {"value": "1,00 - 1,15", "source": "comanda J35/L35", "quote": "INICIAL 1.0 / FINAL 1.15"},
+          {"value": "1,0 a 1,5 (interval de maniobra)", "source": "annex DPSH p.3", "quote": "SPT-1 · 1,0 a 1,5", "note": "interval de la maniobra SPT amb refús, no de la mostra"}
+        ]
+      },
+      "lab_location": {
+        "status": "segur",
+        "value": "P-3",
+        "rule": "comanda + GTL + annex DPSH concordants",
+        "candidates": [
+          {"value": "P-3", "source": "comanda C35 / GTL p.2 / annex DPSH p.3", "quote": "SPT 1 (P3) · SPT1 P3 · SPT-1 a la pàgina P-3"}
+        ]
+      }
+    },
+    "cte": {
+      "status": "candidats",
+      "rule": "el pressupost 25·0616 NO porta la línia 'Tipus d'edifici/Tipus de Terreny' → derivació: C segons superfície construïda TOTAL (<300 m² i <4 plantes → C-0) + T-1 per defecte; SEMPRE candidats, mai segur",
+      "candidates": [
+        {"value": "cte_edificacio = C-0 (derivat: 250,91 m² construïts < 300 i 1 planta < 4)", "source": "projecte 2_02B_DG p.3/p.5 (superfícies) + derivació del skill", "quote": "Superfície construïda TOTAL PBaixa: 250.91 m²"},
+        {"value": "cte_sol = T-1 (defecte de tots els pressupostos G3 que porten la línia)", "source": "derivació del skill (cap document del projecte ho declara)", "quote": "—"}
+      ],
+      "note": "cap document de la carpeta declara C/T; el correu d'encàrrec tampoc ('És un C1' no hi apareix)"
+    }
+  },
+  "incidents": [
+    "Caixetí del tall amb 'Data: Octubre 2023' (error de còpia; el plànol de situació diu 'Octubre 2025').",
+    "Caixetí p.1 del projecte amb 'altitud: 720m' (plantilla de l'arquitecte, errònia per Linyola ~245 m).",
+    "p.1 del projecte amb typo 'JAUME ANDAL ANDREU' (p.2-11: NADAL).",
+    "Full SPT manuscrit amb 'fins a la cota' de grafia ambigua (1,15 o 1,75); resolt pel GTL (1,15).",
+    "Sense sondeig a rotació: cap annex de sondeig; nivells geològics només del tall.",
+    "Cap consulta cadastral a la carpeta: referència i superfície només del plànol 02 del projecte."
+  ],
+  "sources_checked_for_not_found": []
+}

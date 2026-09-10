@@ -1,0 +1,234 @@
+{
+ "source_path": "PDF/ANNEXES/4001612_sondeig.pdf",
+ "source_md5": "81ed4c8e516a780b6823750eb565920a",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex de sondeig a rotació amb bateria contínua (plantilla G3), sondeig únic S-1, amb fitxa tècnica, columna litològica, mostra SPT-1 i fotografies del material recuperat.",
+ "issuer": "G3 (Eva Vázquez Marcet, Geòloga núm. 4302), sobre el treball de camp executat per TPS, S.L. (sondista Sr. Daniel Fernandez, màquina ML-76A)",
+ "date": "6/10/2025",
+ "pages_or_sheets": "2 pàgines: p.1 caixetí + taula tècnica + columna litològica; p.2 Fotografies 1-3 (emplaçament, material recuperat 0-1.80m, material recuperat SPT-1)",
+ "context": {
+  "who_made_it": "G3 (Eva, tècnic/geòloga) documenta el sondeig a rotació S-1 que ha executat TPS, S.L. per a aquest projecte",
+  "for_whom": "Per a l'expedient geotècnic de G3; és la font de detall del sondeig que l'Eva usa per redactar l'informe",
+  "why": "Registre tècnic normalitzat del sondeig: litologia per nivell, mostra SPT amb registre de colpeig, cota i coordenades, perquè l'informe en derivi la descripció geotècnica",
+  "expected_fields": [
+   "num_soil_levels",
+   "cota_referencia",
+   "field_date (del sondeig)",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "street_address (redacció de l'obra)",
+   "municipality"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "num_floors",
+   "building_type detallat",
+   "referencia_catastral",
+   "superficie_parcela",
+   "expedient"
+  ],
+  "relation_to_others": "Document germà de PDF/ANNEXES/4001612_DPSH.pdf i de SONDEIG.pdf (full de camp manuscrit del mateix sondeig); mateixa obra i mateix sol·licitant que el pressupost/fitxa de camp G3. És autoritat A per a cota_referencia, num_soil_levels, field_date (del sondeig) i el bloc lab del punt S-1/SPT-1.",
+  "authority_for": [
+   "cota_referencia",
+   "num_soil_levels",
+   "field_date",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "lab_testing_company",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "199,50 m",
+   "location": "p.1 caixetí, bloc 'Coordenades UTM', casella z:",
+   "quote": "z: 199.50m",
+   "confidence": 0.85,
+   "note": "Caselles x i y buides; només z omplerta. Coincideix amb el criteri de l'Eva (z de l'annex de sondeig com a font de cota_referencia)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "p.1 columna 'Unitat litològica'",
+   "quote": "NIVELL 1",
+   "confidence": 0.55,
+   "note": "Únic nivell etiquetat, però el sondeig només arriba a -1,80 m (coincident amb Fotografia 2/3): no descarta nivells més profunds no travessats per aquest sondeig. Creuar amb annex_tall i DPSH per al nombre total de nivells del projecte."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "6/10/2025",
+   "location": "p.1 caixetí, caselles 'Data d'inici' i 'Data de fi'",
+   "quote": "Data d'inici: 6/10/2025 · Data de fi: 6/10/2025",
+   "confidence": 0.5,
+   "note": "Data del sondeig (S-1), no necessàriament el primer dia de camp (DPSH sol anar abans/després): candidat 2 per a field_date, amb nota 'sondeig'."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "ARQ BOSCH NOVELL",
+   "location": "p.1 caixetí, casella 'Client:'",
+   "quote": "Client: ARQ BOSCH NOVELL",
+   "confidence": 0.5,
+   "note": "La casella 'Client:' d'aquest annex és el sol·licitant, no el promotor; el prefix 'ARQ' indica arquitecte → candidat a architect_name, mai a client_name (regla del Pas 3)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+   "location": "p.1 caixetí, bloc 'Obra:'",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ EN EL MUNICIPI DE BELL-LLOC",
+   "confidence": 0.6,
+   "note": "Parcel·la de cantonada entre dos carrers; candidat 1 (redacció pròpia de l'Eva, idèntica a p.1 i p.2). Corroborat per l'etiqueta manuscrita de la caixa de mostres (Fotografia 2/3): 'S-1  c/Antoni Bellet - Bell·lloc'."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Antoni Bellet",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Bell-lloc d'Urgell",
+    "municipi_alternatives": [
+     "BELL-LLOC"
+    ]
+   },
+   "location": "p.1 caixetí bloc 'Obra:' + etiqueta manuscrita p.2",
+   "quote": "...ENTRE EL CARRER ANTONI BELLET... EN EL MUNICIPI DE BELL-LLOC / 'c/Antoni Bellet - Bell·lloc'",
+   "confidence": 0.6,
+   "note": "Carrer límit (1 de 2) de la parcel·la de cantonada; sense número de portal imprès enlloc del document."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Bell-lloc d'Urgell",
+    "municipi_alternatives": [
+     "BELL-LLOC"
+    ]
+   },
+   "location": "p.1 caixetí, bloc 'Obra:'",
+   "quote": "...I EL CARRER MESTRE RAMON ORTIZ EN EL MUNICIPI DE BELL-LLOC",
+   "confidence": 0.6,
+   "note": "Carrer límit (2 de 2) de la parcel·la de cantonada; sense número de portal imprès enlloc del document."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc",
+   "location": "p.1 caixetí, bloc 'Obra:'",
+   "quote": "EN EL MUNICIPI DE BELL-LLOC",
+   "confidence": 0.7,
+   "note": "Forma curta; corroborada per l'etiqueta manuscrita 'Bell·lloc' a les fotografies de p.2."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "p.1 caixetí, bloc 'Obra:'",
+   "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.7,
+   "note": null
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, S.L.",
+   "location": "p.1 caixetí, casella 'Empresa:'",
+   "quote": "Empresa: TPS, S.L.",
+   "confidence": 0.6,
+   "note": "Casella 'Empresa' d'aquest annex és l'executora del sondeig (sondista); no diu explícitament 'laboratori', però és la mateixa raó social que emet el GTL en aquest projecte."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.1 taula dreta, bloc 'Muestras y ensayos in situ', columna 'Tipus de mostra'",
+   "quote": "SPT-1",
+   "confidence": 0.85,
+   "note": "Annex de l'Eva = font d'autoritat per a l'etiqueta de mostra que apareix a l'informe."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1,00 a -1,60 m",
+   "location": "p.1 taula dreta, columna 'Prof. de extracció (m)'",
+   "quote": "-1.00 a -1.60",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.1 caixetí, casella 'Sondeig nº:'",
+   "quote": "Sondeig nº: S-1",
+   "confidence": 0.8,
+   "note": "Punt d'assaig d'on surt la mostra SPT-1 = l'únic sondeig del document."
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "199,50 m",
+    "profunditat_assolida": "-1,80 m",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "p.1 caixetí (z) + p.2 fotografies (llegendes de les caixes de mostres)",
+    "quote": "z: 199.50m · Fotografia 2: 'Material recuperat en el sondeig S-1 entre les cotes de 0.00 a -1.80 metres de profunditat' · etiqueta manuscrita caixa: '0,00 → 1,80 mts'"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "NIVELL 1",
+    "litologia": "Llims argilosos amb graves cohesives de coloració marronosa. Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares. Tram totalment carbonatat.",
+    "de": "0,00",
+    "a": "-1,80",
+    "mostra_del_nivell": true,
+    "location": "p.1 columnes 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "NIVELL 1 / 'Llims argilosos amb graves cohesives de coloració marronosa.' 'Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares.' 'Tram totalment carbonatat.'"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,60 m",
+    "litologia": "NIVELL 1",
+    "n30": {
+     "registre": [
+      "24",
+      "34",
+      "28",
+      "30"
+     ],
+     "suma_trams_centrals": 62,
+     "estat_suma": "candidats"
+    },
+    "location": "p.1 taula dreta, bloc 'Muestras y ensayos in situ'",
+    "quote": "SPT-1 · Prof. de extracció -1.00 a -1.60 · Registre: 24 / 34 / 28 / 30"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient (no hi ha cap casella de número d'expedient/informe en aquesta plantilla; el nom de fitxer '4001612_sondeig.pdf' és un indici feble, no lectura)",
+  "client_name (només consta el sol·licitant/arquitecte a la casella 'Client:', vegeu architect_name)",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests (document de sondeig a rotació, no de DPSH)",
+  "utm_x (casella x: buida)",
+  "utm_y (casella y: buida)",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text extret (fitz) confirmat brossa per a les 2 pàgines (meta.text_ok=false, PDF Distiller/FreeHand) → lectura 100% visual de les meitats esquerra/dreta a 220dpi. Clip addicional a 450dpi (render_clip.py, fraccions 0.0,0.30,0.35,0.55) per confirmar amb precisió la fondària de terminació de la columna litològica (~-1,80m), creuada amb les llegendes manuscrites de les caixes de mostres a la p.2 (Fotografies 2 i 3)."
+}

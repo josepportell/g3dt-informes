@@ -1,0 +1,27 @@
+{
+ "compared_by": "sessió principal (agent cec)",
+ "eva_truth": "docs/golden-read-taules/_eva_truth/linyola.json (4001607_informe.docx)",
+ "date": "2026-08-24",
+ "cells": {
+  "dpsh.P-1..P-3.cota_inici": {"read": "segur +245 x3", "eva": "+245.0 x3", "class": "OK x3"},
+  "dpsh.P-1..P-3.profunditat": {"read": "segur -2,90/-2,15/-1,75 (B80 + manuscrit R 2,9/2,15/1,75)", "eva": "-2.90/-2.15/-1.75", "class": "OK x3"},
+  "dpsh.P-1..P-3.rebuig": {"read": "segur Si x3", "eva": "Si x3", "class": "OK x3"},
+  "dpsh.P-1..P-3.nf": {"read": "segur No detectat x3", "eva": "No detectat x3 (columna 'Humitat')", "class": "OK x3"},
+  "sondeig.bloc": {"read": "buit no_trobat (6 fonts comprovades)", "eva": "l'informe no té taula de sondeig", "class": "OK"},
+  "spt.id": {"read": "segur SPT-1", "eva": "SPT-1", "class": "OK"},
+  "spt.punt": {"read": "segur P-3", "eva": "P-3", "class": "OK"},
+  "spt.profunditat": {"read": "segur 1,0-1,15 (GTL+camp+comanda manen sobre l'Excel '1,0 a 1,5')", "eva": "-1.00 a -1.15", "class": "OK", "note": "la cadena de prioritat de fonts ha corregit l'Excel — cas nou simètric al de la comanda"},
+  "spt.n30": {"read": "segur R (colpeig 50 al 1r tram de 15 cm)", "eva": "R", "class": "OK"},
+  "spt.litologia": {"read": "candidats (3 redaccions)", "eva": "Lutites", "class": "CAND"},
+  "soil.count": {"read": "2 nivells", "eva": "2 nivells", "class": "OK"},
+  "soil.n1.litologia": {"read": "candidats", "eva": "Llims argilosos i sorrencs.", "class": "CAND"},
+  "soil.n2.litologia": {"read": "candidats", "eva": "Lutites i sorrenques alterades, substrat.", "class": "CAND"},
+  "soil.transicions": {"read": "candidats (contacte NO horitzontal: -1,4 P-1/P-3, -0,2 P-2)", "eva": "(alimenta sísmica, Tier B)", "class": "CAND", "note": "multiplicitat real"},
+  "superficie_construida": {"read": "segur 250,91 m² PB ('segons projecte', única font sense contradicció)", "eva": "250.91", "class": "OK"}
+ },
+ "totals": {"OK": 18, "CAND": 4, "ERR": 0, "NT": 0, "n/a": 0},
+ "observacions": [
+  "0 ERR. L'SPT fet amb equip de penetròmetre (full SPT/MI dins PENETROS.pdf) llegit correctament sense annex de sondeig.",
+  "La fila de parcel·la de l'Eva diu 'segons informació aportada' (571): tercera variant de l'etiqueta-segons-font."
+ ]
+}

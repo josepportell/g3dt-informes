@@ -804,7 +804,8 @@ def _llm_pick_street(
         street_list=street_list_text,
     )
 
-    model = os.environ.get("GROQ_MODEL", "qwen/qwen3-32b")
+    # qwen/qwen3-32b was retired by Groq (404) — map stale ids to the live model
+    model = config.live_groq_model(os.environ.get("GROQ_MODEL", config.TEXT_MODEL_GROQ))
 
     # Qwen3: disable thinking mode for clean output
     if "qwen3" in model.lower():
@@ -822,6 +823,7 @@ def _llm_pick_street(
         "temperature": 0.0,
         "max_tokens": 60,
     }
+    payload.update(config.groq_payload_extras(model))
 
     logger.info(
         f"LLM street picker: matching '{street_hint}' against "

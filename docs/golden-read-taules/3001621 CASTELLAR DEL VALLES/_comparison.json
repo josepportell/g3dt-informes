@@ -1,0 +1,30 @@
+{
+ "compared_by": "sessió principal (agent cec)",
+ "eva_truth": "docs/golden-read-taules/_eva_truth/castellar.json (3001621_informe_v0.docx)",
+ "date": "2026-08-24",
+ "cells": {
+  "dpsh.P-1..P-4.cota_inici": {"read": "segur -4,0/-4,2/-4,0/-4,0 (relatives, respecte el carrer)", "eva": "-4.0/-4.20/-4.0/-4.0", "class": "OK x4", "note": "regla v0.7 de cotes relatives per punt VALIDADA; capçalera de l'Eva '(m*)' no '(msnm*)'"},
+  "dpsh.P-1..P-4.profunditat": {"read": "segur -1,08/-0,48/-0,76/-1,55 (B80)", "eva": "idèntics", "class": "OK x4"},
+  "dpsh.P-1..P-4.rebuig": {"read": "segur Si x4", "eva": "Si x4", "class": "OK x4"},
+  "dpsh.P-1..P-4.nf": {"read": "segur No detectat x4", "eva": "No detectat x4 (columna 'Humitat (m)')", "class": "OK x4", "note": "capçalera de columna de l'Eva = 'Humitat', valor igual"},
+  "sondeig.S-1.cota": {"read": "SEGUR 570,90 msnm (annex z + COORDENADES.txt)", "eva": "-4.20 (relativa, mateix sistema que els DPSH)", "class": "ERR", "note": "ERR-amb-confiança: quan les cotes DPSH del projecte són relatives, la cota del sondeig A LA TAULA també és relativa; el z absolut de l'annex no entra a la taula → REGLA NOVA v0.9"},
+  "sondeig.S-1.profunditat": {"read": "segur -1,20", "eva": "-1.20", "class": "OK"},
+  "sondeig.S-1.spt_ma": {"read": "candidats [1/0 annex | 1/1 GTL]", "eva": "1/0", "class": "CAND", "note": "candidat 1 correcte"},
+  "sondeig.S-1.nf": {"read": "segur No detectat", "eva": "No detectat", "class": "OK"},
+  "spt.id": {"read": "candidats [SPT-1 annex | MA1 GTL]", "eva": "SPT-1", "class": "CAND", "note": "candidat 1 correcte — la regla lab_sample_id (l'ERR històric) funciona"},
+  "spt.punt": {"read": "segur S-1", "eva": "S-1", "class": "OK"},
+  "spt.profunditat": {"read": "segur -1,00 a -1,20", "eva": "-1.00 a -1.20", "class": "OK"},
+  "spt.n30": {"read": "segur R", "eva": "R", "class": "OK"},
+  "spt.litologia": {"read": "candidats (re-redacció)", "eva": "Limolites i bretxes", "class": "CAND"},
+  "soil.count": {"read": "segur 1 nivell numerat (+ terreny vegetal sense numerar)", "eva": "1 nivell", "class": "OK"},
+  "soil.n1.litologia": {"read": "candidats [annex 'substrat rocós, bretxes amb intercalacions de lutites i gresos vermells' primer]", "eva": "Bretxes amb intercalacions de lutites i gresos vermells. Substrat rocós.", "class": "CAND", "note": "candidat 1 pràcticament literal — regla v0.8 (annex primer) VALIDADA"},
+  "soil.n1.fondaries": {"read": "segur 0,50-1,20", "eva": "(alimenta sísmica/geotècnica, Tier B)", "class": "OK"},
+  "superficie_construida": {"read": "candidats '120 m2 construits' (1 de 3 habitatges, mai segur)", "eva": "120 m2", "class": "CAND", "note": "candidat 1 correcte; Eva escriu el valor per casa"}
+ },
+ "totals": {"OK": 23, "CAND": 5, "ERR": 1, "NT": 0, "n/a": 0},
+ "observacions": [
+  "1 ERR: cota del sondeig a la taula = relativa quan el sistema del projecte és relatiu. Convertir en regla (v0.9).",
+  "Capçaleres adaptatives de l'Eva: '(m*)' vs '(msnm*)' segons cota relativa/absoluta; 'Humitat (m)' vs 'Nivell freàtic'.",
+  "La p.2 de l'annex de sondeig era de BELL-LLOC (còpia no actualitzada): l'agent la va descartar sol — regla d'errors de còpia funcionant."
+ ]
+}

@@ -1,0 +1,25 @@
+{
+  "source_path": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf (+ duplicat adjunt del .msg; versió DWG no llegible)",
+  "document_type": "planol",
+  "what_it_is": "Plànol de Factoria d'Arquitectura per a la casa 2: planta amb topogràfic superposat i edificació projectada + secció B, entre Carrer Tosca i Camí Antic.",
+  "issuer": "FACTORIA D'ARQUITECTURA SLP (metadades: ruta '\\\\DISKSTATION\\Actuals\\408 REPARCEL·LACIO JORDI GENE TOSCA 16\\GEOTECNIC\\...')",
+  "date": "modDate 2026-05-06 (enviat el mateix dia per correu)",
+  "pages_or_sheets": "1 pàgina (planta + secció B)",
+  "context": {
+    "who_made_it": "Factoria d'Arquitectura (despatx de la casa 2)",
+    "for_whom": "G3/Eva, per preparar el camp i les cotes",
+    "why": "mostrar on anirà la casa i a quines cotes",
+    "expected_fields": ["cota d'implantació", "num_floors (secció)", "superficie_parcela (si hi hagués taula)", "promotor/arquitecte (si hi hagués caixetí)"],
+    "not_expected": ["field_date", "lab", "expedient"],
+    "relation_to_others": "el 'title' del PDF porta la ruta del despatx amb el nom de l'encàrrec: '408 REPARCEL·LACIO JORDI GENE TOSCA 16' → indici feble (≤0,3) que el promotor de Tosca 16 es diu Jordi Gené (regla 'metadades PDF com a indici'). El DWG bessó no és llegible.",
+    "authority_for": ["cota d'implantació casa 2 (201,25)"]
+  },
+  "tier_a": [
+    {"concept_id": "client_name", "value": "JORDI GENE (casa 2) — indici de metadades, MOLT feble", "location": "metadades PDF /Title", "quote": "\\\\DISKSTATION\\Actuals\\408 REPARCEL·LACIO JORDI GENE TOSCA 16\\GEOTECNIC\\GEOTECNIC CONJUNT\\ENVIO G3\\PLANTA I SECCIO Model (1)", "confidence": 0.25, "note": "nom de la carpeta interna del despatx ('REPARCEL·LACIO JORDI GENE TOSCA 16'); mai segur; cap document del projecte anomena el promotor de la casa 2"},
+    {"concept_id": "num_floors", "value": "PB+1 aparent a la secció (casa 2)", "location": "SECCIÓ B (dibuix)", "quote": "secció amb dues lloses sobre rasant a cota 201,25", "confidence": 0.35, "note": "lectura gràfica insegura (sense caixetí ni taula de plantes); la planta moblada mostra un sol nivell d'estances → podria ser PB única; candidats"},
+    {"concept_id": "cota_referencia", "value": "201,25 (cota d'implantació de la casa 2 al plànol)", "location": "planta i secció (cotes)", "quote": "201.25 (planta, vora la casa; secció B, nivell de la casa)", "confidence": 0.4, "note": "cota del projecte, no del terreny als punts d'assaig; coincideix amb Cota inici P-2.1 (201,25)"},
+    {"concept_id": "street_address", "value": "Carrer Tosca (façana oest) / Camí Antic (est) (casa 2)", "location": "retolació del plànol", "quote": "Carrer Tosca … Camí Antic … CAMI ANTIC DE SANT CUGAT (secció)", "confidence": 0.5, "note": "corrobora Tosca 16; la parcel·la toca dos vials (situació de cantonada/doble façana)"}
+  ],
+  "not_present": ["architect_name imprès (cap caixetí)", "superficie_parcela (cap taula de planejament)", "expedient", "field_date", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "PDF vectorial amb 0 paraules de text → render 120 dpi i lectura visual; zones A i B marcades dins la parcel·la (possibles dues finques de la reparcel·lació); franja ratllada blava vora el Camí Antic."
+}

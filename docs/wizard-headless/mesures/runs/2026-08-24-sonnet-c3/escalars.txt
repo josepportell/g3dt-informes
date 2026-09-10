@@ -1,0 +1,6 @@
+NOU      architect_company      prod=no_trobat
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatges unifamiliars aïllats (grup de 3, entramat lleuger de fusta)'
+ALERTA   cota_referencia        prod puja a segur ('570.90 msnm (segons el plànol ICGC)'); or candidats
+CAUTELA  num_floors             or segur, prod candidats (bo dins): 'PB+1 (sense soterrani)'
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer Arbrells, 18A, 18B i 20'
+TOTALS: {'NOU': 1, 'OK': 17, 'CAUTELA': 3, 'ALERTA': 1}

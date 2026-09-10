@@ -1,0 +1,35 @@
+{
+ "source_path": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+ "document_type": "correu",
+ "what_it_is": "Resposta de l'Eva Vázquez (27/01/2026 07:18) a César Morillas i Dolors Maqueda SENSE text nou (només signatura), adjuntant PLAN_COST_ALCOLETGE.xlsx; cita íntegrament el correu de César del 26/01 i el de David Graus del 21/01.",
+ "issuer": "Eva Vazquez <eva@g3dt.com> (G3, Responsable Dept Geologia, col. 4302)",
+ "date": "2026-01-27",
+ "pages_or_sheets": "cos buit (signatura) + 11 adjunts (1 xlsx + 10 imatges de signatura/plantilla)",
+ "context": {
+  "who_made_it": "Eva (G3)",
+  "for_whom": "César Morillas (comercial) i Dolors Maqueda (administració)",
+  "why": "retornar el PLAN_COST perquè administració emeti el pressupost 26·0049 (emès el mateix dia a les 09:12)",
+  "expected_fields": [
+   "res de nou (RE: sense text)"
+  ],
+  "not_expected": [
+   "tots els camps del nivell A"
+  ],
+  "relation_to_others": "DUPLICAT del correu 07 pel que fa al text (cadena citada idèntica). L'únic aportat és l'adjunt PLAN_COST_ALCOLETGE.xlsx, md5 4aa20587 IDÈNTIC a 26.0049/PLAN_COST_ALCOLETGE.xlsx (ja llegit a g3_04_plan_cost.json). No compta com a font independent.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "attachment_duplicate",
+   "value": "PLAN_COST_ALCOLETGE.xlsx (112018 B, md5 4aa20587) = 26.0049/PLAN_COST_ALCOLETGE.xlsx",
+   "location": "adjunt",
+   "quote": "(cos sense text: 'Atentament ⏎ Eva Vázquez Marcet ⏎ Responsable Dept Geologia.')",
+   "confidence": 1.0,
+   "note": "duplicat exacte; cap dada nova"
+  }
+ ],
+ "not_present": [
+  "tots els camps del nivell A (text nou inexistent; la cadena citada s'ha llegit a correu_07)"
+ ],
+ "reading_notes": "extract_msg. Text nou = buit (només la signatura de l'Eva). Imatges: image001.jpg 185×182, image002/003.png 783×3, image004-006/015.png ~700-979×5-7 (línies), image008.jpg 288×144, image011.jpg 954×744 (= image008.jpg del correu 07, retall del plànol citat), image012.png 400×200 logo: totes de signatura o citació, ignorades. Extrets a scratchpad/alcoletge/agentA/msg2/."
+}

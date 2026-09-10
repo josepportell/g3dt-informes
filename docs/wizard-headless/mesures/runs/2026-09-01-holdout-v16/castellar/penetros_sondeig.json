@@ -1,0 +1,208 @@
+{
+ "source_path": "PENETROS + SONDEIG.pdf",
+ "source_md5": "9c6982925cfde80fd507a53ea8241838",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Albarans i fulls de camp manuscrits de TPS (fotografiats, 'Microsoft: Print To PDF'): 2 albarans (penetròmetre i sondeig) + 3 fulls de camp amb els registres bruts de colpeig dels 4 punts DPSH (P-1 a P-4) i el full de camp del sondeig a rotació S-1.",
+ "issuer": "TPS Prospecció del Subsòl SL (operari/sondista: Daniel Fernández)",
+ "date": "24-10-2025",
+ "pages_or_sheets": "5 pàgines: p.1 albarà DPSH, p.2 full de camp DPSH (Fitxa 01, P1/P2/P3), p.3 full de camp DPSH (Fitxa 01, P4), p.4 albarà sondeig a rotació, p.5 full de camp sondeig S-1",
+ "context": {
+  "who_made_it": "TPS (subcontractista de sondeigs i penetròmetres de G3), operari Daniel Fernández",
+  "for_whom": "G3 (Eva), que li ha encarregat els DPSH i el sondeig d'aquest projecte",
+  "why": "Registre de camp: albarans de conformitat del treball fet (per facturar a G3) i fulls de camp amb els valors bruts de colpeig N20 i la descripció provisional del material del sondeig",
+  "expected_fields": [
+   "cota d'inici per punt",
+   "colpeig N20 per tram de 20 cm",
+   "profunditat de rebuig",
+   "nivell freàtic (columna N.F.)",
+   "data de camp",
+   "nombre de penetròmetres realitzats",
+   "descripció provisional dels materials del sondeig S-1",
+   "profunditat de la mostra"
+  ],
+  "not_expected": [
+   "expedient",
+   "NIF/adreça del client",
+   "arquitecte",
+   "tipus d'edifici",
+   "plantes",
+   "superfície de parcel·la",
+   "referència cadastral",
+   "resultats de laboratori"
+  ],
+  "relation_to_others": "és l'original manuscrit/fotografiat darrere de 'annexes_3001621_dpsh.json' (annex DPSH typed) i de 'pdf_annexes_3001621_sondeig.json' (annex de sondeig de l'Eva): on coincideixen, aquest document NO és una font independent (és el mateix treball de camp transcrit); aporta valor propi sobretot on els typed annexes puguin no ser explícits (p.ex. columna N.F. buida confirmada aquí als 4 punts + sondeig)",
+  "authority_for": [
+   "num_dpsh_tests",
+   "field_date"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.1 ALBARÀ, bloc CONCEPTES / ML DE PERFORACIÓ, camp 'Nº de penetròmetres realitzats'",
+   "quote": "4  Nº de penetròmetres realitzats",
+   "confidence": 0.85,
+   "note": "recompte directe de l'albarà de TPS; coincideix amb els 4 punts (P1-P4) que apareixen al full de camp"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24-10-2025",
+   "location": "p.1 ALBARÀ 'Data:'; p.2/p.3 Full de Camp 'Data:'; p.4 ALBARÀ 'Data inici/Data final:'; p.5 Full de Camp 'Data inici:'",
+   "quote": "Data: 24-10-2025",
+   "confidence": 0.7,
+   "note": "data única i consistent a totes les 5 pàgines (DPSH i sondeig el mateix dia); font TPS, per sota en prioritat de la fitxa de camp G3 i de l'annex DPSH typed si discrepen"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Arbrells",
+   "location": "p.1 DADES OBRA 'Adreça:'; p.2/p.4/p.5 'Adreça de l'obra:'",
+   "quote": "Adreça: C/ Arbrells",
+   "confidence": 0.55,
+   "note": "candidat, document no autoritat A per si sol (full de camp del subcontractista, no plantilla G3)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "p.1 DADES OBRA 'Població:'; p.2/p.4 'Adreça de l'obra: C/Arbrells - Castellar del Vallès'",
+   "quote": "Població: Castellar del Vallès",
+   "confidence": 0.5,
+   "note": "grafia manuscrita, candidat, no font preferent (comanda/pressupost/PLAN_COST manen)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "-4,00 m (respecte C/Arbrells)",
+   "location": "p.2 taula DPSH, capçalera 'Cota Inici' de P1/P2/P3; p.3 P4; p.5 'Decriure cota 0 o cota referència:'",
+   "quote": "Cota Inici: -4 m (P1) / -4,2 m (P2) / -4 m (P3) / -4 m (P4); Decriure cota 0 o cota referència: C/Arbrells -4 m",
+   "confidence": 0.55,
+   "note": "candidat per punt, relatiu al carrer: P1/P3/P4 = -4,00 m, P2 = -4,20 m; el sondeig S-1 usa el mateix -4 m. No hi ha cota absoluta en aquest document (compte amb el sistema de cotes del projecte, Pas 3b)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 (Eva)",
+   "location": "p.1 i p.4 'DADES CLIENT: Empresa / Responsable'",
+   "quote": "DADES CLIENT: Empresa: G3   Responsable: Eva",
+   "confidence": 0.0,
+   "note": "G3 és el client de TPS (sol·licitant del servei de camp), no el client de l'informe geotècnic — descartat per regla del Pas 3 ('G3 mai és client')"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS",
+   "location": "p.1/p.4 capçalera 'tps · prospecció del subsòl · ALBARÀ'",
+   "quote": "tps prospecció del subsòl — ALBARÀ",
+   "confidence": 0.5,
+   "note": "TPS és qui fa el treball de camp i el mostreig; coneixement previ del projecte: TPS (NIF B64803075) és també la banda emissora del GTL de laboratori. Aquest document no porta NIF"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,00 a 1,20 m",
+   "location": "p.5 taula del sondeig S-1, columna 'Mostres / Prof'",
+   "quote": "Mostres Prof: 100 a 1,20",
+   "confidence": 0.55,
+   "note": "única mostra anotada en aquest full; profunditat de la mostra dins el tram 'Roca fracturada'"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.5 capçalera 'Sondeig:'",
+   "quote": "Sondeig: S-1   Tipus de sonda: ML76A",
+   "confidence": 0.55,
+   "note": "únic sondeig d'aquest document; candidat per a l'etiqueta del punt d'assaig"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4,00 m",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 taula P1, columna 'col.'",
+    "quote": "R:1,08 (fila -1,4); columnes N.F. i Par en blanc a totes les files"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,20 m",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 taula P2, columna 'col.'",
+    "quote": "R:0,48 (fila -0,8); columnes N.F. i Par en blanc a totes les files"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4,00 m",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 taula P3, columna 'col.'",
+    "quote": "R:0,76 (fila -1); columnes N.F. i Par en blanc a totes les files"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4,00 m",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3 taula P4, columna 'col.'",
+    "quote": "R:1,55 (fila -1,8); columnes N.F. i Par en blanc a totes les files"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "-4,00 m",
+    "profunditat_assolida": "1,20 m (candidat — última fila descrita a la taula; no queda clar si el sondeig continua sense descripció)",
+    "spt_ma": "aquest full no indica comptes de colpeig (columnes 'tipus' i 'Colpeig' en blanc); hi ha una mostra anotada a 1,00-1,20 m tot i que l'albarà (p.4) marca 'Assaigs SPT: No' — contradicció ja coberta per la regla existent del skill (GTL/annex mana)",
+    "nivell_freatic": "No detectat",
+    "location": "p.5 taula, capçalera 'Nivell Freàtic' (casella en blanc) i files de profunditat",
+    "quote": "Nivell Freàtic (indicar cota o posar No si no n'hi ha): [casella en blanc]"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "tram 0,00-0,50 m (full de camp S-1 — NO és 'nivell' oficial, veure nota)",
+    "litologia_candidats": [
+     "Limos arcillosos con gravas"
+    ],
+    "de": "0,00",
+    "a": "0,50",
+    "mostra_del_nivell": false,
+    "location": "p.5 taula, fila 1",
+    "quote": "0,00  0,50   Limos arcillosos con gravas"
+   },
+   {
+    "nom": "tram 0,50-1,20 m (full de camp S-1 — NO és 'nivell' oficial, veure nota)",
+    "litologia_candidats": [
+     "Roca fracturada"
+    ],
+    "de": "0,50",
+    "a": "1,20",
+    "mostra_del_nivell": true,
+    "location": "p.5 taula, fila 2",
+    "quote": "0,50  1,20   Roca fracturada"
+   }
+  ],
+  "__nota": "Els trams de 'soil_levels' d'aquest document provenen del full de camp ràpid de l'operari (columna 'Cota d'inici respecte cota 0' reaprofitada per escriure-hi el material), NO de l'annex de sondeig formal ('Descripció dels materials') ni de la llegenda del tall. Són candidats de baixa confiança, només per corroborar/contrastar — mai la font primària de num_soil_levels (regla Pas 3b: 'Els trams de material del full de camp NO són nivells')."
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol",
+  "lab_sample_id",
+  "num_soil_levels (aquest document no és font vàlida per aquest camp — veure __nota de tables.soil_levels)"
+ ],
+ "reading_notes": "Les 5 pàgines tenen text_ok=false (fotografies de fulls manuscrits, producer 'Microsoft: Print To PDF'): lectura 100% visual sobre les page-N.png de la pre-extracció (150 dpi). Zoom amb scripts/render_clip.py sobre les columnes N.F./Par de la taula DPSH (p.2 i p.3, dpi 400) per confirmar que estan en blanc a P1-P4. La p.5 (full de camp del sondeig) té el contingut fotografiat girat 90° dins d'una pàgina amb mediabox portrait (page.rect NO reflecteix la rotació visual, a diferència de p.1-p.4): --clip per fraccions no compensava la rotació; calgut obrir la page-5.png amb PIL i rotate(90, expand=True) per llegir-la correctament. També zoom (dpi 500-600) sobre la casella 'Assaigs SPT o MI' de p.1 per confirmar la lectura manuscrita 'Na'. Cap altra pàgina requeria zoom addicional (colpeig i capçaleres llegibles a 150 dpi)."
+}

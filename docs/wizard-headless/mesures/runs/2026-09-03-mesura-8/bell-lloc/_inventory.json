@@ -1,0 +1,2248 @@
+{
+ "generated": "2026-09-03T20:55:37",
+ "project": "4001612 BELL-LLOC",
+ "files": [
+  {
+   "path": "25.0647/4613172CG1141S0001SU-15.pdf",
+   "size": 232488,
+   "md5": "3a5fafccb8cd6c95e71d7943c03e64ab",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "python",
+   "doc_type_hint": "consulta_cadastre",
+   "priority": 0
+  },
+  {
+   "path": "25.0647/4613173CG1141S0001ZU-13.pdf",
+   "size": 233074,
+   "md5": "a2c688b6594ede77ad238e401469555e",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "python",
+   "doc_type_hint": "consulta_cadastre",
+   "priority": 0
+  },
+  {
+   "path": "25.0647/A.01.pdf",
+   "size": 1308892,
+   "md5": "ef0272ce32cc3e0a5f65c6995be59200",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "planol",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_a_01",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_a_01/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_a_01/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_a_01/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 3301016,
+   "md5": "fab8f6289feff3fd980ca3bbf8e368db",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+   "size": 112277,
+   "md5": "94f480df1487f6e9ea4957b7dab7aef1",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+   "size": 367540,
+   "md5": "15556f077a44af2554b6a830fe209ab1",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+   "size": 1230848,
+   "md5": "6cd3bef1288e984b22e6bd660b26dc8c",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+   "size": 896512,
+   "md5": "e697618a53d214d51049213bd8169fbe",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0647/Thumbs.db",
+   "size": 22016,
+   "md5": "b01ff1fbfcf314c41d6131c3ae615e47",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "4001612_PORTADA_25.doc",
+   "size": 198656,
+   "md5": "ad0726a6dbc0564126c8d23f3f86a62e",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:PORTADA",
+   "priority": 0
+  },
+  {
+   "path": "4001612_generated.docx",
+   "size": 12280398,
+   "md5": "b4a491b53982bb791c45983b6d81c9e7",
+   "mtime": "2026-08-23T14:27:10",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:_generated",
+   "priority": 0
+  },
+  {
+   "path": "4001612_informe.doc",
+   "size": 4199424,
+   "md5": "d0fe657c5c2b80121d1e24edc950fe1d",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4001612_informe.docx",
+   "size": 3949940,
+   "md5": "0b9116488aaeb62fbcbf48ddef4f0085",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4001612_informe_DETALLAT.doc",
+   "size": 4205056,
+   "md5": "7f60134628408c89cdb0f936b8a75f1f",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+   "size": 371383,
+   "md5": "dcd7f1ac51cfeead84ed95b2c1231bd4",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "informe_laboratori",
+   "priority": 5,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/page-5.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/4677_gtl_25_bell_lloc_d_urgell/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "A.01 amb punts.pdf",
+   "size": 1461309,
+   "md5": "fde90fcbe90dc9129e4f6641861d76b1",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "claude",
+   "doc_type_hint": "planol",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01_amb_punts",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01_amb_punts/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01_amb_punts/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01_amb_punts/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "A.01.pdf",
+   "size": 1308892,
+   "md5": "ef0272ce32cc3e0a5f65c6995be59200",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "claude",
+   "doc_type_hint": "planol",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/a_01/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/DADES CLIENT.txt",
+   "size": 212,
+   "md5": "c9d7478ed63db174e5fba64d6a4d08b9",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_dades_client",
+    "kind": "unsupported",
+    "files": [],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_dades_client/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+   "size": 371852,
+   "md5": "01c37195fedf9eb468ac6da90ec1eda0",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/4001612_DPSH.xls",
+   "size": 92160,
+   "md5": "93827593c45c5c2dd67a4fa9df9a9c2b",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh/sheet-0.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh/sheet-0.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh/sheet-0.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh/sheet-1.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh/sheet-1.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh/sheet-1.colors.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/annexes_4001612_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 127
+     },
+     {
+      "index": 1,
+      "name": "P-2",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 133
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/4001612_fotografies.FH11",
+   "size": 1762798,
+   "md5": "7423124b1aadd5d2be351f2f91f2c94d",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001612_plànol de situació.FH11",
+   "size": 2169673,
+   "md5": "1c41bcc1f7d10ccbe60db1f7866d6aa6",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001612_sondeig.FH11",
+   "size": 7840058,
+   "md5": "4e07a75c1c4cb8d8cec9f5d93d4ce90b",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001612_tall de correlació.FH11",
+   "size": 206376,
+   "md5": "5bdd613149c1e585d1f0b3f733788fe5",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/COORDENADES.txt",
+   "size": 62,
+   "md5": "603ddae963c68ec352969c152ad9fd7a",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "python",
+   "doc_type_hint": "coordenades_gps",
+   "priority": 0
+  },
+  {
+   "path": "EXPLICACIÓ DETALLS.docx",
+   "size": 7418437,
+   "md5": "4a2c13944d37e8501e076ab98a1179de",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:EXPLICACI",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/Imagen de WhatsApp 2025-10-01 a las 14.16.23_e62682b9.jpg",
+   "size": 255818,
+   "md5": "76a578f4a818cb1f150fd575eebfd3c4",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/P1.jpg",
+   "size": 448265,
+   "md5": "3dd553107a4f30e8a9c6de78d194e5b8",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/P2.jpg",
+   "size": 493910,
+   "md5": "fef87d7d776d6804e52b316452940715",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/Thumbs.db",
+   "size": 41984,
+   "md5": "e9684658ae711cb4e944e632c7404e79",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.41_ccbf024a.jpg",
+   "size": 490991,
+   "md5": "bcf22cdf77e6eb159e591863a5148724",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+   "size": 576342,
+   "md5": "430b3fec7c56f52be13dec6c1509bc50",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
+   "size": 302018,
+   "md5": "b0e7c453215bdfe9660666d5b88b22db",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+   "size": 535263,
+   "md5": "984d488faed4f70c4b2bd1b05d29a93a",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.03.25_47ce45a0.jpg",
+   "size": 449405,
+   "md5": "1e928a67a9b7d32b9299c6b071ec8145",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.03.36_f091c815.jpg",
+   "size": 356928,
+   "md5": "33574b4a8d3041f7747e8f6a8237ca61",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg",
+   "size": 496249,
+   "md5": "a3e7b50686c05d07e5eafeb7ac64e773",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SONDEIG/Thumbs.db",
+   "size": 69120,
+   "md5": "ae53acfe3bbfd8228a8aa6647d665d3a",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Thumbs.db",
+   "size": 43520,
+   "md5": "cd10e0c50002aa7119184bb7af23334c",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/4001612_informe_v0.pdf",
+   "size": 1871456,
+   "md5": "a458f1ad4a864c63bacd5950581b96df",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/ANNEXES/4001612_DPSH.pdf",
+   "size": 108083,
+   "md5": "7f165d4a45cc68e40de1bf346e8271ea",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/ANNEXES/4001612_fotografies.pdf",
+   "size": 280062,
+   "md5": "d366a8acbeb5c6b37bc5aad22d979909",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/ANNEXES/4001612_plànol de situació.pdf",
+   "size": 237052,
+   "md5": "516920bbddc7ec9565c9705dd00302f5",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/ANNEXES/4001612_sondeig.pdf",
+   "size": 229131,
+   "md5": "81ed4c8e516a780b6823750eb565920a",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/ANNEXES/4001612_tall de correlació.pdf",
+   "size": 51660,
+   "md5": "d2392ce1ea7e185375fb30f79236e37d",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/LLETRA/4001612_PORTADA_25_v0.pdf",
+   "size": 60528,
+   "md5": "5023e323d07bb3fb94123944b9b0c85e",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF V0/LLETRA/4001612_informe_v0.pdf",
+   "size": 869621,
+   "md5": "fc10e6712996801768843fef452e8e22",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/4001612_informe.pdf",
+   "size": 2019417,
+   "md5": "56a0564883d3f8746c9d971e0d5680e1",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "PDF/ANNEXES/4001612_DPSH.pdf",
+   "size": 108083,
+   "md5": "7f165d4a45cc68e40de1bf346e8271ea",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "annex_dpsh",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_dpsh",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_dpsh/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_dpsh/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_dpsh/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_dpsh/page-2.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_dpsh/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001612_fotografies.pdf",
+   "size": 280062,
+   "md5": "d366a8acbeb5c6b37bc5aad22d979909",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/page-2-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_fotografies/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001612_plànol de situació.pdf",
+   "size": 237052,
+   "md5": "516920bbddc7ec9565c9705dd00302f5",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_pl_nol_de_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_pl_nol_de_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001612_sondeig.pdf",
+   "size": 229131,
+   "md5": "81ed4c8e516a780b6823750eb565920a",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "claude",
+   "doc_type_hint": "annex_sondeig",
+   "priority": 1,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-1-right.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-2-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/page-2-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_sondeig/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001612_tall de correlació.pdf",
+   "size": 51660,
+   "md5": "d2392ce1ea7e185375fb30f79236e37d",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_4001612_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/LAB-SIG.pdf",
+   "size": 161613,
+   "md5": "1a84de0feb9cd668835cd046300e7f2b",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/page-5.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pdf_annexes_lab_sig/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/LLETRA/4001612_PORTADA_25.pdf",
+   "size": 60371,
+   "md5": "6a027e28ae6c6ea540005b8015ef0fd6",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/LLETRA/4001612_informe.pdf",
+   "size": 869803,
+   "md5": "5fad13bd805359ce1e4007ad0139b6fc",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/LLETRA/Thumbs.db",
+   "size": 17920,
+   "md5": "e075a72c8d60e01396c55e373b508416",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/Thumbs.db",
+   "size": 7680,
+   "md5": "7756a3e82a9965eba19dd4e8ca80f430",
+   "mtime": "2026-03-04T20:50:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS.pdf",
+   "size": 228474,
+   "md5": "dcd4861bb04b1d01c1ffe14cd41c5af9",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/page-2-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/penetros/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "SONDEIG.pdf",
+   "size": 882638,
+   "md5": "40a9c27260c74eb5a0b5d521a217ea67",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "full_camp_manuscrit",
+   "priority": 10,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/page-3-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/sondeig/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "Thumbs.db",
+   "size": 35328,
+   "md5": "99fb6d84d2010ee07679163c87d58ec2",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "comanda laboratori_4001612_BELL-LLOC.xls",
+   "size": 470528,
+   "md5": "cfded9caeb691d37fbd6743b60fa861e",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "pl. situaci.pdf",
+   "size": 3448475,
+   "md5": "1c37ee19f93c14f8e8420ce8210f6870",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pl_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pl_situaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pl_situaci/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/pl_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "tall.pdf",
+   "size": 710739,
+   "md5": "6600f2bff493c21d13ba95079b3ac07f",
+   "mtime": "2026-03-04T20:50:54",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/tall/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "validation/lectura/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch.json",
+   "size": 9441,
+   "md5": "25161ccdc87cabcc5af82ac4b586b3b7",
+   "mtime": "2026-08-24T18:40:39",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch.json",
+   "size": 8496,
+   "md5": "2458b27a1cdd763e295571c98e6f66db",
+   "mtime": "2026-08-24T18:44:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/4677_gtl_25_bell_lloc_d_urgell.json",
+   "size": 6748,
+   "md5": "dee54a4f329b752b2b39ad9ba810ce16",
+   "mtime": "2026-08-24T18:25:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_consolida_only.json",
+   "size": 3305,
+   "md5": "203da380a6ffce638984eb0bf7605331",
+   "mtime": "2026-08-25T21:34:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_decisions.json",
+   "size": 141500,
+   "md5": "5f73efcfba6806cdcacb2843e521b4b4",
+   "mtime": "2026-08-25T21:35:07",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_g3_templates.json",
+   "size": 28569,
+   "md5": "5c156d2b635e4498a094a52b4bd89493",
+   "mtime": "2026-08-25T21:31:03",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_inventory.json",
+   "size": 41205,
+   "md5": "5fc917547bc1231c19479be590e79e1a",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_a_01/meta.json",
+   "size": 592,
+   "md5": "9b87cb21b93e1db90cfd91d1771d35d5",
+   "mtime": "2026-08-25T21:30:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_a_01/page-1.png",
+   "size": 3524428,
+   "md5": "9a33347c3dad1c2dc1699c7dc8a2ebac",
+   "mtime": "2026-08-25T21:30:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_a_01/page-1.txt",
+   "size": 654,
+   "md5": "e58dd41f986a22eb703b9998d337d584",
+   "mtime": "2026-08-25T21:30:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image008.jpg",
+   "size": 165583,
+   "md5": "4d06403a21d149672501f1e1e764d6b5",
+   "mtime": "2026-08-25T21:30:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image008.jpg.preext/image.png",
+   "size": 1402386,
+   "md5": "d7b21c50cda915ad124f964ae5119a69",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image009.jpg",
+   "size": 308690,
+   "md5": "dc92ad25326bdf302ffc18cdade91a1d",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image009.jpg.preext/image.png",
+   "size": 2415603,
+   "md5": "9a500d57fcd1871bc7f5c276c7970653",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/body.txt",
+   "size": 3395,
+   "md5": "b176d8cd2d1deae1d050ad97ec9b0fdb",
+   "mtime": "2026-08-25T21:30:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/meta.json",
+   "size": 1949,
+   "md5": "85e84a7e9306b3acf4bb89a52eb0f72b",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image013.jpg",
+   "size": 165583,
+   "md5": "4d06403a21d149672501f1e1e764d6b5",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image013.jpg.preext/image.png",
+   "size": 1402386,
+   "md5": "d7b21c50cda915ad124f964ae5119a69",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image014.jpg",
+   "size": 308690,
+   "md5": "dc92ad25326bdf302ffc18cdade91a1d",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/attachments/image014.jpg.preext/image.png",
+   "size": 2415603,
+   "md5": "9a500d57fcd1871bc7f5c276c7970653",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/body.txt",
+   "size": 5980,
+   "md5": "1bf6e55ad677323703495561021bcd52",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0647_re_pressupost_c1_bell_lloc_c_mestre_ramon_ortiz_jordi_bosch/meta.json",
+   "size": 1780,
+   "md5": "e5a4113b3fa4aac56d0b8d2d803b57af",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/meta.json",
+   "size": 1195,
+   "md5": "39b9ef5365e0efbe772d082f230c2607",
+   "mtime": "2026-08-25T21:30:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-1.png",
+   "size": 156654,
+   "md5": "4725103eb9659d87ee93adf5d90d0966",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-1.txt",
+   "size": 1041,
+   "md5": "4e2013361dc8620d6d6f442d82eba602",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-2.png",
+   "size": 175143,
+   "md5": "5d98acb7b003a3c0d7834a619ff144a0",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-2.txt",
+   "size": 1125,
+   "md5": "ff3743cd586cad74815b663df4f42abb",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-3.png",
+   "size": 118908,
+   "md5": "efa5a9a7f3701bce8c1b50b475646671",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-3.txt",
+   "size": 606,
+   "md5": "d594ae390125aa6626648fce75aad2a3",
+   "mtime": "2026-08-25T21:30:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-4.png",
+   "size": 238497,
+   "md5": "7a39a47ee4858769a41bd0b03a5dcd9c",
+   "mtime": "2026-08-25T21:30:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-4.txt",
+   "size": 2291,
+   "md5": "6454835326b86e392b4d202d7b486e1d",
+   "mtime": "2026-08-25T21:30:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-5.png",
+   "size": 202671,
+   "md5": "415fab9db428ce507b65b96e65862abe",
+   "mtime": "2026-08-25T21:30:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4677_gtl_25_bell_lloc_d_urgell/page-5.txt",
+   "size": 1185,
+   "md5": "47a34f86e53679578a014e5aa722600c",
+   "mtime": "2026-08-25T21:30:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/a_01/meta.json",
+   "size": 559,
+   "md5": "ef415d7338e97dabbe2b5bc6b6eb5014",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/a_01/page-1.png",
+   "size": 3524428,
+   "md5": "9a33347c3dad1c2dc1699c7dc8a2ebac",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/a_01/page-1.txt",
+   "size": 654,
+   "md5": "e58dd41f986a22eb703b9998d337d584",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/a_01_amb_punts/meta.json",
+   "size": 607,
+   "md5": "91c923583cd0691927223ce69118f69e",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/a_01_amb_punts/page-1.png",
+   "size": 3541594,
+   "md5": "593688b39b3587731f2b4ce3430982d4",
+   "mtime": "2026-08-25T21:30:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/a_01_amb_punts/page-1.txt",
+   "size": 672,
+   "md5": "98aa04159b5bbd05189001d7cbac4af2",
+   "mtime": "2026-08-25T21:30:54",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_dades_client/meta.json",
+   "size": 313,
+   "md5": "a9eef5ea44e7317f1d137c0c7c998b2c",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/meta.json",
+   "size": 1769,
+   "md5": "cac87924b2aeb4e29515ba95b4f7dfd7",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-1.png",
+   "size": 232024,
+   "md5": "bfe10e5d4cd59f616d41d490f4b48ef9",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-1.txt",
+   "size": 160,
+   "md5": "2fb038fcc6c8b03b46354c9b213b271a",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-2.png",
+   "size": 243175,
+   "md5": "90b833e847bc397e7c285797e1b38161",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-2.txt",
+   "size": 1726,
+   "md5": "959c1093fdf8fbb70d1458d36999f68e",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-3.png",
+   "size": 222853,
+   "md5": "030b4f2cf0d34375700cc095202e2dac",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-3.txt",
+   "size": 1312,
+   "md5": "c4a009ebf6b94f143131157d4ecbb471",
+   "mtime": "2026-08-25T21:30:55",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-4.png",
+   "size": 137251,
+   "md5": "05c77624174b2e9938a2d5fdc3c38496",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-4.txt",
+   "size": 724,
+   "md5": "adca02e4c2fb69b9c68272cbd5379263",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-5.png",
+   "size": 331105,
+   "md5": "23389b2e2580270c44ea73f76ccbe048",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-5.txt",
+   "size": 2690,
+   "md5": "02130672c19281470de916d088e8dcc6",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-6.png",
+   "size": 235524,
+   "md5": "a397be158dd0f7201cbe07f28465a33a",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-6.txt",
+   "size": 1948,
+   "md5": "72b598614b67544904dddd93dfd9340e",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-7.png",
+   "size": 125768,
+   "md5": "ffce2f2936900c4b7b1520fb355953a6",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_bell_llocsgtjbn/page-7.txt",
+   "size": 698,
+   "md5": "efb6a6c7d33a5f037dc8de159ae9913b",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_4001612_dpsh/meta.json",
+   "size": 697,
+   "md5": "6e61f4b674a1f2681a6a2e095b7d7047",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_4001612_dpsh/sheet-0.cells.txt",
+   "size": 892,
+   "md5": "904a6546041aeead3cc320317f1aabd4",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_4001612_dpsh/sheet-0.colors.txt",
+   "size": 3262,
+   "md5": "8a10807887a2cd8a65141eb22b7a3acf",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_4001612_dpsh/sheet-0.csv",
+   "size": 1105,
+   "md5": "821fa86c710b80e406c9aab77407c204",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_4001612_dpsh/sheet-1.cells.txt",
+   "size": 1069,
+   "md5": "217acca0adf1eee5451c5fa56a7bec95",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_4001612_dpsh/sheet-1.colors.txt",
+   "size": 3400,
+   "md5": "bf6e23fb3f81e9828143c4b2d8811c86",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_4001612_dpsh/sheet-1.csv",
+   "size": 1222,
+   "md5": "abd0640f0536592241d2a9d802387d78",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_dpsh/meta.json",
+   "size": 819,
+   "md5": "4c1fc8fc9e0119b8c5879e4ce32055ed",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_dpsh/page-1.png",
+   "size": 158384,
+   "md5": "02dbe742cc16d36b4561ce70322c732c",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_dpsh/page-1.txt",
+   "size": 932,
+   "md5": "5fd751ddda5338230c90bc8a558bef33",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_dpsh/page-2.png",
+   "size": 162302,
+   "md5": "f88c4c9b0bc5e821a2ddc6d322929e4a",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_dpsh/page-2.txt",
+   "size": 986,
+   "md5": "54fb0da05c07b90d29b315b247beca6e",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/meta.json",
+   "size": 1088,
+   "md5": "0c0ea6d419cec46e0383ee87ccec1fd5",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-1-bottom.png",
+   "size": 2247609,
+   "md5": "bff2adb4009d7f965805a6d632c95d27",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-1-top.png",
+   "size": 1923771,
+   "md5": "40404777f39a7d65a8a0ba8c4ab8757f",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-1.png",
+   "size": 1825779,
+   "md5": "ac01b1c063af76a0ca9565733c2f9514",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-1.txt",
+   "size": 203,
+   "md5": "583aca97dcf4fb8d00b029f560665f23",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-2-bottom.png",
+   "size": 890150,
+   "md5": "074ae29a4f55a9fbfea221a84db07f06",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-2-top.png",
+   "size": 1657549,
+   "md5": "a70cda83798c27c8be872e5a511a6312",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-2.png",
+   "size": 1212868,
+   "md5": "b07c09f9a43ef2f9527dd269b5c7746a",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_fotografies/page-2.txt",
+   "size": 98,
+   "md5": "0fb8fe46faa1799dea0be652be9f9f95",
+   "mtime": "2026-08-25T21:30:56",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_pl_nol_de_situaci/meta.json",
+   "size": 876,
+   "md5": "349e557784a4775702fce915c9da08ee",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1-left.png",
+   "size": 2454276,
+   "md5": "ab3c613500b2e3c9580b0700867bddb0",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1-right.png",
+   "size": 226111,
+   "md5": "057daee904f7dab3b21e997a3c822a0e",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1.png",
+   "size": 1792953,
+   "md5": "4e6b48c13705702f27d4e800a3e1c64c",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_pl_nol_de_situaci/page-1.txt",
+   "size": 355,
+   "md5": "bca4530ac198dee1a3ddba7ecee53262",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/meta.json",
+   "size": 1047,
+   "md5": "e7dfbb1f58ea01e190f3ce6f76efc1db",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-1-left.png",
+   "size": 363679,
+   "md5": "94ea80c0c4b15b39d86f009a07222369",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-1-right.png",
+   "size": 265591,
+   "md5": "7aa321b361529270ca61670a411dab97",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-1.png",
+   "size": 360841,
+   "md5": "7ecf06e1e25721badab4622758ea4320",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-1.txt",
+   "size": 1613,
+   "md5": "635ac80be3e691bac660cb98ffbf12ba",
+   "mtime": "2026-08-25T21:30:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-2-left.png",
+   "size": 2516316,
+   "md5": "1b7459e13aa0cdc222b67c97619812d7",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-2-right.png",
+   "size": 2264162,
+   "md5": "b7b69b4faf223db5ee3a0fe9a7fef0d6",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-2.png",
+   "size": 2154682,
+   "md5": "d6a3faa50d833ebd26b0046937c99e7a",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_sondeig/page-2.txt",
+   "size": 711,
+   "md5": "5b5e520b7d14a2e6b896c80c69bbe5fe",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_tall_de_correlaci/meta.json",
+   "size": 875,
+   "md5": "35929d830be114110a193c00f62a80ea",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1-left.png",
+   "size": 281063,
+   "md5": "37add6c8ee8c22c1653735018d20f21d",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1-right.png",
+   "size": 91874,
+   "md5": "6176c0af9b5bdc62a27ee5b19b65dabd",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1.png",
+   "size": 194348,
+   "md5": "a8e4423b4e23f85f94cd38f773910f9b",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_4001612_tall_de_correlaci/page-1.txt",
+   "size": 384,
+   "md5": "95420838c9a692bf60ee1027fa8e0b43",
+   "mtime": "2026-08-25T21:30:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/meta.json",
+   "size": 1135,
+   "md5": "423a3a3ee7e52691566108e20c4ab33b",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-1.png",
+   "size": 174523,
+   "md5": "161e3e1a121b7cad1a7b040cd347f7d1",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-1.txt",
+   "size": 1041,
+   "md5": "4e2013361dc8620d6d6f442d82eba602",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-2.png",
+   "size": 194800,
+   "md5": "eea6f7db49ec37b539b44f6a67819525",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-2.txt",
+   "size": 1125,
+   "md5": "ff3743cd586cad74815b663df4f42abb",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-3.png",
+   "size": 138308,
+   "md5": "b53b673461fca1c64834d7fb6d44d4a8",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-3.txt",
+   "size": 606,
+   "md5": "d594ae390125aa6626648fce75aad2a3",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-4.png",
+   "size": 259495,
+   "md5": "78482f5ee45691d742b6ca413cd3ca39",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-4.txt",
+   "size": 2291,
+   "md5": "e71e84dcbda93bc0cfbd3f2b37c22af0",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-5.png",
+   "size": 219530,
+   "md5": "838a774f67e3556893dce8c1655a3256",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-5.txt",
+   "size": 1185,
+   "md5": "47a34f86e53679578a014e5aa722600c",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/meta.json",
+   "size": 770,
+   "md5": "72891211d079930c02a469c22b58bdf6",
+   "mtime": "2026-08-25T21:31:00",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-1-bottom.png",
+   "size": 243501,
+   "md5": "dd7efb0b38245c6b7e073489daeff00b",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-1-top.png",
+   "size": 856902,
+   "md5": "dd14b20fd8239242604a731c4606bd7b",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-1.png",
+   "size": 492858,
+   "md5": "9506724532322fc2e968665519d14d69",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-1.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-2-bottom.png",
+   "size": 979025,
+   "md5": "1b7c8f39be9759ea5f31c087f6ab42fb",
+   "mtime": "2026-08-25T21:31:00",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-2-top.png",
+   "size": 1027652,
+   "md5": "5606975bee952cf744285422b708cee8",
+   "mtime": "2026-08-25T21:31:00",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-2.png",
+   "size": 917135,
+   "md5": "095f98b57a678ba1f9b3030dc7909529",
+   "mtime": "2026-08-25T21:31:00",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros/page-2.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T21:30:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pl_situaci/meta.json",
+   "size": 537,
+   "md5": "6eac4ba4283326ed15ba6575979ca17f",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pl_situaci/page-1.png",
+   "size": 1978849,
+   "md5": "d8abc6531bba64961abbdfd7b8d4baf2",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pl_situaci/page-1.txt",
+   "size": 366,
+   "md5": "848f687e9db4667deb863a1778148924",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/meta.json",
+   "size": 901,
+   "md5": "dc507beb193d8b1083fef6af1fed3b32",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-1-bottom.png",
+   "size": 2038102,
+   "md5": "7929e214602388e46b2e699d687dcb6d",
+   "mtime": "2026-08-25T21:31:01",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-1-top.png",
+   "size": 1996071,
+   "md5": "57a9ad44ab52452f27403955411b2ce0",
+   "mtime": "2026-08-25T21:31:00",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-1.png",
+   "size": 1807123,
+   "md5": "fdfd0acd7f00093a3bd29e45a75176d0",
+   "mtime": "2026-08-25T21:31:00",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-1.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T21:31:00",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-2-bottom.png",
+   "size": 1972706,
+   "md5": "3b9a69903ac2af297ff7c86bd00c8f4f",
+   "mtime": "2026-08-25T21:31:01",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-2-top.png",
+   "size": 2047125,
+   "md5": "fe9110ab3d7018874caf33d2572ab79b",
+   "mtime": "2026-08-25T21:31:01",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-2.png",
+   "size": 1927070,
+   "md5": "b8c481098a9d51c444d3a9bad7eda842",
+   "mtime": "2026-08-25T21:31:01",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-2.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T21:31:01",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-3-bottom.png",
+   "size": 1152282,
+   "md5": "52a91ae6c9da32a3910b67c19647fc4d",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-3-top.png",
+   "size": 1519959,
+   "md5": "62eb8a3edfb1d6ff6ba60578b7a6b53c",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-3.png",
+   "size": 1310451,
+   "md5": "a4c2f3c1f56c8bcb5d2715d9d5b95d7d",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/sondeig/page-3.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T21:31:01",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/tall/meta.json",
+   "size": 512,
+   "md5": "0d2a3d77e93e8fa3b0937fff489493d4",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/tall/page-1.png",
+   "size": 203005,
+   "md5": "69277b29c89ef6b23227ace6f14816e8",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/tall/page-1.txt",
+   "size": 396,
+   "md5": "ca9ab79a4304f957b7030692d8947a91",
+   "mtime": "2026-08-25T21:31:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_telemetry.jsonl",
+   "size": 8897,
+   "md5": "6a4ff645e42e3bc3f14d19d1cc96f256",
+   "mtime": "2026-08-25T21:35:07",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/a_01.json",
+   "size": 6324,
+   "md5": "6bfe8233abfec8f3ec9b8a7f45cac39a",
+   "mtime": "2026-08-24T18:34:15",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/a_01_amb_punts.json",
+   "size": 6423,
+   "md5": "9be59d2785fdffaeff1a206598d2ad98",
+   "mtime": "2026-08-24T18:28:28",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/acceptacio_dades_client.json",
+   "size": 3450,
+   "md5": "62db37458fa7153141b2220e59f46e0e",
+   "mtime": "2026-08-24T17:58:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/acceptacio_pressupost_geotec_bell_llocsgtjbn.json",
+   "size": 7430,
+   "md5": "7dd14059cc12830bdba1e8397d560b17",
+   "mtime": "2026-08-24T18:10:29",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/annexes_4001612_dpsh.json",
+   "size": 6460,
+   "md5": "c18f38a15ab03140d3b22843a8119337",
+   "mtime": "2026-08-24T18:16:25",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_4001612_dpsh.json",
+   "size": 7953,
+   "md5": "eb194fe05c0bf54665f2db15832f5bd4",
+   "mtime": "2026-08-24T18:14:34",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_4001612_fotografies.json",
+   "size": 4699,
+   "md5": "a26ca7cd0cf266caf4c228f2d1023ac0",
+   "mtime": "2026-08-24T18:31:21",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_4001612_pl_nol_de_situaci.json",
+   "size": 6145,
+   "md5": "fdb88788c3f470ee127854b281538d79",
+   "mtime": "2026-08-24T18:48:05",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_4001612_sondeig.json",
+   "size": 11202,
+   "md5": "09100dd65828d818cc6ba4e04fc3857d",
+   "mtime": "2026-08-24T18:11:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_4001612_tall_de_correlaci.json",
+   "size": 12427,
+   "md5": "6ff0761aa3637cf1e88eb64f4975a90f",
+   "mtime": "2026-08-31T22:10:46",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_lab_sig.json",
+   "size": 7563,
+   "md5": "3f03b245f4e992f323b4cc6b8de75559",
+   "mtime": "2026-08-24T18:35:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/penetros.json",
+   "size": 9336,
+   "md5": "808421c124f0aea101baa993d6727513",
+   "mtime": "2026-08-24T18:43:10",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pl_situaci.json",
+   "size": 6880,
+   "md5": "b4865072accc120ebbf4dc3e0f33c842",
+   "mtime": "2026-08-24T18:49:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/sondeig.json",
+   "size": 7788,
+   "md5": "db6ca8ee8108d479e2867d52118ec6e9",
+   "mtime": "2026-08-24T18:53:43",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/tall.json",
+   "size": 8295,
+   "md5": "b206571c0d7cf966f180f7a4a4f23246",
+   "mtime": "2026-08-24T18:22:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  }
+ ],
+ "duplicates": [
+  [
+   "25.0647/A.01.pdf",
+   "A.01.pdf"
+  ]
+ ],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext",
+  "n_docs": 19,
+  "n_errors": 0,
+  "elapsed_s": 0.065
+ }
+}

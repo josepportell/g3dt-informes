@@ -27,10 +27,10 @@
   },
   "variables": {
     "access_street": {
-      "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.",
+      "value": "carrer adjacent situat al sud",
       "position": "p115",
       "position_description": "Body paragraph 115",
-      "confidence": 0.256,
+      "confidence": 0.76751269035533,
       "extraction_method": "paragraph_single",
       "template_text": "El dia dels treballs de camp es realitza l'entrada a la zona d'estudi a través del {{ access_street }}.",
       "reference_text": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud."
@@ -70,15 +70,6 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres."
-    },
-    "building_structure_desc": {
-      "value": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
-      "position": "p327",
-      "position_description": "Body paragraph 327",
-      "confidence": 0.214,
-      "extraction_method": "paragraph_single",
-      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació",
-      "reference_text": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació."
     },
     "building_type_lower": {
       "value": "3 habitatges unifamiliars d’estructura lleugera, fusta",
@@ -133,15 +124,6 @@
       "extraction_method": "table_flatten",
       "template_text": "",
       "reference_text": "-4.0"
-    },
-    "csn_radon_text": {
-      "value": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edificis construïts a la zona sense solucions específiques de protecció en front al radó presenten concentracions de radó superiors al nivell de referencia.",
-      "position": "p342",
-      "position_description": "Body paragraph 342",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitzades pel Consejo de Seguridad Nuclear, es considera que existeix una probabilitat significativa de que els edi..."
     },
     "cte_edificacio": {
       "value": "C-1",
@@ -389,15 +371,6 @@
       "template_text": "{{ lab_tests_text }}",
       "reference_text": "1 assaig de contingut en sulfats UNE 83963 : 2008"
     },
-    "location_sentence": {
-      "value": "L’edificació que es preveu construir presentarà les següents característiques:",
-      "position": "p066",
-      "position_description": "Body paragraph 66",
-      "confidence": 0.208,
-      "extraction_method": "paragraph_single",
-      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
-      "reference_text": "L’edificació que es preveu construir presentarà les següents característiques:"
-    },
     "materials_intro": {
       "value": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
       "position": "p223",
@@ -407,20 +380,11 @@
       "template_text": "",
       "reference_text": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):"
     },
-    "municipality": {
-      "value": "Castellar del Vallès",
-      "position": "p340",
-      "position_description": "Body paragraph 340",
-      "confidence": 0.806,
-      "extraction_method": "paragraph_single",
-      "template_text": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:",
-      "reference_text": "A la zona d’estudi, en el municipi de Castellar del Vallès, s’estableix una acceleració sísmica bàsica de:"
-    },
     "num_dpsh_tests": {
-      "value": "4 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
-      "position": "p130",
-      "position_description": "Body paragraph 130",
-      "confidence": 0.889,
+      "value": "4",
+      "position": "p138",
+      "position_description": "Body paragraph 138",
+      "confidence": 0.8894117647058825,
       "extraction_method": "paragraph_single",
       "template_text": "{{ num_dpsh_tests }} assaigs de penetració dinàmica tipus DPSH (veure annex \"Registre assaigs mecànics\").",
       "reference_text": "4 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”)."
@@ -467,15 +431,6 @@
       "template_text": "",
       "reference_text": "1"
     },
-    "radon_zone_description": {
-      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
-      "position": "p367",
-      "position_description": "Body paragraph 367",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
-    },
     "seismic_ab_text": {
       "value": "AB  = 0,04 g  (essent g el valor de la gravetat)",
       "position": "p342",
@@ -500,24 +455,6 @@
       "extraction_method": "loop_table",
       "template_text": "Loop: ['num', 'terrain_type', 'thickness', 'c_coeff']",
       "reference_text": "1 data rows"
-    },
-    "settlement": {
-      "value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
-      "position": "p460",
-      "position_description": "Body paragraph 460",
-      "confidence": 0.208,
-      "extraction_method": "paragraph_single",
-      "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
-      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm."
-    },
-    "site_condition": {
-      "value": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
-      "position": "p284",
-      "position_description": "Body paragraph 284",
-      "confidence": 0.273,
-      "extraction_method": "paragraph_single",
-      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
-      "reference_text": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
     },
     "site_description": {
       "value": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
@@ -670,6 +607,266 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "P-1\n423167.0 ; 4609608.0 ; 571.5"
+    },
+    "building_structure_desc": {
+      "value": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
+      "position": "p327",
+      "position_description": "Body paragraph 327",
+      "confidence": 0.15,
+      "extraction_method": "paragraph_single",
+      "template_text": "Segons el projecte executiu es preveu la construcció d’una estructura {{ building_structure_desc }}",
+      "reference_text": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació."
+    },
+    "radon_sentence": {
+      "value": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ radon_sentence }}",
+      "reference_text": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1."
+    },
+    "site_condition": {
+      "value": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ site_condition }}",
+      "reference_text": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin."
+    },
+    "adjacent_intro": {
+      "value": "La parcel·la objecte d’estudi es situa al nord del municipi de Castellar del Vallès, pren una morfologia quasi rectangular, i limita:",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ adjacent_intro }}",
+      "reference_text": "La parcel·la objecte d’estudi es situa al nord del municipi de Castellar del Vallès, pren una morfologia quasi rectangular, i limita:"
+    },
+    "bearing_layer_idx": {
+      "value": 0,
+      "position": "t12.row0",
+      "position_description": "Nivell portant declarat a la frase de la tensió admissible/de treball del signat",
+      "confidence": 0.9,
+      "extraction_method": "bearing_rule",
+      "template_text": "",
+      "reference_text": "Per una fonamentació superficial mitjançant sabates, ja sigui aïllades com corregudes, encastada entre 20-30 cm en els materials de substrat, un cop superats els materials superficials, es podrà adopt"
+    },
+    "data_camp_inici_text": {
+      "value": "24 de octubre de 2025",
+      "position": "p095",
+      "position_description": "Body paragraph 95",
+      "confidence": 0.7165048543689321,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia {{ data_camp_inici_text }}, es va visitar l’obra per tal de:",
+      "reference_text": "El dia 24 de octubre de 2025, es va visitar l’obra per tal de:"
+    },
+    "municipality_de": {
+      "value": "de Castellar del Vallès",
+      "position": "p348",
+      "position_description": "Body paragraph 348",
+      "confidence": 0.7904761904761904,
+      "extraction_method": "paragraph_single",
+      "template_text": "A la zona d’estudi, en el municipi {{ municipality_de }}, s’estableix una acceleració sísmica bàsica de:",
+      "reference_text": "A la zona d’estudi, en el municipi de Castellar del Vallès, s’estableix una acceleració sísmica bàsica de:"
+    },
+    "settlement_sentence": {
+      "value": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+      "position": "p467",
+      "position_description": "Body paragraph 467",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ settlement_sentence }}",
+      "reference_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm."
+    },
+    "spt_ma_tests": {
+      "value": [
+        {
+          "test_id": "SPT-1",
+          "location": "S-1",
+          "depth_range": "-1.00 a -1.20",
+          "n30": "R",
+          "lithology": "Limolites i bretxes"
+        }
+      ],
+      "position": "t6",
+      "position_description": "Loop table 6 (spt_ma_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'location', 'depth_range', 'n30', 'lithology']",
+      "reference_text": "1 data rows"
+    },
+    "fig_correlation_num": {
+      "value": "5",
+      "position": "p429",
+      "position_description": "Body paragraph 429",
+      "confidence": 0.507,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_correlation_num }}. Detall del tall de correlació que s’adjunta als annexes.",
+      "reference_text": "Figura 5. Tall de correlació."
+    },
+    "fig_geological_num": {
+      "value": "4",
+      "position": "p241",
+      "position_description": "Body paragraph 241",
+      "confidence": 0.94,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_geological_num }}. Mapa geològic a escala 1:50.000 de la zona en estudi, (Font: ICGC, modificat).",
+      "reference_text": "Figura 4. Mapa geològic a escala 1:25.000 de la zona en estudi (ICGC, modificat)."
+    },
+    "fig_spt_cullera_num": {
+      "value": "3",
+      "position": "p190",
+      "position_description": "Body paragraph 190",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_spt_cullera_num }}. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+      "reference_text": "Figura 3. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez)."
+    },
+    "photo_dpsh_num": {
+      "value": "1",
+      "position": "p170",
+      "position_description": "Body paragraph 170",
+      "confidence": 0.926,
+      "extraction_method": "numbering",
+      "template_text": "Fotografia {{ photo_dpsh_num }}. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPSH.",
+      "reference_text": "Fotografia 1. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica realitzats."
+    },
+    "photo_materials_num": {
+      "value": "4",
+      "position": "p262",
+      "position_description": "Body paragraph 262",
+      "confidence": 0.558,
+      "extraction_method": "numbering",
+      "template_text": "Fotografia {{ photo_materials_num }}. Detall dels materials del {{ level.ordinal }} nivell.",
+      "reference_text": "Fotografia 4. Detall dels materials recuperats durant la realització del sondeig S-1."
+    },
+    "photo_sondeig_num": {
+      "value": "2",
+      "position": "p183",
+      "position_description": "Body paragraph 183",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Fotografia {{ photo_sondeig_num }}. Vista de la màquina utilitzada per a la realització del sondeig a rotació.",
+      "reference_text": "Fotografia 2. Vista de la màquina utilitzada per a la realització del sondeig a rotació."
+    },
+    "section_empentes_num": {
+      "value": "4.4",
+      "position": "p035",
+      "position_description": "Body paragraph 35",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_empentes_num }}. EMPENTES DE TERRES",
+      "reference_text": "4.4. EMPENTES DE TERRES"
+    },
+    "section_estabilitat_num": {
+      "value": "4.5",
+      "position": "p038",
+      "position_description": "Body paragraph 38",
+      "confidence": 0.978,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_estabilitat_num }}. ESTABILITAT DE VESSANT",
+      "reference_text": "4.5. ESTABILITAT DEL VESSANT"
+    },
+    "section_excavabilitat_num": {
+      "value": "3.5",
+      "position": "p333",
+      "position_description": "Body paragraph 333",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_excavabilitat_num }}. EXCAVABILITAT",
+      "reference_text": "3.5. EXCAVABILITAT"
+    },
+    "section_rado_num": {
+      "value": "3.7",
+      "position": "p381",
+      "position_description": "Body paragraph 381",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_rado_num }}. EXPOSICIÓ AL GAS RADÓ",
+      "reference_text": "3.7. EXPOSICIÓ AL GAS RADÓ"
+    },
+    "section_resum_num": {
+      "value": "2.4.4",
+      "position": "p194",
+      "position_description": "Body paragraph 194",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_resum_num }}. Resum dels assaigs in-situ realitzats",
+      "reference_text": "2.4.4. Resum dels assaigs in-situ realitzats"
+    },
+    "section_sismica_num": {
+      "value": "3.6",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sismica_num }}. ACCELERACIÓ SISMICA DE REFERÈNCIA",
+      "reference_text": "3.6. ACCELERACIÓ SISMICA DE REFERÈNCIA"
+    },
+    "section_sondeig_num": {
+      "value": "2.4.2",
+      "position": "p175",
+      "position_description": "Body paragraph 175",
+      "confidence": 0.974,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sondeig_num }}. Sondeig a rotació amb bateria continua",
+      "reference_text": "2.4.2. Sondeig a Rotació amb Bateria Contínua"
+    },
+    "section_spt_num": {
+      "value": "2.4.3",
+      "position": "p186",
+      "position_description": "Body paragraph 186",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_spt_num }}. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+      "reference_text": "2.4.3. Assaig tipus S.P.T. (“Standard Penetration Test”)"
+    },
+    "table_lab_num": {
+      "value": "6",
+      "position": "p212",
+      "position_description": "Body paragraph 212",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_lab_num }}. Resum dels assaigs de laboratori realitzats.",
+      "reference_text": "Taula 6. Resum dels assaigs de laboratori realitzats."
+    },
+    "table_lab_values_num": {
+      "value": "8",
+      "position": "p312",
+      "position_description": "Body paragraph 312",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_lab_values_num }}. Valors obtinguts dels assaigs de laboratori.",
+      "reference_text": "Taula 8. Valors obtinguts dels assaigs de laboratori."
+    },
+    "table_permeability_num": {
+      "value": "7",
+      "position": "p304",
+      "position_description": "Body paragraph 304",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_permeability_num }}. Resum del coeficient de permeabilitat dels materials del subsòl.",
+      "reference_text": "Taula 7. Resum del coeficient de permeabilitat dels materials del subsòl."
+    },
+    "table_seismic_num": {
+      "value": "9",
+      "position": "p375",
+      "position_description": "Body paragraph 375",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_seismic_num }}. Valors de la potencia i coeficient C pel càlcul de l’acceleració sísmica.",
+      "reference_text": "Taula 9. Valors de la potencia i coeficient C pel càlcul de l’acceleració sísmica."
+    },
+    "table_soil_chars_num": {
+      "value": "10",
+      "position": "p438",
+      "position_description": "Body paragraph 438",
+      "confidence": 1.0,
+      "extraction_method": "numbering",
+      "template_text": "Taula {{ table_soil_chars_num }}. Característiques geològiques i geotècnics dels materials del subsol.",
+      "reference_text": "Taula 10. Característiques geològiques i geotècnics dels materials del subsol."
     }
   },
   "warnings": [
@@ -694,5 +891,13 @@
     "p469: Variable 'estabilitat_paragraph' has no static context for matching",
     "Loop table t8 (soil_level_rows): no matching reference table",
     "Merged 23 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, building_type_lower, client, conclusions_aggressivity_statement, conclusions_levels_detected..."
+  ],
+  "notes": [
+    "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 4 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
+    "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 8 claus re-extretes: bearing_layer_idx, data_camp_inici_text, municipality, municipality_de, num_dpsh_tests, settlement, settlement_sentence, spt_ma_tests",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 4, numeració) (--keys): 19 claus re-extretes: fig_correlation_num, fig_geological_num, fig_spt_cullera_num, photo_dpsh_num, photo_materials_num, photo_sondeig_num, section_empentes_num, section_estabilitat_num, section_excavabilitat_num, section_rado_num, section_resum_num, section_sismica_num, section_sondeig_num, section_spt_num, table_lab_num, table_lab_values_num, table_permeability_num, table_seismic_num, table_soil_chars_num"
   ]
 }

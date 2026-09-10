@@ -1,0 +1,791 @@
+{
+ "project": "3001706 C.TULIPA CERDANYOLA",
+ "read_on": "2026-08-23",
+ "reader": "Claude Code en sessió + 2 subagents (annexos visió; manuscrits/fotos)",
+ "sources_read": 22,
+ "structure_warning": "UN expedient, DOS informes (casa 1 = C/ Tulipa 3, casa 2 = C/ Tosca 16; pressupost 2CASES: 'DOS INFORMES GEOTÈCNICS, UN A NOM DE CADA CLIENT'; comanda: 'CONSTR DOS NOUS HAB AÏLLATS'). Un sol sondeig S-1 (a la parcel·la de Tulipa) compartit; 2 DPSH per casa. El nivell A es resol PER CASA. El wizard actual no ho contempla.",
+ "bias_disclosure": "Sabia per l'anàlisi: 2 cases, zip amb .dwg, 'fitxa com a única font del client', que el Cadastre de prod va agafar 'CL TULIPA 11' per error, i una menció a '564 m²' dins PARAMETRES URBANISTICS.dwg (no verificable: DWG no llegible). No sabia: el formulari p.5 omplert a mà, client = arquitecte, Tosca 16 i Factoria, cotes 198 vs 199, 3 nivells, JORDI GENE a les metadades.",
+ "casa_1_tulipa_3": {
+  "expedient": {
+   "status": "segur",
+   "value": "3001706",
+   "rule": "carpeta = comanda N19 = caixetins dels annexos (tall, plànols de situació) = noms d'Excel/annexos",
+   "candidates": [
+    {
+     "value": "3001706",
+     "source": "comanda Hoja1!N19",
+     "quote": "NÚM. D'EXPEDIENT | 3001706.0"
+    },
+    {
+     "value": "3001706",
+     "source": "annex tall caixetí",
+     "quote": "Exp: 3001706"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "annex_c1_tall",
+    "annex_c1_planol_situacio",
+    "g3_07",
+    "altres_13"
+   ]
+  },
+  "client_name": {
+   "status": "segur",
+   "value": "ALEIX SUBIRÀ FELIP",
+   "rule": "formulari p.5 del pressupost acceptat ('DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', manuscrit, NIF 47235352-E) = autoritat A; fitxa C6 i annex sondeig ('SR.ALEIX SUBIÀ FELIP') coincideixen. Aquí client = arquitecte (VUA és el seu despatx): la regla 'client ≠ sol·licitant' no s'aplica perquè hi ha font explícita.",
+   "candidates": [
+    {
+     "value": "ALEIX SUBIRÀ FELIP (NIF 47235352-E)",
+     "source": "ACCEPTACIO/Adobe Scan p.5 (visió)",
+     "quote": "NOM I COGNOMS: ALEIX SUBIRÀ FELIP | N.I.F./C.I.F.: 47235352-E"
+    },
+    {
+     "value": "ALEIX SUBIRA FELIP",
+     "source": "fitxa!C6",
+     "quote": "ALEIX SUBIRA FELIP"
+    },
+    {
+     "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE (despatx, sol·licitant)",
+     "source": "PRESSUPOST p.1",
+     "quote": "CLIENT: VUA, VISUALIZING UNBUILT ARCHITECTURE"
+    }
+   ],
+   "sources_checked": [
+    "acceptacio_03",
+    "g3_04",
+    "annex_09",
+    "g3_01",
+    "g3_02",
+    "correu_10",
+    "g3_06",
+    "camp_penetros",
+    "fotos"
+   ]
+  },
+  "street_address": {
+   "status": "segur",
+   "value": "C/ Tulipa, 3",
+   "rule": "pressupost OBRA + fitxa ADREÇA OBRA + comanda (C TULIPA) + correu + annexos + Street View (≥ 3 fonts independents). Grafies: Tulipa / Tulipà (caixetins) / Tulipan (TPS) / Tulipán (Google) → normalitzar a la impresa de G3 'Tulipa'.",
+   "candidates": [
+    {
+     "value": "C/TULIPA 3",
+     "source": "PRESSUPOST p.1 bloc OBRA",
+     "quote": "C/TULIPA 3 / CERDANYOLA DEL VALLES"
+    },
+    {
+     "value": "C. Tulipa, 3",
+     "source": "correu VUA 25/03",
+     "quote": "La direcció és C. Tulipa, 3 (Cerdanyola del Vallès)"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "g3_04",
+    "g3_06",
+    "correu_10",
+    "annex_08",
+    "annex_09",
+    "g3_fitxa_imatge",
+    "camp_penetros"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Cerdanyola del Vallès",
+   "rule": "comanda N21 + pressupost p.1 + PLAN_COST E9 + annexos; forma oficial amb accent (comanda, annexos, Street View)",
+   "candidates": [
+    {
+     "value": "CERDANYOLA DEL VALLÈS",
+     "source": "comanda Hoja1!N21",
+     "quote": "POBLACIÓ | CERDANYOLA DEL VALLÈS"
+    },
+    {
+     "value": "CERDANYOLA DEL VALLES",
+     "source": "PRESSUPOST p.1",
+     "quote": "CERDANYOLA DEL VALLES"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "g3_01",
+    "g3_05",
+    "annex_08",
+    "annex_09",
+    "annex_c1_tall",
+    "g3_fitxa_imatge"
+   ]
+  },
+  "architect_name": {
+   "status": "segur",
+   "value": "Aleix Subirà Felip (VUA, Visualizing Unbuilt Architecture; col·legiat 74829-3)",
+   "rule": "signatura del correu de petició (arquitecte col·legiat) + pressupost CLIENT = VUA. Mateixa persona que el client.",
+   "candidates": [
+    {
+     "value": "Aleix Subirà Felip, arquitecte col·legiat 74829-3",
+     "source": "correu VUA 25/03 signatura",
+     "quote": "A l e i x  S u b i r à  F e l i p / arquitecte & co-founder / aqte. col·legiat 74829-3"
+    },
+    {
+     "value": "VUA, VISUALIZING UNBUILT ARCHITECTURE",
+     "source": "PRESSUPOST p.1",
+     "quote": "CLIENT: VUA, VISUALIZING UNBUILT ARCHITECTURE"
+    }
+   ],
+   "sources_checked": [
+    "correu_10",
+    "g3_01",
+    "g3_04",
+    "acceptacio_03"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "habitatge unifamiliar aïllat",
+   "rule": "comanda 'CONSTR DOS NOUS HAB AÏLLATS' + PLAN_COST 'HAB UNIF' + annex sondeig/tall 'habitatge unifamiliar' + correu 'casa'",
+   "candidates": [
+    {
+     "value": "habitatge unifamiliar",
+     "source": "annex sondeig 'Obra:'",
+     "quote": "per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3"
+    },
+    {
+     "value": "CONSTR DOS NOUS HAB AÏLLATS",
+     "source": "comanda Hoja1!N18",
+     "quote": "CONSTR DOS NOUS HAB AÏLLATS"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "g3_05",
+    "annex_09",
+    "annex_c1_tall",
+    "correu_10"
+   ]
+  },
+  "num_floors": {
+   "status": "candidats",
+   "value": "PSOT + PB + P1",
+   "rule": "única font: correu de l'arquitecte ('encara s'està definint'); els plànols del projecte són DWG no llegibles. 1 font de proveïdor amb reserva explícita → candidats.",
+   "candidates": [
+    {
+     "value": "PSOT + PB + P1 (soterrani + baixa + pis)",
+     "source": "correu VUA 25/03",
+     "quote": "una casa que tindria PSOT, PB I PPis(tot i que encara s'esta definint) … PB: 135.26m2 / P1: 107.66m2 / PSOT: 65m2"
+    }
+   ],
+   "sources_checked": [
+    "correu_10",
+    "zip_12 (DWG no llegible)",
+    "g3_01",
+    "g3_04",
+    "annex_c1_planol_situacio"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap document de text ni annex la dona; el projecte és DWG (PARAMETRES URBANISTICS.dwg, PLANTA PROPOSTA.dwg) sense conversor; no hi ha consulta cadastral a la carpeta. Proposta: convertir el DWG o consulta Cadastre per adreça exacta 'CL TULIPA 3' (risc de parcel·la errònia: prod va agafar la 11).",
+   "candidates": [],
+   "sources_checked": [
+    "zip_12",
+    "g3_01",
+    "g3_02",
+    "g3_04",
+    "g3_05",
+    "correu_10",
+    "annex_c1_planol_situacio",
+    "annex_c1_tall",
+    "g3_fitxa_imatge"
+   ]
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2026-05-07",
+   "rule": "annex sondeig (inici/fi 07/05/2026) + comanda DATA DE PRESA 07/05 + albarà TPS 7-5-2026 + 4 fotos WhatsApp 2026-05-07 + correu Tosca del 06/05 ('demà'). DPSH i sondeig el mateix dia. Fitxa F38 buida. El full manuscrit del sondeig diu '7-6-2025' (error de l'operari).",
+   "candidates": [
+    {
+     "value": "07/05/2026",
+     "source": "annex sondeig p.1",
+     "quote": "Data d'inici: 07/05/2026 | Data de fi: 07/05/2026"
+    },
+    {
+     "value": "2026-05-07",
+     "source": "comanda Hoja1!N23",
+     "quote": "DATA DE PRESA | 2026-05-07"
+    },
+    {
+     "value": "7-5-2026",
+     "source": "PENETROS + SONDEIG.pdf p.1 albarà",
+     "quote": "Data: 7-5-2026"
+    }
+   ],
+   "sources_checked": [
+    "annex_09",
+    "g3_06",
+    "camp_penetros",
+    "fotos",
+    "correu_11",
+    "g3_04"
+   ]
+  },
+  "cota_referencia": {
+   "status": "candidats",
+   "value": "198",
+   "rule": "dues fonts d'Eva no coincideixen: annex DPSH casa 1 'Cota inici: 198 msnm segons ICGC' (P-1.1 i P-1.2) vs annex sondeig S-1 'z: +199.0 msnm (ICGC)'. El S-1 és a +1 m sobre el carrer segons el full manuscrit (punt 0 = C/ Tulipa +1 m) i els DPSH a cota de carrer → les dues cotes són coherents entre elles (punts diferents). Per a l'informe, candidats.",
+   "candidates": [
+    {
+     "value": "198 msnm (DPSH P-1.1/P-1.2)",
+     "source": "annex DPSH casa 1",
+     "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC"
+    },
+    {
+     "value": "+199.0 msnm (S-1)",
+     "source": "annex sondeig",
+     "quote": "Z: +199.0 msnm (segons el plànol ICGC)"
+    }
+   ],
+   "sources_checked": [
+    "annex_08",
+    "annex_09",
+    "annex_c1_tall",
+    "camp_penetros",
+    "annex_c1_planol_situacio",
+    "planol_c2_planta_seccio"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "segur",
+   "value": "3",
+   "rule": "annex sondeig 'Unitat litològica' NIVELL 1/2/3 + llegenda del tall (3) + peu de l'annex DPSH (Nivell 1/2/3)",
+   "candidates": [
+    {
+     "value": "3",
+     "source": "annex sondeig p.1",
+     "quote": "NIVELL 1 (0,00-1,10) | NIVELL 2 (1,10-2,20) | NIVELL 3 (2,20-3,54)"
+    },
+    {
+     "value": "3",
+     "source": "annex tall llegenda",
+     "quote": "Sorres llimoses / Llims argilosos cohesius / Substrat alterat"
+    }
+   ],
+   "sources_checked": [
+    "annex_09",
+    "annex_c1_tall",
+    "annex_08",
+    "camp_penetros"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "2 (P-1.1, P-1.2) — total expedient 4",
+   "rule": "per informe/casa: Excel DPSH CASA 1 (2 fulls) + annex DPSH casa 1 + full de camp TPS 'Casa 1' (P1, P2) + fotos 'P1 CASA 1'/'P2 CASA 1'. Total 4 (pressupost 2CASES, albarà TPS, fitxa 4P+1S).",
+   "candidates": [
+    {
+     "value": "2",
+     "source": "3001706_DPSH_CASA 1.xls",
+     "quote": "sheets ['P-1.1','P-1.2']"
+    },
+    {
+     "value": "4 (total)",
+     "source": "PRESSUPOST 2CASES p.2",
+     "quote": "4 assaigs de penetració dinàmica DPSH"
+    }
+   ],
+   "sources_checked": [
+    "g3_07",
+    "annex_08",
+    "camp_penetros",
+    "fotos",
+    "g3_02",
+    "g3_04",
+    "g3_05"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "sense COORDENADES.txt; annex sondeig sense caselles x/y; Street View només latitud (41.4971845). Proposta: geocodificar 'C/ Tulipa 3, Cerdanyola del Vallès' (verificació estricta del número).",
+   "candidates": [
+    {
+     "value": "lat 41.4971845 (WGS84, lon tallada)",
+     "source": "fitxa image1.jpg (URL Street View)",
+     "quote": "41.4971845"
+    }
+   ],
+   "sources_checked": [
+    "g3_fitxa_imatge",
+    "annex_09",
+    "g3_04 (enllaç maps curt)",
+    "annex_c1_planol_situacio"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap consulta cadastral a la carpeta ni als adjunts; el plànol de situació d'Eva no porta números de parcel·la llegibles",
+   "candidates": [],
+   "sources_checked": [
+    "inventari complet",
+    "correu_10",
+    "correu_11",
+    "annex_c1_planol_situacio"
+   ]
+  },
+  "lab": {
+   "status": "candidats",
+   "value": {
+    "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "lab_sample_id": "SPT-1 i SPT-2 (S1)",
+    "lab_depth": "1,00-1,60 m i 3,00-3,60 m (3,54 real)",
+    "lab_location": "S-1"
+   },
+   "rule": "sense GTL a la carpeta: mostres/cotes de la comanda (autoritat A) + annex sondeig; el NOM del laboratori no apareix en cap document del projecte (la comanda no l'anomena) → lab_testing_company és coneixement previ (únic laboratori de G3), no lectura: candidat. Dues mostres: la taula de l'informe les porta totes dues.",
+   "candidates": [
+    {
+     "value": "SPT 1 (S1) 1,0-1,6 ; SPT2 (S1) 3,0-3,6",
+     "source": "comanda files 35-36",
+     "quote": "SPT 1  (S1) | 1.0 | 1.6 ; SPT2 (S1) | 3.0 | 3.6"
+    },
+    {
+     "value": "SPT-1 6/9/9/9 ; SPT-2 19/31/33/50R (3,00-3,54)",
+     "source": "annex sondeig",
+     "quote": "SPT-1 -1.00 a -1.60 | SPT-2 -3.00 a -3.54"
+    },
+    {
+     "value": "TPS PROSPECCIÓ DEL SUBSÒL SL (laboratori: no citat en cap document del projecte)",
+     "source": "coneixement previ (memòria gtl_lab_identity)",
+     "quote": "—"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "annex_09",
+    "camp_penetros",
+    "fotos",
+    "g3_05 (SOIL-ASSAIG = plantilla)"
+   ]
+  },
+  "cte": {
+   "status": "segur",
+   "value": {
+    "cte_edificacio": "C-1",
+    "cte_sol": "T-1"
+   },
+   "rule": "pressupost p.2 (v1 i 2CASES) 'Tipus d'edifici: C1 / Tipus de Terreny : T1'; coherent amb 308 m² construïts (> 300) i 3 plantes (< 4) del correu. 1 font A (dues versions) sense contradicció.",
+   "candidates": [
+    {
+     "value": "C1 / T1",
+     "source": "PRESSUPOST p.2",
+     "quote": "Tipus d’edifici: C1 | Tipus de Terreny : T1"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "g3_02",
+    "correu_10"
+   ]
+  }
+ },
+ "casa_2_tosca_16": {
+  "expedient": {
+   "status": "segur",
+   "value": "3001706 (mateix expedient; informe separat)",
+   "rule": "idem casa 1",
+   "candidates": [
+    {
+     "value": "3001706_CASA 2",
+     "source": "annex plànol de situació casa 2 caixetí",
+     "quote": "Exp: 3001706_CASA 2"
+    }
+   ],
+   "sources_checked": [
+    "annex_c2_planol_situacio",
+    "g3_06"
+   ]
+  },
+  "client_name": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap document anomena el client de la casa 2: pressupost i acceptació són de la casa 1; el correu de Factoria no diu el promotor. Únic indici: metadata 'title' del PLANTA I SECCIO.pdf ('\\\\DISKSTATION\\Actuals\\408 REPARCEL·LACIO JORDI GENE TOSCA 16\\GEOTECNIC\\…') → candidat feble. Cal demanar-ho (el pressupost 2CASES diu 'un a nom de cada client').",
+   "candidates": [
+    {
+     "value": "JORDI GENE (?)",
+     "source": "PLANTA I SECCIO.pdf metadata title",
+     "quote": "408 REPARCEL·LACIO JORDI GENE TOSCA 16"
+    }
+   ],
+   "sources_checked": [
+    "correu_11",
+    "planol_c2_planta_seccio",
+    "g3_02",
+    "acceptacio_03",
+    "g3_04",
+    "g3_06",
+    "annex_c2_sondeig"
+   ]
+  },
+  "street_address": {
+   "status": "segur",
+   "value": "C/ Tosca, 16",
+   "rule": "correu de Factoria (assumpte + cos) + annex DPSH casa 2 'OBRA: C/TOSCA 16' + tall 'Carrer Tosca nº16' + PLANTA I SECCIO (carrer + metadata). El caixetí del plànol de situació casa 2 diu 'Tulipà nº3' per error.",
+   "candidates": [
+    {
+     "value": "C/TOSCA 16",
+     "source": "annex DPSH casa 2",
+     "quote": "OBRA: C/TOSCA 16"
+    },
+    {
+     "value": "carrer Tosca 16",
+     "source": "correu Factoria 06/05",
+     "quote": "geotecnic carrer Tosca 16"
+    }
+   ],
+   "sources_checked": [
+    "annex_08",
+    "correu_11",
+    "annex_c1_tall",
+    "planol_c2_planta_seccio",
+    "annex_c2_planol_situacio"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Cerdanyola del Vallès",
+   "rule": "annex DPSH casa 2 + tall + comanda (expedient comú)",
+   "candidates": [
+    {
+     "value": "CERDANYOLA DEL VALLÈS",
+     "source": "annex DPSH casa 2",
+     "quote": "POBLACIÓ: CERDANYOLA DEL VALLÈS"
+    }
+   ],
+   "sources_checked": [
+    "annex_08",
+    "annex_c1_tall",
+    "g3_06"
+   ]
+  },
+  "architect_name": {
+   "status": "segur",
+   "value": "Factoria d'Arquitectura SLP (Fina)",
+   "rule": "1 font (correu amb signatura) sense contradicció; el plànol PLANTA I SECCIO no té caixetí",
+   "candidates": [
+    {
+     "value": "FACTORIA D'ARQUITECTURA SLP",
+     "source": "correu 06/05 signatura",
+     "quote": "Fina / FACTORIA D'ARQUITECTURA SLP / 657873484"
+    }
+   ],
+   "sources_checked": [
+    "correu_11",
+    "planol_c2_planta_seccio"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "habitatge unifamiliar aïllat",
+   "rule": "comanda 'DOS NOUS HAB AÏLLATS' + tall 'un altre [habitatge unifamiliar] al Carrer Tosca nº16' + planta (casa aïllada amb piscina)",
+   "candidates": [
+    {
+     "value": "habitatge unifamiliar",
+     "source": "annex tall caixetí",
+     "quote": "…habitatge unifamiliar al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16…"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "annex_c1_tall",
+    "planol_c2_planta_seccio"
+   ]
+  },
+  "num_floors": {
+   "status": "candidats",
+   "value": "PB+1",
+   "rule": "lectura gràfica de la SECCIÓ B del plànol (conf. 0,6); cap text",
+   "candidates": [
+    {
+     "value": "PB+1",
+     "source": "PLANTA I SECCIO.pdf secció",
+     "quote": "(volum de dues plantes a la secció; sense text)"
+    }
+   ],
+   "sources_checked": [
+    "planol_c2_planta_seccio",
+    "correu_11"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap text; el plànol no la declara; DWG no llegible",
+   "candidates": [],
+   "sources_checked": [
+    "planol_c2_planta_seccio",
+    "correu_11",
+    "annex_c2_planol_situacio"
+   ]
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2026-05-07",
+   "rule": "albarà/full de camp TPS 'Casa 2' 7-5-2026 + correu Factoria 06/05 'demà' + fotos P1/P2 (casa 2) del 07/05",
+   "candidates": [
+    {
+     "value": "7-5-2026",
+     "source": "PENETROS + SONDEIG.pdf p.3 (full DPSH Casa 2)",
+     "quote": "Data: 7-5-2026"
+    }
+   ],
+   "sources_checked": [
+    "camp_penetros",
+    "correu_11",
+    "fotos"
+   ]
+  },
+  "cota_referencia": {
+   "status": "candidats",
+   "value": "201,25",
+   "rule": "annex DPSH casa 2 dona cota per punt (P-2.1 201,25 / P-2.2 202,85, ICGC); el plànol de l'arquitecte posa PB de la casa a 201.25; el full manuscrit diu +2,20/+2,50 sobre el carrer Tulipa. Parcel·la en pendent → candidats.",
+   "candidates": [
+    {
+     "value": "201,25 msnm (P-2.1)",
+     "source": "annex DPSH casa 2 p.1",
+     "quote": "Cota inici: 201,25 msnm segons el plànol topogràfic ICGC"
+    },
+    {
+     "value": "202,85 msnm (P-2.2)",
+     "source": "annex DPSH casa 2 p.2",
+     "quote": "Cota inici: 202,85 msnm …"
+    },
+    {
+     "value": "201.25 (cota PB projectada)",
+     "source": "PLANTA I SECCIO.pdf",
+     "quote": "201.25"
+    }
+   ],
+   "sources_checked": [
+    "annex_08",
+    "planol_c2_planta_seccio",
+    "annex_c1_tall",
+    "camp_penetros"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "candidats",
+   "value": "3",
+   "rule": "el sondeig S-1 és a la parcel·la de Tulipa; per a Tosca només hi ha DPSH. El tall (comú) dibuixa 3 nivells a tot el perfil i el peu de l'annex DPSH casa 2 porta Nivell 1/2/3 → 3, però sense sondeig propi: candidats + confirmar.",
+   "candidates": [
+    {
+     "value": "3",
+     "source": "annex tall (comú) llegenda + annex DPSH casa 2 peu",
+     "quote": "Nivell 1 ⏎ Nivell 3 ⏎ Nivell 2"
+    }
+   ],
+   "sources_checked": [
+    "annex_c1_tall",
+    "annex_08",
+    "annex_c2_sondeig (= S-1 de Tulipa)"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "2 (P-2.1, P-2.2)",
+   "rule": "Excel DPSH CASA 2 + annex DPSH casa 2 + full de camp 'Casa 2' + fotos P1/P2",
+   "candidates": [
+    {
+     "value": "2",
+     "source": "3001706_DPSH_CASA 2.xls",
+     "quote": "sheets ['P-2.1','P-2.2']"
+    }
+   ],
+   "sources_checked": [
+    "g3_07",
+    "annex_08",
+    "camp_penetros",
+    "fotos"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap font",
+   "candidates": [],
+   "sources_checked": [
+    "inventari"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap font",
+   "candidates": [],
+   "sources_checked": [
+    "inventari"
+   ]
+  },
+  "lab": {
+   "status": "candidats",
+   "value": "les mateixes mostres SPT-1/SPT-2 del S-1 (fet a la parcel·la de Tulipa)",
+   "rule": "la casa 2 no té sondeig propi; si l'informe de Tosca cita laboratori, serà el S-1 veí. Decisió de l'Eva.",
+   "candidates": [
+    {
+     "value": "SPT-1 / SPT-2 (S1, Tulipa)",
+     "source": "comanda",
+     "quote": "SPT 1  (S1) | SPT2 (S1)"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "annex_c2_sondeig"
+   ]
+  },
+  "cte": {
+   "status": "candidats",
+   "value": "C-1 / T-1",
+   "rule": "el pressupost (únic amb CTE) és de la casa 1; no hi ha dades de superfície construïda de la casa 2 per aplicar la definició C0/C1",
+   "candidates": [
+    {
+     "value": "C1 / T1 (del pressupost de Tulipa 3)",
+     "source": "PRESSUPOST 2CASES p.2",
+     "quote": "Tipus d’edifici: C1 | Tipus de Terreny : T1"
+    }
+   ],
+   "sources_checked": [
+    "g3_02",
+    "correu_11"
+   ]
+  }
+ },
+ "summary": {
+  "casa_1": {
+   "segur": 10,
+   "candidats": 3,
+   "no_trobat": 3
+  },
+  "casa_2": {
+   "segur": 7,
+   "candidats": 5,
+   "no_trobat": 4
+  },
+  "notes": "casa 1 no_trobat: superficie_parcela (DWG), utm, referencia_catastral — tots tres 'derivats' que a Bell-lloc venien de COORDENADES.txt i dels PDF del Cadastre, absents aquí."
+ },
+ "comparison_with_eva": {
+  "reference": "NO hi ha informe signat de l'Eva a la carpeta. `3001706_TULIPA_INFORME_FIX.docx` és sortida nostra ([Imatge pendent], 'estructura CONSTR DOS NOUS HAB AÏLLATS', 1 nivell, 'Depressió de l'Ebre'); `validation/eva_reference_values.json` n'està extret → contaminat. Referència usada: `_user_data_prev.json` (wizard 2026-06-04), només els camps amb `_sources == 'user'` i descartant els prefills que l'Eva va deixar sense corregir.",
+  "opened_after_decisions": true,
+  "per_field": {
+   "expedient": {
+    "eva": "3001706",
+    "mine": "3001706",
+    "result": "OK"
+   },
+   "client_name": {
+    "eva": "SR. ALEIX SUBIRA FELIP (user)",
+    "mine": "ALEIX SUBIRÀ FELIP",
+    "result": "OK",
+    "note": "el formulari p.5 manuscrit és la font; coincideix amb el que l'Eva va escriure"
+   },
+   "street_address": {
+    "eva": "C/TULIPA 3 CERDANYOLA DEL VALLES (user)",
+    "mine": "C/ Tulipa, 3",
+    "result": "OK"
+   },
+   "municipality": {
+    "eva": "C.Tulipa Cerdanyola (user, però és el nom de carpeta acceptat sense corregir)",
+    "mine": "Cerdanyola del Vallès",
+    "result": "OK*",
+    "note": "referència contaminada: el valor bo és el meu (comanda, pressupost, annexos)"
+   },
+   "architect_name": {
+    "eva": "'' / architect_company='C/TULIPA 3' (prefill erroni acceptat)",
+    "mine": "Aleix Subirà Felip (VUA)",
+    "result": "N/A",
+    "note": "referència inutilitzable"
+   },
+   "building_type": {
+    "eva": "CONSTR DOS NOUS HAB AÏLLATS (prefill de la comanda acceptat)",
+    "mine": "habitatge unifamiliar aïllat",
+    "result": "OK (CLOSE)",
+    "note": "l'Eva no ho va redactar al wizard"
+   },
+   "num_floors": {
+    "eva": "S+Pb+Pp (user)",
+    "mine": "candidats [PSOT+PB+P1]",
+    "result": "CAND",
+    "note": "correcte = candidat 1; amb la regla 'correu de l'arquitecte amb superfícies per planta → segur amb nota' seria OK"
+   },
+   "superficie_parcela": {
+    "eva": "564 (user)",
+    "mine": "no_trobat",
+    "result": "NT* (ERR condicional)",
+    "note": "564 no és a cap document llegible; probablement a PARAMETRES URBANISTICS.dwg (zip). Si el DWG ho porta, és ERR per eina que falta (conversor DWG), no per lectura. Acció: dwg2dxf."
+   },
+   "field_date": {
+    "eva": "(no al wizard; _sources vision_probe)",
+    "mine": "2026-05-07",
+    "result": "N/A",
+    "note": "5 fonts coincideixen"
+   },
+   "cota_referencia": {
+    "eva": "'' (user: l'Eva ho va deixar BUIT); l'informe generat diu +199.00",
+    "mine": "candidats [198 (DPSH) | 199.0 (S-1)]",
+    "result": "CAND",
+    "note": "l'Eva no va decidir al wizard; els seus dos annexos discrepen. Candidats és l'estat honest."
+   },
+   "num_soil_levels": {
+    "eva": "3 (user)",
+    "mine": "3",
+    "result": "OK",
+    "note": "l'informe generat deia 1: error del pipeline, no de l'Eva"
+   },
+   "num_dpsh_tests": {
+    "eva": "2 (computed)",
+    "mine": "2 (casa 1)",
+    "result": "OK",
+    "note": "confirma: per casa, no total"
+   },
+   "utm_x_utm_y": {
+    "eva": "423000 / 4594347 (user, arrodonit: del visor ICGC)",
+    "mine": "no_trobat",
+    "result": "NT",
+    "note": "cap document ho porta; l'Eva ho treu del visor ICGC (com diu a EXPLICACIÓ DETALLS). NT legítim → proposar geocodificació/visor"
+   },
+   "referencia_catastral": {
+    "eva": "(no)",
+    "mine": "no_trobat",
+    "result": "NT"
+   },
+   "lab": {
+    "eva": "(referència buida/sorollosa)",
+    "mine": "candidats (comanda: SPT-1/SPT-2 S1; lab no anomenat)",
+    "result": "N/A"
+   },
+   "cte": {
+    "eva": "C-1 / T-2 (computed pel pipeline des de N20, no user)",
+    "mine": "C1 / T1 (pressupost)",
+    "result": "N/A",
+    "note": "discrepància T1 (pressupost) vs T-2 (càlcul); és nivell B decidir-ho"
+   }
+  },
+  "totals_casa_1": {
+   "OK": 7,
+   "CAND": 2,
+   "NT": 3,
+   "NA": 4,
+   "ERR": 0,
+   "ERR_conditional": 1
+  },
+  "casa_2": "sense cap referència (l'Eva només va generar l'informe de Tulipa 3 al wizard)",
+  "rules_learned": [
+   "num_floors: correu de l'arquitecte amb superfícies per planta (PSOT/PB/P1 + m²) → segur amb nota encara que digui 's'està definint'",
+   "superficie_parcela: quan els plànols són DWG, el valor de l'Eva hi és dins → cal conversor DWG (LibreDWG) al lector; fins llavors no_trobat + proposta",
+   "cota: dos annexos d'Eva poden discrepar (DPSH vs sondeig) → candidats amb els dos, mai triar",
+   "referència de Tulipa: l'informe de la carpeta NO és de l'Eva; el truth-map del 23-08 per a Tulipa (client, 564, 199) ve de _user_data_prev/informe generat, no d'un informe signat",
+   "multi-informe: un expedient amb N subcarpetes CASA n → N conjunts de decisions; num_dpsh_tests per casa; sondeig compartit → num_soil_levels de la casa sense sondeig = candidats",
+   "acceptació escanejada: el formulari p.5 pot estar omplert a mà → visió obligatòria sobre la zona del formulari",
+   "fitxa F38 pot ser buida → field_date des d'annex sondeig / comanda / albarà / fotos / correu 'demà'",
+   "pressupost amb sufix -2CASES i modDate posterior → mana sobre el primer; PLAN_COST no s'actualitza"
+  ]
+ }
+}

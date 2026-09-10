@@ -1,0 +1,29 @@
+{
+ "compared_by": "sessió principal (agent cec)",
+ "eva_truth": "docs/golden-read-taules/_eva_truth/bell-lloc.json (4001612_informe.docx)",
+ "date": "2026-08-24",
+ "cells": {
+  "dpsh.P-1.P-2.cota_inici": {"read": "segur +199,50 x2", "eva": "+199.50 x2", "class": "OK x2"},
+  "dpsh.P-1.P-2.profunditat": {"read": "segur -1,35/-2,45 (corroborat albarà '3,8 ml' = suma exacta)", "eva": "-1.35/-2.45", "class": "OK x2"},
+  "dpsh.P-1.P-2.rebuig": {"read": "segur Si x2", "eva": "Si x2", "class": "OK x2"},
+  "dpsh.P-1.P-2.nf": {"read": "segur No detectat x2", "eva": "No detectat x2", "class": "OK x2"},
+  "sondeig.S-1.cota": {"read": "segur +199,50 (z annex = annex DPSH)", "eva": "+199.50", "class": "OK", "note": "aquí l'absoluta és correcta perquè TOT el sistema del projecte és absolut — coherent amb la regla nova de Castellar"},
+  "sondeig.S-1.profunditat": {"read": "segur -1,80", "eva": "-1.80", "class": "OK"},
+  "sondeig.S-1.spt_ma": {"read": "segur '1/0'", "eva": "'1/--'", "class": "OK", "note": "equivalent; format de l'Eva inconsistent entre informes (Castellar '1/0', Bell-lloc '1/--') — micro-regla: emetre comptes, el format el posa el generador"},
+  "sondeig.S-1.nf": {"read": "segur No detectat", "eva": "No detectat", "class": "OK"},
+  "spt.id": {"read": "segur SPT-1", "eva": "SPT-1", "class": "OK"},
+  "spt.punt": {"read": "segur S-1", "eva": "S-1", "class": "OK"},
+  "spt.profunditat": {"read": "segur -1,00 a -1,60", "eva": "-1.00 a 1.60", "class": "OK"},
+  "spt.n30": {"read": "candidats [58 = 28+30 (tall de l'Eva diu N=58) | 62 = 34+28 trams centrals]", "eva": "54", "class": "CAND*", "note": "el valor de l'informe (54 = 24+30?) NO és entre els candidats — però el TALL de la mateixa Eva diu 58: la incoherència és interna d'Eva (informe vs tall vs registre). Sospita d'error a l'informe. PREGUNTA PER A L'EVA. Cap confiança falsa: l'estat era candidats"},
+  "spt.litologia": {"read": "candidats", "eva": "Graves en matriu sorrenca", "class": "CAND"},
+  "soil.count": {"read": "segur 1 (+ cobertura sense numerar)", "eva": "1 nivell", "class": "OK"},
+  "soil.n1.litologia": {"read": "candidats [annex 'Graves incloses en matriu sorrenca d'aspectes carbonatats' primer | tall 'Graves amb sorres' segon]", "eva": "Graves en matriu sorrenca carbonatades", "class": "CAND", "note": "candidat 1 quasi literal — regla v0.8 (annex sondeig primer) VALIDADA"},
+  "superficie_construida": {"read": "candidats ['280+86' correu | 397 sostre IEN | 296,80 ocupació]", "eva": "280+86", "class": "CAND", "note": "candidat 1 correcte, fins i tot en el FORMAT de suma d'Eva"}
+ },
+ "totals": {"OK": 14, "CAND": 4, "ERR": 0, "NT": 0, "n/a": 0, "CAND_fora": 1},
+ "observacions": [
+  "0 ERR. El n30 és l'única cel·la on el valor de l'informe no era entre els candidats (CAND*), i l'evidència apunta a incoherència interna de l'Eva (tall N=58 vs informe 54 vs registre 24/34/28/30).",
+  "Sorpresa greu de qualitat documental: la p.2 de PENETROS.pdf de Bell-lloc és el full de camp de LINYOLA (escaneig barrejat) — l'agent ho va detectar i descartar sol.",
+  "El criteri de suma N30 d'Eva NO és estable entre projectes: Rubí i Alcoletge = trams centrals; Bell-lloc informe = ni centrals ni últims. Mantenir n30 SEMPRE candidats amb registre."
+ ]
+}

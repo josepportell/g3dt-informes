@@ -1,0 +1,71 @@
+{
+  "source_path": "tall.pdf",
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació A-A' de l'informe (còpia Print To PDF amb text net)",
+  "issuer": "G3 (Eva)",
+  "date": "Data: Desembre 2025",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva (G3), FreeHand exportat via Microsoft Print To PDF",
+    "for_whom": "annex de l'informe (versió de treball amb text llegible)",
+    "why": "síntesi estratigràfica: la font dels nivells quan no hi ha sondeig a rotació",
+    "expected_fields": [
+      "soil_levels (llegenda + geometria)",
+      "num_soil_levels",
+      "cotes de superfície",
+      "building_type/adreça al caixetí"
+    ],
+    "not_expected": [
+      "field_date de camp",
+      "client"
+    ],
+    "relation_to_others": "mateix dibuix que PDF/ANNEXES/3001631_tall de correlació.pdf (text brossa); SUBSTITUEIX l'esborrany ANNEXES/Altres/F5 TALL.png (2 nivells, cotes 211,9) — regla d'esborranys",
+    "authority_for": [
+      "num_soil_levels",
+      "soil_levels",
+      "cota_referencia (superfície gràfica)"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "num_soil_levels",
+      "value": "1",
+      "location": "LLEGENDA",
+      "quote": "Nivell 1 : Graves i sorres. Carbonatat.",
+      "confidence": 0.85,
+      "note": "la llegenda també porta 'Sòls superficials' (franja ~0,3 m) sense numerar; l'esborrany F5 en tenia 2 → candidats al consolidat"
+    }
+  ],
+  "tables": {
+    "soil_levels": [
+      {
+        "nom": "Sòls superficials (sense numerar)",
+        "litologia_candidats": [
+          "Sòls superficials"
+        ],
+        "de": "0 (superfície, ~+212,5 msnm)",
+        "a": "~-0,3 m (~+212,25 msnm, lectura gràfica calibrada amb l'eix)",
+        "mostra_del_nivell": false,
+        "location": "llegenda + franja fosca superior del perfil",
+        "quote": "Sòls superficials"
+      },
+      {
+        "nom": "Nivell 1",
+        "litologia_candidats": [
+          "Graves i sorres. Carbonatat."
+        ],
+        "de": "~-0,3 m",
+        "a": "base investigada (el dibuix arriba a 208 msnm; rebuigs -4,55/-3,58/-3,13)",
+        "mostra_del_nivell": true,
+        "location": "LLEGENDA + perfil",
+        "quote": "Nivell 1 : Graves i sorres. Carbonatat."
+      }
+    ],
+    "__nota": "cap marca de nivell freàtic al perfil; línia vermella 'Cota de fonamentació recomanada' a ~+212,0 (Tier B, no transcrita); Nb anotats al perfil: 40/77/45/R (P-1), 48/R (P-2), 47/72/R (P-3)"
+  },
+  "not_present": [
+    "nivell freàtic",
+    "cotes numèriques de transició (només eix msnm gràfic)"
+  ],
+  "reading_notes": "text net per get_text; fondàries de transició per lectura gràfica calibrada (etiquetes eix 208-213 → ~29,3 pt/m); clip 400 dpi de la franja superior"
+}

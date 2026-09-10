@@ -1,0 +1,18 @@
+{
+  "source_path": "SONDEIG.pdf",
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "3 fotos de mòbil impreses a PDF (Microsoft Print To PDF, 0 text): p.1 ALBARÀ del sondeig (equip ML76A, sondista Daniel Fernández, 1,80 ml en graves, 1 SPT); p.2 Full de camp sondeig a rotació S-1 (apaïsat, girat 90°) amb trams, SPT-1 i colpeig; p.3 (no llegida en detall: foto de caixa/parcel·la).",
+  "issuer": "TPS, sondista Daniel Fernández",
+  "date": "2025-10-06 (manuscrit '6-10-2025')",
+  "pages_or_sheets": 3,
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-06", "location": "p.1 'Data inici' / 'Data final'; p.2 'Data inici'", "quote": "6-10-2025 | 6-10-2025", "confidence": 0.9, "note": "dia del sondeig (2n dia de camp)"},
+    {"concept_id": "street_address", "value": "C/ Antoni Ballet [sic]", "location": "p.1 'Adreça:' / p.2 'Adreça de l'obra:'", "quote": "C/Antoni Ballet - Bell-lloc", "confidence": 0.6, "note": "grafia 'Ballet' del sondista → d'aquí la comanda (Eva copia el full de camp)"},
+    {"concept_id": "municipality", "value": "Bell-lloc", "location": "p.1 'Població:'", "quote": "Bell-lloc", "confidence": 0.8, "note": ""},
+    {"concept_id": "lab_sample_id", "value": "SPT-1, 1,00-1,60, colpeig 24 34 28 30", "location": "p.2 columna Mostres", "quote": "1.00-1.60 S.P.T-1 | 24 34 28 30", "confidence": 0.9, "note": ""},
+    {"concept_id": "num_soil_levels_hint", "value": "2 trams descrits (0,00-1,00 graves con arena; 1,60-1,80 graves carbonatadas)", "location": "p.2 columna Profunditat/descripció", "quote": "0.00 1.00 Graves con arena | 1.60 1.80 Graves carbonatadas", "confidence": 0.5, "note": "trams de material ≠ nivells geològics (l'annex d'Eva els agrupa en NIVELL 1)"},
+    {"concept_id": "NOT_client_name", "value": "G3 / Eva", "location": "p.1 'DADES CLIENT' i p.2 'Empresa/Client'", "quote": "Empresa: G3 | Responsable: Eva | G3 - Eva", "confidence": 1.0, "note": "idem PENETROS: client del subcontractista"}
+  ],
+  "not_present": ["expedient", "client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia (p.2 'Cota d'inici respecte cota 0: c/Antoni Ballet +/- 0')", "num_dpsh_tests", "utm_x/utm_y", "referencia_catastral", "lab_testing_company", "cte_*"],
+  "reading_notes": "Fotos de mòbil amb perspectiva; p.2 està girada 90° → cal rotar per llegir. 90 dpi just per a capçaleres. Només visió."
+}

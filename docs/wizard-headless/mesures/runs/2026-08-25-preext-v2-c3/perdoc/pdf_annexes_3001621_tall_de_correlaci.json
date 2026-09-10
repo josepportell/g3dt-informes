@@ -1,0 +1,127 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+ "source_md5": "e77496626419bcc0e372d33f59609cd5",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geològica-geotècnica (perfil A-A') que uneix els 4 punts DPSH (P-1 a P-4) i el sondeig S-1, amb llegenda de nivells i cota de fonamentació recomanada",
+ "issuer": "G3 (Eva)",
+ "date": "Octubre 2025 (caixetí); metadata PDF creationDate 2025-11-03",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), dibuix elaborat amb FreeHand i exportat via Acrobat Distiller/PScript5.dll",
+  "for_whom": "annex de l'estudi geotècnic, per il·lustrar la correlació litològica entre els punts assajats",
+  "why": "correlacionar litològicament els 4 DPSH (P-1 a P-4) i el sondeig S-1 al llarg de la traça A-A', amb el Nivell 1 de substrat rocós i la cota de fonamentació recomanada",
+  "expected_fields": [
+   "num_soil_levels",
+   "street_address (via títol)",
+   "municipality (via títol)",
+   "building_type (via títol)",
+   "expedient",
+   "num_dpsh_tests (corroboració visual)"
+  ],
+  "not_expected": [
+   "field_date real de camp",
+   "client_name",
+   "architect_name",
+   "cota_referencia numèrica",
+   "dades de laboratori",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cte"
+  ],
+  "relation_to_others": "Probablement el mateix dibuix que l'arxiu arrel 'tall.pdf' (md5 diferent, a4512806...) — aquest (PDF/ANNEXES/3001621_tall de correlació.pdf) té producer Acrobat Distiller 15.0 / PScript5.dll (text brossa, típic d'exportació FreeHand->Distiller); 'tall.pdf' podria ser la còpia neta 'Print To PDF'. No s'ha obert 'tall.pdf' en aquesta crida (document separat, --only per fitxer).",
+  "authority_for": [
+   "num_soil_levels",
+   "soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells núm. 18A-18B-20",
+   "location": "caixetí, títol del projecte",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.7,
+   "note": "redacció del títol, no bloc OBRA explícit; confirmar amb pressupost/comanda"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "caixetí, títol del projecte",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.8
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "caixetí, títol del projecte",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.75
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "requadre LLEGENDA del tall",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.6,
+   "note": "per sobre hi ha 'Terreny Vegetal' sense numerar (topsoil, no compta com a nivell per conveni habitual); confirmar amb annex de sondeig si n'hi ha"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "gràfic del tall + mapa encartat (llegenda 'Assaig de penetració dinàmica DPSH')",
+   "quote": "P-1, P-2, P-4, P-3 marcats amb icona DPSH; S-1 marcat amb icona 'Sondeig a rotació amb bateria contínua'",
+   "confidence": 0.5,
+   "note": "corroboració visual, no font primària (Excel DPSH mana)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10",
+   "location": "caixetí, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.3,
+   "note": "data del document/dibuix, no necessàriament data de camp; només mes i any"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   }
+  ],
+  "__nota": "Nivell 1 és l'únic nivell numerat a la llegenda; la fondària de transició és visible al gràfic (línia entre marró i taronja, ~571 msnm) però sense cap valor numèric imprès -> de/a no citables com a text literal."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "cota_referencia (valor numèric explícit per punt)",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "superficie_parcela",
+  "num_floors",
+  "architect_company"
+ ],
+ "reading_notes": "Text del PDF és brossa (meta.text_ok.1=false; producer 'Acrobat Distiller 15.0 (Windows)', creator 'PScript5.dll Version 5.2.2', típic de FreeHand->Distiller) -> lectura íntegrament visual. page-1.png (150dpi) ja era llegible per al gràfic principal i el caixetí; s'ha fet servir render_clip.py per a 2 retalls d'alta resolució: mapa encartat top-left (400dpi, confirma llegenda DPSH/sondeig/zona d'estudi/traça A-A' i l'ordre real dels punts al llarg del carrer Arbrells: P-1, P-2, S-1, P-4, P-3) i caixetí (300dpi, confirma Exp/Data/títol nets). No s'han necessitat les meitats left/right."
+}

@@ -1,0 +1,54 @@
+{
+ "source_path": "comanda laboratori_4001670_ALCOLETGE.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3 per a la mostra SPT del projecte",
+ "issuer": "G3 (Eva Vázquez, responsable)",
+ "date": "DATA DE PRESA 16/02/2026 (N23=46069); DATA DE SOL.LICITUD 27/02/2026 (AH23=46080)",
+ "pages_or_sheets": "Hoja1",
+ "context": {
+  "who_made_it": "G3 (sol·licitant) demana assaigs al laboratori",
+  "for_whom": "laboratori (nom no consta al document)",
+  "why": "assajar la mostra SPT recuperada (sulfats/agressivitat + Atterberg)",
+  "expected_fields": [
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient",
+   "municipi",
+   "DATA DE PRESA"
+  ],
+  "not_expected": [
+   "client de l'informe (el bloc SOL.LICITANT és G3: s'ignora)",
+   "n30",
+   "litologia (columna buida)"
+  ],
+  "relation_to_others": "coincideix exactament amb l'anotació SPT de l'annex/Excel DPSH i amb el full de camp TPS; sense GTL a la carpeta (arriba setmanes després), la comanda és l'única font de laboratori",
+  "authority_for": [
+   "spt_ma_tests.id",
+   "spt_ma_tests.punt",
+   "spt_ma_tests.profunditat",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT -1 (P3)",
+    "punt": "P3",
+    "profunditat": "0,8 a 1,4 m",
+    "assaigs": "Límits d'Atterberg (O35), Agressivitat sòls (AA35), 'NOMÉS SULFATS' (AD35)",
+    "location": "Hoja1 fila 35: C35/J35/L35/O35/AA35/AD35",
+    "quote": "C35='SPT -1 (P3)' | J35=0.8 | L35=1.4 | AD35='NOMÉS SULFATS'"
+   }
+  ],
+  "__nota": "Cotes de la comanda coincideixen amb annex i full de camp (cap discrepància de transcripció aquí). LITOLOGIA (AJ35) buida."
+ },
+ "not_present": [
+  "n30",
+  "litologia de la mostra",
+  "nom del laboratori"
+ ],
+ "reading_notes": "Bloc DADES DEL SOL.LICITANT = G3 (B25364589): ignorat per regla. DADES DE L'OBRA: N18='CONSTR HAB UNIF', N19=4001670, N21='ALCOLETGE', ADREÇA (N20) buida."
+}

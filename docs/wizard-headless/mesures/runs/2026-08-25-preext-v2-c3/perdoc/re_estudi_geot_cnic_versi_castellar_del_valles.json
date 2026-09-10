@@ -1,0 +1,83 @@
+{
+ "source_path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+ "source_md5": "9b5696cb7a0a51e3abbd06dc815719ae",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Cadena de correus: encàrrec original de G3 (Dolors Maqueda, 2025-11-03) enviant la versió 0 de l'estudi geotècnic, i resposta de Roc Clusa (2025-11-18) demanant confirmar si cal adjuntar la prova de laboratori i dictant el títol definitiu de l'informe.",
+ "issuer": "Roc Clusa (missatge nou, 2025-11-18) / Dolors Maqueda - G3, Dep. Administració (missatge original citat, 2025-11-03)",
+ "date": "2025-11-18",
+ "pages_or_sheets": "cos de correu (body.txt, 1 fitxer, sense adjunts)",
+ "context": {
+  "who_made_it": "Roc Clusa respon a G3; Dolors Maqueda (G3) havia enviat abans la versió 0 de l'estudi",
+  "for_whom": "G3 (Dolors Maqueda) rep els comentaris de Roc Clusa",
+  "why": "Roc Clusa revisa l'esborrany (versió 0) de l'estudi geotècnic i demana 2 canvis: confirmar si cal adjuntar prova de laboratori, i corregir el títol de l'informe amb l'adreça i tipus d'obra correctes",
+  "expected_fields": [
+   "building_type",
+   "street_address",
+   "municipality"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "lab_sample_id",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "num_dpsh_tests",
+   "num_soil_levels"
+  ],
+  "relation_to_others": "Resposta (RE:) a un correu anterior de G3 (Dolors Maqueda, 2025-11-03, assumpte 'ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES') que adjuntava 'estudi geotècnic versió 0, a falta de resultats de laboratori'; l'adjunt d'aquell correu no és present en aquest .msg (attachments: [] al meta — típic de cadenes RE: on l'adjunt original no es reenvia)",
+  "authority_for": [
+   "building_type",
+   "street_address"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "Grup d'habitatges unifamiliars (3 unitats: 18A, 18B, 20)",
+   "location": "cos del correu, missatge superior (Roc Clusa, 2025-11-18)",
+   "quote": "El títol hauria de ser: \"Estudi geològic / geotècnic per la CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS",
+   "confidence": 0.7,
+   "note": "Instrucció del client POSTERIOR a la versió 0 de l'estudi (dicta el títol definitiu) → candidat 1 per davant de qualsevol redacció anterior (regla Pas 3). 3 adreces (18A/18B/20) suggereixen possible estructura multi-habitatge (patró Tulipa): verificar a la carpeta si hi ha subcarpetes o Excels DPSH separats per unitat."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A, 18B i 20",
+   "location": "cos del correu, missatge superior (Roc Clusa, 2025-11-18)",
+   "quote": "GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS",
+   "confidence": 0.7,
+   "note": "Mateixa font que building_type (títol dictat pel client). 3 números de porta → possible pluralitat d'adreces reals dins del mateix carrer, no adreces competidores; verificar contra plànol/cadastre."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del correu, missatge superior (Roc Clusa, 2025-11-18)",
+   "quote": "a CASTELLAR DEL VALLÈS",
+   "confidence": 0.5,
+   "note": "Coincideix amb el nom de la carpeta del projecte ('3001621 CASTELLAR DEL VALLES', sense accent). Font no canònica per a municipality (correu, no comanda/pressupost/PLAN_COST segons Pas 3) — creuar amb aquestes 3 fonts abans de marcar segur."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Cadena RE:/FW: — només el text per sobre del primer 'From:' (missatge de Roc Clusa, 2025-11-18) és nou; la resta és el correu original de Dolors Maqueda (G3, 2025-11-03) citat sencer, incloent peu de plantilla G3 (privacitat CA/ES, ignorat). Sense adjunts (meta.attachments=[]). Remitent 'Roc Clusa' (rocflats@hotmail.com): rol no identificat (client, arquitecte o tècnic) — sense paraula 'arquitecte' ni 'propietari' ni signatura amb càrrec; no s'ha afegit com a candidat de client_name/architect_name per manca de font autoritzada segons Pas 3, però cal creuar amb altres documents del projecte (pressupost, acceptació) per identificar el seu rol. El correu original de Dolors Maqueda esmenta que la versió 0 anava 'a falta de resultats de laboratori' (2025-11-03) — nota estructural, no dada de nivell A."
+}

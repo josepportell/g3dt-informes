@@ -1,0 +1,124 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Excel de plantilla G3 amb els colpeigs N20 dels 4 assaigs de penetració dinàmica DPSH (P-1 a P-4), un full per punt.",
+ "issuer": "TPS (sondista) transcriu els valors de camp; full digital revisat per l'Eva (G3)",
+ "date": null,
+ "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4",
+ "context": {
+  "who_made_it": "TPS (subcontractista de sondeigs) pren els valors de camp amb el penetròmetre DPSH; l'Eva (G3) en revisa/digitalitza la transcripció en aquest Excel.",
+  "for_whom": "G3/Eva, com a font per a la taula 'Penetròmetres dinàmics DPSH' de l'informe i per al PDF/ANNEXES/{exp}_DPSH.pdf derivat.",
+  "why": "Registrar els cops per 20 cm (N20) de cada assaig per detectar el rebuig i, més endavant (Tier B), derivar capacitat portant.",
+  "expected_fields": [
+   "profunditat",
+   "colpeig DPSH (N20)",
+   "colpeig NB",
+   "mostra",
+   "N.F.",
+   "nivells",
+   "rebuig",
+   "nombre de punts executats"
+  ],
+  "not_expected": [
+   "dades de projecte (client, adreça, arquitecte, municipi)",
+   "cota absoluta (cota inici)",
+   "data de camp"
+  ],
+  "relation_to_others": "Versió digital dels fulls de camp manuscrits (PENETROS.pdf/albarà TPS); és la font per a PDF/ANNEXES/{exp}_DPSH.pdf, que sí porta cota inici absoluta i data — no llegit en aquesta crida.",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "noms dels fulls del llibre",
+   "quote": "P-1; P-2; P-3; P-4",
+   "confidence": 0.9,
+   "note": "4 fulls, tots amb dades executades a la columna C (Colpeig DPSH) i peu 'Rebuig a'. Excel DPSH és l'autoritat top per a executats (Pas 3); no s'ha consultat aquí el previst (pressupost/fitxa)."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "cel·la C79 a cada full (P-1, P-2, P-3, P-4)",
+   "quote": "Nivell 1",
+   "confidence": 0.35,
+   "note": "Els 4 punts només etiqueten text 'Nivell 1' (mai 'Nivell 2'). PERÒ la columna G (Nivells) mostra dos colors de fons diferents a P-1 (groc G17:G20, prof. 0 a -0,6 m; vermell G21:G23, -0,8 a -1,2 m) i P-4 (groc G17:G21, 0 a -0,8 m; vermell G22:G25, -1,0 a -1,6 m), mentre P-2 i P-3 són vermell uniforme a tota la seva profunditat (més curta). El significat del canvi de color NO està confirmat (podria marcar un segon nivell no etiquetat en text, o ser només format condicional sense relació amb nivells). Aquest document NO és l'autoritat per a num_soil_levels (Pas 3: mana l'annex de sondeig/tall, no llegit en aquesta crida) — candidat feble, creuar amb l'annex de sondeig si existeix al projecte."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "P-1!B80",
+    "quote": "Rebuig  a -1,08 m",
+    "note": "cota_inici no consta en aquest Excel (profunditats mesurades des d'un origen relatiu, B17=0); ve de PDF/ANNEXES/3001621_DPSH.pdf, no llegit en aquesta crida. N.F. comprovat sense marca de text ni de color a la columna F (formatting_info revisat)."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "P-2!B80",
+    "quote": "Rebuig  a -0,48 m",
+    "note": "cota_inici no consta en aquest Excel. N.F. comprovat sense marca de text ni de color a la columna F."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "P-3!B80",
+    "quote": "Rebuig  a -0,76 m",
+    "note": "cota_inici no consta en aquest Excel. N.F. comprovat sense marca de text ni de color a la columna F."
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "matis": null,
+    "location": "P-4!B80",
+    "quote": "Rebuig  a -1,55 m",
+    "note": "cota_inici no consta en aquest Excel. N.F. comprovat sense marca de text ni de color a la columna F."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció usada (sense fitz/xlrd/openpyxl): sheet-N.cells.txt + sheet-N.colors.txt dels 4 fulls (P-1..P-4), REF\\tvalor. Estructura idèntica als 4 fulls: capçalera fila 16 (B..G), dades files 17-77 (profunditat -12 a 0), peu fila 79-80 (Nivell N / Rebuig a). Colors comprovats a la columna F (N.F., buida a tot arreu, cap marca) i a la G (Nivells, veure nota al candidat num_soil_levels). Cap metadada de projecte a l'Excel (files 1-14 buides excepte D15=0,83, cel·la de configuració d'interval, font blanca — no és dada)."
+}

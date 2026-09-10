@@ -1,0 +1,28 @@
+{
+ "source_path": "24.0807/DADES PER ANAR A CAMP_v1.xlsx",
+ "document_type": "fitxa_camp_g3",
+ "what_it_is": "Fitxa interna de G3 'DADES PER ANAR A CAMP' del projecte Anciles: client/sol·licitant, adreça d'obra, contacte a camp (Enrique), previsió 5P+2S, empresa TPS ERUGA, data de camp 19/02/2026. Porta 2 imatges incrustades (miniatures dels plànols de l'arquitecta 'CASA GRANDE HCS - ANCILES').",
+ "issuer": "G3 (Loli/Dolors Maqueda, dep. administració)",
+ "date": "sense data pròpia; F38 dies de camp = 2026-02-19",
+ "pages_or_sheets": "2 fulls: 'fitxa' (B2:J47, 2 imatges), 'dades de referencia' (plantilla)",
+ "context": {
+  "who_made_it": "G3 (administració) en preparar la sortida a camp, a partir de l'encàrrec acceptat el 05/02/2026",
+  "for_whom": "l'equip de camp (TPS ERUGA + geòleg)",
+  "why": "planificar la visita: qui hi serà, on, a quina hora, quina feina (5 penetros + 2 sondeigs), accessos",
+  "expected_fields": ["client (sol·licitant, C6)", "street_address (C7 ADREÇA OBRA)", "municipality (dins C7)", "field_date (F38)", "num_dpsh_tests / num_sondeigs previstos (E13)", "contacte de camp"],
+  "not_expected": ["expedient", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "referencia_catastral", "lab"],
+  "relation_to_others": "deriva de l'encàrrec (mateixa cadena que el pressupost: C6 = la mateixa Maria Alba Barrau del p.5 signat → NO és font independent per al client). Les 2 imatges incrustades són miniatures de SITE_prop A.pdf i A01_TIPOL.pdf. F38 (19/02/2026) coincideix amb les fotos WhatsApp 2026-02-19 i amb el correu 'Confirmación visita jueves 19 y plano'.",
+  "authority_for": ["field_date (F38, màxima autoritat)", "street_address (corroboració)", "num previstos (5P+2S)"]
+ },
+ "tier_a": [
+  {"concept_id": "field_date", "value": "2026-02-19", "location": "fitxa!F38 (etiqueta E38 'dies de camp'; tipus data)", "quote": "F38=datetime.datetime(2026, 2, 19, 0, 0)", "confidence": 0.9, "note": "Coincideix amb el nom de les fotos 'WhatsApp Image 2026-02-19' i amb el correu 'Confirmación visita jueves 19 y plano' (el 19/02/2026 era dijous). Hora quedada 9:30-10h a obra (C9/F9)."},
+  {"concept_id": "street_address", "value": "C/ General Ferraz 20, Anciles (Huesca)", "location": "fitxa!C7 (etiqueta B7 'ADREÇA OBRA')", "quote": "C/GENERAL FERRAZ 20 ANCILES (HUESCA)", "confidence": 0.85, "note": "Adreça i municipi a la mateixa cel·la. Deriva de l'encàrrec (mateix text que el pressupost): corroboració, no font independent."},
+  {"concept_id": "municipality", "value": "Anciles (Huesca)", "location": "fitxa!C7", "quote": "…ANCILES (HUESCA)", "confidence": 0.85, "note": "dins C7; mateixa cadena que el pressupost."},
+  {"concept_id": "client_name", "value": "MARIA ALBA BARRAU CASTÁN (sol·licitant)", "location": "fitxa!C6 (etiqueta B6 'CLIENT')", "quote": "MARIA ALBA BARRAU CASTÁN 616523792", "confidence": 0.4, "note": "El 'CLIENT' de la fitxa és el sol·licitant (l'arquitecta). Coincideix amb el p.5 signat. Cap promotor diferent esmentat. Candidat, mateixa cadena d'encàrrec."},
+  {"concept_id": "num_dpsh_tests", "value": "5 (previstos)", "location": "fitxa!E13 (al costat de C13 'PENETROS I SONDEIG PETIT')", "quote": "5P+2S", "confidence": 0.6, "note": "Previsió: 5 penetros + 2 sondeigs. L'Excel DPSH mana per als executats (en té 4)."},
+  {"concept_id": "num_sondeigs", "value": "2 (previstos)", "location": "fitxa!E13", "quote": "5P+2S", "confidence": 0.7, "note": "coherent amb el pressupost (2 sondeo a rotación) i amb els annexos S-1/S-2."},
+  {"concept_id": "field_contact", "value": "Enrique, tel. 608333896 (ens espera a camp amb el plànol dels punts)", "location": "fitxa!C8/F8 + D41", "quote": "PERSONA DE CONTACTE: ENRIQUE | TEL.608333896 | Enrique ens estara esperan a camp amb el planol dels punts.", "confidence": 0.85, "note": "No és cap camp del nivell A, però Enrique podria ser persona vinculada a la propietat (promotor?): cap document ho confirma. NO usar com a client_name."}
+ ],
+ "not_present": ["expedient", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab", "cte", "building_type (les imatges incrustades diuen 'CASA GRANDE HCS - ANCILES', vegeu planol_12/13)"],
+ "reading_notes": "openpyxl data_only. Full 'dades de referencia' = plantilla de codis (TPS ERUGA/TPS CAMIÓ, geòlegs CESAR/ALFEREZ…), cap senyal de projecte. 2 imatges incrustades extretes del zip (xl/media): image1.jpg = plànol de situació 'ESTUDIO DE DETALLE CASA GRANDE HCS - ANCILES' amb parcel·la delimitada en vermell discontinu; image2.png = plantes (PLANTA SEMISOTANO?, BAJA, PRIMERA, BAJO CUBIERTA) + TIPOLOGIA 1/2/3 — miniatures dels PDF SITE_prop A / A01_TIPOL. C38 'TPS ERUGA' = màquina de sondeigs (empresa que fa la feina). C15 enllaç Google Maps d'accés: https://maps.app.goo.gl/RPzoGpBPPvDQmSqDA. Hi ha .~lock. del fitxer (obert amb LibreOffice en algun moment): ignorat."
+}

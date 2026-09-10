@@ -1,0 +1,24 @@
+{
+  "source_path": "PDF/ANNEXES/3001631_fotografies.pdf",
+  "document_type": "annex_fotografies",
+  "what_it_is": "Annex 'Fotografies' de l'Eva (2 pàgines, 4 fotos F-1..F-4 amb peus): màquina de penetració als assaigs P-1 i P-2 (F-1, F-2), màquina treballant al P-3 (F-3) i detall de la mostra recuperada a l'assaig SPT (F-4, amb etiqueta manuscrita).",
+  "issuer": "G3 — FreeHand '3001631_fotografies.FH11' (author 'Loli') → Acrobat Distiller 15.0 (PScript5.dll) 17/12/2025 10:00",
+  "date": "PDF 2025-12-17 (sense 'Data:' al caixetí: capçalera només 'Fotografies - pàgina N | 3001631'). Les fotos són del dia de camp 14/11/2025 (FOTOGRAFIES/)",
+  "pages_or_sheets": "2 pàgines A4 verticals; text incrustat parcialment llegible (112 + 155 chars) però verificat per visió",
+  "context": {
+    "who_made_it": "L'Eva (G3), muntant a FreeHand les fotos de FOTOGRAFIES/ (P1.jpg, P2.jpg, P3.jpg, SPT1.jpg).",
+    "for_whom": "Annex de l'informe 3001631.",
+    "why": "Documentar visualment la campanya (màquina a cada punt, mostra SPT).",
+    "expected_fields": ["expedient (capçalera)", "num_dpsh_tests (peus: P-1, P-2, P-3)", "existència d'SPT (F-4)", "descripció qualitativa del solar i del material"],
+    "not_expected": ["street_address", "municipality", "client_name", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota", "nivells", "lab"],
+    "relation_to_others": "Composició de FOTOGRAFIES/P1.jpg, P2.jpg, P3.jpg i SPT1.jpg (mateixes imatges → no font independent). L'etiqueta manuscrita de la mostra de F-4 es llegeix millor a FOTOGRAFIES/SPT1.jpg (original). Confirma: 3 DPSH + 1 SPT (coherent amb albarà TPS i plànol de situació).",
+    "authority_for": ["num_dpsh_tests (corroboració)", "lab_sample_id (corroboració que hi ha 1 SPT)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001631", "location": "capçalera de cada pàgina, casella dreta", "quote": "Fotografies - pàgina 1 | 3001631 ; Fotografies - pàgina 2 | 3001631", "confidence": 0.9, "note": "Coincideix amb carpeta i annexos."},
+    {"concept_id": "num_dpsh_tests", "value": "3 (P-1, P-2, P-3)", "location": "peus de foto p.1 i p.2", "quote": "Fotografies 1 i 2: Vista general de la màquina en els assaigs P-1 i P-2. | Fotografia 3 i 4: Detall de la màquina treballant en l'assaig P-3, detall dels materials recuperats en l'assaig SPT.", "confidence": 0.8, "note": "Corroboració (no independent: deriva de la campanya TPS). Literal 'Fotografia 3 i 4' (singular) a p.2."},
+    {"concept_id": "lab_sample_id", "value": "1 mostra SPT (etiqueta a la cullera, F-4)", "location": "p.2 F-4 + peu", "quote": "detall dels materials recuperats en l'assaig SPT.", "confidence": 0.6, "note": "Etiqueta manuscrita sobre la mostra: il·legible a 100 dpi; llegir a FOTOGRAFIES/SPT1.jpg (vegeu fotos_19). Material visible: graves i sorres de to marró-beix, coherent amb 'Nivell 1: Graves i sorres. Carbonatat.' del tall."}
+  ],
+  "not_present": ["client_name", "street_address", "municipality", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "cte"],
+  "reading_notes": "Render 100 dpi, 2 pàgines. F-1: màquina DPSH sobre erugues en un solar amb herba alta, mur de tanca a l'esquerra, casa amb teulada de teula a la dreta (veïna E). F-2: mateixa màquina vora una tanca verda de malla i arbres (plataner). F-3: màquina amb el mast vertical en una zona més oberta amb pins al fons (P-3). F-4: cullera SPT oberta (dues mitges canyes) amb material granular marró, etiqueta blanca manuscrita a sobre (text no llegible a aquesta resolució). Observació de solar: sense edificació, vegetació herbàcia alta, arbres; coherent amb l'ortofoto de l'annex de situació."
+}

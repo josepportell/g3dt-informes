@@ -1,0 +1,30 @@
+{
+ "source_path": "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 24·0807 de G3 (18/11/24, 7 p., en castellà) per a un estudi geotècnic a Anciles (Huesca): 5 DPSH + 2 sondeigs a rotació amb SPT + laboratori; 1.585,00 € (IVA no inclòs). Formulari p.5 buit, sense signatura.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2024-11-18",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 (ERP m4PRO; PDF creator 'G3 DESENVOLUPAMENT TERRITORIAL, S.L.', title 'm4PRO ERP · Informes del Proyecto', modDate 18/11/2024 17:35)",
+  "for_whom": "la sol·licitant del geotècnic: RETRATERIA / ALBA BARRAU CASTAN, ARQUITECTA (Benasque)",
+  "why": "oferir i acotar la campanya (5 DPSH, 2 sondeigs a rotació amb SPT, laboratori) i el preu abans d'acceptar l'encàrrec",
+  "expected_fields": ["client_name (com a sol·licitant)", "architect_name (el CLIENTE conté ARQUITECTA)", "street_address (bloc OBRA)", "municipality", "cte_edificacio / cte_sol", "num_dpsh_tests (previstos)", "num sondeigs (previstos)"],
+  "not_expected": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "lab_sample", "num_floors", "superficie_parcela"],
+  "relation_to_others": "document d'encàrrec; mateix codi 24·0807 que la carpeta 24.0807/ i que els .msg. ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf n'és la versió acceptada/signada. La fitxa de camp i la comanda deriven del mateix encàrrec (no són fonts independents per al sol·licitant).",
+  "authority_for": ["municipality (corroboració)", "architect_name", "num_dpsh_tests (previstos)"]
+ },
+ "tier_a": [
+  {"concept_id": "architect_name", "value": "ALBA BARRAU CASTAN (despatx: RETRATERIA)", "location": "p.1 bloc CLIENTE (y=230)", "quote": "CLIENTE: / RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA / C/SAN SEBASTIAN 6 / 22440    BENASQUE / Tel: 974551273", "confidence": 0.85, "note": "El bloc CLIENTE és el sol·licitant i conté 'ARQUITECTA' → regla: architect_name, NO client_name. Persona: Alba Barrau Castán; despatx: Retratería (Benasque)."},
+  {"concept_id": "client_name", "value": "NOT_client_name: RETRATERIA / ALBA BARRAU CASTAN (arquitecta sol·licitant)", "location": "p.1 bloc CLIENTE", "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA", "confidence": 0.0, "note": "Sol·licitant amb ARQUITECTA al nom → no és el promotor. El promotor real cal buscar-lo al formulari p.5 signat, al caixetí dels plànols o als correus."},
+  {"concept_id": "street_address", "value": "C/ General Ferraz 20", "location": "p.1 bloc OBRA (y=421)", "quote": "OBRA: / ESTUDIO GEOTECNICO ⏎ C/GENERAL FERRAZ 20 ⏎ ANCILES (HUESCA)", "confidence": 0.85, "note": "Bloc etiquetat OBRA → adreça de l'obra. NO confondre amb C/San Sebastián 6 (adreça de la sol·licitant a Benasque)."},
+  {"concept_id": "municipality", "value": "Anciles (Huesca)", "location": "p.1 bloc OBRA línia 3", "quote": "ANCILES (HUESCA)", "confidence": 0.9, "note": "Anciles és nucli del municipi de Benasque (Osca); G3 el tracta com a localitat de l'obra. Forma del document: ANCILES (HUESCA)."},
+  {"concept_id": "num_dpsh_tests", "value": "5", "location": "p.2 campanya (y=682) + p.4 valoració 001.001", "quote": "5 ensayos de penetración dinámica DPSH | UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH 5,00", "confidence": 0.7, "note": "previstos, no executats; mana l'Excel DPSH (que en té 4 executats: conflicte a resoldre a _decisions)"},
+  {"concept_id": "num_sondeigs", "value": "2", "location": "p.2 campanya (y=699) + p.4 valoració 002.001", "quote": "2 sondeo a rotación con batería continua, que incluye desplazamiento, perforación y realización de ensayos SPT | SONDEO A ROTACION CON BATERIA CONTINUA 2,00", "confidence": 0.8, "note": "2 sondeigs previstos (S1, S2); coherent amb els annexos de l'Eva."},
+  {"concept_id": "cte_edificacio", "value": null, "location": "p.2 'Clasificación CTE' (y=203)", "quote": "Clasificación CTE [zona buida]", "confidence": 0.0, "note": "El títol hi és però NO hi ha valors C-x/T-x (verificat amb render 120 dpi de la zona y=190-280). En aquest pressupost la classificació CTE no es va omplir."},
+  {"concept_id": "cte_sol", "value": null, "location": "p.2 'Clasificación CTE'", "quote": "Clasificación CTE [zona buida]", "confidence": 0.0, "note": "Absent (vegeu cte_edificacio)."},
+  {"concept_id": "expedient_comercial", "value": "24·0807", "location": "p.1 peu (y=783) i p.4/p.5 capçalera", "quote": "24·0807 ⏎ P#", "confidence": 1.0, "note": "codi comercial, NO expedient (l'expedient és 4001679, carpeta/comanda/annexos)"}
+ ],
+ "not_present": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "num_floors", "superficie_parcela", "building_type (només 'ESTUDIO GEOTECNICO')", "lab_testing_company", "lab_sample_id", "lab_depth", "cte_edificacio", "cte_sol"],
+ "reading_notes": "Identificat per metadata (creator G3, title m4PRO). Blocs p.1 ordenats per (y,x). Document en castellà (projecte a Osca). p.2: la zona 'Clasificación CTE' és buida (render a 120 dpi ho confirma: cap C/T). p.5 formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' buit, 0 widgets, sense /Sig → NO és la versió acceptada."
+}

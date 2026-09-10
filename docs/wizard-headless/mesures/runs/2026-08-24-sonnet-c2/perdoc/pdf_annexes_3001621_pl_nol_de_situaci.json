@@ -1,0 +1,118 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+ "source_md5": "7d495516ac2896e3f236b08e7879a41d",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació del projecte (plantilla G3): ortofoto/cadastre amb el polígon de la parcel·la i la ubicació dels punts d'assaig (DPSH i sondeig a rotació), més dos mapes de context (regional i local) i el caixetí de l'informe.",
+ "issuer": "G3 (elaborat a partir d'un dibuix FreeHand, exportat a PDF via Acrobat Distiller)",
+ "date": "Octubre 2025 (data del caixetí del plànol, no necessàriament el dia de camp)",
+ "pages_or_sheets": "1 pàgina, A3 apaïsat (1191×842 pt)",
+ "context": {
+  "who_made_it": "G3 (Eva/tècnic), a partir d'una ortofoto/cadastre de fons amb el polígon de la parcel·la i els punts d'assaig dibuixats a sobre",
+  "for_whom": "per al mateix informe geotècnic: s'inclou com a annex 'Plànol de situació'",
+  "why": "documentar la ubicació del solar (adreça, municipi) i la disposició dels punts d'assaig (DPSH i sondeig) respecte a la parcel·la",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests (per recompte d'icones)",
+   "ubicació relativa del sondeig S-1"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral formal",
+   "dades de laboratori",
+   "num_floors"
+  ],
+  "relation_to_others": "mateix md5 (7d495516ac2896e3f236b08e7879a41d) que PDF-V0/ANNEXES/3001621_plànol de situació.pdf: còpia idèntica, versió de carpeta anterior (PDF-V0), no és una font independent. L'original FreeHand (ANNEXES/3001621_plànol de situació.FH11, md5 diferent) és el dibuix font, no llegible directament — aquest PDF n'és l'exportació.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte ('3001621 CASTELLAR DEL VALLES')"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells Nº 18A-18B-20",
+   "location": "caixetí, títol del projecte (línia 2)",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.85,
+   "note": "el nom del carrer ('Arbrells') també apareix imprès en cursiva sobre la via, al mapa principal, corroborant el caixetí"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès (Barcelona)",
+   "location": "caixetí, títol del projecte; corroborat pel mapa de context regional (etiqueta 'Castellar del Vallès' amb el marcador 'Zona d'estudi')",
+   "quote": "CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, títol del projecte (línia 1)",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "mapa principal + llegenda ('Assaig de penetració dinàmica DPSH', icona blau/blanc)",
+   "quote": "P-1, P-2, P-3, P-4 marcats amb la icona d'assaig DPSH",
+   "confidence": 0.8,
+   "note": "recompte per icona sobre el plànol; aquest document no dona cota ni profunditat per punt (no alimenta tables.dpsh_tests). També hi ha un punt de sondeig a rotació S-1 (icona vermell/blanc), però sense dades de cota/profunditat aquí."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "caixetí, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.2,
+   "note": "és la data d'elaboració del plànol (només mes), no el dia de camp; no és font d'autoritat per a field_date (Pas 3: fitxa F38 / annex DPSH DATA / albarà TPS / noms de fotos). Candidat feble, només corroboratiu."
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "32900",
+   "location": "sobreposició de la capa de Cadastre a l'ortofoto de fons, prop del centre de la parcel·la (junt a una etiqueta 'SUELO')",
+   "quote": "32900",
+   "confidence": 0.15,
+   "note": "etiqueta parcial visible a la capa WMS de Cadastre del mapa de fons; no té el format d'una referència cadastral completa (14-20 caràcters alfanumèrics) — probablement un fragment de polígon/parcel·la del visor. NO inferir-ne la referència cadastral completa; cal una consulta formal del Cadastre com a font."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "superficie_parcela",
+  "num_floors",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text natiu del PDF és brossa (FreeHand → Acrobat Distiller 15.0, creator PScript5.dll, sense ToUnicode): lectura íntegrament visual (render complet a 200dpi + retalls a 400dpi per al caixetí, l'etiqueta de carrer sobre l'ortofoto, i l'overlay '32900'). Creuat amb --inventory abans de llegir (Pas 0): el mateix contingut existeix 3 cops al projecte (PDF/ANNEXES/3001621_plànol de situació.pdf, PDF-V0/ANNEXES/3001621_plànol de situació.pdf —mateix md5— i l'original ANNEXES/3001621_plànol de situació.FH11 —md5 diferent, no llegible—); cap altre document del projecte s'ha llegit en aquesta crida (--only)."
+}

@@ -1,0 +1,29 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Annex 'Tall de correlació' A–A' de l'Eva: planta petita (ortofoto amb línia verda A–A' per P-1, P-2, S-1, P-4, P-3), llegenda (Terreny Vegetal + Nivell 1 + cota de fonamentació recomanada), perfil amb eix msnm 569–572, i caixetí G3.",
+ "issuer": "G3 (Eva) — FreeHand 3001621_tall de correlació.FH11 → Acrobat Distiller 15.0 (PScript5.dll)",
+ "date": "Data: Octubre 2025 (caixetí); PDF creat 2025-11-03 17:39",
+ "pages_or_sheets": "1 pàgina A3 apaïsat (rot=270 al PDF)",
+ "context": {
+  "who_made_it": "l'Eva (G3), al despatx, a partir dels N20 de l'Excel DPSH, el sondeig i la cota ICGC",
+  "for_whom": "l'informe (annex de correlació entre assaigs)",
+  "why": "mostrar la geometria del substrat rocós sota el terreny vegetal i la cota de fonamentació recomanada",
+  "expected_fields": ["expedient (caixetí)", "num_soil_levels (llegenda)", "num_dpsh_tests (punts al perfil)", "cota_referencia (eix msnm, aproximada)", "street_address / municipality / building_type (títol)"],
+  "not_expected": ["field_date (la 'Data' és el mes de l'informe)", "client_name", "architect_name", "num_floors", "superficie_parcela", "referencia_catastral", "lab", "cte"],
+  "relation_to_others": "DUPLICAT exacte a PDF-V0/ANNEXES/ (mateix md5 e7749662). `tall.pdf` a l'arrel és el MATEIX dibuix imprès amb 'Microsoft: Print To PDF' (2025-11-03 16:27, text net; usat per confirmar les cadenes) → una sola font. Títol = mateixa frase que annex sondeig 'Obra' i plànol de situació (redacció d'Eva). La llegenda reprodueix les 2 descripcions de l'annex sondeig.",
+  "authority_for": ["num_soil_levels (llegenda, 2a darrere la columna Unitat litològica)", "expedient (caixetí)", "num_dpsh_tests (corroboració)"]
+ },
+ "tier_a": [
+  {"concept_id": "expedient", "value": "3001621", "location": "caixetí, casella 'Exp:'", "quote": "Exp: 3001621", "confidence": 0.95, "note": "Coincideix amb el nom de la carpeta. Confirmat pel text net de tall.pdf."},
+  {"concept_id": "street_address", "value": "Carrer Arbrells nº 18A-18B-20", "location": "caixetí, 'TÍTOL DEL PROJECTE'", "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).", "confidence": 0.9, "note": "Mateixa redacció que els altres annexos (no independent)."},
+  {"concept_id": "municipality", "value": "Castellar del Vallès", "location": "caixetí, 'TÍTOL DEL PROJECTE'", "quote": "CASTELLAR DEL VALLÈS  (BARCELONA)", "confidence": 0.9, "note": ""},
+  {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí, 'TÍTOL DEL PROJECTE'", "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.85, "note": "Redacció de l'informe (CLOSE); typo 'D'UNA HABITATGE'."},
+  {"concept_id": "num_soil_levels", "value": "1", "location": "LLEGENDA", "quote": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels. | Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.", "confidence": 0.85, "note": "Només un 'Nivell N' numerat (Nivell 1 = substrat rocós); el terreny vegetal apareix SENSE número de nivell. Coincideix amb l'únic 'NIVELL 1' de l'annex sondeig. Tercer ítem de la llegenda = 'Cota de fonamentació recomanada' (línia vermella discontínua a ~571,0–571,4 msnm), no és nivell."},
+  {"concept_id": "num_dpsh_tests", "value": "4", "location": "perfil A–A' + planta", "quote": "P-1 | P-2 | S-1 | P-4 | P-3", "confidence": 0.85, "note": "4 DPSH + 1 sondeig S-1 (en vermell). Ordre al perfil d'esquerra (A, SW) a dreta (A', NE): P-1, P-2, S-1, P-4, P-3. Comptat visualment i confirmat pel text de tall.pdf."},
+  {"concept_id": "cota_referencia", "value": "superfície ≈ 571,4–571,8 msnm; S-1 boca ≈ 571,4 (lectura gràfica)", "location": "perfil A–A', eix '(msnm)' 569–572", "quote": "(msnm) 572 | 571 | 570 | 569", "confidence": 0.3, "note": "Lectura sobre l'eix gràfic (±0,3 m): terreny a ~571,8 a P-1 i P-3, ~571,6 a P-2, ~571,4 a S-1, ~571,8 a P-4. CONFLICTE LLEU amb l'annex sondeig (Cota Z S-1 = 570,90 msnm): el perfil dibuixa S-1 ~0,5 m més alt. Cap cota numèrica explícita al document tret de l'eix. Terreny vegetal 0,3–0,8 m de gruix; substrat rocós a ~571,0 msnm."},
+  {"concept_id": "field_date", "value": "Octubre 2025", "location": "caixetí, casella 'Data:'", "quote": "Data: Octubre 2025", "confidence": 0.3, "note": "Mes de l'informe, no data de camp."}
+ ],
+ "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*", "cota numèrica explícita"],
+ "reading_notes": "Text del PDF és brossa (FreeHand/Distiller): llegit visualment des del render a 100 dpi; cadenes confirmades amb el text net de tall.pdf (Print To PDF del mateix FH11; diferència de píxels 5,7 % per antialiasing, mateix contingut). Perfil: Nb per tram — P-1: Nb=16, Nb=R; P-2: Nb=18, Nb=R; S-1: N=R (columna amb trama de terreny vegetal i bretxes, fins a ~570,4); P-4: Nb=10, Nb=33, Nb=R; P-3: Nb=19, Nb=R. Tots els DPSH rebutgen a <1,6 m dins del substrat rocós. Llegenda literal: 'Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.' / 'Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.' / 'Cota de fonamentació recomanada'. Planta petita: llegenda 'Assaig de penetració dinàmica DPSH', 'Sondeig a rotació amb bateria continua', 'Zona d'estudi', 'X__X' Tall de correlació', línia A–A' verda. Escala gràfica 0–5–10 m. Caixetí literal: 'TÍTOL DEL PROJECTE | ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA). | Data: Octubre 2025 | Exp: 3001621 | Tall de correlació | Pàgina 1/1'."
+}

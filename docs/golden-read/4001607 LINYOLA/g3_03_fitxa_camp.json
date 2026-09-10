@@ -1,0 +1,32 @@
+{
+ "source_path": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+ "document_type": "fitxa_camp_g3",
+ "what_it_is": "Fitxa G3 'DADES PER ANAR A CAMP' per a l'obra 'Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida': client (sol·licitant) BUNYESC, contacte SILVIA EROLES BALAGUERO (propietària), previsió 'PENETROS I MOSTRA' 3 (P), TPS ERUGA, dia de camp 01/10/2025; comentaris de la Laia (despatx) sobre desplaçar 1 m dos punts; imatge incrustada = plànol 03 'PLANTA GENERAL - PARCEL·LA' del projecte bàsic.",
+ "issuer": "G3 (Eva / administració)",
+ "date": "2025-10-01 (F38, dia de camp previst)",
+ "pages_or_sheets": "2 fulls ('fitxa', 'dades de referencia') + 1 imatge EMF (4,3 MB) + 1 PNG miniatura",
+ "context": {
+  "who_made_it": "G3 (fitxa interna)",
+  "for_whom": "el geòleg/operari que va a camp (Eva / TPS)",
+  "why": "tenir a mà adreça, contacte, hora, previsió de treball, accés i comentaris del client abans de la campanya",
+  "expected_fields": ["client (sol·licitant) C6", "ADREÇA OBRA C7", "contacte C8/F8", "previsió C13/F13", "empresa C38", "field_date F38"],
+  "not_expected": ["expedient", "plantes", "superfície", "cota", "nivells", "lab", "promotor (només com a contacte)"],
+  "relation_to_others": "Deriva del pressupost 25·0616 (C6 client = mateix sol·licitant, amb typo 'ARQUITECCTURA'). C7 dona l'adreça completa amb tipus de via 'Carrer'. F38 01/10/2025 coincideix amb els noms de les fotos 'Imagen de WhatsApp 2025-10-01 …'. B42-B45 reprodueixen un missatge de la Laia (628 577 224, del despatx Bunyesc?) sobre la posició dels punts = resposta al 'Punts de Sondeig_Silvia_Jaume.pdf' (d'aquí el fitxer '_REDIBUIX'). La imatge EMF incrustada és el plànol 03 del projecte 2_02B_DG_Silvia_Jaume.pdf (mateix caixetí). 'dades de referencia' és full de plantilla (llistes desplegables): cap senyal.",
+  "authority_for": ["field_date", "street_address", "municipality", "client_name (corroboració: 'silvia la propietària')", "num_dpsh_tests (previst)"]
+ },
+ "tier_a": [
+  {"concept_id": "field_date", "value": "2025-10-01", "location": "fitxa!F38 (etiqueta E38 'dies de camp')", "quote": "F38=datetime.datetime(2025, 10, 1, 0, 0)", "confidence": 0.9, "note": "cel·la tipus data. Coincideix amb les fotos WhatsApp 2025-10-01. Confirmar amb annex DPSH 'DATA:'."},
+  {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna, 16", "location": "fitxa!C7 'ADREÇA OBRA'", "quote": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida", "confidence": 0.9, "note": "amb tipus de via 'Carrer' (el pressupost diu 'Clot de la Llacuna, 16'). El plànol incrustat diu 'C. Clot de la Llacuna, 16'."},
+  {"concept_id": "municipality", "value": "Linyola", "location": "fitxa!C7", "quote": "25240 Linyola, Lleida", "confidence": 0.95, "note": "comarca/província Lleida"},
+  {"concept_id": "client_name", "value": "SILVIA EROLES BALAGUERO", "location": "fitxa!C8 'PERSONA DE CONTACTE' + B47", "quote": "C8='SILVIA EROLES BALAGUERO ' | F8='TEL. 618108612' | B47='trucar mitja hora abans silvia la propietària , vol estar precent 618108612'", "confidence": 0.85, "note": "B47 diu explícitament 'la propietària' → corrobora el formulari d'acceptació. Sense accents. El plànol incrustat afegeix un segon promotor: JAUME NADAL ANDREU."},
+  {"concept_id": "client_name", "value": "JAUME NADAL ANDREU", "location": "imatge incrustada (plànol 03, caixetí PROMOTORS)", "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ ⏎ JAUME NADAL ANDREU", "confidence": 0.8, "note": "segon promotor segons el caixetí del projecte (llegit visualment de l'EMF renderitzat a 400 dpi). No consta a cap plantilla G3 ni al formulari d'acceptació (només Sílvia). L'informe pot anar a nom dels dos o només de Sílvia: candidats."},
+  {"concept_id": "architect_name", "value": "JOSEP BUNYESC PALACÍN (Dr. Arquitecte) — BUNYESC ARQUITECTURA EFICIENT, S.L.P", "location": "imatge incrustada (plànol 03, caixetí REDACTORS) + fitxa!C6", "quote": "REDACTORS: BUNYESC ARQUITECTURA EFICIENT, S.L.P representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte | C6='BUNYESC ARQUITECCTURA EFICIENT, SLP'", "confidence": 0.85, "note": "persona identificada al caixetí; C6 és el despatx (typo 'ARQUITECCTURA'). Lectura visual de text petit: grafia 'PALACÍN' a confirmar amb el PDF del projecte."},
+  {"concept_id": "NOT_client_name", "value": "BUNYESC ARQUITECCTURA EFICIENT, SLP", "location": "fitxa!C6 'CLIENT'", "quote": "BUNYESC ARQUITECCTURA EFICIENT, SLP", "confidence": 1.0, "note": "C6 = sol·licitant (despatx d'arquitectura), no el client de l'informe"},
+  {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "imatge incrustada (caixetí TÍTOL DEL PROJECTE)", "quote": "PROJECTE BÀSIC ⏎ D'UN HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.85, "note": "del plànol del projecte incrustat; la fitxa no ho diu"},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "fitxa!F13 + C13", "quote": "C13='PENETROS I MOSTRA' | F13='3 ( P) '", "confidence": 0.7, "note": "previstos; 'MOSTRA' = SPT amb recuperació. Punts marcats a camp: C27='SI'. Els punts es van desplaçar 1 m (B42-B44) → posicions finals al '_REDIBUIX'."},
+  {"concept_id": "num_floors", "value": "PB (indici)", "location": "imatge incrustada (planta única 'PLANTA GENERAL - PARCEL·LA')", "quote": "PLANTA GENERAL - PARCEL·LA", "confidence": 0.3, "note": "un sol plànol de planta no demostra nombre de plantes; el projecte PDF ho ha de dir"},
+  {"concept_id": "field_contact", "value": "Laia 628 577 224 (despatx); Sílvia 618108612 (propietària); hora 8.30-9 a obra", "location": "fitxa!B45, B47, C9, F9", "quote": "B45='També em diu que si teniu algun dubte que la truqueu, Laia: 628 577 224'", "confidence": 0.9, "note": "nivell B"}
+ ],
+ "not_present": ["expedient", "cota_referencia", "num_soil_levels", "superficie_parcela", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "Identificada per fitxa!B2 == 'DADES PER ANAR A CAMP'. openpyxl no veu imatges (_images=0) però el zip porta xl/media/image2.emf (4,28 MB, ancorat a H2 via drawing1.xml) i image1.png (508×380, mateix plànol en miniatura, orfe). EMF sense bitmaps incrustats → convertit amb soffice a PDF (0 text: tot vectorial→raster) i renderitzat el caixetí (69-74 % alçada) a 400 dpi: llegible. EXPEDIENT del caixetí il·legible amb seguretat ('13/52/04'?), irrellevant (codi de l'arquitecte). F4='#VALUE!' (fórmula de plantilla). Full 'dades de referencia' = llistes de plantilla, ignorat."
+}

@@ -1,0 +1,79 @@
+{
+ "Df_user": 0.3,
+ "num_soil_levels_user": 2,
+ "soil_types_user": [
+  "grava",
+  "arena"
+ ],
+ "dpsh_overall_n20": 13.55,
+ "bearing_layer_idx": 0,
+ "bearing_layer_description": "",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Arcilla limosa y arenosa con algunas gravas.",
+   "from": 0.0,
+   "to": 0.8,
+   "n20_avg": 6.0,
+   "Nb": 7.2,
+   "soil_type": "grava"
+  },
+  {
+   "n": 2,
+   "desc": "Arenas finas-medias, carbonatadas.",
+   "from": 0.8,
+   "to": null,
+   "n20_avg": 18.42,
+   "Nb": 22.2,
+   "soil_type": "arena"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2.0,
+  "cohesion": 0.0,
+  "phi": 29,
+  "E": 50
+ },
+ "terzaghi": {
+  "phi": 29,
+  "cohesion": 0.0,
+  "gamma": 2.0,
+  "B": 1.0,
+  "Df": 0.3,
+  "qu": 2.5809999999999995,
+  "safety_factor": 3.0,
+  "Qa": 1.0,
+  "settlement_cm": 2.0,
+  "settlement_type": "immediat",
+  "Es_used": 25.0,
+  "qa_terzaghi_peck": 0.8848980208887923,
+  "Qa_uncapped": 0.8603333333333332,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.099,
+  "qa_governs": "terzaghi",
+  "settlement_generic": false,
+  "settlement_regime": "granular",
+  "Es_source": "2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes)",
+  "Es_candidates": [
+   {
+    "value": 25.0,
+    "display": "Es=25 (2.5×N SPT 10)",
+    "source": "2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes)",
+    "settlement_cm": 2.0
+   },
+   {
+    "value": 18.072289156626507,
+    "display": "Es=18 (2.5×Nb 7.2)",
+    "source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
+    "settlement_cm": 2.8
+   },
+   {
+    "value": 50.0,
+    "display": "Es=50 (E del criteri)",
+    "source": "E de la taula geotècnica com a Es",
+    "settlement_cm": 1.0
+   }
+  ],
+  "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.00 cm, immediats en el temps donat el comportament granular dels materials."
+ }
+}

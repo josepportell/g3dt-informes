@@ -1,0 +1,80 @@
+{
+ "source_path": "PDF/ANNEXES/3001631_fotografies.pdf",
+ "source_md5": "08883ad31f32edf8a0e0239a6d615f98",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex fotogràfic de camp (2 pàgines, fotos F-1 a F-4) amb la màquina de DPSH treballant als punts P-1, P-2 i P-3, i detall de la mostra recuperada en l'assaig SPT.",
+ "issuer": "G3 (plantilla amb logo G3 al capçal, idèntica a la resta d'annexos del projecte)",
+ "date": "no consta data de camp al document; metadata PDF creationDate/modDate 2025-12-17 (probable data de generació/impressió del PDF, no data d'assaig)",
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 (Eva), com a la resta d'annexos FreeHand del projecte",
+  "for_whom": "l'expedient/informe mateix, com a documentació gràfica del treball de camp",
+  "why": "deixar constància visual de la màquina de penetració dinàmica treballant als assaigs P-1, P-2 i P-3, i de la mostra recuperada en l'assaig SPT",
+  "expected_fields": [
+   "expedient (capçalera de plantilla)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "capçalera de plantilla G3 compartida amb tots els documents del projecte (mateix expedient que la carpeta i que l'Excel DPSH); les captions corroboren visualment els 3 punts DPSH (P-1, P-2, P-3) ja documentats a ANNEXES/3001631_DPSH.xls, però no en són font independent ni primària",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "capçalera, ambdues pàgines, cel·la dreta del quadre de títol",
+   "quote": "3001631",
+   "confidence": 0.3,
+   "note": "capçalera de plantilla G3 idèntica a tots els documents del projecte; no és font independent, només corrobora el número ja conegut pel nom de carpeta i altres plantilles"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "peus de foto, p.1 i p.2",
+   "quote": "Fotografies 1 i 2: Vista general de la màquina en els assaigs P-1 i P-2. / Fotografia 3 i 4: Detall de la màquina treballant en l'assaig P-3, detall dels materials recuperats en l'assaig SPT.",
+   "confidence": 0.35,
+   "note": "corroboració visual de 3 punts DPSH (P-1, P-2, P-3); no és font primària — mana l'Excel DPSH (executats)"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text incrustat brossa (producer Acrobat Distiller 15.0 / creator PScript5.dll, típic dels annexos FreeHand->PDF); text_ok=false a les 2 pàgines. Llegit visualment amb les imatges senceres (page-1.png, page-2.png, 150 dpi); no ha calgut mirar les meitats ni fer clip, tot el text imprès (capçaleres, etiquetes F-1..F-4, peus de foto) es llegeix bé a la mida sencera. Cap dada de nivell A pròpia del document més enllà de l'expedient (plantilla) i la corroboració dels punts DPSH."
+}

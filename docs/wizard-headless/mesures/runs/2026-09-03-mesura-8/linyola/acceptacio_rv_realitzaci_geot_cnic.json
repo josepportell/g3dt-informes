@@ -1,0 +1,90 @@
+{
+ "source_path": "ACCEPTACIO/RV_ Realització geotècnic.msg",
+ "source_md5": "83e3b211af14c59d056a0a7a0cad160a",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Cadena de correu (RV:/RE:) entre la clienta Sílvia Eroles i G3 DT: activació de l'estudi geotècnic i tramesa de l'acceptació signada del pressupost 25·0616, reenviada internament per registre.",
+ "issuer": "G3 DT (reenviament intern, De: g3@g3dt.com); correu original de Sílvia Eroles <serolesba@gmail.com>",
+ "date": "2025-09-23",
+ "pages_or_sheets": null,
+ "context": {
+  "who_made_it": "Sílvia Eroles (clienta) escriu a G3 DT sol·licitant activar l'estudi geotècnic i, en un segon correu de la mateixa cadena, adjuntant l'acceptació signada del pressupost; algú de G3 DT reenvia (RV:) aquest fil a Dolors Maqueda amb la nota 'ja l'he contestat jo'.",
+  "for_whom": "ús intern de G3 (Dolors Maqueda), registre de l'acceptació de la clienta per activar l'expedient",
+  "why": "confirmar l'acceptació del pressupost 25·0616 i activar l'inici de l'estudi geotècnic (treball de camp)",
+  "expected_fields": [
+   "client_name (candidat, correu no és el formulari p.5 d'acceptació)",
+   "referència al pressupost/expedient (codi comercial, no l'expedient numèric)"
+  ],
+  "not_expected": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date de camp",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "L'adjunt del correu de 23/09 (g3dt_silvia_jaume_signat.pdf, md5 8aacb8da57ba22ba62076aa415ef99a6) ja és solt a la carpeta com a ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf (already_in_folder al meta) — és un document a part amb la seva pròpia lectura, no el llegeixo aquí. És una cadena RV:/RE:: el text NOU és només el bloc superior (l.6-16, 'ACCEPTACIÓ' + '(ja l'he contestat jo)'); la resta (l.18 en endavant) és correu antic citat, en dues baules (23/09 i 19/09/2025). Existeix una altra còpia d'aquesta mateixa cadena a l'arrel del projecte ('RV_ Realització geotècnic.msg', md5 5c43c5b52be9af08377bacd459b1fb4a, mida diferent 288768 vs 620032) — NO és el mateix fitxer (md5 diferent): probablement una baula anterior de la mateixa conversa, sense l'adjunt de l'acceptació signada; no es llegeix aquí (document a part).",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles",
+   "location": "cos, correu 23/09/2025 16:36 (Sílvia Eroles → G3 DT), l.25-41",
+   "quote": "Adjunto l'acceptació del pressupost. […] Sílvia Eroles",
+   "confidence": 0.5,
+   "note": "clienta que sol·licita activar l'estudi i envia l'acceptació signada del pressupost 25·0616; no és el formulari p.5 (autoritat A), és correu — candidat, no segur. Possible co-clienta amb Jaume Nadal Andreu (veure candidat següent); noms de fitxer del projecte porten sempre els dos ('Silvia_Jaume')."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Jaume Nadal Andreu",
+   "location": "capçalera correu 23/09/2025 16:36, l.20 (Para:)",
+   "quote": "Para: G3 DT <g3@g3dt.com>; jaume nadal andreu <jume_540@hotmail.com>",
+   "confidence": 0.3,
+   "note": "co-destinatari en còpia; no escriu ni signa res en aquest fitxer, però el cognom apareix sempre juntament amb Sílvia als noms dels fitxers del projecte (Silvia_Jaume) → candidat a co-client/co-promotor."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 DT / Dolors Maqueda / Eva Roig",
+   "location": "capçaleres, l.2-3 i signatura l.91",
+   "quote": "From: G3 DT <g3@g3dt.com>  To: Dolors Maqueda <dolors@g3dt.com>",
+   "confidence": 0.0,
+   "note": "personal intern de G3 (remitent i destinatària del reenviament; Eva Roig signa el correu antic citat, Dep. Administració) — mai client, és qui gestiona l'encàrrec."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Correu .msg amb només body.txt (sense pàgines/fulls) — cap render ni clip necessari. Cadena RV:/RE: de 2 baules citades; només el bloc superior a la primera 'De:' (l.6-16) és text nou. L'adjunt (acceptació signada) ja existeix com a fitxer solt a la carpeta (already_in_folder) i es llegeix com a document independent — no duplicat aquí. El codi '25·0616 P#' citat a la cadena antiga (l.158) és el codi comercial del pressupost, NO l'expedient (regla del Pas 3b/Pas 2): no s'ha emès com a candidat d'expedient."
+}

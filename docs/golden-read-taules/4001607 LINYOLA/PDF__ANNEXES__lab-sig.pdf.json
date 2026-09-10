@@ -1,0 +1,20 @@
+{
+ "source_path": "PDF/ANNEXES/lab-sig.pdf",
+ "document_type": "informe_laboratori",
+ "what_it_is": "Còpia del mateix GTL 4672-GTL-25 (7 pàgines) col·locada com a annex de l'informe.",
+ "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL",
+ "date": "30/10/2025",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "TPS",
+  "for_whom": "G3",
+  "why": "annexar el GTL a l'informe",
+  "expected_fields": [],
+  "not_expected": [],
+  "relation_to_others": "DUPLICAT de '4672-GTL-25 Linyola.pdf' (mateix núm. d'informe i contingut; md5 diferent per còpia). NO compta com a font independent.",
+  "authority_for": []
+ },
+ "tier_a": [],
+ "not_present": [],
+ "reading_notes": "Només verificada la identitat (p.1 idèntica, mateix Núm. Informe 4672-GTL-25)."
+}

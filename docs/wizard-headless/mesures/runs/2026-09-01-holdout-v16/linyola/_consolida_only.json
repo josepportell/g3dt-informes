@@ -1,0 +1,56 @@
+{
+ "schema_version": 1,
+ "fields": {},
+ "tables": {
+  "spt_ma_tests": {
+   "rows": [
+    {
+     "id": "P-3@1.00-1.15",
+     "profunditat": {
+      "estat": "segur",
+      "value": "1,00 - 1,15 m",
+      "candidates": [
+       {
+        "value": "1,00 - 1,15 m",
+        "font": "4672-GTL-25 Linyola.pdf p.2 bloc DADES INICIALS (= PDF/ANNEXES/lab-sig.pdf, mateixa còpia signada del mateix informe 4672-GTL-25, no compten com a fonts independents)",
+        "quote": "Cota d'extracció (m): 1,0 - 1,15"
+       },
+       {
+        "value": "1,00 - 1,15 m",
+        "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!J35/L35 (senyal determinista, _g3_templates.json)",
+        "quote": "INICIAL 1.0 / FINAL 1.15",
+        "note": "nota pròpia del senyal: 'el GTL mana si discrepa' — aquí coincideix exactament amb el GTL, sense discrepància"
+       }
+      ],
+      "rule": "GTL mana per a la profunditat (Pas 3, prioritat sobre comanda/Excel DPSH/manuscrit de camp); aquí 2 fonts independents d'autoritat A (GTL + comanda laboratori) coincideixen exactament en 1,0-1,15 m",
+      "altres": [
+       {
+        "value": "1,0 a 1,5 m",
+        "font": "ANNEXES/4001607_DPSH.xls full P-3, cel·les E23:E25",
+        "quote": "E23='SPT-1', E24='1,0 a 1,5', E25='R'",
+        "note": "confiança pròpia 0,3; anotació fora del lloc habitual (columna 'MESURA DE PAR' del full de penetròmetre), el propi document demana confirmar amb GTL (autoritat superior per a aquest camp)"
+       },
+       {
+        "value": "1,00 a 1,75 m",
+        "font": "PENETROS.pdf p.3, full d'assaig SPT/MI/mostra alterada, camp 'Cota d'extracció'",
+        "quote": "de la cota de: 1,0 / fins a la cota: 1,75",
+        "note": "1,75 coincideix exactament amb la fondària de rebuig del DPSH al mateix punt P-3 ('R 1,75' a p.2 del mateix document): probable confusió del tècnic de camp entre la fondària de rebuig del penetròmetre i l'interval real d'extracció de la mostra SPT, no es considera fiable per a aquesta cel·la"
+       }
+      ],
+      "sources_checked": [
+       "4672-GTL-25 Linyola.pdf",
+       "PDF/ANNEXES/lab-sig.pdf",
+       "comanda laboratori_4001607_LINYOLA.xls",
+       "ANNEXES/4001607_DPSH.xls",
+       "PENETROS.pdf"
+      ],
+      "note": "GTL (informe de laboratori, 2 còpies del mateix informe 4672-GTL-25) i la comanda de laboratori (senyal determinista) coincideixen exactament en 1,0-1,15 m; Excel DPSH (fora de lloc, confiança pròpia baixa) i PENETROS.pdf (manuscrit, valor sospitós de confondre's amb la fondària de rebuig del DPSH) discrepen i queden com a candidats descartats amb el motiu explicat."
+     }
+    }
+   ]
+  }
+ },
+ "notes": [
+  "Aquest --out no conté _decisions.json (no s'ha executat el consolidador Python en aquest run de mesura); s'ha aplicat el Pas 5b directament sobre els JSON per-document existents (_g3_templates.json inclòs) i les regles del Pas 3/3b del skill."
+ ]
+}

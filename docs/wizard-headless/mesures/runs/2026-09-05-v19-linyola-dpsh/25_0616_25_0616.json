@@ -1,0 +1,133 @@
+{
+ "source_path": "25.0616/25·0616.pdf",
+ "source_md5": "7c8537b4b31a3e7f2153cfaacc8d111f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost G3 per a l'estudi geotècnic de l'obra de Linyola (Clot de la Llacuna, 16), codi comercial 25·0616, 3 pàgines, sol·licitat per BUNYESC ARQUITECTURA EFICIENT.",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "21/08/25",
+ "pages_or_sheets": "3 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (oficina tècnica)",
+  "for_whom": "BUNYESC ARQUITECTURA EFICIENT, SLP (sol·licitant, bloc CLIENT: de la p.1) — no el promotor/propietari de l'obra",
+  "why": "Cotitzar l'estudi geotècnic (DPSH+SPT+laboratori) per a l'obra de Clot de la Llacuna 16, Linyola, abans d'encarregar els treballs de camp",
+  "expected_fields": [
+   "architect_name (sol·licitant)",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests (previstos)"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "field_date",
+   "cota_referencia",
+   "num_floors",
+   "building_type",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Codi comercial 25·0616 compartit amb PLAN_COST_LINYOLA.xlsx i DADES PER ANAR A CAMP_v1.xlsx de la mateixa subcarpeta; probablement l'adjunt discutit als correus 'RE:/RV: pressupost geotècnic.msg' i 'pressupost geotècnic.msg'. Formulari p.3 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' en blanc (no acceptat/omplert) — no és la ACCEPTACIO signada pel client.",
+  "authority_for": [
+   "architect_name",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "architect_name",
+   "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+   "location": "p.1 bloc CLIENT:",
+   "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+   "confidence": 0.55,
+   "note": "El bloc CLIENT: del pressupost és el sol·licitant, no el promotor; el nom conté 'ARQUITECTURA' → candidat a architect_name (forma despatx), mai segur ni client_name (regla Pas 3)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Clot de la Llacuna, 16",
+   "location": "p.1 bloc OBRA:",
+   "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.75,
+   "note": "Única adreça d'obra al document; sense confirmació creuada dins d'aquest PDF."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "p.1 bloc OBRA:",
+   "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.75,
+   "note": "Objecte extra (Pas 3) derivat de la mateixa cita d'street_address."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "p.1 bloc OBRA:",
+   "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.75,
+   "note": "Forma curta, coincident amb el nom de la carpeta del projecte (4001607 LINYOLA)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "p.2 taula VALORACIÓ, línia 001.001",
+   "quote": "UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH … 3,00",
+   "confidence": 0.45,
+   "note": "Previstos al pressupost, no executats; l'Excel DPSH (si n'hi ha al projecte) mana si difereix (regla Pas 3)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+   "location": "p.1 bloc CLIENT:",
+   "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT, SLP",
+   "confidence": 0.0,
+   "note": "Descartat com a client_name: el bloc CLIENT: del pressupost G3 és el sol·licitant (l'arquitecte), no el promotor/propietari (regla Pas 3). Vegeu candidat architect_name."
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "25·0616",
+   "location": "p.1/p.2/p.3 (repetit)",
+   "quote": "25·0616  P#",
+   "confidence": 0.0,
+   "note": "Codi comercial G3, no l'expedient (regla Pas 3: '25·0616' explícitament exclosa com a font d'expedient)."
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": "21/08/25",
+   "location": "p.1 DATA:",
+   "quote": "DATA: 21/08/25",
+   "confidence": 0.0,
+   "note": "Data del pressupost, no de camp (regla Pas 3: mai la data del pressupost per a field_date)."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_floors",
+  "superficie_parcela",
+  "building_type",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Bloc CLIENT:/OBRA: de la p.1 llegits sobre el PNG (150 dpi) perquè l'extracció de text barreja l'ordre visual (regla Pas 2: 'ordena els blocs per (y,x)'). P.3 (formulari 'DADES QUE HAN DE CONSTAR...') revisat visualment: en blanc, sense firma del client — no és el pressupost acceptat/signat pel client, només hi ha una firma d'Oficina Tècnica de G3. Cap línia CTE (Tipus d'edifici / Tipus de Terreny) al document, consistent amb la situació estructural coneguda per a Linyola (pressupost sense línia CTE)."
+}

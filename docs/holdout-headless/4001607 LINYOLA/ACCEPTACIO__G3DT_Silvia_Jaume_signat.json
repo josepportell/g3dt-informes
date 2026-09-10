@@ -1,0 +1,24 @@
+{
+  "source_path": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost 25·0616 ACCEPTAT: formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' omplert i signat per les dues parts",
+  "issuer": "G3 (document) + client (formulari i signatura)",
+  "date": "pressupost 21/08/25; modDate PDF 2025-09-23 (retorn signat)",
+  "pages_or_sheets": "3 pàgines; la p.3 conté el formulari omplert i les signatures",
+  "context": {
+    "who_made_it": "G3 va emetre el pressupost; el client l'ha retornat omplert i signat",
+    "for_whom": "G3 (acceptació del contracte)",
+    "why": "formalitzar l'encàrrec i fixar a nom de qui va la factura i l'informe",
+    "expected_fields": ["client_name (formulari p.3 — AUTORITAT A)", "adreça del CLIENT (no de l'obra)"],
+    "not_expected": ["street_address de l'obra (l'adreça del formulari és la del client)", "field_date", "cota", "nivells"],
+    "relation_to_others": "Mateix document que 25.0616/25·0616.pdf (mateixa creationDate) + formulari omplert; substitueix la versió no signada com a font. El nom de fitxer 'Silvia_Jaume' suggereix dos promotors, però el formulari només porta SÍLVIA → l'informe va a nom de qui signa l'acceptació.",
+    "authority_for": ["client_name"]
+  },
+  "tier_a": [
+    {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró", "location": "p.3 formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME'", "quote": "NOM I COGNOMS: SÍLVIA EROLES BALAGUERÓ · N.I.F./C.I.F.: 47697437Z · ADREÇA: C/LLIBERTAT 13, 1-1 · CP I POBLACIÓ: 25240 LINYOLA · Email: serolesba@gmail.com", "confidence": 0.95, "note": "autoritat A (regla Pas 3); concorda amb fitxa B47 'silvia la propietària'. El fitxer es diu 'Silvia_Jaume' (possible segon promotor Jaume) però el formulari només porta Sílvia"},
+    {"concept_id": "NOT_street_address", "value": "C/ Llibertat 13, 1-1, 25240 Linyola", "location": "p.3 formulari ADREÇA", "quote": "C/LLIBERTAT 13, 1-1 / 25240 LINYOLA", "confidence": 0.0, "note": "adreça del CLIENT (facturació/enviament), NO de l'obra — mai street_address"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "p.3 formulari CP I POBLACIÓ", "quote": "25240 LINYOLA", "confidence": 0.4, "note": "és la població del client, no de l'obra — aquí coincideixen, però per regla no és font de municipality de l'obra"}
+  ],
+  "not_present": ["expedient", "architect_name (línia 'ARQUITECTE …' del formulari buida)", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "cte", "utm_x_utm_y", "referencia_catastral", "lab_*", "num_dpsh_tests (les quantitats són les del pressupost)"],
+  "reading_notes": "Formulari escrit amb text (no manuscrit) → llegit del text vectorial ordenat per (y,x). Signatura manuscrita del client + signatura G3 ('Evazquez') verificades visualment (render 150 dpi zona 68-92%). Cap camp /Sig digital. Marcat 'Digital per email' + 'Informe en català'. Compte bancari present (fora d'abast)."
+}

@@ -1,0 +1,113 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern d'Eva (G3) a Dolors (G3) reenviant la petició de pressupost que el client ha enviat per WhatsApp per a un geotècnic a Castellar del Vallès.",
+ "issuer": "Eva Vázquez Marcet (G3 - Dept. Geologia)",
+ "date": "2025-06-25",
+ "pages_or_sheets": "1 cos de correu",
+ "context": {
+  "who_made_it": "Eva Vázquez (geòloga de G3) escriu aquest correu intern a Dolors Maqueda (G3, qui prepara els pressupostos), copiant el missatge que el client li ha fet arribar per WhatsApp.",
+  "for_whom": "Ús intern de G3: que Dolors prepari el/els pressupost(os).",
+  "why": "El client (GRUP ALMA, contacte Roc) demana un estudi geotècnic per a un habitatge a Castellar del Vallès i pregunta el cost; a més avança que comprarà 2 parcel·les del costat i vol preu per 3 estudis a la vegada.",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "num_floors",
+   "building_type",
+   "superficie_construida",
+   "client_name (sol·licitant)"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "referencia_catastral",
+   "utm",
+   "lab",
+   "architect_name"
+  ],
+  "relation_to_others": "Es l'encarrec que origina el/els PRESSUPOST GEOTEC (i la versio MODF). El 'CLIENT: GRUP ALMA' d'aquest correu es el sol.licitant de l'encarrec i, segons la regla estructural de Castellar, queda substituit per WOOD COMFORT al pressupost MODF. L'adjunt plan_cost ja es solt a la carpeta (25.0493/PLAN_COST_CATELLAR DEL VALLES.xlsx) -> no rellegit. Complementa l'altre correu 'Re_ ESTUDI GEOTECNIC VERSIO'.",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "num_floors",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A",
+   "location": "cos del correu (missatge del client reenviat)",
+   "quote": "La direcció és : Carrer Arbrells 18A",
+   "confidence": 0.7,
+   "note": "Adreça de l'obra segons el client a l'encàrrec (font única, no impresa). Grafia 'Arbrells' a contrastar amb documents impresos (plànol/cadastre)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del correu + assumpte",
+   "quote": "haig de fer un geotecnic  a Castellar del Vallès",
+   "confidence": 0.85,
+   "note": "Forma oficial llarga; coincideix amb l'assumpte i el nom de carpeta."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1",
+   "location": "cos del correu (programa del client)",
+   "quote": "PB + 1 - Sense soterrani",
+   "confidence": 0.7,
+   "note": "De l'encàrrec (correu = font vàlida per num_floors). Descriu 1 dels 3 habitatges de l'encàrrec → candidat, no segur."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar (estructura de fusta)",
+   "location": "cos del correu + assumpte",
+   "quote": "3 HAB ... Estructura d'entremat lleuger de fusta.",
+   "confidence": 0.6,
+   "note": "Habitatge unifamiliar de fusta; l'informe re-redacta (comparació CLOSE). Candidat."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "GRUP ALMA",
+   "location": "capçalera del cos del correu",
+   "quote": "CLIENT: GRUP ALMA   ROC - 615 55 74 50",
+   "confidence": 0.3,
+   "note": "Sol·licitant de l'encàrrec (contacte 'Roc'), NO autoritat A per client_name. A més, segons la regla estructural de Castellar sembla substituït per WOOD COMFORT al pressupost MODF. Candidat feble."
+  }
+ ],
+ "tables": {
+  "superficie_construida": {
+   "components": [
+    "120 m2"
+   ],
+   "total": "120 m2",
+   "etiqueta_font": "segons informació aportada (client, correu d'encàrrec)",
+   "quote": "120 m2 construits",
+   "note": "Superfície CONSTRUÏDA (no parcel·la), d'1 dels 3 habitatges de l'encàrrec → valor per casa; candidat."
+  },
+  "__nota": "L'encàrrec és multi-habitatge (3 estudis): 'compraré les 2 parcel·les del costat ... 3 estudis geotècnics a la vegada'. Només aporta programa/superfície d'un habitatge."
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit body.txt de la pre-extracció (kind=msg, sense pàgines). L'únic adjunt (plan_cost) està marcat already_in_folder → no rellegit. Correu intern G3→G3 reenviant petició WhatsApp del client. Encàrrec multi-habitatge (3 cases / compra de 2 parcel·les contigües). Client 'GRUP ALMA' probablement substituït per WOOD COMFORT al MODF (regla estructural). superficie_construida=120 m² és input per a la derivació CTE (C0: <300 m² i <4 plantes) però no es deriva aquí (Tier B)."
+}

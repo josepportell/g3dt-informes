@@ -1,0 +1,10 @@
+NOU      architect_company      prod=segur
+CAUTELA  architect_name         or segur, prod candidats (bo dins): 'Josep Bunyesc Palacín'
+CAUTELA  building_type          or segur, prod candidats (bo dins): 'habitatge unifamiliar aïllat'
+CAUTELA  cota_referencia        or segur, prod candidats (bo dins): '+245'
+CAUTELA  lab_depth              or segur, prod candidats (bo dins): '1,0 - 1,15 m'
+CAUTELA  lab_location           or segur, prod candidats (bo dins): 'P-3'
+CAUTELA  referencia_catastral   or segur, prod candidats (bo dins): '5098344CG2159N0000US'
+CAUTELA  street_address         or segur, prod candidats (bo dins): 'Carrer Clot de la Llacuna, 16'
+CAUTELA  superficie_parcela     or segur, prod candidats (bo dins): '571 m²'
+TOTALS: {'NOU': 1, 'CAUTELA': 8, 'OK': 13}

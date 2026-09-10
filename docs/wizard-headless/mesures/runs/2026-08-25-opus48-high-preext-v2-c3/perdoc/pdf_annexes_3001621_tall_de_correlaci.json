@@ -1,0 +1,202 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+ "source_md5": "e77496626419bcc0e372d33f59609cd5",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geològic (secció A-A') dibuixat per l'Eva: correlaciona els 4 DPSH (P-1..P-4) i el sondeig S-1, mostra els 2 units (terreny vegetal + Nivell 1 rocós) i la cota de fonamentació recomanada.",
+ "issuer": "G3 (Eva) — annex de l'informe",
+ "date": "Octubre 2025 (data de l'informe, no de camp)",
+ "pages_or_sheets": "1 pàgina (A3 apaïsat)",
+ "context": {
+  "who_made_it": "L'Eva (G3), com a annex de síntesi de l'informe geotècnic (FreeHand -> Print/Distiller).",
+  "for_whom": "Per al propi informe (document intern de síntesi), no per a un tercer.",
+  "why": "Correlacionar els punts d'assaig (DPSH P-1..P-4 + sondeig S-1) al llarg de la secció A-A' per definir els nivells geològics, les transicions i la cota de fonamentació recomanada.",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia dels nivells",
+   "fondàries/cotes de transició",
+   "rebuig per punt",
+   "cota de fonamentació recomanada",
+   "expedient (caixetí)",
+   "street_address (OBRA, caixetí)",
+   "municipality (caixetí)",
+   "building_type (redacció caixetí)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "promotor",
+   "field_date real de camp",
+   "lab",
+   "referencia_catastral",
+   "superficie_parcela",
+   "num_floors",
+   "utm"
+  ],
+  "relation_to_others": "És la versió Print-To-PDF de l'annex 'tall de correlació' (font FH11 a ANNEXES/3001621_tall de correlació.FH11). Duplicat de contingut: tall.pdf a l'arrel (mateix dibuix, priority 4). L'ANNEX DE SONDEIG (PDF/ANNEXES/3001621_sondeig.pdf) és la font PRIMÀRIA de nivells i litologies; aquest tall és secundari (candidats). El caixetí diu 'UNA HABITATGE UNIFAMILIAR' però el correu/pressupost és 'PRESSUPOST 3 HAB' -> possible projecte multi-habitatge, cal creuar.",
+  "authority_for": [
+   "num_soil_levels",
+   "building_type",
+   "street_address",
+   "municipality",
+   "expedient"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí inferior dret, camp 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.9,
+   "note": "Coincideix amb el nom de la carpeta. Font única dins d'aquest document (caixetí de l'annex = número d'informe); el consolidador ho creuarà amb comanda N19 / annex DPSH."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "caixetí inferior, bloc descripció OBRA",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.55,
+   "note": "Redacció de l'informe (comparació CLOSE). ATENCIÓ: el caixetí diu 'una habitatge unifamiliar' (singular) però el .msg/pressupost és 'PRESSUPOST 3 HAB' -> possible projecte de 3 habitatges; candidat, no segur."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells nº 18A-18B-20",
+   "location": "caixetí inferior, bloc descripció OBRA",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.6,
+   "note": "Adreça de l'OBRA (vàlida). Múltiples números (18A-18B-20) -> coherent amb un possible projecte multi-parcel·la/3 habitatges; candidat."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "caixetí inferior, bloc descripció OBRA",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.75,
+   "note": "Forma oficial llarga; corroborada pel nom de la carpeta. Prové de la redacció del caixetí."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "LLEGENDA + secció",
+   "quote": "Terreny Vegetal. Llims argilosos... / Nivell 1: Substrat rocós. Bretxes...",
+   "confidence": 0.5,
+   "note": "El tall mostra 2 units: 'Terreny Vegetal' (cobertora) + 'Nivell 1' (substrat rocós, l'únic numerat). Candidats [2 (vegetal+Nivell 1) | 1 (només Nivell 1 substrat)]. L'annex de sondeig (font primària) ha de confirmar el compte; mai segur."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": null,
+   "location": "escala vertical (msnm) de la secció",
+   "quote": "(msnm) 572 / 571 / 570 / 569",
+   "confidence": 0.2,
+   "note": "El tall està en cotes ABSOLUTES msnm (superfície a S-1 ~571,4). NO és font neta de cota_referencia (autoritat = z: de l'annex DPSH/sondeig). Anotat com a corroboració feble; el consolidador usa l'annex."
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Terreny vegetal",
+    "litologia_candidats": [
+     "Llims argilosos de color marró fosc amb graves i algunes arrels"
+    ],
+    "de": "superfície (~571,5-571,8 msnm, absolut)",
+    "a": "~571,0 msnm (transició, prop de la línia de rebuig Nb=R)",
+    "mostra_del_nivell": false,
+    "note": "Cotes absolutes llegides gràficament del tall; imprecises. Litologia = candidat (l'annex de sondeig re-redacta i mana per a la cadena literal)."
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells"
+    ],
+    "de": "~571,0 msnm (absolut)",
+    "a": ">569 msnm (continua sota la base del tall)",
+    "mostra_del_nivell": true,
+    "note": "El rebuig de tots els DPSH i l'N=R del sondeig S-1 cauen dins d'aquest nivell (substrat rocós). Litologia = candidat."
+   }
+  ],
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-1",
+    "quote": "Nb=16 ... Nb=R",
+    "note": "Lectura gràfica del tall (corroboració). Rebuig=Si (Nb=R). cota/profunditat: autoritat = peu 'Rebuig a' de l'Excel DPSH (relatiu 'respecte el carrer'); el tall és absolut i no s'ha de prendre com a cota_inici de la taula. Nb graf.: 16 (sup), R (rebuig)."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-2",
+    "quote": "Nb=18 ... Nb=R",
+    "note": "Lectura gràfica. Nb=18, després R."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-3 (extrem dret)",
+    "quote": "Nb=19 ... Nb=R",
+    "note": "Lectura gràfica. Nb=19, després R."
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-4",
+    "quote": "Nb=10 ... Nb=33 ... Nb=R",
+    "note": "Lectura gràfica. Nb=10 (sup), Nb=33 (mig), R (rebuig)."
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": null,
+    "profunditat_assolida": null,
+    "spt_ma": null,
+    "nivell_freatic": null,
+    "location": "secció, columna central S-1 (columna litològica del sondeig)",
+    "quote": "S-1 ... N=R",
+    "note": "Sondeig a rotació S-1; l'assaig (SPT) marca N=R (rebuig). Cotes/profunditat i comptes SPT/MA: autoritat = annex de sondeig + GTL + comanda; aquí només corroboració gràfica. Sistema de cotes: el tall és absolut (~571,4 superfície); la taula de l'informe pot ser relativa (regla ERR Castellar) -> el consolidador ha de creuar."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT (S-1)",
+    "punt": "S-1",
+    "profunditat": null,
+    "litologia": "Nivell 1 (substrat rocós)",
+    "n30": "R",
+    "location": "secció, columna S-1",
+    "quote": "N=R",
+    "note": "SPT del sondeig S-1 amb rebuig (N=R). Per la regla, un R al primer tram pot ser segur; aquí candidat (font gràfica, id/fondària els dona l'annex/GTL). Litologia = nivell del substrat rocós."
+   }
+  ],
+  "__nota": "Totes les files són corroboració gràfica del tall (síntesi de l'Eva). Fonts autoritàries: Excel DPSH (rebuig/cota), annex de sondeig (nivells/litologia/S-1), GTL/comanda (SPT/mostra). El tall aporta el NOMBRE de nivells i la litologia (candidats) i confirma rebuig per punt."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "field_date",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF = brossa (Acrobat Distiller 15 / PScript5, annex FreeHand sense ToUnicode; text_ok[1]=false, halves_pages=[1]). Lectura visual de page-1.png + meitats page-1-left/right.png (220 dpi). El tall usa cotes ABSOLUTES msnm (569-572); AVÍS mixt-cota Castellar: l'annex DPSH usa cotes relatives ('respecte el carrer'), per tant les cotes absolutes d'aquí no s'han de prendre com a cota_inici de la taula DPSH. La foto aèria porta la línia de tall A-A' i la llegenda (DPSH / sondeig a rotació / zona d'estudi). Duplicat: tall.pdf a l'arrel (mateix dibuix). Caixetí 'TÍTOL DEL PROJECTE' = etiqueta plantilla sense omplir. Discrepància 'UNA HABITATGE' (caixetí) vs 'PRESSUPOST 3 HAB' (.msg) -> possible multi-habitatge, flag per al consolidador."
+}

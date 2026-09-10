@@ -1,0 +1,222 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_DPSH.pdf",
+ "source_md5": "10be2963762ff8cc625bb3c0b025b54f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Gràfic d'assaig de penetració dinàmica DPSH (3 punts P-1/P-2/P-3), exportat des de l'Excel DPSH del projecte",
+ "issuer": "G3 (plantilla amb logo G3, generada a partir de l'Excel 4001671_DPSH.xls)",
+ "date": "19/02/2026",
+ "pages_or_sheets": "3 pàgines (P-1, P-2, P-3)",
+ "context": {
+  "who_made_it": "G3 / Eva, a partir de les lectures de camp del penetròmetre DPSH transcrites a l'Excel del projecte",
+  "for_whom": "L'informe geotècnic (annex tècnic); no és un document d'encàrrec ni de facturació",
+  "why": "Documentar cop a cop (N20/Golpeo NB) de cada assaig DPSH per determinar rebuig, nivells del sòl i, quan n'hi ha, un assaig SPT embegut",
+  "expected_fields": [
+   "cota_referencia",
+   "field_date",
+   "expedient",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests",
+   "dpsh_tests[]",
+   "spt_ma_tests[] (si n'hi ha)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y"
+  ],
+  "relation_to_others": "Versió PDF (Print/Distiller) del mateix contingut que ANEXOS/4001671_DPSH.xls (route python, no llegit en aquesta crida). Complementa PDF/ANEJOS/4001671_corte de correlación.pdf i tall.pdf per confirmar les fondàries de transició de nivell que aquí només es veuen com a bandes de color per punt, no com a cotes numèriques.",
+  "authority_for": [
+   "cota_referencia",
+   "field_date",
+   "expedient",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001671",
+   "location": "peu de cada pàgina (p.1, p.2, p.3)",
+   "quote": "NÚMERO DE INFORME: 4001671",
+   "confidence": 0.9,
+   "note": "idèntic a les 3 pàgines"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "CALLE SANTA GEMMA Nº4",
+   "location": "capçalera p.1/2/3, bloc OBRA",
+   "quote": "OBRA: CALLE SANTA GEMMA Nº4",
+   "confidence": 0.85,
+   "note": "camp OBRA, no client; idèntic a les 3 pàgines"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "VILANOVA DE SEGRIA",
+   "location": "capçalera p.1/2/3, bloc POBLACIÓN",
+   "quote": "POBLACIÓN: VILANOVA DE SEGRIA",
+   "confidence": 0.75,
+   "note": "grafia G3 sense accent/dièresi; forma oficial probablement 'Vilanova de Segrià'"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "19/02/2026",
+   "location": "capçalera p.1/2/3, camp FECHA",
+   "quote": "FECHA: 19/02/2026",
+   "confidence": 0.7,
+   "note": "font 'annex DPSH DATA' (Pas 3): candidata a field_date si la fitxa de camp no en té una de pròpia; idèntica a les 3 pàgines"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+321,69 msnm según el visor ICGC",
+   "location": "capçalera p.1/2/3",
+   "quote": "Cota inicio: +321,69 msnm según el visor ICGC",
+   "confidence": 0.85,
+   "note": "mateixa cota per als 3 punts (parcel·la sense pendent apreciable o cota única d'implantació)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "capçaleres p.1/2/3",
+   "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P-1 / P-2 / P-3",
+   "confidence": 0.8,
+   "note": "3 punts amb lectures completes (P-1, P-2, P-3) dins d'aquest PDF; pendent de confirmar amb l'Excel DPSH.xls (no llegit en aquesta crida)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,80-1,40m",
+   "location": "p.1, columna MEDIDA DE PAR, punt P-1",
+   "quote": "SPT1 / 0,80-1,40m / 13/10/14/24",
+   "confidence": 0.4,
+   "note": "assaig SPT embegut al DPSH al punt P-1, etiquetat 'SPT1' (sense guionet)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0.80-1,40m",
+   "location": "p.3, columna MEDIDA DE PAR, punt P-3",
+   "quote": "SPT-1 / 0.80-1,40m / 3/4/6/5",
+   "confidence": 0.4,
+   "note": "assaig SPT embegut al DPSH al punt P-3, etiquetat 'SPT-1' (amb guionet). AMBIGÜITAT: dos assaigs SPT amb pràcticament el mateix nom ('SPT1' vs 'SPT-1') a punts diferents (P-1 i P-3) amb registres de cops DIFERENTS (13/10/14/24 vs 3/4/6/5) — no es pot saber sense l'annex de sondeig/GTL quin és 'el' SPT-1 citat a l'informe, o si són dues mostres reals"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "llegenda sota la taula, p.1/2/3",
+   "quote": "Nivel 1 / Nivel 2",
+   "confidence": 0.35,
+   "note": "llegenda de colors consistent als 3 gràfics DPSH (mai més de 2 nivells marcats); NO és l'annex de sondeig (autoritat real per aquest camp) — confirmar amb corte de correlación / tall.pdf"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+321,69",
+    "profunditat_assolida": "-1,48",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1",
+    "quote": "Rechazo a la penetración: -1,48 m",
+    "extra": {
+     "nivells_grafic": "Nivell 1 (color) fins -1,2m; Nivell 2 (color) de -1,4 a -1,6m (rebuig) — llegit de les bandes de color de la columna 'Niveles', no de text; transició no confirmada amb annex de sondeig"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+321,69",
+    "profunditat_assolida": "-2,18",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2",
+    "quote": "Rechazo a la penetración: -2,18 m",
+    "extra": {
+     "nivells_grafic": "Nivell 1 (color) fins -1,6m; Nivell 2 (color) de -1,8 a -2,2m (rebuig) — llegit de bandes de color, no confirmat"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+321,69",
+    "profunditat_assolida": "-3,78",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3",
+    "quote": "Rechazo a la penetración: -3,78 m",
+    "extra": {
+     "nivells_grafic": "Nivell 1 (color) fins -2,2m; Nivell 2 (color) de -2,4 a -3,8m (rebuig) — llegit de bandes de color, no confirmat"
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P-1",
+    "profunditat": "0,80-1,40m",
+    "litologia": null,
+    "n30": {
+     "estat": "candidats",
+     "registre": {
+      "estat": "segur",
+      "value": "13/10/14/24",
+      "font": "PDF/ANEJOS/4001671_DPSH.pdf p.1 columna MEDIDA DE PAR",
+      "quote": "13/10/14/24"
+     },
+     "candidates": [
+      {
+       "value": "24",
+       "font": "suma dels 2 trams centrals (10+14)",
+       "quote": "13/10/14/24"
+      }
+     ],
+     "note": "sense litologia coneguda en aquest document; criteri de suma no confirmat amb annex de sondeig"
+    }
+   },
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "0.80-1,40m",
+    "litologia": null,
+    "n30": {
+     "estat": "candidats",
+     "registre": {
+      "estat": "segur",
+      "value": "3/4/6/5",
+      "font": "PDF/ANEJOS/4001671_DPSH.pdf p.3 columna MEDIDA DE PAR",
+      "quote": "3/4/6/5"
+     },
+     "candidates": [
+      {
+       "value": "10",
+       "font": "suma dels 2 trams centrals (4+6)",
+       "quote": "3/4/6/5"
+      }
+     ],
+     "note": "etiqueta 'SPT-1' diferent de 'SPT1' de P-1 amb registre diferent — possible ambigüitat/duplicitat de nom, no resolta aquí"
+    }
+   }
+  ],
+  "__nota": "dpsh_tests i spt_ma_tests venen d'aquest document; soil_levels NO s'emet aquí (autoritat = annex de sondeig/tall, no llegits en aquesta crida)"
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text llegible a les 3 pàgines (text_ok=true, sense halves); no calen render_clip. Columnes N.F. i Niveles del gràfic són bandes de color/marques gràfiques sense text extraible: confirmades visualment a les 3 pàgines PNG (150dpi) — N.F. buida als 3 punts; Niveles mostra 2 bandes de color (llegenda Nivel 1/Nivel 2) amb la transició llegida per fila de taula, no per cota numèrica impresa: baixa confiança, marcat com a nota dins de cada fila de dpsh_tests, no com a soil_levels. Trobada ambigüitat real al document: assaig SPT embegut a DOS punts diferents (P-1 'SPT1', P-3 'SPT-1') amb registres de cops diferents — flagged, no resolta."
+}

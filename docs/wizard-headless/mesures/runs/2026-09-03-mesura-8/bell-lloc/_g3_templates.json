@@ -1,0 +1,985 @@
+{
+ "project": "4001612 BELL-LLOC",
+ "read_on": "2026-09-03T20:55:41",
+ "reader": "automation.g3_templates (Fase 4a, determinista)",
+ "documents": [
+  {
+   "document_type": "fitxa_camp_g3",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "ARQUITECCTURA BOSCH NOVELL",
+     "location": "fitxa!C6 (CLIENT)",
+     "quote": "ARQUITECCTURA BOSCH NOVELL",
+     "confidence": 0.3,
+     "note": "= sol·licitant (regla G3); NO autoritat de client_name"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+     "location": "fitxa!C7 (ADREÇA OBRA)",
+     "quote": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+     "confidence": 0.8,
+     "note": "C7 porta adreça + municipi a la mateixa cel·la"
+    },
+    {
+     "concept_id": "contact_person",
+     "value": "JORDI",
+     "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+     "quote": "JORDI",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "contact_phone",
+     "value": "TEL. 620199571",
+     "location": "fitxa!F8",
+     "quote": "TEL. 620199571",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "previsio_camp",
+     "value": "PENETROS I MOSTRA",
+     "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+     "quote": "PENETROS I MOSTRA",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "previsio_camp_unitats",
+     "value": "2 (P)",
+     "location": "fitxa!F13",
+     "quote": "2 (P)",
+     "confidence": 0.7,
+     "note": "p. ex. '2 (P)', '5P+2S' — previstos, no executats"
+    },
+    {
+     "concept_id": "edificacio_existent",
+     "value": "SI",
+     "location": "fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+     "quote": "SI",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_field_company",
+     "value": "TPS ERUGA",
+     "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+     "quote": "TPS ERUGA",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2025-10-01",
+     "location": "fitxa!F38 (E38 'dies de camp')",
+     "quote": "datetime.datetime(2025, 10, 1, 0, 0)",
+     "confidence": 0.95,
+     "note": "primer dia de camp (autoritat A)"
+    }
+   ],
+   "warnings": [],
+   "source_path": "25.0647/DADES PER ANAR A CAMP_v1.xlsx"
+  },
+  {
+   "document_type": "plan_cost_g3",
+   "tier_a": [
+    {
+     "concept_id": "building_type",
+     "value": "EG HAB UNIF BELL-LLOC",
+     "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG HAB UNIF BELL-LLOC",
+     "confidence": 0.6,
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "concept_id": "municipality",
+     "value": "BELL-LLOC",
+     "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG HAB UNIF BELL-LLOC",
+     "confidence": 0.6,
+     "note": "«BELL-LLOC» és la forma curta de «Bell-lloc d'Urgell» segons el padró de municipis; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "tecnic",
+     "value": "Eva Vázquez Marcet",
+     "location": "'Plan Cost'!E21",
+     "quote": "Eva Vázquez Marcet",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "OFERTA!B21",
+     "quote": "2",
+     "confidence": 0.6,
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "concept_id": "sondeig_ml",
+     "value": 5,
+     "location": "OFERTA!B6",
+     "quote": "5",
+     "confidence": 0.6,
+     "note": "ml de perforació"
+    },
+    {
+     "concept_id": "num_spt",
+     "value": 3,
+     "location": "OFERTA!B14",
+     "quote": "3",
+     "confidence": 0.6,
+     "note": "assaigs SPT previstos"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "TPS",
+     "location": "OFERTA!G3",
+     "quote": "TPS",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "SOIL-ASSAIG",
+     "location": "OFERTA!G27",
+     "quote": "SOIL-ASSAIG",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    }
+   ],
+   "warnings": [],
+   "source_path": "25.0647/PLAN_COST_BELL-LLOC.xlsx"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20250903125300+02'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "architect_name",
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "location": "p.1 bloc CLIENT",
+     "quote": "ARQUITECTURA BOSCH NOVELL",
+     "confidence": 0.5,
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/MESTRE RAMON ORTIZ 15",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "BELL-LLOC",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "25·0647",
+     "location": "p.1 peu / capçaleres",
+     "quote": "25·0647",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "cte_edificacio",
+     "value": "C1",
+     "location": "p.2",
+     "quote": "Tipus d’edifici: C1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "cte_sol",
+     "value": "T1",
+     "location": "p.2",
+     "quote": "Tipus de Terreny : T1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "p.2 campanya",
+     "quote": "2 assaigs de penetració dinàmica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 1,
+     "location": "p.2 campanya",
+     "quote": "1Sondeig a rotació",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20250930164038+02'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "architect_name",
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "location": "p.1 bloc CLIENT",
+     "quote": "ARQUITECTURA BOSCH NOVELL",
+     "confidence": 0.5,
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/MESTRE RAMON ORTIZ 15",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "BELL-LLOC",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "25·0647",
+     "location": "p.1 peu / capçaleres",
+     "quote": "25·0647",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "cte_edificacio",
+     "value": "C1",
+     "location": "p.2",
+     "quote": "Tipus d’edifici: C1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "cte_sol",
+     "value": "T1",
+     "location": "p.2",
+     "quote": "Tipus de Terreny : T1",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "p.2 campanya",
+     "quote": "2 assaigs de penetració dinàmica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 1,
+     "location": "p.2 campanya",
+     "quote": "1Sondeig a rotació",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf"
+  },
+  {
+   "document_type": "dpsh_excel",
+   "tier_a": [
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 2,
+     "location": "fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2']",
+     "confidence": 0.95,
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rebuig a la cota de -1,35 m",
+     "location": "P-1!B80",
+     "quote": "Rebuig a la cota de -1,35 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rebuig a la cota de -2,45 m",
+     "location": "P-2!B80",
+     "quote": "Rebuig a la cota de -2,45 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "expedient",
+     "value": "4001612",
+     "location": "nom del fitxer",
+     "quote": "4001612_DPSH.xls",
+     "confidence": 0.7
+    }
+   ],
+   "warnings": [],
+   "source_path": "ANNEXES/4001612_DPSH.xls"
+  },
+  {
+   "document_type": "comanda_lab_g3",
+   "tier_a": [
+    {
+     "concept_id": "expedient",
+     "value": "4001612",
+     "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001612.0",
+     "confidence": 0.95
+    },
+    {
+     "concept_id": "building_type",
+     "value": "CONSTR HABITATGE",
+     "location": "Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR HABITATGE",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ ANTONI BALLET",
+     "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C/ ANTONI BALLET",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "BELL-LLOC",
+     "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "BELL-LLOC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2025-10-06",
+     "location": "Hoja1!N23 (DATA DE PRESA)",
+     "quote": "45936.0",
+     "confidence": 0.7,
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "concept_id": "data_sollicitud_lab",
+     "value": "2025-10-10",
+     "location": "Hoja1!AH23",
+     "quote": "45940.0",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_sample_id",
+     "value": "SPT 1 (S1)",
+     "location": "Hoja1!C35",
+     "quote": "SPT 1 (S1)",
+     "confidence": 0.7,
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "concept_id": "lab_depth",
+     "value": "1.0 - 1.6",
+     "location": "Hoja1!J35/L35",
+     "quote": "INICIAL 1.0 / FINAL 1.6",
+     "confidence": 0.7,
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "concept_id": "lab_location",
+     "value": "S1",
+     "location": "Hoja1!C35 (parèntesi)",
+     "quote": "SPT 1 (S1)",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_tests_note",
+     "value": "NOMÉS SULFATS",
+     "location": "Hoja1!AD35",
+     "quote": "NOMÉS SULFATS",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "NOT_client_name",
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "confidence": 1.0,
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    }
+   ],
+   "warnings": [],
+   "source_path": "comanda laboratori_4001612_BELL-LLOC.xls"
+  }
+ ],
+ "concepts": {
+  "client_name": [
+   {
+    "concept_id": "client_name",
+    "value": "ARQUITECTURA BOSCH NOVELL",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "ARQUITECTURA BOSCH NOVELL",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "ARQUITECCTURA BOSCH NOVELL",
+    "location": "fitxa!C6 (CLIENT)",
+    "quote": "ARQUITECCTURA BOSCH NOVELL",
+    "confidence": 0.3,
+    "note": "= sol·licitant (regla G3); NO autoritat de client_name",
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "street_address": [
+   {
+    "concept_id": "street_address",
+    "value": "C/MESTRE RAMON ORTIZ 15",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/MESTRE RAMON ORTIZ 15",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+    "location": "fitxa!C7 (ADREÇA OBRA)",
+    "quote": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+    "confidence": 0.8,
+    "note": "C7 porta adreça + municipi a la mateixa cel·la",
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/ ANTONI BALLET",
+    "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+    "quote": "C/ ANTONI BALLET",
+    "confidence": 0.9,
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "contact_person": [
+   {
+    "concept_id": "contact_person",
+    "value": "JORDI",
+    "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+    "quote": "JORDI",
+    "confidence": 0.8,
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "contact_phone": [
+   {
+    "concept_id": "contact_phone",
+    "value": "TEL. 620199571",
+    "location": "fitxa!F8",
+    "quote": "TEL. 620199571",
+    "confidence": 0.8,
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "concept_id": "previsio_camp",
+    "value": "PENETROS I MOSTRA",
+    "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "confidence": 0.7,
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "previsio_camp_unitats": [
+   {
+    "concept_id": "previsio_camp_unitats",
+    "value": "2 (P)",
+    "location": "fitxa!F13",
+    "quote": "2 (P)",
+    "confidence": 0.7,
+    "note": "p. ex. '2 (P)', '5P+2S' — previstos, no executats",
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "concept_id": "edificacio_existent",
+    "value": "SI",
+    "location": "fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "confidence": 0.6,
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "concept_id": "lab_field_company",
+    "value": "TPS ERUGA",
+    "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "confidence": 0.8,
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "field_date": [
+   {
+    "concept_id": "field_date",
+    "value": "2025-10-01",
+    "location": "fitxa!F38 (E38 'dies de camp')",
+    "quote": "datetime.datetime(2025, 10, 1, 0, 0)",
+    "confidence": 0.95,
+    "note": "primer dia de camp (autoritat A)",
+    "source": "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   },
+   {
+    "concept_id": "field_date",
+    "value": "2025-10-06",
+    "location": "Hoja1!N23 (DATA DE PRESA)",
+    "quote": "45936.0",
+    "confidence": 0.7,
+    "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp",
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "building_type": [
+   {
+    "concept_id": "building_type",
+    "value": "CONSTR HABITATGE",
+    "location": "Hoja1!N18 (G18 OBRA)",
+    "quote": "CONSTR HABITATGE",
+    "confidence": 0.7,
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "building_type",
+    "value": "EG HAB UNIF BELL-LLOC",
+    "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+    "quote": "EG HAB UNIF BELL-LLOC",
+    "confidence": 0.6,
+    "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi",
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "municipality": [
+   {
+    "concept_id": "municipality",
+    "value": "BELL-LLOC",
+    "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+    "quote": "BELL-LLOC",
+    "confidence": 0.9,
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "BELL-LLOC",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "BELL-LLOC",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "BELL-LLOC",
+    "location": "'Plan Cost'!E9 (rere el tipus de projecte)",
+    "quote": "EG HAB UNIF BELL-LLOC",
+    "confidence": 0.6,
+    "note": "«BELL-LLOC» és la forma curta de «Bell-lloc d'Urgell» segons el padró de municipis; la forma oficial llarga mana (regla municipi)",
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "tecnic": [
+   {
+    "concept_id": "tecnic",
+    "value": "Eva Vázquez Marcet",
+    "location": "'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "confidence": 0.6,
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_dpsh_tests": [
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "fulls amb dades a la columna C",
+    "quote": "sheets: ['P-1', 'P-2']",
+    "confidence": 0.95,
+    "note": "EXECUTATS (autoritat sobre els previstos)",
+    "source": "ANNEXES/4001612_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "p.2 campanya",
+    "quote": "2 assaigs de penetració dinàmica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "p.2 campanya",
+    "quote": "2 assaigs de penetració dinàmica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 2,
+    "location": "OFERTA!B21",
+    "quote": "2",
+    "confidence": 0.6,
+    "note": "unitats DPSH ofertades (previstes)",
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "sondeig_ml": [
+   {
+    "concept_id": "sondeig_ml",
+    "value": 5,
+    "location": "OFERTA!B6",
+    "quote": "5",
+    "confidence": 0.6,
+    "note": "ml de perforació",
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_spt": [
+   {
+    "concept_id": "num_spt",
+    "value": 3,
+    "location": "OFERTA!B14",
+    "quote": "3",
+    "confidence": 0.6,
+    "note": "assaigs SPT previstos",
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "TPS",
+    "location": "OFERTA!G3",
+    "quote": "TPS",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "SOIL-ASSAIG",
+    "location": "OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "architect_name": [
+   {
+    "concept_id": "architect_name",
+    "value": "ARQUITECTURA BOSCH NOVELL",
+    "location": "p.1 bloc CLIENT",
+    "quote": "ARQUITECTURA BOSCH NOVELL",
+    "confidence": 0.5,
+    "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "architect_name",
+    "value": "ARQUITECTURA BOSCH NOVELL",
+    "location": "p.1 bloc CLIENT",
+    "quote": "ARQUITECTURA BOSCH NOVELL",
+    "confidence": 0.5,
+    "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)",
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "concept_id": "expedient_comercial",
+    "value": "25·0647",
+    "location": "p.1 peu / capçaleres",
+    "quote": "25·0647",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "expedient_comercial",
+    "value": "25·0647",
+    "location": "p.1 peu / capçaleres",
+    "quote": "25·0647",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   }
+  ],
+  "cte_edificacio": [
+   {
+    "concept_id": "cte_edificacio",
+    "value": "C1",
+    "location": "p.2",
+    "quote": "Tipus d’edifici: C1",
+    "confidence": 0.9,
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "cte_edificacio",
+    "value": "C1",
+    "location": "p.2",
+    "quote": "Tipus d’edifici: C1",
+    "confidence": 0.9,
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   }
+  ],
+  "cte_sol": [
+   {
+    "concept_id": "cte_sol",
+    "value": "T1",
+    "location": "p.2",
+    "quote": "Tipus de Terreny : T1",
+    "confidence": 0.9,
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "cte_sol",
+    "value": "T1",
+    "location": "p.2",
+    "quote": "Tipus de Terreny : T1",
+    "confidence": 0.9,
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   }
+  ],
+  "num_sondeigs": [
+   {
+    "concept_id": "num_sondeigs",
+    "value": 1,
+    "location": "p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250930164038+02'00'"
+   },
+   {
+    "concept_id": "num_sondeigs",
+    "value": 1,
+    "location": "p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250903125300+02'00'"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rebuig a la cota de -1,35 m",
+    "location": "P-1!B80",
+    "quote": "Rebuig a la cota de -1,35 m",
+    "confidence": 0.8,
+    "source": "ANNEXES/4001612_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rebuig a la cota de -2,45 m",
+    "location": "P-2!B80",
+    "quote": "Rebuig a la cota de -2,45 m",
+    "confidence": 0.8,
+    "source": "ANNEXES/4001612_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "expedient": [
+   {
+    "concept_id": "expedient",
+    "value": "4001612",
+    "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+    "quote": "4001612.0",
+    "confidence": 0.95,
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "expedient",
+    "value": "4001612",
+    "location": "nom del fitxer",
+    "quote": "4001612_DPSH.xls",
+    "confidence": 0.7,
+    "source": "ANNEXES/4001612_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "concept_id": "data_sollicitud_lab",
+    "value": "2025-10-10",
+    "location": "Hoja1!AH23",
+    "quote": "45940.0",
+    "confidence": 0.6,
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_sample_id": [
+   {
+    "concept_id": "lab_sample_id",
+    "value": "SPT 1 (S1)",
+    "location": "Hoja1!C35",
+    "quote": "SPT 1 (S1)",
+    "confidence": 0.7,
+    "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe",
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_depth": [
+   {
+    "concept_id": "lab_depth",
+    "value": "1.0 - 1.6",
+    "location": "Hoja1!J35/L35",
+    "quote": "INICIAL 1.0 / FINAL 1.6",
+    "confidence": 0.7,
+    "note": "el GTL mana si discrepa",
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_location": [
+   {
+    "concept_id": "lab_location",
+    "value": "S1",
+    "location": "Hoja1!C35 (parèntesi)",
+    "quote": "SPT 1 (S1)",
+    "confidence": 0.7,
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "concept_id": "lab_tests_note",
+    "value": "NOMÉS SULFATS",
+    "location": "Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "confidence": 0.6,
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "NOT_client_name": [
+   {
+    "concept_id": "NOT_client_name",
+    "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+    "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+    "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+    "confidence": 1.0,
+    "note": "G3 = sol·licitant del laboratori, mai client",
+    "source": "comanda laboratori_4001612_BELL-LLOC.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ]
+ }
+}

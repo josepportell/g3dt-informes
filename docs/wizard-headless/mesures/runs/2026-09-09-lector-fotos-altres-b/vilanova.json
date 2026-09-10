@@ -1,0 +1,63 @@
+{
+ "project": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA",
+ "n_candidats": 18,
+ "n_eva_png": 8,
+ "annex": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/PDF/ANEJOS/4001671_fotografías.pdf",
+ "exemplars": {
+  "dpsh": 6,
+  "sondeig": 3,
+  "materials": 7,
+  "vistes": 3
+ },
+ "warnings": [],
+ "rc": 0,
+ "timeout": false,
+ "elapsed_s": 50.9,
+ "model": "sonnet",
+ "effort": "medium",
+ "cli": {
+  "cli_json_ok": true,
+  "num_turns": 7,
+  "duration_ms": 46872,
+  "duration_api_ms": 47634,
+  "cost_usd": 0.32912240000000004,
+  "is_error": false,
+  "subtype": "success",
+  "usage": {
+   "input_tokens": 6,
+   "output_tokens": 4363,
+   "cache_creation_input_tokens": 61044,
+   "cache_read_input_tokens": 179677
+  },
+  "models": [
+   "claude-haiku-4-5-20251001",
+   "claude-sonnet-5"
+  ]
+ },
+ "selection": {
+  "site_1": "FOTOGRAFIES/DES DE DARRERA.jpeg",
+  "site_2": "FOTOGRAFIES/INTERIOR.jpeg",
+  "dpsh": "FOTOGRAFIES/P1.jpeg",
+  "sondeig": null,
+  "materials": "FOTOGRAFIES/SPT 1 P-1.jpeg",
+  "materials_per_punt": [
+   {
+    "punt": "P-1",
+    "rel": "FOTOGRAFIES/SPT 1 P-1.jpeg"
+   },
+   {
+    "punt": "P-3",
+    "rel": "FOTOGRAFIES/SPT A P3.jpeg"
+   }
+  ]
+ },
+ "path": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/validation/photo_selection.json",
+ "slug": "vilanova",
+ "score": {
+  "site_1": "≠ Eva (ph 30)",
+  "site_2": "≠ Eva (ph 32)",
+  "dpsh": "= Eva (ph 0)",
+  "sondeig": "—",
+  "materials": "= Eva (ph 0)"
+ }
+}

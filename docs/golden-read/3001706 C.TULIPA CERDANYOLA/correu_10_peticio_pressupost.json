@@ -1,0 +1,91 @@
+{
+ "source_path": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg",
+ "document_type": "correu",
+ "what_it_is": "Reenviament (Eva → Dolors, 26/03/2026) del correu de petició de pressupost de 'vua visuals' (Aleix Subirà Felip, arquitecte col·legiat 74829-3, 25/03/2026), amb CC a 'Subirà Bertran'. Adjunt: PLAN_COST_CERDANYOLA.xlsx.",
+ "issuer": "vua visuals <info.vuavisuals@gmail.com> (citat) via Eva",
+ "date": "2026-03-25 (original) / 2026-03-26 (RV)",
+ "pages_or_sheets": "1 cos + 6 adjunts (1 xlsx + 5 imatges de signatura)",
+ "context": {
+  "who_made_it": "l'arquitecte (VUA) → Eva; Eva → Dolors",
+  "for_whom": "G3",
+  "why": "demanar pressupost: descriu la casa i l'adreça",
+  "expected_fields": [
+   "adreça",
+   "plantes/superfícies construïdes",
+   "arquitecte"
+  ],
+  "not_expected": [
+   "expedient",
+   "cota",
+   "promotor (pot ser-hi o no)"
+  ],
+  "relation_to_others": "origen de l'encàrrec: d'aquí surten pressupost, fitxa i PLAN_COST",
+  "authority_for": [
+   "architect_name",
+   "num_floors"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "architect_name",
+   "value": "Aleix Subirà Felip (VUA, col·legiat 74829-3)",
+   "location": "signatura del correu citat",
+   "quote": "A l e i x  S u b i r à  F e l i p / arquitecte & co-founder / aqte. col·legiat 74829-3 / www.vuavisuals.com",
+   "confidence": 0.95,
+   "note": "nom amb espais entre lletres (estil de signatura): normalitzar"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C. Tulipa, 3",
+   "location": "cos citat",
+   "quote": "La direcció és C. Tulipa, 3 (Cerdanyola del Vallès)",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "cos citat",
+   "quote": "(Cerdanyola del Vallès)",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PSOT + PB + P1 (3 plantes, 1 soterrani)",
+   "location": "cos citat",
+   "quote": "una casa que tindria PSOT, PB I PPis(tot i que encara s'esta definint) … PB: 135.26m2 / P1: 107.66m2 / PSOT: 65m2",
+   "confidence": 0.8,
+   "note": "'encara s'està definint'; superfície construïda total ≈ 308 m² (> 300 → C1 coherent)"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "casa (habitatge unifamiliar)",
+   "location": "cos citat",
+   "quote": "un projecte per a una casa",
+   "confidence": 0.7,
+   "note": ""
+  },
+  {
+   "concept_id": "client_name_hint",
+   "value": "Subirà Bertran <subirabertran@gmail.com> (CC)",
+   "location": "capçalera CC del correu citat",
+   "quote": "CC: Subirà Bertran <subirabertran@gmail.com>",
+   "confidence": 0.3,
+   "note": "possible propietari (mateix cognom). NO és candidat a client sense més evidència; el formulari d'acceptació diu Aleix Subirà Felip."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "El text nou d'Eva és zero (RV:). Cos citat amb separador 'De: … Enviado el: …'. La signatura d'imatge de VUA és un enllaç googleusercontent (no descarregable)."
+}

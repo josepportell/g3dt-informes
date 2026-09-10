@@ -1,0 +1,184 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "6600f2bff493c21d13ba95079b3ac07f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geològica (perfil del subsòl) entre els punts P-1, S-1 i P-2, versió neta 'Microsoft: Print To PDF' del dibuix",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (Eva)",
+ "date": "Octubre 2025",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), autora dels annexos del projecte",
+  "for_whom": "El propi informe de G3 — annex intern que dona suport a la redacció dels nivells del sòl",
+  "why": "Mostrar gràficament el perfil litològic del subsòl entre els tres punts d'assaig (P-1 DPSH, S-1 sondeig, P-2 DPSH) i la cota de fonamentació proposada",
+  "expected_fields": [
+   "num_soil_levels",
+   "soil_levels (nom + litologia)",
+   "street_address (redacció de cantonada)",
+   "expedient"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte",
+   "cota_referencia absoluta (z:)",
+   "referencia_catastral",
+   "lab_*"
+  ],
+  "relation_to_others": "Mateix dibuix que PDF/ANNEXES/4001612_tall de correlació.pdf (versió FreeHand, text brossa); aquesta és la còpia neta 'Microsoft: Print To PDF' del mateix contingut — no compta com a font independent addicional",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "LLEGENDA (requadre superior dret) + perfil gràfic",
+   "quote": "1er nivell: Graves amb sorres",
+   "confidence": 0.75,
+   "note": "El tall només delimita 'Sòls vegetals' (cobertura, sense número a la llegenda) i un únic '1er nivell'; no hi ha cap 2n nivell marcat al perfil. Per la regla del Pas 3b, el TALL mana pel nombre de nivells."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001612",
+   "location": "caixetí inferior, cel·la 'Exp:'",
+   "quote": "Exp: 4001612",
+   "confidence": 0.5,
+   "note": "Coincideix amb el nom de la carpeta del projecte; document bessó del FreeHand PDF/ANNEXES/4001612_tall de correlació.pdf, no és font independent"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz (Bell-lloc)",
+   "location": "caixetí, subtítol de 'TÍTOL DEL PROJECTE'",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER  LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+   "confidence": 0.6,
+   "note": "Redacció de cantonada — regla Pas 3: aquesta frase és la que sol usar l'informe (candidat 1). Els dos noms de carrer també apareixen al plànol clau (inset)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc",
+   "location": "caixetí, subtítol",
+   "quote": "... DE BELL-LLOC",
+   "confidence": 0.5,
+   "note": "Forma curta tal com surt en aquest document; no dona la forma oficial llarga."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "caixetí, subtítol",
+   "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.6,
+   "note": "Redacció pròpia de l'annex, no de plantilla G3; coincideix amb la redacció habitual de l'informe (comparació CLOSE)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Antoni Bellet",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Bell-lloc",
+    "municipi_alternatives": [
+     "BELL-LLOC"
+    ]
+   },
+   "location": "caixetí, subtítol + plànol clau (inset)",
+   "quote": "CARRER ANTONI BELLET",
+   "confidence": 0.55,
+   "note": "Un dels dos carrers de la cantonada."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Bell-lloc",
+    "municipi_alternatives": [
+     "BELL-LLOC"
+    ]
+   },
+   "location": "caixetí, subtítol + plànol clau (inset)",
+   "quote": "CARRER MESTRE RAMON ORTIZ",
+   "confidence": 0.55,
+   "note": "Segon carrer de la cantonada; també visible al costat dret del solar dins el plànol clau (inset)."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Sòls vegetals (cobertura, sense número)",
+    "litologia": "Sòls vegetals",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "LLEGENDA",
+    "quote": "Sòls vegetals"
+   },
+   {
+    "nom": "1er nivell",
+    "litologia": "Graves amb sorres",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "LLEGENDA + perfil gràfic",
+    "quote": "1er nivell: Graves amb sorres"
+   }
+  ],
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "perfil gràfic, columna P-1",
+    "quote": "Nb=27 / Nb=R",
+    "note": "Nb llegits directament del gràfic (text imprès); cap fondària numèrica impresa al costat — no derivada per mesura de píxels. Fondària exacta: veure Excel DPSH."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "perfil gràfic, columna P-2",
+    "quote": "Nb=22 / Nb=56 / Nb=R",
+    "note": "Mateixa nota que P-1."
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": null,
+    "profunditat_assolida": null,
+    "spt_ma": null,
+    "nivell_freatic": null,
+    "location": "perfil gràfic, columna S-1",
+    "quote": "N=58",
+    "note": "Valor N imprès al costat de la columna litològica de S-1, sense indicar si és N30, N60 o un altre criteri; sense fondària impresa. No es correlaciona aquí amb cap n30 de spt_ma_tests — veure annex de sondeig per l'assaig SPT detallat."
+   }
+  ]
+ },
+ "reading_notes": "Caixetí inconsistent: el camp 'Plànol de situació' del peu de pàgina no correspon al contingut (és un tall de correlació/perfil del subsòl, no un plànol de situació) — error de còpia de plantilla habitual en els annexos de l'Eva (Pas 0). Producer 'Microsoft: Print To PDF', text_ok=true, no ha calgut renderitzar clips ni meitats. Els valors Nb=/N= del perfil són text imprès llegit directament (OCR del PDF net), no estimacions de posició gràfica — no s'ha mesurat cap fondària a partir de píxels, tal com exigeix el protocol."
+}

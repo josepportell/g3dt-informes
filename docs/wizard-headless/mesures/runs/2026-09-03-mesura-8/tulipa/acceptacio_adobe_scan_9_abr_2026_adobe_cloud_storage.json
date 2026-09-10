@@ -1,0 +1,139 @@
+{
+ "source_path": "ACCEPTACIO/Adobe Scan 9 abr 2026 - Adobe cloud storage.pdf",
+ "source_md5": "7b5043283ac6aef9658cd7a4d3b697be",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic G3 26·0254 (C/Tulipa 3, Cerdanyola del Vallès) escanejat amb Adobe Scan després d'acceptar-lo, amb les dades de facturació/informe omplertes a mà a la p.5 i el telèfon de contacte a la p.1.",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (plantilla); client/sol·licitant (acceptació manuscrita)",
+ "date": "26/03/26 (data del pressupost, no data de camp)",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. genera la plantilla del pressupost; el sol·licitant/client l'omple a mà i la signa/torna en acceptar-lo (rescanejat amb Adobe Scan).",
+  "for_whom": "G3, per registrar les dades de facturació i de l'informe.",
+  "why": "Acceptació formal del pressupost geotècnic 26·0254 per a l'estudi de C/Tulipa 3, Cerdanyola del Vallès.",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "cte_edificacio",
+   "cte_sol",
+   "num_dpsh_tests (previst, no executat)"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "utm_x",
+   "utm_y",
+   "referencia_catastral"
+  ],
+  "relation_to_others": "Versió acceptada/escanejada del pressupost imprès a 26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf (single-casa, C/TULIPA 3); coexisteix a la mateixa subcarpeta amb 26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf (dues cases, Tulipa 3 + Tosca 16). Aquest document dona les dades de CASA 1 (Tulipa 3 / VUA) — situació estructural 'un expedient, N informes' del skill.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "cte_edificacio",
+   "cte_sol"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Aleix Subirà Felip",
+   "location": "p.5, bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' → NOM I COGNOMS / N.I.F.",
+   "quote": "NOM I COGNOMS: ALEIX SUBIRÀ FELIP · N.I.F./C.I.F.: 47235352-E",
+   "confidence": 0.9,
+   "note": "manuscrit, OCR incrustat il·legible; llegit visualment amb render_clip.py a 350dpi. Autoritat A (Pas 3, formulari p.5). Adreça personal del client (C/Joan Miró 32, esc.1, 3r-1a, 08110 Montcada i Reixac) és la del client, NO la de l'obra."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/Tulipa 3",
+   "location": "p.1, bloc OBRA",
+   "quote": "OBRA: ESTUDI GEOTECNIC / C/TULIPA 3 / CERDANYOLA DEL VALLES",
+   "confidence": 0.95,
+   "note": "text imprès net"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tulipa",
+    "nom_via_alternatives": [],
+    "portals": [
+     "3"
+    ],
+    "municipi": "Cerdanyola del Vallès",
+    "municipi_alternatives": [
+     "CERDANYOLA DEL VALLES"
+    ]
+   },
+   "location": "p.1, bloc OBRA",
+   "quote": "C/TULIPA 3 · CERDANYOLA DEL VALLES",
+   "confidence": 0.95,
+   "note": "concepte extra, no és cap dels 15 camps"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "p.1, bloc OBRA",
+   "quote": "CERDANYOLA DEL VALLES",
+   "confidence": 0.9,
+   "note": "grafia G3 sense accent; forma oficial 'Cerdanyola del Vallès'"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "VUA, Visualizing Unbuilt Architecture",
+   "location": "p.1, bloc CLIENT: (sol·licitant del pressupost)",
+   "quote": "CLIENT: VUA, VISUALIZING UNBUILT ARCHITECTURE",
+   "confidence": 0.5,
+   "note": "sol·licitant del pressupost, no promotor; conté 'ARCHITECTURE' → candidat a despatx d'arquitectura, no persona. El seu Tel: (626 056 350, p.1) coincideix amb el TELF. del client a p.5 — probable mateix contacte/persona de gestió."
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C1",
+   "location": "p.2",
+   "quote": "Tipus d'edifici: C1",
+   "confidence": 0.9,
+   "note": "text imprès"
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2",
+   "quote": "Tipus de Terreny : T1",
+   "confidence": 0.9,
+   "note": "text imprès"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "p.2, PLA DE TREBALL",
+   "quote": "2 assaigs de penetració dinàmica DPSH",
+   "confidence": 0.4,
+   "note": "previst al pressupost, no executat (Pas 3: mana l'Excel DPSH executats per sobre del previst)"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral"
+ ],
+ "reading_notes": "preext OK (7 pàgines, text_ok=true totes, sense halves_pages). Text imprès llegit dels .txt (p.1-4,6,7). Manuscrit il·legible a l'OCR incrustat (PDFium): p.1 'Tel:' i p.5 bloc 'DADES QUE HAN DE CONSTAR...' renderitzats amb scripts/render_clip.py (p.1 sencera a 250dpi; p.5 clip 0.0,0.28-1.0,0.65 a 350dpi) i llegits visualment. Codi '26·0254 P#' identificat com a codi comercial (Pas 3), NO com a expedient — l'expedient real és el nom de la carpeta arrel (3001706). Aquest document és l'acceptació de CASA 1 (Tulipa 3/VUA) d'un expedient de 2 cases; l'altra casa (Tosca 16) té pressupost/acceptació propis no llegits en aquesta crida."
+}

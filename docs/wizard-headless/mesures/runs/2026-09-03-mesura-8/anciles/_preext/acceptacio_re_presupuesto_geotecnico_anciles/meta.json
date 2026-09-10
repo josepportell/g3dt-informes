@@ -1,0 +1,24 @@
+{
+ "source_path": "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+ "source_md5": "02a50f46b757e4bf72b368d1643ea3c7",
+ "kind": "msg",
+ "generated": "2026-09-04T19:09:33",
+ "elapsed_s": 0.007,
+ "dir": "acceptacio_re_presupuesto_geotecnico_anciles",
+ "files": [
+  "acceptacio_re_presupuesto_geotecnico_anciles/body.txt"
+ ],
+ "subject": "Re: PRESUPUESTO GEOTECNICO ANCILES",
+ "from": "Alba Barrau <abarrau@retrateria.com>",
+ "to": "Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2026-02-05 23:51:01+01:00",
+ "attachments": [
+  {
+   "name": "presupuesto_g3_anciles.pdf",
+   "size": 527672,
+   "md5": "facc75f307f41e899566791f2272b75d",
+   "already_in_folder": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf",
+   "preext_dir": null
+  }
+ ]
+}

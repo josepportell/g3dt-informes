@@ -1,0 +1,146 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_DPSH.pdf",
+ "source_md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Full de resultats de l'assaig de penetració dinàmica DPSH (4 punts P-1 a P-4), generat en PDF des de l'Excel de camp, amb gràfica colpeig/fondària per punt",
+ "issuer": "G3 (logo G3 al capçal; plantilla pròpia generada des de l'Excel DPSH)",
+ "date": "24/10/25",
+ "pages_or_sheets": "4 pàgines, una per punt (P-1, P-2, P-3, P-4)",
+ "context": {
+  "who_made_it": "G3/Eva, a partir de l'Excel DPSH de camp (ANNEXES/3001621_DPSH.xls)",
+  "for_whom": "expedient intern G3 3001621, per incorporar a l'informe",
+  "why": "registrar numèricament i gràfica els 4 assaigs de penetració dinàmica fets a l'obra i la fondària de rebuig de cada punt",
+  "expected_fields": [
+   "cota d'inici per punt (relativa al carrer)",
+   "colpeig DPSH/N_B per fondària",
+   "fondària de rebuig",
+   "N.F.",
+   "Nivells",
+   "OBRA",
+   "POBLACIÓ",
+   "DATA",
+   "NÚMERO D'INFORME"
+  ],
+  "not_expected": [
+   "client/promotor",
+   "arquitecte",
+   "dades de laboratori",
+   "coordenades UTM",
+   "referència cadastral",
+   "cota de referència absoluta (msnm)"
+  ],
+  "relation_to_others": "versió PDF (des d'Excel) de ANNEXES/3001621_DPSH.xls; existeix una còpia antiga a PDF-V0/ANNEXES/3001621_DPSH.pdf (mateixes dades, versió anterior exclosa de la lectura)",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "capçalera de cada pàgina (1-4): NÚMERO D´INFORME",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte (3001621 CASTELLAR DEL VALLES)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "capçalera de cada pàgina (1-4): OBRA",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.85,
+   "note": "camp OBRA, autoritat per a l'adreça de l'obra segons Pas 3"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "capçalera de cada pàgina (1-4): POBLACIÓ",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "capçalera de cada pàgina (1-4): DATA",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.85,
+   "note": "data de camp dels DPSH; candidat prioritari després de la fitxa de camp (F38) segons Pas 3"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "document sencer: 4 pàgines, una per punt, totes amb dades fins a rebuig",
+   "quote": "P-1 ... / P-2 cota inici: -4,2 m / P-3 cota inici: - 4 m / P-4 - 4 m",
+   "confidence": 0.85,
+   "note": "4 assaigs executats (P-1 a P-4), tots amb corba de colpeig i rebuig registrats"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.1: capçalera + peu de taula",
+    "quote": "P-1     - 4  m  (respecte el carrer). / Rebuig  a -1,08 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.2: capçalera + peu de taula",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) / Rebuig  a -0,48 m"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.3: capçalera + peu de taula",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). / Rebuig  a -0,76 m"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.4: capçalera + peu de taula",
+    "quote": "P-4     - 4  m (respecte el carrer). / Rebuig  a -1,55 m"
+   }
+  ],
+  "__nota": "columna N.F. buida a les 4 pàgines (verificat visualment, no només per text): no s'ha detectat nivell freàtic en cap punt DPSH. Columna 'Nivells': totes les pàgines etiqueten el tram fins al rebuig com 'Nivell 1' (única entrada a la llegenda); a P-1 i P-4 la banda de color de la columna 'Nivells' canvia de to (rosa pàl·lid a taronja) amb una línia discontínua entremig, però com que la llegenda no porta cap 'Nivell 2', no ho interpreto com un segon nivell — s'anota com a incertesa a reading_notes, no s'emet com a dada."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF net (generat des d'Excel, Acrobat Distiller): text extret directament, fiable, confirmat contra les 4 imatges. Totes les cotes d'inici són RELATIVES ('respecte el carrer'), no cap valor absolut en msnm: NO és font per a cota_referencia (regla Pas 3b: relatiu de taula != cota_referencia absoluta). Vist a les imatges: columna N.F. buida a les 4 pàgines; columna 'Nivells' amb un sol color de llegenda ('Nivell 1') a totes, però amb un canvi de to + línia discontínua a P-1 i P-4 que no es correspon amb cap segona etiqueta de llegenda — anotat com a incertesa, no com a dada."
+}

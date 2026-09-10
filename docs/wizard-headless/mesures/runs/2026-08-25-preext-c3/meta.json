@@ -1,0 +1,62 @@
+{
+  "label": "2026-08-25-preext-c3",
+  "date": "2026-08-25",
+  "project": "3001621 CASTELLAR DEL VALLES",
+  "model": "sonnet (claude-sonnet-5)",
+  "concurrency": 3,
+  "claude_version": "2.1.245",
+  "skill_version": "1.3 (variant g3dt-llegir-projecte-preext)",
+  "commit_base": "da995b3 + experiment pre-extraccio (G3DT_LECTURA_PREEXT=1: preext.py, write_doc_json.py, render_clip.py, skill-copia)",
+  "conditions": "Castellar SOL, WSL, login (subscripcio), MCPs del Josep carregats (cwd repo); run NET 11:11:16 -> 11:39:18; pre-extraccio 13/13 en 13,2 s (72 MB, 99 PNG, cap > 3 MB); suite de tests i implementacio de la Fase 10 corrent en paral·lel a la mateixa maquina (CPU, no API); effort xhigh (HERETAT de CLAUDE_EFFORT/effortLevel del Josep, no fixat pel runner — descobert 2026-08-25 vespre)",
+  "changes_since_previous": "pre-extraccio determinista (text/PNG per pagina, cel·les Excel, cos msg) + write_doc_json.py + render_clip.py; skill llegeix fitxers pre-extrets en lloc de fabricar-se fitz (unic canvi; mateix protocol Pas 0/3/3b)",
+  "contaminated_docs": [],
+  "contamination_note": null,
+  "wall_real_s": 1682,
+  "quality_judgement": {
+    "erroni_amb_confianca_fons": 0,
+    "notes": [
+      "field_date ERR = format ('24/10/2025' vs '2025-10-24', mateixa data); el comparador no normalitza dates",
+      "dpsh_tests cota_inici ERR x3 = format (-4 vs -4,0), identic a sonnet-c3",
+      "spt_ma_tests[0].profunditat ERR = format signe/decimals (mateix valor), identic a sonnet-c2",
+      "REGRESSIO (candidats empitjoren): nivell_freatic a 5 files (dpsh_tests x4 + sondeig_tests x1) passa de segur 'No detectat' (c3) a no_trobat — causa declarada pel model a reading_notes de annexes_3001621_dpsh: el Pas 3b exigeix comprovar el COLOR de cel·la (xlrd formatting_info=True) i la pre-extraccio v1 no exporta colors -> v2: sheet-i.colors.txt",
+      "lab_sample_id i num_soil_levels baixen de segur (c3) a candidats amb el bo dins (CAUTELA): perdua de confianca, no d'exactitud; n=1, dins la banda de soroll entre runs?",
+      "num_floors ALERTA = mateix valor PB+1 amb anotacio diferent ('(2 plantes)' vs '(sense soterrani)'): format",
+      "building_type ALERTA = CLOSE; cota_referencia ALERTA = puja a segur amb 1 font (3/3 runs) -> guard Fase 12; street_address ALERTA = variants de format",
+      "MILLORES vs c3: spt_ma_tests ja no duplica SPT-1/MA1 (1 fila, com l'or); sondeig_tests[0].cota CAUTELA amb el valor de l'or entre candidats (c3: ALERTA sense); excés de confiança sondeig_tests[0].spt_ma desapareix",
+      "TEMPS: mediana/doc 292 -> 221 s (-24 %), turns/doc 20,6 -> 17,3, tokens sortida 306k -> 239k (-22 %), paret 33 -> 28 min (-15 %); annexos d'1 pagina baixen 30-45 % (tall 349->206, DPSH.pdf 292->191, DPSH.xls 386->212) pero els multipagina pugen (ACCEPTACIO 7 p 23->28 turns, PENETROS 5 p 31->39): el model llegeix sencer+meitats de TOTES les pagines -> v2: meitats nomes per a pagines amb text_ok=false + regla al skill",
+      "VEREDICTE: NO ADOPTAT (criteri 'candidats no empitjoren' no complert per forat corregible). Seguent: preext v2 (colors Excel + meitats selectives + heuristica text_ok per producer Distiller/PScript5) i remesura preext-v2-c3",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
+    ]
+  },
+  "effort": "xhigh (heretat)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 14,
+      "ALERTA": 4,
+      "ERR": 1,
+      "CAUTELA": 2
+    },
+    "taules_before": {
+      "ERR": 4,
+      "OK": 14,
+      "ALERTA": 5,
+      "CAUTELA": 2,
+      "ABSENT": 2
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 15,
+      "CAUTELA": 5,
+      "ALERTA": 1
+    },
+    "taules_after": {
+      "OK": 20,
+      "ALERTA": 5,
+      "CAUTELA": 2,
+      "ABSENT": 2
+    }
+  }
+}

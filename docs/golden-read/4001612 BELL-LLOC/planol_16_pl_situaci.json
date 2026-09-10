@@ -1,0 +1,15 @@
+{
+  "source_path": "pl. situaci.pdf",
+  "document_type": "annex_planol_situacio",
+  "what_it_is": "Impressió (Microsoft Print To PDF, 24/10/2025) del FreeHand '4001621_plànol de situació.FH11' d'Eva: mateixa composició que PDF/ANNEXES/4001612_plànol de situació.pdf però amb text llegible.",
+  "issuer": "Eva (G3)",
+  "date": "2025-10-24",
+  "pages_or_sheets": 1,
+  "tier_a": [
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí (text)", "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER  LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.95, "note": ""},
+    {"concept_id": "street_address", "value": "entre el Carrer Antoni Bellet i Carrer Mestre Ramon Ortiz", "location": "caixetí (text)", "quote": "SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC", "confidence": 0.95, "note": ""},
+    {"concept_id": "expedient", "value": "4001621 [sic]", "location": "caixetí + títol del PDF", "quote": "Exp: 4001621 | title '4001621_plànol de situació.FH11'", "confidence": 0.2, "note": "el mateix typo que a l'annex FreeHand (origen comú). Regla: expedient des de nom de carpeta / comanda / DPSH annex, mai del caixetí dels plànols d'Eva."}
+  ],
+  "not_present": ["la resta: vegeu annex_10_planol_situacio.json (mateix dibuix)"],
+  "reading_notes": "Versió amb text de l'annex 10. Quan hi ha una còpia 'Print To PDF' d'un FreeHand, preferir-la per al text i el FreeHand per a la imatge."
+}

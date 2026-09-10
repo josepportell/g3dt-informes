@@ -489,7 +489,10 @@ When a value is unclear:
 - If completely illegible, use "??" and confidence = 0.0
 - Always add a note explaining the issue
 
-The output will be reviewed by humans, so marking uncertainty is essential.'''
+The output will be reviewed by humans, so marking uncertainty is essential.
+
+OUTPUT: respond with a single JSON object and nothing else — no preamble, no explanation,
+no markdown fences. The first character of your reply must be "{" and the last must be "}".'''
 
 
 # ============================================================================

@@ -1,0 +1,46 @@
+# vilanova/viaA — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 10 | 0 | 9 | 3 | 53 % |
+| calc | 6 | 2 | 5 | 0 | 62 % |
+| narr | 0 | 6 | 6 | 2 | 50 % |
+| resta | 0 | 2 | 1 | 1 | 67 % |
+
+- [narr] `access_street` **MISMATCH** gen=«carrer adjacent situat al oest» ↔ eva=«El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada»
+- [narr] `adjacent_east_fmt` **MISMATCH** gen=«Per la part est amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre » ↔ eva=«Por la parte norte y este, con parcelas de similares características a las proyectadas en »
+- [narr] `adjacent_intro` **CLOSE** gen=«La parcel·la objecte d'estudi es situa al oest del municipi de Vilanova de Segrià, pren un» ↔ eva=«La parcela objeto de estudio se sitúa al sureste del municipio de VILANOVA DE SEGRIÀ, tien»
+- [narr] `adjacent_north_fmt` **MISMATCH** gen=«Per la part nord amb un magatzem.» ↔ eva=«Por la parte norte y este, con parcelas de similares características a las proyectadas en »
+- [narr] `adjacent_south_fmt` **MISMATCH** gen=«Per la part sud amb una parcel·la buida.» ↔ eva=«Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación her»
+- [narr] `adjacent_west_fmt` **CLOSE** gen=«I finalment, per la part oest, amb el Carrer Santa Gemma.» ↔ eva=«Y finalmente, Por la parte oeste con la calle STA. GEMMA.»
+- [A] `architect_name_upper` **MISMATCH** gen=«JORDI CARNER» ↔ eva=«JUAN JOSÉ TORRES POVEDANO»
+- [A] `building_type_lower` **MISMATCH** gen=«un habitatge unifamiliar aïllat» ↔ eva=«una vivienda unifamiliar aislada»
+- [narr] `conclusions_levels_detected` **CLOSE** gen=«Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl » ↔ eva=«A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles d»
+- [narr] `conclusions_water_statement` **MISMATCH** gen=«En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detect» ↔ eva=«En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta »
+- [A] `data_camp_inici_text` **MISMATCH** gen=«19 de febrer de 2026» ↔ eva=«El día 19 de febrero de 2026, se visitó la obra para:»
+- [A] `data_camp_text` **MISMATCH** gen=«19 de febrer de 2026» ↔ eva=«La campaña de campo, que se ha realizado el día 19 de febrero de 2026, ha consistido en la»
+- [resta] `data_signatura_text` **MISMATCH** gen=«16 de març de 2026» ↔ eva=«Els Omells de Na Gaia, 16 de marzo de 2026»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar»
+- [calc] `geomech_E` **MISMATCH** gen=«450» ↔ eva=«550»
+- [calc] `geomech_cohesion` **MISMATCH** gen=«0.0» ↔ eva=«0.50»
+- [calc] `geomech_gamma` **CLOSE** gen=«2.0» ↔ eva=«2.20»
+- [calc] `geomech_phi` **CLOSE** gen=«38» ↔ eva=«34»
+- [A] `lab_depth` **NO_DATA** gen=«None» ↔ eva=«Profundidad: -1.00 a -1.60 m»
+- [resta] `lab_field_description` **CLOSE** gen=«laboratori d'assaigs per al control de qualitat de l'edificació» ↔ eva=«laboratorio de ensayos para el control de calidad de la edificación»
+- [A] `lab_location` **NO_DATA** gen=«None» ↔ eva=«Punto:  P-3»
+- [A] `lab_sample_id` **NO_DATA** gen=«None» ↔ eva=«Muestra: SPT-1»
+- [resta] `lab_testing_description` **CLOSE** gen=«laboratori d'assaigs per al control de qualitat de l'edificació» ↔ eva=«laboratorio de ensayos para el control de calidad de la edificación»
+- [narr] `lab_tests_text` **NO_DATA** gen=«None» ↔ eva=«Determinación del contenido en ion sulfato en suelos UNE 83963 / 08»
+- [narr] `materials_intro` **CLOSE** gen=«A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del » ↔ eva=«A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de ma»
+- [A] `municipality_de` **MISMATCH** gen=«de Vilanova de Segrià» ↔ eva=«En la zona en estudio, en la población de VILANOVA DE SEGRIÀ, se establece una aceleración»
+- [narr] `photo_site_text` **NO_DATA** gen=«None» ↔ eva=«Fotografía 1. Detalle de la parcela de estudio.»
+- [calc] `qa_value` **MISMATCH** gen=«3.00» ↔ eva=«2.50 Kg/cm2 con un factor de seguridad incluido de F=3»
+- [narr] `radon_sentence` **CLOSE** gen=«La parcel·la concreta d'estudi es localitza al terme municipal de VILANOVA DE SEGRIÀ i, se» ↔ eva=«La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y»
+- [calc] `settlement_sentence` **MISMATCH** gen=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o in» ↔ eva=«Los asientos máximos previstos para la carga recomendada anteriormente serán menospreciabl»
+- [narr] `site_condition` **CLOSE** gen=«Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'ero» ↔ eva=«En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacio»
+- [narr] `site_description` **MISMATCH** gen=«El solar es localitza sense construccions ni pavimentacions.» ↔ eva=«El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada»
+- [A] `spt_lithology` **MISMATCH** gen=«Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)» ↔ eva=«Arcilla limosa y arenosa con algunas gravas»
+- [A] `spt_n30` **MISMATCH** gen=«24» ↔ eva=«10»
+- [A] `superficie_construida` **MISMATCH** gen=«100» ↔ eva=«406»
+- [A] `superficie_parcela` **MISMATCH** gen=«406» ↔ eva=«100»
+- [calc] `table_dpsh_range` **MISMATCH** gen=«3 i 4» ↔ eva=«Tabla 3 y 4. Resumen de los ensayos in situ realizados.»

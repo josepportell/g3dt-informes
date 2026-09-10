@@ -1,0 +1,47 @@
+{
+ "source_path": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+ "source_md5": "286d601c42f4e747aea41e9e7a54ca79",
+ "kind": "msg",
+ "generated": "2026-09-04T15:41:11",
+ "elapsed_s": 0.086,
+ "dir": "26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge",
+ "files": [
+  "26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/body.txt",
+  "26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image008.jpg",
+  "26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image008.jpg.preext/image.png"
+ ],
+ "subject": "geotècnic Ampliació Albert Sans municipi d'Alcoletge",
+ "from": "Cesar Morillas <cesar@g3dt.com>",
+ "to": "Eva Vazquez <eva@g3dt.com>; Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2026-01-26 19:06:05+01:00",
+ "attachments": [
+  {
+   "name": "planol_1.pdf",
+   "size": 201207,
+   "md5": "ed1aaf8235a817a17be1f154bbcd3bfa",
+   "already_in_folder": "26.0049/planol-1.pdf",
+   "preext_dir": null
+  },
+  {
+   "name": "plano_2.pdf",
+   "size": 77163,
+   "md5": "68e0df362820f293092e4a06439c4395",
+   "already_in_folder": "26.0049/A.01.pdf",
+   "preext_dir": null
+  },
+  {
+   "name": "planol_3.pdf",
+   "size": 31008,
+   "md5": "209583ad1d729716a53e81ca2b27a0c9",
+   "already_in_folder": "26.0049/planol 3.pdf",
+   "preext_dir": null
+  },
+  {
+   "name": "image008.jpg",
+   "size": 56700,
+   "md5": "ed4844ac845030d4e9ef3bce4f4091c6",
+   "already_in_folder": null,
+   "preext_dir": "26_0049_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image008.jpg.preext"
+  }
+ ]
+}

@@ -1,0 +1,198 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_corte de correlación.pdf",
+ "source_md5": "731970b4753d1443ff0ecc1ef41a89d2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall (perfil) de correlació geotècnica entre els tres punts DPSH de l'obra (P-1, P-2, P-3) al llarg de l'eix A-A', amb llegenda de dos nivells litològics, marca de cota de nivell freàtic i lectures Nb per punt.",
+ "issuer": "G3 (plantilla i logo G3 al peu; dibuix FreeHand exportat via Acrobat Distiller)",
+ "date": "Fecha: Marzo 2025 (imprès al caixetí; discrepant amb la data de creació del PDF, vegeu reading_notes)",
+ "pages_or_sheets": "1 pàgina (A4 apaïsat, 842x595 pt)",
+ "context": {
+  "who_made_it": "G3 (Eva), com a figura de suport de l'estudi geotècnic",
+  "for_whom": "ús intern de l'informe — és una de les figures que s'insereixen a l'informe geotècnic final",
+  "why": "correlacionar litològicament els tres punts de reconeixement (P-1, P-2, P-3) i mostrar, per punt, els cops Nb, el nombre de nivells i on hi ha nivell freàtic",
+  "expected_fields": [
+   "num_soil_levels",
+   "soil_levels (litologia, contacte entre nivells)",
+   "nivell_freatic per punt DPSH",
+   "referència creuada dels punts P-1/P-2/P-3"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date de camp",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "dades de laboratori"
+  ],
+  "relation_to_others": "prové (probablement) del mateix original FreeHand que ANEXOS/4001671_corte de correlación.FH11 (route skip, no llegible). El projecte també té un tall.pdf a l'arrel (doc_type_hint annex_tall) que pot ser el mateix dibuix o una altra vista del mateix aixecament — no s'ha obert en aquesta crida (--only) per confirmar-ho; tractar com a possible duplicat conceptual fins que es llegeixi.",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001671",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 4001671",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova de Segrià",
+   "location": "caixetí, títol del projecte (2a línia)",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+   "confidence": 0.55,
+   "note": "font secundària (redacció del títol, no una casella dedicada de municipi); comanda/pressupost/PLAN_COST manen per aquest camp"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Santa Gemma, nº 4",
+   "location": "caixetí, títol del projecte (2a línia) + planta de situació (text vertical vora el carrer)",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ. / \"CARRER DE SANTA GEMMA\" (planta)",
+   "confidence": 0.55,
+   "note": "el títol ho diu en castellà ('calle'), la planta en català ('carrer'); mateix carrer, candidat, no és la casella OBRA/ADREÇA d'una plantilla G3"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [],
+    "portals": [
+     "4"
+    ],
+    "municipi": "Vilanova de Segrià",
+    "municipi_alternatives": []
+   },
+   "location": "caixetí, títol del projecte + planta de situació",
+   "quote": "CALLE SANTA GEMMA Nº4 / CARRER DE SANTA GEMMA",
+   "confidence": 0.55,
+   "note": "concepte extra (address_struct), no és cap dels 15 camps"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Vivienda unifamiliar",
+   "location": "caixetí, títol del projecte (1a línia)",
+   "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR",
+   "confidence": 0.5,
+   "note": "redacció del títol, no una casella dedicada; comparació CLOSE amb la redacció final de l'informe"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "LEYENDA",
+   "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas. / Nivel 2: Arenas finas-medias, carbonatadas.",
+   "confidence": 0.85,
+   "note": "aquest document és el TALL de correlació: mana per al NOMBRE de nivells (regla existent). Sense annex de sondeig en aquest projecte (no n'hi ha cap), és l'única font."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "capçaleres del tall",
+   "quote": "P-1 / P-2 / P-3",
+   "confidence": 0.5,
+   "note": "confirma 3 punts DPSH per correlació visual; l'Excel DPSH és l'autoritat per al recompte (executats)"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "tall, columna P-1",
+    "quote": "Nb=8 / Nb=25 / Nb=R",
+    "extra": {
+     "nb_readings": [
+      "Nb=8 (Nivel 1, prop de superfície)",
+      "Nb=25 (Nivel 1, prop del contacte amb Nivel 2)",
+      "Nb=R (Nivel 2, rebuig)"
+     ],
+     "nota": "cap marca de 'Cota de nivel freático' (línia blava discontínua) en aquesta columna"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "tall, columna P-2",
+    "quote": "Nb=11 / Nb=46 / Nb=R",
+    "extra": {
+     "nb_readings": [
+      "Nb=11 (Nivel 1, prop de superfície)",
+      "Nb=46 (Nivel 1, molt prop del contacte amb Nivel 2)",
+      "Nb=R (Nivel 2, rebuig)"
+     ],
+     "nota": "cap marca de 'Cota de nivel freático' en aquesta columna"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": "Aigua",
+    "location": "tall, columna P-3",
+    "quote": "Nb=8 (coincidint amb la línia blava discontínua 'Cota de nivel freático') / Nb=28 / Nb=R",
+    "extra": {
+     "nb_readings": [
+      "Nb=8 (Nivel 1, a la mateixa alçada que la marca de nivell freàtic)",
+      "Nb=28 (Nivel 2)",
+      "Nb=R (Nivel 2, rebuig, al fons del tall)"
+     ],
+     "matis": "aigua",
+     "nota": "única columna amb la marca blava discontínua de la llegenda ('Cota de nivel freático'); no hi ha xifra de cota impresa, només la posició gràfica coincident amb la lectura Nb=8"
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Nivel 1",
+    "litologia": "Arcilla limosa y arenosa con algunas gravas.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "extra": {
+     "nota": "sostre = superfície del terreny (no hi ha capa de cobertura numerada per sobre); el nom exacte al document és 'Nivel 1' (castellà), no 'Nivell 1'"
+    }
+   },
+   {
+    "nom": "Nivel 2",
+    "litologia": "Arenas finas-medias, carbonatadas.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "extra": {
+     "nota": "el contacte Nivel 1/Nivel 2 és una línia inclinada, diferent cota (msnm) a cada punt (~321 msnm prop de P-1 baixant fins a ~319,5 msnm prop de P-3, llegit del gràfic, aproximat). No s'imprimeix cap xifra de fondària (de/a); no s'ha mesurat per píxels, per això de/a queden null."
+    }
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text natiu del PDF és brossa (FreeHand->Acrobat Distiller, text_ok=false); llegit visualment sobre page-1.png (render sencer, ja llegible) + 4 clips amb scripts/render_clip.py (planta de situació 400dpi, títol 300dpi, P-1/P-2 500dpi, P-3 500dpi, llegenda 400dpi). El caixetí diu 'Fecha: Marzo 2025' però els metadades del PDF (creationDate/modDate) són 2026-03-16T17:00:53 — discrepància d'any no resolta; no s'ha usat aquesta data per a field_date (aquest document no és font vàlida per aquest camp). La llegenda també defineix 'Cota de cimentación' (línia vermella discontínua) però no s'ha vist cap traç vermell dibuixat a cap de les tres columnes P-1/P-2/P-3 revisades."
+}

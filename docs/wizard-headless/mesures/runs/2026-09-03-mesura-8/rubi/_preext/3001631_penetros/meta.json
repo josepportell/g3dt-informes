@@ -1,0 +1,52 @@
+{
+ "source_path": "3001631 - PENETROS.pdf",
+ "source_md5": "addfe9cd751987285c9c63b05b24f9e5",
+ "kind": "pdf",
+ "generated": "2026-09-04T13:28:06",
+ "elapsed_s": 3.427,
+ "dir": "3001631_penetros",
+ "files": [
+  "3001631_penetros/page-1.txt",
+  "3001631_penetros/page-1.png",
+  "3001631_penetros/page-1-top.png",
+  "3001631_penetros/page-1-bottom.png",
+  "3001631_penetros/page-2.txt",
+  "3001631_penetros/page-2.png",
+  "3001631_penetros/page-2-top.png",
+  "3001631_penetros/page-2-bottom.png",
+  "3001631_penetros/page-3.txt",
+  "3001631_penetros/page-3.png",
+  "3001631_penetros/page-3-top.png",
+  "3001631_penetros/page-3-bottom.png"
+ ],
+ "pages": 3,
+ "page_sizes_pt": [
+  [
+   595.28,
+   841.89
+  ],
+  [
+   595.28,
+   841.89
+  ],
+  [
+   595.28,
+   841.89
+  ]
+ ],
+ "producer": "Microsoft: Print To PDF",
+ "creator": "",
+ "creationDate": "D:20251114121202+01'00'",
+ "modDate": "D:20251114121258+01'00'",
+ "text_ok": {
+  "1": false,
+  "2": false,
+  "3": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1,
+  2,
+  3
+ ]
+}

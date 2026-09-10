@@ -1,0 +1,46 @@
+{
+  "source_path": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+  "document_type": "plan_cost_g3",
+  "what_it_is": "Full intern de costos/oferta de G3.",
+  "issuer": "G3",
+  "date": "no consta (adjunt al correu del 25/06/25)",
+  "pages_or_sheets": "fulls Plan Cost + OFERTA (la resta és plantilla)",
+  "context": {
+    "who_made_it": "G3 (admin)",
+    "for_whom": "ús intern",
+    "why": "calcular cost/oferta",
+    "expected_fields": [
+      "unitats DPSH (OFERTA!B21)",
+      "ml sondeig (B6)",
+      "SPT previstos (B14)"
+    ],
+    "not_expected": [
+      "valors de camp",
+      "superfícies d'obra"
+    ],
+    "relation_to_others": "duplicat de l'adjunt del correu d'encàrrec; PLAN_COST no s'actualitza (última font per a quantitats)",
+    "authority_for": []
+  },
+  "tier_a": [],
+  "tables": {
+    "quantitats_previstes": {
+      "dpsh": {
+        "valor": 4,
+        "quote": "OFERTA!A21='unitat de penetració dinàmica DPSH' B21=4"
+      },
+      "ml_sondeig_sols": {
+        "valor": 5,
+        "quote": "OFERTA!A6='ml de perforació en sòls fins a 20 m' B6=5"
+      },
+      "spt": {
+        "valor": 3,
+        "quote": "OFERTA!A14='Assaig SPT' B14=3"
+      }
+    },
+    "__nota": "3 SPT previstos vs 1 executat (annex/GTL): previsió, no competeix amb l'executat. E9='EG 3 HAB UNIF CASTELLAR DEL VALLÈS'."
+  },
+  "not_present": [
+    "superficie_construida"
+  ],
+  "reading_notes": "openpyxl data_only; resta de fulls = plantilla (mai senyal)."
+}

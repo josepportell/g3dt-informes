@@ -1,0 +1,17 @@
+{
+  "source_path": "25.0647/PLAN_COST_BELL-LLOC.xlsx (idèntic a l'adjunt del correu 2)",
+  "document_type": "plan_cost_g3",
+  "what_it_is": "Full de planificació de costos de G3 per a l'oferta: títol descriptiu, tècnic responsable, subcontractació, hores; full OFERTA amb les unitats pressupostades (sondeig, SPT, DPSH, laboratori).",
+  "issuer": "G3 (Eva: E21 'Tecnic responsable')",
+  "date": "sense data; adjuntat per Eva el 2025-09-03",
+  "pages_or_sheets": "7 fulls: Plan Cost, OFERTA, FACTURA M, Material Cost (lab), Material Cost, Cost Center, Technicians",
+  "tier_a": [
+    {"concept_id": "building_type", "value": "HAB UNIF (habitatge unifamiliar)", "location": "'Plan Cost'!E9 (etiqueta B9 'DESCRIPCIÓ TITÒL')", "quote": "EG HAB UNIF BELL-LLOC", "confidence": 0.85, "note": "'EG' = estudi geotècnic; 'HAB UNIF' = habitatge unifamiliar; abreviatura, cal expandir"},
+    {"concept_id": "municipality", "value": "BELL-LLOC", "location": "'Plan Cost'!E9", "quote": "EG HAB UNIF BELL-LLOC", "confidence": 0.85, "note": "J8 'LLEIDA' és la província/centre (CLIENT / UBICACIÓ OBRA → LLEIDA), no el municipi"},
+    {"concept_id": "num_dpsh_tests", "value": "2", "location": "OFERTA!B21", "quote": "unitat de penetració dinàmica DPSH | 2", "confidence": 0.85, "note": "pressupostat"},
+    {"concept_id": "num_sondeigs", "value": "1 (5 ml, 3 SPT)", "location": "OFERTA!B6, B14", "quote": "ml de perforació en sòls fins a 20 m | 5 ; Assaig SPT | 3", "confidence": 0.7, "note": "no és dels 15; pla de sondeig"},
+    {"concept_id": "lab_testing_company_hint", "value": "TPS (sondeigs) / SOIL-ASSAIG (laboratori)", "location": "OFERTA!G3, G27", "quote": "SUBCONTRATACION SONDEOS | TPS ; SUBCONTRATACIÓN LABORATORI | SOIL-ASSAIG", "confidence": 0.3, "note": "PERILL: són etiquetes de la PLANTILLA (surten igual a tots els projectes), no dades del projecte. No usar com a font de lab_testing_company (memòria gtl_lab_identity: el lab és TPS sempre). Aquest 'SOIL-ASSAIG' és l'error que va fer l'AI Pipeline."}
+  ],
+  "not_present": ["expedient (I7 'NUM INF' buit)", "client_name (B8 'CLIENT / UBICACIÓ OBRA' sense valor; J8=LLEIDA)", "street_address", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x/utm_y", "referencia_catastral", "lab_sample_id", "lab_depth", "lab_location", "cte_edificacio", "cte_sol"],
+  "reading_notes": "Identificació determinista: 'Plan Cost'!B2 == 'PLAN COST  |  G3 DT'. Valors del projecte només a E9 (títol), E21 (tècnic), i OFERTA columna B (unitats). La resta són preus de plantilla i fórmules. 'NUM D'OFERTA' (B7) i 'NUM INF' (I7) buits → la referència a 25·0647 / 4001612 no hi és. Un lector ingenu pot prendre 'SOIL-ASSAIG' o 'LLEIDA' com a dades: regla → cel·les de plantilla (presents a tots els projectes) no són senyal."
+}

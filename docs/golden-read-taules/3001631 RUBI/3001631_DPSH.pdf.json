@@ -1,0 +1,76 @@
+{
+  "source_path": "PDF/ANNEXES/3001631_DPSH.pdf",
+  "document_type": "annex_dpsh",
+  "what_it_is": "Annex DPSH de l'informe (imprès des de l'Excel), un full per punt amb capçalera de cota",
+  "issuer": "G3 (Eva)",
+  "date": "DATA: 14/11/25",
+  "pages_or_sheets": "3 pàgines (P-1, P-2, P-3)",
+  "context": {
+    "who_made_it": "Eva (G3), impressió Distiller de l'Excel DPSH",
+    "for_whom": "annex de l'informe",
+    "why": "presentació gràfica dels DPSH amb cota d'inici per punt",
+    "expected_fields": [
+      "cota_inici per punt",
+      "field_date",
+      "expedient",
+      "obra/població"
+    ],
+    "not_expected": [
+      "client",
+      "arquitecte"
+    ],
+    "relation_to_others": "derivat d'ANNEXES/3001631_DPSH.xls (mateixos valors); les capçaleres de cota són l'única dada NOVA; discrepa de l'esborrany ANNEXES/Altres/F5 TALL.png (cotes 211,9/211,4/211,40)",
+    "authority_for": [
+      "dpsh_tests.cota_inici",
+      "field_date",
+      "cota_referencia"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "field_date",
+      "value": "14/11/2025",
+      "location": "peu de cada pàgina",
+      "quote": "DATA: 14/11/25",
+      "confidence": 0.9,
+      "note": "coincideix amb comanda DATA DE PRESA i albarà TPS"
+    },
+    {
+      "concept_id": "expedient",
+      "value": "3001631",
+      "location": "peu p.1",
+      "quote": "NÚMERO D´INFORME: 3001631",
+      "confidence": 0.9,
+      "note": ""
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": "+212,50 msnm",
+        "location": "p.1 capçalera del gràfic",
+        "quote": "P-1   +212,50 msnm, segons el planol del ICGC."
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": "+212 msnm",
+        "location": "p.2 capçalera del gràfic",
+        "quote": "P-2   + 212 msnm  segons el plànol del ICGC",
+        "nota": "possible truncament de +212,50 (P-1 i P-3 diuen 212,50 i el tall dibuixa superfície uniforme) — no ho resolc: candidats"
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": "+212,50 msnm",
+        "location": "p.3 capçalera del gràfic",
+        "quote": "P-3   +212,50 msnm  segons plànol en el ICGC"
+      }
+    ],
+    "__nota": "valors de colpeig idèntics a l'Excel; rebuigs als peus: 'Rebuig a -4,55/-3,58/-3,13 m'"
+  },
+  "not_present": [
+    "nivell freàtic (cap marca)",
+    "nivells de sòl"
+  ],
+  "reading_notes": "text net (imprès des d'Excel, no FreeHand); p.1 truncava al primer volcat — llegida la cua sencera"
+}

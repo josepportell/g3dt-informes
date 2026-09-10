@@ -1,0 +1,50 @@
+{
+ "source_path": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf (versió signada a ACEPTACION CASTELLANO/)",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost G3 (m4PRO ERP, 7 p., castellà): quantitats previstes d'assaigs",
+ "issuer": "G3",
+ "date": "gener 2026 (codi 26.0050)",
+ "pages_or_sheets": "7 pàgines; llegida p.2 (quantitats)",
+ "context": {
+  "who_made_it": "G3",
+  "for_whom": "el sol·licitant de l'encàrrec",
+  "why": "oferta econòmica: quantitats PREVISTES, no executades",
+  "expected_fields": [
+   "N assaigs DPSH",
+   "línia sondeig si n'hi ha",
+   "línia SPT",
+   "CTE C/T"
+  ],
+  "not_expected": [
+   "valors de camp"
+  ],
+  "relation_to_others": "les quantitats executades manen (Excel DPSH, albarà TPS)",
+  "authority_for": [
+   "cte",
+   "num_dpsh_tests (previstos)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0",
+   "location": "p.2",
+   "quote": "Tipo de Edificio. C0",
+   "confidence": 0.8
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2",
+   "quote": "Tipo de terreno: T1",
+   "confidence": 0.8
+  }
+ ],
+ "tables": {
+  "__nota": "p.2: '3 ensayos de penetración dinámica DPSH' (=executats) i 'Ensayo SPT, con recuperación de muestra' (1 previst; se'n van fer 2 segons l'albarà). CAP línia de sondeig a rotació → evidència del bloc sondeig_tests buit"
+ },
+ "not_present": [
+  "sondeig a rotació"
+ ],
+ "reading_notes": "PyMuPDF; només línies d'assaigs de la p.2 (grep); no s'ha fet lectura del nivell A escalar (fora d'objectiu)"
+}

@@ -1,0 +1,13 @@
+-- dpsh_tests: or 3 files / prod 3 files · alineades per clau
+ALERTA   dpsh_tests[0].cota_inici prod puja a segur ('+212,50 msnm, segons el planol del ICGC.'); or candidats
+ALERTA   dpsh_tests[2].cota_inici prod puja a segur ('+212,50 msnm, segons plànol en el ICGC'); or candidats
+-- sondeig_tests: or 0 files / prod 0 files
+-- spt_ma_tests: or 1 files / prod 1 files · alineades per clau
+-- soil_levels: or 3 files / prod 2 files · alineades per clau
+BUIT     soil_levels[0].de (or=candidats '~-0,3 m (sota la franja de sòls superficials; lectura gràfica: superfície +212,5 → base franja ~+212,25)'; prod no_trobat)
+CAUTELA  soil_levels[0].a candidats disjunts: or=['fins a la base investigada (rebuigs -4,55/-3,58/-3,13; el dibuix arriba a 208 msnm)', 'fins ~208 msnm al SW / ~210 al NE (~-3,9 m sota P-1), on comença N2'] prod=["fins al fons d'investigació (rebuig DPSH: -4,55/-3,58/-3,13 m per punt)"]
+ABSENT   soil_levels[1].de (or=candidats)
+ABSENT   soil_levels[1].a (or=candidats)
+ALERTA   soil_levels[2].de prod puja a segur ('0,00'); or candidats
+BUIT     soil_levels[2].a (or=candidats '~-0,3 m (~+212,25 msnm, lectura gràfica)'; prod no_trobat)
+TOTALS: {'ALERTA': 3, 'OK': 15, 'BUIT': 2, 'CAUTELA': 1, 'ABSENT': 2}

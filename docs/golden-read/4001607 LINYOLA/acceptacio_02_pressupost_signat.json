@@ -1,0 +1,28 @@
+{
+ "source_path": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "El mateix pressupost 25·0616 (3 p.) amb el formulari p.3 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' omplert amb text tipogràfic (SÍLVIA EROLES BALAGUERÓ, NIF 47697437Z, C/ Llibertat 13, 1-1, 25240 Linyola) i signat a mà (imatge) pel client; modDate 23/09/2025.",
+ "issuer": "G3 (document) omplert i signat pel client (Sílvia Eroles Balagueró)",
+ "date": "2025-09-23",
+ "pages_or_sheets": 3,
+ "context": {
+  "who_made_it": "G3 va generar el PDF (creationDate 21/08/2025); el client el va omplir (camps de text afegits, no widgets) i signar; desat amb modDate 23/09/2025 16:32",
+  "for_whom": "G3: acceptació del contracte-pressupost i dades de facturació/informe",
+  "why": "formalitzar l'encàrrec i dir a G3 A NOM DE QUI ha d'anar l'informe i la factura",
+  "expected_fields": ["client_name (NOM I COGNOMS + NIF)", "adreça del client (NO de l'obra)"],
+  "not_expected": ["street_address de l'obra (el bloc OBRA és el del pressupost original)", "field_date", "cota", "nivells", "lab", "plantes", "superfície"],
+  "relation_to_others": "Còpia de 25.0616/25·0616.pdf (mateix creationDate 20250821132847) + formulari omplert + imatge de signatura. Nom de fitxer 'G3DT_Silvia_Jaume' = nom que li posa el despatx/arquitecte (Silvia + Jaume = els propietaris, probablement parella). El nom del fitxer coincideix amb '2_02B_DG_Silvia_Jaume.pdf' i 'Punts de Sondeig_Silvia_Jaume.pdf' (projecte de l'arquitecte). Adjunt del correu ACCEPTACIO/RV_ Realització geotècnic.msg (comprovar md5).",
+  "authority_for": ["client_name"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "SÍLVIA EROLES BALAGUERÓ", "location": "p.3 formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' (y=306)", "quote": "NOM I COGNOMS: SÍLVIA EROLES BALAGUERÓ | N.I.F./C.I.F.: 47697437Z", "confidence": 0.95, "note": "Autoritat A per al client de l'informe (regla Pas 0: formulari p.5/p.3 omplert). Text tipogràfic, no manuscrit. El nom del fitxer suggereix un segon propietari ('Jaume') que NO consta al formulari: l'informe podria anar a nom de 'Sílvia Eroles Balagueró' sola o dels dos; comprovar projecte de l'arquitecte (Promotor)."},
+  {"concept_id": "client_nif", "value": "47697437Z", "location": "p.3 (y=307 x=447)", "quote": "47697437Z", "confidence": 0.95, "note": "nivell B (dades de factura)"},
+  {"concept_id": "NOT_street_address", "value": "C/LLIBERTAT 13, 1-1, 25240 LINYOLA", "location": "p.3 ADREÇA / CP I POBLACIÓ", "quote": "ADREÇA: C/LLIBERTAT 13, 1-1 | CP I POBLACIÓ: 25240 LINYOLA", "confidence": 1.0, "note": "Adreça del CLIENT (domicili actual, pis 1-1), NO de l'obra. L'obra és 'Clot de la Llacuna, 16' (bloc OBRA p.1). Mateix municipi (Linyola), cosa coherent però no prova."},
+  {"concept_id": "municipality", "value": "Linyola", "location": "p.1 bloc OBRA (y=421)", "quote": "Clot de la Llacuna, 16 -25240- Linyola", "confidence": 0.95, "note": "duplicat del pressupost original (no font independent)"},
+  {"concept_id": "street_address", "value": "Clot de la Llacuna, 16", "location": "p.1 bloc OBRA", "quote": "OBRA: ⏎ Clot de la Llacuna, 16 -25240- Linyola", "confidence": 0.85, "note": "duplicat del pressupost original (no font independent)"},
+  {"concept_id": "architect_name", "value": "BUNYESC ARQUITECTURA EFICIENT, SLP", "location": "p.1 bloc CLIENT", "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP", "confidence": 0.7, "note": "duplicat del pressupost; despatx. La línia p.3 'ARQUITECTE ......' (persones que poden rebre informació) NO està omplerta."},
+  {"concept_id": "client_contact", "value": "tel 618108612; email serolesba@gmail.com; informe digital per email; informe en català", "location": "p.3 (y=321, 527, 506, 546)", "quote": "TELF.: 618108612 | Email del client:...serolesba@gmail.com | X Digital per email (Cost 0€) | X Informe en català", "confidence": 0.9, "note": "nivell B. 'serolesba' = S. Eroles Ba(lagueró)."}
+ ],
+ "not_present": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests (només previstos, com al pressupost)", "superficie_parcela", "num_floors", "building_type", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "Cap widget ni objecte /Sig (no és signatura digital). El formulari està omplert amb text vectorial (get_text el llegeix net). p.3 té una 3a imatge (xref 16, 330×294 RGB, rect 346,599-439,682) = signatura manuscrita del client incrustada com a imatge; a l'esquerra la signatura de G3 ('Evazquez', xref 15, present també a l'original). Renderitzat clip p.3 y=560-720 per confirmar-ho. No cal agent visual."
+}

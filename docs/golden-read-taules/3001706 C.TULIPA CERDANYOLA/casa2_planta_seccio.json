@@ -1,0 +1,37 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf (+ .dwg, mateix dibuix)",
+ "document_type": "planol",
+ "what_it_is": "Plànol de treball de Factoria (casa 2): planta amb topogràfic superposat, casa projectada amb piscina, i secció B; sense caixetí ni taula de superfícies.",
+ "issuer": "Factoria d'Arquitectura SLP",
+ "date": "modDate PDF 2026-05-06",
+ "pages_or_sheets": "1 pàgina (PDF sense capa de text; DWG amb només cotes i rètols de carrer)",
+ "context": {
+  "who_made_it": "l'arquitecte de casa 2",
+  "for_whom": "G3, per situar el camp i les cotes",
+  "why": "mostrar on anirà l'edificació i a quina cota",
+  "expected_fields": [
+   "cota d'implantació",
+   "carrers",
+   "corbes de nivell"
+  ],
+  "not_expected": [
+   "taula de planejament",
+   "superfícies construïdes"
+  ],
+  "relation_to_others": "adjunt del correu 'geotecnic carrer Tosca 16'; la cota 201.25 coincideix amb la cota inici de P-2.1 de l'annex DPSH de casa 2.",
+  "authority_for": [
+   "corroboració de dpsh_tests.cota_inici P-2.1 (201,25)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "Cota d'implantació retolada 201.25 (planta i secció B). La secció mostra l'edifici amb DUES plantes sobre el nivell d'implantació. Cap xifra de superfície: ni al render 150 dpi ni al volcat de text del DWG (només cotes de terreny 196-204, 'Carrer Tosca', 'Camí Antic', 'SECCIÓ B', 'linia virtual terreny natural')."
+ },
+ "not_present": [
+  "superficie_construida",
+  "superficie_parcela",
+  "promotor",
+  "referència cadastral"
+ ],
+ "reading_notes": "PDF sense text → render 150 dpi; DWG passat per dwg2dxf + scripts/dwg_text_dump.py."
+}

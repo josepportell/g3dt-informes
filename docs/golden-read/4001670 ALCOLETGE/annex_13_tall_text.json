@@ -1,0 +1,106 @@
+{
+ "source_path": "tall.pdf (= 'Print To PDF' de ANNEXES/4001670_tall de correlació.FH11; versió Distiller: PDF/ANNEXES/4001670_tall de correlació.pdf)",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació A-A' de l'informe (FreeHand → Microsoft Print To PDF, 16/03/2026): llegenda amb 2 nivells (Nivell 1: Rebliment antròpic; Nivell 2: Lutites, substrat), columnes P-3/P-2/P-1 amb Nb, escala 186-189 msnm, 'Cota de fonamentació recomanada', 'Augment de la humitat detectada', rètol 'Ampliació'; caixetí: 'ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE', Data: Febrer 2026, Exp: 4001670.",
+ "issuer": "G3 (Eva), dibuix FreeHand",
+ "date": "2026-03-16 (PDF); caixetí 'Febrer 2026'",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "l'Eva (annex de l'informe, dibuixat ABANS d'obrir el wizard)",
+  "for_whom": "l'informe (annex tall de correlació)",
+  "why": "correlacionar els 3 DPSH en un perfil i marcar nivells i cota de fonamentació",
+  "expected_fields": [
+   "num_soil_levels (llegenda)",
+   "expedient (caixetí)",
+   "building_type + street_address + municipality (títol de l'informe al caixetí = redacció final de l'Eva)",
+   "cota_referencia (escala msnm, corroboració)"
+  ],
+  "not_expected": [
+   "client",
+   "arquitecte",
+   "plantes",
+   "superfície",
+   "data de camp (el caixetí diu 'Febrer 2026': mes de l'informe/camp, no dia)",
+   "lab"
+  ],
+  "relation_to_others": "mateix dibuix que PDF/ANNEXES/4001670_tall de correlació.pdf (Distiller, text brossa: per a l'agent visual) i que ANNEXES/4001670_tall de correlació.FH11 (no llegible). El títol del caixetí és el TÍTOL DE L'INFORME redactat per l'Eva: màxima autoritat per a la redacció de building_type/adreça. Cotes 186-189 coherents amb 'Cota inici +188,20' de l'annex DPSH. No hi ha annex de sondeig (sense sondeig a rotació): el tall és l'única font de nivells.",
+  "authority_for": [
+   "num_soil_levels",
+   "expedient",
+   "building_type (redacció de l'Eva)",
+   "street_address (redacció de l'Eva)",
+   "municipality",
+   "cota_referencia (corroboració)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "LLEGENDA (y=140)",
+   "quote": "Nivell 2:  Lutites, substrat. ⏎ Nivell 1: Rebliment antròpic.",
+   "confidence": 0.9,
+   "note": "llegenda del tall = criteri de l'Eva. Nivell 1 rebliment antròpic (superficial), Nivell 2 lutites (substrat, rebuig < 2 m). Sense annex de sondeig per creuar (no n'hi ha); agent visual pot confirmar sobre PDF/ANNEXES/…tall….pdf."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "caixetí (y=527, x=732)",
+   "quote": "Exp: 4001670",
+   "confidence": 0.95,
+   "note": "= comanda = annex DPSH = carpeta"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "ampliació d'un edifici (redacció Eva: 'l'ampliació d'un edifici')",
+   "location": "caixetí TÍTOL DEL PROJECTE (y=526-541)",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL ⏎ CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+   "confidence": 0.85,
+   "note": "l'Eva escriu 'edifici', no 'habitatge unifamiliar'. Tipus d'obra = AMPLIACIÓ (= PLAN_COST 'AMPL', correus). Rètol 'Ampliació' (y=175) sobre el perfil. CONFLICTE amb comanda 'CONSTR HAB UNIF'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols nº7, Urbanització El Roser",
+   "location": "caixetí (y=541)",
+   "quote": "CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+   "confidence": 0.9,
+   "note": "redacció de l'Eva; = pressupost/correu/plànols"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "caixetí (y=541)",
+   "quote": "D'ALCOLETGE",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "~188 msnm (escala 186-189)",
+   "location": "eix vertical (y=318-440)",
+   "quote": "189 ⏎ 188 ⏎ 187 ⏎ 186 | A ⏎ A' ⏎ (msnm)",
+   "confidence": 0.5,
+   "note": "només corrobora l'ordre de magnitud de '+188,20' de l'annex DPSH; el valor exacte no hi és escrit"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-02 (mes)",
+   "location": "caixetí (y=527)",
+   "quote": "Data: Febrer 2026",
+   "confidence": 0.3,
+   "note": "mes de l'informe/campanya, sense dia; coherent amb 16/02/2026 (annex DPSH, comanda). Candidat feble."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests (3 columnes P-3/P-2/P-1 dibuixades: corrobora 3, però no és una font de recompte)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Text net (Microsoft Print To PDF, 24 blocs, 92 imatges = trames). Valors Nb per columna: Nb=5/7, Nb=3, Nb=14/N=20, Nb=R (nivell B). PDF/ANNEXES/4001670_tall de correlació.pdf (Distiller, 60 KB) NO llegit aquí: mateix dibuix, text brossa → agent visual si cal. PDF/ANNEXES/4001670_plànol de situació.pdf i 4001670_fotografies.pdf: per a l'agent visual (poden portar UTM de P-2/P-3, data a les fotos)."
+}

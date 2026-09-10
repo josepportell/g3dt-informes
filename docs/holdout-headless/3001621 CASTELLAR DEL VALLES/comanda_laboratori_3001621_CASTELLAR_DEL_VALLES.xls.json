@@ -1,0 +1,30 @@
+{
+  "source_path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+  "document_type": "comanda_lab_g3",
+  "what_it_is": "Petició d'assaigs de laboratori de G3 per a la mostra del sondeig del projecte 3001621",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, SL (responsable EVA VÁZQUEZ)",
+  "date": "2025-10-24 (AH23 DATA DE SOL.LICITUD)",
+  "pages_or_sheets": "Hoja1 (66x41)",
+  "context": {
+    "who_made_it": "G3 (Eva) com a sol·licitant d'assaigs",
+    "for_whom": "El laboratori (el nom del laboratori NO consta a la comanda)",
+    "why": "Encarregar l'assaig d'agressivitat (només sulfats) de la mostra del sondeig",
+    "expected_fields": ["expedient (N19)", "tipus obra (N18)", "adreça (N20)", "municipi (N21)", "data de presa (N23)", "mostres (fila 35: id + cotes)"],
+    "not_expected": ["client_name (bloc SOL.LICITANT = G3, s'ignora)", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm", "referencia_catastral", "cte"],
+    "relation_to_others": "El bloc DADES DEL SOL.LICITANT (G3, NIF B25364589, Els Omells de na Gaia) és la relació G3→laboratori: cap rol al projecte. DATA DE PRESA 24/10 = mateix dia que la data de camp de la fitxa (F38) → sondeig i DPSH el mateix dia. La mostra 'MA (S1)' ha de quadrar amb el GTL i l'annex de sondeig.",
+    "authority_for": ["expedient", "lab_sample_id (etiqueta, per sota de l'annex Eva i el GTL)", "lab_depth (per sota de GTL i Excel/annex)", "municipality"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001621", "location": "Hoja1!N19 (NÚM. D'EXPEDIENT, float)", "quote": "3001621.0", "confidence": 0.9, "note": "Coincideix amb el nom de la carpeta '3001621 CASTELLAR DEL VALLES'."},
+    {"concept_id": "building_type", "value": "construcció de 3 habitatges unifamiliars", "location": "Hoja1!N18 (OBRA)", "quote": "CONSTR 3 HAB UNIF", "confidence": 0.5, "note": "Coherent amb PLAN_COST E9 i el '3HAB' del pressupost inicial."},
+    {"concept_id": "street_address", "value": "C ARBRELLS", "location": "Hoja1!N20 (ADREÇA, bloc DADES DE L'OBRA)", "quote": "C ARBRELLS", "confidence": 0.5, "note": "Sense números; el MODF en dona la forma completa (18A-18B-20)."},
+    {"concept_id": "municipality", "value": "CASTELLAR DEL VALLÈS", "location": "Hoja1!N21 (POBLACIÓ, bloc DADES DE L'OBRA)", "quote": "CASTELLAR DEL VALLÈS", "confidence": 0.7, "note": "Amb accent."},
+    {"concept_id": "field_date", "value": "2025-10-24", "location": "Hoja1!N23 (DATA DE PRESA)", "quote": "datetime(2025, 10, 24)", "confidence": 0.5, "note": "Dia de la presa de mostra (sondeig); aquí coincideix amb la data de camp de la fitxa F38 → un sol dia de campanya."},
+    {"concept_id": "lab_sample_id", "value": "MA (S1)", "location": "Hoja1!C35 (fila de mostres)", "quote": "MA (S1)", "confidence": 0.5, "note": "Etiqueta de la comanda; l'annex de l'Eva i el GTL manen per a l'etiqueta de l'informe."},
+    {"concept_id": "lab_depth", "value": "1,0 - 1,2 m", "location": "Hoja1!J35 (INICIAL) / L35 (FINAL)", "quote": "1.0 / 1.2", "confidence": 0.5, "note": "GTL > Excel/annex > comanda per a la profunditat (regla de cota mal transcrita)."},
+    {"concept_id": "lab_testing_company", "value": "(no consta)", "location": "—", "quote": "—", "confidence": 0.0, "note": "La comanda no anomena el laboratori; si no hi hagués GTL, seria candidat per coneixement previ (G3 treballa amb TPS). Aquí sí que hi ha GTL: mana el GTL."},
+    {"concept_id": "NOT_client_name", "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL (B25364589)", "location": "Hoja1!N11-N14 (DADES DEL SOL.LICITANT)", "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589 | ELS OMELLS DE NA GAIA", "confidence": 0.0, "note": "G3 mai és client; població del sol·licitant mai és el municipi de l'obra."}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "cte"],
+  "reading_notes": "Llegit amb xlrd; dates convertides amb xldate. Assaigs demanats: agressivitat sòls (X) + 'NOMÉS SULFATS'. Litologia i referència mostra buides."
+}

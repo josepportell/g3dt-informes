@@ -1,0 +1,28 @@
+{
+  "source_path": "4687-GTL-25 Castellar del Vallés.pdf (duplicat signat: PDF/ANNEXES/LAB-SIG.pdf, mateix contingut i title)",
+  "document_type": "informe_laboratori",
+  "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL): sulfats de la mostra del sondeig S-1",
+  "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL — B64803075 (laboratori, Golmés, Lleida); signat per Pere Cervós Flinch i Pere Farrés i Bori (19/11/2025)",
+  "date": "2025-11-19 (data d'expedició i signatures digitals)",
+  "pages_or_sheets": "5 pàgines",
+  "context": {
+    "who_made_it": "TPS (laboratori) per encàrrec de G3",
+    "for_whom": "G3 Desenvolupament Territorial, SL (client DEL LABORATORI, NIF B25364589) — cap rol al projecte",
+    "why": "Respondre la comanda d'assaigs (només sulfats) de la mostra del sondeig",
+    "expected_fields": ["lab_testing_company (emissor)", "lab_sample_id (Mostra)", "lab_depth (Cota d'extracció)", "expedient (Obra/Projecte)", "data d'extracció (dia del sondeig)"],
+    "not_expected": ["client_name (les DADES DEL CLIENT són G3)", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "utm", "referencia_catastral", "cte"],
+    "relation_to_others": "Tanca el cicle de la comanda laboratori (mostra 1,0-1,2, només sulfats). Etiqueta de mostra 'MA1 S1' DISCREPA de l'annex de l'Eva ('SPT-1') i de la comanda ('MA (S1)') → per a l'etiqueta de l'informe mana l'annex (regla). LAB-SIG.pdf és la mateixa peça (title idèntic) desada a PDF/ANNEXES: duplicat, no font independent. GTL-8230-25 i 4687-GTL-25 són referències del laboratori, mai expedient.",
+    "authority_for": ["lab_testing_company", "lab_depth", "lab_sample_id (candidat 2, darrere l'annex)", "expedient (corroboració via Obra/Projecte)"]
+  },
+  "tier_a": [
+    {"concept_id": "lab_testing_company", "value": "TPS, Prospecció del Subsòl, SL (B64803075)", "location": "banda de peu de totes les pàgines (emissor + registre mercantil)", "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL B64803075 Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136", "confidence": 0.9, "note": "Laboratori = emissor del GTL, mai el 'client' del GTL."},
+    {"concept_id": "lab_sample_id", "value": "MA1 S1", "location": "p.2/p.4 camp 'Mostra:'", "quote": "Mostra: MA1 S1", "confidence": 0.5, "note": "Discrepa de l'annex de l'Eva (SPT-1): per a l'etiqueta de l'informe, annex > GTL > comanda → candidats, mai segur."},
+    {"concept_id": "lab_depth", "value": "1,0 - 1,2 m", "location": "p.2/p.4 'Cota d'extracció (m)'", "quote": "Cota d'extracció (m): 1,0 - 1,2", "confidence": 0.85, "note": "GTL = comanda = annex sondeig: les 3 fonts coincideixen."},
+    {"concept_id": "expedient", "value": "3001621", "location": "p.2 'Obra / Projecte'", "quote": "Castellar del Vallés. Carrer Arbrells. 3001621", "confidence": 0.7, "note": "Corrobora comanda N19 / annexos / nom de carpeta."},
+    {"concept_id": "field_date", "value": "2025-10-24", "location": "p.2 'Data extracció' / 'Data recepció'", "quote": "Data extracció: 24/10/2025", "confidence": 0.4, "note": "Dia de la mostra (sondeig); coincideix amb la resta. Mai usar la data d'expedició del GTL (19/11) com a data de camp."},
+    {"concept_id": "municipality", "value": "Castellar del Vallés", "location": "p.1 'Situació'", "quote": "Castellar del Vallés. Carrer Arbrells.", "confidence": 0.3, "note": "Grafia castellanitzada del laboratori ('Vallés'); les fonts G3/annexos donen 'Vallès'."},
+    {"concept_id": "NOT_client_name", "value": "G3 Desenvolupament Territorial, SL (B25364589)", "location": "p.1/p.5 'DADES DEL CLIENT' i p.2 'DADES DEL SOL.LICITANT'", "quote": "DADES DEL CLIENT: G3 Desenvolupament Territorial, SL | B25364589", "confidence": 0.0, "note": "Client del laboratori = G3: cap rol al projecte."}
+  ],
+  "not_present": ["client_name", "street_address (només 'Carrer Arbrells' dins Situació, sense número)", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "cte"],
+  "reading_notes": "Text natiu (PDFMaker Excel). Resultat: contingut en SO4 = 0,0 mg/kg (massa 25,0 g, UNE 83963:2008, realitzat 18/11/2025). Descripció del material: 'Grava amb llims'. Tipus de mostra: Alterada. LAB-SIG.pdf verificat com a mateix document (title = '4687-GTL-25 Castellar del Vallés.pdf', mateixos text_chars per pàgina)."
+}

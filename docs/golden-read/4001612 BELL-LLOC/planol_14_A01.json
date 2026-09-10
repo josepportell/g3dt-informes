@@ -1,0 +1,22 @@
+{
+  "source_path": "A.01.pdf (arrel) = 25.0647/A.01.pdf (md5 idèntic)",
+  "document_type": "planol",
+  "what_it_is": "Plànol A.01 'Emplaçament i situació' del Projecte Bàsic i Executiu de l'arquitecte (AutoCAD 2021, 30/09/2025), A1 apaïsat: planta coberta amb cotes de parcel·la i edifici, retalls Cadastre/aèria/POUM, taula 'JUSTIFICACIÓ PLANEJAMENT' (imatge) i caixetí.",
+  "issuer": "ARQUITECTURA BOSCH NOVELL (Jordi Bosch Novell), EXP25.34/SET.25",
+  "date": "2025-09-30 (PDF) / SET.25 (caixetí)",
+  "pages_or_sheets": 1,
+  "tier_a": [
+    {"concept_id": "client_name", "value": "RAMON MITJANA SL", "location": "caixetí, 'Promotor' (x≈1809, y≈1577)", "quote": "Promotor / RAMON MITJANA SL", "confidence": 0.95, "note": "etiqueta explícita 'Promotor' al caixetí de l'arquitecte = propietari/promotor de l'obra. Font independent de l'encàrrec de G3. Coincideix amb DADES CLIENT.txt (NIF B25771726)."},
+    {"concept_id": "architect_name", "value": "Jordi Bosch Novell", "location": "caixetí, 'Arquitecte' (x≈1929, y≈1577)", "quote": "Arquitecte / Jordi Bosch Novell / tel. 620199571 / arquitectura@boschnovell.com", "confidence": 1.0, "note": "nom de persona complet, etiqueta explícita"},
+    {"concept_id": "building_type", "value": "HABITATGE UNIFAMILIAR AÏLLAT", "location": "caixetí, títol del projecte", "quote": "Projecte Bàsic i Executiu / HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 1.0, "note": ""},
+    {"concept_id": "street_address", "value": "CARRER MESTRE RAMON ORTIZ (sense número)", "location": "caixetí 'Situació'", "quote": "Situació / CARRER MESTRE RAMON ORTIZ / 25220 BELL.LLOC D'URGELL (Lleida)", "confidence": 0.9, "note": "la planta mostra els dos carrers: CARRER MESTRE RAMON ORTIZ (est) i CARRER ANTONI BELLET (sud) → cantonada"},
+    {"concept_id": "municipality", "value": "BELL.LLOC D'URGELL", "location": "caixetí 'Situació'", "quote": "25220 BELL.LLOC D'URGELL (Lleida)", "confidence": 0.95, "note": "punt en lloc de guió (mateixa grafia que DADES CLIENT.txt → mateix origen, l'arquitecte)"},
+    {"concept_id": "superficie_parcela", "value": "995,00 m²", "location": "taula JUSTIFICACIÓ PLANEJAMENT, fila 'Parcel.la mínima', columna 'Projecte' — ÉS UNA IMATGE, no text", "quote": "Parcel.la mínima | CLAU 6B min 600.00 m2 | 995,00m2", "confidence": 0.85, "note": "NOMÉS amb visió (la taula és un PNG incrustat). Cadastre diu 518+494=1012 m² (2 parcel·les); el projecte declara 995 m². Candidats: 995 (projecte) / 1012 (Cadastre)."},
+    {"concept_id": "num_floors", "value": "PB+PP", "location": "taula JUSTIFICACIÓ PLANEJAMENT, fila 'N. plantes', columna 'Projecte' (imatge)", "quote": "N. plantes | PB+PP | PB+PP", "confidence": 0.9, "note": "planta baixa + planta pis; coincideix amb el correu ('Pb de 280m + p1 de 86'). Només amb visió."},
+    {"concept_id": "ocupacio_i_alcada", "value": "ocupació 296,80 m²; H màx 6,50 m; façana 24,07 m; IEN 397 m²", "location": "taula JUSTIFICACIÓ PLANEJAMENT (imatge)", "quote": "Ocupacio | … | 296.80 m2 ; H. max | 6.60 mts màx | 6.50 m", "confidence": 0.85, "note": "no són dels 15 però el wizard els té (building_footprint, max_height)"},
+    {"concept_id": "referencia_catastral_hint", "value": "parcel·les 72-73 ressaltades al retall CATASTRE", "location": "retall 'CATASTRE E. 1/750' (imatge)", "quote": "(polígon vermell sobre dues parcel·les)", "confidence": 0.5, "note": "gràfic; els números de parcel·la són massa petits a 36 dpi"},
+    {"concept_id": "dimensions_parcela", "value": "24,72 (nord) × 34,61 (oest) × 24,57 (sud, Antoni Bellet) m + xamfrà 6,11", "location": "cotes de la planta (text)", "quote": "24.72 | 34.61 | 24.57 | 6.11", "confidence": 0.9, "note": ""}
+  ],
+  "not_present": ["expedient (el del projecte de l'arquitecte és EXP25.34/SET.25, no el de G3)", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x/utm_y", "referencia_catastral (com a codi)", "lab_*", "cte_*"],
+  "reading_notes": "Text vectorial per al caixetí i les cotes (get_text ok). La taula de planejament i els tres retalls són imatges: cal retallar (clip) la regió i renderitzar a ≥120 dpi. A1: renderitzar sencer a 36 dpi per orientar-se, després clips. Les etiquetes 'Promotor' / 'Arquitecte' del caixetí són la manera determinista de separar client d'arquitecte. NOTA BIAIX: el skill g3dt-extreure-planol.md posa com a exemple 598 m², Pb+P1, 8,38 m per a aquest plànol — NO coincideix amb el que diu el document (995 m², PB+PP, 6,50 m); l'exemple del skill és erroni o d'una altra versió."
+}

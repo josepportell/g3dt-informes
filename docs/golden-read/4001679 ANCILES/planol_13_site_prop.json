@@ -1,0 +1,27 @@
+{
+ "source_path": "24.0807/SITE_prop A.pdf",
+ "document_type": "planol",
+ "what_it_is": "Plànol de situació 'INTEGRACIÓN PROPUESTA EN TRAMA URBANA' (oXX, PLANOS DE INFORMACIÓN) de l'ESTUDIO DE DETALLE 'CASA GRANDE HCS - ANCILES' (novembre 2023): trama urbana d'Anciles 1/1000 amb la parcel·la 'HUERTO CASA SORT' delimitada en vermell discontinu i la proposta (bloc allargat) a dins.",
+ "issuer": "A+M Arquitectura: ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703)",
+ "date": "2023-11 (caixetí Fecha NOVIEMBRE 2023; PDF creationDate 05/03/2024)",
+ "pages_or_sheets": "1 pàgina A3 apaïsada (6 imatges + text vectorial)",
+ "context": {
+  "who_made_it": "les arquitectes (A+M Arquitectura)",
+  "for_whom": "tramitació de l'estudio de detalle (plànol d'informació)",
+  "why": "situar la proposta dins la trama urbana d'Anciles",
+  "expected_fields": ["client_name (Promotor)", "architect_name", "street_address (Situación)", "nom de la parcel·la", "delimitació cadastral (gràfica)"],
+  "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "superficie_parcela numèrica", "num_floors"],
+  "relation_to_others": "adjunt del correu d'encàrrec (md5 4b5ae667d7469439a4e543d3c8970fef = fitxer solt); miniatura incrustada a la fitxa (image1.jpg). Mateix caixetí que A01_TIPOL (NO és font independent per a promotor/arquitectes: mateix joc de plànols).",
+  "authority_for": ["client_name (Promotor)", "architect_name", "street_address", "parcel_name"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "ANDRÉS AMAT y ENRIQUE M. GARDETA", "location": "caixetí Promotor (y=715)", "quote": "Promotor | ANDRÉS AMAT y ENRIQUE M. GARDETA", "confidence": 0.85, "note": "mateix caixetí que A01_TIPOL (mateix joc, no independent)."},
+  {"concept_id": "architect_name", "value": "ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703)", "location": "caixetí Arquitectura (y=724)", "quote": "Arquitectura | ALBA BARRAU, nºCol. 6.408 | MIRIAM CASTEL, nºCol. 6.703", "confidence": 0.9, "note": "logo A+M ARQUITECTURA al caixetí."},
+  {"concept_id": "street_address", "value": "C/ General Ferraz 20, Anciles - Benasque (Huesca)", "location": "caixetí Situación (y=704)", "quote": "Situación | C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)", "confidence": 0.9, "note": "idèntic a A01_TIPOL."},
+  {"concept_id": "municipality", "value": "Anciles - Benasque (Huesca)", "location": "caixetí Situación", "quote": "ANCILES - BENASQUE (HUESCA)", "confidence": 0.9, "note": "forma llarga."},
+  {"concept_id": "parcel_name", "value": "HUERTO CASA SORT", "location": "llegenda SITUACIÓN (y=567) + delimitació vermella discontínua al plànol", "quote": "PARCELA: HUERTO CASA SORT | DELIMITACIÓN CATASTRAL", "confidence": 0.85, "note": "nom tradicional de la parcel·la; útil per a la descripció del solar. El títol del projecte ('CASA GRANDE HCS') hi fa referència (HCS = Huerto Casa Sort?—inferència, no lectura)."},
+  {"concept_id": "superficie_parcela", "value": null, "location": "plànol sencer", "quote": "[cap xifra de superfície; escala gràfica 1/1000]", "confidence": 0.0, "note": "la delimitació és gràfica; cap valor numèric de parcel·la en aquest plànol."}
+ ],
+ "not_present": ["superficie_parcela", "num_floors", "building_type (només forma del bloc proposat)", "expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral (delimitació gràfica sense codi)", "lab", "cte"],
+ "reading_notes": "Render 100 dpi per confirmar la delimitació vermella (parcel·la al NE del nucli, amb bloc allargat proposat a dins) i la llegenda. Text vectorial del caixetí net. Parcel·les numerades (1-35) = catàleg urbanístic, no cadastre. PDF title 'o02'."
+}

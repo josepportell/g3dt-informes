@@ -52,7 +52,7 @@ def _load_env() -> None:
     env_path = Path(__file__).parent.parent / ".env"
     if not env_path.exists():
         return
-    for line in env_path.read_text().splitlines():
+    for line in env_path.read_text(encoding="utf-8", errors="replace").splitlines():
         line = line.strip()
         if not line or line.startswith("#"):
             continue

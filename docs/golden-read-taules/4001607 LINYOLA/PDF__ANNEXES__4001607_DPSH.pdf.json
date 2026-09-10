@@ -1,0 +1,67 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Impressió PDF (Distiller, 28/10/2025) de l'Excel DPSH: un full per punt amb capçalera de cota, obra, població i data.",
+ "issuer": "G3 (Eva; autor PDF 'Loli')",
+ "date": "creationDate 2025-10-28; DATA de camp a capçalera: 01/10/2025",
+ "pages_or_sheets": "3 pàgines (P-1, P-2, P-3)",
+ "context": {
+  "who_made_it": "Eva (G3) des de l'Excel ANNEXES/4001607_DPSH.xls",
+  "for_whom": "annex de l'informe",
+  "why": "Presentar els assaigs DPSH amb la capçalera de cota i identificació de l'obra",
+  "expected_fields": [
+   "dpsh_tests[].cota_inici (capçalera per pàgina)",
+   "field_date (DATA:)",
+   "street_address (OBRA:)",
+   "municipality (POBLACIÓ:)"
+  ],
+  "not_expected": [
+   "nivell freàtic (ve de la columna N.F. de l'Excel)",
+   "litologies"
+  ],
+  "relation_to_others": "Mateixes dades que ANNEXES/4001607_DPSH.xls (l'Excel mana per als valors de colpeig); aquest PDF afegeix la capçalera amb la cota. NO és font independent de l'Excel per als cops.",
+  "authority_for": [
+   "dpsh_tests[].cota_inici",
+   "cota_referencia"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "+245 msnm",
+   "location": "capçalera p.1-3",
+   "quote": "Cota d'inici: +245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+   "confidence": 0.9,
+   "note": "context: mateixa cota a les 3 pàgines; criteri Eva ICGC -0,15 m carrer"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+245 msnm",
+    "location": "p.1 capçalera",
+    "quote": "ASSSAIG DE PENETRACIÓ DINÀMICA: P-1  Cota d'inici: +245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+245 msnm",
+    "location": "p.2 capçalera",
+    "quote": "ASSSAIG DE PENETRACIÓ DINÀMICA: P-2  Cota d'inici: +245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+245 msnm",
+    "location": "p.3 capçalera",
+    "quote": "ASSSAIG DE PENETRACIÓ DINÀMICA: P-3  Cota d'inici: +245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)"
+   }
+  ],
+  "__nota": "L'annex dona UNA cota (+245 msnm) idèntica per als 3 punts -> val per a tots (regla Pas 3b). Peus 'Rebuig a la cota de -2,90/-2,15/-1,75 m' idèntics a l'Excel (mateixa font, no independent). Anotació SPT-1 / 1,0 a 1,5 / R visible a p.3 (com a l'Excel)."
+ },
+ "not_present": [
+  "nivell freàtic",
+  "litologies",
+  "fondàries de transició de nivells"
+ ],
+ "reading_notes": "Text net (impressió des d'Excel, no FreeHand). Capçalera amb NBSP (\\xa0) i guions Unicode; normalitzats a la transcripció. DATA: 01/10/2025 coincideix amb els noms de les fotos WhatsApp 2025-10-01 (context)."
+}

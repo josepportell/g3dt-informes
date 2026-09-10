@@ -1,0 +1,22 @@
+{
+ "source_path": "pl situ.pdf",
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació de l'Eva (Print To PDF de '4001607_plànol de situació.FH11', 27/10/2025 10:03): 1 pàgina A4 vertical, 0 caràcters de text, 1346 imatges (rasteritzat) → NO llegible com a text.",
+ "issuer": "G3 (Eva)",
+ "date": "2025-10-27",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "l'Eva (FreeHand → Print To PDF)",
+  "for_whom": "annex de l'informe",
+  "why": "situar els 3 punts DPSH sobre el plànol de l'arquitecte / ortofoto",
+  "expected_fields": ["posició dels punts", "carrers", "caixetí (exp., títol, data)"],
+  "not_expected": ["data de camp", "lab", "nivells"],
+  "relation_to_others": "= ANNEXES/4001607_plànol de situació.FH11 = PDF/ANNEXES/4001607_plànol de situació.pdf. A diferència de tall.pdf, aquí el Print To PDF ha rasteritzat tot (1346 imatges, 0 text).",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "needs_vision", "value": "pl situ.pdf (i PDF/ANNEXES/4001607_plànol de situació.pdf)", "location": "tota la pàgina", "quote": "", "confidence": 0.0, "note": "Per a l'agent visual: caixetí (Exp, títol, data —pot tenir el mateix typo '2023' que el tall—), carrers i posició de P-1/P-2/P-3."}
+ ],
+ "not_present": ["(cap camp llegible com a text)"],
+ "reading_notes": "get_text() = '' ; page.get_images() = 1346. Sense intentar render aquí (encàrrec: només text)."
+}

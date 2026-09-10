@@ -10,11 +10,12 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from automation import config
+from automation.lectura import jobs as lectura_jobs
 
 from . import wizard_service
 from . import vision_fast
@@ -33,6 +34,16 @@ def _require_ai_pipeline_enabled() -> None:
     is not advertised in production.
     """
     if not config.G3DT_ENABLE_AI_PIPELINE:
+        raise HTTPException(status_code=404, detail="Not Found")
+
+
+def _require_lectura_enabled() -> None:
+    """Block `/api/lectura-stream/*` when the headless lectura pipeline is off.
+
+    Returns 404 (not 403), same reasoning as `_require_ai_pipeline_enabled`:
+    the existence of this experimental endpoint is not advertised in production.
+    """
+    if not config.G3DT_USE_LECTURA_HEADLESS:
         raise HTTPException(status_code=404, detail="Not Found")
 
 
@@ -58,6 +69,10 @@ def _require_claudecode_vision_enabled() -> None:
 class WizardSaveRequest(BaseModel):
     wizard_fields: dict[str, Any]
     expert_overrides: dict[str, Any] | None = None
+    #: Fase 8b — tries d'Eva sobre cel·les de taula de la lectura
+    #: (`"{bloc}.{index}.{cel·la}"`) i sobre camps de lectura sense input al
+    #: wizard. Absent a la via B i als clients antics.
+    lectura_selections: dict[str, Any] | None = None
 
 
 class TargetedExtractRequest(BaseModel):
@@ -506,11 +521,15 @@ def get_user_data(project_name: str):
 
 
 @router.get("/prefills-stream/{project_name:path}")
-def prefills_stream(project_name: str):
+def prefills_stream(project_name: str, refresh: bool = False):
     """SSE endpoint: streams progress events during extraction, then final prefills.
 
     Production v1: syncs from network share to local workspace first if
     `G3DT_NETWORK_PROJECTS` is configured (idempotent).
+
+    `refresh=true` (botó «Actualitzar prefills») salta la cache de disc de la
+    Fase 13(a). L'obertura normal d'un projecte NO el passa: hi encerta, i és
+    el que estalvia els 43-141 s de tornar a fer l'extracció sencera.
     """
     from automation import sync_workspace
     if sync_workspace.is_network_workflow_enabled():
@@ -524,13 +543,161 @@ def prefills_stream(project_name: str):
         raise HTTPException(status_code=404, detail=str(e))
 
     return StreamingResponse(
-        wizard_service.get_prefills_streaming(project_name),
+        wizard_service.get_prefills_streaming(project_name, force_refresh=refresh),
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",
             "X-Accel-Buffering": "no",
         },
     )
+
+
+@router.get("/lectura-stream/{project_name:path}")
+def lectura_stream(project_name: str, attach: bool = False, refresh: bool = False):
+    """SSE endpoint: headless `claude -p` lectura (via A) + auto_extract in
+    parallel, then merged prefills. Gated by `G3DT_USE_LECTURA_HEADLESS`
+    (404 when off — disseny §2/§9 Fase 5). Same media type/headers/style as
+    `/api/prefills-stream` (via B, untouched).
+
+    Fase 10 (`docs/DISSENY-ANNEX-TRES-BOTONS-JOBS-NOTIFICACIONS-2026-08-24.md`
+    §5.2): `attach=false` (per defecte) arrenca un job nou o s'hi enganxa si
+    ja n'hi ha un de viu — comportament idèntic a abans de la Fase 10.
+    `attach=true` NOMÉS subscriu a un job JA viu (el job corre en un fil
+    propi, no cal repetir el sync de xarxa ni la validació del projecte).
+
+    `refresh=true` (botó «Actualitzar prefills») fa que el job nou salti la
+    cache de disc de `_auto_extract_cached`. Només té efecte quan ARRENCA el
+    job: enganxar-se a un que ja corre (o `attach=true`) no el pot rebobinar.
+    L'obertura normal d'un projecte NO el passa — hi hem de seguir encertant.
+    """
+    _require_lectura_enabled()
+
+    if not attach:
+        from automation import sync_workspace
+        if sync_workspace.is_network_workflow_enabled():
+            sync_result = sync_workspace.sync_to_workspace(project_name, force=False)
+            if sync_result["status"] == "error":
+                raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+
+        try:
+            wizard_service._resolve_project(project_name)  # Validate project exists
+        except ValueError as e:
+            raise HTTPException(status_code=404, detail=str(e))
+
+    from . import lectura_service
+
+    return StreamingResponse(
+        lectura_service.get_lectura_streaming(project_name, attach=attach, force_refresh=refresh),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
+@router.get("/lectura/enabled")
+def lectura_enabled():
+    """Sonda de la UI (Fase 14a): la lectura headless està engegada?
+
+    Existeix per no fer servir un 404 com a senyal. La resta d'endpoints
+    d'aquest pipeline fan 404 amb el flag apagat, i està bé per a una API —
+    però `fetch()` d'un 404 deixa una línia vermella a la consola del navegador
+    encara que el codi el gestioni, i el criteri de la fase és **0 errors de
+    consola** també amb el flag apagat, on la UI d'avui no ha de canviar en res.
+    """
+    return {"enabled": bool(config.G3DT_USE_LECTURA_HEADLESS)}
+
+
+@router.get("/jobs")
+def list_lectura_jobs(refresh: bool = False):
+    """Taula d'estat dels jobs de lectura headless (Fase 10, disseny §5.2).
+
+    `refresh=true` (botó *Actualitzar*, Fase 14b) torna a mirar la xarxa ara en
+    lloc de servir el `network_delta` cachejat d'un minut. Segueix sent el mode
+    `check` del delta-sync: no copia ni mou res, i no arrenca cap job.
+
+    Gated per `G3DT_USE_LECTURA_HEADLESS` (404 quan és off, mateix criteri
+    que la resta d'endpoints d'aquest pipeline).
+    """
+    _require_lectura_enabled()
+
+    from . import lectura_service
+
+    return {"jobs": lectura_service.list_jobs(refresh=refresh)}
+
+
+@router.post("/jobs/{project_name:path}")
+def start_lectura_job(project_name: str, button: str = "desde_zero"):
+    """Arrenca (o s'enganxa a) un job de lectura headless per a un projecte
+    (Fase 10, disseny §2/§3.4/§5.2).
+
+    202 + `{"job": ..., "attach": false}` si crea un job nou. 409 +
+    `{"job": ..., "attach": true}` si ja n'hi havia un de viu per aquest
+    projecte — mai dos `run_lectura` del mateix projecte alhora.
+
+    Totes dues respostes porten `"warnings"` (llista, buida quan tot ha anat bé)
+    i, si n'hi ha, `"sync"` amb els indicadors del delta-sync
+    (`scan_incomplete`/`mass_disappearance`/`scan_errors`/`vanished`).
+    """
+    _require_lectura_enabled()
+
+    if button not in lectura_jobs.BUTTONS:
+        raise HTTPException(status_code=400, detail=f"Botó desconegut: {button!r}")
+
+    from automation import sync_workspace
+    from . import lectura_service
+
+    # Avisos del delta-sync cap a la pantalla de l'Eva (mateix contracte que el
+    # `warnings` de `/api/generate`: cadenes ja redactades, informatives, que no
+    # bloquegen res).
+    warnings: list[str] = []
+    sync_flags: dict = {}
+
+    if sync_workspace.is_network_workflow_enabled():
+        # Fase 11 (disseny §4, pas 1/4 dels botons 2 i 3): delta-sync en lloc de
+        # la còpia idempotent. `sync_to_workspace(force=False)` feia `skipped`
+        # quan el workspace ja existia, i el job es posava a llegir fitxers vells
+        # sense dir-ho. Si el projecte encara no hi és, no hi ha delta possible:
+        # còpia sencera com fins ara.
+        delta = sync_workspace.sync_delta_for_leaf(project_name, check_only=False)
+        if delta.get("status") == "error":
+            raise HTTPException(status_code=404, detail=delta.get("error", "delta-sync failed"))
+        if delta.get("status") in ("absent", "skipped"):
+            sync_result = sync_workspace.sync_to_workspace(project_name, force=False)
+            if sync_result["status"] == "error":
+                raise HTTPException(status_code=404, detail=sync_result.get("error", "sync failed"))
+        else:
+            logger.info(
+                "delta-sync %s: %d nous, %d canviats, %d apartats",
+                project_name, len(delta.get("new") or []), len(delta.get("changed") or []),
+                len(delta.get("deleted") or []),
+            )
+            # `status="ok"` amb `warning`: el delta-sync ha pres una decisió
+            # prudent en silenci (escaneig de xarxa incomplet, o desaparició en
+            # massa) i no ha apartat res. Si l'avís es queda al log del servidor,
+            # l'Eva llegeix una còpia que pot ser incompleta sense saber-ho. El
+            # text el redacta `sync_workspace` — diu què ha passat i què s'ha
+            # fet, i no acusa la xarxa (pot haver reorganitzat ella la carpeta).
+            if delta.get("warning"):
+                warnings.append(delta["warning"])
+                sync_flags = {
+                    key: delta[key]
+                    for key in ("scan_incomplete", "mass_disappearance", "scan_errors", "vanished")
+                    if key in delta
+                }
+        lectura_service.invalidate_network_delta(project_name)
+
+    try:
+        wizard_service._resolve_project(project_name)  # Validate project exists
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    job, created = lectura_service.start_or_attach_job(project_name, button)
+    body = {"job": job.snapshot(), "attach": not created, "warnings": warnings}
+    if sync_flags:
+        body["sync"] = sync_flags
+    return JSONResponse(status_code=202 if created else 409, content=body)
 
 
 @router.get("/pipeline-log/{project_name:path}")
@@ -652,7 +819,8 @@ def save_wizard(project_name: str, req: WizardSaveRequest):
     """Save wizard data to user_data.json."""
     try:
         path = wizard_service.save_wizard(
-            project_name, req.wizard_fields, req.expert_overrides
+            project_name, req.wizard_fields, req.expert_overrides,
+            lectura_selections=req.lectura_selections,
         )
         return {"saved": True, "path": str(path)}
     except ValueError as e:
@@ -853,24 +1021,104 @@ _G3DT_ROOT = Path(__file__).resolve().parent.parent
 # Prefix patterns in cache dir → figure slot key
 _CACHE_PREFIX_TO_SLOT: list[tuple[str, str, str]] = [
     # (glob prefix, slot_key, human source label)
-    ("cadastre_sitplan_*", "fig_cadastre", "PDF crop situation plan"),
-    ("cadastre_*", "fig_cadastre", "Architect plan crop"),
-    ("google_sat_parcel_*", "fig_aerea", "Google satellite"),
-    ("orthophoto_parcel_*", "fig_aerea", "ICGC orthophoto"),
-    ("main_plan_*", "fig_main_plan", "Architect plan crop"),
-    ("planol_*", "fig_main_plan", "Full plan render"),
+    # Acció 4 (2026-09-09): claus de ranura = les de la plantilla de la peça 7a (`fig_situacio`, `fig_assaigs`,
+    # `fig_projecte_1/2`); les d'assaigs i projecte surten de `figure_selection.json` (vegeu `_collect_figure_previews`)
+    # Peça 5 / 4 (2026-09-08): els dos mapes del full de situació i el retall del dibuix amb punts (peça 7a: al 2.2)
+    ("situacio_*", "fig_situacio", "Dos mapes del full de situació"),
+    ("plan_crop_*", "fig_assaigs", "Retall del dibuix amb punts (figura d'assaigs, 2.2)"),
+    ("cadastre_sitplan_*", "fig_situacio", "PDF crop situation plan"),
+    ("cadastre_*", "fig_situacio", "Architect plan crop"),
+    ("main_plan_*", "fig_assaigs", "Architect plan crop"),
+    ("planol_*", "fig_assaigs", "Full plan render"),
     ("geological_composite_*", "fig_geological", "ICGC geological composite"),
     ("geological_*", "fig_geological", "ICGC geological map"),
+    ("tall_crop2_*", "fig_correlation", "Retall del tall de correlació"),
     ("tall_*", "fig_correlation", "Correlation section PDF"),
 ]
 
 # SmartScan role → figure slot key
 _ROLE_TO_FIGURE_SLOT: dict[str, tuple[str, str]] = {
-    "figure_situation_map": ("fig_cadastre", "SmartScan figure"),
+    "figure_situation_map": ("fig_situacio", "SmartScan figure"),
     "figure_geological_map": ("fig_geological", "SmartScan figure"),
     "figure_test_points": ("fig_test_points", "SmartScan figure"),
     "figure_correlation": ("fig_correlation", "SmartScan figure"),
 }
+
+#: ranures que MANEN des de `figure_selection.json` (lector o Eva): la selecció també buida (cap figura = cap figura)
+_SELECTION_SLOTS = {"fig_assaigs_image": "fig_assaigs", "fig_projecte_image_1": "fig_projecte_1",
+                    "fig_projecte_image_2": "fig_projecte_2", "fig_situacio_image_1": "fig_situacio",
+                    "fig_situacio_image_2": "fig_situacio_2",
+                    # pujada (2026-09-10): les tres figures automàtiques, quan l'Eva hi ha posat una imatge seva
+                    "fig_geological_image": "fig_geological", "fig_correlation_image": "fig_correlation",
+                    "fig_spt_cullera_image": "fig_spt_cullera"}
+
+
+_CACHE_SOURCE_PDF_RE = __import__("re").compile(r"tall|corte|situ|pl[aà]nol|plano|A\.01", __import__("re").I)
+_UTM_RE = __import__("re").compile(r'"utm_x"\s*:\s*([0-9.]+)[^{}]*?"utm_y"\s*:\s*([0-9.]+)', __import__("re").S)
+
+
+def _project_cache_keys(project_path: Path) -> set[str]:
+    """Marques que identifiquen les imatges de la cau d'AQUEST projecte: el hash de contingut (10 hex) dels PDF font
+    (`_cache_name`: tall, plànol de situació, A.01…) i els parells UTM `x_y` (`geological_composite_{x}_{y}`,
+    `orthophoto_parcel_…`) que hi hagi als JSON de `validation/`. La cau és GLOBAL: sense aquest filtre el calaix
+    mostrava «el fitxer més recent» del prefix, que podia ser d'un altre projecte (2026-09-09, vist amb Tulipa)."""
+    import hashlib, re
+    keys: set[str] = set()
+    try:
+        for f in project_path.rglob("*.pdf"):
+            rel = f.relative_to(project_path)
+            if len(rel.parts) > 4 or "validation" in rel.parts or not _CACHE_SOURCE_PDF_RE.search(f.name):
+                continue
+            try:
+                keys.add(hashlib.md5(f.read_bytes()).hexdigest()[:10])
+            except OSError:
+                continue
+        vdir = project_path / "validation"
+        if vdir.is_dir():
+            for j in vdir.glob("*.json"):
+                try:
+                    if j.stat().st_size > 2_000_000:
+                        continue
+                    txt = j.read_text(encoding="utf-8", errors="replace")
+                except OSError:
+                    continue
+                for x, y in _UTM_RE.findall(txt):
+                    try:
+                        keys.add(f"{float(x):.0f}_{float(y):.0f}")
+                    except ValueError:
+                        pass
+    except Exception as exc:
+        logger.warning("_project_cache_keys: %s", exc)
+    return keys
+
+
+def _figures_from_selection(project_path: Path, project_name: str) -> dict[str, dict[str, str]] | None:
+    """Acció 4: les figures d'assaigs, projecte i situació doble tal com les aplicarà el generador
+    (`lector_figures.apply_selection`, mateixa cau `figsel_*`). `None` si no hi ha cap selecció vàlida."""
+    from automation.imatges.lector_figures import apply_selection, load_selection
+    sel = load_selection(project_path)
+    if not sel:
+        return None
+    label = "Tria de l'Eva" if sel.get("source") == "user" else "Tria del lector de figures"
+    encoded_name = quote(project_name, safe='')
+    out: dict[str, dict[str, str]] = {}
+    try:
+        applied = apply_selection(project_path, _FIGURE_CACHE_DIR)
+    except Exception as exc:
+        logger.warning("figure_selection al calaix: %s", exc)
+        return None
+    for key, slot in _SELECTION_SLOTS.items():
+        val = applied.get(key)
+        if not val:
+            continue
+        p = Path(val)
+        if p.is_file():
+            out[slot] = {"filename": p.name, "source": label,
+                         "thumbnail_url": f"/api/figure-preview/{encoded_name}?slot={slot}&file={quote(p.name, safe='')}"}
+    # la selecció mana també quan diu «cap»: assaigs i projecte no cauen als prefixos de la cau
+    for slot in ("fig_assaigs", "fig_projecte_1", "fig_projecte_2"):
+        out.setdefault(slot, {"filename": "", "source": f"{label}: cap figura", "thumbnail_url": ""})
+    return out
 
 
 def _collect_figure_previews(
@@ -886,14 +1134,19 @@ def _collect_figure_previews(
     figures: dict[str, dict[str, str]] = {}
     encoded_name = quote(project_name, safe='')
 
-    # 1. Scan cache dir for known prefixes
+    # 0. Acció 4 (2026-09-09): la selecció del lector de figures / de l'Eva mana sobre assaigs, projecte i situació doble
+    figures.update(_figures_from_selection(project_path, project_name) or {})
+
+    # 1. Scan cache dir for known prefixes — només els fitxers d'AQUEST projecte (hash del PDF font o UTM al nom)
     if _FIGURE_CACHE_DIR.is_dir():
+        keys = _project_cache_keys(project_path)
         for glob_prefix, slot_key, source_label in _CACHE_PREFIX_TO_SLOT:
             if slot_key in figures:
                 continue  # first match wins per slot
-            matches = sorted(_FIGURE_CACHE_DIR.glob(glob_prefix))
+            matches = [f for f in _FIGURE_CACHE_DIR.glob(glob_prefix) if any(k in f.name for k in keys)]
+            matches.sort(key=lambda f: f.stat().st_mtime)
             if matches:
-                f = matches[-1]  # most recent by name
+                f = matches[-1]  # el més recent d'aquest projecte
                 if f.is_file() and f.suffix.lower() in _IMAGE_EXTENSIONS:
                     figures[slot_key] = {
                         "filename": f.name,
@@ -1013,18 +1266,10 @@ def list_photos(project_name: str):
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    # Find photos directory
-    foto_dir: Path | None = None
-    for name in ['FOTOGRAFIES', 'FOTOS DE CAMP + PLANOL PUNTS', 'FOTOGRAFÍAS']:
-        candidate = project_path / name
-        if candidate.is_dir():
-            foto_dir = candidate
-            break
-    if foto_dir is None:
-        for d in sorted(project_path.iterdir()):
-            if d.is_dir() and d.name.upper().startswith('FOTOS'):
-                foto_dir = d
-                break
+    # Find photos directory: la mateixa cerca que el lector de fotos i l'ImageManager (rol `photos_dir`, `FOTOGRAFIA`
+    # en singular, `FOTOS*`/`FOTOGRAF*`); abans un projecte amb `FOTOGRAFIA/` no llistava cap foto (2026-09-09)
+    from automation.imatges.lector_fotos import find_photos_dir
+    foto_dir: Path | None = find_photos_dir(project_path)
 
     photos: list[dict[str, str]] = []
     if foto_dir:
@@ -1034,8 +1279,33 @@ def list_photos(project_name: str):
                 photos.append({
                     "filename": f.name,
                     "relative_path": rel,
+                    "kind": "foto",
                     "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
                 })
+    # PNG de l'Eva (`ALTRES`/`OTROS`): els mateixos candidats que veu el lector de fotos (2026-09-09, acció 1 de
+    # l'anàlisi de discrepàncies). Una vista del solar d'un visor (Google Earth) hi pot ser «Fotografia 1».
+    from automation.imatges.lector_fotos import list_eva_pngs
+    seen = {p["relative_path"] for p in photos}
+    for f in list_eva_pngs(project_path):
+        rel = str(f.relative_to(project_path))
+        if rel in seen:
+            continue
+        photos.append({
+            "filename": f.name,
+            "relative_path": rel,
+            "kind": "eva_png",
+            "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
+        })
+    # Pujades de l'Eva des de la finestreta d'alternatives (2026-09-10): carpeta pròpia, nom = ID; el nom original
+    # es guarda a l'índex. Sense això la pestanya pintava la ranura buida quan l'actual era una pujada.
+    for f, original in _list_uploaded_images(project_path):
+        rel = f.relative_to(project_path).as_posix()
+        photos.append({
+            "filename": original or f.name,
+            "relative_path": rel,
+            "kind": "upload",
+            "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
+        })
 
     # Load current selection
     sel_path = project_path / 'validation' / 'photo_selection.json'
@@ -1063,6 +1333,454 @@ def list_photos(project_name: str):
         "current_selection": current_selection,
         "slot_info": slot_info,
     }
+
+
+# --- Acció 4 (2026-09-09): les alternatives dels lectors, visibles al wizard (zona fixa amb hover) ---
+
+_PHOTO_SLOTS = ("site_1", "site_2", "dpsh", "sondeig", "materials")
+_PHOTO_SLOT_LABELS = {"site_1": "Foto vista general 1", "site_2": "Foto vista general 2", "dpsh": "Foto penetròmetre DPSH",
+                      "sondeig": "Foto sondeig", "materials": "Foto materials"}
+_FIGURE_SLOT_LABELS = {"fig_situacio": "Figura de situació (1.1)", "fig_projecte_1": "Figura del projecte 1 (1.1)",
+                       "fig_projecte_2": "Figura del projecte 2 (1.1)", "fig_assaigs": "Figura d'assaigs (2.2)",
+                       # pujada (2026-09-10): les tres figures automàtiques també admeten una imatge de l'Eva
+                       "fig_geological": "Mapa geològic (3.1)", "fig_correlation": "Tall de correlació (4.1)",
+                       "fig_spt_cullera": "Cullera normalitzada SPT"}
+#: ranura del wizard → (clau a `figure_selection.json`, què hi posa el generador si l'Eva no hi puja res)
+_AUTO_FIGURE_SLOTS = {
+    "fig_geological": ("geologic", "el mapa que l'Eva ha compost al projecte (si n'hi ha) o la recepta ICGC"),
+    "fig_correlation": ("tall", "el retall automàtic del tall de correlació"),
+    "fig_spt_cullera": ("cullera", "el gràfic de la cullera normalitzada de la plantilla"),
+}
+_ENTRY_KEYS = ("idx", "kind", "rel", "page", "src", "crop", "caption", "rao", "crops")
+
+# --- Pujada d'imatges des de la finestreta (2026-09-10) ---
+_UPLOAD_IMG_SUBDIR = ("validation", "uploads", "imatges")     # carpeta pròpia: NO la de l'evidència HITL
+_UPLOAD_IMG_INDEX = "pujades.json"                            # nom original, ranura i moment de cada pujada
+_UPLOAD_IMG_MAX_BYTES = 25 * 1024 * 1024
+_UPLOAD_IMG_MAX_SIDE = 2400        # 150 mm a > 400 dpi; una foto de mòbil de 10 MB entraria sencera al .docx
+_UPLOAD_PROJECT_CAPTION = "Detall del projecte. Font: G3DT."   # decisió del Josep 2026-09-10; camp de peu: pendent
+
+
+def _uploads_dir(project_path: Path) -> Path:
+    return project_path.joinpath(*_UPLOAD_IMG_SUBDIR)
+
+
+def _list_uploaded_images(project_path: Path) -> list[tuple[Path, str]]:
+    """Les imatges pujades per l'Eva, amb el nom original (de l'índex) — ordenades pel nom, que comença per la data."""
+    d = _uploads_dir(project_path)
+    if not d.is_dir():
+        return []
+    idx = _read_json_file(d / _UPLOAD_IMG_INDEX) or {}
+    out = []
+    for f in sorted(d.iterdir()):
+        if f.is_file() and f.suffix.lower() in _IMAGE_EXTENSIONS:
+            meta = idx.get(f.name) if isinstance(idx.get(f.name), dict) else {}
+            out.append((f, str(meta.get("original") or "")))
+    return out
+
+
+def _store_uploaded_image(project_path: Path, data: bytes, raw_name: str, slot: str) -> str:
+    """Valida que és una imatge (PIL, no l'extensió), la normalitza (EXIF, RGB, costat llarg ≤ 2.400 px; PNG es queda
+    PNG, la resta JPEG q=90) i la desa amb un nom que és només un ID (data + hex): cap paraula que una regla pel nom
+    («geol», «tall», «situ»…) pugui agafar. El nom original va a l'índex. Retorna el camí relatiu (posix)."""
+    import datetime
+    import io
+    import json as _json
+    import secrets
+    from PIL import Image, ImageOps
+    try:
+        Image.open(io.BytesIO(data)).verify()
+        im = Image.open(io.BytesIO(data)); im.load()
+    except Image.DecompressionBombError:
+        raise HTTPException(status_code=400, detail="La imatge té massa píxels")
+    except Exception:
+        raise HTTPException(status_code=400, detail="El fitxer no és una imatge llegible")
+    keep_png = (im.format or "").upper() == "PNG"
+    im = ImageOps.exif_transpose(im) or im
+    if keep_png:
+        if im.mode not in ("RGB", "RGBA"):
+            im = im.convert("RGBA" if (im.mode in ("P", "LA", "PA") or "transparency" in im.info) else "RGB")
+    else:
+        im = im.convert("RGB")
+    if max(im.size) > _UPLOAD_IMG_MAX_SIDE:
+        im.thumbnail((_UPLOAD_IMG_MAX_SIDE, _UPLOAD_IMG_MAX_SIDE), Image.Resampling.LANCZOS)
+    d = _uploads_dir(project_path); d.mkdir(parents=True, exist_ok=True)
+    when = datetime.datetime.now()
+    name = f"{when:%Y%m%d-%H%M%S}-{secrets.token_hex(3)}{'.png' if keep_png else '.jpg'}"
+    out = d / name
+    if keep_png:
+        im.save(out, format="PNG", optimize=True)
+    else:
+        im.save(out, format="JPEG", quality=90, optimize=True)
+    idx_path = d / _UPLOAD_IMG_INDEX
+    idx = _read_json_file(idx_path) or {}
+    idx[name] = {"original": Path(raw_name or "imatge").name[:120], "slot": slot, "when": when.isoformat(timespec="seconds"),
+                 "size": list(im.size)}
+    idx_path.write_text(_json.dumps(idx, ensure_ascii=False, indent=1), encoding="utf-8")
+    return out.relative_to(project_path).as_posix()
+
+
+def _is_upload_rel(rel: str | None) -> bool:
+    return isinstance(rel, str) and rel.replace("\\", "/").startswith("/".join(_UPLOAD_IMG_SUBDIR) + "/")
+
+
+def _referenced_upload_rels(project_path: Path) -> set[str]:
+    """Els camins de pujada que apareixen, com a cadena i a qualsevol nivell, a les dues seleccions."""
+    found: set[str] = set()
+
+    def walk(x) -> None:
+        if isinstance(x, str):
+            if _is_upload_rel(x):
+                found.add(x.replace("\\", "/"))
+        elif isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    for name in ("photo_selection.json", "figure_selection.json"):
+        walk(_read_json_file(project_path / "validation" / name) or {})
+    return found
+
+
+def _sweep_unreferenced_uploads(project_path: Path) -> list[str]:
+    """#12 (2026-09-10): una pujada que ja no és a cap ranura no existeix: fora el fitxer, la seva entrada de l'índex i
+    els renders `figsel_*` que en depenen. L'original continua a l'ordinador de l'Eva; tornar-la a pujar és un clic.
+    Es crida després de cada escriptura de les seleccions (`/choose`, `/upload`, «Guardar» de la pestanya, «Restablir»)."""
+    import json as _json
+    d = _uploads_dir(project_path)
+    if not d.is_dir():
+        return []
+    keep = _referenced_upload_rels(project_path)
+    idx_path = d / _UPLOAD_IMG_INDEX
+    idx = _read_json_file(idx_path) or {}
+    removed: list[str] = []
+    for f in sorted(d.iterdir()):
+        if not f.is_file() or f.suffix.lower() not in _IMAGE_EXTENSIONS:
+            continue
+        rel = f.relative_to(project_path).as_posix()
+        if rel in keep:
+            continue
+        try:
+            f.unlink()
+        except OSError as exc:
+            logger.warning("neteja de pujades: %s: %s", f.name, exc)
+            continue
+        idx.pop(f.name, None)
+        removed.append(rel)
+        for c in _FIGURE_CACHE_DIR.glob(f"figsel_*_{f.stem[:30]}_*"):
+            try:
+                c.unlink()
+            except OSError:
+                pass
+    if removed:
+        if idx:
+            idx_path.write_text(_json.dumps(idx, ensure_ascii=False, indent=1), encoding="utf-8")
+        elif idx_path.exists():
+            idx_path.unlink()
+        logger.info("neteja de pujades: %s", removed)
+    return removed
+
+
+def _read_json_file(path: Path) -> dict | None:
+    import json as _json
+    try:
+        d = _json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return d if isinstance(d, dict) else None
+
+
+def _entry_ok(project_path: Path, e) -> dict | None:
+    """Una entrada de figura (candidat del lector) segura de renderitzar: `src` dins el projecte o dins la cau
+    d'imatges, o `rel` dins el projecte. Cap camí arbitrari."""
+    if not isinstance(e, dict) or not e.get("rel") or not e.get("kind"):
+        return None
+    out = {k: e.get(k) for k in _ENTRY_KEYS if k in e}
+    root = str(project_path.resolve()); cache = str(_FIGURE_CACHE_DIR.resolve())
+    src = e.get("src")
+    if src:
+        target = Path(str(src)).resolve()
+        if not (str(target).startswith(root) or str(target).startswith(cache)) or not target.is_file():
+            return None
+    else:
+        target = (project_path / str(e["rel"])).resolve()
+        if not str(target).startswith(root) or not target.is_file():
+            return None
+    # Tot el que no és una pàgina de PDF s'obre amb PIL (`render_entry`): si no és una imatge, abans passava i la
+    # miniatura sortia buida en silenci (2026-09-10)
+    if e.get("kind") != "project_page" and target.suffix.lower() not in _IMAGE_EXTENSIONS:
+        return None
+    return out
+
+
+def _fig_thumb_url(project_path: Path, project_name: str, entry: dict, crop, tag: str) -> str:
+    """Renderitza el candidat (o reaprofita la cau `figsel_*`, com el generador) i dona la URL de la miniatura."""
+    from automation.imatges.lector_figures import _out_name, render_entry
+    p = _out_name(_FIGURE_CACHE_DIR, tag, entry, crop)
+    if not p.exists() and render_entry(project_path, entry, p, crop=crop) is None:
+        return ""
+    return f"/api/figure-preview/{quote(project_name, safe='')}?slot={tag}&file={quote(p.name, safe='')}"
+
+
+@router.get("/alternatives/{project_name:path}")
+def list_alternatives(project_name: str):
+    """Per ranura d'imatge: la tria actual, les alternatives del lector (2-3, amb raó i miniatura), la raó de la tria i
+    si el lector no hi ha trobat cap font. Fotos de `photo_selection.json`, figures de `figure_selection.json`."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    enc = quote(project_name, safe='')
+    slots: dict[str, dict] = {}
+
+    psel = _read_json_file(project_path / 'validation' / 'photo_selection.json') or {}
+    pmeta = psel.get('_lector') if isinstance(psel.get('_lector'), dict) else {}
+    palts = psel.get('alternatives') if isinstance(psel.get('alternatives'), dict) else {}
+
+    def photo_item(rel: str, rao: str = "") -> dict:
+        return {"rel": rel, "rao": rao or "", "thumbnail_url": f"/api/thumbnail/{enc}?file={quote(rel, safe='/')}",
+                "kind": "upload" if _is_upload_rel(rel) else "foto"}
+
+    plector = psel.get("_lector_selection") if isinstance(psel.get("_lector_selection"), dict) else None
+    for slot in _PHOTO_SLOTS:
+        rel = psel.get(slot) if isinstance(psel.get(slot), str) else None
+        cur = photo_item(rel) if rel and (project_path / rel).is_file() else None
+        lector_rel = plector.get(slot) if plector else rel          # la tria del lector (si l'Eva n'ha canviat alguna)
+        alts = []
+        if isinstance(lector_rel, str) and lector_rel != rel and (project_path / lector_rel).is_file():
+            alts.append(photo_item(lector_rel, "la tria del lector: " + str((pmeta.get("raons") or {}).get(slot) or "")))
+        alts += [photo_item(a["rel"], a.get("rao")) for a in (palts.get(slot) or [])
+                 if isinstance(a, dict) and isinstance(a.get("rel"), str) and a["rel"] != rel and a["rel"] != lector_rel
+                 and (project_path / a["rel"]).is_file()]
+        is_lector = (rel == lector_rel)
+        # font PER RANURA (Josep, nit): amb una sola tria de l'Eva no es torna «tria de l'Eva» tot el fitxer
+        file_src = psel.get("source") or ("ia" if psel else None)
+        slot_src = ("lector" if (plector is not None and is_lector) else file_src) if file_src == "user" else file_src
+        slots[slot] = {"type": "photo", "label": _PHOTO_SLOT_LABELS[slot], "source": slot_src,
+                       "current": cur, "alternatives": alts, "rao": (pmeta.get("raons") or {}).get(slot) if is_lector else None,
+                       "cap_font": slot in (pmeta.get("cap_font") or []) and is_lector,
+                       "confianca": (pmeta.get("confianca") or {}).get(slot) if is_lector else None}
+
+    fsel = _read_json_file(project_path / 'validation' / 'figure_selection.json') or {}
+    fsrc = fsel.get("source") if fsel.get("source") in ("user", "lector") else None
+    fmeta = fsel.get('_lector') if isinstance(fsel.get('_lector'), dict) else {}
+    falts = fsel.get('alternatives') if isinstance(fsel.get('alternatives'), dict) else {}
+    raons = fmeta.get("raons") or {}; cap_font = fmeta.get("cap_font") or []; conf = fmeta.get("confianca") or {}
+
+    def fig_item(e, tag: str) -> dict | None:
+        e = _entry_ok(project_path, e)
+        if not e:
+            return None
+        crops = e.get("crops")
+        item = {"entry": e, "rao": e.get("rao") or "", "caption": e.get("caption") or ""}
+        if isinstance(crops, list) and len(crops) == 2:            # situació doble: dues miniatures
+            item["thumbnail_url"] = _fig_thumb_url(project_path, project_name, e, crops[0], f"{tag}1")
+            item["thumbnail_url_2"] = _fig_thumb_url(project_path, project_name, e, crops[1], f"{tag}2")
+        else:
+            item["thumbnail_url"] = _fig_thumb_url(project_path, project_name, e, e.get("crop"), tag)
+        return item
+
+    flector = fsel.get("_lector_selection") if isinstance(fsel.get("_lector_selection"), dict) else None
+
+    def _same_entry(a, b) -> bool:
+        if not isinstance(a, dict) or not isinstance(b, dict):
+            return a is None and b is None
+        return (a.get("rel"), a.get("page"), a.get("crop"), a.get("crops")) == (b.get("rel"), b.get("page"), b.get("crop"), b.get("crops"))
+
+    def fig_source(key: str, current_entry, k: int | None = None) -> str | None:
+        """Font per ranura: «lector» si el que hi ha és el que va triar el lector (`_lector_selection`), «user» si l'Eva
+        l'ha canviat; sense tries de l'Eva, la font del fitxer."""
+        if key == "situacio":                     # la proposta d'insets del lector només s'aplica si l'Eva la tria
+            return "user" if current_entry else None   # None = composició automàtica del full
+        if fsrc != "user" or flector is None:
+            return fsrc
+        if key == "projecte":
+            lst = [x for x in (flector.get("projecte") or []) if isinstance(x, dict)]
+            lec = lst[k - 1] if k is not None and len(lst) >= k else None
+        else:
+            lec = flector.get(key)
+        return "lector" if _same_entry(current_entry, lec) else "user"
+
+    def fig_slot(label: str, key: str, current, alternatives: list, extra: dict | None = None, k: int | None = None) -> dict:
+        cur_entry = current["entry"] if isinstance(current, dict) else None
+        src = fig_source(key, cur_entry, k)
+        is_lec = src != "user"
+        d = {"type": "figure", "label": label, "source": src, "current": current, "alternatives": [a for a in alternatives if a],
+             "rao": raons.get(key) if is_lec else None, "cap_font": (key in cap_font) and is_lec, "confianca": conf.get(key) if is_lec else None}
+        d.update(extra or {})
+        return d
+
+    slots["fig_assaigs"] = fig_slot(_FIGURE_SLOT_LABELS["fig_assaigs"], "assaigs",
+                                    fig_item(fsel.get("assaigs"), "assaigs") if fsrc else None,
+                                    [fig_item(a, "alt") for a in (falts.get("assaigs") or [])])
+    proj = [x for x in (fsel.get("projecte") or []) if isinstance(x, dict)] if fsrc else []
+    alts_p = [fig_item(a, "alt") for a in (falts.get("projecte") or [])]
+    for k in (1, 2):
+        cur = fig_item(proj[k - 1], f"projecte{k}") if len(proj) >= k else None
+        # la figura de l'altra posició només s'ofereix quan intercanviar-les té sentit (les dues posicions plenes)
+        others = [fig_item(proj[j], f"projecte{j + 1}") for j in range(len(proj)) if j != k - 1] if len(proj) == 2 else []
+        used = [proj[j] for j in range(len(proj))]
+        alts_k = [a for a in alts_p if a and not any(_same_entry(a["entry"], u) for u in used)]
+        slots[f"fig_projecte_{k}"] = fig_slot(_FIGURE_SLOT_LABELS[f"fig_projecte_{k}"], "projecte", cur, others + alts_k, k=k)
+    sit = fig_item(fsel.get("situacio"), "situacio") if fsrc and isinstance(fsel.get("situacio"), dict) else None
+    slots["fig_situacio"] = fig_slot(_FIGURE_SLOT_LABELS["fig_situacio"], "situacio",
+                                     sit if (fsrc == "user" and sit) else None,
+                                     [sit] if (sit and fsrc != "user") else [],
+                                     {"default_label": "Els dos mapes del full de situació (automàtic)",
+                                      "is_default": not (fsrc == "user" and sit)})
+    # Les tres figures automàtiques (2026-09-10): sense lector ni alternatives; «actual» només si l'Eva hi ha pujat
+    # una imatge (`source: user`); si no, el generador hi posa el camí determinista (`default_label`)
+    for wslot, (key, auto_label) in _AUTO_FIGURE_SLOTS.items():
+        cur = fig_item(fsel.get(key), key) if (fsrc == "user" and isinstance(fsel.get(key), dict)) else None   # mateixa cau que `apply_selection`
+        slots[wslot] = {"type": "figure", "label": _FIGURE_SLOT_LABELS[wslot], "source": "user" if cur else None,
+                        "current": cur, "alternatives": [], "rao": None, "cap_font": False, "confianca": None,
+                        "is_default": cur is None, "default_label": auto_label, "auto": True}
+    return {"slots": slots, "photo_source": psel.get("source"), "figure_source": fsrc}
+
+
+class AlternativeChoice(BaseModel):
+    slot: str
+    rel: str | None = None          # fotos: camí relatiu al projecte; None = cap foto
+    entry: dict | None = None       # figures: entrada del lector (idx, kind, rel, page, src, crop[, caption, crops]); None = cap / automàtic
+
+
+def _apply_alternative_choice(project_path: Path, req: AlternativeChoice) -> dict:
+    """Desa la tria de l'Eva per a UNA ranura amb `source: user` (mana al generador) i conserva la resta de la selecció
+    del lector (alternatives, raons, i una còpia de la seva tria a `_lector_selection`). La fan servir `/choose` i
+    `/upload` (2026-09-10): una pujada és una tria més."""
+    import json as _json
+    vdir = project_path / 'validation'; vdir.mkdir(exist_ok=True)
+    root = str(project_path.resolve())
+
+    if req.slot in _PHOTO_SLOTS:
+        path = vdir / 'photo_selection.json'; sel = _read_json_file(path) or {}
+        if req.rel is not None:
+            fp = (project_path / req.rel).resolve()
+            if not str(fp).startswith(root):
+                raise HTTPException(status_code=403, detail="Path traversal not allowed")
+            if not fp.is_file():
+                raise HTTPException(status_code=404, detail=f"File not found: {req.rel}")
+            if fp.suffix.lower() not in _IMAGE_EXTENSIONS:
+                raise HTTPException(status_code=400, detail=f"Not an image file: {req.rel}")
+        if sel.get("source") == "lector" and "_lector_selection" not in sel:
+            sel["_lector_selection"] = {s: sel.get(s) for s in _PHOTO_SLOTS}
+        cleared: list[str] = []
+        for s in _PHOTO_SLOTS:                                   # una foto només pot anar a un forat
+            if req.rel is not None and sel.get(s) == req.rel and s != req.slot:
+                sel[s] = None
+                cleared.append(s)
+        sel[req.slot] = req.rel
+        payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
+        path.write_text(_json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+        _sweep_unreferenced_uploads(project_path)
+        return {"status": "saved", "slot": req.slot, "rel": req.rel, "cleared": cleared}
+
+    if req.slot in _FIGURE_SLOT_LABELS:
+        path = vdir / 'figure_selection.json'
+        sel = _read_json_file(path) or {"assaigs": None, "projecte": [], "situacio": None}
+        e = _entry_ok(project_path, req.entry) if req.entry is not None else None
+        if req.entry is not None and e is None:
+            raise HTTPException(status_code=400, detail="Entrada de figura no vàlida")
+        placed: str | None = None
+        if sel.get("source") == "lector" and "_lector_selection" not in sel:
+            sel["_lector_selection"] = {k: sel.get(k) for k in ("assaigs", "projecte", "situacio")}
+        proj = [x for x in (sel.get("projecte") or []) if isinstance(x, dict)]
+
+        def same(a, b) -> bool:
+            return bool(a and b) and (a.get("rel"), a.get("page"), a.get("crop")) == (b.get("rel"), b.get("page"), b.get("crop"))
+
+        if req.slot == "fig_assaigs":
+            sel["assaigs"] = {k: e.get(k) for k in ("idx", "kind", "rel", "page", "src", "crop")} if e else None
+            proj = [x for x in proj if not same(x, e)]           # el mateix retall no s'imprimeix dues vegades
+        elif req.slot.startswith("fig_projecte_"):
+            # Les figures del projecte són una LLISTA ORDENADA (la 2 va darrere de la 1): una tria per a la 2 amb la 1
+            # buida queda a la posició 1 i la resposta ho diu (`placed`); una figura que ja hi és es reordena.
+            k = int(req.slot[-1])
+            if e:
+                ent = {kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crop")}
+                caption = str(e.get("caption") or "").strip()[:200]
+                ent["caption"] = caption or (_UPLOAD_PROJECT_CAPTION if e.get("kind") == "upload" else "Detall del projecte. Font: Projecte.")
+                j = next((i for i, x in enumerate(proj) if same(x, e)), None)
+                if j is not None:
+                    if caption:                          # #10 (2026-09-10): el peu de la figura que ja hi és s'edita al lloc
+                        proj[j]["caption"] = caption
+                    if j != k - 1 and len(proj) >= k:
+                        proj[j], proj[k - 1] = proj[k - 1], proj[j]
+                else:
+                    if same(sel.get("assaigs"), e):
+                        sel["assaigs"] = None
+                    if len(proj) >= k:
+                        proj[k - 1] = ent
+                    else:
+                        proj.append(ent)
+                placed = f"fig_projecte_{next(i for i, x in enumerate(proj) if same(x, e)) + 1}"
+            elif len(proj) >= k:
+                del proj[k - 1]
+        elif req.slot == "fig_situacio":
+            if e and isinstance(e.get("crops"), list) and len(e["crops"]) == 2:
+                sel["situacio"] = {kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crops")}
+            elif e:
+                # pujada (2026-09-10): una sola imatge sencera, sense partir (la plantilla ja té el cas d'una imatge)
+                sel["situacio"] = {kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crop")}
+            else:
+                sel["situacio"] = None
+        elif req.slot in _AUTO_FIGURE_SLOTS:
+            # geològic, tall, cullera (2026-09-10): la imatge de l'Eva mana sobre el camí determinista; `null` = automàtic
+            sel[_AUTO_FIGURE_SLOTS[req.slot][0]] = ({kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crop")}
+                                                    if e else None)
+        sel["projecte"] = proj[:2]
+        payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
+        path.write_text(_json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+        _sweep_unreferenced_uploads(project_path)
+        return {"status": "saved", "slot": req.slot, "placed": placed or req.slot}
+
+    raise HTTPException(status_code=400, detail=f"Ranura desconeguda: {req.slot}")
+
+
+@router.post("/alternatives/{project_name:path}/choose")
+def choose_alternative(project_name: str, req: AlternativeChoice):
+    """La tria de l'Eva per a una ranura (vegeu `_apply_alternative_choice`)."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    return _apply_alternative_choice(project_path, req)
+
+
+@router.post("/alternatives/{project_name:path}/upload")
+async def upload_slot_image(project_name: str, file: UploadFile = File(...), slot: str = Form(...),
+                            caption: str | None = Form(None)):
+    """Pujada d'una imatge de l'Eva per a una ranura de l'informe (2026-09-10): si el pipeline no ha trobat la que vol,
+    sigui a la carpeta o no, la puja des de la finestreta i entra a la ranura amb la mateixa lògica que una
+    alternativa (`source: user`). Es desa normalitzada a `validation/uploads/imatges/` amb un nom que és un ID."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    if slot not in _PHOTO_SLOTS and slot not in _FIGURE_SLOT_LABELS:
+        raise HTTPException(status_code=400, detail=f"Ranura desconeguda: {slot}")
+    raw_name = file.filename or "imatge"
+    if Path(raw_name).suffix.lower() not in _IMAGE_EXTENSIONS:
+        raise HTTPException(status_code=415, detail=f"Extensió no permesa: {Path(raw_name).suffix or '(cap)'}. "
+                                                    f"Acceptades: {sorted(_IMAGE_EXTENSIONS)}")
+    data = await file.read(_UPLOAD_IMG_MAX_BYTES + 1)
+    if len(data) > _UPLOAD_IMG_MAX_BYTES:
+        raise HTTPException(status_code=413, detail=f"Fitxer massa gran ({len(data) / 1024 / 1024:.1f} MB). "
+                                                    f"Màxim: {_UPLOAD_IMG_MAX_BYTES // (1024 * 1024)} MB.")
+    rel = _store_uploaded_image(project_path, data, raw_name, slot)
+    if slot in _PHOTO_SLOTS:
+        req = AlternativeChoice(slot=slot, rel=rel)
+    else:
+        entry: dict = {"kind": "upload", "rel": rel}          # sense `src`: el camí absolut no sobreviu la còpia
+        if slot.startswith("fig_projecte_"):
+            entry["caption"] = (caption or "").strip()[:200] or _UPLOAD_PROJECT_CAPTION   # #10: el peu que escriu l'Eva
+        req = AlternativeChoice(slot=slot, entry=entry)
+    out = _apply_alternative_choice(project_path, req)
+    out["rel"] = rel
+    logger.info("pujada d'imatge: %s → %s (%s)", project_name, slot, rel)
+    return out
 
 
 @router.post("/photos/{project_name:path}/select")
@@ -1096,10 +1814,19 @@ def select_photos(project_name: str, req: PhotoSelectionRequest):
 
         selection[slot] = rel_path
 
+    # #11 (2026-09-10): «Guardar» de la pestanya conserva la resta del fitxer (alternatives, raons del lector,
+    # `materials_per_punt`) i guarda la tria del lector a `_lector_selection` la primera vegada, com fa `/choose`.
+    # Abans reescrivia el fitxer només amb les 5 ranures i la tria del lector deixava de tornar com a alternativa.
     sel_dir = project_path / 'validation'
     sel_dir.mkdir(exist_ok=True)
     sel_path = sel_dir / 'photo_selection.json'
-    sel_path.write_text(_json.dumps(selection, indent=2, ensure_ascii=False), encoding='utf-8')
+    sel = _read_json_file(sel_path) or {}
+    if sel.get("source") == "lector" and "_lector_selection" not in sel:
+        sel["_lector_selection"] = {s: sel.get(s) for s in _PHOTO_SLOTS}
+    sel.update(selection)
+    payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
+    sel_path.write_text(_json.dumps(payload, indent=2, ensure_ascii=False), encoding='utf-8')
+    _sweep_unreferenced_uploads(project_path)
 
     return {"status": "saved"}
 
@@ -1115,6 +1842,7 @@ def reset_photos(project_name: str):
     sel_path = project_path / 'validation' / 'photo_selection.json'
     if sel_path.exists():
         sel_path.unlink()
+    _sweep_unreferenced_uploads(project_path)      # #12: les pujades que només eren a ranures de foto ja no són enlloc
 
     return {"status": "reset"}
 

@@ -1,0 +1,187 @@
+{
+ "source_path": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+ "source_md5": "7df29e1f0995ea8b5153503f6a6e54c7",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "projecte_arquitecte",
+ "what_it_is": "Documentació Gràfica (11 làmines, projecte AutoCAD) del Projecte Bàsic d'un habitatge unifamiliar aïllat, redactada per l'arquitecte per als promotors, amb situació, emplaçament/parcel·la, plantes, coberta i façanes/seccions",
+ "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P., representat per Josep Bunyesc Palacín - Dr. Arquitecte",
+ "date": "Agost 2025 (caixetí 'DATA'); metadades PDF creationDate/modDate 2025-08-19",
+ "pages_or_sheets": "11 làmines (01 a 11), A3",
+ "context": {
+  "who_made_it": "L'arquitecte (Bunyesc Arquitectura Eficient, S.L.P.) que redacta el Projecte Bàsic de l'habitatge per encàrrec dels promotors",
+  "for_whom": "Els promotors/propietaris de l'obra (i, indirectament, base gràfica per a l'estudi geotècnic de G3)",
+  "why": "Documentació gràfica del projecte bàsic (situació, emplaçament, plantes, cobertes, façanes) per a tramitació/llicència i com a suport de disseny",
+  "expected_fields": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "utm_x",
+   "utm_y",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "El caixetí PROMOTORS coincideix amb SÍLVIA EROLES BALAGUERÓ del formulari d'acceptació signat (ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf), però hi afegeix un segon promotor (parella) no present en aquell document; referencia_catastral i superficie_parcela (571 m²) surten d'aquest plànol però no hi ha cap consulta del Cadastre pròpia a la carpeta que ho corrobori de forma independent; l'EXPEDIENT: 13/52/04 del caixetí és el codi intern de l'arquitecte, no l'expedient G3 (4001607, nom de la carpeta)",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró i Jaume Nadal Andreu",
+   "location": "p.2-11 caixetí PROMOTORS (10 de 11 làmines)",
+   "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU",
+   "confidence": 0.7,
+   "note": "Caixetí 'Promotors' del plànol de l'arquitecte (font prioritària per a client_name, regla Pas 3). Confirma Sílvia (ja coneguda per l'acceptació signada) i hi afegeix un segon promotor (parella), Jaume Nadal Andreu. Verificat visualment (zoom 400dpi) a p.2; la mateixa grafia es repeteix p.3-11"
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró i Jaume Andal Andreu",
+   "location": "p.1 caixetí PROMOTORS",
+   "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ / JAUME ANDAL ANDREU",
+   "confidence": 0.25,
+   "note": "Discrepància real al dibuix (no artefacte d'extracció de text; verificat visualment a 400dpi): NOMÉS la làmina 01 escriu 'ANDAL', les altres 10 làmines (02-11) escriuen 'NADAL'. Probable errata puntual d'aquesta làmina; NADAL és la forma majoritària"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Josep Bunyesc Palacín",
+   "location": "p.1-11 caixetí REDACTOR/S",
+   "quote": "REDACTOR/S: BUNYESC ARQUITECTURA EFICIENT, S.L.P representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+   "confidence": 0.6,
+   "note": "Forma persona (regla 'persona i despatx': quan coexisteixen totes dues formes, candidats, mai segur)"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Bunyesc Arquitectura Eficient, S.L.P.",
+   "location": "p.1-11 caixetí REDACTOR/S",
+   "quote": "REDACTOR/S: BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+   "confidence": 0.5,
+   "note": "Forma despatx (regla 'persona i despatx'); coincideix amb el sol·licitant del pressupost G3 (_g3_templates.json)"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Bunyesc Arquitectura Eficient, S.L.P.",
+   "location": "p.1-11 caixetí REDACTOR/S",
+   "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P / C/ ARBORÈTUM NÚM. 17 25199 LLEIDA - TEL. 973157519 / info@bunyesc.com - www.bunyesc.com",
+   "confidence": 0.7
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Clot de la Llacuna, 16",
+   "location": "p.1-11 caixetí EMPLAÇAMENT",
+   "quote": "EMPLAÇAMENT: C/ Clot de la Llacuna,16 / LINYOLA (25240)",
+   "confidence": 0.85,
+   "note": "Coincideix amb street_address ja conegut d'altres documents G3. Al plànol p.2 el carrer 'CARRER SITJAR' apareix dibuixat a la part inferior, però la parcel·la NO hi fa front (hi ha una parcel·la veïna pel mig): no és una adreça de cantonada, només context del dibuix"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "p.1 bloc superior esquerre (municipi:) i caixetí EMPLAÇAMENT (totes les làmines)",
+   "quote": "municipi: LINYOLA / població: LINYOLA",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Projecte Bàsic d'un habitatge unifamiliar aïllat",
+   "location": "p.1-11 caixetí TÍTOL DEL PROJECTE",
+   "quote": "TÍTOL DEL PROJECTE: PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB (només planta baixa, 1 planta)",
+   "location": "p.1 taula NORMATIVA URBANÍSTICA, columna dreta 'PROJECTE'",
+   "quote": "PROJECTE / NOMBRE MAXIM PLANTES: PB",
+   "confidence": 0.75,
+   "note": "Taula de planejament del projecte (regla Pas 3, font prioritària per a num_floors), llegida per imatge (no surt al text pla de la p.1). Corrobora la columna esquerra 'NORMATIVA' que diu PB+2PP com a MÀXIM permès per zona, no com a projectat. Coherent amb el fet que cap de les 11 làmines mostra planta pis (P1): totes són PB, coberta o façanes/seccions"
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": "571 m²",
+   "location": "p.1 taula NORMATIVA URBANÍSTICA columna 'PROJECTE' (etiquetada 'PARCEL.LA MINIMA', valor real de la parcel·la) i p.2 anotació sota el plànol de parcel·la",
+   "quote": "PARCEL·LA / ref: 5098344CG2159N0000US / 571 m²",
+   "confidence": 0.6,
+   "note": "Apareix 2 cops dins del MATEIX document (p.1 taula i p.2 plànol de parcel·la): no compten com a fonts independents (regla Pas 0). A la p.1 la cel·la porta l'etiqueta 'PARCEL.LA MINIMA' però pel valor (571m², igual que el de la p.2) és clarament la superfície real de la parcel·la del projecte, no un mínim normatiu (el mínim normatiu de zona, 150m², ja consta a la columna esquerra 'NORMATIVA')"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "5098344CG2159N0000US",
+   "location": "p.1 taula NORMATIVA URBANÍSTICA ('PARÀMETRES NORMATIVA _') i p.2 anotació de parcel·la",
+   "quote": "PARÀMETRES NORMATIVA _ 5098344CG2159N0000US",
+   "confidence": 0.5,
+   "note": "Font única (aquest plànol, repetida 2 cops dins del mateix document): candidata, mai segura sense consulta pròpia del Cadastre (regla Pas 3); no hi ha cap consulta de Cadastre a la carpeta d'aquest projecte"
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "13/52/04",
+   "location": "p.1-11 caixetí EXPEDIENT",
+   "quote": "EXPEDIENT: 13/52/04",
+   "confidence": 0.85,
+   "note": "Codi d'expedient intern de l'arquitecte (com 'EXP25.34/SET.25' en altres projectes), NO és l'expedient G3 (4001607 = nom de la carpeta)"
+  }
+ ],
+ "tables": {
+  "superficie_construida": {
+   "components": [
+    {
+     "concepte": "NO HABITABLE - EXTERIOR (porxo 22.15 + voladís sud 1, 3.15 + voladís sud 2, 3.24)",
+     "valor": "28.55 m²"
+    },
+    {
+     "concepte": "NO HABITABLE - INTERIOR (garatge)",
+     "valor": "56.75 m²"
+    },
+    {
+     "concepte": "HABITATGE (planta baixa)",
+     "valor": "165.61 m²"
+    }
+   ],
+   "total": "250.91 m²",
+   "etiqueta_font": "Superfície construïda TOTAL PBaixa (taula 'SUPERFÍCIES CONSTRUÏDES', PROJECTE de l'arquitecte)",
+   "location": "p.5 (detall per estances) i p.3 (resum) 'PLANTA BAIXA - SUP. TOTALS / SUPERFÍCIES CONSTRUÏDES'",
+   "quote": "TOTAL NO HABITABLE 28.55 m² / TOTAL NO HABITABLE 56.75 m² / TOTAL HABITATGE 165.61 m² / Superfície construïda TOTAL PBaixa: 250.91 m²",
+   "note": "Repetit igual a p.3 (resum) i p.5 (detall per estances) dins del mateix document; no és font independent addicional. El document també dona superfícies ÚTILS (Superfície útil TOTAL Planta Baixa: 515.62 m², que inclou pati interior i jardí exteriors): NO confondre amb la construïda"
+  },
+  "__nota": "Únic bloc de taula alimentat per aquest document (superficie_construida); dpsh_tests/sondeig_tests/spt_ma_tests/soil_levels no aplicables (document arquitectònic, sense dades de camp geotècnic)"
+ },
+ "not_present": [
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció v1.4 (text_ok=true a les 11 pàgines, sense halves_pages). El .txt de cada pàgina ja venia en ordre de lectura coherent (caixetí sencer al final de cada bloc), sense necessitat de reordenar per (y,x) com en altres plantilles G3. La taula 'NORMATIVA URBANÍSTICA' de la p.1 (incl. 'NOMBRE MAXIM PLANTES: PB' i 'PARCEL.LA MINIMA: 571m²') NO surt al text pla (probablement un bloc/taula AutoCAD no exportat com a text cercable): llegida directament de page-1.png. La discrepància ANDAL/NADAL (p.1 vs p.2-11) i les adreces de promotors s'han verificat amb clips a 400dpi (scripts/render_clip.py, zona caixetí PROMOTORS) per descartar error d'extracció de text: és una discrepància real del dibuix. Comprovat a p.2 que 'CARRER SITJAR', tot i aparèixer dibuixat, no toca la parcel·la (hi ha una parcel·la veïna pel mig): no és un cas de cantonada. La classificació urbanística 'CLASSIFICACIÓ DEL SÒL: SU — sòl urbà' (p.1) és normativa municipal, NO el concepte cte_sol (tipus de terreny geotècnic/sísmic T1/T2 de G3): no s'ha afegit com a candidat per no barrejar vocabularis."
+}

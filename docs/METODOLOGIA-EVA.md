@@ -37,6 +37,36 @@ correccions.
 
 ---
 
+## 0. El marc abans de cap fórmula: la professió divergeix de les fórmules amb criteris pactats
+
+*(Afegit 2026-09-02. Síntesi de `CRITERIS-CALCUL-EVA.md`, `RECERCA-PRACTICA-GEOTECNICA-ESPANYA.md` §6 i
+`ANALISI-SETTLEMENT-BACK-ENGINEERING.md` §5 — verificat amb 4 fonts externes i contra els informes signats.)*
+
+Terzaghi, Schmertmann i les taules CTE són **punts de partida, no resultats**. Els criteris amb què tot el
+sector (i Eva) se n'aparta:
+
+1. **Arrodoniment professional**: Qa a passos de 0,5; E a desenes o 50s (7/7 projectes: 80, 90, 100, 350,
+   450, 500, 650, 800); φ a graus enters. Les taules de referència del sector són totes de valors rodons.
+2. **Topalls a la Qa** encara que Terzaghi doni molt més: 3,0 sòl / 3,5 granular dens / 3,0 roca mixta
+   (4,0–4,5 només roca massissa sana). Ja implementat i validat (`terzaghi_calculator.py:417`, 6/7 exacte).
+3. **Ajust per litologia, no per fórmula**: carbonatació/cimentació → E amunt (Bell-lloc 650 vs Rubí 450 amb
+   el mateix rang d'N).
+4. **L'estrat que mana és on RECOLZA la fonamentació** — ni el primer ni el més profund per sistema.
+   *(Corregit 2026-09-03 pel repàs R:)* la millor font és que **la frase del Qa de l'informe signat DECLARA
+   el nivell portant** — «encastament/empotrado un mínim de 20-40 cm» al nivell que anomena, sistemàtic a
+   5 projectes. Anciles fonamenta a **L2 via pous** («empotrados un mínimo de 20-40 cm de los materiales del
+   segundo nivel saneado», Qa=2,0) — la lectura anterior («usa L1 perquè no hi arriba», `CRITERIS-CALCUL-EVA.md`
+   §1) era errònia. Rubí sosté el principi per l'altra banda: la taula parametritza les graves on treballa la
+   sabata, no el substrat rocós de sota.
+5. **L'assentament és verificació de servei** («està ben per sota de 2,54 cm?»), no predicció: precisió
+   millor que ±50 % és il·lusòria.
+6. **Simplicitat deliberada**: «es basa tant com pot en les taules del CTE i no es busca complicacions»
+   (Eva). Cap correlació publicada sola reprodueix els seus valors — el mètode són els criteris.
+
+**Implicació per al pipeline: modela criteris (règim + ajust + arrodoniment + topall), no persegueixis
+precisió decimal.** Estat actual contra aquest marc: `ANALISI-CALCUL-N20-E-2026-09-02.md`; retocs pendents:
+`PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md`.
+
 ## 1. Fonts bibliogràfiques citades textualment als informes
 
 ### 1.1 Crespo Villalaz — per cohesió (c) i angle de fricció intern (φ)

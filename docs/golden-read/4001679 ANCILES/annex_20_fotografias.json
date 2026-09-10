@@ -1,0 +1,24 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_fotografías.pdf",
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex 'Reportaje fotográfico' de l'informe (FreeHand 4001679_fotografías.FH11): 2 pàgines amb 4 fotos F-1..F-4 de la màquina executant els DPSH P-1..P-4.",
+ "issuer": "G3 (Eva), amb fotos de camp del 19/02/2026",
+ "date": "2026-03-16 (Distiller)",
+ "pages_or_sheets": "2 (F-1/F-2 i F-3/F-4)",
+ "context": {
+  "who_made_it": "l'Eva selecciona 4 fotos del camp per a l'annex",
+  "for_whom": "l'informe 4001679",
+  "why": "documentar l'execució dels assaigs",
+  "expected_fields": ["expedient (capçalera)", "corroboració de num_dpsh_tests"],
+  "not_expected": ["client_name", "street_address", "municipality", "field_date (no impresa)", "cota", "nivells", "lab"],
+  "relation_to_others": "les fotos F-1..F-4 corresponen a FOTOGRAFIES/P1..P4.jpeg (mateixes escenes); les fotos dels sondeigs són a l'annex de sondeigs (p.2/p.4), no aquí.",
+  "authority_for": ["expedient (capçalera '4001679')"]
+ },
+ "tier_a": [
+  {"concept_id": "expedient", "value": "4001679", "location": "capçalera de les 2 pàgines", "quote": "Reportaje fotográfico | 4001679", "confidence": 0.85, "note": ""},
+  {"concept_id": "num_dpsh_tests", "value": "4 fotos de DPSH (P-1..P-4)", "location": "peus de foto", "quote": "Fotografía 1 y 2. Vista del emplazamiento de la máquina durante la realización del ensayo de penetración dinámica DPSH P-1 y P-2, respectivamente. | Fotografía 3 y 4. … DPSH P-3 y P-4…", "confidence": 0.5, "note": "l'annex fotogràfic només mostra P-1..P-4 (P-5/P-6 queden coberts per les fotos dels sondeigs). Corroboració, no recompte."},
+  {"concept_id": "site_description", "value": "prat amb mur de pedra perimetral i edificacions de pedra del nucli al fons; talperes al prat", "location": "fotos F-1..F-4", "quote": "[visual]", "confidence": 0.5, "note": "útil per a la descripció del solar de l'informe."}
+ ],
+ "not_present": ["client_name", "architect_name", "street_address", "municipality", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+ "reading_notes": "Text FreeHand brossa → render 100 dpi de les 2 pàgines. Capçalera i peus llegits visualment."
+}

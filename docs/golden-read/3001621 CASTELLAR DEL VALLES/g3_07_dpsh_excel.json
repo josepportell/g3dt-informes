@@ -1,0 +1,71 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció (revisada per l'Eva) dels 4 penetròmetres DPSH: P-1 (rebuig a −1,08 m), P-2 (−0,48 m), P-3 (−0,76 m), P-4 (−1,55 m); tots amb 'Nivell 1' com a única unitat; cap N.F. ni mostra anotats.",
+ "issuer": "G3 (Eva) a partir del full de camp de TPS",
+ "date": "sense data dins del fitxer",
+ "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4",
+ "context": {
+  "who_made_it": "G3 (Eva) transcriu i revisa els valors N20 del full manuscrit de TPS (PENETROS + SONDEIG.pdf)",
+  "for_whom": "l'informe (gràfics DPSH de l'annex) i els càlculs",
+  "why": "tenir els N20 en format digital i generar l'annex PDF/ANNEXES/3001621_DPSH.pdf",
+  "expected_fields": [
+   "num_dpsh_tests (fulls amb dades a la columna C)",
+   "cota de rebuig per assaig (B80)",
+   "N.F. (F) i mostres (E) si n'hi ha",
+   "nivells (G / C79)"
+  ],
+  "not_expected": [
+   "cap metadada de projecte: expedient, client, adreça, data, cota"
+  ],
+  "relation_to_others": "Versió digital revisada del manuscrit de TPS (PENETROS + SONDEIG.pdf, visual): l'Excel mana per als valors. Origen del PDF/ANNEXES/3001621_DPSH.pdf (capçalera amb cota/obra/població/data). 4 executats = 4 previstos (pressupost, fitxa, PLAN_COST).",
+  "authority_for": [
+   "num_dpsh_tests",
+   "num_soil_levels (indici feble: 'Nivell 1' a tots els fulls)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "fulls P-1..P-4, columna C (Colpeig DPSH) amb dades a tots quatre",
+   "quote": "sheets ['P-1','P-2','P-3','P-4']; C19..: P-1 [6,10,13,38,100], P-2 [15,100], P-3 [16,46,100], P-4 [8,8,12,27,21,28,100]",
+   "confidence": 1.0,
+   "note": "4 executats = 4 previstos. Rebuig (100) molt superficial: P-1 −1,08 m, P-2 −0,48 m, P-3 −0,76 m, P-4 −1,55 m (B80 'Rebuig  a -N,NN m') → substrat dur/roca a ≤ 1,6 m."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1 (indici)",
+   "location": "C79 de cada full",
+   "quote": "Nivell 1",
+   "confidence": 0.3,
+   "note": "'Nivell 1' és l'única etiqueta de nivell als 4 fulls (columna G 'Nivells' buida). Els DPSH només arriben a ~1,5 m; el sondeig S1 pot definir més nivells (rebliment/sòl + roca). Candidat, confirmar amb annex de sondeig 'Unitat litològica'."
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": null,
+   "location": "files 1-15 de cada full",
+   "quote": "(buides; només D15=0.83 = coeficient NB)",
+   "confidence": 1.0,
+   "note": "cap capçalera amb data/obra/cota dins de l'Excel; són a l'annex PDF generat"
+  }
+ ],
+ "not_present": [
+  "expedient (només al nom del fitxer)",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*",
+  "nivell freàtic (F buida)"
+ ],
+ "reading_notes": "Capçalera a la fila 16 ('Profunditat de penetròmetre' | 'Colpeig DPSH' | 'Colpeig NB' | 'MOSTRA' | 'N.F.' | 'Nivells'). Columnes E/F/G buides a tots els fulls. Valors 100 = refús. D15=0.83 = factor NB (nivell B)."
+}

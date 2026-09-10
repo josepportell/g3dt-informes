@@ -1,0 +1,181 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_tall de correlació.pdf",
+ "source_md5": "b53c50eaba8b0b2dd18126bcb9286b5c",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geotècnica (secció A-A') que uneix els punts d'assaig de CASA 1 (P-1.1, P-1.2, S-1) i CASA 2 (P-2.1, P-2.2) en un sol dibuix, amb 3 nivells litològics i la línia de fonamentació proposada.",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (Eva)",
+ "date": "Maig 2026 (imprès al peu); metadades PDF creationDate/modDate: 2026-06-04",
+ "pages_or_sheets": "1 pàgina (Pàgina 1/1)",
+ "context": {
+  "who_made_it": "G3 (Eva), tècnica redactora de l'informe geotècnic — dibuix FreeHand imprès via Acrobat Distiller (patró habitual dels annexos de l'Eva)",
+  "for_whom": "síntesi interna per a l'informe geotècnic del projecte (les dues cases); no és un document adreçat a cap tercer",
+  "why": "correlacionar els nivells del sòl entre tots els punts d'assaig al llarg d'una línia de tall A-A' (planta a l'encapçalament) i fixar la línia de fonamentació (vermella discontínua) que recomanarà l'informe",
+  "expected_fields": [
+   "num_soil_levels",
+   "soil_levels (nom+litologia)",
+   "expedient",
+   "building_type",
+   "street_address (una per casa)",
+   "municipality",
+   "recompte gràfic de punts DPSH/sondeig per casa"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date de camp",
+   "cota_referencia puntual exacta",
+   "referencia_catastral",
+   "utm_x/utm_y",
+   "dades de laboratori",
+   "cte_edificacio/cte_sol"
+  ],
+  "relation_to_others": "Mateixa làmina (mateix disseny, mida gairebé idèntica ~101,7 KB) que 'CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf' (md5 diferent: 6d4bef5cba59b56fad91ac5fa08cf3f9 vs b53c50eaba8b0b2dd18126bcb9286b5c) — el tall cobreix les DUES cases en un sol dibuix i està arxivat per duplicat dins de cada carpeta de casa. No compta com a segona font independent del recompte de nivells ni de la resta de camps.",
+  "authority_for": [
+   "num_soil_levels",
+   "expedient",
+   "building_type",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": "peu de plànol, requadre 'Exp:'",
+   "quote": "Exp: 3001706",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "peu de plànol, TÍTOL DEL PROJECTE",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16 de Cerdanyola del Vallès",
+   "confidence": 0.8,
+   "note": "aplica a les dues cases (dos habitatges unifamiliars)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tulipà nº3",
+   "location": "peu de plànol, TÍTOL DEL PROJECTE",
+   "quote": "un habitatge unifamiliar al Carrer Tulipà nº3",
+   "confidence": 0.8,
+   "note": "casa_1 (Tulipa); l'inset del plànol de situació escriu 'Carrer de la Tulipa' (sense accent, mateix carrer)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tosca nº16",
+   "location": "peu de plànol, TÍTOL DEL PROJECTE",
+   "quote": "un altre al Carrer Tosca nº16 de Cerdanyola del Vallès",
+   "confidence": 0.8,
+   "note": "casa_2 (Tosca); aquest document és de la carpeta CASA 1, però el títol esmenta les dues adreces del projecte conjunt"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tulipà",
+    "nom_via_alternatives": [
+     "Tulipa"
+    ],
+    "portals": [
+     "3"
+    ],
+    "municipi": "Cerdanyola del Vallès",
+    "municipi_alternatives": []
+   },
+   "location": "peu de plànol, TÍTOL DEL PROJECTE + inset plànol de situació",
+   "quote": "un habitatge unifamiliar al Carrer Tulipà nº3",
+   "confidence": 0.8,
+   "note": "casa_1"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tosca",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Cerdanyola del Vallès",
+    "municipi_alternatives": []
+   },
+   "location": "peu de plànol, TÍTOL DEL PROJECTE",
+   "quote": "un altre al Carrer Tosca nº16 de Cerdanyola del Vallès",
+   "confidence": 0.8,
+   "note": "casa_2"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "peu de plànol, TÍTOL DEL PROJECTE",
+   "quote": "de Cerdanyola del Vallès",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "3",
+   "location": "llegenda, blocs 'Nivell 1/2/3'",
+   "quote": "Nivell 1: Sorres llimoses disgregades amb graves. / Nivell 2: Llims argilosos cohesius. / Nivell 3: Substrat alterat.",
+   "confidence": 0.75,
+   "note": "el tall mana pel nombre de nivells (regla del skill); aplica a les dues cases (mateixa estratigrafia correlacionada); confirmar amb l'annex de sondeig (3001706_sondeig.pdf) si hi discrepa"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "litologia": "Sorres llimoses disgregades amb graves.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda, 'Nivell 1'",
+    "quote": "Nivell 1: Sorres llimoses disgregades amb graves."
+   },
+   {
+    "nom": "2on nivell",
+    "litologia": "Llims argilosos cohesius.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda, 'Nivell 2'",
+    "quote": "Nivell 2: Llims argilosos cohesius."
+   },
+   {
+    "nom": "3er nivell",
+    "litologia": "Substrat alterat.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "llegenda, 'Nivell 3'",
+    "quote": "Nivell 3: Substrat alterat."
+   }
+  ],
+  "__nota": "Fondàries de transició (de/a) no impreses numèricament al tall: els límits de nivell es dibuixen gràficament sobre l'escala (msnm) de la secció, sense cotes de transició etiquetades. No s'han estimat per píxels (regla del skill). Els valors Nb/N impresos a cada punt (P-1.1: Nb=12/22/39; P-1.2: Nb=8/18; S-1: N=18/64 + Nb=R; P-2.1: Nb=9/21/R; P-2.2: Nb=14/24/35/R) són colpeigs puntuals sense fondària numèrica adjunta en aquest document — no transcrits com a files de dpsh_tests/sondeig_tests perquè manquen cota_inici i profunditat_assolida impreses; aquestes viuen a l'annex DPSH/sondeig, no llegits en aquesta crida."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "field_date",
+  "cota_referencia",
+  "num_dpsh_tests (recompte exacte, viu a l'Excel DPSH)",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok=false (producer Acrobat Distiller 15.0 / creator PScript5.dll, típic de FreeHand imprès a PDF): text de page-1.txt és brossa, ignorat. Lectura visual de page-1.png (150 dpi, pàgina sencera) — prou llegible, no ha calgut recórrer a page-1-left.png/page-1-right.png (220 dpi, halves_pages=[1] al meta). _inventory.json llegit primer (Pas 0): aquest fitxer és bessó del 'CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf' (mateixa mida ~101,7 KB, md5 diferent) — mateixa làmina, arxivada dues vegades, una per carpeta de casa."
+}

@@ -1,0 +1,43 @@
+{
+ "source_path": "25.0616/25·0616.pdf",
+ "source_md5": "7c8537b4b31a3e7f2153cfaacc8d111f",
+ "kind": "pdf",
+ "generated": "2026-09-01T13:25:16",
+ "elapsed_s": 0.716,
+ "dir": "25_0616_25_0616",
+ "files": [
+  "25_0616_25_0616/page-1.txt",
+  "25_0616_25_0616/page-1.png",
+  "25_0616_25_0616/page-2.txt",
+  "25_0616_25_0616/page-2.png",
+  "25_0616_25_0616/page-3.txt",
+  "25_0616_25_0616/page-3.png"
+ ],
+ "pages": 3,
+ "page_sizes_pt": [
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 20.0 (Windows)",
+ "creator": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "creationDate": "D:20250821132847+02'00'",
+ "modDate": "D:20250821132948+02'00'",
+ "text_ok": {
+  "1": true,
+  "2": true,
+  "3": true
+ },
+ "pages_truncated": false,
+ "halves_pages": [],
+ "text_suspect_reason": "producer: Acrobat Distiller 20.0 (Windows)"
+}

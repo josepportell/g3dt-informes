@@ -1,0 +1,669 @@
+{
+ "generated": "2026-09-04T13:28:01",
+ "project": "3001631 RUBI",
+ "files": [
+  {
+   "path": "25.0794/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 16553,
+   "md5": "99bf3026a748e718bf3fca15c20eafea",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0794/IMG-20251104-WA0015.jpg",
+   "size": 259796,
+   "md5": "435eb44ea05e3e618bb701357fdc2960",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "25.0794/IMG-20251104-WA0016.jpg",
+   "size": 255352,
+   "md5": "6e31533951c7caeec9322d0672655d28",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "25.0794/PLAN_COST_RUBI.xlsx",
+   "size": 112195,
+   "md5": "5051a4a85645871425c36b8c03e0fac6",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0794/PRESSU.msg",
+   "size": 715776,
+   "md5": "5e4dc0f39ea61c31b80d78bb6d463944",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_pressu",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_pressu/body.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_pressu/attachments/img_20251104_wa0016.jpg",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_pressu/attachments/img_20251104_wa0016.jpg.preext/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_pressu/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+   "size": 379308,
+   "md5": "d3803c02be61136a2039b1e126cb4b77",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0794/RE_ PRESSU.msg",
+   "size": 301056,
+   "md5": "f9418534fa84b8b8b61f8203c65d76a4",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_re_pressu",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_re_pressu/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/25_0794_re_pressu/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0794/Thumbs.db",
+   "size": 31744,
+   "md5": "5f9bb3b9910ab005ed38a8d18cb8e1b5",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "3001631 - PENETROS.pdf",
+   "size": 773993,
+   "md5": "addfe9cd751987285c9c63b05b24f9e5",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/page-3-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/3001631_penetros/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "3001631_informe.doc",
+   "size": 7834112,
+   "md5": "effa99057cfeb1adc2ddc5f93160e9b8",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "3001631_informe.docx",
+   "size": 7548309,
+   "md5": "d9ec41f00aeed372b3d683b8f1148a24",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4703-GTL-25 Rubí.pdf",
+   "size": 474810,
+   "md5": "721c81ea9bcaa2188d30b4c5b9a90ca5",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "informe_laboratori",
+   "priority": 5,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-7.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-8.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/page-8.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/4703_gtl_25_rub/meta.json",
+    "pages": 8,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/Thumbs.db",
+   "size": 15872,
+   "md5": "292455dc9ded61089b4991134237c599",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+   "size": 316073,
+   "md5": "2106e5f08cc221715f167c958193adce",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/acceptacio_whatsapp_image_2025_11_13_at_11_55_57",
+    "kind": "image",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/acceptacio_whatsapp_image_2025_11_13_at_11_55_57/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/acceptacio_whatsapp_image_2025_11_13_at_11_55_57/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/3001631_DPSH.xls",
+   "size": 113664,
+   "md5": "c78e5a5b715b61e5001cead5549c324a",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-0.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-0.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-0.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-1.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-1.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-1.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-2.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-2.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/sheet-2.colors.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/annexes_3001631_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 112
+     },
+     {
+      "index": 1,
+      "name": "P-2",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 107
+     },
+     {
+      "index": 2,
+      "name": "P-3",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 108
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/3001631_fotografies.FH11",
+   "size": 2227885,
+   "md5": "e69c666a325f65056764ba84ed1e003a",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001631_plànol de situació.FH11",
+   "size": 2279298,
+   "md5": "41387c3853f1fe82d49503d67263b468",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001631_tall de correlació.FH11",
+   "size": 887371,
+   "md5": "c7ae46f3ef23855d5914ea4b5cdb1998",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/6_mapa Geol_CAT_ - CAST_VS.FH11",
+   "size": 1164880,
+   "md5": "e86f47a9bc05ef24ae73cd9f1011ef37",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/F1 UBI.png",
+   "size": 1714888,
+   "md5": "42af8f7d009e4077c84123c7ec15167f",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/F2 UBI PUNTS.png",
+   "size": 866469,
+   "md5": "f3d549af3a126c6d827398ff30e4ebda",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/F3 VG.png",
+   "size": 2702538,
+   "md5": "18f17bf6474217dc7aaf356d5865ace5",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/F4 MGEOL.png",
+   "size": 1007315,
+   "md5": "39257367b6bc6ee5b05f7a97ff845616",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/F5 TALL.png",
+   "size": 51827,
+   "md5": "a19517e606a543ad4183795d5d458708",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/Thumbs.db",
+   "size": 24576,
+   "md5": "143b32b813d640410d1d8a4b46ed6314",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/m1.png",
+   "size": 661944,
+   "md5": "6eebe48f981ae3cb3336a89d9b243432",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/m2.png",
+   "size": 803041,
+   "md5": "10a627dc86979c005bacbf1cab81ae75",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/m3.png",
+   "size": 767403,
+   "md5": "04e7cc3e8cbabd172cc3fe9429344b1e",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/m4.png",
+   "size": 47251,
+   "md5": "48587d083781522ed6c5394139537bfc",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/Altres/m5.png",
+   "size": 962496,
+   "md5": "f3d76456d6885e25264b2fb43f79dd47",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imatge de WhatsApp 2025-11-14 a les 11.17.54_936f3908.jpg",
+   "size": 363408,
+   "md5": "37a969b7cf66002d27b7ca0029e8e56d",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imatge de WhatsApp 2025-11-14 a les 11.49.21_a3e04224.jpg",
+   "size": 460435,
+   "md5": "28cda956d99897f713fa12dcde63391f",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P1.jpg",
+   "size": 555639,
+   "md5": "4a0a53a78be492fb79c59e705fbb0998",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P2.jpg",
+   "size": 562789,
+   "md5": "86e618406787300e2b9d9e7a593d13db",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P3.jpg",
+   "size": 533373,
+   "md5": "59c9047733cb1181fe4a9e557cc0f0d7",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SPT1.jpg",
+   "size": 543991,
+   "md5": "25dac6225cd6d5f72eed323bae887653",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Thumbs.db",
+   "size": 102400,
+   "md5": "6eabf7c5678c9906aecf134e9ff0fb02",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "PDF/3001631_informe.pdf",
+   "size": 1918182,
+   "md5": "f735aebe1976fa9c0440d020742275e5",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "PDF/ANNEXES/3001631_DPSH.pdf",
+   "size": 105546,
+   "md5": "87e7f2ec85bd8290a320b507e1bb6b56",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "annex_dpsh",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh/page-3.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_dpsh/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001631_fotografies.pdf",
+   "size": 405335,
+   "md5": "08883ad31f32edf8a0e0239a6d615f98",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/page-2-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_fotografies/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001631_plànol de situació.pdf",
+   "size": 229583,
+   "md5": "114b0a5148e6cf7fc45df20f0eee86e0",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_pl_nol_de_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_pl_nol_de_situaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_pl_nol_de_situaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_pl_nol_de_situaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_pl_nol_de_situaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_pl_nol_de_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001631_tall de correlació.pdf",
+   "size": 100552,
+   "md5": "a7965b2cf0e7789c084ec8a0fba11d0f",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_tall_de_correlaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_tall_de_correlaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_tall_de_correlaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_3001631_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/LAB-SIG.pdf",
+   "size": 237059,
+   "md5": "8bc2f8d744bfa74b91bd79e4e84420f1",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-7.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-8.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/page-8.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/pdf_annexes_lab_sig/meta.json",
+    "pages": 8,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/LLETRA/3001631_PORTADA_25.pdf",
+   "size": 60621,
+   "md5": "8d7060e85aaa38f6f800c760a7174c3b",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/LLETRA/3001631_informe.pdf",
+   "size": 830907,
+   "md5": "97b903a62d17170b88b0346934b391ec",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "Thumbs.db",
+   "size": 11264,
+   "md5": "3af8d7c3e52b22e39d1d845ca6f49c72",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "comanda laboratori_3001631_RUBI.xls",
+   "size": 470528,
+   "md5": "e6dc17584b4dba15323c219643be3bee",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "tall.pdf",
+   "size": 983665,
+   "md5": "a265cc5813c654dc1a43014b0f98bbb6",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/tall/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  }
+ ],
+ "duplicates": [],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/rubi/_preext",
+  "n_docs": 12,
+  "n_errors": 0,
+  "elapsed_s": 10.284
+ }
+}

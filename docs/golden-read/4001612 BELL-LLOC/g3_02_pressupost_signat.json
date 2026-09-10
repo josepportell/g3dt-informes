@@ -1,0 +1,15 @@
+{
+  "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "El mateix pressupost 25·0647 (mateixes 7 pàgines, mateix creationDate) retornat signat digitalment pel sol·licitant el 30/09/2025; el formulari de dades de facturació (p.5) és buit.",
+  "issuer": "G3 (document) + signatura digital Adobe PPKLite de JORDI BOSCH NOVELL",
+  "date": "2025-09-03 (document) / 2025-09-30 (acceptació)",
+  "pages_or_sheets": 7,
+  "tier_a": [
+    {"concept_id": "architect_name", "value": "JORDI BOSCH NOVELL (núm. 37655-8)", "location": "p.5 widget 'Signature2' → /V /Name i aparença", "quote": "Firmado digitalmente por JORDI BOSCH NOVELL / num:37655-8 Fecha: 2025.09.30 16:40:38 +02'00'", "confidence": 0.9, "note": "qui signa l'acceptació és el sol·licitant (arquitecte). 'num:37655-8' té forma de número de col·legiat COAC; no ho puc verificar des del document. NO és al text layer: cal llegir el diccionari /Sig o renderitzar."},
+    {"concept_id": "client_name", "value": "JORDI BOSCH NOVELL", "location": "p.5 signatura 'El client'", "quote": "Signa l'acceptació del contracte-pressupost: … El client", "confidence": 0.4, "note": "signa sota l'etiqueta 'El client', però és la mateixa persona/despatx destinatari del pressupost (arquitecte). Mateixa ambigüitat que g3_01. Les caselles 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' — que haurien de dir el client real — són BUIDES."},
+    {"concept_id": "data_acceptacio", "value": "2025-09-30", "location": "signatura /M", "quote": "D:20250930164038+02'00'", "confidence": 1.0, "note": "no és dels 15 camps; fita temporal: camp NO pot ser anterior (el primer dia de camp serà ≥ 30/09)"}
+  ],
+  "not_present": ["tots els altres camps: idèntics a g3_01_pressupost.json (mateix contingut); no compta com a font independent per a res excepte la signatura"],
+  "reading_notes": "Duplicat del pressupost + signatura. Regla: 'ACCEPTACIO/' porta el pressupost signat; l'única informació nova és QUI signa i QUAN, i si el formulari p.5 està omplert (aquí no). Lectura: fitz widgets → xref /V → /Name, /M. La signatura manuscrita de l'esquerra ('Resp. Oficina Tècnica') és d'Eva Vázquez (imatge, il·legible com a text)."
+}

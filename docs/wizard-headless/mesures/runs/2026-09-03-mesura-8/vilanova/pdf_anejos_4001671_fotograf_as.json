@@ -1,0 +1,94 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_fotografías.pdf",
+ "source_md5": "3e6c4615c7c8c5fe5e807d276943d92c",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Reportatge fotogràfic de camp (7 fotos F-1 a F-7 en 4 pàgines): vistes generals de la parcel·la i emplaçament de la màquina DPSH als punts P-1, P-2 i P-3, amb detall del material recuperat en assaigs SPT associats.",
+ "issuer": "G3 (logotip a la capçalera de cada pàgina)",
+ "date": "PDF generat 2026-03-16 (creationDate/modDate del fitxer; no és necessàriament la data de camp)",
+ "pages_or_sheets": "4 pàgines",
+ "context": {
+  "who_made_it": "G3 (logotip corporatiu a la capçalera de cada pàgina; és el Print-to-PDF de l'annex fotogràfic intern)",
+  "for_whom": "el mateix informe (annex de suport visual, no adreçat a cap tercer)",
+  "why": "documentar visualment la parcel·la i l'emplaçament de la màquina de penetració dinàmica DPSH als punts P-1, P-2 i P-3, i el material recuperat en els assaigs SPT associats",
+  "expected_fields": [
+   "expedient (capçalera de cada pàgina)",
+   "corroboració visual del nombre i identificació dels punts DPSH (P-1/P-2/P-3)",
+   "identificació de mostres SPT per punt"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "municipality",
+   "street_address",
+   "field_date",
+   "cota_referencia",
+   "num_floors",
+   "building_type",
+   "superficie_parcela",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol",
+   "lab_testing_company",
+   "lab_depth"
+  ],
+  "relation_to_others": "Print-to-PDF de l'annex FreeHand ANEXOS/4001671_fotografías.FH11 (mateix contingut fotogràfic; l'FH11 no és llegible per text). Pot solapar-se amb fotos soltes de FOTOGRAFIES/*.jpeg (p.ex. 'SPT 1 P-1.jpeg', 'SPT A P3.jpeg', 'ZONA P3.jpeg') però no s'ha pogut confirmar coincidència exacta sense comparar imatges/md5.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001671",
+   "location": "capçalera de cada pàgina (banda dreta, 'Reportaje fotográfico - Página N')",
+   "quote": "4001671",
+   "confidence": 0.55,
+   "note": "coincideix amb el nom de la carpeta del projecte; document de baixa autoritat (fotos), corrobora però no és font primària"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "peus de foto p.2 (F-3/F-4) i p.3 (F-5)",
+   "quote": "Fotografía 3 y 4. Vista del emplazamiento de la máquina durante la realización del ensayo de penetración dinámica DPSH P-1 y P-2, respectivamente. / Fotografía 5 y 6. Vista del emplazamiento de la máquina durante la realización del ensayo de penetración dinámica DPSH P-3 y Detalle del material recuperado en el ensayo SPT-1 (P-1).",
+   "confidence": 0.4,
+   "note": "corroboració visual de 3 punts DPSH (P-1, P-2, P-3); l'Excel DPSH (ANEXOS/4001671_DPSH.xls, 3 fulls P-1/P-2/P-3) és la font d'autoritat per aquest camp, aquest document només ho confirma"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "peu de foto p.3 (Fotografía 6)",
+   "quote": "Detalle del material recuperado en el ensayo SPT-1 (P-1).",
+   "confidence": 0.3,
+   "note": "etiqueta 'SPT-1' associada al punt P-1 en aquest document; candidat feble, creuar amb GTL/annex de sondeig per a l'etiqueta definitiva"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "peu de foto p.4 (Fotografía 7)",
+   "quote": "Fotografía 7. Detalle del material recuperado en el ensayo SPT-1 (P-3).",
+   "confidence": 0.25,
+   "note": "la mateixa etiqueta 'SPT-1' torna a aparèixer aquí associada al punt P-3 (possible ús genèric de 'SPT-1' per punt, no ID únic de projecte); NO assumir mostra única — aquesta ambigüitat s'ha d'anotar i resoldre amb el GTL/comanda de laboratori"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok=false a les 4 pàgines (Acrobat Distiller/PScript, text brossa) → lectura visual de page-N.png (150 dpi) per a totes les pàgines; no ha calgut recórrer a les meitats top/bottom perquè capçaleres i peus de foto ja eren llegibles a la pàgina sencera. Etiqueta 'SPT-1' repetida per a dos punts diferents (P-1 i P-3) és una inconsistència pròpia del document, anotada com a nota als dos candidats corresponents."
+}

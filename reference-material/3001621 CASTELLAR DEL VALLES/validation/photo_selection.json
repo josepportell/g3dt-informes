@@ -1,7 +1,39 @@
 {
-  "site_1": 16,
-  "site_2": 7,
-  "dpsh": 1,
-  "sondeig": 13,
-  "materials": 14
+ "source": "lector",
+ "site_1": null,
+ "site_2": null,
+ "dpsh": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+ "sondeig": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+ "materials": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+ "materials_per_punt": [
+  {
+   "punt": "S-1",
+   "rel": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg"
+  }
+ ],
+ "_lector": {
+  "data": "2026-09-09 13:35",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 57.7,
+  "exclude_slug": "castellar",
+  "raons": {
+   "dpsh": "màquina DPSH sencera al solar, és F-1 de l'annex («P-1»); les altres 3 fotos DPSH (2,3,6) són equivalents però l'Eva no té regla fixa i F-1 és la primera",
+   "sondeig": "màquina compacta amb operari, carpeta S1, rol SmartScan photo_sondeig_equipment; no és cap dels punts P1-P4 de l'annex ni hi és; és la foto de màquina que queda un cop identificades les 4 DPSH",
+   "materials": "capsa blava de testimonis amb els nuclis i el cartell del sondeig, carpeta S1; entre les dues fotos gairebé iguals (7 i 8) triada la que ensenya millor el conjunt sense la bossa tapant"
+  },
+  "confianca": {
+   "dpsh": 0.9,
+   "sondeig": 0.75,
+   "materials": 0.7,
+   "site_1": 1.0,
+   "site_2": 1.0
+  },
+  "cap_font": [
+   "site_1",
+   "site_2"
+  ],
+  "notes": "Les 4 fotos DPSH de l'annex (F-1..F-4) corresponen a P-1..P-4; no n'hi ha cap altra amb la màquina DPSH. Els PNG ALTRES (mapes, ortofotos, croquis, tall) mai van a un forat de foto: cap és una vista de camp del solar sense marques, per això site_1 i site_2 queden null. WhatsApp 09.37.01 i 10.02.53 (índex 4 i 5) són fulls de camp / croquis, no van a l'informe.",
+  "warnings": []
+ }
 }

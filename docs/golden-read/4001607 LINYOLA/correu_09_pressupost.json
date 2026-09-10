@@ -1,0 +1,28 @@
+{
+ "source_path": "25.0616/pressupost geotècnic.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu d'encàrrec de Laia Alarcón (arquitecta, BUNYESC ARQUITECTURA EFICIENT SLP) a G3 (Dolors Maqueda), 19/08/2025 15:24: 'estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola', Carrer Clot de la Llacuna, 16; dades de la 'Clienta' Sílvia Eroles Balagueró (DNI, facturació, tel, correu); adjunta plànols del projecte bàsic i plànol dels 3 punts de sondeig; demana pressupost.",
+ "issuer": "Laia Alarcon <laia.alarcon@bunyesc.com> (arquitecta, Bunyesc Arquitectura Eficient SLP, B25828922, C/ Arboretum 17, Lleida)",
+ "date": "2025-08-19",
+ "pages_or_sheets": "cos + 3 adjunts (2 PDF útils + 1 logo)",
+ "context": {
+  "who_made_it": "el despatx d'arquitectura que redacta el projecte bàsic (Laia Alarcón, arquitecta col·laboradora de Bunyesc)",
+  "for_whom": "G3 administració",
+  "why": "demanar pressupost d'estudi geotècnic i passar les dades de facturació de la clienta i els plànols",
+  "expected_fields": ["street_address + municipality", "client_name (com a 'Clienta')", "architect_name (despatx + persona que escriu)", "building_type", "num_dpsh_tests (3 punts proposats)", "adjunts amb projecte (plantes, superfície, promotor, cadastral)"],
+  "not_expected": ["expedient", "field_date", "cota", "nivells", "lab", "num_floors (no ho diu al text)"],
+  "relation_to_others": "ORIGEN de tot l'encàrrec: el pressupost 25·0616 (21/08) copia CLIENT: BUNYESC i OBRA: 'Clot de la Llacuna, 16 -25240- Linyola' d'aquí (mateixa línia literal). RV_ (Dolors→Eva, 20/08) i RE_ (Eva→Dolors amb PLAN_COST, 20/08) són reenviaments SENSE text nou. Adjunts: 'Punts de Sondeig_Silvia_Jaume.pdf' md5 296c5aa7 i '2_02B_DG_Silvia_Jaume.pdf' md5 7df29e1f = còpies soltes a 25.0616/ (idèntiques). image.png 114×161 (31,5 KB) = logo de signatura.",
+  "authority_for": ["street_address", "municipality", "building_type", "architect_name (despatx; persona candidata)", "client_name (candidat fort: 'Clienta' amb DNI = formulari acceptació)", "num_dpsh_tests (proposats)"]
+ },
+ "tier_a": [
+  {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna, 16", "location": "cos del correu", "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola", "confidence": 0.9, "note": "font primària de la línia OBRA del pressupost (no independents entre si)"},
+  {"concept_id": "municipality", "value": "Linyola", "location": "cos del correu", "quote": "un habitatge unifamiliar a Linyola", "confidence": 0.95, "note": ""},
+  {"concept_id": "building_type", "value": "habitatge unifamiliar", "location": "cos del correu", "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola", "confidence": 0.9, "note": "el projecte afegeix 'aïllat'"},
+  {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró", "location": "cos del correu 'Dades Clienta'", "quote": "Dades Clienta: ⏎ Sílvia Eroles Balagueró. ⏎ dni: 47697437Z ⏎ direcció facturació: C/ Llibertat 13, 1r 2a -25240- LINYOLA ⏎ telf: 618 10 86 12 ⏎ correu: serolesba@gmail.com", "confidence": 0.85, "note": "'Clienta' de l'arquitecte = promotora. Coincideix amb formulari d'acceptació (NIF 47697437Z). El correu NO esmenta Jaume Nadal Andreu (sí el caixetí del projecte, com a 2n promotor). Adreça de facturació 'C/ Llibertat 13, 1r 2a' vs formulari '13, 1-1': discrepància de pis irrellevant per a l'informe."},
+  {"concept_id": "architect_name", "value": "BUNYESC ARQUITECTURA EFICIENT SLP (escriu Laia Alarcón, arquitecta)", "location": "signatura + peu legal", "quote": "Laia Alarcón ⏎ arquitecta ⏎ +34 628 57 72 24 | Dades identificatives: Bunyesc Arquitectura Eficient Slp, B25828922, Carrer Arboretum 17,25199, Lleida.", "confidence": 0.7, "note": "Laia Alarcón és l'arquitecta que gestiona l'encàrrec; el caixetí del projecte diu 'representat per JOSEP BUNYESC PALACÍN - Dr. Arquitecte' → l'arquitecte signant és Josep Bunyesc; Laia és col·laboradora. Candidats: Josep Bunyesc Palacín > Bunyesc Arquitectura Eficient SLP > Laia Alarcón."},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "cos del correu", "quote": "plànol dels 3 punts de sondeig.", "confidence": 0.6, "note": "punts proposats per l'arquitecte (DPSH, no sondeigs a rotació)"},
+  {"concept_id": "NOT_street_address", "value": "C/ Llibertat 13, 1r 2a, 25240 Linyola", "location": "cos 'direcció facturació'", "quote": "direcció facturació: C/ Llibertat 13, 1r 2a -25240-  LINYOLA", "confidence": 1.0, "note": "adreça de facturació de la clienta, NO de l'obra"}
+ ],
+ "not_present": ["expedient", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "extract_msg: cos net (primer correu de la cadena). Adjunts extrets a scratchpad/linyola/agentA/m09/ i dedupats per md5 contra 25.0616/ (idèntics → llegits des de la carpeta: projecte_14 i planol_15)."
+}

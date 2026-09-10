@@ -1,0 +1,28 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe (3 p., una per penetròmetre P-1/P-2/P-3; PDF des de l'Excel DPSH, 'Loli', 28/10/2025): capçalera 'Cota d'inici: +245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)', OBRA C/ CLOT DE LA LLACUNA 16, POBLACIÓ LINYOLA, DATA 01/10/2025, NÚMERO D'INFORME 4001607; gràfics amb rebuig a -2,90 / -2,15 / -1,75 m.",
+ "issuer": "G3 (Eva; imprès per 'Loli')",
+ "date": "2025-10-28 (PDF) / DATA de camp 01/10/2025",
+ "pages_or_sheets": 3,
+ "context": {
+  "who_made_it": "G3 a partir d'ANNEXES/4001607_DPSH.xls (title del PDF = '4001607_DPSH.xls')",
+  "for_whom": "l'annex de l'informe 4001607",
+  "why": "presentar els gràfics DPSH amb la capçalera del projecte",
+  "expected_fields": ["cota_referencia (Cota d'inici)", "field_date (DATA:)", "expedient (NÚMERO D'INFORME)", "street_address (OBRA:)", "municipality (POBLACIÓ:)", "num_dpsh_tests (pàgines)"],
+  "not_expected": ["client", "arquitecte", "plantes", "superfície", "nivells geològics ('Nivell 1/2' és la llegenda del gràfic)", "lab"],
+  "relation_to_others": "Versió impresa de l'Excel DPSH (mateixos valors i 'Rebuig a la cota de…'). La capçalera l'escriu l'Eva: és l'autoritat per a cota_referencia (criteri ICGC −0,15 m carrer) i corrobora field_date (= fitxa F38 = comanda = GTL). z GPS de COORDENADES.txt (244,9-245,1) ≈ 245 (aquí coincideixen, no els 0,6 m habituals).",
+  "authority_for": ["cota_referencia", "field_date", "expedient", "street_address", "municipality", "num_dpsh_tests"]
+ },
+ "tier_a": [
+  {"concept_id": "cota_referencia", "value": "+245 msnm", "location": "capçalera p.1-3 (y=144)", "quote": "Cota d'inici:  +245 msnm segons plànol topogràfic del ICGC (‐0,15m carrer)", "confidence": 0.95, "note": "criteri de l'Eva: ICGC −0,15 m carrer. Igual a les 3 pàgines. Comparar amb el tall (escala 241-245 msnm, coherent)."},
+  {"concept_id": "field_date", "value": "2025-10-01", "location": "capçalera 'DATA:' (y=164)", "quote": "DATA: 01/10/2025", "confidence": 0.95, "note": "= fitxa F38 = comanda DATA DE PRESA = GTL data extracció = fotos WhatsApp 2025-10-01"},
+  {"concept_id": "expedient", "value": "4001607", "location": "capçalera 'NÚMERO D'NFORME:' (sic)", "quote": "NÚMERO D'NFORME: 4001607", "confidence": 0.95, "note": "typo de plantilla 'D'NFORME'"},
+  {"concept_id": "street_address", "value": "C/ Clot de la Llacuna 16", "location": "capçalera 'OBRA :'", "quote": "OBRA : C/ CLOT DE LA LLACUNA 16 (p.2: 'C / CLOT DE LA LLACUNA 16'; p.3: 'C/ CLOT DE LA LLACUNA  16')", "confidence": 0.9, "note": "redacció de l'Eva per a l'informe"},
+  {"concept_id": "municipality", "value": "Linyola", "location": "capçalera 'POBLACIÓ:'", "quote": "POBLACIÓ: LINYOLA", "confidence": 0.95, "note": ""},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "3 pàgines P-1, P-2, P-3", "quote": "ASSSAIG DE PENETRACIÓ DINÀMICA: P‐1 | P‐2 | P‐3", "confidence": 0.95, "note": "= Excel DPSH"},
+  {"concept_id": "dpsh_refusal_depths", "value": "P-1 -2,90; P-2 -2,15; P-3 -1,75 m", "location": "peu de cada pàgina", "quote": "Rebuig a la cota de -2,90 m | -2,15 m | -1,75 m", "confidence": 0.95, "note": "nivell B"}
+ ],
+ "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "PScript5/Distiller des d'Excel: text net però amb NBSP (\\xa0) i guió U+2010 a 'P‐1' i '(‐0,15m'. Normalitzats a la lectura. 'Nivell 1/Nivell 2' al peu = llegenda del gràfic (plantilla), no nivells geològics."
+}

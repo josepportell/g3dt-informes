@@ -1,0 +1,261 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+ "source_md5": "e77496626419bcc0e372d33f59609cd5",
+ "skill_version": "1.3-preext-v2",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Annex de l'Eva (G3): tall de correlació A-A' del projecte 3001621, amb mini plànol de situació dels punts d'assaig, llegenda de materials, secció en cota absoluta (msnm) dels 4 DPSH i del sondeig S-1, valors Nb per tram i cota de fonamentació recomanada.",
+ "issuer": "G3 Desenvolupament Territorial (Eva) — dibuix FreeHand exportat via Acrobat Distiller",
+ "date": "Octubre 2025 (caixetí); PDF creat 2025-11-03",
+ "pages_or_sheets": "1 pàgina A3 apaïsada (1191x842 pt)",
+ "context": {
+  "who_made_it": "L'Eva (G3), síntesi geològica pròpia a partir dels DPSH, del sondeig S-1 i del reconeixement de camp.",
+  "for_whom": "Per a l'informe geotècnic 3001621 (annex del cos de l'informe); el lector final és el client/arquitecte.",
+  "why": "Correlacionar els 5 punts d'assaig al llarg de la línia A-A' i fixar els nivells del terreny i la cota de fonamentació recomanada.",
+  "expected_fields": [
+   "expedient",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "building_type",
+   "street_address",
+   "municipality",
+   "soil_levels (litologia, gruixos)",
+   "dpsh_tests (rebuig per punt, Nb)",
+   "sondeig_tests (S-1)",
+   "spt_ma_tests (N=R a S-1)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date (només mes del dibuix)",
+   "superficie_parcela",
+   "num_floors",
+   "utm",
+   "referencia_catastral",
+   "lab_*",
+   "cte_*",
+   "cota_referencia numèrica exacta (escala gràfica 1 m ≈ 81 px)"
+  ],
+  "relation_to_others": "Mateix dibuix que `tall.pdf` (arrel; Microsoft Print To PDF, text net, md5 diferent) i que `PDF-V0/ANNEXES/3001621_tall de correlació.pdf` (mateix md5 e774966…, exclòs de l'inventari). NO són fonts independents. El text d'aquest PDF és brossa (FreeHand→Distiller, text_ok=false): lectura 100 % visual. Segon a la prioritat de nivells/litologia darrere de `PDF/ANNEXES/3001621_sondeig.pdf` (Pas 3b, columna Unitat litològica / Descripció dels materials); el TALL mana per al NOMBRE de nivells si discrepen. Complementa l'Excel `ANNEXES/3001621_DPSH.xls` (font dels Nb i del peu «Rebuig a») i `PDF/ANNEXES/3001621_DPSH.pdf` (cotes d'inici per punt, relatives «respecte el carrer»).",
+  "authority_for": [
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "expedient"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí, casella Exp (peu dreta)",
+   "quote": "Exp: 3001621",
+   "confidence": 0.9,
+   "note": "Coincideix amb el nom de la carpeta i amb el nom del fitxer. Els caixetins dels annexos de l'Eva poden portar typos (regla Pas 3): creuar amb comanda N19."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "llegenda (quadre LLEGENDA, 2 files de material)",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.8,
+   "note": "Només un nivell numerat. El «Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.» (primera fila de la llegenda, ~0,4-0,7 m, per damunt de la cota de fonamentació recomanada) NO porta número: no compta com a nivell segons criteri Unitat litològica. Confirmar amb la columna Unitat litològica de l'annex de sondeig (font 1)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "secció (etiquetes blaves P-1, P-2, P-4, P-3 d'esquerra a dreta) + mini plànol de situació (P-1..P-4 sobre la línia A-A')",
+   "quote": "P-1 … P-2 … S-1 … P-4 … P-3",
+   "confidence": 0.85,
+   "note": "4 penetròmetres dibuixats amb corba Nb, tots executats (cap marcat com a previst). Mana l'Excel DPSH (fulls amb dades) si discrepa."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells nº 18A-18B-20",
+   "location": "caixetí, TÍTOL DEL PROJECTE, línia 2",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.7,
+   "note": "Redacció de l'Eva al títol de l'annex (deriva de l'encàrrec: no independent del pressupost/comanda). Tres números (18A-18B-20): possible parcel·la agrupada / 3 habitatges (el correu s'anomena 'PRESSUPOST 3 HAB'). El carrer 'Arbrells' també és llegible al mini plànol."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "caixetí, TÍTOL DEL PROJECTE, línia 2",
+   "quote": "CASTELLAR DEL VALLÈS  (BARCELONA)",
+   "confidence": 0.7,
+   "note": "Forma llarga amb accent. Deriva de l'encàrrec; no és font independent de les plantilles G3."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "caixetí, TÍTOL DEL PROJECTE, línia 1",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.6,
+   "note": "Redacció pròpia de l'Eva (typo 'una habitatge'). Ambigüitat: el títol diu UN habitatge però l'adreça és triple (18A-18B-20) i el correu d'encàrrec parla de 3 HAB → candidat, no segur; una instrucció posterior del client mana (regla Pas 3)."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "≈571,5 msnm (superfície a S-1, lectura gràfica ±0,2)",
+   "location": "secció, escala vertical (msnm) 569-572 a l'esquerra; superfície del terreny a la vertical de S-1",
+   "quote": "(msnm) 572 / 571 / 570 / 569",
+   "confidence": 0.2,
+   "note": "NO és font d'autoritat (annex DPSH > annex sondeig z > COORDENADES.txt). Només corroboració: el tall està en sistema ABSOLUT (msnm), superfície entre ≈571,4 (P-2, S-1) i ≈571,8 (P-1, P-3, P-4). Lectura gràfica: 1 m ≈ 81 px a 150 dpi."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "≈571,8 msnm (gràfic, ±0,2)",
+    "profunditat_assolida": "≈-1,3 m (gràfic; fi de la corba a ≈570,4 msnm)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-1 (esquerra)",
+    "quote": "Nb=16 … Nb=R",
+    "extra": {
+     "nb_trams": [
+      "16 (terreny vegetal)",
+      "R (Nivell 1)"
+     ],
+     "nota": "Valors exactes: Excel DPSH full P-1 i peu «Rebuig a». Cap símbol de N.F. al tall."
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "≈571,5 msnm (gràfic, ±0,2)",
+    "profunditat_assolida": "≈-0,5 m (gràfic; corba curta)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-2",
+    "quote": "Nb=18 … Nb=R",
+    "extra": {
+     "nb_trams": [
+      "18 (terreny vegetal)",
+      "R (Nivell 1)"
+     ],
+     "nota": "Cap símbol de N.F. al tall."
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "≈571,8 msnm (gràfic, ±0,2)",
+    "profunditat_assolida": "≈-0,6 m (gràfic)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-3 (extrem dret)",
+    "quote": "Nb=19 … Nb=R",
+    "extra": {
+     "nb_trams": [
+      "19 (terreny vegetal)",
+      "R (Nivell 1)"
+     ],
+     "nota": "Ordre al tall: P-1, P-2, S-1, P-4, P-3 (P-3 és el més a l'est/A'). Cap símbol de N.F."
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "≈571,8 msnm (gràfic, ±0,2)",
+    "profunditat_assolida": "≈-1,5 m (gràfic; fi de la corba a ≈570,3 msnm)",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "secció, columna P-4",
+    "quote": "Nb=10 … Nb=33 … Nb=R",
+    "extra": {
+     "nb_trams": [
+      "10 (terreny vegetal)",
+      "33 (sostre Nivell 1)",
+      "R (Nivell 1)"
+     ],
+     "nota": "Únic punt amb 3 trams: capa de transició amb Nb=33 abans del rebuig. Cap símbol de N.F."
+    }
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "≈571,5 msnm (gràfic, ±0,2) — ABSOLUT",
+    "profunditat_assolida": "≈-1,3 m (gràfic; columna dibuixada de ≈571,5 a ≈570,2 msnm)",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": null,
+    "location": "secció, columna S-1 (vermella, centre) amb litologia gràfica i etiqueta N=R",
+    "quote": "S-1 … N=R",
+    "extra": {
+     "nota_sistema_cotes": "REGLA ERR Castellar (Pas 3b): si les cotes DPSH de l'annex DPSH són relatives «respecte el carrer», la cel·la 'cota' de la taula de sondeig ha de ser la relativa (Eva: -4,20), no l'absoluta d'aquest tall ni el z de l'annex sondeig. Aquest valor absolut només corrobora `cota_referencia`.",
+     "nota_spt": "Un sol assaig dibuixat (N=R) dins la columna S-1; comptar amb GTL + comanda fila 35 + annex sondeig."
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1 (etiqueta no impresa al tall; només 'N=R' a S-1)",
+    "punt": "S-1",
+    "profunditat": "≈-0,8 a -1,3 m (gràfic; tram amb trama de bretxa sota el terreny vegetal)",
+    "litologia": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells (l'assaig cau per sota de la base del terreny vegetal)",
+    "n30": {
+     "value": "R",
+     "registre": null,
+     "candidates": [
+      "R"
+     ],
+     "location": "secció, etiqueta a la dreta de la columna S-1",
+     "quote": "N=R",
+     "note": "El tall imprimeix N=R (rebuig). Registre per trams de 15 cm NO és en aquest document: annex sondeig bloc 'Muestras y ensayos in situ'. n30 mai segur (Pas 3b)."
+    },
+    "location": "secció, columna S-1",
+    "quote": "N=R"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Terreny vegetal (sense número)",
+    "litologia": null,
+    "litologia_candidats": [
+     "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels."
+    ],
+    "de": "0,00 (superfície)",
+    "a": "≈-0,4 a -0,7 m segons punt (gràfic: P-1 ≈0,7; P-2/P-3 ≈0,4; S-1/P-4 ≈0,5)",
+    "mostra_del_nivell": false,
+    "location": "llegenda fila 1 + secció (franja marró fosc)",
+    "quote": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "extra": {
+     "nota": "No numerat a la llegenda → no compta a num_soil_levels; la cota de fonamentació recomanada (línia vermella discontínua) coincideix aproximadament amb la seva base."
+    }
+   },
+   {
+    "nom": "1er nivell",
+    "litologia": null,
+    "litologia_candidats": [
+     "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+    ],
+    "de": "≈-0,4 a -0,7 m segons punt (base del terreny vegetal, gràfic)",
+    "a": "fons del tall (569 msnm, ≈-2,5 m); no delimitat — rebuig DPSH/SPT dins d'aquest nivell",
+    "mostra_del_nivell": true,
+    "location": "llegenda fila 2 + secció (franja salmó)",
+    "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "extra": {
+     "nota": "mostra_del_nivell=true per lectura gràfica (l'SPT N=R a S-1 cau sota el terreny vegetal); confirmar amb lab_depth del GTL/annex sondeig. Litologia sempre candidats: l'Eva re-redacta; 'Descripció dels materials' de l'annex sondeig passa primer."
+    }
+   }
+  ],
+  "__nota": "Totes les fondàries i cotes d'aquest bloc són lectura GRÀFICA de la secció (1 m ≈ 81 px a 150 dpi, ±0,2 m): serveixen per corroborar, no per omplir la taula; els valors exactes vénen de l'Excel DPSH (peu «Rebuig a»), de l'annex DPSH.pdf (cota inici per punt) i de l'annex sondeig."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (el caixetí diu 'Data: Octubre 2025' = mes del dibuix, no dia de camp: no s'emet com a candidat)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location (només es dedueix que la mostra és a S-1)",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció v2: llegit _inventory.json (Pas 0) → entrada preext sense error, text_ok[1]=false (Acrobat Distiller 15 / PScript5, FreeHand): page-1.txt és brossa (753 bytes de glifs), confirmat. Lectura visual de page-1.png (150 dpi) + page-1-left/right.png (220 dpi); no ha calgut render_clip (caixetí, llegenda i etiquetes Nb llegibles). Cap codi executat sobre el PDF. Duplicats detectats via inventari: tall.pdf (Print To PDF, text net, mateix dibuix) i PDF-V0/ANNEXES (mateix md5) — no independents. Cotes/fondàries de la secció estimades per píxels contra l'escala msnm (572→y≈820, 569→y≈1063 a 2000 px d'amplada): ±0,2 m, marcades com a gràfiques. Cap símbol de nivell freàtic al tall (cap marca ni llegenda de NF): nivell_freatic=null, no 'No detectat' (això ho decideix l'Excel DPSH per text+color). Caixetí: 'Data: Octubre 2025', 'Tall de correlació', 'Pàgina 1/1'. Mini plànol de situació: zona d'estudi taronja, línia A-A' verda, punts P-1..P-4 i S-1, carrer 'Arbrells' llegible, escala 0-15 m."
+}

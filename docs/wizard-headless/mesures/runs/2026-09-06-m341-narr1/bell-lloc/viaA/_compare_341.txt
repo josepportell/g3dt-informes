@@ -1,0 +1,33 @@
+# bell-lloc/viaA — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 16 | 4 | 5 | 0 | 80 % |
+| calc | 11 | 0 | 3 | 0 | 79 % |
+| narr | 5 | 2 | 6 | 2 | 54 % |
+| resta | 2 | 0 | 1 | 1 | 67 % |
+
+- [narr] `access_street` **NO_DATA** gen=«None» ↔ eva=«En solars propers existeixen construccions de característiques similars a la obra projecta»
+- [narr] `adjacent_east_fmt` **MISMATCH** gen=«Per la part est amb una parcel·la amb construcció.» ↔ eva=«Per la part est amb el Carrer Mestre Ramon Ortiz.»
+- [narr] `adjacent_north_fmt` **MISMATCH** gen=«Per la part nord amb el Carrer Antoni Bellet Pérez.» ↔ eva=«Per la part nord amb una parcel·la buida.»
+- [narr] `adjacent_south_fmt` **MISMATCH** gen=«Per la part sud amb una parcel·la amb construcció.» ↔ eva=«Per la part sud amb el Carrer Antoni Bellet.»
+- [narr] `adjacent_west_fmt` **MISMATCH** gen=«I finalment, per la part oest amb una parcel·la amb construcció.» ↔ eva=«I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos»
+- [A] `architect_company` **CLOSE** gen=«ABN Arquitectura Bosch Novell» ↔ eva=«ARQUITECTURA BOSCH NOVELL»
+- [narr] `building_structure_desc` **MISMATCH** gen=«sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l» ↔ eva=«en planta baixa, i per tant, no es preveu cap excavació important, únicament l’excavació p»
+- [A] `building_type_lower` **MISMATCH** gen=«habitatge unifamiliar aïllat» ↔ eva=«un habitatge unifamiliar»
+- [narr] `conclusions_aggressivity_statement` **MISMATCH** gen=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on» ↔ eva=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on»
+- [calc] `cte_sol` **MISMATCH** gen=«T-2» ↔ eva=«T-1»
+- [A] `data_camp_text` **MISMATCH** gen=«1 i 6 d'octubre de 2025» ↔ eva=«1 d’octubre de 2025»
+- [resta] `data_signatura_text` **MISMATCH** gen=«06 de setembre de 2026» ↔ eva=«27 d’octubre de 2025»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar c»
+- [calc] `geomech_E` **MISMATCH** gen=«450» ↔ eva=«650»
+- [narr] `lab_tests_text` **CLOSE** gen=«Contingut en sulfats solubles UNE 83963:2008» ↔ eva=«1 assaig de contingut en sulfats UNE 83963 : 2008»
+- [A] `location_sentence` **CLOSE** gen=«entre el Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz i el Carrer A» ↔ eva=«entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d’Urgell»
+- [A] `municipality` **CLOSE** gen=«BELL.LLOC D'URGELL (Lleida)» ↔ eva=«Bell-lloc d’Urgell»
+- [calc] `settlement` **MISMATCH** gen=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o in» ↔ eva=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a»
+- [narr] `site_condition` **CLOSE** gen=«Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'ero» ↔ eva=«Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de pro»
+- [narr] `site_description` **NO_DATA** gen=«None» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del C»
+- [A] `spt_lithology` **MISMATCH** gen=«Grava amb matriu sorrenca» ↔ eva=«Graves en matriu sorrenca»
+- [A] `spt_n30` **MISMATCH** gen=«62» ↔ eva=«54»
+- [A] `spt_test_id` **MISMATCH** gen=«SPT1 S1» ↔ eva=«SPT-1»
+- [A] `superficie_construida` **CLOSE** gen=«397» ↔ eva=«280+86»

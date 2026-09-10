@@ -1,0 +1,2623 @@
+{
+ "generated": "2026-09-01T12:57:34",
+ "project": "3001621 CASTELLAR DEL VALLES",
+ "files": [
+  {
+   "path": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 17245,
+   "md5": "2ba1d934a03964da93d177c5aea4ecf8",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+   "size": 112072,
+   "md5": "8418e65b89940a0b1ae42104be279547",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+   "size": 272896,
+   "md5": "3ecd5e682c690373fd56fd0fde96bab2",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+   "size": 425022,
+   "md5": "5b71a5637f8084f4c0506851ca0729ff",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+   "size": 361570,
+   "md5": "6bfc5258bd580854e42ea5be3a4041c6",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/Thumbs.db",
+   "size": 49664,
+   "md5": "622f46ec238926d3b58940cb5d4d69e2",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25 (1).jpeg",
+   "size": 376837,
+   "md5": "5524691f1c54e9ec6ef325878934a6d6",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/WhatsApp Image 2025-10-20 at 13.00.25.jpeg",
+   "size": 224779,
+   "md5": "2ebd337ac49348d11daa5e34a6c77c7e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+   "size": 9766,
+   "md5": "82b18a3e21c35923b45345419356d49b",
+   "mtime": "2026-08-26T17:13:29",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img0.jpeg",
+   "size": 31726,
+   "md5": "e875bae970adc89de0b870aaea246794",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img1.jpeg",
+   "size": 8255,
+   "md5": "ed3960092969f702f01b52a329fc403d",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img2.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES_img3.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img0.jpeg",
+   "size": 31726,
+   "md5": "e875bae970adc89de0b870aaea246794",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img1.jpeg",
+   "size": 8255,
+   "md5": "ed3960092969f702f01b52a329fc403d",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img2.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "25.0493/validation/mined_images/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES_img3.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-26T17:13:31",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "3001621_PORTADA_25.doc",
+   "size": 198656,
+   "md5": "5bc1ca6a766aaaeeda44cffdbfd7c8b1",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:PORTADA",
+   "priority": 0
+  },
+  {
+   "path": "3001621_generated.docx",
+   "size": 10697163,
+   "md5": "e2290c6d1cd743c7dc6cc08a9d1de740",
+   "mtime": "2026-08-23T14:35:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:_generated",
+   "priority": 0
+  },
+  {
+   "path": "3001621_informe_v0.doc",
+   "size": 5880320,
+   "md5": "5877838a28caf0f388f0ae64a71573d8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "3001621_informe_v0.docx",
+   "size": 5594470,
+   "md5": "1ba3b47fca8b31a64394b80a27cd0689",
+   "mtime": "2026-03-04T20:50:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4687-GTL-25 Castellar del Vallés.pdf",
+   "size": 371355,
+   "md5": "ed8a07b662f237b3c9db0b752d54a300",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "informe_laboratori",
+   "priority": 5,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/page-5.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/4687_gtl_25_castellar_del_vall_s/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+   "size": 551055,
+   "md5": "3f3035ff2113238d74e3e22e5cffb26a",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/acceptacio_pressupost_geotec_castellar_del/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/Thumbs.db",
+   "size": 8704,
+   "md5": "edf3e6348fb5e81bab662a827581f3f9",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img0.jpeg",
+   "size": 31726,
+   "md5": "e875bae970adc89de0b870aaea246794",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img1.jpeg",
+   "size": 8255,
+   "md5": "ed3960092969f702f01b52a329fc403d",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img2.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/validation/mined_images/PRESSUPOST GEOTEC CASTELLAR DEL...._img3.jpeg",
+   "size": 41551,
+   "md5": "22bf772ffdd03550796fe439a8fdb968",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_DPSH.xls",
+   "size": 130048,
+   "md5": "0389af31b3b165e13338709a568cf130",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-0.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-0.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-0.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-1.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-1.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-1.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-2.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-2.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-2.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-3.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-3.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/sheet-3.colors.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/annexes_3001621_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 95
+     },
+     {
+      "index": 1,
+      "name": "P-2",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 92
+     },
+     {
+      "index": 2,
+      "name": "P-3",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 96
+     },
+     {
+      "index": 3,
+      "name": "P-4",
+      "rows": 80,
+      "cols": 7,
+      "colored_cells": 97
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/3001621_fotografies.FH11",
+   "size": 1747068,
+   "md5": "95f6cd66dfe9f5742c1936b5382e48e1",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_plànol de situació.FH11",
+   "size": 2700738,
+   "md5": "cc6bcb8e89a0c4a8382c9c941d78ba06",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_sondeig.FH11",
+   "size": 7254285,
+   "md5": "b49731f3b6aab28ee7bfaf192fbd72bf",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/3001621_tall de correlació.FH11",
+   "size": 1082509,
+   "md5": "1a991dcd9ffde4c4fa4de2c290e2ccd5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/6_mapa Geologic_CAT_VS.FH11",
+   "size": 1716191,
+   "md5": "bf603be29969aef9774b486919c70187",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/COORDENADES.txt",
+   "size": 210,
+   "md5": "58b0deb6f8ee074033fbd8ac7e0f85d3",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "coordenades_gps",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M1.png",
+   "size": 649112,
+   "md5": "25757e1aee82a2a246f8570f55e2b28f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M10.png",
+   "size": 1544968,
+   "md5": "5d4160893ca77ad2a1b8581b816120ae",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M11.png",
+   "size": 180853,
+   "md5": "b8b79556d8532ff2d6abcf0be3660a82",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M2.png",
+   "size": 518256,
+   "md5": "ede33e6bfafe136d18760f1053269833",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M3.png",
+   "size": 632179,
+   "md5": "179f758d8b1c76179f261c0f08707fa5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/M4.png",
+   "size": 627024,
+   "md5": "2f7b412831096f67291c22b3a328878c",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/Thumbs.db",
+   "size": 219136,
+   "md5": "a89cd3fe5adfd63f9424a7d6eee0d04f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m12 mgeol.png",
+   "size": 1638980,
+   "md5": "006a37326f18a7fdefcd5034ed0b52f7",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m5.png",
+   "size": 386297,
+   "md5": "07ad16906f33acdd1a6882370e95f84e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m6.png",
+   "size": 986877,
+   "md5": "2b2a8295ccc672864b596dcf8a16a64a",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m7.png",
+   "size": 1372127,
+   "md5": "659913a315d48b95cfc6e7aa2fd6cc32",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m8.png",
+   "size": 882718,
+   "md5": "f51410232335ae3a509b2745127a5497",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/m9.png",
+   "size": 73468,
+   "md5": "aa4977dd80f2e0f828afb9567c0577b2",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/EF7DB361.tmp",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "DTE.txt",
+   "size": 77,
+   "md5": "2432c38b8e2f1f07c894409b1ba8ce14",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+   "size": 361105,
+   "md5": "ddafdfecb4ddc67ba6d246fa92f06b1a",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/maquina_dpsh_2.jpg",
+   "size": 482143,
+   "md5": "66375621d29b744b0f1f266e7b96fb0f",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/DPSH/maquina_dpsh_3.jpg",
+   "size": 432498,
+   "md5": "61912151c7ebf4f08b3c85015284b549",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 09.37.01_63bb48b8.jpg",
+   "size": 365133,
+   "md5": "78a3c71bf36ce2285513b9f3be4ff181",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-24 a las 10.02.53_404bc72b.jpg",
+   "size": 347552,
+   "md5": "6eb510600c13fb8ac17be6eff37b780c",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P1.jpg",
+   "size": 361105,
+   "md5": "ddafdfecb4ddc67ba6d246fa92f06b1a",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P2.jpg",
+   "size": 440685,
+   "md5": "0ada9df61caff348dd133892dd604ad8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P3.jpg",
+   "size": 482143,
+   "md5": "66375621d29b744b0f1f266e7b96fb0f",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P4.jpg",
+   "size": 432498,
+   "md5": "61912151c7ebf4f08b3c85015284b549",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+   "size": 334189,
+   "md5": "cacc0168398d6cb0e121954145259d5d",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.14_4f05eb48.jpg",
+   "size": 356255,
+   "md5": "e105b9e7cd24b02e870c34dc5d2dee54",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+   "size": 538905,
+   "md5": "021456ea95862e2e9e9b7de4d89042f6",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/S1/Thumbs.db",
+   "size": 50688,
+   "md5": "e13a2e7a76c32faef522138b3743e071",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/SONDEIG/maquina_sondeig.jpg",
+   "size": 538905,
+   "md5": "021456ea95862e2e9e9b7de4d89042f6",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Thumbs.db",
+   "size": 48128,
+   "md5": "5a6497af840557c7b4e5118528835e66",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/detall_materials.jpg",
+   "size": 334189,
+   "md5": "cacc0168398d6cb0e121954145259d5d",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/detall_materials_2.jpg",
+   "size": 356255,
+   "md5": "e105b9e7cd24b02e870c34dc5d2dee54",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/vista_general_1.jpg",
+   "size": 440685,
+   "md5": "0ada9df61caff348dd133892dd604ad8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/3001621_informe_v0.pdf",
+   "size": 1929400,
+   "md5": "83fce68e4b6945c1022ead3fce43acd8",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_DPSH.pdf",
+   "size": 108674,
+   "md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_fotografies.pdf",
+   "size": 376873,
+   "md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_plànol de situació.pdf",
+   "size": 198501,
+   "md5": "7d495516ac2896e3f236b08e7879a41d",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_sondeig.pdf",
+   "size": 149175,
+   "md5": "2295eafdfbaf24a22d916a124ea308d0",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/ANNEXES/3001621_tall de correlació.pdf",
+   "size": 116065,
+   "md5": "e77496626419bcc0e372d33f59609cd5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/LLETRA/3001621_PORTADA_25_v0.pdf",
+   "size": 60044,
+   "md5": "0b52d77fba96ed648ef682de469ef1df",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF-V0/LLETRA/3001621_informe_v0.pdf",
+   "size": 954420,
+   "md5": "0a5fae85b5fcfd04c76d90d28328bfb5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/3001621_informe.pdf",
+   "size": 2049849,
+   "md5": "4bcac0abcd84732f5b48bffb4416a48e",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_DPSH.pdf",
+   "size": 108674,
+   "md5": "de76ad0dfa3cf9cc4cbed9479cfa634f",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_dpsh",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/page-4.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_dpsh/meta.json",
+    "pages": 4,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_fotografies.pdf",
+   "size": 376873,
+   "md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/page-2-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_fotografies/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+   "size": 198501,
+   "md5": "7d495516ac2896e3f236b08e7879a41d",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_pl_nol_de_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_pl_nol_de_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_sondeig.pdf",
+   "size": 149175,
+   "md5": "2295eafdfbaf24a22d916a124ea308d0",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "claude",
+   "doc_type_hint": "annex_sondeig",
+   "priority": 1,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-1-right.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-2-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/page-2-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_sondeig/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+   "size": 116065,
+   "md5": "e77496626419bcc0e372d33f59609cd5",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_3001621_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/LAB-SIG.pdf",
+   "size": 162079,
+   "md5": "0527692d91b76c17cf1eba8e50a5bf8a",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/page-5.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/pdf_annexes_lab_sig/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/LLETRA/3001621_PORTADA_25.pdf",
+   "size": 65823,
+   "md5": "06e4f0aa38cbc9f81d0e1e7b2cbc4bb8",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/LLETRA/3001621_informe_v0.pdf",
+   "size": 954437,
+   "md5": "ed6122d7a57491f3aa923bee7cb2e550",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS + SONDEIG.pdf",
+   "size": 1652817,
+   "md5": "9c6982925cfde80fd507a53ea8241838",
+   "mtime": "2026-03-04T20:50:47",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-3-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-4-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-4-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-5-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/page-5-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/penetros_sondeig/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+   "size": 135680,
+   "md5": "9b5696cb7a0a51e3abbd06dc815719ae",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/re_estudi_geot_cnic_versi_castellar_del_valles",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/re_estudi_geot_cnic_versi_castellar_del_valles/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/re_estudi_geot_cnic_versi_castellar_del_valles/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+   "size": 470528,
+   "md5": "4e6c8b60d5fa1f8767cc001e153b891d",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "file_mapping.json",
+   "size": 22822,
+   "md5": "0e6ddcfd18c4c8c575084be05d9bca1b",
+   "mtime": "2026-08-26T17:14:01",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "tall.pdf",
+   "size": 969838,
+   "md5": "a4512806fd21fe5f6efc6b4e6dd15f69",
+   "mtime": "2026-03-04T20:50:48",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/tall/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "validation/_auto_result.json",
+   "size": 153326,
+   "md5": "7ae7acd7d9d7243eaf15c6ed45ec646f",
+   "mtime": "2026-08-26T17:14:40",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_map.json",
+   "size": 41882,
+   "md5": "847a20f8e0ef632ab76a28ada739aeeb",
+   "mtime": "2026-08-24T18:10:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/00c58c79afc2.json",
+   "size": 623,
+   "md5": "a78f3d5d74f9225756fbf57cd9acd9e0",
+   "mtime": "2026-08-24T18:10:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/0a6169066a2a.json",
+   "size": 854,
+   "md5": "b084c8d9e7160c07456237e982c1c8b9",
+   "mtime": "2026-08-24T18:10:22",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/26afc0e1717a.json",
+   "size": 462,
+   "md5": "df778b82ffff7c0849a5a430753d6aba",
+   "mtime": "2026-08-24T18:10:20",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/28f1764ec8e9.json",
+   "size": 808,
+   "md5": "fac20000d1d4d55c6740765f3cc3b14e",
+   "mtime": "2026-08-24T18:10:04",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/2e7b1bb3bef2.json",
+   "size": 149,
+   "md5": "69ee3e339e90c8510056af540441068f",
+   "mtime": "2026-08-24T18:10:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/5785e5071fcc.json",
+   "size": 918,
+   "md5": "bf45b22d2e83a6d61267bee889a4237b",
+   "mtime": "2026-08-24T18:10:19",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/736669bee386.json",
+   "size": 232,
+   "md5": "abd3b0a3ee575fa3a196f8e14b042900",
+   "mtime": "2026-08-24T18:10:07",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/87de5e3b9b14.json",
+   "size": 331,
+   "md5": "896ab8b11d18579a9315bc588398f95b",
+   "mtime": "2026-08-24T18:10:10",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/9549ce2b0a57.json",
+   "size": 161,
+   "md5": "75d7e5e0f659e962553a2a8394de0748",
+   "mtime": "2026-08-24T18:10:08",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/9c8d9dc6e1ad.json",
+   "size": 734,
+   "md5": "fb93edca7858ba01734f639392f3326e",
+   "mtime": "2026-08-24T18:10:27",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/a4012501665b.json",
+   "size": 160,
+   "md5": "5aaf8397c766569ba438753bba32d6e6",
+   "mtime": "2026-08-24T18:10:13",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/b74a8a7ec1fb.json",
+   "size": 336,
+   "md5": "171898b9e70ca48cd5cdd9a35eca0da7",
+   "mtime": "2026-08-24T18:10:18",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/c079e4b2cd43.json",
+   "size": 962,
+   "md5": "f6c3bf543417d7de1e54a41f13a53f6a",
+   "mtime": "2026-08-24T18:10:25",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/c79e00f2420f.json",
+   "size": 1382,
+   "md5": "979c8801b2513ce1022de1394fd813ff",
+   "mtime": "2026-08-24T18:10:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/d5ee94b231f0.json",
+   "size": 328,
+   "md5": "343b5be51b6d63cc7d94bd8804717273",
+   "mtime": "2026-08-24T18:10:12",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/e758772e601f.json",
+   "size": 756,
+   "md5": "ec8e04ebca5b10b80f6f3cc6bae95466",
+   "mtime": "2026-08-24T18:10:15",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/ea73107bd4a6.json",
+   "size": 750,
+   "md5": "2c223461f4880dfd57c25e58be936bac",
+   "mtime": "2026-08-24T18:10:09",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/f791100a539d.json",
+   "size": 314,
+   "md5": "180941240d3121990565c591c33009a3",
+   "mtime": "2026-08-24T18:10:13",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/concept_probes/fe5966b488d0.json",
+   "size": 336,
+   "md5": "d7c5cf3023273b7613be3e4cd6bad004",
+   "mtime": "2026-08-24T18:10:06",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/25_0493_pressupost_3_hab_castellar_del_vall_s.json",
+   "size": 4982,
+   "md5": "a53ef702813e00a2c842ce8c358ac566",
+   "mtime": "2026-08-25T20:01:57",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/4687_gtl_25_castellar_del_vall_s.json",
+   "size": 6619,
+   "md5": "4045c7a652c3de30e4d308d82e9962c6",
+   "mtime": "2026-08-25T19:56:08",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_decisions.json",
+   "size": 126289,
+   "md5": "dee50b3071512d0ad4fc458327ad3a2c",
+   "mtime": "2026-08-25T21:30:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_g3_templates.json",
+   "size": 31046,
+   "md5": "b5065c57ebab7c04725ffad480b71f27",
+   "mtime": "2026-08-25T21:30:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_inventory.json",
+   "size": 84803,
+   "md5": "bc98e1e03456955a27d78f84d88c9973",
+   "mtime": "2026-08-25T21:30:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s/body.txt",
+   "size": 2982,
+   "md5": "45cf9dd7303cdb2a9a9fb9d2414eb0a9",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/25_0493_pressupost_3_hab_castellar_del_vall_s/meta.json",
+   "size": 740,
+   "md5": "5fca85202e548559af76a81361d94055",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/meta.json",
+   "size": 1219,
+   "md5": "2ff3205c0e0339b044e19e469afab40e",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-1.png",
+   "size": 156757,
+   "md5": "43ea2a5ec4d65645f94a736ab6cdb896",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-1.txt",
+   "size": 1039,
+   "md5": "d14c108d0ae489b2a795e6440430932d",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-2.png",
+   "size": 174814,
+   "md5": "d8e829acdcc8c29073a67b0c67b4164d",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-2.txt",
+   "size": 1117,
+   "md5": "36d3e4c1d49ccd7fc7568f185586b614",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-3.png",
+   "size": 119170,
+   "md5": "beb158789b68f1e47c943d880ab4d74a",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-3.txt",
+   "size": 605,
+   "md5": "badc2456e9486176db96acfedae334e1",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-4.png",
+   "size": 238669,
+   "md5": "353aee23bcacdf7395f3140e1354215c",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-4.txt",
+   "size": 2289,
+   "md5": "7620b82510c02771c36213eae278b9fb",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-5.png",
+   "size": 203961,
+   "md5": "c8b14381290af3e71a59fab64131a5bd",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/4687_gtl_25_castellar_del_vall_s/page-5.txt",
+   "size": 1184,
+   "md5": "9cd8a90caa5d97b07043eead9bef0abc",
+   "mtime": "2026-08-25T19:47:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/meta.json",
+   "size": 1741,
+   "md5": "784550e0a86730d0bfe9c914eeb5f83f",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-1.png",
+   "size": 240712,
+   "md5": "f3852097b4845144f59e9dc098b385ed",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-1.txt",
+   "size": 211,
+   "md5": "bf783597bc0c8b2216d1e23adb739bc8",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-2.png",
+   "size": 237558,
+   "md5": "db864e9078bfa7e1ad5f113cd2d093e2",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-2.txt",
+   "size": 1610,
+   "md5": "3ec88536f0574187590f70363efe2f5c",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-3.png",
+   "size": 222853,
+   "md5": "030b4f2cf0d34375700cc095202e2dac",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-3.txt",
+   "size": 1312,
+   "md5": "c4a009ebf6b94f143131157d4ecbb471",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-4.png",
+   "size": 137077,
+   "md5": "9c701ee021c45310ae2da20b745231b5",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-4.txt",
+   "size": 727,
+   "md5": "5d9ef95a09f1bf2105df1825d2b8491f",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-5.png",
+   "size": 345122,
+   "md5": "0d2194c193a8c8c2a1d846ab588aecbc",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-5.txt",
+   "size": 2574,
+   "md5": "dd7b70e90012803d3f896c96d064eb55",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-6.png",
+   "size": 235524,
+   "md5": "a397be158dd0f7201cbe07f28465a33a",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-6.txt",
+   "size": 1948,
+   "md5": "72b598614b67544904dddd93dfd9340e",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-7.png",
+   "size": 125768,
+   "md5": "ffce2f2936900c4b7b1520fb355953a6",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/acceptacio_pressupost_geotec_castellar_del/page-7.txt",
+   "size": 698,
+   "md5": "efb6a6c7d33a5f037dc8de159ae9913b",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/meta.json",
+   "size": 1137,
+   "md5": "b4419d1c0f2ac84396210df8f817711a",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-0.cells.txt",
+   "size": 844,
+   "md5": "9854b6b28a643c9eaf13e1614e85f875",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-0.colors.txt",
+   "size": 2508,
+   "md5": "320018f8dff8ff8305a92336f5e136f9",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-0.csv",
+   "size": 1067,
+   "md5": "3e83fcf4a0110a9ae94c4a5a8bd7ff32",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-1.cells.txt",
+   "size": 758,
+   "md5": "7d36f900236c2ee40e2c2fa472f63815",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-1.colors.txt",
+   "size": 2439,
+   "md5": "92cedc030adcd5532bb6505aa1528bda",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-1.csv",
+   "size": 1011,
+   "md5": "01d78c845133de7bf7af28eb64398996",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-2.cells.txt",
+   "size": 786,
+   "md5": "1e275f4b0e27216574924b7c9bd236de",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-2.colors.txt",
+   "size": 2531,
+   "md5": "0b40f601f0fe96176f51dd12edf3d670",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-2.csv",
+   "size": 1029,
+   "md5": "45c4ed6350baa31fa53ed5be81940bce",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-3.cells.txt",
+   "size": 900,
+   "md5": "1322b56254cf83d84d02d8c91d63ff8f",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-3.colors.txt",
+   "size": 2554,
+   "md5": "1c24f736550a64d11bdf9e010eb2c5bf",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/annexes_3001621_dpsh/sheet-3.csv",
+   "size": 1103,
+   "md5": "eff5f0c794874027daf7e17b0277889e",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/meta.json",
+   "size": 1067,
+   "md5": "32497b109220beb459752201ff1303bc",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-1.png",
+   "size": 147884,
+   "md5": "a52960b1e9986e617f746c059835add6",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-1.txt",
+   "size": 899,
+   "md5": "488b29a4f63056ba8e5cc972b7b12c47",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-2.png",
+   "size": 146125,
+   "md5": "a9efe5f95cf36b78e94b4fddbe396499",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-2.txt",
+   "size": 887,
+   "md5": "8cea0ce197b8dd3c75905cd534879b80",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-3.png",
+   "size": 147151,
+   "md5": "55fd32516e7c05e38268060164666ec3",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-3.txt",
+   "size": 895,
+   "md5": "c9bcabd0bc268e71b3cbe0b516250f80",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-4.png",
+   "size": 149634,
+   "md5": "149ced3b6911ee61065d37ca8bb3bc3d",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_dpsh/page-4.txt",
+   "size": 917,
+   "md5": "11d0d860bb9f9f961df7419ec9da3441",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/meta.json",
+   "size": 1088,
+   "md5": "c0c2e05cede4b519144ea075e7ba4710",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1-bottom.png",
+   "size": 2464026,
+   "md5": "7b4fc56566c8335dfd0c11ab6a17863f",
+   "mtime": "2026-08-25T19:47:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1-top.png",
+   "size": 2312764,
+   "md5": "e9306538a8daccc0a8e12f1bca4fff6f",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1.png",
+   "size": 2063159,
+   "md5": "8871f652c2b5b3ee40d8556401408621",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-1.txt",
+   "size": 176,
+   "md5": "8918870a6d19de44a008f95d5d473403",
+   "mtime": "2026-08-25T19:47:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2-bottom.png",
+   "size": 2491407,
+   "md5": "d58c2cc35b6b4c5171ca7051c0b42dac",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2-top.png",
+   "size": 2388686,
+   "md5": "ea57905d73e3dc72afeaa9a0ed57ac70",
+   "mtime": "2026-08-25T19:47:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2.png",
+   "size": 2068325,
+   "md5": "032d39923171e43066f88e008476940a",
+   "mtime": "2026-08-25T19:47:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_fotografies/page-2.txt",
+   "size": 175,
+   "md5": "8a78dbcab652d9319f3b5fe4debcfd2c",
+   "mtime": "2026-08-25T19:47:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/meta.json",
+   "size": 876,
+   "md5": "1c786aa32bb02eaa689c80a289ffc750",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1-left.png",
+   "size": 2653904,
+   "md5": "2e0e95820eca9d1b5274d13999bc1166",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1-right.png",
+   "size": 1145323,
+   "md5": "bb89dba0edd06fe70627471e099b0de8",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1.png",
+   "size": 3060296,
+   "md5": "b99907478a02c72c5810f4c96b60ece6",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_pl_nol_de_situaci/page-1.txt",
+   "size": 464,
+   "md5": "e31de0c25d733adb2ec73700c5a08d05",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/meta.json",
+   "size": 1046,
+   "md5": "d1083d98819bb355270137e0f6c6090d",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1-left.png",
+   "size": 343292,
+   "md5": "92325dffa480fc246c536fa8543f40ab",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1-right.png",
+   "size": 258039,
+   "md5": "b121f41f5a6139d58b26c1b105c3ecb4",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1.png",
+   "size": 344582,
+   "md5": "72cf7d9fb60ef4c3e1554d521acff6b4",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-1.txt",
+   "size": 1625,
+   "md5": "237bbca660c0f10d80b87d92353c7405",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2-left.png",
+   "size": 2040054,
+   "md5": "1670c01ce943171c2a05090cf1b4a46a",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2-right.png",
+   "size": 695382,
+   "md5": "e02ad0c9384587cc974f5eb5d57f2fa4",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2.png",
+   "size": 1213222,
+   "md5": "32e65ebba8402551b555aa3552daf223",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_sondeig/page-2.txt",
+   "size": 712,
+   "md5": "3b8b127f7668670c936c819cdce24382",
+   "mtime": "2026-08-25T19:47:49",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/meta.json",
+   "size": 875,
+   "md5": "011502532d59e2e96c7aaf7bcc5243c4",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1-left.png",
+   "size": 1085471,
+   "md5": "689f9ac78eeda3c835597814527c8cbc",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1-right.png",
+   "size": 118721,
+   "md5": "bb6c3d47616c123d68806a3c38a9eccc",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1.png",
+   "size": 601484,
+   "md5": "deed7290fb5aa04438c52e42dad4febd",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_3001621_tall_de_correlaci/page-1.txt",
+   "size": 753,
+   "md5": "d7e03ab70ed1055973dc8f0b14bd898b",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/meta.json",
+   "size": 1135,
+   "md5": "759b06ca36c3cb42b708fe05a9d778ab",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-1.png",
+   "size": 174620,
+   "md5": "b1e1a8722e676314f962d68deb5937c6",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-1.txt",
+   "size": 1039,
+   "md5": "d14c108d0ae489b2a795e6440430932d",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-2.png",
+   "size": 194187,
+   "md5": "f79a3f04bdf846bceccf652ea3d8b140",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-2.txt",
+   "size": 1117,
+   "md5": "36d3e4c1d49ccd7fc7568f185586b614",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-3.png",
+   "size": 138590,
+   "md5": "b20885acb7a0f148cbbf3e794b5acd50",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-3.txt",
+   "size": 605,
+   "md5": "badc2456e9486176db96acfedae334e1",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-4.png",
+   "size": 259762,
+   "md5": "bf3d4b9cd3d0549e67c00185cccdd084",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-4.txt",
+   "size": 2289,
+   "md5": "f6f699c62b9e8a90b2d24ebbc3861954",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-5.png",
+   "size": 220920,
+   "md5": "2c15f4bc9aad9530838ae2ca8330fe5f",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/pdf_annexes_lab_sig/page-5.txt",
+   "size": 1184,
+   "md5": "9cd8a90caa5d97b07043eead9bef0abc",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/meta.json",
+   "size": 1413,
+   "md5": "aa05281f06bc3aae43036f446eaf2484",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-1-bottom.png",
+   "size": 1347539,
+   "md5": "4f5067be98922d9d94e1d1558503bc13",
+   "mtime": "2026-08-25T19:47:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-1-top.png",
+   "size": 1844388,
+   "md5": "8a5462a2e55dfc4fd2050388f30e51b1",
+   "mtime": "2026-08-25T19:47:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-1.png",
+   "size": 1503032,
+   "md5": "4093c615ed8e0c25495c456da488222c",
+   "mtime": "2026-08-25T19:47:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-1.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T19:47:50",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-2-bottom.png",
+   "size": 1956234,
+   "md5": "f6191ded7394866327a34676f43df02b",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-2-top.png",
+   "size": 2064308,
+   "md5": "ade568bdfc468e535e720168de858990",
+   "mtime": "2026-08-25T19:47:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-2.png",
+   "size": 1891924,
+   "md5": "05d0d84abe0493401a1e0485d4e81315",
+   "mtime": "2026-08-25T19:47:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-2.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T19:47:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-3-bottom.png",
+   "size": 1985353,
+   "md5": "9a413dd5ee1ce80ae1fce8299a09dc90",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-3-top.png",
+   "size": 2010974,
+   "md5": "6f2d40ea049dadfd4e1e522c9dbabaea",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-3.png",
+   "size": 1897636,
+   "md5": "a7e2b23a94deaed68337b2717dfaed62",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-3.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-4-bottom.png",
+   "size": 2355950,
+   "md5": "4ba1c3252183185ecff98e8d8dde834d",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-4-top.png",
+   "size": 2211545,
+   "md5": "5ee62372fb45086778b9b5629597f6d1",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-4.png",
+   "size": 2044025,
+   "md5": "9f19c7fea359f79c89d3b9afc236a2de",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-4.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T19:47:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-5-bottom.png",
+   "size": 2554047,
+   "md5": "84a74e1e2efb79c8fa4f2bfc3bef327c",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-5-top.png",
+   "size": 3011209,
+   "md5": "37010d91e9fea8e2eda07dffc3638442",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-5.png",
+   "size": 2601390,
+   "md5": "eaf7214e419242246802f07d0a1cce70",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/penetros_sondeig/page-5.txt",
+   "size": 0,
+   "md5": "d41d8cd98f00b204e9800998ecf8427e",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/re_estudi_geot_cnic_versi_castellar_del_valles/body.txt",
+   "size": 3167,
+   "md5": "48d032c30b887b0d389a4767036e8a45",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/re_estudi_geot_cnic_versi_castellar_del_valles/meta.json",
+   "size": 547,
+   "md5": "6bffbcf74efc85b53e949677d1fafa12",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/tall/meta.json",
+   "size": 512,
+   "md5": "1128b604fa478cfb5655dc889079aea9",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/tall/page-1.png",
+   "size": 605240,
+   "md5": "de6d58a2d8580c2510482cd37a6f6dc0",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_preext/tall/page-1.txt",
+   "size": 635,
+   "md5": "61ab054875d43b92fcc927de52962839",
+   "mtime": "2026-08-25T19:47:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/_telemetry.jsonl",
+   "size": 11547,
+   "md5": "6abb0593a003a95f6092d0a9d78899f7",
+   "mtime": "2026-08-25T21:30:48",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/acceptacio_pressupost_geotec_castellar_del.json",
+   "size": 4874,
+   "md5": "871323de6bfef280366571cc25756765",
+   "mtime": "2026-08-25T19:51:39",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/annexes_3001621_dpsh.json",
+   "size": 4897,
+   "md5": "d86bc6a14ab5b53ad26f0a702cd07795",
+   "mtime": "2026-08-25T19:53:18",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_3001621_dpsh.json",
+   "size": 6213,
+   "md5": "bb67847195bc9d77c7f31cf20a0c5d79",
+   "mtime": "2026-08-25T19:50:01",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_3001621_fotografies.json",
+   "size": 3097,
+   "md5": "dfb96d20c10f069bf57157badcf27888",
+   "mtime": "2026-08-25T19:57:58",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_3001621_pl_nol_de_situaci.json",
+   "size": 4529,
+   "md5": "5f0176f1af6674215fd70285699c1c79",
+   "mtime": "2026-08-25T20:04:22",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_3001621_sondeig.json",
+   "size": 9066,
+   "md5": "67f1dab86e54a1c6e0f88a0c4d490a41",
+   "mtime": "2026-08-25T19:53:18",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_3001621_tall_de_correlaci.json",
+   "size": 9176,
+   "md5": "f0eeb01fd2f7e14a884525663feea0f4",
+   "mtime": "2026-08-25T19:56:34",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/pdf_annexes_lab_sig.json",
+   "size": 6506,
+   "md5": "63deeceb1f030894e7a6a581d9ad96e8",
+   "mtime": "2026-08-25T19:59:40",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/penetros_sondeig.json",
+   "size": 9028,
+   "md5": "69b6d06d20bfb51d26bfc518726e8cd6",
+   "mtime": "2026-08-25T20:03:37",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/re_estudi_geot_cnic_versi_castellar_del_valles.json",
+   "size": 4611,
+   "md5": "ac432d7770e68e5eeea0ec9b62debdad",
+   "mtime": "2026-08-25T20:01:45",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/lectura/tall.json",
+   "size": 9825,
+   "md5": "701d1fc8dccd548aa5e2a05c84378d02",
+   "mtime": "2026-08-25T19:59:19",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img0.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img1.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img2.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img3.jpeg",
+   "size": 37263,
+   "md5": "55ea40c6bdca5b27bec501c26b3cba60",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/4687-GTL-25 Castellar del Vallés_img4.jpeg",
+   "size": 36993,
+   "md5": "8ee18b932d5606bd5aeb52b1a86a0348",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img0.jpeg",
+   "size": 243325,
+   "md5": "b41ecaf524d863af81a7aba955a12693",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img1.jpeg",
+   "size": 290751,
+   "md5": "39d5daa950153bfc3bfa83fcdb7a71ca",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img2.jpeg",
+   "size": 311935,
+   "md5": "59b1f59b7502595b81679492f70698e2",
+   "mtime": "2026-08-26T17:13:32",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img3.jpeg",
+   "size": 356213,
+   "md5": "bbce8fa9a2a8f7b3b4db9308ddbf6406",
+   "mtime": "2026-08-26T17:13:33",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/PENETROS + SONDEIG_img4.jpeg",
+   "size": 444029,
+   "md5": "8df84739491e4dd5ab3d6cce4dafa89b",
+   "mtime": "2026-08-26T17:13:33",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/tall_img0.jpeg",
+   "size": 22328,
+   "md5": "616b55a318c95e7acfbc3cb253a694c5",
+   "mtime": "2026-08-26T17:13:33",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/mined_images/tall_img1.jpeg",
+   "size": 284778,
+   "md5": "99fa285fbc7e5ae9b0b74e2901571e27",
+   "mtime": "2026-08-26T17:13:33",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+   "size": 112072,
+   "md5": "8418e65b89940a0b1ae42104be279547",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image001.jpg",
+   "size": 8569,
+   "md5": "e8126ae1872f8e8b43ce08b8bec35f7b",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image005.png",
+   "size": 23848,
+   "md5": "40afd571ae14c62675d86c67227fd60c",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/image009.jpg",
+   "size": 5021,
+   "md5": "aa80772ca61c3d8988b41547d917de05",
+   "mtime": "2026-08-24T18:09:44",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS/validation/mined_images/PLAN_COST_CATELLAR DEL VALLÈS_img0.png",
+   "size": 9766,
+   "md5": "82b18a3e21c35923b45345419356d49b",
+   "mtime": "2026-08-26T17:13:35",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "validation/msg_attachments/Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES/image008.jpg",
+   "size": 6340,
+   "md5": "c17aa1bd21df2abf472f1b677fe9ba0e",
+   "mtime": "2026-08-24T18:09:47",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  }
+ ],
+ "duplicates": [],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/castellar/_preext",
+  "n_docs": 13,
+  "n_errors": 0,
+  "elapsed_s": 14.405
+ }
+}

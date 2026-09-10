@@ -1,0 +1,1023 @@
+{
+ "project": "3001621 CASTELLAR DEL VALLES",
+ "read_on": "2026-08-24T22:26:23",
+ "reader": "automation.g3_templates (Fase 4a, determinista)",
+ "documents": [
+  {
+   "document_type": "fitxa_camp_g3",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "GRUP ALMA",
+     "location": "fitxa!C6 (CLIENT)",
+     "quote": "GRUP ALMA",
+     "confidence": 0.3,
+     "note": "= sol·licitant (regla G3); NO autoritat de client_name"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+     "location": "fitxa!C7 (ADREÇA OBRA)",
+     "quote": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+     "confidence": 0.8,
+     "note": "C7 porta adreça + municipi a la mateixa cel·la"
+    },
+    {
+     "concept_id": "contact_person",
+     "value": "ROC",
+     "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+     "quote": "ROC",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "contact_phone",
+     "value": "TEL. 615557450",
+     "location": "fitxa!F8",
+     "quote": "TEL. 615557450",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "previsio_camp",
+     "value": "PENETROS I MOSTRA",
+     "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+     "quote": "PENETROS I MOSTRA",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "previsio_camp_unitats",
+     "value": "4 (P) +1 (S)",
+     "location": "fitxa!F13",
+     "quote": "4 (P) +1 (S)",
+     "confidence": 0.7,
+     "note": "p. ex. '2 (P)', '5P+2S' — previstos, no executats"
+    },
+    {
+     "concept_id": "edificacio_existent",
+     "value": "SI",
+     "location": "fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+     "quote": "SI",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_field_company",
+     "value": "TPS ERUGA",
+     "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+     "quote": "TPS ERUGA",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2025-10-24",
+     "location": "fitxa!F38 (E38 'dies de camp')",
+     "quote": "datetime.datetime(2025, 10, 24, 0, 0)",
+     "confidence": 0.95,
+     "note": "primer dia de camp (autoritat A)"
+    }
+   ],
+   "warnings": [],
+   "source_path": "25.0493/DADES PER ANAR A CAMP_v1.xlsx"
+  },
+  {
+   "document_type": "plan_cost_g3",
+   "tier_a": [
+    {
+     "concept_id": "building_type",
+     "value": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+     "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+     "confidence": 0.6,
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "concept_id": "municipality",
+     "value": "HAB UNIF CASTELLAR DEL VALLÈS",
+     "location": "'Plan Cost'!E9 (final)",
+     "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "tecnic",
+     "value": "Eva Vázquez Marcet",
+     "location": "'Plan Cost'!E21",
+     "quote": "Eva Vázquez Marcet",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 4,
+     "location": "OFERTA!B21",
+     "quote": "4",
+     "confidence": 0.6,
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "concept_id": "sondeig_ml",
+     "value": 5,
+     "location": "OFERTA!B6",
+     "quote": "5",
+     "confidence": 0.6,
+     "note": "ml de perforació"
+    },
+    {
+     "concept_id": "num_spt",
+     "value": 3,
+     "location": "OFERTA!B14",
+     "quote": "3",
+     "confidence": 0.6,
+     "note": "assaigs SPT previstos"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "TPS",
+     "location": "OFERTA!G3",
+     "quote": "TPS",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    },
+    {
+     "concept_id": "subcontractes_hint",
+     "value": "SOIL-ASSAIG",
+     "location": "OFERTA!G27",
+     "quote": "SOIL-ASSAIG",
+     "confidence": 0.4,
+     "note": "plantilla: mai senyal fort"
+    }
+   ],
+   "warnings": [],
+   "source_path": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20250625164335+02'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "GRUP ALMA CONSTRUCCIONS",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "GRUP ALMA CONSTRUCCIONS / Tel:",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ARBRELLS 18A",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC 3HAB. / C/ARBRELLS 18A / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CASTELLAR DEL VALLES",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC 3HAB. / C/ARBRELLS 18A / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "25·0493",
+     "location": "p.1 peu / capçaleres",
+     "quote": "25·0493",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 4,
+     "location": "p.2 campanya",
+     "quote": "4 assaigs de penetració dinàmica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 1,
+     "location": "p.2 campanya",
+     "quote": "1Sondeig a rotació",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20251007102221+02'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "WOOD COMFORT PROMOCIONS SLU",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ARBRELLS 18A-18B-20",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CASTELLAR DEL VALLES",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "25·0493",
+     "location": "p.1 peu / capçaleres",
+     "quote": "25·0493",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 4,
+     "location": "p.2 campanya",
+     "quote": "4 assaigs de penetració dinàmica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 1,
+     "location": "p.2 campanya",
+     "quote": "1Sondeig a rotació",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf"
+  },
+  {
+   "document_type": "pressupost_g3",
+   "mod_date": "D:20251008102518+02'00'",
+   "tier_a": [
+    {
+     "concept_id": "client_name",
+     "value": "WOOD COMFORT PROMOCIONS SLU",
+     "location": "p.1 bloc CLIENT (y,x)",
+     "quote": "WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA",
+     "confidence": 0.3,
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C/ARBRELLS 18A-18B-20",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CASTELLAR DEL VALLES",
+     "location": "p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+     "confidence": 0.85,
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "concept_id": "expedient_comercial",
+     "value": "25·0493",
+     "location": "p.1 peu / capçaleres",
+     "quote": "25·0493",
+     "confidence": 0.9,
+     "note": "codi comercial m4PRO, NO és l'expedient"
+    },
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 4,
+     "location": "p.2 campanya",
+     "quote": "4 assaigs de penetració dinàmica",
+     "confidence": 0.7,
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "concept_id": "num_sondeigs",
+     "value": 1,
+     "location": "p.2 campanya",
+     "quote": "1Sondeig a rotació",
+     "confidence": 0.7,
+     "note": "previstos"
+    }
+   ],
+   "warnings": [],
+   "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf"
+  },
+  {
+   "document_type": "dpsh_excel",
+   "tier_a": [
+    {
+     "concept_id": "num_dpsh_tests",
+     "value": 4,
+     "location": "fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2', 'P-3', 'P-4']",
+     "confidence": 0.95,
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rebuig a -1,08 m",
+     "location": "P-1!B80",
+     "quote": "Rebuig a -1,08 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rebuig a -0,48 m",
+     "location": "P-2!B80",
+     "quote": "Rebuig a -0,48 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rebuig a -0,76 m",
+     "location": "P-3!B80",
+     "quote": "Rebuig a -0,76 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "dpsh_refusal",
+     "value": "Rebuig a -1,55 m",
+     "location": "P-4!B80",
+     "quote": "Rebuig a -1,55 m",
+     "confidence": 0.8
+    },
+    {
+     "concept_id": "expedient",
+     "value": "3001621",
+     "location": "nom del fitxer",
+     "quote": "3001621_DPSH.xls",
+     "confidence": 0.7
+    }
+   ],
+   "warnings": [],
+   "source_path": "ANNEXES/3001621_DPSH.xls"
+  },
+  {
+   "document_type": "comanda_lab_g3",
+   "tier_a": [
+    {
+     "concept_id": "expedient",
+     "value": "3001621",
+     "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "3001621.0",
+     "confidence": 0.95
+    },
+    {
+     "concept_id": "building_type",
+     "value": "CONSTR 3 HAB UNIF",
+     "location": "Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR 3 HAB UNIF",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "street_address",
+     "value": "C ARBRELLS",
+     "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C ARBRELLS",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "municipality",
+     "value": "CASTELLAR DEL VALLÈS",
+     "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "CASTELLAR DEL VALLÈS",
+     "confidence": 0.9
+    },
+    {
+     "concept_id": "field_date",
+     "value": "2025-10-24",
+     "location": "Hoja1!N23 (DATA DE PRESA)",
+     "quote": "45954.0",
+     "confidence": 0.7,
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "concept_id": "data_sollicitud_lab",
+     "value": "2025-10-24",
+     "location": "Hoja1!AH23",
+     "quote": "45954.0",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "lab_sample_id",
+     "value": "MA (S1)",
+     "location": "Hoja1!C35",
+     "quote": "MA (S1)",
+     "confidence": 0.7,
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "concept_id": "lab_depth",
+     "value": "1.0 - 1.2",
+     "location": "Hoja1!J35/L35",
+     "quote": "INICIAL 1.0 / FINAL 1.2",
+     "confidence": 0.7,
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "concept_id": "lab_location",
+     "value": "S1",
+     "location": "Hoja1!C35 (parèntesi)",
+     "quote": "MA (S1)",
+     "confidence": 0.7
+    },
+    {
+     "concept_id": "lab_tests_note",
+     "value": "NOMÉS SULFATS",
+     "location": "Hoja1!AD35",
+     "quote": "NOMÉS SULFATS",
+     "confidence": 0.6
+    },
+    {
+     "concept_id": "NOT_client_name",
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "confidence": 1.0,
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    }
+   ],
+   "warnings": [],
+   "source_path": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls"
+  }
+ ],
+ "concepts": {
+  "client_name": [
+   {
+    "concept_id": "client_name",
+    "value": "WOOD COMFORT PROMOCIONS SLU",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251008102518+02'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "WOOD COMFORT PROMOCIONS SLU",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251007102221+02'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "GRUP ALMA CONSTRUCCIONS",
+    "location": "p.1 bloc CLIENT (y,x)",
+    "quote": "GRUP ALMA CONSTRUCCIONS / Tel:",
+    "confidence": 0.3,
+    "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+    "source": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250625164335+02'00'"
+   },
+   {
+    "concept_id": "client_name",
+    "value": "GRUP ALMA",
+    "location": "fitxa!C6 (CLIENT)",
+    "quote": "GRUP ALMA",
+    "confidence": 0.3,
+    "note": "= sol·licitant (regla G3); NO autoritat de client_name",
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "street_address": [
+   {
+    "concept_id": "street_address",
+    "value": "C/ARBRELLS 18A-18B-20",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251008102518+02'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/ARBRELLS 18A-18B-20",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251007102221+02'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C/ARBRELLS 18A",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC 3HAB. / C/ARBRELLS 18A / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.9,
+    "source": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250625164335+02'00'"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+    "location": "fitxa!C7 (ADREÇA OBRA)",
+    "quote": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona",
+    "confidence": 0.8,
+    "note": "C7 porta adreça + municipi a la mateixa cel·la",
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   },
+   {
+    "concept_id": "street_address",
+    "value": "C ARBRELLS",
+    "location": "Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+    "quote": "C ARBRELLS",
+    "confidence": 0.9,
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "contact_person": [
+   {
+    "concept_id": "contact_person",
+    "value": "ROC",
+    "location": "fitxa!C8 (PERSONA DE CONTACTE)",
+    "quote": "ROC",
+    "confidence": 0.8,
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "contact_phone": [
+   {
+    "concept_id": "contact_phone",
+    "value": "TEL. 615557450",
+    "location": "fitxa!F8",
+    "quote": "TEL. 615557450",
+    "confidence": 0.8,
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "concept_id": "previsio_camp",
+    "value": "PENETROS I MOSTRA",
+    "location": "fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "confidence": 0.7,
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "previsio_camp_unitats": [
+   {
+    "concept_id": "previsio_camp_unitats",
+    "value": "4 (P) +1 (S)",
+    "location": "fitxa!F13",
+    "quote": "4 (P) +1 (S)",
+    "confidence": 0.7,
+    "note": "p. ex. '2 (P)', '5P+2S' — previstos, no executats",
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "concept_id": "edificacio_existent",
+    "value": "SI",
+    "location": "fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "confidence": 0.6,
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "concept_id": "lab_field_company",
+    "value": "TPS ERUGA",
+    "location": "fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "confidence": 0.8,
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   }
+  ],
+  "field_date": [
+   {
+    "concept_id": "field_date",
+    "value": "2025-10-24",
+    "location": "fitxa!F38 (E38 'dies de camp')",
+    "quote": "datetime.datetime(2025, 10, 24, 0, 0)",
+    "confidence": 0.95,
+    "note": "primer dia de camp (autoritat A)",
+    "source": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+    "document_type": "fitxa_camp_g3"
+   },
+   {
+    "concept_id": "field_date",
+    "value": "2025-10-24",
+    "location": "Hoja1!N23 (DATA DE PRESA)",
+    "quote": "45954.0",
+    "confidence": 0.7,
+    "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp",
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "building_type": [
+   {
+    "concept_id": "building_type",
+    "value": "CONSTR 3 HAB UNIF",
+    "location": "Hoja1!N18 (G18 OBRA)",
+    "quote": "CONSTR 3 HAB UNIF",
+    "confidence": 0.7,
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "building_type",
+    "value": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+    "location": "'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+    "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+    "confidence": 0.6,
+    "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi",
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "municipality": [
+   {
+    "concept_id": "municipality",
+    "value": "CASTELLAR DEL VALLÈS",
+    "location": "Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+    "quote": "CASTELLAR DEL VALLÈS",
+    "confidence": 0.9,
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "CASTELLAR DEL VALLES",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251008102518+02'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "CASTELLAR DEL VALLES",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251007102221+02'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "CASTELLAR DEL VALLES",
+    "location": "p.1 bloc OBRA",
+    "quote": "ESTUDI GEOTECNIC 3HAB. / C/ARBRELLS 18A / CASTELLAR DEL VALLES / PRESSUPOST GEOTECNIC",
+    "confidence": 0.85,
+    "note": "forma curta G3; la forma oficial llarga mana (regla municipi)",
+    "source": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250625164335+02'00'"
+   },
+   {
+    "concept_id": "municipality",
+    "value": "HAB UNIF CASTELLAR DEL VALLÈS",
+    "location": "'Plan Cost'!E9 (final)",
+    "quote": "EG 3 HAB UNIF CASTELLAR DEL VALLÈS",
+    "confidence": 0.6,
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "tecnic": [
+   {
+    "concept_id": "tecnic",
+    "value": "Eva Vázquez Marcet",
+    "location": "'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "confidence": 0.6,
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_dpsh_tests": [
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 4,
+    "location": "fulls amb dades a la columna C",
+    "quote": "sheets: ['P-1', 'P-2', 'P-3', 'P-4']",
+    "confidence": 0.95,
+    "note": "EXECUTATS (autoritat sobre els previstos)",
+    "source": "ANNEXES/3001621_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 4,
+    "location": "p.2 campanya",
+    "quote": "4 assaigs de penetració dinàmica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251008102518+02'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 4,
+    "location": "p.2 campanya",
+    "quote": "4 assaigs de penetració dinàmica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251007102221+02'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 4,
+    "location": "p.2 campanya",
+    "quote": "4 assaigs de penetració dinàmica",
+    "confidence": 0.7,
+    "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel",
+    "source": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250625164335+02'00'"
+   },
+   {
+    "concept_id": "num_dpsh_tests",
+    "value": 4,
+    "location": "OFERTA!B21",
+    "quote": "4",
+    "confidence": 0.6,
+    "note": "unitats DPSH ofertades (previstes)",
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "sondeig_ml": [
+   {
+    "concept_id": "sondeig_ml",
+    "value": 5,
+    "location": "OFERTA!B6",
+    "quote": "5",
+    "confidence": 0.6,
+    "note": "ml de perforació",
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "num_spt": [
+   {
+    "concept_id": "num_spt",
+    "value": 3,
+    "location": "OFERTA!B14",
+    "quote": "3",
+    "confidence": 0.6,
+    "note": "assaigs SPT previstos",
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "TPS",
+    "location": "OFERTA!G3",
+    "quote": "TPS",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   },
+   {
+    "concept_id": "subcontractes_hint",
+    "value": "SOIL-ASSAIG",
+    "location": "OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "confidence": 0.4,
+    "note": "plantilla: mai senyal fort",
+    "source": "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx",
+    "document_type": "plan_cost_g3"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "concept_id": "expedient_comercial",
+    "value": "25·0493",
+    "location": "p.1 peu / capçaleres",
+    "quote": "25·0493",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251008102518+02'00'"
+   },
+   {
+    "concept_id": "expedient_comercial",
+    "value": "25·0493",
+    "location": "p.1 peu / capçaleres",
+    "quote": "25·0493",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251007102221+02'00'"
+   },
+   {
+    "concept_id": "expedient_comercial",
+    "value": "25·0493",
+    "location": "p.1 peu / capçaleres",
+    "quote": "25·0493",
+    "confidence": 0.9,
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "source": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250625164335+02'00'"
+   }
+  ],
+  "num_sondeigs": [
+   {
+    "concept_id": "num_sondeigs",
+    "value": 1,
+    "location": "p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251008102518+02'00'"
+   },
+   {
+    "concept_id": "num_sondeigs",
+    "value": 1,
+    "location": "p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20251007102221+02'00'"
+   },
+   {
+    "concept_id": "num_sondeigs",
+    "value": 1,
+    "location": "p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "confidence": 0.7,
+    "note": "previstos",
+    "source": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf",
+    "document_type": "pressupost_g3",
+    "mod_date": "D:20250625164335+02'00'"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rebuig a -1,08 m",
+    "location": "P-1!B80",
+    "quote": "Rebuig a -1,08 m",
+    "confidence": 0.8,
+    "source": "ANNEXES/3001621_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rebuig a -0,48 m",
+    "location": "P-2!B80",
+    "quote": "Rebuig a -0,48 m",
+    "confidence": 0.8,
+    "source": "ANNEXES/3001621_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rebuig a -0,76 m",
+    "location": "P-3!B80",
+    "quote": "Rebuig a -0,76 m",
+    "confidence": 0.8,
+    "source": "ANNEXES/3001621_DPSH.xls",
+    "document_type": "dpsh_excel"
+   },
+   {
+    "concept_id": "dpsh_refusal",
+    "value": "Rebuig a -1,55 m",
+    "location": "P-4!B80",
+    "quote": "Rebuig a -1,55 m",
+    "confidence": 0.8,
+    "source": "ANNEXES/3001621_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "expedient": [
+   {
+    "concept_id": "expedient",
+    "value": "3001621",
+    "location": "Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+    "quote": "3001621.0",
+    "confidence": 0.95,
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   },
+   {
+    "concept_id": "expedient",
+    "value": "3001621",
+    "location": "nom del fitxer",
+    "quote": "3001621_DPSH.xls",
+    "confidence": 0.7,
+    "source": "ANNEXES/3001621_DPSH.xls",
+    "document_type": "dpsh_excel"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "concept_id": "data_sollicitud_lab",
+    "value": "2025-10-24",
+    "location": "Hoja1!AH23",
+    "quote": "45954.0",
+    "confidence": 0.6,
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_sample_id": [
+   {
+    "concept_id": "lab_sample_id",
+    "value": "MA (S1)",
+    "location": "Hoja1!C35",
+    "quote": "MA (S1)",
+    "confidence": 0.7,
+    "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe",
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_depth": [
+   {
+    "concept_id": "lab_depth",
+    "value": "1.0 - 1.2",
+    "location": "Hoja1!J35/L35",
+    "quote": "INICIAL 1.0 / FINAL 1.2",
+    "confidence": 0.7,
+    "note": "el GTL mana si discrepa",
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_location": [
+   {
+    "concept_id": "lab_location",
+    "value": "S1",
+    "location": "Hoja1!C35 (parèntesi)",
+    "quote": "MA (S1)",
+    "confidence": 0.7,
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "concept_id": "lab_tests_note",
+    "value": "NOMÉS SULFATS",
+    "location": "Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "confidence": 0.6,
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ],
+  "NOT_client_name": [
+   {
+    "concept_id": "NOT_client_name",
+    "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+    "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+    "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+    "confidence": 1.0,
+    "note": "G3 = sol·licitant del laboratori, mai client",
+    "source": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls",
+    "document_type": "comanda_lab_g3"
+   }
+  ]
+ }
+}

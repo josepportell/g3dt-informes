@@ -1,0 +1,46 @@
+{
+  "source_path": "25.0794/IMG-20251104-WA0015.jpg + IMG-20251104-WA0016.jpg",
+  "document_type": "planol",
+  "what_it_is": "Fotos WhatsApp de 2 pàgines del catàleg del fabricant de cases modulars: planta i fonamentació del model",
+  "issuer": "VIVIENDAS MODULARES (Monforte del Cid, Alacant) — segell al plànol",
+  "date": "fotos del 04/11/2025 (nom de fitxer WhatsApp)",
+  "pages_or_sheets": "2 imatges (planta + cimentació), mateix catàleg",
+  "context": {
+    "who_made_it": "el fabricant de cases modulars; la sol·licitant les passa per WhatsApp",
+    "for_whom": "G3, com a única documentació del projecte",
+    "why": "no hi ha projecte d'arquitecte: el catàleg defineix la geometria de l'edifici",
+    "expected_fields": [
+      "superficie_construida",
+      "num_floors (PB)",
+      "dimensions"
+    ],
+    "not_expected": [
+      "promotor",
+      "arquitecte",
+      "parcel·la",
+      "adreça"
+    ],
+    "relation_to_others": "les 2 pàgines són el MATEIX catàleg (Rf-Mga70) → 1 sola font; regla 'plànols de catàleg': superfície = construïda, mai parcel·la; el fabricant NO és l'arquitecte",
+    "authority_for": [
+      "superficie_construida",
+      "num_floors"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "superficie_construida": {
+      "value": "72 m² + 20 m² de porxada",
+      "location": "títol de les dues pàgines",
+      "quote": "PLANO DE PLANTA, MODELO MEDITERRANEO / ESCALA 1: 0'50 - 72 m2 + 20 de Porchada / Rf - Mga70",
+      "nota": "planta 9,00×8,00 m + porxada 2,50 m; cimentació 8,96×7,96 m; única font (2 pàgines del mateix catàleg)"
+    },
+    "__nota": "num_floors: tot el programa és PB (planta única + porxada) — escalars fora d'abast d'aquesta lectura"
+  },
+  "not_present": [
+    "superficie_parcela",
+    "promotor",
+    "arquitecte",
+    "adreça de l'obra"
+  ],
+  "reading_notes": "lectura visual; fotos girades 90° (llegides tal qual)"
+}

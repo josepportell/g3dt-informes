@@ -1,0 +1,20 @@
+{
+  "source_path": "PDF/ANNEXES/3001621_fotografies.pdf (+ DTE.txt agrupat aquí com a 'altre')",
+  "document_type": "annex_fotografies",
+  "what_it_is": "Annex fotogràfic de l'informe (2 pàgines, FreeHand→Distiller, text brossa) + DTE.txt: nota administrativa de facturació",
+  "issuer": "G3 (Eva)",
+  "date": "fotografies: 2025-11-03 (creationDate); DTE.txt: 27/10 (esmentat al text)",
+  "pages_or_sheets": "fotografies: 2 pàgines; DTE.txt: 1 línia",
+  "context": {
+    "who_made_it": "Eva (annex fotos); administració G3 (DTE.txt)",
+    "for_whom": "informe final / control intern de facturació",
+    "why": "Il·lustrar l'estat de la parcel·la i els treballs; deixar constància de l'enviament de la factura",
+    "expected_fields": ["cap camp del nivell A nou (fotos corroboren; DTE és administratiu)"],
+    "not_expected": ["tots els camps del nivell A"],
+    "relation_to_others": "Les fotos de l'annex surten de FOTOGRAFIES/ (P1-P4, S1, vista general, materials). DTE.txt ('EN DATA 27/10 TDTO AQUEST INFORME PER UN IMPORT DE 1548,80€ - VCT: 01/12/25') confirma indirectament que el gruix de la feina és de finals d'octubre 2025.",
+    "authority_for": []
+  },
+  "tier_a": [],
+  "not_present": ["tots els 15 camps del nivell A (cap senyal nou)"],
+  "reading_notes": "El text de l'annex de fotografies és brossa FreeHand (fonts sense ToUnicode); no s'ha renderitzat perquè no s'hi espera cap camp del nivell A que no estigui ja cobert (regla Pas 0: valor trobat on no s'espera = confiança baixa). DTE.txt llegit sencer: import 1.548,80 EUR, venciment 01/12/25 — cap camp del nivell A."
+}

@@ -1,0 +1,24 @@
+{
+ "source_path": "ACCEPTACIO/RV_ Realització geotècnic.msg",
+ "source_md5": "83e3b211af14c59d056a0a7a0cad160a",
+ "kind": "msg",
+ "generated": "2026-09-04T14:20:27",
+ "elapsed_s": 0.012,
+ "dir": "acceptacio_rv_realitzaci_geot_cnic",
+ "files": [
+  "acceptacio_rv_realitzaci_geot_cnic/body.txt"
+ ],
+ "subject": "RV: Realització geotècnic",
+ "from": "G3 DT <g3@g3dt.com>",
+ "to": "Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2025-09-23 16:50:25+02:00",
+ "attachments": [
+  {
+   "name": "g3dt_silvia_jaume_signat.pdf",
+   "size": 504479,
+   "md5": "8aacb8da57ba22ba62076aa415ef99a6",
+   "already_in_folder": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+   "preext_dir": null
+  }
+ ]
+}

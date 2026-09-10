@@ -1,0 +1,568 @@
+{
+ "tag": "vilanova/viaA",
+ "generated": "/home/josep/g3dt-e2e/informes-mesura/2026-09-06-m341-mesura/vilanova_viaA.docx",
+ "eva": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/golden-read-taules/_eva_truth/vilanova.json",
+ "tables": {
+  "plantes": {
+   "counts": {
+    "CLOSE": 4,
+    "MISMATCH": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Nº de plantes per habitatge",
+     "eva": "Nº de plantas previstas"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "PB (planta baixa, 1 planta)",
+     "eva": "Pb"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Superfície de la parcel·la segons plànols cadastrals  (m2)",
+     "eva": "Superficie construida total (m2)"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "406.0",
+     "eva": "100"
+    },
+    {
+     "row": "fila2",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Superfície construïda total (m2)",
+     "eva": "Superficie de la parcela según catastro (m2)"
+    },
+    {
+     "row": "fila2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "100",
+     "eva": "406"
+    }
+   ]
+  },
+  "cte_edificacio": {
+   "counts": {
+    "CLOSE": 2,
+    "MATCH": 1,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Tipus d’edificació considerada:",
+     "eva": "Tipo de edificación considerada:"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Tipus de sòl considerat :",
+     "eva": "Tipo de suelo considerado:"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "T-2",
+     "eva": "T-1"
+    }
+   ]
+  },
+  "dpsh": {
+   "counts": {
+    "MATCH": 9,
+    "MISMATCH": 4,
+    "CLOSE": 2
+   },
+   "cells": [
+    {
+     "row": "p-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "+321.69",
+     "eva": "+321.00"
+    },
+    {
+     "row": "p-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "p-2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "+321.69",
+     "eva": "+321.00"
+    },
+    {
+     "row": "p-2",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "p-3",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "+321.69",
+     "eva": "+320.00"
+    },
+    {
+     "row": "p-3",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "Aigua",
+     "eva": "-1.00"
+    }
+   ]
+  },
+  "spt_ma": {
+   "counts": {
+    "MATCH": 6,
+    "MISMATCH": 4
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "24",
+     "eva": "10"
+    },
+    {
+     "row": "fila0",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)",
+     "eva": "Arcilla limosa y arenosa con algunas gravas"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "10",
+     "eva": "24"
+    },
+    {
+     "row": "fila1",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "Argila limosa i sorrenca, amb algunes graves",
+     "eva": "Arena fina-media"
+    }
+   ]
+  },
+  "mostra_lab": {
+   "counts": {
+    "MISMATCH": 3,
+    "CLOSE": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MISMATCH",
+     "gen": "Mostra :",
+     "eva": "Muestra: SPT-1"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Punt:",
+     "eva": "Punto:  P-3"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "Profunditat:",
+     "eva": "Profundidad: -1.00 a -1.60 m"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Assaigs realitzats",
+     "eva": "Ensayos realizados"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08"
+    }
+   ]
+  },
+  "soil_levels": {
+   "counts": {
+    "CLOSE": 3,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell.",
+     "eva": "1er nivel:"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Arcilla limosa y arenosa con algunas gravas.",
+     "eva": "Arcilla limosa y arenosa con algunas gravas"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "2n nivell.",
+     "eva": "2do nivel:"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "Arenas finas-medias, carbonatadas.",
+     "eva": "Areniscas, arenas, sustrato"
+    }
+   ]
+  },
+  "permeabilitat": {
+   "counts": {
+    "CLOSE": 5,
+    "MISMATCH": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell",
+     "eva": "1er nivel"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "10^-2 a 10^-4",
+     "eva": "10-2-10-4"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Arcilla limosa y arenosa con algunas gravas.",
+     "eva": "Arcilla limosa y arenosa con algunas gravas"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "2n nivell",
+     "eva": "2do nivel"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "10^-3 a 10^-5",
+     "eva": "10-3-10-6"
+    },
+    {
+     "row": "fila1",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "Arenas finas-medias, carbonatadas.",
+     "eva": "Areniscas, arenas, sustrato"
+    }
+   ]
+  },
+  "sulfats": {
+   "counts": {
+    "CLOSE": 1,
+    "MATCH": 1
+   },
+   "cells": [
+    {
+     "row": "1r",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell",
+     "eva": "1er nivel"
+    },
+    {
+     "row": "1r",
+     "col": 2,
+     "estat": "MATCH"
+    }
+   ]
+  },
+  "sismica": {
+   "counts": {
+    "MATCH": 3,
+    "CLOSE": 3,
+    "MISMATCH": 2
+   },
+   "cells": [
+    {
+     "row": "1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Tipus IV",
+     "eva": "Tipo IV"
+    },
+    {
+     "row": "1",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "0.80",
+     "eva": "2.20"
+    },
+    {
+     "row": "1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "2",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Tipus II",
+     "eva": "Tipo II-I"
+    },
+    {
+     "row": "2",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "1.58*"
+    },
+    {
+     "row": "2",
+     "col": 3,
+     "estat": "CLOSE",
+     "gen": "1.3",
+     "eva": "1.3-1.0"
+    }
+   ]
+  },
+  "geotecnica": {
+   "counts": {
+    "CLOSE": 2,
+    "MISMATCH": 9,
+    "MATCH": 3
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell. Arcilla limosa y arenosa con algunas gravas.",
+     "eva": "1er nivel:  Arcilla limosa y arenosa con gravas"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "7",
+     "eva": "9"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "2.00",
+     "eva": "1.90"
+    },
+    {
+     "row": "fila0",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "0.00",
+     "eva": "0.10"
+    },
+    {
+     "row": "fila0",
+     "col": 5,
+     "estat": "MISMATCH",
+     "gen": "29°",
+     "eva": "25º"
+    },
+    {
+     "row": "fila0",
+     "col": 6,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "2n nivell. Arenas finas-medias, carbonatadas.",
+     "eva": "2do nivel: Areniscas, arenas, sustrato"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "22-R",
+     "eva": "57-R"
+    },
+    {
+     "row": "fila1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "2.00",
+     "eva": "2.20"
+    },
+    {
+     "row": "fila1",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "0.00",
+     "eva": "0.50"
+    },
+    {
+     "row": "fila1",
+     "col": 5,
+     "estat": "MISMATCH",
+     "gen": "38°",
+     "eva": "34º"
+    },
+    {
+     "row": "fila1",
+     "col": 6,
+     "estat": "MISMATCH",
+     "gen": "450",
+     "eva": "550"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "CLOSE": 24,
+  "MISMATCH": 27,
+  "MATCH": 23
+ }
+}

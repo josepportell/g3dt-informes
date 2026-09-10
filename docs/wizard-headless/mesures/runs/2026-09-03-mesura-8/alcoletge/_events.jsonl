@@ -1,0 +1,37 @@
+{"t": 24.5, "ev": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/alcoletge/_preext", "n_docs": 15, "n_errors": 0, "elapsed_s": 22.408}
+{"t": 24.5, "ev": "lectura_inventari", "n_files": 37}
+{"t": 27.3, "ev": "templates_fields", "n_documents": 5}
+{"t": 27.3, "ev": "lectura_doc", "doc": "26.0049/A.01.pdf", "skipped_duplicate": true}
+{"t": 27.3, "ev": "lectura_doc", "doc": "26.0049/PLANO 2.pdf", "skipped_duplicate": true}
+{"t": 27.3, "ev": "lectura_inici", "n_claude": 13, "n_python": 5}
+{"t": 27.3, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf"}
+{"t": 27.3, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001670_DPSH.pdf"}
+{"t": 260.2, "ev": "lectura_doc", "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf", "cached": false, "attempt": 1}
+{"t": 260.3, "ev": "lectura_doc_inici", "doc": "ANNEXES/4001670_DPSH.xls"}
+{"t": 286.5, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001670_DPSH.pdf", "cached": false, "attempt": 1}
+{"t": 286.6, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001670_tall de correlació.pdf"}
+{"t": 533.8, "ev": "lectura_doc", "doc": "ANNEXES/4001670_DPSH.xls", "cached": false, "attempt": 1}
+{"t": 533.8, "ev": "lectura_doc_inici", "doc": "tall.pdf"}
+{"t": 780.4, "ev": "lectura_doc", "doc": "tall.pdf", "cached": false, "attempt": 1}
+{"t": 780.4, "ev": "lectura_doc_inici", "doc": "26.0049/planol 3.pdf"}
+{"t": 855.5, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001670_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"t": 855.5, "ev": "lectura_doc_inici", "doc": "26.0049/planol-1.pdf"}
+{"t": 932.4, "ev": "lectura_doc", "doc": "26.0049/planol 3.pdf", "cached": false, "attempt": 1}
+{"t": 932.4, "ev": "lectura_doc_inici", "doc": "A.01.pdf"}
+{"t": 1056.2, "ev": "lectura_doc", "doc": "26.0049/planol-1.pdf", "cached": false, "attempt": 1}
+{"t": 1056.3, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001670_fotografies.pdf"}
+{"t": 1088.5, "ev": "lectura_doc", "doc": "A.01.pdf", "cached": false, "attempt": 1}
+{"t": 1088.5, "ev": "lectura_doc_inici", "doc": "PENETROS.pdf"}
+{"t": 1181.2, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001670_fotografies.pdf", "cached": false, "attempt": 1}
+{"t": 1181.2, "ev": "lectura_doc_inici", "doc": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg"}
+{"t": 1437.6, "ev": "lectura_doc", "doc": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg", "cached": false, "attempt": 1}
+{"t": 1437.6, "ev": "lectura_doc_inici", "doc": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg"}
+{"t": 1660.5, "ev": "lectura_doc", "doc": "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg", "cached": false, "attempt": 1}
+{"t": 1660.5, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001670_plànol de situació.pdf"}
+{"t": 1713.6, "ev": "lectura_doc_error", "doc": "PENETROS.pdf", "attempt": 1, "rc": null, "timeout": true}
+{"t": 1813.5, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001670_plànol de situació.pdf", "cached": false, "attempt": 1}
+{"t": 2246.2, "ev": "lectura_doc", "doc": "PENETROS.pdf", "cached": false, "attempt": 2}
+{"t": 2246.2, "ev": "consolidacio_inici", "consolidator": "python"}
+{"t": 2460.8, "ev": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 1, "elapsed_s": 205.024}
+{"t": 2460.8, "ev": "lectura_fi", "n_docs": 15, "elapsed_s_total": 3258.479283400171, "degraded": false}
+DONE 4001670 ALCOLETGE: 41.0 min, degraded=False, mode=document, decisions=OK, docs=15

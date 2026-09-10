@@ -1,0 +1,15 @@
+{
+  "source_path": "26.0254/DADES PER ANAR A CAMP_v1.xlsx (xl/media/image1.jpg, imatge incrustada)",
+  "document_type": "fitxa_camp_g3",
+  "what_it_is": "Única imatge incrustada a la fitxa G3 'DADES PER ANAR A CAMP': captura de pantalla (567×319 px, JPG) de Google Street View de l'adreça '3 C. de la Tulipán, Cerdanyola del Vallès', feta a Windows el 6/5/2026 a les 10:59 (vigília del camp). Mostra la parcel·la: tanca de maó amb reixa metàl·lica verda i solar amb herba i pins a la dreta, carrer en pendent amb cotxe blanc aparcat, casa blanca veïna al fons esquerra. No és un plànol ni una foto de camp; no hi ha superfícies ni cotes.",
+  "issuer": "G3 (Eva) — captura pròpia de Google Maps/Street View (imatge de Street View de mar 2016)",
+  "date": "captura 6/5/2026 10:59 (rellotge de la barra de tasques de Windows); imatge Street View 'mar 2016'",
+  "pages_or_sheets": "1 imatge (xl/media/image1.jpg)",
+  "tier_a": [
+    {"concept_id": "street_address", "value": "C/ de la Tulipa, 3", "location": "image1.jpg, etiqueta del panell Street View (dalt esquerra) i URL del navegador", "quote": "3 C. de la Tulipán | www.google.com/maps/place/C.+de+la+Tulipán,+3,+08193+Cerdanyola+del+Vallès,+Barcelona/@41.4971845,2…", "confidence": 0.75, "note": "Adreça de la CASA 1 segons la consulta que l'Eva ha fet a Google Maps abans d'anar a camp (grafia Google 'Tulipán'). Només consta la Casa 1; no hi ha captura de C/ Tosca 16. Deriva de l'encàrrec, no és font independent."},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "image1.jpg, panell Street View + URL", "quote": "Cerdanyola del Vallès, Cataluña | 08193+Cerdanyola+del+Vallès", "confidence": 0.8, "note": "Forma oficial llarga. CP 08193."},
+    {"concept_id": "utm_x_utm_y", "value": "lat 41.4971845 (lon truncada a la captura)", "location": "image1.jpg, URL del navegador", "quote": "@41.4971845,2…", "confidence": 0.3, "note": "Només latitud WGS84 llegible; la longitud queda tallada ('2…'). No és UTM i és la posició de la càmera Street View, no de la parcel·la. No usar com a coordenada."}
+  ],
+  "not_present": ["expedient", "client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date (el 6/5/2026 de la barra de tasques és la data de la captura, no de camp)", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "referencia_catastral", "lab", "cte"],
+  "reading_notes": "Extret amb zipfile (xl/media/image1.jpg, únic fitxer de media). Llegit a mida original i amb tires superior/inferior ampliades ×3 (PIL LANCZOS) per llegir el panell, la URL, el peu 'Fecha de la imagen: mar 2016 © 2026 Google' i el rellotge de Windows '10:59 6/5/2026'. Navegador Firefox en català ('Escriu aquí per cercar', 'Restaura avall'). Cap text manuscrit ni superfícies."
+}

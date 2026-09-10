@@ -1,0 +1,121 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (Eva -> Dolors) que trasllada, en forma de text reenviat 'per whats', la sol·licitud original de pressupost del client (contacte ROC, GRUP ALMA) per a un estudi geotècnic a Castellar del Vallès.",
+ "issuer": "Eva Vázquez Marcet (G3 DT, Responsable Dept Geologia) <eva@g3dt.com>; destinatari Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2025-06-25T11:14:44+02:00",
+ "pages_or_sheets": "N/A (correu); 8 adjunts (1 Excel duplicat + 7 imatges de logotip/signatura <=25KB)",
+ "context": {
+  "who_made_it": "Eva Vázquez (G3, Responsable Dept Geologia) reenvia internament a Dolors Maqueda (G3) el text d'una consulta de pressupost rebuda per WhatsApp d'un contacte anomenat ROC, en nom de GRUP ALMA.",
+  "for_whom": "Dolors Maqueda (G3), presumiblement per preparar el pressupost comercial (25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf, mod_date el mateix dia 16:43, ~5h30 després d'aquest correu).",
+  "why": "Traslladar la sol·licitud original del client (adreça, característiques bàsiques d'una de les obres, intenció d'ampliar a 3 parcel·les) perquè G3 pugui cotitzar l'estudi geotècnic.",
+  "expected_fields": [
+   "client_name (sol·licitant/contacte)",
+   "street_address",
+   "municipality",
+   "num_floors (descriptiu, una unitat)",
+   "superficie_construida (descriptiu, una unitat)",
+   "building_type (descriptiu)"
+  ],
+  "not_expected": [
+   "expedient",
+   "architect_name / architect_company",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_* (encara no hi ha campanya de laboratori)",
+   "cte_edificacio / cte_sol",
+   "field_date (aquest correu és 4 mesos abans del camp: fitxa!F38 = 2025-10-24)",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "Precedeix el pressupost imprès '25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf' (mod_date 2025-06-25T16:43:35+02:00, MATEIX DIA, ~5h30 després d'aquest correu de les 11:14): és molt probablement l'encàrrec ORIGEN d'aquell pressupost, amb client imprès 'GRUP ALMA CONSTRUCCIONS' coincidint amb 'CLIENT: GRUP ALMA' d'aquest correu. Aquest client sol·licitant va ser substituït per 'WOOD COMFORT PROMOCIONS SLU' al pressupost MODF (mod_date 2025-10-07) i confirmat al formulari p.5 signat d'ACCEPTACIO/ (2025-10-08) -> la versió posterior mana per a client_name (regla Pas 3 / situacions estructurals Castellar; ja registrat a acceptacio_pressupost_geotec_castellar_del.json). L'adjunt 'PLAN_COST_CATELLAR DEL VALLÈS.xlsx' d'aquest correu és IDÈNTIC (md5 8418e65b89940a0b1ae42104be279547) al fitxer solt ja present a 25.0493/ -> no és font independent (regla Pas 1 dedup); ja llegit determinísticament a _g3_templates.json (building_type 'EG 3 HAB UNIF CASTELLAR DEL VALLÈS'). El text del correu descriu explícitament només LA PRIMERA de les 3 adreces finals (18A); l'ampliació a 18A-18B-20 es demana al mateix correu ('et puc preguntar el preu per fer 3 estudis geotècnics a la vegada?') però encara no està confirmada aquí.",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "num_floors",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "GRUP ALMA",
+   "location": "cos del correu, línia 'CLIENT:' (abans del text reenviat)",
+   "quote": "CLIENT: GRUP ALMA",
+   "confidence": 0.3,
+   "note": "= sol·licitant/contacte de l'encàrrec (regla Pas 3, 'CLIENT:' d'un correu d'encàrrec no és autoritat de client_name). Coincideix amb fitxa!C6 (GRUP ALMA) i amb el client imprès del pressupost ORIGINAL del mateix dia (GRUP ALMA CONSTRUCCIONS). El client final de l'informe va canviar a WOOD COMFORT PROMOCIONS SLU (pressupost MODF + formulari p.5 signat, posteriors) -> vegeu context.relation_to_others; NO és `segur` per aquesta font."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A",
+   "location": "cos del correu, sota 'La direcció és :'",
+   "quote": "La direcció és :\n\nCarrer Arbrells 18A",
+   "confidence": 0.7,
+   "note": "Coincideix amb street_address ja llegit a fitxa/comanda/pressupost. Descriu només la primera de les 3 adreces finals (18A-18B-20); el client demana ampliar-ho més avall al mateix correu."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del correu ('haig de fer un geotecnic a Castellar del Vallès')",
+   "quote": "haig de fer un geotecnic  a Castellar del Vallès.",
+   "confidence": 0.75,
+   "note": "Forma amb accent (Vallès), coincident amb l'assumpte del correu i amb comanda!N21."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB + 1",
+   "location": "cos del correu, línia solta després de 'Moltes gràcies'",
+   "quote": "PB + 1",
+   "confidence": 0.5,
+   "note": "Descriu únicament la unitat de 18A (primera consulta, abans de decidir ampliar a 3 unitats); no confirmat que apliqui igual a 18B/20 -> candidat, no segur (regla Pas 3 'si la descripció només cobreix 1 de N unitats')."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge (PB+1) d'estructura d'entremat lleuger de fusta, sense soterrani",
+   "location": "assumpte del correu ('PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS') + cos ('Estructura d'entremat lleuger de fusta.')",
+   "quote": "Estructura d'entremat lleuger de fusta.",
+   "confidence": 0.35,
+   "note": "'3 HAB' de l'assumpte = 3 habitatges/unitats a construir a les 3 parcel·les (18A-18B-20), coherent amb PLAN_COST!E9 ('EG 3 HAB UNIF'); no és una categoria d'edifici formal (C1/C2), és descriptiu de l'estructura. Font vàlida per building_type segons regla Pas 3 (correu, prioritat més baixa)."
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     "120"
+    ],
+    "total": "120",
+    "etiqueta_font": "segons correu d'encàrrec (WhatsApp del client, reenviat per Eva 25/06/2025)",
+    "location": "cos del correu, línia solta",
+    "quote": "120 m2 construits",
+    "confidence": 0.5,
+    "note": "Descriu únicament la unitat de 18A (primera consulta, abans d'ampliar a 3 unitats) -> candidat, no segur."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "architect_company",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Extracció amb `extract_msg` (Python): cos + 8 adjunts guardats a directori temporal. L'adjunt 'PLAN_COST_CATELLAR DEL VALLÈS.xlsx' és IDÈNTIC (md5 8418e65b89940a0b1ae42104be279547) al fitxer solt ja present a 25.0493/ -> no és font independent (regla Pas 1 dedup), no re-llegit (ja llegit a _g3_templates.json). Els altres 7 adjunts (image001.jpg 8.6KB, image002.png 158B, image003.png 157B, image005.png 23.3KB, image008.png 362B, image009.jpg 5.0KB, image010.png 371B) són tots <=25KB -> logotips/signatura de correu (regla Pas 1), ignorats, no llegits individualment. Bloc 'CLIENT: GRUP ALMA' / 'ROC - 615 55 74 50' llegit del cos ABANS del marcador 'Enviat per whats:' (nota de context de qui reenvia i a qui pertany la sol·licitud); el text SOTA 'Enviat per whats:' és la sol·licitud original del client, transcrita tal qual. Peu de signatura estàndard G3 (Eva Vázquez Marcet) i clàusules RGPD CAT/ES del final ignorades (plantilla de correu corporatiu, no aporten dades de nivell A). --inventory llegit prèviament (Pas 0): confirma que aquest .msg és l'únic fitxer 'correu' de tipus pressupost a la subcarpeta 25.0493/ i que el seu md5 coincideix amb l'entrada de l'inventari."
+}

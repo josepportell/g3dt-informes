@@ -1,0 +1,28 @@
+{
+ "source_path": "pl situ.pdf",
+ "source_md5": "63db6493fdf5145ea7a27220d3927ad0",
+ "kind": "pdf",
+ "generated": "2026-09-04T19:09:37",
+ "elapsed_s": 0.398,
+ "dir": "pl_situ",
+ "files": [
+  "pl_situ/page-1.txt",
+  "pl_situ/page-1.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   1190.52,
+   841.92
+  ]
+ ],
+ "producer": "Microsoft: Print To PDF",
+ "creator": "",
+ "creationDate": "D:20260316080618+01'00'",
+ "modDate": "D:20260316080618+01'00'",
+ "text_ok": {
+  "1": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

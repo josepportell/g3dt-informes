@@ -1,0 +1,185 @@
+{
+ "source_path": "PDF/ANNEXES/3001631_DPSH.pdf",
+ "source_md5": "87e7f2ec85bd8290a320b507e1bb6b56",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Full imprès (des de l'Excel DPSH) amb els 3 assaigs de penetració dinàmica DPSH (P-1, P-2, P-3): taula de colpeig cada 20 cm, gràfica i capçalera amb obra/població/data/número d'informe.",
+ "issuer": "G3 (imprès des de l'Excel ANNEXES/3001631_DPSH.xls, plantilla pròpia, via Acrobat Distiller)",
+ "date": "14/11/25",
+ "pages_or_sheets": "3 pàgines (P-1, P-2, P-3)",
+ "context": {
+  "who_made_it": "G3/Eva, generat automàticament des de l'Excel ANNEXES/3001631_DPSH.xls i imprès a PDF per incloure's com a annex de l'informe",
+  "for_whom": "Per al mateix informe geotècnic — és l'annex tal com apareix al document final",
+  "why": "Documentar els 3 assaigs de penetració dinàmica DPSH (colpeig N20 cada 20 cm) fets al camp, amb cota d'inici, fondària de rebuig, i la mostra presa (SPT-1 dins de P-3)",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests",
+   "dpsh_tests[]",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Versió impresa (Print/Distiller) de 'ANNEXES/3001631_DPSH.xls' (mateixes dades P-1/P-2/P-3): mateix contingut, no és font independent de l'Excel",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "p.1/2/3 peu, camp 'NÚMERO D´INFORME'",
+   "quote": "NÚMERO D´INFORME: 3001631",
+   "confidence": 0.95,
+   "note": "coincideix a les 3 pàgines i amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ DE LA MIRANDA",
+   "location": "p.1/2/3 capçalera, camp 'OBRA:'",
+   "quote": "OBRA: C/ DE LA MIRANDA",
+   "confidence": 0.8,
+   "note": "coincident a les 3 pàgines; sense número de portal"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "RUBÌ",
+   "location": "p.1/2/3 capçalera, camp 'POBLACIÓ:'",
+   "quote": "POBLACIÓ: RUBÌ",
+   "confidence": 0.8,
+   "note": "grafia literal del document (accent invertit sobre la I); forma oficial probable 'Rubí'"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "14/11/25",
+   "location": "p.1/2/3 capçalera, camp 'DATA:'",
+   "quote": "DATA: 14/11/25",
+   "confidence": 0.85,
+   "note": "data dels assaigs DPSH (mateixa a les 3 pàgines); candidata a primer dia de camp"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+212,50 msnm",
+   "location": "p.1 capçalera, línia del punt",
+   "quote": "P-1   +212,50 msnm, segons el planol del ICGC.",
+   "confidence": 0.75,
+   "note": "cota del punt P-1, origen ICGC"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+212 msnm",
+   "location": "p.2 capçalera, línia del punt",
+   "quote": "P-2   + 212 msnm  segons el plànol del ICGC",
+   "confidence": 0.7,
+   "note": "cota del punt P-2, origen ICGC; lleugerament diferent de P-1/P-3 (,50 m)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+212,50 msnm",
+   "location": "p.3 capçalera, línia del punt",
+   "quote": "P-3   +212,50 msnm  segons plànol en el ICGC",
+   "confidence": 0.75,
+   "note": "cota del punt P-3, origen ICGC"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "3 pàgines del document (una per punt)",
+   "quote": "P-1 / P-2 / P-3",
+   "confidence": 0.9,
+   "note": "recompte per nombre de fulls impresos; coincideix amb els 3 fulls (P-1,P-2,P-3) de l'Excel DPSH"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.3 taula, columna MOSTRA, files -1/-1,2/-1,4",
+   "quote": "SPT-1",
+   "confidence": 0.75,
+   "note": "única mostra presa durant els DPSH, dins de l'assaig del punt P-3"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,6 a 1,2",
+   "location": "p.3 taula, columna MOSTRA sota SPT-1",
+   "quote": "0,6 a 1,2",
+   "confidence": 0.75,
+   "note": "fondària de la mostra SPT-1"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "p.3 capçalera del full",
+   "quote": "P-3",
+   "confidence": 0.75,
+   "note": "el SPT-1 es va prendre dins de l'assaig DPSH del punt P-3"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+212,50 msnm, segons el planol del ICGC.",
+    "profunditat_assolida": "-4,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1 taula + peu",
+    "quote": "Rebuig  a -4,55  m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+212 msnm, segons el plànol del ICGC",
+    "profunditat_assolida": "-3,58 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 taula + peu",
+    "quote": "Rebuig  a - 3,58  m"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+212,50 msnm, segons plànol en el ICGC",
+    "profunditat_assolida": "-3,13 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3 taula + peu",
+    "quote": "Rebuig  a - 3,13  m"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "num_soil_levels (només etiqueta 'Nivell 1' sense litologia ni segon nivell; no és font d'autoritat per a aquest camp)",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text extret net (PDF generat des de l'Excel via Acrobat Distiller; text_ok=true a les 3 pàgines), sense necessitat de clip ni visió d'alta resolució. Verificades visualment les 3 pàgines (page-N.png) per confirmar que la columna N.F. és buida (sense marca ni ombrejat) als 3 punts i que la columna Nivells només marca 'Nivell 1' (ombrejat taronja) sense segon nivell fins al rebuig. La 'Colpeig N_B' és una columna derivada (Colpeig DPSH / 0,83) i no s'ha tractat com a dada independent."
+}

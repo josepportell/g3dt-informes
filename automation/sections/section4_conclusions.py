@@ -307,20 +307,12 @@ class Section4Generator:
 
         Classifies based on sulfate content according to EHE-08.
         """
-        if self.data.aggressivity_class:
-            return self.AGGRESSIVITY_TEXTS.get(
-                self.data.aggressivity_class,
-                self.AGGRESSIVITY_TEXTS['']
-            )
-
-        if self.data.sulfate_mg_kg is not None:
+        # Fórmula literal de l'Eva (4/5 CA + Anciles ES): `narrative_criteria.aggressivity_sentence` (2026-09-06).
+        from ..narrative_criteria import aggressivity_sentence, language_for_report
+        agg_class = self.data.aggressivity_class or ''
+        if not agg_class and self.data.sulfate_mg_kg is not None:
             agg_class = self._classify_aggressivity(self.data.sulfate_mg_kg)
-            return (
-                f"El contingut en sulfats del terreny es de {self.data.sulfate_mg_kg:.0f} mg/kg. "
-                + self.AGGRESSIVITY_TEXTS.get(agg_class, self.AGGRESSIVITY_TEXTS[''])
-            )
-
-        return self.AGGRESSIVITY_TEXTS['']
+        return aggressivity_sentence(agg_class, language_for_report(self.data))
 
     @staticmethod
     def _classify_aggressivity(sulfate_mg_kg: float) -> str:
@@ -426,16 +418,14 @@ class Section4Generator:
         ka = (1 - math.sin(phi_rad)) / (1 + math.sin(phi_rad))
         kp = (1 + math.sin(phi_rad)) / (1 - math.sin(phi_rad))
 
-        paragraph = (
-            f"Per al disseny dels murs de contenció, s'han calculat els "
-            f"coeficients d'empenta de Rankine:\n\n"
-            f"- Coeficient d'empenta activa: Ka = {ka:.3f}\n"
-            f"- Coeficient d'empenta passiva: Kp = {kp:.3f}\n\n"
-            f"Amb un angle de fricció interna de {self.data.geotechnical_params.phi:.0f} "
-            f"i una densitat de {self.data.geotechnical_params.gamma:.2f} g/cm3."
-        )
-
-        return paragraph, ka, kp
+        # Fórmula literal de l'Eva (Castellar CA, Anciles ES): el nivell més desfavorable, no Ka/Kp (2026-09-06).
+        # Ka/Kp es conserven al context (`ka_value`, `kp_value`) per si la plantilla els vol.
+        from ..narrative_criteria import empentes_paragraph, language_for_report, most_unfavourable_level
+        level = most_unfavourable_level([
+            {"phi": getattr(lv, "phi", None), "cohesion": getattr(lv, "cohesion", None)}
+            for lv in (self.data.soil_levels or [])
+        ]) if self.data.soil_levels else 1
+        return empentes_paragraph(level, language_for_report(self.data)), ka, kp
 
     def generate_estabilitat(self) -> str | None:
         """

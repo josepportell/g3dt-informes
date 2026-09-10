@@ -1,0 +1,676 @@
+{
+ "tag": "anciles/viaA",
+ "generated": "/home/josep/g3dt-e2e/informes-mesura/2026-09-07-m341-peca0b/anciles_viaA.docx",
+ "eva": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/golden-read-taules/_eva_truth/anciles.json",
+ "tables": {
+  "plantes": {
+   "estat": "ABSENT_Eva"
+  },
+  "cte_edificacio": {
+   "estat": "ABSENT_Eva"
+  },
+  "dpsh": {
+   "counts": {
+    "MATCH": 18,
+    "MISMATCH": 6,
+    "CLOSE": 6
+   },
+   "cells": [
+    {
+     "row": "p-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.40"
+    },
+    {
+     "row": "p-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-1",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "p-2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.30"
+    },
+    {
+     "row": "p-2",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-2",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "p-3",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.40"
+    },
+    {
+     "row": "p-3",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-3",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "p-4",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.30"
+    },
+    {
+     "row": "p-4",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-4",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "p-5",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-5",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.42"
+    },
+    {
+     "row": "p-5",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-5",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-5",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "p-6",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-6",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.65"
+    },
+    {
+     "row": "p-6",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-6",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "p-6",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    }
+   ]
+  },
+  "sondeig": {
+   "counts": {
+    "MATCH": 4,
+    "MISMATCH": 2,
+    "CLOSE": 4
+   },
+   "cells": [
+    {
+     "row": "s-1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.65"
+    },
+    {
+     "row": "s-1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-1",
+     "col": 3,
+     "estat": "CLOSE",
+     "gen": "1/0",
+     "eva": "1/0/0"
+    },
+    {
+     "row": "s-1",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    },
+    {
+     "row": "s-2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-2",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "+1106.42"
+    },
+    {
+     "row": "s-2",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "s-2",
+     "col": 3,
+     "estat": "CLOSE",
+     "gen": "1/1",
+     "eva": "1/0/1"
+    },
+    {
+     "row": "s-2",
+     "col": 4,
+     "estat": "CLOSE",
+     "gen": "No detectat",
+     "eva": "No detectado"
+    }
+   ]
+  },
+  "spt_ma": {
+   "counts": {
+    "MATCH": 11,
+    "MISMATCH": 4
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Arcilla arenosa con gravitas"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Arcilla arenosa con gravitas"
+    },
+    {
+     "row": "fila2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila2",
+     "col": 1,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila2",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila2",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "1/1/1/1",
+     "eva": "--"
+    },
+    {
+     "row": "fila2",
+     "col": 4,
+     "estat": "MISMATCH",
+     "gen": "Graves",
+     "eva": "Bolos y gravas en matriz arenosa arcillosa"
+    }
+   ]
+  },
+  "mostra_lab": {
+   "counts": {
+    "MISMATCH": 3,
+    "CLOSE": 2
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "MISMATCH",
+     "gen": "Mostra :",
+     "eva": "Muestra: MA-1"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Punt:",
+     "eva": "Punto:  S-2"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "Profunditat:",
+     "eva": "Profundidad: -2.80 a -3.00 m"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "Assaigs realitzats",
+     "eva": "Ensayos realizados"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08"
+    }
+   ]
+  },
+  "soil_levels": {
+   "counts": {
+    "CLOSE": 4
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell.",
+     "eva": "1er nivel."
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Arcillas arenosas con puntualmente bolos",
+     "eva": "Arcillas arenosas con gravitas y puntualmente bolos de granito, de coloraciones marrones"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "2n nivell.",
+     "eva": "2do nivel."
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Bolos y gravas en matriz arenosa y arcillosa",
+     "eva": "Bolos y gravas de granito en matriz arenosa y arcillosa, de coloraciones grisáceos"
+    }
+   ]
+  },
+  "permeabilitat": {
+   "counts": {
+    "CLOSE": 6
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell",
+     "eva": "1er nivel"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "10^-3 a 10^-5",
+     "eva": "10-3 – 10-7"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Arcillas arenosas con puntualmente bolos",
+     "eva": "Arcillas arenosas"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "2n nivell",
+     "eva": "2do nivel"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "10^-2 a 10^-4",
+     "eva": "10 – 10-1"
+    },
+    {
+     "row": "fila1",
+     "col": 2,
+     "estat": "CLOSE",
+     "gen": "Bolos y gravas en matriz arenosa y arcillosa",
+     "eva": "Bolos y gravas con arenas arcillosas"
+    }
+   ]
+  },
+  "sulfats": {
+   "counts": {
+    "CLOSE": 1,
+    "MISMATCH": 2,
+    "MATCH": 1
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell",
+     "eva": "2do nivel"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "(no llegible al flux de text del V0)"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "",
+     "eva": "(no llegible)"
+    }
+   ]
+  },
+  "sismica": {
+   "counts": {
+    "MATCH": 3,
+    "CLOSE": 2,
+    "MISMATCH": 3
+   },
+   "cells": [
+    {
+     "row": "1",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "1",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Tipus IV",
+     "eva": "Tipo IV"
+    },
+    {
+     "row": "1",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "2.20",
+     "eva": "4.00"
+    },
+    {
+     "row": "1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "2",
+     "col": 0,
+     "estat": "MATCH"
+    },
+    {
+     "row": "2",
+     "col": 1,
+     "estat": "CLOSE",
+     "gen": "Tipus II",
+     "eva": "Tipo IV"
+    },
+    {
+     "row": "2",
+     "col": 2,
+     "estat": "MISMATCH",
+     "gen": "3.72*",
+     "eva": "3.92*"
+    },
+    {
+     "row": "2",
+     "col": 3,
+     "estat": "MISMATCH",
+     "gen": "1.3",
+     "eva": "2.00"
+    }
+   ]
+  },
+  "geotecnica": {
+   "counts": {
+    "CLOSE": 2,
+    "MISMATCH": 4,
+    "MATCH": 8
+   },
+   "cells": [
+    {
+     "row": "fila0",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "1er nivell. Arcillas arenosas con puntualmente bolos.",
+     "eva": "1er nivel. Arcillas arenosas"
+    },
+    {
+     "row": "fila0",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "7",
+     "eva": "5"
+    },
+    {
+     "row": "fila0",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 5,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila0",
+     "col": 6,
+     "estat": "MISMATCH",
+     "gen": "50",
+     "eva": "90"
+    },
+    {
+     "row": "fila1",
+     "col": 0,
+     "estat": "CLOSE",
+     "gen": "2n nivell. Bolos y gravas en matriz arenosa y arcillosa.",
+     "eva": "2do nivel. Bolos y gravas en matriz areno-arcillosa"
+    },
+    {
+     "row": "fila1",
+     "col": 1,
+     "estat": "MISMATCH",
+     "gen": "26-R",
+     "eva": "15-R"
+    },
+    {
+     "row": "fila1",
+     "col": 2,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 3,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 4,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 5,
+     "estat": "MATCH"
+    },
+    {
+     "row": "fila1",
+     "col": 6,
+     "estat": "MISMATCH",
+     "gen": "450",
+     "eva": ">350"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "TABLE_ABSENT": 2,
+  "MATCH": 45,
+  "MISMATCH": 24,
+  "CLOSE": 27
+ }
+}

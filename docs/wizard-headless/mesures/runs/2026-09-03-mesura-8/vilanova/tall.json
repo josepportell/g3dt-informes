@@ -1,0 +1,154 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "6827ce7c40783908ec326a24f3127a7c",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació (secció transversal A-A') dels tres punts DPSH P-1/P-2/P-3, amb nivells litològics, escala de cotes en msnm i llegenda de cota de cimentació / nivell freàtic.",
+ "issuer": "G3 (Eva)",
+ "date": "Marzo 2025",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva) — dibuix tècnic de correlació que acompanya l'informe geotècnic",
+  "for_whom": "el propi informe / el seu lector (client, arquitecte); és un annex intern de correlació de columnes, no una comunicació a un tercer",
+  "why": "correlacionar els 3 punts DPSH del projecte (P-1, P-2, P-3) mostrant nivells litològics, escala de cotes (msnm), cota de nivell freàtic detectada i cota de cimentació de referència",
+  "expected_fields": [
+   "expedient",
+   "títol del projecte (adreça+municipi+tipus d'edifici, en text narratiu)",
+   "data del document (mes/any)",
+   "nivells litològics (nom+descripció)",
+   "marca gràfica de nivell freàtic",
+   "Nb per punt i posició relativa"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "dades de laboratori",
+   "referencia_catastral",
+   "UTM"
+  ],
+  "relation_to_others": "Aquest fitxer (arrel del projecte, producer 'Microsoft: Print To PDF') és la còpia de text net del mateix dibuix FreeHand que 'PDF/ANEJOS/4001671_corte de correlación.pdf' (text brossa, requereix lectura visual). Mateix contingut, mateixa font — no compten com a 2 fonts independents.",
+  "authority_for": [
+   "expedient",
+   "municipality",
+   "street_address",
+   "building_type",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001671",
+   "location": "p.1 caixetí, camp 'Exp:'",
+   "quote": "Exp: 4001671",
+   "confidence": 0.95,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova de Segrià",
+   "location": "p.1 bloc TÍTULO DEL PROYECTO",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+   "confidence": 0.85,
+   "note": "forma tal com surt al títol; comparar amb la forma oficial llarga d'altres fonts (comanda/pressupost/PLAN_COST)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Santa Gemma Nº4",
+   "location": "p.1 bloc TÍTULO DEL PROYECTO; corroborat pel rètol 'CARRER DE SANTA GEMMA' al plànol de situació inclòs a la mateixa pàgina",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+   "confidence": 0.6,
+   "note": "extret del títol narratiu del projecte, no d'un bloc OBRA/ADREÇA dedicat"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Santa Gemma",
+    "nom_via_alternatives": [],
+    "portals": [
+     "4"
+    ],
+    "municipi": "Vilanova de Segrià",
+    "municipi_alternatives": [
+     "VILANOVA DE SEGRIÀ"
+    ]
+   },
+   "location": "p.1 bloc TÍTULO DEL PROYECTO",
+   "quote": "EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.",
+   "confidence": 0.6,
+   "note": "concepte extra (Pas 3), no és un dels 15 camps"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Vivienda unifamiliar",
+   "location": "p.1 bloc TÍTULO DEL PROYECTO",
+   "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR",
+   "confidence": 0.75,
+   "note": "redacció del títol; comparació CLOSE esperada amb la redacció final de l'informe"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "p.1 LEYENDA",
+   "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas. / Nivel 2: Arenas finas-medias, carbonatadas.",
+   "confidence": 0.8,
+   "note": "única font d'aquest projecte (no hi ha annex de sondeig a la carpeta, només tall); llegenda explícita amb 2 nivells numerats, sense contradicció"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.1 gràfic (columnes verticals P-1, P-2, P-3)",
+   "quote": "P-1 / P-2 / P-3",
+   "confidence": 0.65,
+   "note": "recompte visual de punts al tall de correlació; corroborar amb l'Excel DPSH (fulls executats), font primària"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Marzo 2025",
+   "location": "p.1 caixetí, camp 'Fecha:'",
+   "quote": "Fecha: Marzo 2025",
+   "confidence": 0.2,
+   "note": "data del document/tall (només mes), no és una de les fonts autoritzades per field_date (fitxa/annex DPSH/albarà/foto); probablement la data de redacció de l'annex/informe, no necessàriament el primer dia de camp"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "litologia": "Arcilla limosa y arenosa con algunas gravas.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   },
+   {
+    "nom": "2on nivell",
+    "litologia": "Arenas finas-medias, carbonatadas.",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (producer 'Microsoft: Print To PDF'), llegit primer amb page-1.txt i page-1.png (150dpi, pre-extracció). Zoom amb render_clip.py a 400dpi (columna P-3) i 300dpi (columnes P-1/P-2 + llegenda) per confirmar la posició de la marca de nivell freàtic (ratlla blava discontínua) i comprovar que NO hi ha cap ratlla vermella discontínua de 'cota de cimentación' dibuixada enlloc del tall (només definida a la llegenda, no aplicada al gràfic). Marca de nivell freàtic detectada NOMÉS a la columna P-3, a l'alçada de la lectura 'Nb=8' (banda ~320-321 msnm); sense marca a P-1 ni P-2. No s'han mesurat fondàries de transició de nivell per píxels (no hi ha cap xifra impresa): 'de'/'a' de soil_levels es deixen null. El petit plànol de situació de la cantonada superior esquerra només aporta cotes de dimensionat de parcel·la (21.62, 22.86, 17.85, 7.70 m) sense una xifra de superfície total impresa."
+}

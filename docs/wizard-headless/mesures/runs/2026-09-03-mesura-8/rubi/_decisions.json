@@ -1,0 +1,2262 @@
+{
+ "schema_version": 1,
+ "project": "3001631 RUBI",
+ "generated": "2026-09-04T13:51:17",
+ "skill_version": "1.6",
+ "consolidation": {
+  "consolidator": "python-1.0",
+  "elapsed_s": 3.405,
+  "n_docs": 12,
+  "n_conflicts": 1,
+  "docs_skill_versions": [
+   "1.6"
+  ],
+  "llm_only_fields": {
+   "requested": [
+    "fields.lab_sample_id"
+   ],
+   "applied": [
+    "fields.lab_sample_id"
+   ],
+   "elapsed_s": 206.1,
+   "rc": 0,
+   "timeout": false,
+   "json_valid": true
+  }
+ },
+ "fields": {
+  "architect_company": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "PDF/ANNEXES/3001631_plànol de situació.pdf"
+   ]
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "Joana Martínez",
+   "candidates": [
+    {
+     "value": "Joana Martínez",
+     "font": "25.0794/RE_ PRESSU.msg cos del missatge original citat, sota 'Adjunto la info que m'ha passat'",
+     "quote": "JOANA MARTINEZ – 696 04 00 77",
+     "note": "Candidat només per la pràctica coneguda d'Eva d'escriure el client al camp arquitecte quan no n'hi ha (casa modular, particular) — mai segur; el candidat principal per aquest concepte és client_name."
+    },
+    {
+     "value": "Albert Coll",
+     "font": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg bloc 'ADREÇA ON S'HA D'ENVIAR L'INFORME', camp NOM I COGNOMS",
+     "quote": "NOM I COGNOMS: ALBERT COLL / ADREÇA: COLLBASSAS@gmail.com / CP I POBLACIÓ: 08172 - St. Cugat del Vallès / TELÈFON 689325558",
+     "note": "Aquest bloc nomes indica qui ha de REBRE l'informe un cop generat; el document no etiqueta explicitament el rol (arquitecte, gestor, familiar...). Candidat feble a architect_name per practica habitual (l'informe sovint es tramet a l'arquitecte), sense corroboracio en aquest document. No confondre amb el bloc de client."
+    },
+    {
+     "value": "Joana Martinez",
+     "font": "25.0794/PRESSU.msg cos del correu",
+     "quote": "JOANA MARTINEZ – 696 04 00 77",
+     "note": "(pràctica Eva: client) — Rubí és un dels projectes citats explícitament al skill on, sense arquitecte identificat, l'Eva hi escriu el client. Mai segur."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf",
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg"
+   ],
+   "note": "(pràctica Eva: client) — Rubí és un dels projectes citats explícitament al skill on, sense arquitecte identificat, l'Eva hi escriu el client. Mai segur.",
+   "descartats": [
+    {
+     "value": "VIVIENDAS MODULARES (fabricant, segell del catàleg)",
+     "font": "25.0794/PRESSU.msg adjunt img_20251104_wa0016.jpg — segell inferior del plànol",
+     "quote": "VIVIENDAS MODULARES ... 12360 MONFORTE DEL CID (Alic...)",
+     "note": "Descartat explícitament com a arquitecte: és el fabricant de la casa modular, no un arquitecte (regla Pas 3)."
+    }
+   ]
+  },
+  "building_type": {
+   "estat": "candidats",
+   "value": "habitatge unifamiliar aïllat",
+   "candidates": [
+    {
+     "value": "habitatge unifamiliar aïllat",
+     "font": "PDF/ANNEXES/3001631_plànol de situació.pdf capçalera del títol del projecte",
+     "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "redacció del títol, no d'un bloc de dades estructurat"
+    },
+    {
+     "value": "CONSTR HABITATGE UNI",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR HABITATGE UNI"
+    },
+    {
+     "value": "EG HAB UNIF RUBI",
+     "font": "25.0794/PLAN_COST_RUBI.xlsx 'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG HAB UNIF RUBI",
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    }
+   ],
+   "rule": "contradiccio: CONSTR HABITATGE UNI (1 doc, conf max 0.70); EG HAB UNIF RUBI (1 doc, conf max 0.60); casa modular (1 doc, conf max 0.55)",
+   "altres": [
+    {
+     "value": "casa modular",
+     "font": "25.0794/RE_ PRESSU.msg cos del missatge original citat, sota l'encapçalament 'RUBÍ'",
+     "quote": "RUBÍ\n\n(1 casa modular)",
+     "note": "Nota informal d'Eva Roig identificant el tipus d'obra; no és cap de les 3 fonts d'autoritat habituals (pressupost/PLAN_COST/comanda) — corrobora, confirmar amb aquelles."
+    },
+    {
+     "value": "Vivenda modular, model 'Mediterráneo' (fabricant Viviendas Modulares)",
+     "font": "25.0794/PRESSU.msg adjunt img_20251104_wa0016.jpg — títol i segell del plànol",
+     "quote": "PLANO DE CIMENTACION MODELO MEDITERRANEO ... VIVIENDAS MODULARES",
+     "note": "Única font (plànol de catàleg del fabricant): candidat, mai segur amb una sola font."
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "PDF/ANNEXES/3001631_tall de correlació.pdf caixetí, TÍTOL DEL PROJECTE",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRERDE LA MIRANDA Nº 39,  PARC. 6-105 B, RUBÍ (BARCELONA)",
+     "note": "redacció pròpia de l'Eva al títol, no és la plantilla G3 tipus C1/C2; 'CARRERDE' imprès sense espai (typo del document original)"
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "tall.pdf bloc TÍTOL DEL PROJECTE (peu), línia 1",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "redacció; comparació CLOSE amb l'informe"
+    }
+   ],
+   "sources_checked": [
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "comanda laboratori_3001631_RUBI.xls",
+    "25.0794/PLAN_COST_RUBI.xlsx",
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf"
+   ],
+   "note": "redacció del títol, no d'un bloc de dades estructurat"
+  },
+  "client_name": {
+   "estat": "candidats",
+   "value": "Joana Martínez",
+   "candidates": [
+    {
+     "value": "Joana Martínez",
+     "font": "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', camp NOM I COGNOMS",
+     "quote": "NOM I COGNOMS: Joana Martínez",
+     "note": "Formulari d'acceptacio signat, funcio equivalent a ACCEPTACIO/DADES CLIENT.txt (autoritat A per client_name). Porta tambe N.I.F. 38540702Q, TELF. 696040077 i adreca personal a Calle Juan Carlos Ferrero 41A, 03370 Redovan (Alacant) — aquesta adreca es la del CLIENT, no la de l'obra (Rubi), i no s'ha d'usar com a street_address. Font unica en aquest document; per la jerarquia del Pas 3 aquest formulari va per sota d'un caixeti de planol amb Promotor/Propietat si n'hi ha al projecte."
+    },
+    {
+     "value": "Joana Martinez",
+     "font": "25.0794/PRESSU.msg cos del correu",
+     "quote": "Adjunto la info que m'ha passat JOANA MARTINEZ – 696 04 00 77",
+     "note": "Rol no etiquetat explícitament ('CLIENT'/'Promotor'); és qui ha passat la informació i no té correu (comunicació per WhatsApp). Candidat feble."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "altres": [
+    {
+     "value": "JOANA MARTINEZ",
+     "font": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "JOANA MARTINEZ / 08 RUBI / Tel: 696040077",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "Joana Martínez",
+     "font": "25.0794/RE_ PRESSU.msg cos del missatge original citat, sota 'Adjunto la info que m'ha passat'",
+     "quote": "Adjunto la info que m'ha passat\n\nJOANA MARTINEZ – 696 04 00 77",
+     "note": "Contacte que ha passat la informació del projecte a Eva Roig. Casa modular sense arquitecte → probable clienta particular que encarrega directament (situació estructural coneguda: 'architect_name absent', Rubí és un dels exemples citats a la regla). Només telèfon: 'no te correu' (frase següent del mateix missatge)."
+    }
+   ],
+   "sources_checked": [
+    "3001631 - PENETROS.pdf",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf",
+    "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg"
+   ],
+   "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)",
+   "descartats": [
+    {
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    },
+    {
+     "value": "G3 Desenvolupament Territorial, SL",
+     "font": "4703-GTL-25 Rubí.pdf p.1/p.2/p.8 bloc 'DADES DEL SOL·LICITANT:' / 'DADES DEL CLIENT:'",
+     "quote": "DADES DEL SOL.LICITANT: Nom: G3 Desenvolupament Territorial, SL / NIF: B25364589",
+     "note": "G3 mai és client (regla Pas 3): és el sol·licitant dels assaigs al laboratori, no el promotor/client de l'informe geotècnic. Descartat explícitament."
+    },
+    {
+     "value": "G3 Desenvolupament Territorial, SL",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.1/p.2/p.8 bloc 'DADES DEL SOL·LICITANT:' / 'DADES DEL CLIENT:'",
+     "quote": "DADES DEL SOL.LICITANT: Nom: G3 Desenvolupament Territorial, SL / NIF: B25364589",
+     "note": "G3 mai és client (regla Pas 3): sol·licitant dels assaigs, no promotor/client de l'informe geotècnic. Descartat explícitament."
+    }
+   ]
+  },
+  "cota_referencia": {
+   "estat": "candidats",
+   "value": "+212,50 msnm",
+   "candidates": [
+    {
+     "value": "+212,50 msnm",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1 capçalera, línia del punt",
+     "quote": "P-1   +212,50 msnm, segons el planol del ICGC.",
+     "note": "cota del punt P-1, origen ICGC"
+    },
+    {
+     "value": "+212 msnm",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.2 capçalera, línia del punt",
+     "quote": "P-2   + 212 msnm  segons el plànol del ICGC",
+     "note": "cota del punt P-2, origen ICGC; lleugerament diferent de P-1/P-3 (,50 m)"
+    }
+   ],
+   "rule": "contradiccio: +212 msnm (1 doc, conf max 0.70)",
+   "altres": [
+    {
+     "value": "+212,50 msnm",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 capçalera, línia del punt",
+     "quote": "P-3   +212,50 msnm  segons plànol en el ICGC",
+     "note": "cota del punt P-3, origen ICGC"
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf"
+   ],
+   "note": "cota del punt P-1, origen ICGC"
+  },
+  "cte_edificacio": {
+   "estat": "candidats",
+   "value": "C0",
+   "candidates": [
+    {
+     "value": "C0",
+     "font": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf p.2",
+     "quote": "Tipus d’edifici: C0"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf",
+    "25.0794/PRESSUPOST GEOTEC.RUBI.pdf"
+   ]
+  },
+  "cte_sol": {
+   "estat": "candidats",
+   "value": "T1",
+   "candidates": [
+    {
+     "value": "T1",
+     "font": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf p.2",
+     "quote": "Tipus de Terreny : T1"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf",
+    "25.0794/PRESSUPOST GEOTEC.RUBI.pdf"
+   ]
+  },
+  "expedient": {
+   "estat": "segur",
+   "value": "3001631",
+   "candidates": [
+    {
+     "value": "3001631",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1/2/3 peu, camp 'NÚMERO D´INFORME'",
+     "quote": "NÚMERO D´INFORME: 3001631",
+     "note": "coincideix a les 3 pàgines i amb el nom de la carpeta del projecte"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "3001631",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "3001631.0"
+    },
+    {
+     "value": "3001631",
+     "font": "ANNEXES/3001631_DPSH.xls nom del fitxer",
+     "quote": "3001631_DPSH.xls"
+    },
+    {
+     "value": "3001631",
+     "font": "4703-GTL-25 Rubí.pdf p.2 camp 'Obra / Projecte:' (bloc DADES INICIALS)",
+     "quote": "Rubí. Carrer Miranda. 3001631",
+     "note": "GTL 'Obra / Projecte' és una de les fonts llistades per a expedient (Pas 3); coincideix amb el nom de la carpeta del projecte."
+    },
+    {
+     "value": "3001631",
+     "font": "PDF/ANNEXES/3001631_fotografies.pdf capçalera, ambdues pàgines, cel·la dreta del quadre de títol",
+     "quote": "3001631",
+     "note": "capçalera de plantilla G3 idèntica a tots els documents del projecte; no és font independent, només corrobora el número ja conegut pel nom de carpeta i altres plantilles"
+    },
+    {
+     "value": "3001631",
+     "font": "PDF/ANNEXES/3001631_plànol de situació.pdf peu de pàgina, cel·la 'Exp:'",
+     "quote": "Exp: 3001631",
+     "note": "coincideix amb el nom de la carpeta '3001631 RUBI'"
+    },
+    {
+     "value": "3001631",
+     "font": "PDF/ANNEXES/3001631_tall de correlació.pdf caixetí, cel·la Exp:",
+     "quote": "Exp: 3001631",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "3001631",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 camp 'Obra / Projecte:' (bloc DADES INICIALS)",
+     "quote": "Rubí. Carrer Miranda. 3001631",
+     "note": "Duplicat del GTL ja llegit (4703-GTL-25 Rubí.pdf): no és font independent addicional, mateix valor."
+    },
+    {
+     "value": "3001631",
+     "font": "tall.pdf peu, cel·la 'Exp:'",
+     "quote": "Exp: 3001631",
+     "note": "coincideix amb el nom de la carpeta (3001631 RUBI)"
+    },
+    {
+     "value": "3001631",
+     "font": "nom de la carpeta del projecte",
+     "quote": "3001631 RUBI",
+     "note": "regla Pas 3: nom de la carpeta = NNNNNNN MUNICIPI"
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "ANNEXES/3001631_DPSH.xls",
+    "comanda laboratori_3001631_RUBI.xls",
+    "4703-GTL-25 Rubí.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf",
+    "(carpeta)"
+   ],
+   "note": "GTL 'Obra / Projecte' és una de les fonts llistades per a expedient (Pas 3); coincideix amb el nom de la carpeta del projecte."
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2025-11-14",
+   "candidates": [
+    {
+     "value": "2025-11-14",
+     "font": "3001631 - PENETROS.pdf p.1 Data / p.2 Data / p.3 Data",
+     "quote": "14-11-2025",
+     "note": "consistent i clar a les 3 pàgines"
+    },
+    {
+     "value": "14/11/25",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1/2/3 capçalera, camp 'DATA:'",
+     "quote": "DATA: 14/11/25",
+     "note": "data dels assaigs DPSH (mateixa a les 3 pàgines); candidata a primer dia de camp"
+    },
+    {
+     "value": "14/11/2025",
+     "font": "4703-GTL-25 Rubí.pdf p.2 camp 'Data extracció:' (bloc Dimensions de la mostra)",
+     "quote": "Data extracció: 14/11/2025",
+     "note": "Candidat 2 per regla (GTL dona el dia de la mostra/sondeig, no necessàriament el primer dia de camp DPSH); confirmat visualment (render de la pàgina) perquè l'ordre d'extracció de text barrejava aquesta data amb 'Data recepció' (18/11/2025) i 'Data obertura' (18/11/2025)."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "2025-11-14",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!N23 (DATA DE PRESA)",
+     "quote": "45975.0",
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "value": "14/11/2025",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 camp 'Data extracció:' (bloc Dimensions de la mostra)",
+     "quote": "Data extracció: 14/11/2025",
+     "note": "Duplicat del GTL ja llegit; candidat 2 (dia de la mostra/sondeig, no necessàriament el primer dia de camp DPSH)."
+    },
+    {
+     "value": "Desembre 2025",
+     "font": "tall.pdf peu, cel·la 'Data:'",
+     "quote": "Data: Desembre 2025",
+     "note": "data del DOCUMENT (tall), no de camp; només mes/any sense dia; les fotos de la carpeta són 'IMG-20251104-WA...' (novembre 2025) — possible desfasament entre camp i redacció del tall, no contradicció necessàriament"
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "comanda laboratori_3001631_RUBI.xls",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf"
+   ],
+   "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+  },
+  "lab_depth": {
+   "estat": "candidats",
+   "value": "0,6 - 1,2",
+   "candidates": [
+    {
+     "value": "0,6 - 1,2",
+     "font": "4703-GTL-25 Rubí.pdf p.2 camp 'Cota d'extracció (m):'; p.7 resum",
+     "quote": "Cota d'extracció (m): 0,6 - 1,2",
+     "note": "GTL és la font d'autoritat principal per a lab_depth (regla Pas 3)."
+    },
+    {
+     "value": "0.6 - 1.4",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!J35/L35",
+     "quote": "INICIAL 0.6 / FINAL 1.4",
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "value": "0,60 - 1,20",
+     "font": "3001631 - PENETROS.pdf p.3 'Cota d'extracció'",
+     "quote": "de la cota de: 0,60 / fins a la cota: 1,20"
+    }
+   ],
+   "rule": "contradiccio: 0.6 - 1.4 (1 doc, conf max 0.70)",
+   "altres": [
+    {
+     "value": "0,6 a 1,2",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula, columna MOSTRA sota SPT-1",
+     "quote": "0,6 a 1,2",
+     "note": "fondària de la mostra SPT-1"
+    },
+    {
+     "value": "0,6 - 1,2",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 camp 'Cota d'extracció (m):'; p.7 resum",
+     "quote": "Cota d'extracció (m): 0,6 - 1,2",
+     "note": "Duplicat del GTL ja llegit; mateix valor."
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf",
+    "comanda laboratori_3001631_RUBI.xls",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf"
+   ],
+   "note": "GTL és la font d'autoritat principal per a lab_depth (regla Pas 3)."
+  },
+  "lab_location": {
+   "estat": "segur",
+   "value": "P3",
+   "candidates": [
+    {
+     "value": "P3",
+     "font": "3001631 - PENETROS.pdf p.3 'Assaig de referència'",
+     "quote": "P3"
+    },
+    {
+     "value": "P-3",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 capçalera del full",
+     "quote": "P-3",
+     "note": "el SPT-1 es va prendre dins de l'assaig DPSH del punt P-3"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "P3",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!C35 (parèntesi)",
+     "quote": "SPT1 (P3)"
+    },
+    {
+     "value": "P3",
+     "font": "4703-GTL-25 Rubí.pdf derivat de p.2 camp 'Mostra: SPT1 P3'",
+     "quote": "Mostra: SPT1 P3",
+     "note": "Punt d'assaig derivat del text de la mostra; el GTL no porta un camp separat de punt/localització."
+    },
+    {
+     "value": "P3",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf derivat de p.2 camp 'Mostra: SPT1 P3'",
+     "quote": "Mostra: SPT1 P3",
+     "note": "Duplicat del GTL ja llegit; derivat del text de la mostra."
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf",
+    "comanda laboratori_3001631_RUBI.xls",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf"
+   ],
+   "note": "Punt d'assaig derivat del text de la mostra; el GTL no porta un camp separat de punt/localització."
+  },
+  "lab_sample_id": {
+   "estat": "segur",
+   "value": "SPT-1",
+   "candidates": [
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula, columna MOSTRA, files -1/-1,2/-1,4",
+     "quote": "SPT-1"
+    },
+    {
+     "value": "SPT1 P3",
+     "font": "4703-GTL-25 Rubí.pdf p.2 camp 'Mostra:' (bloc DADES INICIALS); p.7 'Referència del client'",
+     "quote": "Mostra: SPT1 P3"
+    },
+    {
+     "value": "SPT1 (P3)",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!C35",
+     "quote": "SPT1 (P3)"
+    }
+   ],
+   "rule": "Annex de l'Eva (DPSH) > GTL > comanda per a l'etiqueta (Pas 3); mateix patró verificat a Castellar (annex 'SPT-1' + GTL 'MA1' -> informe 'SPT-1') i Anciles (comanda/annex 'MA' -> informe 'MA-1').",
+   "note": "GTL i comanda s'autodeclaren subordinats a l'annex ('l'annex de l'Eva mana per a l'etiqueta de l'informe', nota pròpia de tots dos documents llegits). LAB-SIG és duplicat literal del GTL (mateix informe, versió signada) i no compta com a font independent. PENETROS (full de camp manuscrit) només dona 'P3' -- el punt DPSH d'on surt la mostra, no una etiqueta de mostra pròpia -- i no és font d'autoritat per a l'etiqueta.",
+   "llm_only_fields": true,
+   "altres": [
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula, columna MOSTRA, files -1/-1,2/-1,4",
+     "quote": "SPT-1",
+     "note": "única mostra presa durant els DPSH, dins de l'assaig del punt P-3"
+    },
+    {
+     "value": "SPT1 P3",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 camp 'Mostra:' (bloc DADES INICIALS); p.7 'Referència del client'",
+     "quote": "Mostra: SPT1 P3",
+     "note": "Duplicat del GTL ja llegit; mateixa etiqueta."
+    }
+   ]
+  },
+  "lab_testing_company": {
+   "estat": "segur",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "candidates": [
+    {
+     "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+     "font": "4703-GTL-25 Rubí.pdf peu de totes les pàgines; p.8 bloc de signatures digitals",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+     "note": "Emissor real (banda amb registre mercantil), no la marca comercial 'Soilassaig' del capçal ni 'DADES DEL CLIENT' (=G3)."
+    },
+    {
+     "value": "TPS (Prospecció del Subsòl, SL)",
+     "font": "3001631 - PENETROS.pdf p.1 caixetí/logo",
+     "quote": "tps · prospecció del subsòl · ALBARÀ",
+     "note": "emissor del document (empresa de camp/laboratori habitual de G3, memòria prèvia); cap NIF imprès en aquest full concret"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf peu de totes les pàgines; p.8 bloc de signatures digitals (Director tècnic i Cap d'àrea d'assaig GTL)",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+     "note": "Emissor real (banda amb registre mercantil), confirmat ara amb signatures digitals nominals (Pere Cervós Flinch, Pere Farrés Bori) que no aporten un valor diferent per a aquest concepte."
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf"
+   ],
+   "note": "emissor del document (empresa de camp/laboratori habitual de G3, memòria prèvia); cap NIF imprès en aquest full concret"
+  },
+  "municipality": {
+   "estat": "segur",
+   "value": "Rubí",
+   "candidates": [
+    {
+     "value": "Rubí",
+     "font": "3001631 - PENETROS.pdf p.1 Població; p.2 'Adreça de l'obra'; p.3 'Adreça de l'obra'",
+     "quote": "Rubí",
+     "note": "consistent i clar a les 3 pàgines"
+    },
+    {
+     "value": "RUBI",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "RUBI"
+    },
+    {
+     "value": "RUBÌ",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1/2/3 capçalera, camp 'POBLACIÓ:'",
+     "quote": "POBLACIÓ: RUBÌ",
+     "note": "grafia literal del document (accent invertit sobre la I); forma oficial probable 'Rubí'"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "Rubí (Barcelona)",
+     "font": "PDF/ANNEXES/3001631_tall de correlació.pdf caixetí, TÍTOL DEL PROJECTE",
+     "quote": "RUBÍ (BARCELONA)"
+    },
+    {
+     "value": "RUBI",
+     "font": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / RUBI / PRESSUPOST GEOTECNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "RUBI",
+     "font": "25.0794/PLAN_COST_RUBI.xlsx 'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG HAB UNIF RUBI"
+    },
+    {
+     "value": "Rubí",
+     "font": "25.0794/RE_ PRESSU.msg cos del missatge original citat, primera línia després de la salutació",
+     "quote": "RUBÍ",
+     "note": "Nom de projecte usat al correu, no un camp OBRA/adreça explícit; coincideix amb el nom de la carpeta però no és font d'autoritat (Pas 3: manen comanda N21 / pressupost p.1 / PLAN_COST E9)."
+    },
+    {
+     "value": "Rubí",
+     "font": "4703-GTL-25 Rubí.pdf p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+     "quote": "Rubí. Carrer Miranda.",
+     "note": "Forma curta; no és cap de les 3 fonts 'sempre' (comanda/pressupost/PLAN_COST) però coincideix amb el nom de la carpeta."
+    },
+    {
+     "value": "Rubí",
+     "font": "PDF/ANNEXES/3001631_plànol de situació.pdf capçalera del títol del projecte + mapa de context (requadre superior esquerre)",
+     "quote": "RUBÍ (BARCELONA)",
+     "note": "el mapa de context també mostra 'Rubí' en negreta com a nucli urbà de referència"
+    },
+    {
+     "value": "Rubí",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+     "quote": "Rubí. Carrer Miranda.",
+     "note": "Duplicat del GTL ja llegit; forma curta, no és cap de les 3 fonts 'sempre'."
+    },
+    {
+     "value": "Rubí",
+     "font": "tall.pdf bloc TÍTOL DEL PROJECTE (peu), línia 2 + ortofotoplànol",
+     "quote": "RUBÍ (BARCELONA)",
+     "note": "coincideix amb el nom de la carpeta"
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "comanda laboratori_3001631_RUBI.xls",
+    "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+    "25.0794/PLAN_COST_RUBI.xlsx",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf"
+   ],
+   "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+  },
+  "num_dpsh_tests": {
+   "estat": "segur",
+   "value": 3,
+   "candidates": [
+    {
+     "value": 3,
+     "font": "ANNEXES/3001631_DPSH.xls fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2', 'P-3']",
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 3,
+     "font": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf p.2 campanya",
+     "quote": "3 assaigs de penetració dinàmica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "value": 3,
+     "font": "25.0794/PLAN_COST_RUBI.xlsx OFERTA!B21",
+     "quote": "3",
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "value": "3",
+     "font": "3001631 - PENETROS.pdf p.1 bloc CONCEPTES / ML DE PERFORACIÓ, 'Nº de penetròmetres realitzats'",
+     "quote": "3",
+     "note": "coincideix amb les 3 columnes P1/P2/P3 del full de camp (p.2)"
+    },
+    {
+     "value": 3,
+     "font": "ANNEXES/3001631_DPSH.xls fulls del llibre: P-1, P-2, P-3",
+     "quote": "P-1; P-2; P-3 (cadascun amb colpeig executat a la columna C, fila 17 en endavant)",
+     "note": "3 fulls amb dades reals de colpeig (no buits); coincideix amb el nombre de punts DPSH del projecte"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf 3 pàgines del document (una per punt)",
+     "quote": "P-1 / P-2 / P-3",
+     "note": "recompte per nombre de fulls impresos; coincideix amb els 3 fulls (P-1,P-2,P-3) de l'Excel DPSH"
+    },
+    {
+     "value": "3",
+     "font": "PDF/ANNEXES/3001631_fotografies.pdf peus de foto, p.1 i p.2",
+     "quote": "Fotografies 1 i 2: Vista general de la màquina en els assaigs P-1 i P-2. / Fotografia 3 i 4: Detall de la màquina treballant en l'assaig P-3, detall dels materials recuperats en l'assaig SPT.",
+     "note": "corroboració visual de 3 punts DPSH (P-1, P-2, P-3); no és font primària — mana l'Excel DPSH (executats)"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/3001631_plànol de situació.pdf plànol principal, etiquetes P-1/P-2/P-3 + llegenda",
+     "quote": "P-1 / P-2 / P-3 — Llegenda: Assaig de penetració dinàmica DPSH",
+     "note": "recompte visual de marcadors dins la 'Zona d'estudi'"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/3001631_tall de correlació.pdf foto aèria (llegenda 'Assaig de penetració dinàmica DPSH') + capçaleres de columna del tall",
+     "quote": "P-1 / P-2 / P-3"
+    },
+    {
+     "value": 3,
+     "font": "tall.pdf gràfic, capçaleres de columna",
+     "quote": "P-1 / P-2 / P-3",
+     "note": "punts DPSH correlacionats al tall (executats, presumiblement); font primària és l'Excel DPSH, no obert en aquesta crida"
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "ANNEXES/3001631_DPSH.xls",
+    "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+    "25.0794/PLAN_COST_RUBI.xlsx",
+    "3001631 - PENETROS.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf"
+   ],
+   "note": "EXECUTATS (autoritat sobre els previstos)"
+  },
+  "num_floors": {
+   "estat": "candidats",
+   "value": "PB (planta baixa) + porxada, sense pis superior",
+   "candidates": [
+    {
+     "value": "PB (planta baixa) + porxada, sense pis superior",
+     "font": "25.0794/PRESSU.msg adjunt img_20251104_wa0016.jpg — plànol de fonamentació",
+     "quote": "PLANO DE CIMENTACION MODELO MEDITERRANEO ... 72 m2 + 20 de Porchada",
+     "note": "Derivat estructuralment (únic plànol de fonamentació d'una planta + porxada); no hi ha text explícit de nombre de plantes. Regla: plànols de catàleg de fabricant → num_floors = PB (+ Porxo)."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf",
+    "25.0794/PRESSU.msg"
+   ],
+   "note": "Derivat estructuralment (únic plànol de fonamentació d'una planta + porxada); no hi ha text explícit de nombre de plantes. Regla: plànols de catàleg de fabricant → num_floors = PB (+ Porxo)."
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": 1,
+   "candidates": [
+    {
+     "value": 1,
+     "font": "PDF/ANNEXES/3001631_tall de correlació.pdf LLEGENDA",
+     "quote": "Nivell 1 : Graves i sorres. Carbonatat.",
+     "note": "cap sondeig a rotació en aquest projecte (només DPSH); el tall és l'única font de nivells del corpus. Sota la llegenda només hi ha 'Sòls superficials' (cobertura sense número) i 'Nivell 1'; cap altre nivell numerat ni al gràfic ni a la llegenda"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 1,
+     "font": "tall.pdf LLEGENDA",
+     "quote": "Nivell 1 : Graves i sorres. Carbonatat.",
+     "note": "un sol nivell numerat a la llegenda, a més de 'Sòls superficials' (cobertura sense número, no compta); sense annex de sondeig en aquest projecte, el tall és font única"
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf"
+   ],
+   "note": "cap sondeig a rotació en aquest projecte (només DPSH); el tall és l'única font de nivells del corpus. Sota la llegenda només hi ha 'Sòls superficials' (cobertura sense número) i 'Nivell 1'; cap altre nivell numerat ni al gràfic ni a la llegenda"
+  },
+  "referencia_catastral": {
+   "estat": "candidats",
+   "value": "Polígon 6, Parcel·la 105-B",
+   "candidates": [
+    {
+     "value": "Polígon 6, Parcel·la 105-B",
+     "font": "PDF/ANNEXES/3001631_plànol de situació.pdf capçalera del títol del projecte",
+     "quote": "PARC. 6-105 B",
+     "note": "format polígon-parcel·la rústega, no la referència cadastral de 20 caràcters; font única (aquest plànol), mai segur sense consulta del Cadastre"
+    },
+    {
+     "value": "6-105 B",
+     "font": "tall.pdf bloc TÍTOL DEL PROJECTE (peu), línia 2",
+     "quote": "PARC. 6-105 B",
+     "note": "notació polígon-parcel·la (probablement rústega), NO format de referència cadastral urbana (20 car.); creuar amb consultes del Cadastre de la carpeta abans d'usar-lo com a candidat real"
+    },
+    {
+     "value": "Polígon 6, Parcel·la 105 B",
+     "font": "PDF/ANNEXES/3001631_tall de correlació.pdf caixetí, TÍTOL DEL PROJECTE",
+     "quote": "PARC. 6-105 B",
+     "note": "format polígon-parcel·la de sòl rústic, NO és el format estàndard de referència cadastral urbana (20 caràcters); no inferir com a referència cadastral formal sense confirmar amb consulta del Cadastre. Les etiquetes '27' i '26' que apareixen sobre la foto aèria semblen números de portal de parcel·les veïnes (properes a 'Nº 39'), no referència cadastral -> no s'han inclòs com a candidat"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf"
+   ],
+   "note": "format polígon-parcel·la rústega, no la referència cadastral de 20 caràcters; font única (aquest plànol), mai segur sense consulta del Cadastre"
+  },
+  "street_address": {
+   "estat": "candidats",
+   "value": "Carrer de la Miranda, 39",
+   "candidates": [
+    {
+     "value": "Carrer de la Miranda, 39",
+     "font": "PDF/ANNEXES/3001631_plànol de situació.pdf capçalera del títol del projecte + rètol sobre el carrer al plànol principal",
+     "quote": "AL CARRERDE LA MIRANDA Nº 39, PARC. 6-105 B, RUBÍ (BARCELONA)",
+     "note": "typo del document original ('CARRERDE' sense espai); corroborat pel rètol 'Carrer de la Miranda' dibuixat sobre el vial i pel número '39' junt al límit de parcel·la"
+    },
+    {
+     "value": "Carrer de la Moranda",
+     "font": "3001631 - PENETROS.pdf p.1 ALBARÀ, bloc DADES OBRA, Adreça",
+     "quote": "C / de la Moranda",
+     "note": "cursiva ambigua a l'albarà (p.1); zoom 400dpi no en resol el dubte, podria ser la mateixa 'Miranda' mal cal·ligrafiada; candidats, no descartar"
+    },
+    {
+     "value": "Carrer de la Miranda, Nº 39",
+     "font": "PDF/ANNEXES/3001631_tall de correlació.pdf caixetí (TÍTOL DEL PROJECTE) + etiqueta de carrer a la foto aèria",
+     "quote": "AL CARRERDE LA MIRANDA Nº 39 (caixetí); \"Carrer de la Miranda\" (etiqueta a la foto aèria)",
+     "note": "typo 'CARRERDE' sense espai al caixetí; l'etiqueta de la foto aèria ho confirma sense typo"
+    }
+   ],
+   "rule": "formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes",
+   "altres": [
+    {
+     "value": "C/ MIRANDA",
+     "font": "comanda laboratori_3001631_RUBI.xls Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C/ MIRANDA"
+    },
+    {
+     "value": "Carrer de la Miranda",
+     "font": "3001631 - PENETROS.pdf p.2 'Adreça de l'obra' i 'Descriure punt 0 o cota referencia'; p.3 'Adreça de l'obra'",
+     "quote": "C/de la Miranda - Rubí",
+     "note": "grafia clara i repetida 3 cops (2x p.2, 1x p.3) amb 'i' punt; forma majoritària del document"
+    },
+    {
+     "value": "C/ DE LA MIRANDA",
+     "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1/2/3 capçalera, camp 'OBRA:'",
+     "quote": "OBRA: C/ DE LA MIRANDA",
+     "note": "coincident a les 3 pàgines; sense número de portal"
+    },
+    {
+     "value": "Carrer Miranda",
+     "font": "4703-GTL-25 Rubí.pdf p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+     "quote": "Rubí. Carrer Miranda.",
+     "note": "El GTL no dona número de portal ni confirmació de cantonada; candidat, no font principal per a l'adreça de l'obra."
+    },
+    {
+     "value": "Carrer Miranda",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+     "quote": "Rubí. Carrer Miranda.",
+     "note": "Duplicat del GTL ja llegit; no dona número de portal ni confirmació de cantonada."
+    },
+    {
+     "value": "Carrer de la Miranda, 39",
+     "font": "tall.pdf bloc TÍTOL DEL PROJECTE (peu), línia 2",
+     "quote": "AL CARRERDE LA MIRANDA Nº 39,  PARC. 6-105 B, RUBÍ (BARCELONA)",
+     "note": "redacció del títol de l'informe (no bloc OBRA explícit); typo del document 'CARRERDE'→'CARRER DE'; porta també referència de parcel·la '6-105 B' (possible notació polígon-parcel·la, no format RC urbà)"
+    }
+   ],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "comanda laboratori_3001631_RUBI.xls",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf"
+   ],
+   "note": "grafia clara i repetida 3 cops (2x p.2, 1x p.3) amb 'i' punt; forma majoritària del document"
+  },
+  "superficie_parcela": {
+   "estat": "candidats",
+   "value": "951",
+   "candidates": [
+    {
+     "value": "951",
+     "font": "(Cadastre: 39 = 8259027DF1985N, 951 m²)",
+     "quote": "",
+     "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça"
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf"
+   ],
+   "note": "suma de les parcel·les cadastrals dels portals de l'adreça llegida (consulta HTTP, no lectura d'un document de la carpeta); la fila de l'informe diu \"segons plànols cadastrals\"; confirmar si el projecte abasta més o menys portals dels que diu l'adreça"
+  },
+  "utm_x": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "PDF/ANNEXES/3001631_plànol de situació.pdf"
+   ]
+  },
+  "utm_y": {
+   "estat": "no_trobat",
+   "value": null,
+   "sources_checked": [
+    "PDF/ANNEXES/3001631_plànol de situació.pdf"
+   ]
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "segur",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+212,50 msnm, segons el planol del ICGC.",
+      "candidates": [
+       {
+        "value": "+212,50 msnm, segons el planol del ICGC.",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1 taula + peu",
+        "quote": "Rebuig  a -4,55  m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "0,00 (relatiu, +/-0)",
+        "font": "3001631 - PENETROS.pdf p.2, columna P1: fila 'Cota Inici' (+/-0) i fila -4,8 (R)",
+        "quote": "+/-0 … R:4,55"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-4,55 m",
+      "candidates": [
+       {
+        "value": "-4,55 m",
+        "font": "ANNEXES/3001631_DPSH.xls P-1!B80 (rebuig); P-1!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a -4,55  m",
+        "note": "Última lectura de colpeig P-1!C40=100 a -4,6 m; el rebuig s'assoleix a -4,55 m (dins l'interval). Columna F (N.F.) sense text ni color a cap fila; columna G (Nivells) uniformement bg=#FF8080 a totes les profunditats (0 a -12 m) — format estàtic de plantilla, no un senyal de transició real. cota_inici no consta en aquest Excel (sí a PDF/ANNEXES/3001631_DPSH.pdf)."
+       },
+       {
+        "value": "-4,55",
+        "font": "3001631 - PENETROS.pdf p.2, columna P1: fila 'Cota Inici' (+/-0) i fila -4,8 (R)",
+        "quote": "+/-0 … R:4,55"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-4,55 m",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1 taula + peu",
+        "quote": "Rebuig  a -4,55  m"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-1!C40=100 a -4,6 m; el rebuig s'assoleix a -4,55 m (dins l'interval). Columna F (N.F.) sense text ni color a cap fila; columna G (Nivells) uniformement bg=#FF8080 a totes les profunditats (0 a -12 m) — format estàtic de plantilla, no un senyal de transició real. cota_inici no consta en aquest Excel (sí a PDF/ANNEXES/3001631_DPSH.pdf)."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/3001631_DPSH.xls P-1!B80 (rebuig); P-1!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a -4,55  m",
+        "note": "Última lectura de colpeig P-1!C40=100 a -4,6 m; el rebuig s'assoleix a -4,55 m (dins l'interval). Columna F (N.F.) sense text ni color a cap fila; columna G (Nivells) uniformement bg=#FF8080 a totes les profunditats (0 a -12 m) — format estàtic de plantilla, no un senyal de transició real. cota_inici no consta en aquest Excel (sí a PDF/ANNEXES/3001631_DPSH.pdf)."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "3001631 - PENETROS.pdf p.2, columna P1: fila 'Cota Inici' (+/-0) i fila -4,8 (R)",
+        "quote": "+/-0 … R:4,55"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1 taula + peu",
+        "quote": "Rebuig  a -4,55  m"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf tall, peu de la columna P-1",
+        "quote": "Nb=R",
+        "note": "el tall només confirma textualment el rebuig (marca 'R' impresa); la cota d'inici i la fondària exacta de rebuig no hi són impreses com a xifra (només posició gràfica sobre l'eix msnm) -> no s'estima per píxels; vénen de l'Excel DPSH / annex DPSH PDF"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf gràfic, extrem inferior de la columna P-1",
+        "quote": "Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-1!C40=100 a -4,6 m; el rebuig s'assoleix a -4,55 m (dins l'interval). Columna F (N.F.) sense text ni color a cap fila; columna G (Nivells) uniformement bg=#FF8080 a totes les profunditats (0 a -12 m) — format estàtic de plantilla, no un senyal de transició real. cota_inici no consta en aquest Excel (sí a PDF/ANNEXES/3001631_DPSH.pdf)."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/3001631_DPSH.xls P-1!B80 (rebuig); P-1!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a -4,55  m",
+        "note": "Última lectura de colpeig P-1!C40=100 a -4,6 m; el rebuig s'assoleix a -4,55 m (dins l'interval). Columna F (N.F.) sense text ni color a cap fila; columna G (Nivells) uniformement bg=#FF8080 a totes les profunditats (0 a -12 m) — format estàtic de plantilla, no un senyal de transició real. cota_inici no consta en aquest Excel (sí a PDF/ANNEXES/3001631_DPSH.pdf).",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "3001631 - PENETROS.pdf p.2, columna P1: fila 'Cota Inici' (+/-0) i fila -4,8 (R)",
+        "quote": "+/-0 … R:4,55",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.1 taula + peu",
+        "quote": "Rebuig  a -4,55  m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf tall, peu de la columna P-1",
+        "quote": "Nb=R",
+        "note": "el tall només confirma textualment el rebuig (marca 'R' impresa); la cota d'inici i la fondària exacta de rebuig no hi són impreses com a xifra (només posició gràfica sobre l'eix msnm) -> no s'estima per píxels; vénen de l'Excel DPSH / annex DPSH PDF",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf gràfic, extrem inferior de la columna P-1",
+        "quote": "Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-1!C40=100 a -4,6 m; el rebuig s'assoleix a -4,55 m (dins l'interval). Columna F (N.F.) sense text ni color a cap fila; columna G (Nivells) uniformement bg=#FF8080 a totes les profunditats (0 a -12 m) — format estàtic de plantilla, no un senyal de transició real. cota_inici no consta en aquest Excel (sí a PDF/ANNEXES/3001631_DPSH.pdf).",
+      "matis": null
+     },
+     "extra": {
+      "tall.pdf": {
+       "nb_readings": [
+        "Nb=40",
+        "Nb=77",
+        "Nb=45",
+        "Nb=R"
+       ]
+      }
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+212 msnm, segons el plànol del ICGC",
+      "candidates": [
+       {
+        "value": "+212 msnm, segons el plànol del ICGC",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.2 taula + peu",
+        "quote": "Rebuig  a - 3,58  m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "0,00 (relatiu, +/-0)",
+        "font": "3001631 - PENETROS.pdf p.2, columna P2: fila 'Cota Inici' (+/-0) i fila -3,8 (R)",
+        "quote": "+/-0 … R: 3,58"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-3,58 m",
+      "candidates": [
+       {
+        "value": "-3,58 m",
+        "font": "ANNEXES/3001631_DPSH.xls P-2!B80 (rebuig); P-2!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a - 3,58  m",
+        "note": "Última lectura de colpeig P-2!C35=100 a -3,6 m. Mateix patró que P-1: F buida, G uniformement vermella (plantilla)."
+       },
+       {
+        "value": "-3,58",
+        "font": "3001631 - PENETROS.pdf p.2, columna P2: fila 'Cota Inici' (+/-0) i fila -3,8 (R)",
+        "quote": "+/-0 … R: 3,58"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-3,58 m",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.2 taula + peu",
+        "quote": "Rebuig  a - 3,58  m"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-2!C35=100 a -3,6 m. Mateix patró que P-1: F buida, G uniformement vermella (plantilla)."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/3001631_DPSH.xls P-2!B80 (rebuig); P-2!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a - 3,58  m",
+        "note": "Última lectura de colpeig P-2!C35=100 a -3,6 m. Mateix patró que P-1: F buida, G uniformement vermella (plantilla)."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "3001631 - PENETROS.pdf p.2, columna P2: fila 'Cota Inici' (+/-0) i fila -3,8 (R)",
+        "quote": "+/-0 … R: 3,58"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.2 taula + peu",
+        "quote": "Rebuig  a - 3,58  m"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf tall, peu de la columna P-2",
+        "quote": "Nb=R",
+        "note": "mateixa limitació que P-1"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf gràfic, extrem inferior de la columna P-2",
+        "quote": "Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-2!C35=100 a -3,6 m. Mateix patró que P-1: F buida, G uniformement vermella (plantilla)."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/3001631_DPSH.xls P-2!B80 (rebuig); P-2!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a - 3,58  m",
+        "note": "Última lectura de colpeig P-2!C35=100 a -3,6 m. Mateix patró que P-1: F buida, G uniformement vermella (plantilla).",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "3001631 - PENETROS.pdf p.2, columna P2: fila 'Cota Inici' (+/-0) i fila -3,8 (R)",
+        "quote": "+/-0 … R: 3,58",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.2 taula + peu",
+        "quote": "Rebuig  a - 3,58  m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf tall, peu de la columna P-2",
+        "quote": "Nb=R",
+        "note": "mateixa limitació que P-1",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf gràfic, extrem inferior de la columna P-2",
+        "quote": "Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-2!C35=100 a -3,6 m. Mateix patró que P-1: F buida, G uniformement vermella (plantilla).",
+      "matis": null
+     },
+     "extra": {
+      "tall.pdf": {
+       "nb_readings": [
+        "Nb=48",
+        "Nb=R"
+       ]
+      }
+     }
+    },
+    {
+     "punt": "P-3",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+212,50 msnm, segons plànol en el ICGC",
+      "candidates": [
+       {
+        "value": "+212,50 msnm, segons plànol en el ICGC",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula + peu",
+        "quote": "Rebuig  a - 3,13  m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "0,00 (relatiu, +/-0)",
+        "font": "3001631 - PENETROS.pdf p.2, columna P3: fila 'Cota Inici' (+/-0) i fila -3,4 (R)",
+        "quote": "+/-0 … R:3,13"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-3,13 m",
+      "candidates": [
+       {
+        "value": "-3,13 m",
+        "font": "ANNEXES/3001631_DPSH.xls P-3!B80 (rebuig); P-3!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a - 3,13  m",
+        "note": "Última lectura de colpeig P-3!C33=100 a -3,2 m. Aquest punt porta la mostra SPT-1 (vegeu spt_ma_tests)."
+       },
+       {
+        "value": "-3,13",
+        "font": "3001631 - PENETROS.pdf p.2, columna P3: fila 'Cota Inici' (+/-0) i fila -3,4 (R)",
+        "quote": "+/-0 … R:3,13"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-3,13 m",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula + peu",
+        "quote": "Rebuig  a - 3,13  m"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-3!C33=100 a -3,2 m. Aquest punt porta la mostra SPT-1 (vegeu spt_ma_tests)."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/3001631_DPSH.xls P-3!B80 (rebuig); P-3!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a - 3,13  m",
+        "note": "Última lectura de colpeig P-3!C33=100 a -3,2 m. Aquest punt porta la mostra SPT-1 (vegeu spt_ma_tests)."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "3001631 - PENETROS.pdf p.2, columna P3: fila 'Cota Inici' (+/-0) i fila -3,4 (R)",
+        "quote": "+/-0 … R:3,13"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula + peu",
+        "quote": "Rebuig  a - 3,13  m"
+       },
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf tall, peu de la columna P-3",
+        "quote": "Nb=R",
+        "note": "mateixa limitació que P-1"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf gràfic, extrem inferior de la columna P-3",
+        "quote": "Nb=R"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-3!C33=100 a -3,2 m. Aquest punt porta la mostra SPT-1 (vegeu spt_ma_tests)."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/3001631_DPSH.xls P-3!B80 (rebuig); P-3!F17:F77 i G17:G77 (N.F. i Nivells, comprovats text+color)",
+        "quote": "Rebuig  a - 3,13  m",
+        "note": "Última lectura de colpeig P-3!C33=100 a -3,2 m. Aquest punt porta la mostra SPT-1 (vegeu spt_ma_tests).",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "3001631 - PENETROS.pdf p.2, columna P3: fila 'Cota Inici' (+/-0) i fila -3,4 (R)",
+        "quote": "+/-0 … R:3,13",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula + peu",
+        "quote": "Rebuig  a - 3,13  m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf tall, peu de la columna P-3",
+        "quote": "Nb=R",
+        "note": "mateixa limitació que P-1",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf gràfic, extrem inferior de la columna P-3",
+        "quote": "Nb=R",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/3001631_DPSH.pdf",
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "Última lectura de colpeig P-3!C33=100 a -3,2 m. Aquest punt porta la mostra SPT-1 (vegeu spt_ma_tests).",
+      "matis": null
+     },
+     "extra": {
+      "tall.pdf": {
+       "nb_readings": [
+        "Nb=47",
+        "Nb=R"
+       ]
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "3001631 - PENETROS.pdf",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf"
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf"
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "id": {
+      "estat": "segur",
+      "value": "SPT-1",
+      "candidates": [
+       {
+        "value": "SPT-1",
+        "font": "ANNEXES/3001631_DPSH.xls P-3!E22:E24",
+        "quote": "SPT-1 / 0,6 a 1,2 / 16/20/20/24",
+        "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)"
+       },
+       {
+        "value": "SPT1",
+        "font": "4703-GTL-25 Rubí.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "SPT1",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       },
+       {
+        "value": "SPT-1",
+        "font": "3001631 - PENETROS.pdf p.3, bloc 'Assaig tipus' (SPT marcat), 'Assaig de referència: P3', 'Colpeig'",
+        "quote": "SPT ☑ · Assaig de referència: P3 · Colpeig: 16 20 20 24"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "4703-GTL-25 Rubí.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/LAB-SIG.pdf"
+      ],
+      "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)"
+     },
+     "punt": {
+      "estat": "segur",
+      "value": "P-3",
+      "candidates": [
+       {
+        "value": "P-3",
+        "font": "ANNEXES/3001631_DPSH.xls P-3!E22:E24",
+        "quote": "SPT-1 / 0,6 a 1,2 / 16/20/20/24",
+        "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)"
+       },
+       {
+        "value": "P3",
+        "font": "4703-GTL-25 Rubí.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "P3",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       },
+       {
+        "value": "P3",
+        "font": "3001631 - PENETROS.pdf p.3, bloc 'Assaig tipus' (SPT marcat), 'Assaig de referència: P3', 'Colpeig'",
+        "quote": "SPT ☑ · Assaig de referència: P3 · Colpeig: 16 20 20 24"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "4703-GTL-25 Rubí.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/LAB-SIG.pdf"
+      ],
+      "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)"
+     },
+     "profunditat": {
+      "estat": "segur",
+      "value": "0,6 - 1,2",
+      "candidates": [
+       {
+        "value": "0,6 - 1,2",
+        "font": "4703-GTL-25 Rubí.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       },
+       {
+        "value": "0,6 a 1,2",
+        "font": "ANNEXES/3001631_DPSH.xls P-3!E22:E24",
+        "quote": "SPT-1 / 0,6 a 1,2 / 16/20/20/24",
+        "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)"
+       },
+       {
+        "value": "0,60-1,20",
+        "font": "3001631 - PENETROS.pdf p.3, bloc 'Assaig tipus' (SPT marcat), 'Assaig de referència: P3', 'Colpeig'",
+        "quote": "SPT ☑ · Assaig de referència: P3 · Colpeig: 16 20 20 24"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "0,6 - 1,2",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "4703-GTL-25 Rubí.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/LAB-SIG.pdf"
+      ],
+      "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)"
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)",
+      "candidates": [
+       {
+        "value": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)",
+        "font": "4703-GTL-25 Rubí.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+        "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "4703-GTL-25 Rubí.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/LAB-SIG.pdf"
+      ]
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": 40,
+      "candidates": [
+       {
+        "value": 40,
+        "font": "ANNEXES/3001631_DPSH.xls P-3!E22:E24",
+        "quote": "SPT-1 / 0,6 a 1,2 / 16/20/20/24",
+        "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)",
+        "extra": {
+         "registre": {
+          "estat": "segur",
+          "value": [
+           16,
+           20,
+           20,
+           24
+          ],
+          "location": "P-3!E24",
+          "quote": "16/20/20/24"
+         }
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": 40,
+        "font": "3001631 - PENETROS.pdf p.3, bloc 'Assaig tipus' (SPT marcat), 'Assaig de referència: P3', 'Colpeig'",
+        "quote": "SPT ☑ · Assaig de referència: P3 · Colpeig: 16 20 20 24",
+        "extra": {
+         "registre": [
+          16,
+          20,
+          20,
+          24
+         ]
+        }
+       }
+      ],
+      "sources_checked": [
+       "3001631 - PENETROS.pdf",
+       "4703-GTL-25 Rubí.pdf",
+       "ANNEXES/3001631_DPSH.xls",
+       "PDF/ANNEXES/LAB-SIG.pdf"
+      ],
+      "note": "litologia no derivable d'aquest document (cal l'annex de sondeig o el tall del projecte)",
+      "registre": {
+       "estat": "candidats",
+       "value": {
+        "estat": "segur",
+        "value": [
+         16,
+         20,
+         20,
+         24
+        ],
+        "location": "P-3!E24",
+        "quote": "16/20/20/24"
+       },
+       "candidates": [
+        {
+         "value": {
+          "estat": "segur",
+          "value": [
+           16,
+           20,
+           20,
+           24
+          ],
+          "location": "P-3!E24",
+          "quote": "16/20/20/24"
+         },
+         "font": "ANNEXES/3001631_DPSH.xls P-3!E22:E24",
+         "quote": "SPT-1 / 0,6 a 1,2 / 16/20/20/24"
+        },
+        {
+         "value": [
+          16,
+          20,
+          20,
+          24
+         ],
+         "font": "3001631 - PENETROS.pdf p.3, bloc 'Assaig tipus' (SPT marcat), 'Assaig de referència: P3', 'Colpeig'",
+         "quote": ""
+        }
+       ],
+       "sources_checked": [
+        "3001631 - PENETROS.pdf",
+        "4703-GTL-25 Rubí.pdf",
+        "ANNEXES/3001631_DPSH.xls",
+        "PDF/ANNEXES/LAB-SIG.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/LAB-SIG.pdf"
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "nom": "Sòls superficials (cobertura, sense número)",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Sòls superficials",
+      "candidates": [
+       {
+        "value": "Sòls superficials",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf LLEGENDA + banda superior fosca del tall gràfic",
+        "quote": "Sòls superficials",
+        "note": "banda prima uniforme a les 3 columnes; sense fondària impresa -> de/a null (no s'estima gruix per píxels)"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Sòls superficials",
+        "font": "tall.pdf LLEGENDA + secció gràfica (franja superior marró fosc)",
+        "quote": "Sòls superficials"
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "banda prima uniforme a les 3 columnes; sense fondària impresa -> de/a null (no s'estima gruix per píxels)"
+     },
+     "de": {
+      "estat": "segur",
+      "value": "0,00",
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "candidates": [
+       {
+        "value": "0,00",
+        "font": "(definició: la cobertura arrenca a la superfície)",
+        "quote": ""
+       }
+      ],
+      "rule": "Pas 3b: la capa de cobertura comença a 0,00 per definició"
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     }
+    },
+    {
+     "nom": "Nivell 1",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Graves i sorres. Carbonatat.",
+      "candidates": [
+       {
+        "value": "Graves i sorres. Carbonatat.",
+        "font": "PDF/ANNEXES/3001631_tall de correlació.pdf LLEGENDA",
+        "quote": "Nivell 1 : Graves i sorres. Carbonatat.",
+        "note": "ocupa tota la resta de la secció (fins a Nb=R de cada punt); sense fondària de transició impresa -> de/a null"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Graves i sorres. Carbonatat.",
+        "font": "tall.pdf LLEGENDA",
+        "quote": "Nivell 1 : Graves i sorres. Carbonatat."
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "ocupa tota la resta de la secció (fins a Nb=R de cada punt); sense fondària de transició impresa -> de/a null"
+     },
+     "de": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/3001631_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     }
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "tall.pdf"
+   ]
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "value": "92",
+   "candidates": [
+    {
+     "value": "92",
+     "font": "25.0794/PRESSU.msg",
+     "quote": "",
+     "note": "Total 92 calculat per suma dels components impresos (72+20); no apareix imprès com a tal en aquest document — coincideix amb el patró conegut de l'informe de Rubí citat al skill.",
+     "extra": {
+      "components": [
+       {
+        "value": "72",
+        "label": "vivenda",
+        "quote": "72 m2"
+       },
+       {
+        "value": "20",
+        "label": "porxada",
+        "quote": "20 de Porchada"
+       }
+      ],
+      "etiqueta_font": "plànol de fonamentació del fabricant (Viviendas Modulares), adjunt al correu"
+     }
+    },
+    {
+     "value": "72 m² (vivenda) + 20 m² (porxada)",
+     "font": "25.0794/PRESSU.msg adjunt img_20251104_wa0016.jpg — caixetí del plànol de fonamentació",
+     "quote": "PLANO DE CIMENTACION MODELO MEDITERRANEO ESCALA 1: 0'50 - 72 m2 + 20 de Porchada",
+     "note": "Sumands impresos al plànol del fabricant; el total (92) NO hi és imprès — coincideix amb el patró conegut de l'Eva a Rubí ('72+20 porxada' → informe '92', Pas 3b del skill). Confirmar amb pressupost/informe."
+    }
+   ],
+   "rule": "Pas 3b: l'Eva escriu de vegades la suma i de vegades els sumands; multi-habitatge pot ser per casa → sempre candidats",
+   "sources_checked": [
+    "25.0794/PRESSU.msg",
+    "25.0794/RE_ PRESSU.msg",
+    "3001631 - PENETROS.pdf",
+    "4703-GTL-25 Rubí.pdf",
+    "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+    "ANNEXES/3001631_DPSH.xls",
+    "PDF/ANNEXES/3001631_DPSH.pdf",
+    "PDF/ANNEXES/3001631_fotografies.pdf",
+    "PDF/ANNEXES/3001631_plànol de situació.pdf",
+    "PDF/ANNEXES/3001631_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "tall.pdf"
+   ],
+   "note": "Total 92 calculat per suma dels components impresos (72+20); no apareix imprès com a tal en aquest document — coincideix amb el patró conegut de l'informe de Rubí citat al skill.",
+   "components": [
+    {
+     "doc": "25.0794/PRESSU.msg",
+     "components": [
+      {
+       "value": "72",
+       "label": "vivenda",
+       "quote": "72 m2"
+      },
+      {
+       "value": "20",
+       "label": "porxada",
+       "quote": "20 de Porchada"
+      }
+     ],
+     "total": "92"
+    }
+   ],
+   "etiqueta_font": "plànol de fonamentació del fabricant (Viviendas Modulares), adjunt al correu"
+  }
+ },
+ "conflicts": [
+  {
+   "path": "fields.lab_sample_id",
+   "why": "dues fonts d'autoritat A discrepen",
+   "clusters": [
+    {
+     "value": "SPT1 (P3)",
+     "fonts": [
+      "comanda laboratori_3001631_RUBI.xls Hoja1!C35",
+      "4703-GTL-25 Rubí.pdf p.2 camp 'Mostra:' (bloc DADES INICIALS); p.7 'Referència del client'",
+      "PDF/ANNEXES/3001631_DPSH.pdf p.3 taula, columna MOSTRA, files -1/-1,2/-1,4"
+     ]
+    },
+    {
+     "value": "P3",
+     "fonts": [
+      "3001631 - PENETROS.pdf p.3 'Assaig de referència'"
+     ]
+    }
+   ]
+  }
+ ],
+ "extra_concepts": {
+  "contact_phone": [
+   {
+    "value": "TEL.",
+    "font": "25.0794/DADES PER ANAR A CAMP_v1.xlsx fitxa!F8",
+    "quote": "TEL.",
+    "doc": "25.0794/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "value": "PENETROS I MOSTRA",
+    "font": "25.0794/DADES PER ANAR A CAMP_v1.xlsx fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "doc": "25.0794/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "value": "SI",
+    "font": "25.0794/DADES PER ANAR A CAMP_v1.xlsx fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "doc": "25.0794/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "value": "TPS ERUGA",
+    "font": "25.0794/DADES PER ANAR A CAMP_v1.xlsx fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "doc": "25.0794/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "tecnic": [
+   {
+    "value": "Eva Vázquez Marcet",
+    "font": "25.0794/PLAN_COST_RUBI.xlsx 'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "doc": "25.0794/PLAN_COST_RUBI.xlsx"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "value": "TPS",
+    "font": "25.0794/PLAN_COST_RUBI.xlsx OFERTA!G3",
+    "quote": "TPS",
+    "note": "plantilla: mai senyal fort",
+    "doc": "25.0794/PLAN_COST_RUBI.xlsx"
+   },
+   {
+    "value": "SOIL-ASSAIG",
+    "font": "25.0794/PLAN_COST_RUBI.xlsx OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "note": "plantilla: mai senyal fort",
+    "doc": "25.0794/PLAN_COST_RUBI.xlsx"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "value": "25·0794",
+    "font": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf p.1 peu / capçaleres",
+    "quote": "25·0794",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "value": "Rebuig a -4,55 m",
+    "font": "ANNEXES/3001631_DPSH.xls P-1!B80",
+    "quote": "Rebuig a -4,55 m",
+    "doc": "ANNEXES/3001631_DPSH.xls"
+   },
+   {
+    "value": "Rebuig a - 3,58 m",
+    "font": "ANNEXES/3001631_DPSH.xls P-2!B80",
+    "quote": "Rebuig a - 3,58 m",
+    "doc": "ANNEXES/3001631_DPSH.xls"
+   },
+   {
+    "value": "Rebuig a - 3,13 m",
+    "font": "ANNEXES/3001631_DPSH.xls P-3!B80",
+    "quote": "Rebuig a - 3,13 m",
+    "doc": "ANNEXES/3001631_DPSH.xls"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "value": "2025-11-18",
+    "font": "comanda laboratori_3001631_RUBI.xls Hoja1!AH23",
+    "quote": "45979.0",
+    "doc": "comanda laboratori_3001631_RUBI.xls"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "value": "NOMÉS SULFATS",
+    "font": "comanda laboratori_3001631_RUBI.xls Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "doc": "comanda laboratori_3001631_RUBI.xls"
+   }
+  ],
+  "superficie_construida": [
+   {
+    "value": "72 m² (vivenda) + 20 m² (porxada)",
+    "font": "25.0794/PRESSU.msg adjunt img_20251104_wa0016.jpg — caixetí del plànol de fonamentació",
+    "quote": "PLANO DE CIMENTACION MODELO MEDITERRANEO ESCALA 1: 0'50 - 72 m2 + 20 de Porchada",
+    "note": "Sumands impresos al plànol del fabricant; el total (92) NO hi és imprès — coincideix amb el patró conegut de l'Eva a Rubí ('72+20 porxada' → informe '92', Pas 3b del skill). Confirmar amb pressupost/informe.",
+    "doc": "25.0794/PRESSU.msg"
+   }
+  ],
+  "street_address_struct": [
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Miranda",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Rubí",
+     "municipi_alternatives": []
+    },
+    "font": "4703-GTL-25 Rubí.pdf p.1/p.2/p.8 camp 'Situació:' / 'Obra / Projecte:'",
+    "quote": "Rubí. Carrer Miranda.",
+    "note": "Cap portal imprès en aquest document.",
+    "doc": "4703-GTL-25 Rubí.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Miranda",
+     "nom_via_alternatives": [],
+     "portals": [
+      "39"
+     ],
+     "municipi": "Rubí",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/3001631_plànol de situació.pdf capçalera del títol + rètol al plànol principal",
+    "quote": "AL CARRERDE LA MIRANDA Nº 39, PARC. 6-105 B, RUBÍ (BARCELONA)",
+    "note": "concepte extra (Pas 3), no és cap dels 15 camps",
+    "doc": "PDF/ANNEXES/3001631_plànol de situació.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Miranda",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Rubí",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/LAB-SIG.pdf p.1/p.2/p.8 camp 'Situació:' / 'Obra / Projecte:'",
+    "quote": "Rubí. Carrer Miranda.",
+    "note": "Duplicat del GTL ja llegit; cap portal imprès en aquest document.",
+    "doc": "PDF/ANNEXES/LAB-SIG.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "de la Miranda",
+     "nom_via_alternatives": [
+      "Miranda"
+     ],
+     "portals": [
+      "39"
+     ],
+     "municipi": "Rubí",
+     "municipi_alternatives": [
+      "RUBÍ"
+     ]
+    },
+    "font": "tall.pdf bloc TÍTOL DEL PROJECTE (peu)",
+    "quote": "AL CARRERDE LA MIRANDA Nº 39, ... RUBÍ (BARCELONA)",
+    "note": "extra concept per Cadastre; typo 'CARRERDE' normalitzat a 'carrer'",
+    "doc": "tall.pdf"
+   }
+  ]
+ },
+ "sources_read": [
+  "_g3_templates.json",
+  "25.0794/PRESSU.msg",
+  "25.0794/RE_ PRESSU.msg",
+  "3001631 - PENETROS.pdf",
+  "4703-GTL-25 Rubí.pdf",
+  "ACCEPTACIO/WhatsApp Image 2025-11-13 at 11.55.57.jpeg",
+  "ANNEXES/3001631_DPSH.xls",
+  "PDF/ANNEXES/3001631_DPSH.pdf",
+  "PDF/ANNEXES/3001631_fotografies.pdf",
+  "PDF/ANNEXES/3001631_plànol de situació.pdf",
+  "PDF/ANNEXES/3001631_tall de correlació.pdf",
+  "PDF/ANNEXES/LAB-SIG.pdf",
+  "tall.pdf"
+ ],
+ "notes_estructurals": [
+  "_decisions.json generat per consolidacio Python-first (Fase 12, python-1.0): 12 documents llegits, 5 plantilles G3, 1 conflictes A-vs-A"
+ ]
+}

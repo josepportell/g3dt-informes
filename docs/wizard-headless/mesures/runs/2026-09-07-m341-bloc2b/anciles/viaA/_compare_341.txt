@@ -1,0 +1,45 @@
+# anciles/viaA — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 7 | 1 | 7 | 5 | 53 % |
+| calc | 4 | 0 | 6 | 0 | 40 % |
+| narr | 3 | 4 | 7 | 2 | 50 % |
+| resta | 0 | 2 | 1 | 1 | 67 % |
+
+- [narr] `access_street` **MISMATCH** gen=«calle situada al norte» ↔ eva=«El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del ca»
+- [narr] `adjacent_east_fmt` **CLOSE** gen=«Y finalmente, por la parte este, con Carretera.» ↔ eva=«Por la parte noreste con un campo de conreo herbáceo.»
+- [narr] `adjacent_intro` **CLOSE** gen=«La parcela objeto de estudio se sitúa en el municipio de ANCILES, tiene una morfología cas» ↔ eva=«La parcela objeto de estudio se sitúa en el norte del municipio de Anciles, tiene una morf»
+- [narr] `adjacent_north_fmt` **MISMATCH** gen=«Por la parte norte, con la Calle General Ferraz.» ↔ eva=«Por la parte noroeste con un jardín.»
+- [narr] `adjacent_south_fmt` **MISMATCH** gen=«Por la parte sur y oeste, con parcelas sin edificaciones.» ↔ eva=«Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante.»
+- [narr] `adjacent_west_fmt` **MISMATCH** gen=«Por la parte sur y oeste, con parcelas sin edificaciones.» ↔ eva=«Y finalmente por el sureste, con una zona yerma con vegetación.»
+- [A] `architect_name_upper` **MISMATCH** gen=«ALBA BARRAU, NºCOL. 6.408 / MIRIAM CASTEL, NºCOL. 6.703» ↔ eva=«ALBA MARIA BARRAU CASTÁN»
+- [narr] `building_structure_desc` **MISMATCH** gen=«con nivel de sótano, y por tanto se prevé una excavación general hasta la cota de cimentac» ↔ eva=«un semisótano en dos de las siete viviendas previstas»
+- [A] `client` **MISMATCH** gen=«SRA. MARIA ALBA BARRAU CASTÁN» ↔ eva=«SRA. ALBA MARIA BARRAU CASTÁN»
+- [narr] `conclusions_aggressivity_statement` **MISMATCH** gen=«No se han realizado ensayos de laboratorio para determinar la agresividad de los materiale» ↔ eva=«A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito »
+- [narr] `conclusions_water_statement` **CLOSE** gen=«En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detect» ↔ eva=«Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se dete»
+- [A] `cota_referencia` **NO_DATA** gen=«None» ↔ eva=«+1106.40»
+- [A] `data_camp_text` **MISMATCH** gen=«19 de febrer de 2026» ↔ eva=«El día 19 de febrero de 2026, se visitó la obra para:»
+- [resta] `data_signatura_text` **MISMATCH** gen=«16 de març de 2026» ↔ eva=«Els Omells de Na Gaia, 16 de marzo de 2026»
+- [narr] `empentes_paragraph` **NO_DATA** gen=«None» ↔ eva=«Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá»
+- [A] `expedient` **CLOSE** gen=«4001679» ↔ eva=«Expediente Núm.: 4001679_v0»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar »
+- [calc] `geomech_E` **MISMATCH** gen=«450» ↔ eva=«>350»
+- [A] `lab_depth` **NO_DATA** gen=«None» ↔ eva=«Profundidad: -2.80 a -3.00 m»
+- [resta] `lab_field_description` **CLOSE** gen=«laboratori d'assaigs per al control de qualitat de l'edificació» ↔ eva=«laboratorio de ensayos para el control de calidad de la edificación»
+- [A] `lab_location` **NO_DATA** gen=«None» ↔ eva=«Punto:  S-2»
+- [A] `lab_sample_id` **NO_DATA** gen=«None» ↔ eva=«Muestra: MA-1»
+- [resta] `lab_testing_description` **CLOSE** gen=«laboratori d'assaigs per al control de qualitat de l'edificació» ↔ eva=«laboratorio de ensayos para el control de calidad de la edificación»
+- [narr] `lab_tests_text` **NO_DATA** gen=«None» ↔ eva=«Determinación del contenido en ión sulfato en suelos UNE 83963 / 08»
+- [A] `municipality` **MISMATCH** gen=«ANCILES» ↔ eva=«En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración»
+- [A] `num_dpsh_tests` **MISMATCH** gen=«6» ↔ eva=«2 ensayos SPT con recuperación de muestra (ver registro de los ensayos mecánicos).»
+- [A] `plantes` **MISMATCH** gen=«2Ps+Pb+1Pp» ↔ eva=«C-1»
+- [calc] `qa_value` **MISMATCH** gen=«3.50» ↔ eva=«2.0 Kg/cm2 con un factor de seguridad incluido de F=3»
+- [narr] `radon_sentence` **CLOSE** gen=«La parcela concreta de estudio se localiza en el término municipal de ANCILES y, según la » ↔ eva=«La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y»
+- [calc] `seismic_ab_text` **MISMATCH** gen=«0,04» ↔ eva=«AB = 0.05 g (siento g el valor de la gravedad)»
+- [calc] `settlement` **MISMATCH** gen=«2.60» ↔ eva=«Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a »
+- [narr] `site_description` **MISMATCH** gen=«La parcela se localiza sin construcciones ni pavimentaciones.» ↔ eva=«El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del ca»
+- [A] `spt_lithology` **NO_DATA** gen=«None» ↔ eva=«Arcilla arenosa con gravitas»
+- [calc] `sulfate_level_name` **MISMATCH** gen=«1er nivell» ↔ eva=«2do nivel»
+- [A] `superficie_parcela` **MISMATCH** gen=«1.655,01» ↔ eva=«T-1»
+- [calc] `table_dpsh_range` **MISMATCH** gen=«3, 4 i 5» ↔ eva=«Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados.»

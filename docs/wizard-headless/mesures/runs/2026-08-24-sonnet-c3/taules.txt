@@ -1,0 +1,12 @@
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+ALERTA   sondeig_tests[0].spt_ma prod puja a segur ({'n_spt': 1, 'n_tp': 0, 'n_ma': 0}); or candidats
+-- spt_ma_tests: or 1 files / prod 2 files
+ABSENT   spt_ma_tests[0].id (or=candidats)
+ABSENT   spt_ma_tests[0].punt (or=segur)
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 1 files · alineades per clau
+ABSENT   soil_levels[0].de (or=segur)
+ABSENT   soil_levels[0].a (or=segur)
+ERR      soil_levels[1].de segur discrepant: or='-0,50' prod='0.00'
+TOTALS: {'OK': 22, 'ALERTA': 1, 'ABSENT': 4, 'CAUTELA': 1, 'ERR': 1}

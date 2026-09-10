@@ -1,0 +1,86 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_fotografías.pdf",
+ "source_md5": "ddafe260fe7d152952065122381d15fa",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Reportatge fotogràfic (2 pàgines, 4 fotos) de l'emplaçament de la màquina de penetració dinàmica durant els assaigs DPSH P-1, P-2, P-3 i P-4.",
+ "issuer": "G3 (logo a la capçalera; format intern d'annex fotogràfic)",
+ "date": null,
+ "pages_or_sheets": "2 pàgines, 4 fotografies (F-1 a F-4)",
+ "context": {
+  "who_made_it": "G3 / Eva, com a annex fotogràfic estàndard que acompanya l'informe (mateix format vist a altres expedients: caixetí 'Reportaje fotográfico' + número d'expedient)",
+  "for_whom": "arxiu intern del projecte / annex de l'informe, no és un document de cara al client",
+  "why": "documentar visualment l'emplaçament de la màquina de DPSH durant la realització de cada assaig, com a suport de l'informe",
+  "expected_fields": [
+   "expedient (caixetí)",
+   "identificadors dels punts DPSH assajats (P-1..P-4)",
+   "context visual del terreny/emplaçament (mur de pedra, vegetació, edificacions properes)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Corrobora visualment el nombre de punts DPSH (P-1..P-4) que ja reporten l'Excel DPSH i/o la comanda de laboratori; no és una font independent d'aquest recompte (mateix esdeveniment de camp fotografiat), i pot no cobrir tots els punts si n'hi ha més enllà dels fotografiats. Cap altre camp del nivell A hi apareix.",
+  "authority_for": [
+   "expedient"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001679",
+   "location": "caixetí superior, cel·la dreta ('Reportaje fotográfico | 4001679'), totes dues pàgines",
+   "quote": "4001679",
+   "confidence": 0.85,
+   "note": "Document fotogràfic, no és font primària per a expedient (Pas 2), però el número és imprès i llegible sense ambigüitat a les dues pàgines."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "peu de foto p.1 ('Fotografía 1 y 2... DPSH P-1 y P-2') i p.2 ('Fotografía 3 y 4... DPSH P-3 y P-4')",
+   "quote": "Fotografía 1 y 2. Vista del emplazamiento de la máquina durante la realización del ensayo de penetración dinámica DPSH P-1 y P-2, respectivamente. / Fotografía 3 y 4. ... DPSH P-3 y P-4, respectivamente.",
+   "confidence": 0.4,
+   "note": "Corroboració visual només: confirma que existeixen (almenys) els punts P-1 a P-4, però no és font primària de recompte (Pas 3: Excel DPSH > albarà TPS > pressupost > fitxa) i podria no cobrir tots els punts assajats si n'hi ha més."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text de les 2 pàgines és brossa (producer Acrobat Distiller 15.0 / creator PScript5.dll, meta.text_ok=false ambdues) — origen FreeHand, com altres annexos de l'Eva. Llegit visualment a page-1.png i page-2.png (150 dpi); ambdues pàgines perfectament llegibles a resolució sencera, no ha calgut recórrer a les meitats (page-N-top/bottom.png) tot i que l'inventari les oferia. Cap metadada de data útil: creationDate/modDate del PDF (2026-03-16) és la data d'exportació del document, no la data de camp — no s'ha usat com a candidat de field_date."
+}

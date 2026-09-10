@@ -1,0 +1,221 @@
+{
+ "source": "/mnt/c/claude/g3dt/projectes/4001607 LINYOLA/4001607_informe.docx",
+ "tables": [
+  {
+   "type": "plantes",
+   "grid": [
+    [
+     "Nº de plantes per habitatge",
+     "Pb"
+    ],
+    [
+     "Superfície de la parcel·la segons informació aportada  (m2)",
+     "571"
+    ],
+    [
+     "Superfície construïda total (m2)",
+     "250.91"
+    ]
+   ]
+  },
+  {
+   "type": "cte_edificacio",
+   "grid": [
+    [
+     "Tipus d’edificació considerada:",
+     "C-0"
+    ],
+    [
+     "Tipus de sòl considerat :",
+     "T-1"
+    ]
+   ]
+  },
+  {
+   "type": "dpsh",
+   "grid": [
+    [
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH"
+    ],
+    [
+     "Punt",
+     "Cota d’inici (msnm*)",
+     "Profunditat assolida (m)",
+     "Rebuig",
+     "Humitat"
+    ],
+    [
+     "P-1",
+     "+245.0",
+     "-2.90",
+     "Si",
+     "No detectat"
+    ],
+    [
+     "P-2",
+     "+245.0",
+     "-2.15",
+     "Si",
+     "No detectat"
+    ],
+    [
+     "P-3",
+     "+245.0",
+     "-1.75",
+     "Si",
+     "No detectat"
+    ]
+   ]
+  },
+  {
+   "type": "spt_ma",
+   "grid": [
+    [
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA"
+    ],
+    [
+     "Nº assaig",
+     "Punt",
+     "Prof. Extracció (m)",
+     "N30",
+     "Litologia"
+    ],
+    [
+     "SPT-1",
+     "P-3",
+     "-1.00 a -1.15",
+     "R",
+     "Lutites"
+    ]
+   ]
+  },
+  {
+   "type": "mostra_lab",
+   "grid": [
+    [
+     "Mostra : SPT-1",
+     "Punt: P-3",
+     "Profunditat:  -1.00  a -1.15 m"
+    ],
+    [
+     "Assaigs realitzats",
+     "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008",
+     "Assaig de Límits d’Atterberg UNE 103103/94 – 104/93\nAssaig d’expansivitat Lambe UNE 103500/94\nAssaig de contingut en sulfats UNE 83963 : 2008"
+    ]
+   ]
+  },
+  {
+   "type": "soil_levels",
+   "grid": [
+    [
+     "1er nivell",
+     "Llims argilosos i sorrencs."
+    ],
+    [
+     "2on nivell",
+     "Lutites i sorrenques alterades, substrat."
+    ]
+   ]
+  },
+  {
+   "type": "permeabilitat",
+   "grid": [
+    [
+     "Nivell",
+     "K (m/s)",
+     "Tipus material"
+    ],
+    [
+     "1er nivell",
+     "10-3 – 10-5",
+     "Llims argilosos i sorrencs"
+    ],
+    [
+     "2on nivell",
+     "10-6 – 10-8",
+     "Lutites i sorrenques"
+    ]
+   ]
+  },
+  {
+   "type": "sulfats",
+   "grid": [
+    [
+     "Nivell",
+     "Contingut en sulfats \n(mg/kg SO4)",
+     "Acidesa Baumann-Gully (ml/kg)",
+     "Qualificació (*)"
+    ],
+    [
+     "2on nivell",
+     "0.0",
+     "--",
+     "No agressius"
+    ]
+   ]
+  },
+  {
+   "type": "sismica",
+   "grid": [
+    [
+     "Nivells",
+     "Tipus de terreny",
+     "Gruix (metres)",
+     "Coeficient C"
+    ],
+    [
+     "1",
+     "Tipus IV",
+     "1.60",
+     "2.0"
+    ],
+    [
+     "2",
+     "Tipus II",
+     "1.30*",
+     "1.3"
+    ]
+   ]
+  },
+  {
+   "type": "geotecnica",
+   "grid": [
+    [
+     "Nivell",
+     "Nb",
+     "N",
+     "Densitat(1)",
+     "Cohesió(2)",
+     "Angle de fregament intern (3)",
+     "E (4)"
+    ],
+    [
+     "1er nivell: Llims argilosos i sorrencs",
+     "13",
+     "--",
+     "1.90",
+     "0.05",
+     "28",
+     "100"
+    ],
+    [
+     "2on nivell: Lutites i sorrenques",
+     "31-R",
+     "R",
+     "2.20",
+     "1.0",
+     "30",
+     ">800"
+    ]
+   ]
+  }
+ ]
+}

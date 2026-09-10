@@ -1,0 +1,85 @@
+{
+ "source_path": "ANNEXES/4001612_DPSH.xls",
+ "source_md5": "93827593c45c5c2dd67a4fa9df9a9c2b",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Full Excel de transcripció dels assaigs de penetració dinàmica DPSH (colpeig cada 20 cm), un full per punt",
+ "issuer": "G3 / Eva (transcripció dels valors de camp)",
+ "date": null,
+ "pages_or_sheets": "2 fulls: P-1, P-2",
+ "context": {
+  "who_made_it": "Eva (G3), transcripció manual dels valors de camp DPSH (colpeig N20 cada 20 cm) al full de plantilla G3, un full per punt",
+  "for_whom": "ús intern de G3/Eva; base de la taula 'Penetròmetres dinàmics DPSH' de l'informe",
+  "why": "registrar el colpeig de camp per calcular el Colpeig NB i determinar la fondària de rebuig i el nombre de nivells travessats per cada punt DPSH",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "dpsh_tests[].profunditat_assolida",
+   "dpsh_tests[].rebuig",
+   "dpsh_tests[].nivell_freatic",
+   "num_soil_levels (senyal feble, per punt)"
+  ],
+  "not_expected": [
+   "expedient",
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "field_date",
+   "cota_referencia (absoluta)",
+   "cota_inici (absoluta)"
+  ],
+  "relation_to_others": "Transcripció digital dels fulls de camp manuscrits (PENETROS.pdf), no presents en aquesta lectura --only. L'annex `PDF/ANNEXES/{exp}_DPSH.pdf` (si existeix) portaria la 'Cota inici' absoluta per capçalera, que aquest Excel no dona.",
+  "authority_for": [
+   "num_dpsh_tests",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 2,
+   "location": "noms de full (Hoja1 sheet names)",
+   "quote": "P-1; P-2 (ambdós fulls amb colpeig real a la columna C, files 17-30)",
+   "confidence": 0.9,
+   "note": "2 fulls amb dades executades a la columna 'Colpeig DPSH' (P-1 fins fila 24, P-2 fins fila 30); no hi ha cap altre full ni cap indicació de previstos en aquest document."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "Full P-1, cel·la C79; Full P-2, cel·la C79",
+   "quote": "Nivell 1",
+   "confidence": 0.3,
+   "note": "La mateixa marca 'Nivell 1' apareix idèntica a P-1 i P-2, a la fila de peu (79), no lligada a cap fondària de transició. És un senyal per punt DPSH, feble: el nombre de nivells de l'informe el determina l'annex de sondeig o la llegenda del tall, que aquí no s'ha llegit."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,35",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full P-1, cel·la B80",
+    "quote": "Rebuig a la cota de  -1,35 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,45",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full P-2, cel·la B80",
+    "quote": "Rebuig a la cota de  -2,45 m"
+   }
+  ]
+ },
+ "not_present": [
+  "field_date: cap cel·la de data en aquest Excel (ni a P-1 ni a P-2)",
+  "cota_inici (dpsh_tests P-1/P-2): aquest Excel només dona profunditat relativa al punt 0 de l'assaig, no una cota absoluta; caldria l'annex PDF equivalent",
+  "expedient, client_name, street_address, municipality, architect_name, building_type: cap metadada de projecte en aquest Excel (confirmat: només graella de colpeig i peu de rebuig)"
+ ],
+ "reading_notes": "Pre-extracció Excel (sheet-0/sheet-1 .cells.txt + .colors.txt) sense error (preext.error=null). Columnes F ('N.F.') i G ('Nivells') porten color de FONT (#33CCCC a F) i de FONS (#FF8080 a G) UNIFORME a totes les files de dades de banda dos fulls, sense cap cel·la diferenciada — és bandeig de plantilla, no una marca real; comprovat amb formatting_info (colors.txt) a P-1 i P-2 → nivell_freatic = 'No detectat' amb aquesta comprovació feta. Fila 79 (C79='Nivell 1') i fila 80 (B80='Rebuig a la cota de...') són la zona de peu, fora de la graella de profunditats (files 17-77)."
+}

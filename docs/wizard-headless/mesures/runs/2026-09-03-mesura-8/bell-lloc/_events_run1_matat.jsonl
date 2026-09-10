@@ -1,0 +1,40 @@
+{"t": 30.2, "ev": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/bell-lloc/_preext", "n_docs": 19, "n_errors": 0, "elapsed_s": 23.741}
+{"t": 30.2, "ev": "lectura_inventari", "n_files": 214}
+{"t": 36.8, "ev": "templates_fields", "n_documents": 6}
+{"t": 36.8, "ev": "lectura_doc", "doc": "25.0647/A.01.pdf", "skipped_duplicate": true}
+{"t": 36.8, "ev": "lectura_inici", "n_claude": 18, "n_python": 7}
+{"t": 36.8, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001612_sondeig.pdf"}
+{"t": 36.8, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/DADES CLIENT.txt"}
+{"t": 149.3, "ev": "lectura_doc", "doc": "ACCEPTACIO/DADES CLIENT.txt", "cached": false, "attempt": 1}
+{"t": 149.4, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf"}
+{"t": 386.2, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001612_sondeig.pdf", "cached": false, "attempt": 1}
+{"t": 386.3, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001612_DPSH.pdf"}
+{"t": 463.2, "ev": "lectura_doc", "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf", "cached": false, "attempt": 1}
+{"t": 463.2, "ev": "lectura_doc_inici", "doc": "ANNEXES/4001612_DPSH.xls"}
+{"t": 615.4, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001612_DPSH.pdf", "cached": false, "attempt": 1}
+{"t": 615.4, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001612_tall de correlació.pdf"}
+{"t": 618.2, "ev": "lectura_doc", "doc": "ANNEXES/4001612_DPSH.xls", "cached": false, "attempt": 1}
+{"t": 618.2, "ev": "lectura_doc_inici", "doc": "tall.pdf"}
+{"t": 860.1, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001612_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"t": 860.1, "ev": "lectura_doc_inici", "doc": "4677-GTL-25 Bell-Lloc d'Urgell.pdf"}
+{"t": 951.9, "ev": "lectura_doc", "doc": "tall.pdf", "cached": false, "attempt": 1}
+{"t": 951.9, "ev": "lectura_doc_inici", "doc": "A.01 amb punts.pdf"}
+{"t": 1058.9, "ev": "lectura_doc", "doc": "4677-GTL-25 Bell-Lloc d'Urgell.pdf", "cached": false, "attempt": 1}
+{"t": 1058.9, "ev": "lectura_doc_inici", "doc": "A.01.pdf"}
+{"t": 1250.2, "ev": "lectura_doc_error", "doc": "A.01.pdf", "attempt": 1, "rc": 0, "timeout": false}
+{"t": 1276.2, "ev": "lectura_doc", "doc": "A.01 amb punts.pdf", "cached": false, "attempt": 1}
+{"t": 1276.2, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001612_fotografies.pdf"}
+{"t": 1395.6, "ev": "lectura_doc", "doc": "PDF/ANNEXES/4001612_fotografies.pdf", "cached": false, "attempt": 1}
+{"t": 1395.6, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/LAB-SIG.pdf"}
+{"t": 1453.2, "ev": "lectura_doc", "doc": "A.01.pdf", "cached": false, "attempt": 2}
+{"t": 1453.2, "ev": "lectura_doc_inici", "doc": "PENETROS.pdf"}
+{"t": 1571.2, "ev": "lectura_doc", "doc": "PDF/ANNEXES/LAB-SIG.pdf", "cached": false, "attempt": 1}
+{"t": 1571.2, "ev": "lectura_doc_inici", "doc": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg"}
+{"t": 1803.8, "ev": "lectura_doc", "doc": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg", "cached": false, "attempt": 1}
+{"t": 1803.8, "ev": "lectura_doc_inici", "doc": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg"}
+{"t": 1941.4, "ev": "lectura_doc", "doc": "PENETROS.pdf", "cached": false, "attempt": 1}
+{"t": 1941.4, "ev": "lectura_doc_inici", "doc": "PDF/ANNEXES/4001612_plànol de situació.pdf"}
+{"t": 1979.7, "ev": "lectura_doc", "doc": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg", "cached": false, "attempt": 1}
+{"t": 1979.7, "ev": "lectura_doc_inici", "doc": "pl. situaci.pdf"}
+{"t": 2093.6, "ev": "lectura_doc", "doc": "pl. situaci.pdf", "cached": false, "attempt": 1}
+{"t": 2093.6, "ev": "lectura_doc_inici", "doc": "SONDEIG.pdf"}

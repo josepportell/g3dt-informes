@@ -1,0 +1,80 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf",
+ "source_md5": "f3c6c2e8ceef2e0d20dcba361712d748",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol de planta baixa i secció (SECCIÓ B) de l'habitatge de CASA 2 (Tulipa), amb la parcel·la dividida en zona A (edificable, amb l'habitatge i piscina) i zona B, entre Carrer Tosca i Camí Antic de Sant Cugat",
+ "issuer": "arquitecte del projecte (despatx no identificat: full sense caixetí)",
+ "date": null,
+ "pages_or_sheets": "1 pàgina (planta baixa + secció B)",
+ "context": {
+  "who_made_it": "l'arquitecte del projecte per a CASA 2; full de treball sense caixetí (no hi consta despatx ni firma)",
+  "for_whom": "el client/promotor de CASA 2",
+  "why": "definir la implantació de l'habitatge dins la parcel·la (zones A edificable / B) i la secció topogràfica per al projecte executiu",
+  "expected_fields": [
+   "street_address (nom de carrer, sense portal)",
+   "num_floors (recompte visual a la secció)",
+   "cota_referencia (cota de planta baixa, possible coincidència amb la cota d'assaig)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type (etiqueta textual)",
+   "field_date",
+   "superficie_parcela (valor numèric imprès)",
+   "referencia_catastral",
+   "num_dpsh_tests",
+   "lab",
+   "cte",
+   "expedient"
+  ],
+  "relation_to_others": "mateix dibuix que 'PLANTA I SECCIO.dwg' del mateix subprojecte (CAD natiu vs exportació PDF; no és font independent addicional). Complementa (no repeteix) 'PDF/3001706_plànol de situació_CASA 2.pdf' i l'annex de sondeig ja llegit d'aquesta casa, que dona client_name='SR.ALEIX SUBIÀ FELIP' (sol·licitant) i municipality='Cerdanyola del Vallès'. La cota 201,25 de planta baixa d'aquest full coincideix numèricament amb 'Cota inici: 201,25' del punt P-2.1 de l'annex DPSH de CASA 2 (ja llegit), però és un concepte diferent (cota de disseny de planta, no cota d'assaig)",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tosca",
+   "location": "planta, marge esquerre, etiqueta de carrer vora el límit de parcel·la",
+   "quote": "Carrer Tosca",
+   "confidence": 0.4,
+   "note": "nom de carrer imprès al costat del límit de parcel·la, sense número de portal; corrobora (no és font independent nova de) 'C/TOSCA 16' ja trobat a l'annex DPSH d'aquesta mateixa casa"
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1",
+   "location": "secció B, alçat de l'edifici",
+   "quote": "[cap text imprès; recompte visual a la secció: planta baixa (cota 201,25) + planta pis + coberta plana]",
+   "confidence": 0.55,
+   "note": "derivat del programa/secció (Pas 3), sense etiqueta numèrica impresa al full; el full només dibuixa la planta baixa (no s'hi veu la distribució de la planta pis) — confirmar amb correu/taula de planejament si n'hi ha"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "201,25",
+   "location": "planta (etiqueta vora piscina) i secció B (cotes de planta baixa als dos costats de l'edifici)",
+   "quote": "201.25",
+   "confidence": 0.35,
+   "note": "cota de planta baixa (disseny arquitectònic), NO cota d'inici d'assaig; coincideix numèricament amb 'Cota inici: 201,25 msnm' del punt P-2.1 de l'annex DPSH de CASA 2, però discrepa de P-2.2 (202,85) — la parcel·la té pendent; candidat feble, mai segur des d'aquest full"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "field_date",
+  "superficie_parcela",
+  "referencia_catastral",
+  "num_dpsh_tests",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "expedient",
+  "utm_x_utm_y",
+  "num_soil_levels"
+ ],
+ "reading_notes": "Text de la pàgina buit (text_ok=false; Producer='Acrobat Distiller 10.1.16 (Windows)', Creator='PScript5.dll Version 5.2.2' — mateix patró que els annexos FreeHand: text brossa). Llegit visualment: page-1.png (150dpi) sencer + meitats esquerra/dreta; ampliat amb scripts/render_clip.py a 350dpi sobre la secció B (recompte de plantes) i a 200dpi sobre el marge dret (confirmar absència de caixetí a tot el full — no hi ha cap bloc de promotor/arquitecte/dimensions imprès en aquesta pàgina, a diferència d'un A.01 típic). Metadada PDF creationDate=2026-05-06 (no impresa al full, no usada com a field_date)."
+}

@@ -1,0 +1,154 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_corte de correlación.pdf",
+ "source_md5": "64c187d7046d3715441f67a283d33a0d",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geotècnica (perfil A-A') que travessa els 6 punts DPSH (P-1 a P-6) i els 2 sondeigs (S-1, S-2), amb llegenda de 2 nivells litològics, cotes de cimentació recomanada i de sòtano.",
+ "issuer": "G3",
+ "date": "Febrero 2026",
+ "pages_or_sheets": "1 pàgina (Página 1/1)",
+ "context": {
+  "who_made_it": "G3 (logotip al peu de pàgina), com a annex gràfic del seu propi informe geotècnic",
+  "for_whom": "annex intern de l'informe, no un document rebut d'un tercer extern al projecte",
+  "why": "correlacionar litologia i colpeigs (Nb/N) entre els 6 punts DPSH i els 2 sondeigs al llarg d'un tall A-A', per fixar la cota recomanada de cimentació i la cota de nivell de sòtano",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia dels nivells",
+   "expedient",
+   "num_dpsh_tests (corroboració)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte",
+   "superficie_parcela",
+   "num_floors",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "dades de laboratori"
+  ],
+  "relation_to_others": "Conversió llegible (Acrobat Distiller/PScript5, text brossa segons meta text_ok=false) del FH11 original 'ANEJOS/4001679_corte de correlación.FH11' (route: skip, no llegible directament). Document germà 'tall.pdf' a l'arrel del projecte (probable còpia Print To PDF, no llegit en aquesta crida, prioritat superior segons regla existent). Complementari a 'PDF_V0/ANEJOS/4001679_sondeos.pdf' (dades detallades per sondeig, no llegit en aquesta crida — autoritat primera per a litologia/nivells per davant de la llegenda del tall) i a 'ANEJOS/4001679_DPSH.xls' (Excel amb 6 fulls P-1..P-6, autoritat per a num_dpsh_tests).",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001679",
+   "location": "peu de pàgina, requadre 'Exp:'",
+   "quote": "Exp: 4001679",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "requadre LEYENDA (part superior)",
+   "quote": "1er nivel: Arcillas arenosas con puntualmente bolos. / 2do nivel: Bolos y gravas en matriz arenosa y arcillosa.",
+   "confidence": 0.75,
+   "note": "llegenda del tall (2a prioritat rere la 'Descripció dels materials' de l'annex de sondeig, no llegit en aquesta crida)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "6",
+   "location": "capçaleres del tall (P-1..P-6) + plànol de situació inserit (cercles P-1..P-6)",
+   "quote": "P-1, P-2, P-3, P-4, P-5, P-6",
+   "confidence": 0.7,
+   "note": "corroboració visual; l'Excel DPSH (6 fulls P-1..P-6) és l'autoritat"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Vivienda adosada (edifici de 7 habitatges adossats)",
+   "location": "requadre TÍTULO DEL PROYECTO",
+   "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.65,
+   "note": "surt d'una redacció de títol/caixetí, no d'un bloc OBRA etiquetat"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Gral Ferraz Nº20",
+   "location": "requadre TÍTULO DEL PROYECTO",
+   "quote": "EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.6,
+   "note": "mateixa reserva que building_type; 'Gral' és abreviatura de 'General'"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Benasque",
+   "location": "requadre TÍTULO DEL PROYECTO",
+   "quote": "DE ARCILES, BENASQUE",
+   "confidence": 0.6,
+   "note": "el mateix text esmenta 'ARCILES' com a nucli/barri — probable errata per 'Anciles' (topònim que dona nom a la carpeta del projecte '4001679 ANCILES'); Benasque és el terme municipal"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Gral Ferraz",
+    "nom_via_alternatives": [
+     "General Ferraz"
+    ],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Benasque",
+    "municipi_alternatives": []
+   },
+   "location": "requadre TÍTULO DEL PROYECTO",
+   "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.55,
+   "note": "no s'hi inclou 'Arciles/Anciles' com a alternativa de municipi perquè sembla un nucli/barri diferent, no una grafia variant de Benasque"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "litologia_candidats": [
+     "Arcillas arenosas con puntualmente bolos"
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "requadre LEYENDA",
+    "quote": "1er nivel: Arcillas arenosas con puntualmente bolos.",
+    "confidence": 0.7,
+    "note": "llegenda del tall; fondàries no impreses numèricament — el límit entre nivells és una línia gràfica que puja i baixa entre punts (aprox. 1103,4-1104,7 msnm segons l'escala de l'eix), no s'ha mesurat per píxels"
+   },
+   {
+    "nom": "2on nivell",
+    "litologia_candidats": [
+     "Bolos y gravas en matriz arenosa y arcillosa"
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "requadre LEYENDA",
+    "quote": "2do nivel: Bolos y gravas en matriz arenosa y arcillosa.",
+    "confidence": 0.7,
+    "note": "mateixa reserva de fondàries que el 1er nivell"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "field_date",
+  "cota_referencia (valor numèric imprès)",
+  "superficie_parcela",
+  "num_floors",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF brossa (Distiller/PScript5, text_ok=false) → lectura visual de page-1.png (150dpi) i clips amb render_clip.py a 300-400dpi (esquerra: S-2/P-5..P-2; dreta: P-3..S-1/P-6; requadre de títol; plànol de situació inserit; detall '-3.0 m Sótano'). El tall porta, per a cada punt, una seqüència de colpeigs Nb (DPSH) o N (SPT del sondeig) al llarg del perfil (S-2/P-5: N=6, Nb=38, Nb=R; P-1: Nb=6, Nb=33, Nb=R; P-2: Nb=6, Nb=44, Nb=R; P-3: Nb=4, Nb=13, [Nb=R fora del retall llegit]; P-4: Nb=5, Nb=32, Nb=17, Nb=R; S-1/P-6: N=6, Nb=14, Nb=26, Nb=R) i una marca de '-3.0 m Sótano' (vermell) prop de S-1/P-6 — dades gràfiques sense fondària numèrica impresa, no tabulades a 'tables' per no inventar profunditats; útils com a corroboració si es llegeix l'Excel DPSH o l'annex de sondeig. Plànol de situació inserit confirma la disposició dels 6 punts DPSH + 2 sondeigs sobre l'empremta de l'edifici (7 mòduls adossats visibles)."
+}

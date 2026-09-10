@@ -1,0 +1,173 @@
+{
+ "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+ "source_md5": "1a84de0feb9cd668835cd046300e7f2b",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Còpia signada digitalment de l'informe GTL de resultats d'assaigs de laboratori (contingut en ió sulfat) sobre la mostra SPT1 S1, arxivada per l'Eva a PDF/ANNEXES/",
+ "issuer": "TPS, Prospecció del Subsòl, SL (marca comercial Soilassaig) — signat per Pere Cervós Flinch (Cap d'àrea d'assaig GTL, geòleg col. 5326) i Pere Farrés i Bori (Director tècnic, geòleg col. 3481)",
+ "date": "26/11/2025 (data d'expedició); mostra extreta 06/10/2025, rebuda i oberta 10/10/2025",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl SL (marca comercial Soilassaig), laboratori subcontractat",
+  "for_whom": "G3 Desenvolupament Territorial SL (DADES DEL CLIENT / DADES DEL SOL·LICITANT), que ha encarregat l'assaig d'una mostra del projecte",
+  "why": "Certificar el resultat de l'assaig de contingut en ió sulfat sobre la mostra SPT1 S1 extreta al sondeig S1 del projecte, per a l'estudi geotècnic; còpia signada arxivada per l'Eva com a annex",
+  "expected_fields": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "municipality",
+   "street_address",
+   "expedient (dins Obra/Projecte)"
+  ],
+  "not_expected": [
+   "client_name real (G3 hi surt com a client del laboratori, no com a client de l'obra)",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "MATEIX informe (núm. 4677-GTL-25, mateixa mostra SPT1 S1, mateix contingut) que 'PDF de l'arrel del projecte 4677-GTL-25 Bell-Lloc d'Urgell.pdf' (md5 diferent: dcd7f1ac.. vs 1a84de0f..; mida diferent, 371383 vs 161613 bytes — aquesta és la versió arxivada/signada a ANNEXES, probablement re-exportada sense imatges). NO compta com a font independent d'aquell altre document per a cap camp: mateixa dada, mateix emissor, mateix client, mateixa mostra. El 'DADES DEL CLIENT'/'DADES DEL SOL·LICITANT' d'aquest document és G3, no el client real de l'obra (Pas 0, regla GTL: G3 mai és client).",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001612",
+   "location": "p.2 DADES INICIALS / Obra-Projecte",
+   "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet. 4001612",
+   "confidence": 0.7,
+   "note": "coincideix amb el nom de la carpeta del projecte; mateixa dada que l'altre GTL (no independent), font secundària (no plantilla G3 primària)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-Lloc d'Urgell",
+   "location": "p.1 MATERIAL A ASSAJAR / Situació; p.2 Obra-Projecte; p.5 Situació",
+   "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+   "confidence": 0.75,
+   "note": "forma oficial llarga; repetida a p.1, p.2 i p.5 (mateix contingut, no independent entre si, ni respecte l'altre GTL)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Antoni Bellet",
+   "location": "p.1 MATERIAL A ASSAJAR / Situació; p.2 Obra-Projecte",
+   "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+   "confidence": 0.65,
+   "note": "sense número de portal imprès"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Antoni Bellet",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Bell-Lloc d'Urgell",
+    "municipi_alternatives": []
+   },
+   "location": "p.1/p.2/p.5 Situació / Obra-Projecte",
+   "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+   "confidence": 0.65,
+   "note": "cap portal imprès en aquest document"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "06/10/2025",
+   "location": "p.2 DADES INICIALS / Data extracció",
+   "quote": "Data extracció: 06/10/2025",
+   "confidence": 0.3,
+   "note": "dia d'extracció de la mostra SPT1 S1 (sondeig), no necessàriament el primer dia de camp — candidat secundari, mai el principal (regla Pas 3: GTL dona el dia del sondeig)"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (NIF B64803075)",
+   "location": "marge esquerre vertical i peu, totes les pàgines",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.9,
+   "note": "emissor del GTL (banda amb registre mercantil) — autoritat A per aquest camp"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 S1",
+   "location": "p.2 DADES INICIALS / Mostra",
+   "quote": "Mostra: SPT1 S1",
+   "confidence": 0.6,
+   "note": "etiqueta del GTL; l'annex de l'Eva té prioritat sobre el GTL per a l'etiqueta (Pas 3) — pendent de creuar"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,6",
+   "location": "p.2 DADES INICIALS / Cota d'extracció (m)",
+   "quote": "Cota d'extracció (m): 1,0 - 1,6",
+   "confidence": 0.85,
+   "note": "el GTL mana per a la profunditat (Pas 3)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "p.2 DADES INICIALS / Mostra (SPT1 S1)",
+   "quote": "Mostra: SPT1 S1",
+   "confidence": 0.6,
+   "note": "punt d'assaig derivat de l'etiqueta de la mostra (sondeig S1)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL (descartat)",
+   "location": "p.1/p.5 DADES DEL CLIENT; p.2 DADES DEL SOL·LICITANT",
+   "quote": "DADES DEL CLIENT: ... Nom: G3 Desenvolupament Territorial, SL",
+   "confidence": 0.0,
+   "note": "G3 és el client del laboratori (qui encarrega l'assaig), no el client de l'obra — descartat per la regla 'G3 mai és client' (Pas 3)"
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1 S1",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,6",
+    "litologia": "Grava amb matriu sorrenca",
+    "n30": null,
+    "location": "p.2 DESCRIPCIÓ DEL MATERIAL",
+    "quote": "Grava amb matriu sorrenca",
+    "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal; mateixa dada que l'altre GTL"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": null,
+    "litologia": "Grava amb matriu sorrenca",
+    "de": "1,0",
+    "a": "1,6",
+    "mostra_del_nivell": true,
+    "location": "p.2 DESCRIPCIÓ DEL MATERIAL",
+    "quote": "Grava amb matriu sorrenca",
+    "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name (real)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text de p.1/p.2/p.5 extret amb etiquetes i valors intercalats fora d'ordre visual (columnes de formulari, kind=pdf, text_ok totes les pàgines); s'han renderitzat page-1.png, page-2.png i page-5.png per confirmar l'aparellament etiqueta-valor correcte (en particular Data extracció/recepció/obertura). P.3 és el resultat numèric (sulfat 89,8 mg/kg, massa 25,0 g, operador PC). P.4 és una taula resum de tots els assaigs possibles del laboratori (només sulfat omplert) — sense dades noves de nivell A. P.5 és una pàgina de signatures amb el mateix contingut de p.1 més les firmes digitals. Document sencer: mateix informe (4677-GTL-25) que l'altre GTL a l'arrel del projecte — contingut idèntic, no font independent."
+}

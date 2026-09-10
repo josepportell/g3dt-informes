@@ -1,0 +1,79 @@
+{
+ "source_path": "PDF/ANNEXES/4001612_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe imprès des de l'Excel (Distiller), una pàgina per punt amb capçalera de cota/obra/data",
+ "issuer": "G3 (usuari 'Loli' segons metadades PDF)",
+ "date": "PDF creat 2025-10-27; DATA de camp a capçalera: 01/10/2025",
+ "pages_or_sheets": "2 pàgines (P-1, P-2)",
+ "context": {
+  "who_made_it": "G3 imprimeix l'Excel DPSH amb capçalera d'annex",
+  "for_whom": "annex de l'informe",
+  "why": "presentar el colpeig amb la cota d'inici i la gràfica",
+  "expected_fields": [
+   "dpsh_tests.cota_inici per pàgina",
+   "field_date",
+   "expedient",
+   "municipi (forma G3)"
+  ],
+  "not_expected": [
+   "client",
+   "arquitecte",
+   "nivells de sòl"
+  ],
+  "relation_to_others": "imprès de ANNEXES/4001612_DPSH.xls (mateixos valors); NO és font independent de l'Excel per al colpeig",
+  "authority_for": [
+   "dpsh_tests.cota_inici",
+   "field_date (candidat)",
+   "cota_referencia"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "+199.50 msnm",
+   "location": "capçalera p.1 i p.2",
+   "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer).",
+   "confidence": 0.9,
+   "note": "mateixa cota als dos punts; origen ICGC -0,15 carrer"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "01/10/2025",
+   "location": "capçalera p.1 i p.2",
+   "quote": "DATA: 01/10/2025",
+   "confidence": 0.9,
+   "note": "coincideix amb noms de fotos WhatsApp 2025-10-01"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+199.50 msnm",
+    "profunditat_assolida": "-1,35 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.1 capçalera + peu",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1        Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer).",
+    "rule": "Cota inici de la capçalera de CADA pàgina de l'annex DPSH; aquí única i absoluta, val per al punt."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+199.50 msnm",
+    "profunditat_assolida": "-2,45 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "p.2 capçalera + peu",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-2        Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0.15 carrer)",
+    "rule": "Mateixa cota que P-1; cap cota per punt diferenciada."
+   }
+  ],
+  "__nota": "Peu 'Rebuig a la cota de -1,35/-2,45 m' idèntic a l'Excel (mateix origen). p.2 POBLACIÓ: BELL-LLOCH (grafia manuscrita arrossegada)."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "soil_levels"
+ ],
+ "reading_notes": "Text net (imprès des d'Excel via Distiller, no FreeHand). Capçalera al final del flux de text de cada pàgina."
+}

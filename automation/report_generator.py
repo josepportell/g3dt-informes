@@ -36,6 +36,7 @@ import sys
 from .formatting import format_floor_notation
 from .project_extractor import ProjectExtractor
 from .report_data import ReportData, build_report_data, to_dict as report_data_to_dict
+from .spt_n_column import NO_SPT, assign_spt_n30
 from .terzaghi_calculator import TerzaghiCalculator, FootingShape
 from .vision_normalizer import load_dpsh_json, load_sondeig_json
 from .sections import (
@@ -82,6 +83,19 @@ def _shorten_material_desc(desc: str) -> str:
     return desc
 
 
+def _level_material(level) -> str:
+    """Text de material d'un nivell per a una cel·la de taula.
+
+    Fase 8b: quan la descripcio ve de la lectura (via A) ja es la redaccio que
+    Eva ha triat entre els candidats — hi va LITERAL. Nomes s'escurça la
+    descripcio automatica derivada del sondeig/DPSH.
+    """
+    desc = getattr(level, 'description', '') or ''
+    if getattr(level, 'description_verbatim', False):
+        return desc
+    return _shorten_material_desc(desc)
+
+
 @dataclass
 class ContextPreviewResult:
     """Result of a dry-run context build (no template rendering)."""
@@ -97,6 +111,80 @@ class GenerationResult:
     output_path: str | None
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+
+
+def insitu_table_range(has_sondeig: bool, first: int = 3, has_spt_table: bool = True, lang: str = 'ca') -> tuple[str, int]:
+    """(«3 i 4» / «3, 4 i 5», última taula) del bloc d'assaigs in situ: DPSH + sondeig (si n'hi ha) + SPT/MA.
+
+    L'Eva numera TAULES (7/7 signats): «Taula 3 i 4» sense sondeig, «Taula 3, 4 i 5» amb sondeig. `lang='es'`
+    → «3 y 4». Compartit pel generador (`_build_numbering_context`) i el wizard (`_compute_narrative_prefills`).
+    """
+    n = 1 + (1 if has_sondeig else 0) + (1 if has_spt_table else 0)
+    nums = [str(first + i) for i in range(n)]
+    conj = 'y' if lang == 'es' else 'i'
+    text = nums[0] if n == 1 else f"{', '.join(nums[:-1])} {conj} {nums[-1]}"
+    return text, first + n - 1
+
+
+
+def _is_image(v: Any) -> bool:
+    """Un `InlineImage` viu (o un camí) compta; el buit i el text «[Imatge pendent]» no."""
+    if v is None:
+        return False
+    if isinstance(v, str):
+        return bool(v.strip()) and 'pendent' not in v.lower()
+    return True
+
+
+def figure_numbers(n_situacio: int = 1, n_projecte: int = 0, has_assaigs: bool = True) -> dict[str, Any]:
+    """Peça 7a (2026-09-08, D11 del pas 2): numeració de les figures PER PRESÈNCIA, en l'ordre dels signats.
+
+    Ordre: situació (1 o 2: Bell-lloc en té dues) → figures del projecte (0-2, a l'1.1) → assaigs (0-1, al 2.2, on la
+    posen 5 dels 6 signats que en tenen) → cullera SPT → mapa geològic → tall de correlació. Els 7 signats: 2/2/3/3/2/3/4
+    figures abans de la cullera. Linyola posa la del projecte DESPRÉS de la d'assaigs (totes dues a l'1.1): els seus
+    dos números queden creuats i s'accepta (1 de 7). Les ranures que no hi són donen '' (el bloc de la plantilla no
+    s'imprimeix). Els noms antics (`fig_cadastre_num`, `fig_main_plan_num`, `fig_location_num`, `fig_building_num`)
+    queden com a àlies.
+    """
+    n_situacio = max(1, min(2, int(n_situacio or 1)))
+    n_projecte = max(0, min(2, int(n_projecte or 0)))
+    out: dict[str, Any] = {}
+    n = 1
+    out['fig_situacio_num'] = n
+    if n_situacio == 2:
+        n += 1
+        out['fig_situacio_2_num'] = n
+    else:
+        out['fig_situacio_2_num'] = ''
+    for i in (1, 2):
+        if i <= n_projecte:
+            n += 1
+            out[f'fig_projecte_{i}_num'] = n
+        else:
+            out[f'fig_projecte_{i}_num'] = ''
+    if has_assaigs:
+        n += 1
+        out['fig_assaigs_num'] = n
+    else:
+        out['fig_assaigs_num'] = ''
+    n += 1
+    out['fig_spt_cullera_num'] = n
+    n += 1
+    out['fig_geological_num'] = n
+    n += 1
+    out['fig_correlation_num'] = n
+    out['fig_cadastre_num'] = out['fig_location_num'] = out['fig_situacio_num']
+    out['fig_main_plan_num'] = out['fig_building_num'] = out['fig_assaigs_num'] or out['fig_projecte_1_num']
+    return out
+
+
+def figure_numbers_from_context(context: dict[str, Any]) -> dict[str, Any]:
+    """La numeració que toca a les imatges que el context porta de debò (`ImageManager.build_context`)."""
+    return figure_numbers(
+        n_situacio=2 if _is_image(context.get('fig_situacio_image_2')) else 1,
+        n_projecte=sum(1 for i in (1, 2) if _is_image(context.get(f'fig_projecte_image_{i}'))),
+        has_assaigs=_is_image(context.get('fig_assaigs_image')),
+    )
 
 
 class ReportGenerator:
@@ -345,6 +433,23 @@ class ReportGenerator:
             except Exception as e:
                 self.warnings.append(f"Could not auto-fill from sondeig_extracted.json: {e}")
 
+            # P5 (2026-09-07): sense sondeig, les capes surten de la taula `soil_levels` LLEGIDA (tall de
+            # correlació, via A), no del segmentador DPSH. Es posen a `user_data` com les del sondeig perquè
+            # el càlcul inicial (Terzaghi-Peck del nivell portant) i les files de la taula geotècnica vegin la
+            # mateixa geometria que `build_report_data`. L'N20 per capa l'omple `build_report_data` (té el DPSH).
+            if not self.user_data.get('sondeig_layers'):
+                try:
+                    from .report_data import lectura_sondeig_layers
+                    lectura_layers = lectura_sondeig_layers(self.user_data, self.project_path, tables=self.lectura_tables)
+                    if lectura_layers:
+                        self.user_data['sondeig_layers'] = lectura_layers
+                        if 'num_soil_levels' not in self.user_data:
+                            self.user_data['num_soil_levels'] = len(lectura_layers)
+                        logger.info("P5: %d capes des de la lectura (soil_levels de/a): %s", len(lectura_layers),
+                                    [(l['depth_from_m'], l['depth_to_m']) for l in lectura_layers])
+                except Exception as e:
+                    self.warnings.append(f"P5: no s'han pogut derivar les capes de la lectura: {e}")
+
             # Auto-fill annotated refusal depths from dpsh_extracted.json
             # (handwritten "R:" annotation is more accurate than Excel last-row depth)
             try:
@@ -386,6 +491,18 @@ class ReportGenerator:
                             abs(test.refusal_depth_annotated),
                         )
 
+            # P5: la geometria que ha usat el càlcul (sondeig, lectura o segmentador) també per a Terzaghi-Peck
+            # i les files de la taula geotècnica. Abans, sense `sondeig_layers` a `user_data`, el Qa imprès
+            # sortia amb l'N20 GLOBAL (limitació coneguda del DECISION-LOG 2026-09-06 (vespre)): Anciles amb
+            # pous a 2,9 usava Nb 17,6 (global) en lloc dels 26,3 de les graves portants.
+            if not self.user_data.get('sondeig_layers') and getattr(self.report_data, 'sondeig_layers_used', None):
+                self.user_data['sondeig_layers'] = list(self.report_data.sondeig_layers_used)
+
+            # P5: gruix «fins a la fondària investigada» amb la fondària de rebuig IMPRESA en aquest informe
+            # (files DPSH llegides «-1.69»; si no, l'anotació «R:» del full de camp; l'Excel arrodoneix al tram
+            # de 0,20 → 1,80): Alcoletge 1,69 − 1,40 = 0,29* com el signat.
+            self._refresh_open_thickness()
+
             # Calculate Terzaghi AFTER build_report_data (needs correct cohesion for rock cap)
             if self.report_data.geotechnical_params:
                 try:
@@ -405,6 +522,7 @@ class ReportGenerator:
                     if self.report_data.dpsh and sondeig_layers:
                         avg_n20 = _bearing_stratum_n20(
                             self.report_data.dpsh, sondeig_layers, soil_types_list,
+                            foundation_depth=float(Df) if Df else 0.8,
                         )
                     else:
                         avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
@@ -427,11 +545,128 @@ class ReportGenerator:
                 except Exception as e:
                     self.warnings.append(f"Terzaghi calculation failed: {e}")
 
+            # Fase 8b: litologia llegida (i triada per Eva) -> descripcio dels
+            # nivells. Es fa DESPRES dels calculs a proposit: el tipus de sol i
+            # els parametres ja estan decidits sobre `sondeig_layers`; aqui nomes
+            # canvia el TEXT que veura Eva a les taules i a la narrativa.
+            self._apply_lectura_soil_levels()
+
             return self.report_data
 
         except Exception as e:
             self.errors.append(f"Error building report data: {e}")
             return None
+
+    # === Fase 8b: taules llegides (via A) ===
+
+    @property
+    def lectura_tables(self) -> dict:
+        """Files de taula llegides per la via A, llestes per al `.docx`.
+
+        Ordre de preferencia:
+          1. `user_data['lectura_tables']` — el que Eva va desar al wizard
+             (les seves tries ja aplicades). Congelat: un canvi posterior de
+             `_decisions.json` no li mou l'informe sota els peus.
+          2. `validation/lectura/_decisions.json` del projecte — perque un
+             informe generat sense passar pel wizard (CLI, harness) tambe
+             surti amb les taules llegides.
+
+        A la via B cap de les dues existeix i retorna `{}`: comportament
+        identic al d'avui.
+        """
+        cached = getattr(self, '_lectura_tables_cache', None)
+        if cached is not None:
+            return cached
+        tables = self.user_data.get('lectura_tables')
+        if not isinstance(tables, dict) or not tables:
+            try:
+                from .lectura.tables_report import load_project_tables
+                tables = load_project_tables(
+                    self.project_path, self.user_data.get('lectura_selections'),
+                )
+            except Exception as e:  # pragma: no cover - defensiu
+                self.warnings.append(f"Could not load lectura tables: {e}")
+                tables = {}
+        self._lectura_tables_cache = tables if isinstance(tables, dict) else {}
+        return self._lectura_tables_cache
+
+    def _apply_lectura_tables(self, context: dict) -> None:
+        """Fase 8b — bolca les taules llegides al context de la plantilla.
+
+        Cada bloc es substitueix sencer i nomes si la lectura en te files;
+        els blocs que la lectura no ha trobat es queden com estaven (via B).
+        `superficie_construida` i la capçalera de la mostra de laboratori hi
+        van tambe: son camps que el wizard NO te com a input i que, sense
+        aquest pont, no arribarien mai a l'informe.
+        """
+        tables = self.lectura_tables
+        if not tables:
+            return
+        applied = []
+        for key in ('dpsh_tests', 'sondeig_tests', 'spt_ma_tests'):
+            rows = tables.get(key)
+            if rows:
+                context[key] = rows
+                applied.append(f"{key}={len(rows)}")
+        spt_rows = tables.get('spt_ma_tests') or []
+        if spt_rows:
+            first = spt_rows[0]
+            from .formatting import format_spt_id
+            context['spt_test_id'] = format_spt_id(first.get('test_id', ''))
+            context['spt_location'] = first.get('location', '')
+            context['spt_depth_range'] = first.get('depth_range', '')
+            context['spt_n30'] = first.get('n30', '')
+            context['spt_lithology'] = first.get('lithology', '')
+        superficie = tables.get('superficie_construida')
+        if superficie and not context.get('superficie_construida'):
+            from .formatting import format_area
+            context['superficie_construida'] = format_area(superficie)
+            applied.append('superficie_construida')
+        lab = tables.get('lab') or {}
+        for ctx_key, lab_key in (
+            ('lab_sample_id', 'sample_id'),
+            ('lab_location', 'location'),
+            ('lab_depth', 'depth'),
+        ):
+            if lab.get(lab_key) and not context.get(ctx_key):
+                context[ctx_key] = lab[lab_key]
+                applied.append(ctx_key)
+        if applied:
+            logger.info("Fase 8b: taules de la lectura aplicades (%s)", ', '.join(applied))
+
+    def _apply_lectura_soil_levels(self) -> None:
+        """Aplica la litologia llegida a `report_data.soil_levels`.
+
+        Alineacio per NUMERO de nivell (`levels_by_number`), no per index: l'or
+        pot portar una capa vegetal sense numerar que l'informe no te com a
+        nivell propi. Les fondaries `de`/`a` NO es toquen (son entrada de
+        calcul: gruixos, taula sismica) — fora d'abast de la Fase 8b.
+        """
+        levels = (self.lectura_tables or {}).get('soil_levels')
+        if not levels or not self.report_data or not self.report_data.soil_levels:
+            return
+        from .lectura.tables_report import levels_by_number
+        by_number = levels_by_number(levels)
+        if not by_number:
+            return
+        applied = 0
+        for level in self.report_data.soil_levels:
+            row = by_number.get(level.level_number)
+            litologia = (row or {}).get('litologia')
+            if not litologia:
+                continue
+            level.description = litologia
+            # Text ja triat per Eva: va literal a les cel·les, sense escurçar.
+            level.description_verbatim = True
+            applied += 1
+        if applied:
+            logger.info("Fase 8b: %d nivell(s) amb litologia de la lectura", applied)
+        missing = len(self.report_data.soil_levels) - applied
+        if missing > 0:
+            self.warnings.append(
+                f"Lectura: {missing} nivell(s) de l'informe sense litologia llegida "
+                f"(llegits: {sorted(by_number)}); es manté la descripció automàtica."
+            )
 
     def generate_sections(self) -> dict[str, Any]:
         """
@@ -484,7 +719,9 @@ class ReportGenerator:
         Build dynamic numbering for figures, photos, and tables.
 
         Numbering depends on:
-        - num_project_figures: Project-specific figures from user (0-3)
+        - figures: per PRESÈNCIA (peça 7a, 2026-09-08): situació 1-2, projecte 0-2, assaigs 0-1, cullera,
+          geològic, tall. Aquí van amb els valors per defecte (1 / 0 / 1); `render_template` els torna a calcular
+          quan ja sap quines imatges hi ha (`figure_numbers`). `num_project_figures` del `user_data` ja no mana.
         - has_sondeig: Adds one photo for sondeig machine
         - num_dpsh_tests: Affects table range for DPSH results
 
@@ -493,57 +730,31 @@ class ReportGenerator:
         if not self.report_data:
             return {}
 
-        # Get configuration from user_data
-        num_project_figures = self.user_data.get('num_project_figures', 0)
         has_sondeig = self.report_data.has_sondeig
         num_dpsh_tests = self.report_data.num_dpsh_tests
 
-        # === FIGURE NUMBERING ===
-        # Project figures come first (from architect's project)
-        fig_counter = num_project_figures
-
-        # Cadastre map (from architect plan crops)
-        fig_counter += 1
-        fig_cadastre_num = fig_counter
-
-        # Aerial view (from architect plan crops)
-        fig_counter += 1
-        fig_aerea_num = fig_counter
-
-        # Main architect plan with building layout
-        fig_counter += 1
-        fig_main_plan_num = fig_counter
-
-        # SPT spoon diagram (if present in section 2.4)
-        fig_counter += 1
-        fig_spt_cullera_num = fig_counter
-
-        # Geological map
-        fig_counter += 1
-        fig_geological_num = fig_counter
-
-        # Correlation section
-        fig_counter += 1
-        fig_correlation_num = fig_counter
+        # === FIGURE NUMBERING === (per defecte; es refà a `render_template` amb les imatges reals)
+        fig_nums = figure_numbers()
 
         # === PHOTO NUMBERING ===
         photo_counter = 0
 
-        # Site view(s) - auto-detect from FOTOGRAFIES/ if not explicitly set
-        num_site_photos = self.user_data.get('num_site_photos', 0)
-        if num_site_photos == 0:
-            # Auto-detect: count vista_general_* files in FOTOGRAFIES/
-            foto_dir = self.project_path / 'FOTOGRAFIES'
-            if foto_dir.exists():
-                site_photos = sorted(foto_dir.glob('vista_general_*'))
-                num_site_photos = min(len(site_photos), 2)
-            if num_site_photos == 0:
-                num_site_photos = 2  # Eva always places 2 side-by-side photos
+        # Vistes generals (peça 3, 2026-09-07): el bloc (taula de 2 fotos + peu) és CONDICIONAL. 4/7 signats no el
+        # porten (la Fotografia 1 hi és la màquina); Bell-lloc 2 fotos, Rubí 1 (Google Earth), Vilanova 1. Defecte: les
+        # fotos de vista general que l'Eva ha triat a la pestanya de fotos (`photo_selection.json` amb source=user); si
+        # no, 0. `num_site_photos` del wizard mana. Abans: sempre 2 («Eva always places 2 side-by-side photos», fals a
+        # 4/7) i la numeració de la màquina i dels materials arrossegava +2.
+        from .narrative_criteria import language_for_report, photo_site_caption
+        lang = language_for_report(self.report_data, self.user_data)
+        num_site_photos = self.user_data.get('num_site_photos')
+        if num_site_photos in (None, ''):
+            num_site_photos = self._site_photos_from_user_selection()
+        try:
+            num_site_photos = max(0, min(2, int(num_site_photos or 0)))
+        except (TypeError, ValueError):
+            num_site_photos = 0
         photo_counter += num_site_photos
-        if num_site_photos == 1:
-            photo_site_text = "Fotografia 1"
-        else:
-            photo_site_text = "Fotografia 1 i Fotografia 2"
+        photo_site_text = photo_site_caption(num_site_photos, lang)
 
         # DPSH machine photo
         photo_counter += 1
@@ -559,27 +770,23 @@ class ReportGenerator:
         # Materials detail photo
         photo_counter += 1
         photo_materials_num = photo_counter
+        # Peça 1 (D7 del pas 2): UNA foto de materials per informe, dins el 1r nivell (posició dels signats: Castellar,
+        # Bell-lloc), amb la font al peu («…recuperats durant la realització del sondeig S-1» / «…de l'assaig SPT-1»).
+        if lang == 'es':
+            photo_materials_source = 'del sondeo' if has_sondeig else 'del ensayo SPT'
+        else:
+            photo_materials_source = 'del sondeig' if has_sondeig else "de l'assaig SPT"
 
         # === TABLE NUMBERING ===
         # Tables 1-2 are always: Building summary, CTE classification
         table_counter = 2
 
-        # In-situ test tables: DPSH + sondeig combined in one range
-        # Pattern from samples:
-        # - 2 DPSH tests (no sondeig) = "Taula 3 i 4"
-        # - 2 DPSH + 1 sondeig = "Taula 3, 4 i 5"
-        # - 3 DPSH tests (no sondeig) = "Taula 3, 4 i 5"
-        total_insitu_tables = num_dpsh_tests + (1 if has_sondeig else 0)
-        table_dpsh_start = table_counter + 1  # Usually 3
-
-        if total_insitu_tables <= 2:
-            table_dpsh_end = table_dpsh_start + 1  # "3 i 4"
-            table_dpsh_range = f"{table_dpsh_start} i {table_dpsh_end}"
-            table_counter = table_dpsh_end
-        else:
-            table_dpsh_end = table_dpsh_start + 2  # "3, 4 i 5"
-            table_dpsh_range = f"{table_dpsh_start}, {table_dpsh_start + 1} i {table_dpsh_end}"
-            table_counter = table_dpsh_end
+        # In-situ test tables («Taula 3 i 4. Resum dels assaigs in situ realitzats»): l'Eva compta TAULES,
+        # no assaigs (7/7 signats, 2026-09-07): DPSH (1) + sondeig (1 si n'hi ha) + SPT/MA (1, la plantilla
+        # la imprimeix sempre) → «3 i 4» sense sondeig (Rubí, Linyola, Alcoletge, Vilanova), «3, 4 i 5» amb
+        # sondeig (Castellar, Bell-lloc, Anciles). Abans: nombre d'assaigs DPSH (3 DPSH → «3, 4 i 5», 4/7 X).
+        table_dpsh_range, table_counter = insitu_table_range(has_sondeig, first=table_counter + 1)
+        _ = num_dpsh_tests  # no decideix la numeració
 
         # Lab results table
         table_counter += 1
@@ -602,21 +809,15 @@ class ReportGenerator:
         table_soil_chars_num = table_counter
 
         return {
-            # Figure numbers
-            'fig_cadastre_num': fig_cadastre_num,
-            'fig_aerea_num': fig_aerea_num,
-            'fig_main_plan_num': fig_main_plan_num,
-            'fig_spt_cullera_num': fig_spt_cullera_num,
-            'fig_geological_num': fig_geological_num,
-            'fig_correlation_num': fig_correlation_num,
-            # Backward-compat aliases
-            'fig_location_num': fig_cadastre_num,
-            'fig_building_num': fig_main_plan_num,
+            # Figure numbers (incl. àlies `fig_cadastre_num`, `fig_main_plan_num`, `fig_location_num`, `fig_building_num`)
+            **fig_nums,
             # Photo numbers
             'photo_site_text': photo_site_text,
+            '_num_site_photos': num_site_photos,
             'photo_dpsh_num': photo_dpsh_num,
             'photo_sondeig_num': photo_sondeig_num if photo_sondeig_num else '',
             'photo_materials_num': photo_materials_num,
+            'photo_materials_source': photo_materials_source,
             # Table numbers
             'table_dpsh_range': table_dpsh_range,
             'table_lab_num': table_lab_num,
@@ -625,6 +826,55 @@ class ReportGenerator:
             'table_seismic_num': table_seismic_num,
             'table_soil_chars_num': table_soil_chars_num,
         }
+
+    def _refresh_open_thickness(self) -> None:
+        """Recalcula `thickness_m` dels nivells `thickness_open` amb la fondària màxima assolida IMPRESA."""
+        rd = self.report_data
+        if not rd or not rd.soil_levels or not any(getattr(lv, 'thickness_open', False) for lv in rd.soil_levels):
+            return
+        reached = 0.0
+        for row in (self.lectura_tables or {}).get('dpsh_tests') or []:
+            try:
+                reached = max(reached, abs(float(str(row.get('depth', '')).replace(',', '.'))))
+            except (TypeError, ValueError):
+                continue
+        if reached <= 0 and rd.dpsh and rd.dpsh.tests:
+            reached = max((t.depth_reached for t in rd.dpsh.tests), default=0.0)
+        if reached <= 0:
+            return
+        for lv in rd.soil_levels:
+            if getattr(lv, 'thickness_open', False) and reached > lv.depth_from_m:
+                lv.thickness_m = round(reached - lv.depth_from_m, 2)
+
+    def _signature_date(self):
+        """`user_data['data_signatura']` (ISO `YYYY-MM-DD` o `DD/MM/YYYY`) si és vàlida; si no, `report_date`."""
+        from datetime import date, datetime
+        raw = self.user_data.get('data_signatura')
+        if raw not in (None, ''):
+            text = str(raw).strip()
+            for fmt in ('%Y-%m-%d', '%d/%m/%Y', '%d-%m-%Y'):
+                try:
+                    return datetime.strptime(text[:10], fmt).date()
+                except ValueError:
+                    continue
+            self.warnings.append(f"Data de signatura no reconeguda («{text}»): s'usa la data d'avui")
+        rd = getattr(self.report_data, 'report_date', None)
+        return rd or date.today()
+
+    def _site_photos_from_user_selection(self) -> int:
+        """Fotos de vista general triades per l'Eva a la pestanya de fotos (`validation/photo_selection.json`,
+        source=user: `site_1`/`site_2` no nuls). Cap tria explícita → 0 (la selecció automàtica/IA sempre omple els dos
+        forats i no diu res del que l'Eva vol imprimir)."""
+        sel_path = self.project_path / 'validation' / 'photo_selection.json'
+        if not sel_path.exists():
+            return 0
+        try:
+            data = json.loads(sel_path.read_text(encoding='utf-8'))
+        except Exception:
+            return 0
+        if not isinstance(data, dict) or data.get('source') not in ('user', 'lector'):   # peça 2: el lector compta com a tria
+            return 0
+        return sum(1 for k in ('site_1', 'site_2') if data.get(k))
 
     def _build_template_context(self, sections: dict[str, Any]) -> dict[str, Any]:
         """
@@ -644,14 +894,25 @@ class ReportGenerator:
         # Map to current template's expected flat variables
         if self.report_data:
             # Basic project info
+            from .narrative_criteria import (language_for_report, municipality_proper, municipality_de,
+                                             building_type_with_article, de_building_type)
+            from .honorifics import with_honorific, de_party
+            _lang = language_for_report(self.report_data, self.user_data)
             client_name = self.report_data.client.company_name or ''
             # Format company suffix: SL -> S.L., SLU -> S.L.U.
             client_name = re.sub(r'\bSLU\b', 'S.L.U.', client_name)
             client_name = re.sub(r'\bSL\b', 'S.L.', client_name)
-            context['client'] = client_name.upper()
+            # Bloc 2 (2026-09-07): «SR./SRA.» davant d'una persona (4/4 signats), res davant d'una empresa (3/3);
+            # `client_de` és el forat «en nom {{ client_de }}» («de la SRA. …» / «del SR. …» / «de RAMON MITJANA S.L.»).
+            context['client'] = with_honorific(client_name.upper(), _lang)
+            context['client_de'] = de_party(context['client'], _lang)
             context['expedient'] = self.report_data.expedient or ''
             context['street_address'] = self.report_data.street_address or ''
-            context['municipality'] = self.report_data.municipality or ''
+            # Bloc 2: nom del padró a la impressió («BELL.LLOC D'URGELL (Lleida)» → «Bell-lloc d'Urgell»; el wizard
+            # conserva el llegit) i «en el municipi {{ municipality_de }}» («d'Alcoletge», signat; abans «de Alcoletge»).
+            _muni_raw = self.report_data.municipality or ''
+            context['municipality'] = municipality_proper(_muni_raw) or _muni_raw
+            context['municipality_de'] = municipality_de(_muni_raw)
 
             # Dates - auto-fill from DPSH PDF if not provided
             if not self.report_data.field_work_dates_text:
@@ -664,30 +925,51 @@ class ReportGenerator:
                 except (ImportError, Exception) as e:
                     self.warnings.append(f"Could not extract dates from DPSH PDF: {e}")
             context['data_camp_text'] = self.report_data.field_work_dates_text or ''
-            d = self.report_data.report_date
-            mes = self.MESOS_CAT.get(d.month, d.strftime('%B'))
-            context['data_signatura_text'] = f"{d.day:02d} de {mes} de {d.year}"
+            # Primera ranura de la plantilla («El dia {{ data_camp_inici_text }}, es va visitar l'obra»): nomes el
+            # primer dia; la segona («s'ha realitzat el dia {{ data_camp_text }}») porta tots els dies (Josep 2026-09-05;
+            # els signats de Bell-lloc: «El dia 1 d'octubre» / «el dia 1 i 6 d'octubre»).
+            from .dpsh_extractor import first_field_day_text
+            context['data_camp_inici_text'] = first_field_day_text(
+                self.report_data.field_work_dates, self.report_data.field_work_dates_text)
+            # Data de signatura (bloc 1, 2026-09-07): la que l'Eva escriu al wizard (`data_signatura`, ISO);
+            # si no, la data de l'informe (avui). Mateix format que la data de camp («29 d'octubre de 2025»:
+            # «d'» davant vocal, dia sense zero), que és com la signa (0/7 abans: «06 de setembre de 2026»).
+            from .dpsh_extractor import format_dates_catalan
+            d = self._signature_date()
+            context['data_signatura_text'] = format_dates_catalan([d.isoformat()])
 
             # Architect
             context['architect_name'] = self.report_data.architect_name or ''
             context['architect_company'] = self.report_data.architect_company or ''
+            # Bloc 2: «el SR. X{{ architect_company_de }}, en nom …» = «, de l'ARQUITECTURA BOSCH NOVELL» (signat) / «, de 2 Graus»
+            # / «, d'ABN …» / res si no hi ha despatx (abans «de l'» fix: «de l'2 Graus», «de l', en nom»).
+            _ac_de = de_party(self.report_data.architect_company or '', _lang)
+            context['architect_company_de'] = f", {_ac_de}" if _ac_de else ''
             context['architect_name_upper'] = (self.report_data.architect_name or '').upper()
 
             # Building
             context['building_type'] = self.report_data.building_type or ''
-            context['building_type_lower'] = (self.report_data.building_type or '').lower()
+            # Bloc 2: article pel gènere/nombre del cap («un habitatge…», «3 habitatges…», «l'ampliació…»); la frase
+            # dels antecedents porta «la construcció {{ building_type_de }}» («d'un …», «de 3 …», «de l'…»): la
+            # plantilla tenia «d'un» fix i l'Eva hi escriu «de 3 habitatges» (Castellar) i «de l'ampliació» (Alcoletge).
+            _bt_lower = (self.report_data.building_type or '').lower()
+            context['building_type_lower'] = building_type_with_article(_bt_lower, _lang)
+            context['building_type_de'] = de_building_type(_bt_lower, _lang)
             context['num_floors'] = format_floor_notation(self.report_data.num_floors or '')
 
-            # Building structure description from num_floors
-            # "en planta baixa" when foundation starts at ground level (PB, PB+P1, etc.)
-            # "de soterrani" when there's a basement (PS, etc.)
-            num_floors_raw = (self.report_data.num_floors or '').upper()
-            if num_floors_raw.startswith('PB'):
-                context['building_structure_desc'] = 'en planta baixa'
-            elif num_floors_raw.startswith('PS'):
-                context['building_structure_desc'] = 'de soterrani'
-            else:
-                context['building_structure_desc'] = self.report_data.building_type or 'en planta baixa'
+            # Building structure: clàusula sencera després de «…construcció d'una estructura » per criteri
+            # (`narrative_criteria.building_structure_clause`, 2026-09-06): PB sol → (a) «en planta baixa, i per tant…»;
+            # amb pis → (b) «sense nivell de soterrani, i per tant…»; soterrani → (c). El valor del wizard (Eva) mana;
+            # els valors curts antics («en planta baixa») es mapegen a la clàusula. Abans: `building_type` sencer dins
+            # la frase quan les plantes eren buides (Alcoletge).
+            from .narrative_criteria import building_structure_clause
+            context['report_language'] = _lang
+            _bsd = building_structure_clause(
+                self.report_data.num_floors, getattr(self.report_data, 'has_basement', None), _lang,
+                current=self.user_data.get('building_structure_desc'),
+            )
+            context['building_structure_desc'] = _bsd.value
+            context['_narr_building_structure'] = _bsd.to_dict()
 
             # Municipality uppercase
             context['municipality_upper'] = (self.report_data.municipality or '').upper()
@@ -713,14 +995,16 @@ class ReportGenerator:
             context['plantes'] = format_floor_notation(self.report_data.num_floors or '')
             # Prefer cadastral surface for Taula 1 (official parcel area)
             # Fall back to planol surface if cadastral not available
-            context['superficie_parcela'] = (
+            # Bloc 2 (2026-09-07): superfícies com a la Taula 1 de l'Eva («1.284», «250,91»; abans «1284.0»).
+            from .formatting import format_area, format_cota
+            context['superficie_parcela'] = format_area(
                 self.report_data.superficie_cadastral
                 or self.report_data.superficie_parcela
                 or ''
             )
-            context['superficie_cadastral'] = self.report_data.superficie_cadastral or ''
-            context['superficie_parcela_planol'] = self.report_data.superficie_parcela or ''
-            context['superficie_construida'] = self.report_data.superficie_construida or ''
+            context['superficie_cadastral'] = format_area(self.report_data.superficie_cadastral or '')
+            context['superficie_parcela_planol'] = format_area(self.report_data.superficie_parcela or '')
+            context['superficie_construida'] = format_area(self.report_data.superficie_construida or '')
 
             # Descriptions
             context['access_description'] = self.report_data.access_description or ''
@@ -745,7 +1029,8 @@ class ReportGenerator:
                 except ICGCError as e:
                     self.warnings.append(f"Could not auto-fill cota_referencia from ICGC MDT: {e}")
 
-            context['cota_referencia'] = self.report_data.cota_referencia or ''
+            # Bloc 2: «+188.20» (signat) i no el text llegit sencer («+188,20 msnm», «+245 msnm segons plànol…»).
+            context['cota_referencia'] = format_cota(self.report_data.cota_referencia or '')
 
             # Location details
             context['street_address'] = self.report_data.street_address or ''
@@ -771,16 +1056,22 @@ class ReportGenerator:
             any_still_empty = any(
                 not adj.get(d) for d in ('north', 'south', 'east', 'west')
             )
-            if any_still_empty and self.report_data.utm_x and self.report_data.utm_y:
+            # Referències cadastrals del PROJECTE (lectura, pel portal: `cadastral_refs`; 2026-09-06, peça 2):
+            # manen sobre l'UTM del punt de màquina i permeten adjacents sense UTM (Rubí, Vilanova, Anciles).
+            from .parcel_context import parse_rc_list
+            _rc_list = parse_rc_list(self.user_data.get('cadastral_refs') or getattr(self.report_data, 'cadastral_ref', None))
+            context['_parcel_rcs'] = _rc_list
+            _has_utm = bool(self.report_data.utm_x and self.report_data.utm_y)
+            if any_still_empty and (_rc_list or _has_utm):
                 try:
                     from .cadastre_adjacents import get_adjacent_parcels, CadastreError
                     from .report_data import _eval_numeric
                     superficie = _eval_numeric(self.report_data.superficie_parcela) or 600.0
-                    rc14 = getattr(self.report_data, 'cadastral_ref', None)
+                    rc14 = _rc_list or getattr(self.report_data, 'cadastral_ref', None)
                     municipality = self.report_data.municipality
                     auto_adj = get_adjacent_parcels(
-                        self.report_data.utm_x,
-                        self.report_data.utm_y,
+                        self.report_data.utm_x if _has_utm else None,
+                        self.report_data.utm_y if _has_utm else None,
                         superficie,
                         rc14=rc14,
                         municipality=municipality,
@@ -833,26 +1124,12 @@ class ReportGenerator:
                 return 'el '
 
             municipality = self.report_data.municipality or ''
-            muni_suffix = f" de {municipality}" if municipality else ''
-            st1 = context.get('street_1', '')
-            if street_1_lower and second_street:
-                art1 = _street_article(st1)
-                art2 = _street_article(second_street)
-                context['location_sentence'] = f"entre {art1}{st1} i {art2}{second_street}{muni_suffix}"
-            elif street_1_lower:
-                art = _street_article(st1)
-                # Catalan preposition "a" + article: al (a+el), a la, a l'
-                if art == "l'":
-                    loc_prep = "a l'"
-                elif art == 'la ':
-                    loc_prep = "a la "
-                else:
-                    loc_prep = "al "  # a + el contraction
-                context['location_sentence'] = f"{loc_prep}{st1}{muni_suffix}"
-            elif municipality:
-                context['location_sentence'] = f"al terme municipal de {municipality}"
-            else:
-                context['location_sentence'] = "en una ubicació no especificada"
+            # 2026-09-06 (peça 2): «Situat entre X i Y» de la lectura tal qual, carrers duplicats pel nom normalitzat
+            # fora («Carrer Arbrells» ≡ «Carrer dels Arbrells»), municipi del padró («Bell-lloc d'Urgell»).
+            from .narrative_criteria import location_sentence_from_streets
+            context['location_sentence'] = location_sentence_from_streets(
+                context.get('street_1', ''), second_street, municipality, _lang,
+            )
 
             # Adjacent formatting with bilingual support (Catalan/Spanish).
             # Priority per direction (see resolve_adjacent_fmt):
@@ -880,13 +1157,39 @@ class ReportGenerator:
                 access, re.IGNORECASE,
             )
             context['access_street'] = access_match.group(1).strip() if access_match else access
+            _acc_user = str(self.user_data.get('access_street') or '').strip()   # camp del wizard (peça 3)
+            if _acc_user:
+                context['access_street'] = _acc_user
+            if not context['access_street']:
+                # 2026-09-06 (peça 2): el costat que és carrer → «carrer adjacent situat al sud» (+ candidats)
+                from .adjacent_formatter import access_street_from_adjacents
+                _acc, _acc_cands = access_street_from_adjacents(adj, context.get('street_1', ''), _lang)
+                context['access_street'] = _acc
+                context['_narr_access'] = {'value': _acc, 'candidates': _acc_cands}
 
-            # Site condition
-            is_anthropized = getattr(self.report_data, 'is_anthropized', None)
-            if is_anthropized is None:
-                context['site_condition'] = 'pla'
-            else:
-                context['site_condition'] = 'antropitzat' if is_anthropized else 'no antropitzat'
+            # Introducció dels adjacents (2.1.1, 7/7 signats): «La parcel·la objecte d'estudi es situa al {nord} del
+            # municipi de {Municipi}, pren una morfologia {rectangular} i limita:» — posició des del centre del municipi
+            # (Nominatim, cache) i forma pel polígon del Cadastre; `site_position`/`parcel_shape` del wizard manen.
+            try:
+                from .narrative_criteria import municipality_proper
+                from .parcel_context import (adjacent_intro, centroid, municipality_centre_utm,
+                                             position_in_municipality, shape_word)
+                _poly: list = []
+                if _rc_list:
+                    from .cadastre_adjacents import project_polygon
+                    _poly = project_polygon(_rc_list)
+                _cen = centroid(_poly) if _poly else (
+                    (self.report_data.utm_x, self.report_data.utm_y) if _has_utm else None)
+                _pos = (self.user_data.get('site_position') or '').strip() or None
+                if not _pos and _cen and municipality:
+                    _pos = position_in_municipality(
+                        _cen, municipality_centre_utm(municipality, self.user_data.get('province', '') or ''), _lang)
+                _shape = (self.user_data.get('parcel_shape') or '').strip() or shape_word(_poly, _lang)
+                context['adjacent_intro'] = adjacent_intro(_pos, municipality_proper(municipality), _shape, _lang)
+                context['_narr_parcel'] = {'position': _pos, 'shape': _shape, 'centroid': _cen, 'rcs': _rc_list}
+            except Exception as e:
+                self.warnings.append(f"Introducció dels adjacents: {e}")
+                context.setdefault('adjacent_intro', '')
 
             # Auto-fill is_sloped from ICGC MDT slope analysis
             if self.report_data.utm_x and self.report_data.utm_y:
@@ -908,6 +1211,36 @@ class ReportGenerator:
                 except (ImportError, Exception) as e:
                     self.warnings.append(f"Could not calculate slope from ICGC MDT: {e}")
                     context['is_sloped'] = getattr(self.report_data, 'is_sloped', False)
+
+            # Site condition: FRASE SENCERA per criteri (`narrative_criteria.site_condition_sentence`, 2026-09-06):
+            # pendent > 10 % → «Tot i no ser un solar pla…»; antropitzat → «Degut a que…»; si no «Com que es tracta
+            # d'un solar pla…». La plantilla ja no porta la capçalera fixa «Degut a que es tracta d'un solar {{ }}».
+            # El valor del wizard (Eva o `computed`) mana si és una frase; els valors curts antics («pla») es recalculen.
+            from .narrative_criteria import site_condition_sentence
+            _slope_pct = context.get('slope_percent') or getattr(self.report_data, 'slope_percent', None)
+            _sc = site_condition_sentence(_slope_pct, getattr(self.report_data, 'is_anthropized', None), _lang)
+            _sc_user = str(self.user_data.get('site_condition') or '').strip()
+            if len(_sc_user.split()) >= 4:
+                context['site_condition'] = _sc_user
+            else:
+                context['site_condition'] = _sc.value
+            context['_narr_site_condition'] = _sc.to_dict()
+
+            # Estat del solar per criteri (peça 3, 2026-09-07; `narrative_criteria.site_description_sentence`): NOMÉS el
+            # bloc 2 de «2.1.2» (l'accés, «En solars propers…» i «Destacar…» ja són text fix de la plantilla). Fets:
+            # construcció pròpia al Cadastre (DNPRC de les referències del projecte) i pendent ICGC. El text de l'Eva
+            # al wizard mana. Abans: `site_description` buit a la via A (7/7 NO_DATA).
+            from .narrative_criteria import site_description_sentence
+            _own = None
+            try:
+                from .parcel_context import own_parcel_buildings
+                _own = own_parcel_buildings(context.get('_parcel_rcs') or [])
+            except Exception as e:
+                self.warnings.append(f"Construccions de la parcel·la pròpia (DNPRC): {e}")
+            _sd = site_description_sentence(_slope_pct, _own, _lang, current=self.report_data.site_description)
+            context['site_description'] = _sd.value
+            context['_narr_site_description'] = _sd.to_dict()
+            context['_own_parcel_building'] = _own
 
             # Conditional sections - Sondeig
             has_sondeig = getattr(self.report_data, 'has_sondeig', False)
@@ -1010,17 +1343,40 @@ class ReportGenerator:
             if not spt and self.report_data.has_spt:
                 spt = self._extract_spt_from_sondeig()
             spt = spt or {}
-            context['spt_test_id'] = spt.get('test_id', '')
+            from .formatting import format_spt_id
+            context['spt_test_id'] = format_spt_id(spt.get('test_id', ''))   # «SPT1 S1» → «SPT-1» (bloc 2)
             context['spt_location'] = spt.get('location', '')
             context['spt_depth_range'] = spt.get('depth_range', '')
             context['spt_n30'] = str(spt.get('n30', ''))
             context['spt_lithology'] = spt.get('lithology', '')
+            # La taula SPT/MA de la plantilla es un bucle (pot tenir mes d'una
+            # fila: Anciles en te 3). Per defecte, la fila unica de sempre —
+            # tambe quan es buida, per no canviar la sortida de la via B.
+            context['spt_ma_tests'] = [{
+                'test_id': context['spt_test_id'],
+                'location': context['spt_location'],
+                'depth_range': context['spt_depth_range'],
+                'n30': context['spt_n30'],
+                'lithology': context['spt_lithology'],
+            }]
 
-            # Lab data - auto-fill from lab PDF if not provided
-            if not self.report_data.lab_tests:
+            # --- Fase 8b: les taules llegides manen sobre les de la via B ----
+            # Substitucio EN BLOC (no cel·la a cel·la): les files llegides son
+            # les del full de camp/annex, amb la cota per punt i la fondaria
+            # exacta del peu "Rebuig a", que es el que Eva escriu a l'informe.
+            self._apply_lectura_tables(context)
+
+            # Lab data - auto-fill from lab PDF if not provided (una sola lectura del GTL: també dona el bloc
+            # «ASSAIGS REALITZATS» per a `lab_tests_text`, peça 3)
+            _lab_results = None
+            try:
+                from .lab_extractor import extract_lab_results
+                _lab_results = extract_lab_results(self.project_path)
+            except (ImportError, Exception) as e:
+                self.warnings.append(f"Could not extract lab results from PDF: {e}")
+            if not self.report_data.lab_tests and _lab_results is not None:
                 try:
-                    from .lab_extractor import extract_lab_results
-                    lab_results = extract_lab_results(self.project_path)
+                    lab_results = _lab_results
                     if lab_results.tests:
                         self.report_data.lab_tests = [t.to_dict() for t in lab_results.tests]
                         logger.info(f"Auto-filled lab_tests from {lab_results.source_file}")
@@ -1034,7 +1390,15 @@ class ReportGenerator:
             context['lab_sample_id'] = lab.get('sample_id', '')
             context['lab_location'] = lab.get('location', '')
             context['lab_depth'] = lab.get('depth', '')
-            context['lab_tests_text'] = lab.get('type', '')
+            # Assaigs realitzats per criteri (peça 3, 2026-09-07; `narrative_criteria.lab_tests_lines`): la llista del
+            # bloc «ASSAIGS REALITZATS» del GTL amb el vocabulari de l'Eva («1 assaig de contingut en sulfats UNE 83963 :
+            # 2008» sol; llista granulometria → Atterberg → Lambe → sulfats). Abans: el `type` del primer assaig
+            # («Contingut en sulfats solubles UNE 83963:2008», que l'Eva no escriu mai). El wizard mana.
+            from .narrative_criteria import lab_tests_lines
+            _lab_user = str(self.user_data.get('lab_tests_text') or '').strip()
+            _lt = lab_tests_lines(getattr(_lab_results, 'lab_tests_text', '') if _lab_results else '', _lang)
+            context['lab_tests_text'] = _lab_user or _lt.value or lab.get('type', '')
+            context['_narr_lab_tests'] = _lt.to_dict()
 
             # Geology paragraphs from section 3
             context['materials_level_1'] = ''
@@ -1042,6 +1406,7 @@ class ReportGenerator:
             context['seismic_ab_text'] = ''
             context['radon_zone'] = '1'
             context['radon_zone_description'] = ''
+            context['radon_sentence'] = ''
             context['csn_radon_text'] = ''
             for i in range(6):
                 context[f'geology_para_{i+1}'] = ''
@@ -1097,30 +1462,18 @@ class ReportGenerator:
                             f"Reviseu manualment."
                         )
                     context['radon_zone'] = str(radon_info.zone)
-                    if radon_info.zone == 0:
-                        context['radon_zone_description'] = ', municipi amb baixes concentracions de gas radó.'
-                    elif radon_info.zone == 1:
-                        context['radon_zone_description'] = (
-                            ', municipi amb concentracions mitjanes de gas radó en edificis tancats. '
-                            'Es recomana la implementació de mesures bàsiques de protecció.'
-                        )
-                    else:  # zone == 2
-                        context['radon_zone_description'] = (
-                            ', municipi amb concentracions potencialment elevades de gas radó en edificis tancats. '
-                            'És obligatòria la implementació de mesures de protecció segons CTE DB HS6.'
-                        )
+                    # Frase sencera del radó per criteri (`narrative_criteria.radon_sentence`, 2026-09-06): zona 0 →
+                    # «no pertany a cap municipi…» (Linyola), municipi en majúscules amb «de/d'». La cua antiga
+                    # («, municipi amb concentracions mitjanes… Es recomana…») no és de cap signat: buida.
+                    from .narrative_criteria import radon_sentence
+                    _rs = radon_sentence(radon_info.zone, municipality, _lang)
+                    context['radon_sentence'] = _rs.value
+                    context['_narr_radon'] = _rs.to_dict()
+                    context['radon_zone_description'] = ''
 
-                utm_x = self.report_data.utm_x
-                utm_y = self.report_data.utm_y
-                if utm_x and utm_y:
-                    try:
-                        from .csn_radon import get_radon_potential_text
-                        csn_text = get_radon_potential_text(utm_x, utm_y)
-                        if csn_text:
-                            context['csn_radon_text'] = csn_text
-                    except Exception as e:
-                        import logging
-                        logging.getLogger(__name__).warning(f"Could not get CSN radon potential: {e}")
+                # `csn_radon_text` (cartografia CSN per coordenades) NO s'emet: el paràgraf del CSN ja és text fix de la
+                # plantilla (p474) i el generador l'imprimia dues vegades. Cap signat porta el text de coordenades.
+                context['csn_radon_text'] = ''
 
             # Section-derived text variables
             context['materials_depth_text'] = ''
@@ -1146,7 +1499,7 @@ class ReportGenerator:
                     materials_text = s3_materials[i] if i < len(s3_materials) else ''
                     context['soil_levels'].append({
                         'description': level.description,
-                        'description_short': _shorten_material_desc(level.description),
+                        'description_short': _level_material(level),
                         'ordinal': _catalan_ordinal(level.level_number),
                         'materials_text': materials_text,
                         'depth_text': s3_depth_texts[i] if i < len(s3_depth_texts) else '',
@@ -1157,10 +1510,8 @@ class ReportGenerator:
 
             # Conclusions geology intro (dynamic level count)
             num_levels = len(self.report_data.soil_levels) if self.report_data.soil_levels else 1
-            if num_levels == 1:
-                context['conclusions_levels_detected'] = "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
-            else:
-                context['conclusions_levels_detected'] = f"Es detecten {num_levels} nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi."
+            from .narrative_criteria import levels_detected
+            context['conclusions_levels_detected'] = levels_detected(num_levels, context.get('report_language', 'ca'))
 
             # === Multi-level table context ===
             from .dpsh_extractor import GeotechCorrelations
@@ -1177,8 +1528,8 @@ class ReportGenerator:
             for level in soil_levels:
                 context['soil_level_rows'].append({
                     'name': f'{_catalan_ordinal(level.level_number)} nivell.',
-                    'material': _shorten_material_desc(level.description),
-                    'material_short': _shorten_material_desc(level.description),
+                    'material': _level_material(level),
+                    'material_short': _level_material(level),
                 })
             if not context['soil_level_rows']:
                 context['soil_level_rows'] = [{'name': '', 'material': '', 'material_short': ''}]
@@ -1186,13 +1537,24 @@ class ReportGenerator:
             # Table 6: Permeability rows
             context['perm_rows'] = []
             if sections.get('section3') and sections['section3'].taula7_permeability:
+                # Fase 8b: quan el nivell porta litologia llegida, el text de
+                # la fila de permeabilitat es el mateix (mateix nivell, mateix
+                # material) — si no, la taula de nivells i aquesta dirien coses
+                # diferents del mateix estrat.
+                levels_by_num = {lv.level_number: lv for lv in soil_levels}
                 for i, perm in enumerate(sections['section3'].taula7_permeability):
                     ordinal = _catalan_ordinal(i + 1)
+                    lv = levels_by_num.get(i + 1)
+                    material = (
+                        _level_material(lv)
+                        if lv is not None and getattr(lv, 'description_verbatim', False)
+                        else _shorten_material_desc(perm.material)
+                    )
                     context['perm_rows'].append({
                         'name': f'{ordinal} nivell',
                         'k_value': perm.k_m_s,
-                        'material': _shorten_material_desc(perm.material),
-                        'material_short': _shorten_material_desc(perm.material),
+                        'material': material,
+                        'material_short': material,
                     })
             # Ensure at least one row per soil level (fallback with empty k)
             if not context['perm_rows']:
@@ -1200,8 +1562,8 @@ class ReportGenerator:
                     context['perm_rows'].append({
                         'name': f'{_catalan_ordinal(level.level_number)} nivell',
                         'k_value': '',
-                        'material': _shorten_material_desc(level.description),
-                        'material_short': _shorten_material_desc(level.description),
+                        'material': _level_material(level),
+                        'material_short': _level_material(level),
                     })
             if not context['perm_rows']:
                 context['perm_rows'] = [{'name': '', 'k_value': '', 'material': '', 'material_short': ''}]
@@ -1219,23 +1581,44 @@ class ReportGenerator:
                 else ''
             )
 
+            # P3 (2026-09-06): criteris per nivell (règim per Nb i rebuig, litologia) — es
+            # calculen un cop i serveixen la taula sísmica (8) i la geotècnica (9).
+            from .geotech_criteria import geotech_by_criteria
+            level_criteria: dict[int, Any] = {}
+            level_refusal: dict[int, bool] = {}
+            if dpsh and dpsh.tests:
+                from .report_data import _level_has_refusal
+                for level in soil_levels:
+                    # Rebuig dins del rang del NIVELL de l'informe (criteri de la cel·la «Nb»: «25-R»)
+                    _ref = _level_has_refusal(dpsh, level)
+                    level_refusal[level.level_number] = _ref
+                    _n20 = level.n20_average or 0
+                    level_criteria[level.level_number] = geotech_by_criteria(
+                        _n20 / 0.83 if _n20 else 0, _n20, level.soil_type, level.description, _ref,
+                    )
+
             # Table 8: Seismic rows (one per soil level)
             context['seismic_rows'] = []
             for level in soil_levels:
                 avg_n20 = level.n20_average
-                # Terrain type based on N20
-                if avg_n20 >= 30:
-                    terrain_type = 'Tipus II'
-                elif avg_n20 >= 10:
-                    terrain_type = 'Tipus III'
+                crit = level_criteria.get(level.level_number)
+                if crit is not None:
+                    # Tipus NCSE-02 per règim (roca/dens II, mitjà III, fluix IV)
+                    terrain_type, c_coeff = crit.seismic_type, crit.seismic_C
                 else:
-                    terrain_type = 'Tipus IV'
+                    if avg_n20 >= 30:
+                        terrain_type = 'Tipus II'
+                    elif avg_n20 >= 10:
+                        terrain_type = 'Tipus III'
+                    else:
+                        terrain_type = 'Tipus IV'
+                    c_coeff = {
+                        'Tipus I': '1.0', 'Tipus II': '1.3',
+                        'Tipus III': '1.6', 'Tipus IV': '2.0',
+                    }.get(terrain_type, '1.3')
                 thickness = f"{level.thickness_m:.2f}" if level.thickness_m else ''
-                # C coefficient based on terrain type
-                c_coeff = {
-                    'Tipus I': '1.0', 'Tipus II': '1.3',
-                    'Tipus III': '1.6', 'Tipus IV': '2.0',
-                }.get(terrain_type, '1.3')
+                if thickness and getattr(level, 'thickness_open', False):
+                    thickness += '*'  # «fins a la fondària investigada» (P5: Linyola 1.30*, Alcoletge 0.29*)
                 context['seismic_rows'].append({
                     'num': str(level.level_number),
                     'terrain_type': terrain_type,
@@ -1247,8 +1630,19 @@ class ReportGenerator:
 
             # Table 9: Geotechnical parameters rows (one per soil level)
             context['geotech_rows'] = []
+            spt_n_by_level: dict[int, str] = {}
             if dpsh and dpsh.tests:
                 all_readings = [r for test in dpsh.tests for r in test.readings]
+                # P0 (2026-09-06): la columna «N» és l'N30 de l'SPT del nivell, mai la
+                # mitjana N20 del DPSH (7/7 signats). Font: les files de la taula SPT/MA
+                # tal com s'imprimeixen en aquest mateix informe (lectura via A si n'hi
+                # ha, si no la fila de la via B), perquè les dues taules diguin el mateix.
+                spt_n_by_level, spt_n_notes = assign_spt_n30(
+                    context.get('spt_ma_tests') or [], soil_levels,
+                )
+                for note in spt_n_notes:
+                    self.warnings.append(f"Columna N (SPT): {note}")
+                    logger.warning("Columna N (SPT): %s", note)
                 for level in soil_levels:
                     avg_n20 = level.n20_average
                     # Filter readings by depth range from sondeig_layers
@@ -1277,7 +1671,12 @@ class ReportGenerator:
                         else:
                             # Use level's bearing stratum N20 average, convert to Nb
                             avg_nb_display = avg_n20 / 0.83 if avg_n20 else 0
-                            has_refusal = any(r.n20 >= 100 for r in level_readings)
+                            # «-R» si el DPSH rebutja dins del NIVELL (mateix criteri que el règim); mai en un
+                            # rebliment (el rebuig hi és el substrat: Alcoletge signat «5-0», sense R)
+                            has_refusal = level_refusal.get(level.level_number, any(r.n20 >= 100 for r in level_readings))
+                            _crit_lv = level_criteria.get(level.level_number)
+                            if _crit_lv is not None and getattr(_crit_lv, 'klass', '') == 'rebliment':
+                                has_refusal = False
                             nb_display = f"{avg_nb_display:.0f}-R" if has_refusal else f"{avg_nb_display:.0f}"
                     else:
                         nb_display = ''
@@ -1290,41 +1689,40 @@ class ReportGenerator:
                     # Determine soil type from level description
                     level_soil_type = level.soil_type
 
+                    # P3: criteri del nivell (candidats amb procedència); l'override mana per camp
+                    crit = level_criteria.get(level.level_number)
+                    if crit is None:
+                        crit = geotech_by_criteria(avg_nb, avg_n20, level_soil_type, level.description,
+                                                   level_refusal.get(level.level_number,
+                                                                     any(r.n20 >= 100 for r in level_readings)))
+                    E_display = crit.E_display
                     if geomech.get('gamma') or geomech.get('phi') or geomech.get('E'):
                         # Manual override — use exactly what G3DT specified
-                        gamma = geomech.get('gamma') or nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
-                        phi = geomech.get('phi') or nspt_to_phi(avg_nb, level_soil_type)
-                        E = geomech.get('E') or nspt_to_E_kg_cm2(avg_n20)
+                        gamma = geomech.get('gamma') or crit.gamma
+                        phi = geomech.get('phi') or crit.phi
+                        E = geomech.get('E') or crit.E
+                        if geomech.get('E'):
+                            E_display = str(geomech.get('E'))
                         cohesion = geomech.get('cohesion', 0.0)
-                    elif is_rock(avg_n20, level.description):
-                        # Rock detected — use CTE rock defaults
-                        rock = rock_params_default()
-                        gamma = rock['gamma']
-                        phi = rock['phi']
-                        E = rock['E']
-                        cohesion = rock['cohesion']
                     else:
-                        # CTE correlations for soil
-                        gamma = nspt_to_gamma_g_cm3(avg_n20, level_soil_type)
-                        phi = nspt_to_phi(avg_nb, level_soil_type)
-                        E = nspt_to_E_kg_cm2(avg_n20)
-                        cohesion = soil_type_to_cohesion(level_soil_type)
+                        gamma, phi, E, cohesion = crit.gamma, crit.phi, crit.E, crit.cohesion
 
-                    # N display: G3DT may write "R" (refusal) instead of numeric
-                    n_display = geomech.get('N') or (str(int(avg_n20)) if avg_n20 else '')
+                    # N display: N30 de l'SPT del nivell («R» si rebutja, «--» si al
+                    # nivell no hi ha SPT). L'override expert `geomech_params.N` mana.
+                    n_display = geomech.get('N') or spt_n_by_level.get(level.level_number, NO_SPT)
                     # Nb override
                     if geomech.get('Nb'):
                         nb_display = geomech['Nb']
 
                     context['geotech_rows'].append({
-                        'name': f"{_catalan_ordinal(level.level_number)} nivell. {_shorten_material_desc(level.description)}.",
-                        'material_short': _shorten_material_desc(level.description),
+                        'name': f"{_catalan_ordinal(level.level_number)} nivell. {_level_material(level).rstrip('.')}.",
+                        'material_short': _level_material(level),
                         'nb': nb_display,
                         'n': str(n_display),
                         'density': f"{gamma:.2f}",
                         'cohesion': f"{cohesion:.2f}",
                         'phi': f"{phi:.0f}\u00b0",
-                        'E': f"{E:.0f}" if isinstance(E, (int, float)) else str(E),
+                        'E': E_display if E_display else (f"{E:.0f}" if isinstance(E, (int, float)) else str(E)),
                     })
             if not context['geotech_rows']:
                 context['geotech_rows'] = [{'name': '', 'material_short': '', 'nb': '', 'n': '', 'density': '', 'cohesion': '', 'phi': '', 'E': ''}]
@@ -1399,10 +1797,49 @@ class ReportGenerator:
             if self.report_data.terzaghi_result:
                 tr = self.report_data.terzaghi_result
                 context['qa_value'] = f"{tr.Qa:.2f}"
-                context['settlement'] = f"{tr.settlement_cm:.2f}" if tr.settlement_cm else ''
                 # Calculation transparency notes
                 B = self.user_data.get('footing_width_m', 1.0)
                 Df = self.user_data.get('foundation_depth_m', 0.8)
+                # Assentament per CRITERI (2026-09-06, `automation/settlement_criteria.py`): frase per
+                # règim del nivell portant (granular → valor; roca/cohesiu o < 1,0 → genèrica) i Es amb
+                # candidats (2,5×N SPT del nivell → 2,5×Nb del nivell → E). Substitueix el 2,5×Nb global
+                # del càlcul inicial; l'«Es assentament» escrit al wizard mana.
+                try:
+                    from .settlement_criteria import settlement_by_criteria, settlement_regime, parse_spt_n, calc_note
+                    from .geotech_criteria import _classify, lith_flags
+                    _rd = self.report_data
+                    _bnum = getattr(_rd, 'bearing_level_number', None)
+                    _blev = next((l for l in soil_levels if l.level_number == _bnum), soil_levels[-1] if soil_levels else None)
+                    _gp = _rd.geotechnical_params
+                    _coh = float(_gp.cohesion) if _gp else 0.0
+                    _crit_b = level_criteria.get(_bnum) if _bnum is not None else None
+                    _klass = _classify(_blev.soil_type if _blev else 'granular',
+                                       lith_flags(_blev.description if _blev else ''), _coh >= 0.5)
+                    _regime = settlement_regime(_klass, _coh, _crit_b.regime if _crit_b is not None else None)
+                    _nb_level = (_blev.n20_average / 0.83) if _blev and _blev.n20_average else None
+                    _n_spt = parse_spt_n(spt_n_by_level.get(_bnum)) if _bnum is not None else None
+                    _es_ud = self.user_data.get('Es_settlement')
+                    try:
+                        _es_ud = float(_es_ud) if _es_ud not in (None, '') else None
+                    except (TypeError, ValueError):
+                        _es_ud = None
+                    sc = settlement_by_criteria(
+                        q_net=tr.Qa, B=float(B or 1.0), Df=float(Df or 0.8), gamma=tr.gamma, nb=_nb_level,
+                        n_spt=_n_spt, E=(_gp.E if _gp else None), regime=_regime, Es_override=_es_ud,
+                    )
+                    tr.settlement_cm, tr.Es_used, tr.settlement_generic = sc.settlement_cm, sc.Es, sc.generic
+                    tr.settlement_regime, tr.Es_source, tr.settlement_sentence = sc.regime, sc.Es_source, sc.sentence
+                    tr.Es_candidates = [c.__dict__ for c in sc.candidates]
+                    tr.settlement_type = 'immediat' if sc.regime == 'granular' else 'diferit'
+                    context['settlement_sentence'] = sc.sentence
+                    context['_calc_settlement'], context['_calc_Es'] = calc_note(sc, float(B or 1.0))
+                    for _n in sc.notes:
+                        if _n.startswith('⚠'):
+                            self.warnings.append(f"Assentament: {_n}")
+                except Exception as exc:
+                    self.warnings.append(f"Assentament per criteri: {exc}")
+                    context['settlement_sentence'] = tr.format_settlement_for_report()
+                context['settlement'] = f"{tr.settlement_cm:.2f}" if tr.settlement_cm else ''
                 avg_n20 = self.report_data.dpsh.overall_average_n20 if self.report_data.dpsh else None
                 nb = avg_n20 / 0.83 if avg_n20 else None
                 # Soil category for Eva's Qa cap range (uses shared soil_cat/ranges)
@@ -1419,26 +1856,12 @@ class ReportGenerator:
                         context['_calc_qa'] = f"{formula} = {tr.Qa:.2f} | Rang Eva: {ranges['Qa_cap']}"
                 else:
                     context['_calc_qa'] = ""
-                # Settlement note with sensitivity +/-25% Es
-                if tr.settlement_cm and tr.Es_used:
-                    Es = tr.Es_used
-                    base = tr.settlement_cm
-                    Es_low = Es * 0.75
-                    Es_high = Es * 1.25
-                    s_low = base * Es / Es_high
-                    s_high = base * Es / Es_low
-                    context['_calc_settlement'] = (
-                        f"Schmertmann Es={Es:.0f}, B={B}m \u2192 {base:.2f} cm"
-                        f" | Si Es={Es_low:.0f}: {s_high:.2f} cm"
-                        f" | Si Es={Es_high:.0f}: {s_low:.2f} cm"
-                    )
-                    context['_calc_Es'] = f"Es={Es:.0f} (2.5\u00d7Nb) | \u00b125%: {Es_low:.0f}-{Es_high:.0f}"
-                else:
-                    context['_calc_settlement'] = ""
-                    context['_calc_Es'] = ""
+                context.setdefault('_calc_settlement', "")
+                context.setdefault('_calc_Es', "")
             else:
                 context['qa_value'] = ''
                 context['settlement'] = ''
+                context['settlement_sentence'] = ''
                 context['_calc_qa'] = ''
                 context['_calc_settlement'] = ''
                 context['_calc_Es'] = ''
@@ -1506,6 +1929,15 @@ class ReportGenerator:
             context.update(image_ctx)
         except Exception as e:
             self.warnings.append(f"Image insertion failed (report will have placeholders): {e}")
+        # Peça 7a: la numeració de les figures va per presència; ara ja sabem quines imatges hi ha
+        context.update(figure_numbers_from_context(context))
+        # Vistes generals: només les que el peu anuncia (peça 3); el bloc sencer cau si `photo_site_text` és buit
+        _n_site = context.get('_num_site_photos')
+        if _n_site is not None:
+            if int(_n_site) < 2:
+                context['photo_site_image_2'] = ''
+            if int(_n_site) < 1:
+                context['photo_site_image_1'] = ''
 
         doc.render(context)
         doc.save(str(output_path))

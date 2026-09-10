@@ -1,0 +1,221 @@
+{
+ "source": "/tmp/claude-1000/-home-josep-projects-claudecode-job-clients-g3dt-prod/f4e779bc-2463-4626-97b2-e2e97ea1da5c/scratchpad/taules/4001670_informe.docx",
+ "tables": [
+  {
+   "type": "plantes",
+   "grid": [
+    [
+     "Nº de plantes per habitatge",
+     "Pb"
+    ],
+    [
+     "Superfície de la parcel·la segons cadastre (m2)",
+     "1167"
+    ],
+    [
+     "Superfície construïda ampliació  (m2)",
+     "100"
+    ]
+   ]
+  },
+  {
+   "type": "cte_edificacio",
+   "grid": [
+    [
+     "Tipus d’edificació considerada:",
+     "C-0"
+    ],
+    [
+     "Tipus de sòl considerat :",
+     "T-1"
+    ]
+   ]
+  },
+  {
+   "type": "dpsh",
+   "grid": [
+    [
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH",
+     "Penetròmetres dinàmics DPSH"
+    ],
+    [
+     "Punt",
+     "Cota d’inici (msnm*)",
+     "Profunditat assolida (m)",
+     "Rebuig",
+     "Humitat (m)"
+    ],
+    [
+     "P-1",
+     "+188.20",
+     "-1.60",
+     "Si",
+     "-1.00"
+    ],
+    [
+     "P-2",
+     "+188.20",
+     "-1.30",
+     "Si",
+     "-1.00"
+    ],
+    [
+     "P-3",
+     "+188.20",
+     "-1.69",
+     "Si",
+     "-1.00"
+    ]
+   ]
+  },
+  {
+   "type": "spt_ma",
+   "grid": [
+    [
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA",
+     "Assaigs SPT / MA"
+    ],
+    [
+     "Nº assaig",
+     "Punt",
+     "Prof. Extracció (m)",
+     "N30",
+     "Litologia"
+    ],
+    [
+     "SPT-1",
+     "P-3",
+     "-0.80 a -1.40",
+     "20",
+     "Llims compactes, lutites alterades"
+    ]
+   ]
+  },
+  {
+   "type": "mostra_lab",
+   "grid": [
+    [
+     "Mostra : SPT-1",
+     "Punt: P-3",
+     "Profunditat:  -0.80  a -1.40 m"
+    ],
+    [
+     "Assaigs realitzats",
+     "Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93\nContingut en sulfats solubles dels sòl UNE 83963/08",
+     "Assaig de plasticitat de Límits d’Atterberg UNE 103103/94-104/93\nContingut en sulfats solubles dels sòl UNE 83963/08"
+    ]
+   ]
+  },
+  {
+   "type": "soil_levels",
+   "grid": [
+    [
+     "1er nivell.",
+     "Reblert superficial"
+    ],
+    [
+     "2on nivell.",
+     "Lutites amb intercalacions de sorrenca."
+    ]
+   ]
+  },
+  {
+   "type": "permeabilitat",
+   "grid": [
+    [
+     "Nivell",
+     "K (m/s)",
+     "Tipus material"
+    ],
+    [
+     "1er nivell",
+     "10-1 – 10-3",
+     "Sorres argiloses antròpiques"
+    ],
+    [
+     "2on nivell",
+     "10-5 – 10-7",
+     "Lutites i sorrenques del substrat Oligocè"
+    ]
+   ]
+  },
+  {
+   "type": "sulfats",
+   "grid": [
+    [
+     "Nivell",
+     "Contingut en sulfats \n(mg/kg SO4)",
+     "Acidesa Baumann-Gully (ml/kg)",
+     "Qualificació (*)"
+    ],
+    [
+     "2on nivell",
+     "297.9",
+     "---",
+     "No Agressius"
+    ]
+   ]
+  },
+  {
+   "type": "sismica",
+   "grid": [
+    [
+     "Nivells",
+     "Tipus de terreny",
+     "Gruix (metres)",
+     "Coef. C"
+    ],
+    [
+     "1",
+     "Tipus IV",
+     "1.40",
+     "2.0"
+    ],
+    [
+     "2",
+     "Tipus I",
+     "0.29*",
+     "1.0"
+    ]
+   ]
+  },
+  {
+   "type": "geotecnica",
+   "grid": [
+    [
+     "Nivell",
+     "Nb",
+     "N",
+     "Densitat(1)",
+     "Cohesió(2)",
+     "Angle de fregament intern (3)",
+     "E (4)"
+    ],
+    [
+     "1er nivell. Sorres argiloses de rebliment",
+     "5-0",
+     "--",
+     "1.80",
+     "0.00",
+     "28º",
+     "50"
+    ],
+    [
+     "2on nivell. Lutites i sorrenques alterades",
+     "R",
+     "20",
+     "2.00",
+     "1.00",
+     "30º",
+     ">400"
+    ]
+   ]
+  }
+ ]
+}

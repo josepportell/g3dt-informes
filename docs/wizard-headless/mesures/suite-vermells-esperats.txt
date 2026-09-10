@@ -1,0 +1,33 @@
+# Tests vermells ESPERATS a la suite completa (sense dades locals de projecte / xarxa). Actualitzat 2026-09-05 (nit): 31 vermells / 2064 verds / 5 omesos.
+# Us: comparar NOMS, no recomptes (memoria feedback_compare_test_names_not_counts): grep '^FAILED' <sortida> | sed 's/ - .*//' | sort | diff - <(grep -v '^#' docs/wizard-headless/mesures/suite-vermells-esperats.txt)
+FAILED tests/test_ai_pipeline_ranking_api.py::test_api_preserves_systemic_failure_shape
+FAILED tests/test_ai_pipeline_ranking_api.py::test_api_returns_schema_fields_needed_by_ui
+FAILED tests/test_ai_pipeline_ranking_api.py::test_ranking_group_filter_parses_comma_separated
+FAILED tests/test_ai_pipeline_ranking_api.py::test_ranking_no_group_pass_empty_groups
+FAILED tests/test_ai_pipeline_ranking_api.py::test_ranking_passthrough_cache_miss_then_hit
+FAILED tests/test_ai_pipeline_ranking_api.py::test_ranking_refresh_bypasses_cache
+FAILED tests/test_ai_pipeline_ranking_api.py::test_ranking_response_roundtrip_preserves_all_schema_fields
+FAILED tests/test_ai_pipeline_trace.py::test_api_trace_endpoint_returns_cached_trace
+FAILED tests/test_ai_pipeline_trace.py::test_real_alcoletge_trace
+FAILED tests/test_bearing_stratum_n20_regression.py::test_bell_lloc_bearing_idx_and_n20
+FAILED tests/test_fileminer.py::TestIntegrationAnciles::test_at_least_4_mapped_signals
+FAILED tests/test_fileminer.py::TestIntegrationAnciles::test_client_nif_is_personal
+FAILED tests/test_fileminer.py::TestIntegrationAnciles::test_municipality_is_anciles
+FAILED tests/test_groq_miner.py::TestCache::test_cache_hit
+FAILED tests/test_smartscan.py::TestSmartScanCombinedFiles::test_combined_file_dual_roles[4001679 ANCILES-PENETROS + SONDEIGS.pdf]
+FAILED tests/test_smartscan.py::TestSmartScanESVariants::test_anciles_anejos
+FAILED tests/test_smartscan.py::TestSmartScanESVariants::test_anciles_plural_penetros_sondeigs
+FAILED tests/test_smartscan.py::TestSmartScanESVariants::test_anciles_sondeos_annex
+FAILED tests/test_smartscan.py::TestSmartScanESVariants::test_vilanova_anexos
+FAILED tests/test_smartscan.py::TestSmartScanFigureRoles::test_vilanova_figure_maps
+FAILED tests/test_smartscan.py::TestSmartScanGroundTruth::test_roles_match_ground_truth[4001670 ALCOLETGE]
+FAILED tests/test_smartscan.py::TestSmartScanGroundTruth::test_roles_match_ground_truth[4001671 VILANOVA DE SEGRIA]
+FAILED tests/test_smartscan.py::TestSmartScanGroundTruth::test_roles_match_ground_truth[4001679 ANCILES]
+FAILED tests/test_smartscan.py::TestSmartScanImageClassification::test_alcoletge_croquis_classified
+FAILED tests/test_smartscan.py::TestSmartScanImageClassification::test_alcoletge_field_photos_stay_informative
+FAILED tests/test_smartscan.py::TestSmartScanImageClassification::test_alcoletge_penetros_jpeg_is_suggestion
+FAILED tests/test_smartscan.py::TestSmartScanImageFingerprint::test_alcoletge_ampliacio_is_document
+FAILED tests/test_smartscan.py::TestSmartScanNonStandard::test_alcoletge_photos_dir
+FAILED tests/test_smartscan.py::TestSmartScanRoleFiles::test_backward_compat_roles_unchanged
+FAILED tests/test_smartscan.py::TestSmartScanRoleFiles::test_role_files_in_file_mapping_json
+FAILED tests/test_smartscan.py::TestSmartScanRoleFiles::test_role_files_map_contains_all_candidates

@@ -1,0 +1,27 @@
+{
+ "source_path": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Versió ACCEPTADA del pressupost 26·0050: mateix PDF que 26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf però amb el formulari p.5 omplert amb text TIPOGRAFIAT (no manuscrit) i dues signatures manuscrites dibuixades (G3 i el client).",
+ "issuer": "G3 (document) + client GRUPO CUENCA GUERRERO SL (emplenat i signatura d'acceptació)",
+ "date": "2026-01-27 (data del pressupost; la data de signatura no consta al PDF)",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 genera el pressupost; el client (Grupo Cuenca Guerrero SL) omple el formulari p.5 i el signa. Sense signatura digital: 0 widgets, cap objecte /Type/Sig — les signatures són traços/imatges (p.5 té 3 imatges vs 2 a l'original). Emplenat digital tipografiat, no manuscrit.",
+  "for_whom": "per a G3: acceptació contractual que dispara la campanya de camp i la facturació",
+  "why": "el formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' és on el client declara A NOM DE QUI va l'informe → autoritat A per a client_name",
+  "expected_fields": ["client_name (formulari p.5, autoritat A)", "NIF client", "adreça/telèfon/email del client (NO de l'obra)"],
+  "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "num_floors", "superficie_parcela", "expedient"],
+  "relation_to_others": "mateixa base (mateixos metadata/creationDate) que 26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf → NO és font independent per a OBRA/CTE/campanya; només aporta el formulari p.5 omplert i les signatures. La carpeta es diu 'ACEPTACION CASTELLANO' (no hi ha DADES CLIENT.txt en aquest projecte).",
+  "authority_for": ["client_name"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "Grupo Cuenca Guerrero SL (NIF B26604942)", "location": "p.5 formulari DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME (y=277)", "quote": "NOMBRE Y APELLIDO: Grupo Cuenca Guerrero SL | N.I.F./C.I.F.: B26604942 | DIRECCIÓN: Calle Merce Rodoreda, 9 | CP Y POBLACIÓN: 25133 - Vilanova de Segria | TELF.: 625 298 919", "confidence": 0.95, "note": "Autoritat A (regla del skill: formulari p.5 omplert = el client de l'informe). Coincideix amb el bloc CLIENTE de p.1. L'adreça Merce Rodoreda 9 és la del client, NO la de l'obra. Signatura del client present (traç manuscrit il·legible, compatible amb 'Antoni/Antonio'); signatura G3 al costat 'Resp. Departamento'."},
+  {"concept_id": "client_contact_person", "value": "ANTONIO CUENCA LARA", "location": "p.5 'PERSONAS Y/O EMPRESAS QUE PUEDEN RECIBIR INFORMACIÓN' (y=448)", "quote": "ANTONIO CUENCA LARA", "confidence": 0.9, "note": "persona física autoritzada a rebre informació (probablement l'administrador de la SL); NO és el client_name de l'informe (el formulari posa la SL). Email: hola@cuencaguerrero.es (y=531)."},
+  {"concept_id": "street_address", "value": "C/ Sta. Gemma 4, Urb. La Serra", "location": "p.1 bloc OBRA", "quote": "ESTUDI GEOTECNIC ⏎ C/ STA. GEMMA 4, URB.LA SERRA ⏎ VILANOVA DE SEGRIA", "confidence": 0.9, "note": "idèntic a l'original 26.0050/ → mateixa font, no independent"},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "p.1 bloc OBRA / p.5 formulari '25133 - Vilanova de Segria'", "quote": "VILANOVA DE SEGRIA | 25133 - Vilanova de Segria", "confidence": 0.9, "note": "el CP 25133 del formulari és el del client, que coincideix amb el municipi de l'obra"},
+  {"concept_id": "cte_edificacio", "value": "C0", "location": "p.2", "quote": "Tipo de Edificio. C0", "confidence": 1.0, "note": "duplicat del pressupost original, no font independent"},
+  {"concept_id": "cte_sol", "value": "T1", "location": "p.2", "quote": "Tipo de terreno: T1", "confidence": 1.0, "note": "duplicat del pressupost original"}
+ ],
+ "not_present": ["expedient", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "lab_sample_id", "lab_depth", "data de signatura"],
+ "reading_notes": "Mateixos metadata i mateix text que l'original (mateix creationDate/modDate 27/01/2026): l'emplenat és una capa de text tipografiat afegida sobre el mateix PDF (p.5 passa de 33 a 42 blocs i de 2 a 3 imatges). Cap /Sig ni widget → signatura no criptogràfica; zona de signatures verificada visualment (clip y=430-715 a 170 dpi): dues rúbriques manuscrites, la del client sota 'Firma la aceptación del contrato-presupuesto'. Checkbox 'Digital por email' sense marcar però email omplert. IBAN del client present (ES91 0182 ...), irrellevant per a l'informe."
+}

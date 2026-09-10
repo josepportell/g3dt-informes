@@ -1,0 +1,89 @@
+{
+ "source_path": "25.0794/RE_ PRESSU.msg",
+ "source_md5": "f9418534fa84b8b8b61f8203c65d76a4",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (fil 'PRESSU'): Eva Roig demana a Eva Vázquez preparar el pressupost del nou projecte RUBÍ (casa modular) i li passa el contacte de la clienta; la resposta (RE:) no afegeix text nou, només reenvia PLAN_COST_RUBI.xlsx.",
+ "issuer": "Eva Roig (Dep. Administració, G3) — missatge original; Eva Vázquez (Responsable Dept Geologia, G3) — resposta",
+ "date": "2025-11-05 16:23:26+01:00 (resposta); missatge original citat: 2025-11-05 09:34",
+ "pages_or_sheets": "cos de correu (2 missatges encadenats), sense pàgines",
+ "context": {
+  "who_made_it": "Eva Roig (Dep. Administració, G3) escriu el correu original 'PRESSU', amb CC a Dolors Maqueda; Eva Vázquez (Responsable Dept Geologia) respon",
+  "for_whom": "Personal intern de G3 (Eva Vázquez, que prepara el pressupost; CC Dolors Maqueda) — no hi ha cap destinatari extern",
+  "why": "Passar el contacte de la clienta i les dades bàsiques d'un nou encàrrec (RUBÍ, casa modular) perquè Eva Vázquez pugui preparar i enviar el pressupost; demana enviar-lo per WhatsApp perquè la clienta no té correu electrònic",
+  "expected_fields": [
+   "nota informal de tipus d'obra",
+   "contacte del client (nom + telèfon)",
+   "nom/municipi del projecte al text"
+  ],
+  "not_expected": [
+   "adreça de l'obra",
+   "dades tècniques de camp",
+   "arquitecte real",
+   "expedient formal",
+   "dates de camp",
+   "superfícies",
+   "coordenades"
+  ],
+  "relation_to_others": "Correu d'encàrrec intern que origina el projecte RUBÍ 3001631 (precedeix PRESSUPOST GEOTEC.RUBI.pdf i PLAN_COST_RUBI.xlsx). La resposta (RE:) és purament una nota de traspàs sense text propi nou; l'adjunt plan_cost_rubi.xlsx és el mateix fitxer (mateix md5) ja solt a la carpeta — no és font independent addicional.",
+  "authority_for": [
+   "building_type",
+   "client_name",
+   "architect_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "casa modular",
+   "location": "cos del missatge original citat, sota l'encapçalament 'RUBÍ'",
+   "quote": "RUBÍ\n\n(1 casa modular)",
+   "confidence": 0.55,
+   "note": "Nota informal d'Eva Roig identificant el tipus d'obra; no és cap de les 3 fonts d'autoritat habituals (pressupost/PLAN_COST/comanda) — corrobora, confirmar amb aquelles."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Joana Martínez",
+   "location": "cos del missatge original citat, sota 'Adjunto la info que m'ha passat'",
+   "quote": "Adjunto la info que m'ha passat\n\nJOANA MARTINEZ – 696 04 00 77",
+   "confidence": 0.5,
+   "note": "Contacte que ha passat la informació del projecte a Eva Roig. Casa modular sense arquitecte → probable clienta particular que encarrega directament (situació estructural coneguda: 'architect_name absent', Rubí és un dels exemples citats a la regla). Només telèfon: 'no te correu' (frase següent del mateix missatge)."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Joana Martínez",
+   "location": "cos del missatge original citat, sota 'Adjunto la info que m'ha passat'",
+   "quote": "JOANA MARTINEZ – 696 04 00 77",
+   "confidence": 0.3,
+   "note": "Candidat només per la pràctica coneguda d'Eva d'escriure el client al camp arquitecte quan no n'hi ha (casa modular, particular) — mai segur; el candidat principal per aquest concepte és client_name."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "cos del missatge original citat, primera línia després de la salutació",
+   "quote": "RUBÍ",
+   "confidence": 0.25,
+   "note": "Nom de projecte usat al correu, no un camp OBRA/adreça explícit; coincideix amb el nom de la carpeta però no és font d'autoritat (Pas 3: manen comanda N21 / pressupost p.1 / PLAN_COST E9)."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "street_address",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura directa de body.txt (preext); correu 100% text, sense imatges a llegir. L'adjunt plan_cost_rubi.xlsx és duplicat (md5 idèntic) del fitxer ja solt a la carpeta ('already_in_folder': '25.0794/PLAN_COST_RUBI.xlsx') — no s'ha obert de nou, es llegirà com a document PLAN_COST propi."
+}

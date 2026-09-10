@@ -1,0 +1,22 @@
+{
+ "source_path": "25.0616/RE_ pressupost geotècnic.msg",
+ "document_type": "correu",
+ "what_it_is": "Resposta interna d'Eva Vázquez (geòloga) a Dolors + Eva Roig, 20/08/2025 13:15, SENSE text nou (només signatura), adjuntant PLAN_COST_LINYOLA.xlsx (= el fitxer solt, md5 idèntic) perquè administració emeti el pressupost.",
+ "issuer": "Eva Vázquez Marcet <eva@g3dt.com> (Responsable Dept Geologia, geòloga col. 4302)",
+ "date": "2025-08-20",
+ "pages_or_sheets": "cos (cadena) + 9 adjunts (1 xlsx + 8 imatges de signatura)",
+ "context": {
+  "who_made_it": "Eva (G3 geologia)",
+  "for_whom": "administració G3",
+  "why": "entregar el càlcul de costos (PLAN_COST) per fer el pressupost 25·0616 (emès l'endemà, 21/08)",
+  "expected_fields": ["res de nou al text"],
+  "not_expected": ["tot"],
+  "relation_to_others": "RE: de correu_10 (cadena completa citada). Adjunt PLAN_COST_LINYOLA.xlsx md5 bdeacfee = 25.0616/PLAN_COST_LINYOLA.xlsx (llegit a g3_04_plan_cost.json). Imatges = signatures.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "duplicate_of", "value": "correu_09_pressupost.json (text) + g3_04_plan_cost.json (adjunt)", "location": "adjunt", "quote": "ATT: PLAN_COST_LINYOLA.xlsx size=112076 md5=bdeacfee…", "confidence": 1.0, "note": "cap dada nova"}
+ ],
+ "not_present": ["(cap camp nou)"],
+ "reading_notes": "Text nou = només signatura d'Eva Vázquez. Data del correu (20/08) ≠ cap data del nivell A."
+}

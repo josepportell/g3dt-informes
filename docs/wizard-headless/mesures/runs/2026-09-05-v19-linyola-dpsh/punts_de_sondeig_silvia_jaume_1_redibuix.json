@@ -1,0 +1,143 @@
+{
+ "source_path": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+ "source_md5": "aea7363d09156b57bfb49a4cc1d5c739",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol de l'arquitecte (planta general de la parcel·la, full 03, A3 1:100) redibuixat, amb la ubicació dels 3 punts de sondeig marcats en vermell i les distàncies d'acotament fins a elements de la planta.",
+ "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P (representat per Josep Bunyesc Palacín, Dr. Arquitecte)",
+ "date": "AGOST 2025 (data del plànol, caixetí)",
+ "pages_or_sheets": "1 pàgina (plànol A3, full 03 'PLANTA GENERAL - PARCEL·LA')",
+ "context": {
+  "who_made_it": "BUNYESC ARQUITECTURA EFICIENT, S.L.P (arquitecte del projecte), amb l'aixecament dels 3 punts de sondeig marcats en vermell probablement afegit per G3/Eva per planificar la campanya de camp.",
+  "for_whom": "Per als promotors de l'obra (Sílvia Eroles Balagueró i Jaume Nadal Andreu) i com a eina de camp de G3 per ubicar els punts DPSH/sondeig.",
+  "why": "Definir la planta general de la parcel·la i localitzar amb precisió (cotes en vermell) els 3 punts de sondeig de l'estudi geotècnic.",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "client_name",
+   "building_type",
+   "num_dpsh_tests (indirecte, via punts marcats)"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_*",
+   "cte_*",
+   "utm_x_utm_y",
+   "referencia_catastral"
+  ],
+  "relation_to_others": "Segons l'inventari, existeix 'Punts de Sondeig_Silvia_Jaume (1).pdf' a l'arrel del projecte amb el mateix md5 (296c5aa7...) que '25.0616/Punts de Sondeig_Silvia_Jaume.pdf' (duplicat exacte, mateix contingut). Aquest document ('..._REDIBUIX.pdf') té un md5 diferent (aea7363d...) i una mida molt més gran (337.779 vs 149.307 bytes): és presumiblement un redibuix/versió refeta del mateix plànol de punts de sondeig. No s'ha obert l'altre fitxer en aquesta crida (mode --only); la relació es dedueix només del nom i de l'inventari.",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "client_name",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "architect_name",
+   "value": "Josep Bunyesc Palacín",
+   "location": "caixetí, bloc REDACTOR/S",
+   "quote": "representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+   "confidence": 0.85,
+   "note": "Persona (Dr. Arquitecte) dins del bloc REDACTOR/S; el despatx és BUNYESC ARQUITECTURA EFICIENT, S.L.P (vegeu architect_company)."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+   "location": "caixetí, bloc REDACTOR/S",
+   "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró",
+   "location": "caixetí, bloc PROMOTORS",
+   "quote": "SÍLVIA EROLES BALAGUERÓ",
+   "confidence": 0.6,
+   "note": "Dos promotors al mateix encàrrec (vegeu també Jaume Nadal Andreu); l'informe pot anar a nom de qui signa l'acceptació (ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf, no obert en aquesta crida). Candidat, no segur, per la multiplicitat."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Jaume Nadal Andreu",
+   "location": "caixetí, bloc PROMOTORS",
+   "quote": "JAUME NADAL ANDREU",
+   "confidence": 0.6,
+   "note": "Co-promotor amb Sílvia Eroles Balagueró; mateixa nota de multiplicitat."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C. Clot de la Llacuna, 16",
+   "location": "caixetí, bloc EMPLAÇAMENT",
+   "quote": "C. Clot de la Llacuna, 16",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "caixetí, bloc EMPLAÇAMENT",
+   "quote": "Linyola  (25240)",
+   "confidence": 0.9,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, bloc TÍTOL DEL PROJECTE",
+   "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "caixetí, bloc EMPLAÇAMENT",
+   "quote": "C. Clot de la Llacuna, 16 / Linyola (25240)",
+   "confidence": 0.85,
+   "note": "Extra concept, no és un dels 15 camps del nivell A."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "plànol, planta general",
+   "quote": "1r PUNT SONDEIG / 2n PUNT SONDEIG / 3r PUNT SONDEIG",
+   "confidence": 0.4,
+   "note": "3 punts marcats i acotats al plànol. 'Sondeig' aquí és terme genèric del camp (no hi ha sondeig a rotació documentat a Linyola); no és font d'autoritat A per al recompte (l'Excel DPSH mana). Candidat corroboratiu."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela",
+  "num_floors",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text de la pàgina llegible (text_ok=true a meta.json); combinat amb la imatge sencera (page-1.png) per interpretar la ubicació gràfica dels 3 punts de sondeig i les cotes en vermell, que el text pla no situa espacialment. No ha calgut render_clip (caixetí ja llegible a 150 dpi). L'EXPEDIENT 13/52/04 del caixetí és el de l'arquitecte, no el de G3 (regla del Pas 3): no s'emet com a candidat de 'expedient'."
+}

@@ -1,0 +1,155 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Excel intern de G3 amb el registre de colpeig DPSH (Nb/N20) per als 4 punts de penetracio dinamica (P-1 a P-4); es el fitxer FONT del qual es genera 'PDF/ANNEXES/3001621_DPSH.pdf' (Print to PDF/Distiller)",
+ "issuer": "G3 (Eva), plantilla interna de calcul DPSH",
+ "date": "24/10/25 (text 'DATA:' incrustat, identic a les 4 fulls)",
+ "pages_or_sheets": "4 fulls Excel: P-1, P-2, P-3, P-4 (un per punt DPSH)",
+ "context": {
+  "who_made_it": "G3 (Eva), full de calcul intern per registrar colpeig DPSH de camp i derivar-ne el NB equivalent (factor de conversio a la cel·la D15=0,83)",
+  "for_whom": "us intern G3; es la font de la qual s'imprimeix 'PDF/ANNEXES/3001621_DPSH.pdf', l'annex tecnic incorporat a l'informe",
+  "why": "registrar per punt el colpeig DPSH cada 20 cm, calcular-ne el NB, marcar la fondaria de rebuig, la zona de mostra, el nivell freatic i el nivell geologic (banda de color)",
+  "expected_fields": [
+   "dpsh_tests[] (punt, cota_inici, profunditat_assolida, rebuig, nivell_freatic) -- taula de cops i peu 'Rebuig a'",
+   "num_dpsh_tests (fulls amb dades de colpeig realment poblades)",
+   "expedient, street_address, municipality, field_date -- com a text de capcalera incrustat (objecte de dibuix, no cel·la)",
+   "num_soil_levels (candidat molt feble, nomes banda de color 'Nivell 1' a la columna Nivells)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "cota_referencia (valor absolut)"
+  ],
+  "relation_to_others": "es el fitxer FONT de 'PDF/ANNEXES/3001621_DPSH.pdf' (md5 de76ad0dfa3cf9cc4cbed9479cfa634f, ja llegit -- vegeu pdf_annexes_3001621_dpsh.json). El text de capcalera (OBRA/POBLACIO/DATA/NUMERO D'INFORME/P-x/cota inici) esta incrustat com a objecte de dibuix/quadre de text (no com a valor de cel·la: l'API de cel·les de xlrd no el retorna encara que hi es -- confirmat per escaneig binari cru del fitxer, cadena identica a les 4 fulls) i es BYTE-IDENTIC al que apareix impres al PDF derivat: per a expedient/street_address/municipality/field_date, aquest document NO es una font independent addicional del PDF (mateixa font subjacent, mateix text). En canvi, la taula numerica de colpeig (Colpeig DPSH/Colpeig NB per cada 20 cm) i el peu 'Rebuig a' es llegeixen aqui com a VALORS DE CEL·LA exactes (no per OCR/lectura visual del PDF renderitzat), evidencia de metode independent encara que del mateix fitxer font.",
+  "authority_for": [
+   "num_dpsh_tests",
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "4 fulls Excel (P-1, P-2, P-3, P-4), columna 'Colpeig DPSH' (C17:C22 aprox.) poblada de dades numeriques a cadascun",
+   "quote": "sheet_names = ['P-1', 'P-2', 'P-3', 'P-4']; totes 4 amb serie completa de Colpeig DPSH/Colpeig NB i peu 'Rebuig a'",
+   "confidence": 0.85,
+   "note": "font primaria per a aquest camp segons regla Pas 3 (Excel DPSH = executats, per davant d'albara TPS i pressupost previstos); llegit directament de valors de cel·la, no per recompte de pagines com al PDF derivat -- evidencia de metode independent"
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "capcalera de cada full (objecte de dibuix, no cel·la), repetit identic a P-1..P-4",
+   "quote": "NÚMERO D´INFORME: 3001621",
+   "confidence": 0.75,
+   "note": "text incrustat, identic byte-a-byte al del PDF derivat (mateixa font, no independent); coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ ARBRELLS 18 A",
+   "location": "capcalera de cada full (objecte de dibuix, no cel·la), bloc OBRA",
+   "quote": "OBRA: C/ ARBRELLS 18 A",
+   "confidence": 0.7,
+   "note": "text incrustat, identic al del PDF derivat -- no independent"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "capcalera de cada full (objecte de dibuix, no cel·la), bloc POBLACIO",
+   "quote": "POBLACIÓ: CASTELLAR DEL VALLES",
+   "confidence": 0.75,
+   "note": "text incrustat, identic al del PDF derivat -- no independent; forma curta sense accents/minuscules"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "capcalera de cada full (objecte de dibuix, no cel·la), sota OBRA",
+   "quote": "DATA: 24/10/25",
+   "confidence": 0.65,
+   "note": "candidat 2 segons regla field_date (data del DPSH); text incrustat identic al del PDF derivat -- no independent; confirmar amb fitxa de camp F38 si existeix (no llegida en aquesta crida)"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "peu de cada full, cel·la B79 (llegenda) i franja de color a la columna Nivells (G)",
+   "quote": "Nivell 1 (swatch B78 rgb(255,128,128))",
+   "confidence": 0.3,
+   "note": "font secundaria molt feble: la columna Nivells nomes te UNA franja etiquetada a la llegenda ('Nivell 1', vermell rgb(255,128,128)). A P-1 i P-4 hi ha ADEMES una franja mes clara sense etiqueta propia (groc palid rgb(255,255,192), fondaries 0 a -0,6/-0,8 m) per SOBRE de la franja vermella -- a P-2 i P-3 la franja vermella comenca directament des de la superficie, sense franja groga. Aquesta franja groga sense llegenda NO s'interpreta com 'Nivell 2': podria ser terra vegetal/reblert sense codi propi a la llegenda d'aquesta plantilla. La font primaria per num_soil_levels es la columna 'Unitat litologica' de l'annex de sondeig (document diferent, no llegit aqui) -- no pujar a segur amb nomes aquest document; anotat per encreuar amb l'annex de sondeig al consolidat"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "full 'P-1': capcalera (objecte de dibuix) + peu B80 'Rebuig a'",
+    "quote": "P-1     - 4  m  (respecte el carrer). [...] B80: 'Rebuig  a -1,08 m'"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "-4,2 m (respecte el carrer)",
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "full 'P-2': capcalera (objecte de dibuix) + peu B80 'Rebuig a'",
+    "quote": "P-2    cota inici: -4,2 m  (respecte el carrer) [...] B80: 'Rebuig  a -0,48 m'"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "full 'P-3': capcalera (objecte de dibuix) + peu B80 'Rebuig a'",
+    "quote": "P-3    cota inici: - 4 m  (respecte el carrer). [...] B80: 'Rebuig  a -0,76 m'"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": "-4 m (respecte el carrer)",
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "full 'P-4': capcalera (objecte de dibuix) + peu B80 'Rebuig a'",
+    "quote": "P-4     - 4  m (respecte el carrer). [...] B80: 'Rebuig  a -1,55 m'"
+   }
+  ],
+  "__nota": "cota_inici i profunditat_assolida coincideixen exactament amb 'PDF/ANNEXES/3001621_DPSH.pdf' (mateix fitxer font); el peu 'Rebuig a' es sempre B80 (0-indexat R79C1) a les 4 fulls d'aquest projecte, dins la zona B79-B82 documentada al Pas 3b. La cota_inici es RELATIVA (respecte el carrer) a totes 4 files -- coherent amb la regla d'or (ERR Castellar): si el projecte fa servir cotes relatives al DPSH, la taula de sondeig ha de seguir el mateix sistema, no l'absolut de cota_referencia."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia (valor absolut msnm)",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit amb xlrd 2.0.2 (formatting_info=True) per accedir a valors de cel·la I colors de fons. El text de capcalera (OBRA/POBLACIO/DATA/NUMERO D'INFORME/P-x/cota inici) NO es cel·la -- l'API de cel·les de xlrd el retorna buit (fila 13-14, cel·la fusionada (13,14,6,10), sense valor); nomes es va poder confirmar la seva existencia i contingut exacte fent un escaneig binari cru del fitxer (grep de cadenes ASCII/CP1252 sobre els bytes crus), que el va trobar 4 cops (un per full), identic al que ja s'havia llegit visualment al PDF derivat. Columna N.F. (E): fons blanc/sense ombrejat (colour_idx=9, sense patro real) a les 4 fulls -- no hi ha cap marca de nivell freatic per color ni per text, confirma el 'no detectat' ja vist al PDF. Columna Nivells (G): 2 colors reals trobats -- vermell rgb(255,128,128) = llegenda 'Nivell 1' (confirmat: mateix colour_idx que el swatch B78), i groc palid rgb(255,255,192) sense entrada a la llegenda (nomes a P-1 files 16-19 i P-4 files 16-20, per SOBRE de la franja vermella) -- vegeu nota a tier_a num_soil_levels. Columna MOSTRA (D): fons blanc a gairebe totes les files (formatatge de plantilla, no dada); a P-3 hi ha una banda grisa rgb(227,227,227) a les files 22-24 (fondaries -1,2/-1,4/-1,6 m), PER SOTA del rebuig (-0,76 m) i sense text -- mateix color que el fons de la zona de llegenda/peu (rgb 227,227,227), sembla artefacte de plantilla, no interpretat com a dada real. Cel·la D15=0,83 es un factor de conversio DPSH->NB (Colpeig NB = Colpeig DPSH / 0,83), no metadada de projecte. Cap 'CLIENT'/'ARQUITECTE'/'SUPERFICIE'/'PLANTA'/'CADASTRE' trobat enlloc del fitxer (escaneig binari complet) -- confirma la regla Pas 2 'cap metadada de projecte' mes enlla del segell d'expedient/adreca/data."
+}

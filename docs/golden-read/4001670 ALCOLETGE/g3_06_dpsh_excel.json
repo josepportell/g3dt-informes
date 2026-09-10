@@ -1,0 +1,93 @@
+{
+ "source_path": "ANNEXES/4001670_DPSH.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Transcripció de l'Eva dels 3 penetròmetres DPSH (fulls P-1, P-3, P-2) amb N20 cada 20 cm, coeficient NB 0,83, rebuig a −1,60 / −1,69 / −1,30 m; al P-3, SPT-1 a 0,80-1,40 m amb cops 5/9/11/33. Cap metadada de projecte.",
+ "issuer": "G3 (Eva), a partir del full de camp TPS (PENETROS.pdf)",
+ "date": null,
+ "pages_or_sheets": "3 fulls: P-1, P-3, P-2 (en aquest ordre)",
+ "context": {
+  "who_made_it": "Eva (G3), transcrivint el full de camp manuscrit de TPS",
+  "for_whom": "ella mateixa: font de les gràfiques i de l'annex DPSH de l'informe",
+  "why": "versió digital REVISADA dels valors de camp (mana sobre el manuscrit PENETROS.pdf)",
+  "expected_fields": [
+   "num_dpsh_tests (fulls amb dades a la columna C)",
+   "cota de rebuig per punt (B81)",
+   "N.F. (F)",
+   "SPT (E)"
+  ],
+  "not_expected": [
+   "expedient (només al nom del fitxer)",
+   "client",
+   "adreça",
+   "municipi",
+   "data",
+   "cota de referència",
+   "plantes",
+   "arquitecte"
+  ],
+  "relation_to_others": "versió revisada de PENETROS.pdf (full de camp TPS manuscrit, per a l'agent visual) i font de PDF/ANNEXES/4001670_DPSH.pdf. La nota 'SPT-1 / 0,80 a 1,40' al P-3 coincideix amb la comanda de laboratori (SPT -1 (P3), 0,8-1,4). 'Nivell 1'/'Nivell 2' a C79/F79 és llegenda de plantilla, NO compte de nivells.",
+  "authority_for": [
+   "num_dpsh_tests",
+   "lab_location (corroboració: SPT-1 al P-3)",
+   "lab_depth (corroboració: 0,80 a 1,40)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "fulls P-1, P-3, P-2 (columna C amb dades a tots tres)",
+   "quote": "sheets ['P-1', 'P-3', 'P-2'] | P-1: 9 files C numèriques (rebuig −1,60) | P-3: 10 (rebuig −1,69) | P-2: 8 (rebuig −1,30)",
+   "confidence": 1.0,
+   "note": "executats = previstos (3). Ordre dels fulls P-1, P-3, P-2 (no alfabètic)."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "nom del fitxer",
+   "quote": "4001670_DPSH.xls",
+   "confidence": 0.9,
+   "note": "només pel nom; cap cel·la amb l'expedient"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "P-3!E22",
+   "quote": "SPT-1",
+   "confidence": 0.9,
+   "note": "la mostra SPT-1 s'ha pres al punt P-3 (= comanda)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,80-1,40 m",
+   "location": "P-3!E23 (+E24 cops SPT)",
+   "quote": "0,80 a 1,40 | 5/9/11/33",
+   "confidence": 0.9,
+   "note": "= comanda J35/L35 (0,8 / 1,4). Cops SPT 5/9/11/33 (nivell B). Cap discrepància."
+  },
+  {
+   "concept_id": "dpsh_refusal_depths",
+   "value": "P-1 −1,60 m; P-2 −1,30 m; P-3 −1,69 m",
+   "location": "B81 de cada full",
+   "quote": "Rebuig a la cota de  -1,60 m | Rebuig a la cota de  -1,30 m | Rebuig a la cota de  -1,69 m",
+   "confidence": 0.95,
+   "note": "nivell B. Penetròmetres molt curts (rebuig < 2 m): substrat dur superficial."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels (C79/F79 'Nivell 1/2' és llegenda de plantilla)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "xlrd. Capçalera fila 16 ('Profunditat de penetròmetre', 'Colpeig DPSH', 'Colpeig NB', 'MESURA DE PAR', 'N.F.', 'Nivells'); D15 = 0,83 (coeficient NB). Columnes F (N.F.) i G (Nivells) buides a tots els fulls: cap nivell freàtic anotat. Files 1-14 buides (cap capçalera de projecte)."
+}

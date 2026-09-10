@@ -1,0 +1,117 @@
+{
+ "source_path": "25.0794/PRESSUPOST GEOTEC.RUBI.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 25·0794 de G3 (05/11/2025, 7 p.) per a un estudi geotècnic a Rubí: 3 DPSH + 1 SPT amb recuperació de mostra + laboratori; 840 € (IVA no inclòs). Formulari p.5 buit, sense signatura.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2025-11-05",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 (ERP m4PRO; PDF creator 'G3 DESENVOLUPAMENT TERRITORIAL, S.L.', title 'm4PRO ERP · Informes del Proyecto', modDate 05/11/2025 17:54)",
+  "for_whom": "la sol·licitant del geotècnic (JOANA MARTINEZ, particular de Rubí)",
+  "why": "oferir i acotar la campanya (3 DPSH, 1 SPT, laboratori) i el preu abans d'acceptar l'encàrrec",
+  "expected_fields": [
+   "client_name (com a sol·licitant)",
+   "street_address (bloc OBRA)",
+   "municipality",
+   "cte_edificacio / cte_sol",
+   "num_dpsh_tests (previst)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample",
+   "num_floors",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "document d'encàrrec; la fitxa de camp (C6) i la comanda deriven del mateix encàrrec. L'acceptació és una foto WhatsApp a ACCEPTACIO/ (visual, la llegeix l'altre agent). Mateix codi 25·0794 que la carpeta 25.0794/ i que el PRESSU.msg.",
+  "authority_for": [
+   "municipality",
+   "cte_edificacio",
+   "cte_sol"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "JOANA MARTINEZ",
+   "location": "p.1 bloc CLIENT (y=231)",
+   "quote": "CLIENT: / JOANA MARTINEZ / 08       RUBI / Tel: 696040077",
+   "confidence": 0.6,
+   "note": "sol·licitant del pressupost. És una persona particular (no conté ARQUITECT), viu a Rubí (CP '08' truncat) → probablement la propietària/promotora, però cap document de la carpeta ho diu amb l'etiqueta 'Promotor'. Sense cognom segon ni NIF. Candidat, no segur."
+  },
+  {
+   "concept_id": "street_address",
+   "value": null,
+   "location": "p.1 bloc OBRA",
+   "quote": "OBRA: / ESTUDI GEOTECNIC / RUBI",
+   "confidence": 0.0,
+   "note": "El bloc OBRA NO porta línia d'adreça (només encàrrec + municipi). El bloc CLIENT tampoc porta carrer. Adreça absent en aquest document."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "RUBI",
+   "location": "p.1 bloc OBRA línia 2 (y=421)",
+   "quote": "ESTUDI GEOTECNIC ⏎ RUBI",
+   "confidence": 0.9,
+   "note": "forma curta G3 sense accent; forma oficial 'Rubí'. Coincideix amb la població de la sol·licitant ('08 RUBI'), cosa que no és prova per si sola."
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0",
+   "location": "p.2 (y=211)",
+   "quote": "Tipus d’edifici: C0",
+   "confidence": 1.0,
+   "note": "C0 = < 300 m² i < 4 plantes (definició Eva)"
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2 (y=227)",
+   "quote": "Tipus de Terreny : T1",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "p.2 campanya (y=678) + p.4 valoració 001.001",
+   "quote": "3 assaigs de penetració dinàmica DPSH | UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH 3,00",
+   "confidence": 0.7,
+   "note": "previstos, no executats; mana l'Excel DPSH"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "1 assaig SPT amb recuperació de mostra (sense sondeig a rotació pressupostat)",
+   "location": "p.2 (y=694) + p.4 001.002/001.003",
+   "quote": "1 assaig SPT, amb recuperació de mostra | ASSAIG SPT 1,00 | ML.PREVIS A L'ASSAIG SPT 1,00",
+   "confidence": 0.7,
+   "note": "previst; cap línia 'N Sondeig' a rotació: la mostra de laboratori vindrà d'un SPT"
+  },
+  {
+   "concept_id": "expedient_comercial",
+   "value": "25·0794",
+   "location": "p.1 peu (y=756) i p.4/p.5 capçalera",
+   "quote": "25·0794 ⏎ P#",
+   "confidence": 1.0,
+   "note": "codi comercial, NO expedient (l'expedient és 3001631, carpeta/comanda)"
+  }
+ ],
+ "not_present": [
+  "street_address",
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth"
+ ],
+ "reading_notes": "Identificat per metadata (creator G3, title m4PRO). Blocs de p.1 ordenats per (y,x): l'ordre natural del PDF posa JOANA MARTINEZ després d'OBRA: i CLIENT: al final. p.1 és una imatge de portada amb text superposat. Formulari p.5 ('DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME') completament buit; cap /Sig ni widgets: NO és la versió acceptada/signada. Cap arquitecte esmentat enlloc del document."
+}

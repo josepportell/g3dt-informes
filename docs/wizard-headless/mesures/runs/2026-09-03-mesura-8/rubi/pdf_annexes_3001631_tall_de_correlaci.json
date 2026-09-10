@@ -1,0 +1,170 @@
+{
+ "source_path": "PDF/ANNEXES/3001631_tall de correlació.pdf",
+ "source_md5": "a7965b2cf0e7789c084ec8a0fba11d0f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació estratigràfica entre els 3 punts DPSH (P-1, P-2, P-3), amb foto aèria d'ubicació i llegenda de nivells",
+ "issuer": "G3 (Eva) - síntesi gràfica pròpia de l'estudi geotècnic",
+ "date": "Desembre 2025 (caixetí); creationDate PDF 2025-12-17",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 / Eva, síntesi gràfica pròpia (FreeHand -> Acrobat Distiller/PScript5.dll, mateix patró que la resta d'annexos de l'Eva)",
+  "for_whom": "figura per inserir al cos de l'informe geotècnic",
+  "why": "correlacionar estratigràficament els 3 punts DPSH (P-1, P-2, P-3) i mostrar la cota de fonamentació recomanada",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia dels nivells",
+   "punts DPSH i resultat de rebuig",
+   "expedient",
+   "adreça/municipi (caixetí)",
+   "building_type (títol)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "dades de laboratori",
+   "superficies",
+   "field_date",
+   "utm_x_utm_y",
+   "cota_referencia impresa"
+  ],
+  "relation_to_others": "Projecte sense annex de sondeig a rotació (només DPSH) -> aquest tall és la font PRIMARIA (i única) per a num_soil_levels i la litologia dels nivells, seguint la regla del Pas 3b 'sense sondeig, nivells = tall'. Existeix una còpia/esborrany probable a l'arrel del projecte ('tall.pdf', mateix doc_type_hint annex_tall); aquest fitxer (PDF/ANNEXES/) té prioritat per la regla d'esborranys del Pas 3 i és el que s'ha llegit.",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "caixetí, cel·la Exp:",
+   "quote": "Exp: 3001631",
+   "confidence": 0.75,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, TÍTOL DEL PROJECTE",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRERDE LA MIRANDA Nº 39,  PARC. 6-105 B, RUBÍ (BARCELONA)",
+   "confidence": 0.55,
+   "note": "redacció pròpia de l'Eva al títol, no és la plantilla G3 tipus C1/C2; 'CARRERDE' imprès sense espai (typo del document original)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer de la Miranda, Nº 39",
+   "location": "caixetí (TÍTOL DEL PROJECTE) + etiqueta de carrer a la foto aèria",
+   "quote": "AL CARRERDE LA MIRANDA Nº 39 (caixetí); \"Carrer de la Miranda\" (etiqueta a la foto aèria)",
+   "confidence": 0.6,
+   "note": "typo 'CARRERDE' sense espai al caixetí; l'etiqueta de la foto aèria ho confirma sense typo"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí (Barcelona)",
+   "location": "caixetí, TÍTOL DEL PROJECTE",
+   "quote": "RUBÍ (BARCELONA)",
+   "confidence": 0.6
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "foto aèria (llegenda 'Assaig de penetració dinàmica DPSH') + capçaleres de columna del tall",
+   "quote": "P-1 / P-2 / P-3",
+   "confidence": 0.7
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 1,
+   "location": "LLEGENDA",
+   "quote": "Nivell 1 : Graves i sorres. Carbonatat.",
+   "confidence": 0.85,
+   "note": "cap sondeig a rotació en aquest projecte (només DPSH); el tall és l'única font de nivells del corpus. Sota la llegenda només hi ha 'Sòls superficials' (cobertura sense número) i 'Nivell 1'; cap altre nivell numerat ni al gràfic ni a la llegenda"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "Polígon 6, Parcel·la 105 B",
+   "location": "caixetí, TÍTOL DEL PROJECTE",
+   "quote": "PARC. 6-105 B",
+   "confidence": 0.15,
+   "note": "format polígon-parcel·la de sòl rústic, NO és el format estàndard de referència cadastral urbana (20 caràcters); no inferir com a referència cadastral formal sense confirmar amb consulta del Cadastre. Les etiquetes '27' i '26' que apareixen sobre la foto aèria semblen números de portal de parcel·les veïnes (properes a 'Nº 39'), no referència cadastral -> no s'han inclòs com a candidat"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "tall, peu de la columna P-1",
+    "quote": "Nb=R",
+    "note": "el tall només confirma textualment el rebuig (marca 'R' impresa); la cota d'inici i la fondària exacta de rebuig no hi són impreses com a xifra (només posició gràfica sobre l'eix msnm) -> no s'estima per píxels; vénen de l'Excel DPSH / annex DPSH PDF"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "tall, peu de la columna P-2",
+    "quote": "Nb=R",
+    "note": "mateixa limitació que P-1"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "tall, peu de la columna P-3",
+    "quote": "Nb=R",
+    "note": "mateixa limitació que P-1"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "Sòls superficials (cobertura, sense número)",
+    "litologia_candidats": [
+     "Sòls superficials"
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "LLEGENDA + banda superior fosca del tall gràfic",
+    "quote": "Sòls superficials",
+    "note": "banda prima uniforme a les 3 columnes; sense fondària impresa -> de/a null (no s'estima gruix per píxels)"
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Graves i sorres. Carbonatat."
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "LLEGENDA",
+    "quote": "Nivell 1 : Graves i sorres. Carbonatat.",
+    "note": "ocupa tota la resta de la secció (fins a Nb=R de cada punt); sense fondària de transició impresa -> de/a null"
+   }
+  ],
+  "__nota": "dpsh_tests i soil_levels; sondeig_tests i spt_ma_tests buits (projecte sense sondeig a rotació ni mostres SPT/MA en aquest document)"
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF és brossa (FreeHand -> Acrobat Distiller 15.0 / PScript5.dll; text_ok=false, halves_pages=[1]); llegit visualment amb page-1.png (150dpi) + 3 clips amb scripts/render_clip.py a 300-350dpi (foto aèria completa, secció del tall ampliada, marge superior dret i logo) per confirmar que no hi havia text addicional fora del ja llegit. Cap 'Cota inici'/'z:' imprès enlloc del document (només escala msnm genèrica de l'eix del tall, sense xifra associada a la superfície ni a la cota de fonamentació recomanada més enllà de l'alineació visual amb el gridline '212') -> no s'inclou cota_referencia com a candidat. Els valors 'Nb=' (colpeig) i les fondàries de transició són gràfics: no s'ha mesurat cap posició en píxels; només s'ha transcrit com a text literal la marca 'Nb=R' de rebuig a cada punt. 'Data: Desembre 2025' del caixetí és la data del document/informe (mes), no data de camp -> no s'usa per a field_date. Existeix un probable duplicat/esborrany a l'arrel del projecte ('tall.pdf', 983665 bytes, mateix doc_type_hint 'annex_tall') que no s'ha obert (--only limita a un sol document); per la regla d'esborranys del Pas 3, PDF/ANNEXES/*.pdf té prioritat sobre 'tall.pdf'."
+}

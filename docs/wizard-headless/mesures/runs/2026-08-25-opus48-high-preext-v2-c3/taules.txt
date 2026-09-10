@@ -1,0 +1,6 @@
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+-- spt_ma_tests: or 1 files / prod 1 files
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+TOTALS: {'OK': 28, 'CAUTELA': 1}

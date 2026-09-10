@@ -1,0 +1,276 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Plantilla Excel interna de G3 amb el colpeig DPSH (N20) transcrit per punt de penetròmetre dinàmic, un full per punt (P-1 a P-4): fondària, colpeig DPSH, colpeig NB normalitzat, mostra, nivell freàtic i nivells (aquesta última per color de cel·la).",
+ "issuer": "G3 (Eva) — plantilla interna de transcripció, sense logotip ni signatura d'emissor extern",
+ "date": null,
+ "pages_or_sheets": "4 fulls (P-1, P-2, P-3, P-4); 80 files x 7 columnes cadascun",
+ "context": {
+  "who_made_it": "Eva (G3), transcripció manual del colpeig de camp del DPSH a la plantilla Excel interna de G3",
+  "for_whom": "ús intern G3 — base de dades del colpeig que alimenta la taula 'Penetròmetres dinàmics DPSH' de l'informe i el càlcul de Nb",
+  "why": "registrar cop a cop (cada 20 cm) el colpeig de cada punt de penetròmetre dinàmic (P-1 a P-4) i marcar la fondària de rebuig",
+  "expected_fields": [
+   "colpeig DPSH per fondària (N20)",
+   "colpeig NB normalitzat",
+   "fondària de rebuig (peu 'Rebuig a')",
+   "nivell freàtic (si n'hi ha)",
+   "transicions de nivell (columna 'Nivells', per color de cel·la)"
+  ],
+  "not_expected": [
+   "expedient",
+   "client",
+   "adreça de l'obra",
+   "municipi",
+   "arquitecte",
+   "data de camp",
+   "cota de referència absoluta / cota d'inici"
+  ],
+  "relation_to_others": "Mateix contingut de camp que PDF/ANNEXES/3001621_DPSH.pdf (versió PDF generada des d'aquest mateix Excel, que SÍ porta capçalera 'Cota inici' per pàgina — aquest Excel no la porta) i que el full de camp manuscrit 'PENETROS + SONDEIG.pdf' (origen de la transcripció). Per als valors de colpeig i rebuig, aquest Excel MANA (regla Pas 0: l'Excel revisat per l'Eva mana sobre el manuscrit).",
+  "authority_for": [
+   "num_dpsh_tests",
+   "dpsh_tests[].profunditat_assolida",
+   "dpsh_tests[].rebuig",
+   "dpsh_tests[].nivell_freatic"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "Fulls P-1, P-2, P-3, P-4 (columna C 'Colpeig DPSH' amb dades a totes 4)",
+   "quote": "P-1!C16='Colpeig DPSH' amb P-1!C19=6; ídem P-2!C19=15, P-3!C19=16, P-4!C19=8 — les 4 fulles tenen dades a la columna C (= executats, regla Pas 2)",
+   "confidence": 0.9,
+   "note": "regla Pas 2: num_dpsh_tests = fulls Excel amb dades a la columna C (executats)"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "Columna G 'Nivells' (color de cel·la), fulls P-1 a P-4",
+   "quote": "P-1: G17:G20 bg=#FFFFC0, G21:G23 bg=#FF8080 (transició entre -0,6 i -0,8 m); P-4: G17:G21 bg=#FFFFC0, G22:G25 bg=#FF8080 (transició entre -0,8 i -1,0 m); P-2 i P-3: tot el rang llegit bg=#FF8080 (cap cel·la #FFFFC0)",
+   "confidence": 0.4,
+   "note": "senyal SECUNDARI (Pas 3b: la 'Unitat litològica' de l'annex de sondeig mana per al nombre de nivells quan existeix — aquest projecte en té, PDF/ANNEXES/3001621_sondeig.pdf). Cap cel·la #CC9CCC ('Humitat', vegeu llegenda A80) a la columna G de cap full: sense marca d'humitat al DPSH. Candidat, mai segur."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1.08",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-1!B80 (peu)",
+    "quote": "Rebuig  a -1,08 m",
+    "note": "cota_inici no consta en aquest Excel (buscar a PDF/ANNEXES/3001621_DPSH.pdf o a l'annex de sondeig); nivell_freatic no_trobat — columna F16 'N.F.' buida (text i color comprovats, cap cel·la F17:F77 amb bg ni valor)",
+    "extra": {
+     "registre_n20": [
+      {
+       "profunditat": 0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 6,
+       "colpeig_nb": 7.23
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 10,
+       "colpeig_nb": 12.05
+      },
+      {
+       "profunditat": -0.8,
+       "colpeig_dpsh": 13,
+       "colpeig_nb": 15.66
+      },
+      {
+       "profunditat": -1.0,
+       "colpeig_dpsh": 38,
+       "colpeig_nb": 45.78
+      },
+      {
+       "profunditat": -1.2,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120.48
+      }
+     ],
+     "nivells_color": "Nivell 1 (bg=#FFFFC0) de 0 a -0,6 m; Nivell 2 (bg=#FF8080) de -0,8 a -1,2 m (rebuig dins Nivell 2). Transició candidata entre -0,6 i -0,8 m.",
+     "colpeig_nb_divisor": "D15=0.83 (factor de normalització 'Colpeig NB' = Colpeig DPSH / 0.83); no és un senyal de nivell A, Tier B"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-0.48",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-2!B80 (peu)",
+    "quote": "Rebuig  a -0,48 m",
+    "note": "cota_inici no consta en aquest Excel; nivell_freatic no_trobat — columna F16 'N.F.' buida (text i color comprovats)",
+    "extra": {
+     "registre_n20": [
+      {
+       "profunditat": 0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 15,
+       "colpeig_nb": 18.07
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120.48
+      }
+     ],
+     "nivells_color": "Tot el rang llegit (0 a -0,6 m) bg=#FF8080 (Nivell 2); cap cel·la #FFFFC0 (Nivell 1) — a diferència de P-1/P-4, aquí no apareix Nivell 1 al DPSH.",
+     "colpeig_nb_divisor": "D15=0.83; Tier B"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-0.76",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-3!B80 (peu)",
+    "quote": "Rebuig  a -0,76 m",
+    "note": "cota_inici no consta en aquest Excel; nivell_freatic no_trobat — columna F16 'N.F.' buida (text i color comprovats). Cel·les E23:E25 amb bg=#E3E3E3 sense text ni valor — gris neutre (mateix de les cel·les de llegenda no-dada), no interpretat com a marca de MOSTRA.",
+    "extra": {
+     "registre_n20": [
+      {
+       "profunditat": 0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 16,
+       "colpeig_nb": 19.28
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 46,
+       "colpeig_nb": 55.42
+      },
+      {
+       "profunditat": -0.8,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120.48
+      }
+     ],
+     "nivells_color": "Tot el rang llegit (0 a -0,8 m) bg=#FF8080 (Nivell 2); cap cel·la #FFFFC0 (Nivell 1) — mateix patró que P-2.",
+     "colpeig_nb_divisor": "D15=0.83; Tier B"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-1.55",
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "matis": null,
+    "location": "P-4!B80 (peu)",
+    "quote": "Rebuig  a -1,55 m",
+    "note": "cota_inici no consta en aquest Excel; nivell_freatic no_trobat — columna F16 'N.F.' buida (text i color comprovats)",
+    "extra": {
+     "registre_n20": [
+      {
+       "profunditat": 0,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.2,
+       "colpeig_dpsh": 0,
+       "colpeig_nb": 0
+      },
+      {
+       "profunditat": -0.4,
+       "colpeig_dpsh": 8,
+       "colpeig_nb": 9.64
+      },
+      {
+       "profunditat": -0.6,
+       "colpeig_dpsh": 8,
+       "colpeig_nb": 9.64
+      },
+      {
+       "profunditat": -0.8,
+       "colpeig_dpsh": 12,
+       "colpeig_nb": 14.46
+      },
+      {
+       "profunditat": -1.0,
+       "colpeig_dpsh": 27,
+       "colpeig_nb": 32.53
+      },
+      {
+       "profunditat": -1.2,
+       "colpeig_dpsh": 21,
+       "colpeig_nb": 25.3
+      },
+      {
+       "profunditat": -1.4,
+       "colpeig_dpsh": 28,
+       "colpeig_nb": 33.73
+      },
+      {
+       "profunditat": -1.6,
+       "colpeig_dpsh": 100,
+       "colpeig_nb": 120.48
+      }
+     ],
+     "nivells_color": "Nivell 1 (bg=#FFFFC0) de 0 a -0,8 m; Nivell 2 (bg=#FF8080) de -1,0 a -1,6 m (rebuig dins Nivell 2). Transició candidata entre -0,8 i -1,0 m.",
+     "colpeig_nb_divisor": "D15=0.83; Tier B"
+    }
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit sense fitz/xlrd/openpyxl: sheet-i.cells.txt i sheet-i.colors.txt de les 4 fulles (P-1 a P-4, index 0-3). Cap CSV necessari (cells.txt ja porta REF+valor). Confirmat contra l'exemple d'or del skill (Castellar: -1,08/-0,48/-0,76/-1,55 = coincideix exactament amb les 4 fulles llegides). Columna F ('N.F.') comprovada per color (formatting_info) i text a les 4 fulles: buida a totes — no_trobat confirmat, no assumit. Columna G ('Nivells') SÍ porta color real i variable entre punts (no és decoració de plantilla: P-1/P-4 mostren transició groc->vermell, P-2/P-3 són vermell des de superfície) — capturat com a candidat secundari, mai com a segur, i sempre subordinat a l'annex de sondeig (que existeix en aquest projecte). Fila de llegenda (A79 groc / B79 vermell / A80 lila 'Humitat') idèntica a les 4 fulles — és plantilla, no una transició real; cap cel·la de dades usa el lila #CC9CCC. Columna D ('Colpeig NB') és un valor derivat (divisor D15=0,83), Tier B, no és lectura de nivell A. Cap metadada de projecte (expedient/client/adreça/data) enlloc del llibre, tal com preveu el Pas 2."
+}

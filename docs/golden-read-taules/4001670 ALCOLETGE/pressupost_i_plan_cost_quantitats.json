@@ -1,0 +1,35 @@
+{
+ "source_path": "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf (p.2) + 26.0049/PLAN_COST_ALCOLETGE.xlsx (OFERTA)",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Quantitats contractades d'assaigs (només línies rellevants per a les taules; la resta del pressupost és fora d'abast aquí)",
+ "issuer": "G3 (m4PRO ERP / PLAN COST)",
+ "date": "codi comercial 26.0049 (carpeta); PLAN_COST adjunt al RE_ del 27/01/2026",
+ "pages_or_sheets": "pressupost p.2; full OFERTA",
+ "context": {
+  "who_made_it": "G3 pressuposta l'encàrrec al sol·licitant",
+  "for_whom": "client/sol·licitant",
+  "why": "definir l'abast contractat: quins assaigs es fan",
+  "expected_fields": [
+   "nombre previst de DPSH",
+   "SPT",
+   "ml de sondeig"
+  ],
+  "not_expected": [
+   "valors de camp"
+  ],
+  "relation_to_others": "quantitats PREVISTES; l'Excel DPSH (executats) mana si difereixen — aquí coincideixen (3 i 3)",
+  "authority_for": [
+   "sondeig_tests (absència de sondeig contractat)",
+   "corroboració num_dpsh_tests i nombre d'SPT"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "sondeig_tests": [],
+  "__nota": "Pressupost p.2: '3 assaigs de penetració dinàmica DPSH' + '1 assaig SPT, amb recuperació de mostra'; CAP línia de sondeig a rotació. PLAN_COST OFERTA: B21=3 (unitat d'assaig de penetració dinàmica DPSH), B23=1 (spt), cap unitat a les línies de ml de perforació (columna B buida al bloc SONDEIGS). Corrobora que el projecte no té sondeig a rotació."
+ },
+ "not_present": [
+  "sondeig a rotació (cap línia)"
+ ],
+ "reading_notes": "Del pressupost només s'ha llegit la p.2 (quantitats); blocs CLIENT/OBRA fora d'abast d'aquesta lectura de taules."
+}

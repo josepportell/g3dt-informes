@@ -1,0 +1,24 @@
+{
+ "source_path": "ACCEPTACIO/RV_ Realització geotècnic.msg",
+ "document_type": "correu",
+ "what_it_is": "Reenviament d'Eva Roig (G3 DT) a Dolors, 23/09/2025 16:50, amb el text nou 'ACCEPTACIÓ (ja l’he contestat jo)', del missatge de Sílvia Eroles del 23/09 16:36 (cc Jaume Nadal Andreu) que adjunta 'G3DT_Silvia_Jaume signat.pdf' (= ACCEPTACIO/…, md5 idèntic) i pregunta terminis.",
+ "issuer": "G3 DT <g3@g3dt.com> (Eva Roig, administració)",
+ "date": "2025-09-23",
+ "pages_or_sheets": "cos (cadena de 3 missatges) + 4 adjunts (1 PDF = acceptació signada + 3 imatges signatura)",
+ "context": {
+  "who_made_it": "Eva Roig (admin G3) reenviant la clienta",
+  "for_whom": "Dolors Maqueda (admin/planning)",
+  "why": "registrar l'acceptació del pressupost 25·0616 i obrir expedient",
+  "expected_fields": ["client_name (qui accepta)", "data d'acceptació (nivell B)"],
+  "not_expected": ["expedient", "adreça", "data de camp", "cota", "nivells", "lab"],
+  "relation_to_others": "Subconjunt de la cadena de correu_12 (missatges 19/09 12:49, 19/09 12:55, 23/09 16:36). Adjunt 'G3DT_Silvia_Jaume signat.pdf' md5 8aacb8da = ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf (llegit a acceptacio_02). Data d'acceptació 23/09/2025 = modDate del PDF signat.",
+  "authority_for": ["client_name (corroboració)"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "Sílvia Eroles", "location": "missatge 23/09 16:36 (remitent + signatura)", "quote": "Adjunto l'acceptació del pressupost. … Sílvia Eroles", "confidence": 0.85, "note": "mateixa persona que el formulari d'acceptació; cc jaume nadal andreu (2n promotor)"},
+  {"concept_id": "client_name", "value": "Jaume Nadal Andreu", "location": "CC", "quote": "Para: G3 DT <g3@g3dt.com>; jaume nadal andreu <jume_540@hotmail.com>", "confidence": 0.5, "note": "co-destinatari; candidat a co-client"},
+  {"concept_id": "acceptance_date", "value": "2025-09-23", "location": "capçalera del missatge de Sílvia", "quote": "Enviado el: martes, 23 de septiembre de 2025 16:36", "confidence": 1.0, "note": "nivell B; mai field_date"}
+ ],
+ "not_present": ["expedient", "street_address", "municipality", "architect_name", "field_date", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "Text nou per sobre del 'De:': 'ACCEPTACIÓ ⏎ (ja l’he contestat jo)'. Resta = cadena ja coberta a correu_12. Adjunt dedupat per md5."
+}

@@ -1,0 +1,14 @@
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+ALERTA   dpsh_tests[0].nivell_freatic estat or=segur prod=no_trobat (or value='No detectat')
+ALERTA   dpsh_tests[1].nivell_freatic estat or=segur prod=no_trobat (or value='No detectat')
+ALERTA   dpsh_tests[2].nivell_freatic estat or=segur prod=no_trobat (or value='No detectat')
+ALERTA   dpsh_tests[3].nivell_freatic estat or=segur prod=no_trobat (or value='No detectat')
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+ALERTA   sondeig_tests[0].nivell_freatic estat or=segur prod=no_trobat (or value='No detectat')
+-- spt_ma_tests: or 1 files / prod 1 files
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 1 files · alineades per clau
+ABSENT   soil_levels[0].de (or=segur)
+ABSENT   soil_levels[0].a (or=segur)
+CAUTELA  soil_levels[1].de or segur, prod candidats (bo dins): '-0,50'
+TOTALS: {'OK': 20, 'ALERTA': 5, 'CAUTELA': 2, 'ABSENT': 2}

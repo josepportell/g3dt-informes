@@ -1,0 +1,33 @@
+# castellar/viaA — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 15 | 1 | 4 | 2 | 80 % |
+| calc | 13 | 0 | 3 | 0 | 81 % |
+| narr | 4 | 4 | 4 | 4 | 67 % |
+| resta | 2 | 0 | 1 | 1 | 67 % |
+
+- [narr] `access_street` **NO_DATA** gen=«None» ↔ eva=«carrer adjacent situat al sud»
+- [narr] `adjacent_east_fmt` **MISMATCH** gen=«Per la part est amb una parcel·la buida.» ↔ eva=«Per la part est, amb una parcel·la construïda amb piscina.»
+- [narr] `adjacent_north_fmt` **MISMATCH** gen=«Per la part nord amb una parcel·la buida.» ↔ eva=«Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una »
+- [narr] `adjacent_south_fmt` **CLOSE** gen=«Per la part sud amb el Carrer dels Arbrells.» ↔ eva=«Per la part sud, amb el carrer Arbrells.»
+- [narr] `adjacent_west_fmt` **MISMATCH** gen=«I finalment, per la part oest amb una parcel·la amb construcció.» ↔ eva=«I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres.»
+- [narr] `building_structure_desc` **CLOSE** gen=«sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l» ↔ eva=«Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterra»
+- [A] `building_type_lower` **MISMATCH** gen=«habitatge unifamiliar aïllat» ↔ eva=«3 habitatges unifamiliars d’estructura lleugera, fusta»
+- [narr] `conclusions_water_statement` **MISMATCH** gen=«En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detect» ↔ eva=«Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió rel»
+- [A] `cota_referencia` **MISMATCH** gen=«+570.90» ↔ eva=«-4.0»
+- [calc] `cte_edificacio` **MISMATCH** gen=«C-0» ↔ eva=«C-1»
+- [calc] `cte_sol` **MISMATCH** gen=«T-2» ↔ eva=«T-1»
+- [resta] `data_signatura_text` **MISMATCH** gen=«06 de setembre de 2026» ↔ eva=«19 de novembre de 2025.»
+- [narr] `empentes_paragraph` **NO_DATA** gen=«None» ↔ eva=«Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà»
+- [narr] `estabilitat_paragraph` **NO_DATA** gen=«None» ↔ eva=«Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren material»
+- [calc] `k30_value` **MISMATCH** gen=«8.0» ↔ eva=«Si s’optés per una fonamentació amb llosa, el valor de coeficient de balast, referit a la »
+- [A] `lab_location` **NO_DATA** gen=«None» ↔ eva=«Punt: S-1»
+- [A] `lab_sample_id` **NO_DATA** gen=«None» ↔ eva=«Mostra : SPT-1»
+- [narr] `lab_tests_text` **CLOSE** gen=«Contingut en sulfats solubles UNE 83963:2008» ↔ eva=«1 assaig de contingut en sulfats UNE 83963 : 2008»
+- [narr] `materials_intro` **CLOSE** gen=«A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des de» ↔ eva=«A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del»
+- [A] `plantes` **CLOSE** gen=«Pb+1» ↔ eva=«Pb+1Pp»
+- [narr] `site_description` **NO_DATA** gen=«None» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer »
+- [A] `spt_lithology` **MISMATCH** gen=«Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)» ↔ eva=«Limolites i bretxes»
+- [A] `superficie_parcela` **MISMATCH** gen=«1284.0» ↔ eva=«1.284»

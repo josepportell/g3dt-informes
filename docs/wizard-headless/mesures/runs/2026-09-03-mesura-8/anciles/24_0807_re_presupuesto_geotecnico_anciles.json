@@ -1,0 +1,79 @@
+{
+ "source_path": "24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+ "source_md5": "06679f22ededacfbfeb7fb0e3959528a",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Fil de correu (Re:) entre Alba Barrau (contacte del client, retrateria.com) i Dolors 'Loli' Maqueda (G3DT, Dep. Administració): Alba reprèn el projecte, demana l'estudi geotècnic, reenvia l'acceptació signada i adjunta l'enllaç als plànols de parcel·la i projecte (IV_PLANOS.pdf).",
+ "issuer": "Alba Barrau <abarrau@retrateria.com> (últim missatge del fil); fil compartit amb Dolors Maqueda de G3DT",
+ "date": "2026-02-05 23:54:36+01:00 (missatge més recent); fil nia un intercanvi anterior des de 2024-11-18)",
+ "pages_or_sheets": "n/a (correu, sense adjunts segons meta.attachments)",
+ "context": {
+  "who_made_it": "Alba Barrau, contacte del client (domini retrateria.com), en resposta a Dolors 'Loli' Maqueda del Departament d'Administració de G3DT",
+  "for_whom": "G3DT (Dolors Maqueda), per gestionar l'inici de l'estudi geotècnic",
+  "why": "Alba reprèn un projecte aturat des de novembre de 2024, demana que G3DT executi l'estudi geotècnic, reenvia l'acceptació signada del pressupost i adjunta els plànols de parcel·la i projecte perquè G3DT pugui planificar l'accés i l'obra",
+  "expected_fields": [
+   "client_name (sol·licitant)",
+   "referències a l'acceptació i als plànols"
+  ],
+  "not_expected": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_*",
+   "cte_*"
+  ],
+  "relation_to_others": "Reenvia l'acceptació signada (probablement ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf i/o ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg, no oberts en aquesta lectura) i esmenta l'enllaç (Google Drive) a IV_PLANOS.pdf, que ja existeix solt a la carpeta (24.0807/IV_PLANOS.pdf, inventariat i llegit per separat) — no és un adjunt d'aquest .msg (meta.attachments buit). Mateix assumpte 'Re: PRESUPUESTO GEOTECNICO ANCILES' que ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg: probable còpia/continuació del mateix fil, no font independent. Fil DIFERENT de 24.0807/Presupuesto Parcela Anciles.msg i RE_ Presupuesto Parcela Anciles.msg (assumpte 'Parcela', no 'GEOTECNICO'). El bloc niat de novembre 2024 és l'encàrrec original que va donar lloc al pressupost (PRESUPUESTO GEOTEC.ANCILES.pdf) i a la comanda de laboratori.",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Alba Barrau",
+   "location": "capçalera/signatura del correu (missatges de 2026-02-05 23:51 i 23:54)",
+   "quote": "El jue, 5 feb 2026 a las 23:51, Alba Barrau (<abarrau@retrateria.com>) escribió: Hola, reenvío aceptación.",
+   "confidence": 0.35,
+   "note": "Sol·licitant que reprèn el projecte i tramet l'acceptació — correu d'encàrrec/seguiment: candidat, MAI segur per aquesta sola font (Pas 3). Cap paraula 'ARQUITECT' al fil, així que no es descarta com a client. Creuar amb el formulari p.5 d'ACCEPTACIO (autoritat A per a client_name) i amb el promotor que consti al plànol IV_PLANOS."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "Dolors Maqueda / G3DT",
+   "location": "signatura, tot el fil",
+   "quote": "Loli Maqueda / Dep. Administració / www.g3dt.com",
+   "confidence": 0.0,
+   "note": "G3 mai és client (regla del Pas 3): és personal de G3DT (Dep. Administració) responent l'encàrrec, no el sol·licitant."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit des de body.txt (pre-extracció, mode --only); no s'ha executat extract_msg. Fil llarg amb missatges niats (Re: dins Re:): un intercanvi de novembre 2024 (encàrrec original) i un de febrer 2026 (represa + acceptació + plànols). meta.attachments buit: 'IV_PLANOS.pdf' esmentat al cos és un enllaç extern (Drive), no un adjunt embegut d'aquest .msg. _inventory.json consultat abans de llegir (Pas 0): confirma que IV_PLANOS.pdf, els dos fitxers ACCEPTACIO/ i els dos .msg de 'Parcela' existeixen com a documents separats a la carpeta."
+}

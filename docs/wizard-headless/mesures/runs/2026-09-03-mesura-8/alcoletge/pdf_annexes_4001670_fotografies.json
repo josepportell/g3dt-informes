@@ -1,0 +1,88 @@
+{
+ "source_path": "PDF/ANNEXES/4001670_fotografies.pdf",
+ "source_md5": "a4cea6a5792bd51b1b230b1a162d3982",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex fotogràfic de G3 (2 pàgines, 4 fotos) que documenta l'emplaçament de la màquina de DPSH als punts P-1, P-2 i P-3, i el detall dels materials recuperats en l'assaig SPT-1.",
+ "issuer": "G3",
+ "date": null,
+ "pages_or_sheets": "2 pàgines (F-1/F-2 a p.1, F-3/F-4 a p.2)",
+ "context": {
+  "who_made_it": "G3 (Eva), com a annex fotogràfic de camp per a l'informe",
+  "for_whom": "el mateix informe geotècnic (annex visual per al lector)",
+  "why": "documentar visualment l'emplaçament dels assaigs DPSH P-1/P-2/P-3 i el material recuperat de l'assaig SPT-1",
+  "expected_fields": [
+   "confirmació visual de num_dpsh_tests (P-1/P-2/P-3)",
+   "confirmació de lab_sample_id (SPT-1)",
+   "expedient a la capçalera"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "còpia impresa (Distiller) de ANNEXES/4001670_fotografies.FH11 (no llegible, exclòs de l'inventari); mateix expedient que ANNEXES/4001670_DPSH.xls (fulls P-1/P-2/P-3) i comanda laboratori_4001670_ALCOLETGE.xls (SPT-1)",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "capçalera p.1 i p.2, extrem dret (\"Fotografies - pàgina N\" | codi)",
+   "quote": "4001670",
+   "confidence": 0.5,
+   "note": "capçalera de la plantilla G3 fotogràfica, coincident amb el nom de carpeta; confirmació, no font primària (comanda/annex DPSH/GTL)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "peus de foto p.1 (\"Fotografies 1 i 2\") i p.2 (\"Fotografies 3 i 4\")",
+   "quote": "assaigs de penetració dinàmica DPSH P-1 i P-2 ... assaig de penetració dinàmica DPSH P-3",
+   "confidence": 0.55,
+   "note": "confirma l'existència de P-1, P-2, P-3 (coincident amb els 3 fulls de l'Excel DPSH: P-1, P-2, P-3); no és la font primària de recompte, només confirmació visual"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "peu de foto F-4, p.2",
+   "quote": "detall dels materials recuperats en l'assaig SPT-1, respectivament",
+   "confidence": 0.5,
+   "note": "confirma l'etiqueta SPT-1 de la mostra recuperada; no dona fondària ni cota (regla: annex de l'Eva mana per a l'etiqueta, GTL/Excel per a la profunditat)"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF és brossa (FreeHand -> Acrobat Distiller 15.0, creator PScript5.dll, text_ok=false a les 2 pàgines): lectura visual directa de les 2 pàgines senceres (150 dpi), sense necessitat de clip ni meitats (halves disponibles però no calien). Cap dada del nivell A primària (client, adreça, municipi, arquitecte, dates, cotes, superfícies) apareix en aquest document: només fotos de camp amb peus de foto curts."
+}

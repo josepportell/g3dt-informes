@@ -1,0 +1,200 @@
+{
+ "signat": "3001631_informe.docx",
+ "slug": "rubi",
+ "label": "2026-09-07 veritat des dels signats (pas 1)",
+ "n_images": 10,
+ "n_static": 2,
+ "template": "g3dt-jinja-template.docx",
+ "images": [
+  {
+   "n": 1,
+   "file": "01_fig_situacio_figura-1-situacio-de-la-zona-d-estudi-am.png",
+   "media": "image1.png",
+   "md5": "42af8f7d009e4077c84123c7ec15167f",
+   "dims": [
+    1595,
+    795
+   ],
+   "bytes": 1714888,
+   "phash": "cc422b64b64bafd2",
+   "slot": "fig_situacio",
+   "static_of": null,
+   "caption": "Figura 1. Situació de la zona d’estudi, amb color taronja. (mapes topogràfic i ortofoto, ICGC 2025).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "1.1. ANTECEDENTS",
+   "para": 69
+  },
+  {
+   "n": 2,
+   "file": "02_foto_vista_fotografia-1-vista-general-de-la-zona-d.png",
+   "media": "image2.png",
+   "md5": "18f17bf6474217dc7aaf356d5865ace5",
+   "dims": [
+    1393,
+    1035
+   ],
+   "bytes": 2702538,
+   "phash": "99ea845e2bc1dc1e",
+   "slot": "foto_vista",
+   "static_of": null,
+   "caption": "Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.1.2. Descripció del solar",
+   "para": 126
+  },
+  {
+   "n": 3,
+   "file": "03_fig_assaigs_figura-2-situacio-de-l-estructura-projec.png",
+   "media": "image3.png",
+   "md5": "f3d549af3a126c6d827398ff30e4ebda",
+   "dims": [
+    847,
+    838
+   ],
+   "bytes": 866469,
+   "phash": "b626e931b5ce6883",
+   "slot": "fig_assaigs",
+   "static_of": null,
+   "caption": "Figura 2. Situació de l’estructura projectada i els assaigs realitzats.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.2. RECONEIXEMENT DEL TERRENY",
+   "para": 140
+  },
+  {
+   "n": 4,
+   "file": "04_foto_dpsh_fotografia-2-vista-de-la-maquina-utilitz.jpeg",
+   "media": "image4.jpeg",
+   "md5": "c926ad79deb9b410a29c0c30f23f825b",
+   "dims": [
+    1920,
+    1080
+   ],
+   "bytes": 533390,
+   "phash": "ae2b7b7350c0a4ad",
+   "slot": "foto_dpsh",
+   "static_of": null,
+   "caption": "Fotografia 2. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPSH.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.4.1. Assaigs de penetració tipus “DPSH”",
+   "para": 168
+  },
+  {
+   "n": 5,
+   "file": "05_fig_spt_cullera_figura-3-cullera-normalitzada-grafic-ext.jpeg",
+   "media": "image5.jpeg",
+   "md5": "681b87cc3d4e23fb68124579cb8d8598",
+   "dims": [
+    1552,
+    641
+   ],
+   "bytes": 105135,
+   "phash": "ad18ac99c6d2936d",
+   "slot": "fig_spt_cullera",
+   "static_of": null,
+   "caption": "Figura 3. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.4.2. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+   "para": 175
+  },
+  {
+   "n": 6,
+   "file": "06_fig_geologic_figura-4-mapa-geologic-a-escala-1-50-000.png",
+   "media": "image6.png",
+   "md5": "39257367b6bc6ee5b05f7a97ff845616",
+   "dims": [
+    1578,
+    805
+   ],
+   "bytes": 1007315,
+   "phash": "b960c1bd3d81b85d",
+   "slot": "fig_geologic",
+   "static_of": null,
+   "caption": "Figura 4. Mapa geològic a escala 1:50.000 de la zona en estudi, (Font: ICGC, modificat).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "3.1. MARC GEOLÒGIC",
+   "para": 262
+  },
+  {
+   "n": 7,
+   "file": "07_foto_materials_fotografia-3-detall-dels-materials-del-p.jpeg",
+   "media": "image7.jpeg",
+   "md5": "d487a64c948686ac63088f55e8da012f",
+   "dims": [
+    1920,
+    1080
+   ],
+   "bytes": 524593,
+   "phash": "99f06bacac1b90e5",
+   "slot": "foto_materials",
+   "static_of": null,
+   "caption": "Fotografia 3. Detall dels materials del primer nivell.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "3.2. CARACTERITZACIÓ DELS MATERIALS",
+   "para": 285
+  },
+  {
+   "n": 8,
+   "file": "08_static_plantilla_capcalera-3-3-hidrologia-i-hidrogeologi.png",
+   "media": "image8.png",
+   "md5": "957feed0a0518822e5b299403a832bc0",
+   "dims": [
+    752,
+    452
+   ],
+   "bytes": 20071,
+   "phash": "b939c661ce866c9a",
+   "slot": "static_plantilla",
+   "static_of": "image8.png",
+   "caption": "",
+   "shared_caption": false,
+   "after": "(capçalera: 3.3. HIDROLOGIA I HIDROGEOLOGIA)",
+   "heading": "3.2. CARACTERITZACIÓ DELS MATERIALS",
+   "para": 294
+  },
+  {
+   "n": 9,
+   "file": "09_fig_tall_figura-5-detall-del-tall-de-correlacio-q.png",
+   "media": "image9.png",
+   "md5": "c139ec422a2c7e8e8215d1b6eb2b8b51",
+   "dims": [
+    777,
+    343
+   ],
+   "bytes": 23015,
+   "phash": "ff80807f777f8080",
+   "slot": "fig_tall",
+   "static_of": null,
+   "caption": "Figura 5. Detall del tall de correlació que s’adjunta als annexes.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "4.1. GEOLOGIA",
+   "para": 460
+  },
+  {
+   "n": 10,
+   "file": "10_static_plantilla_final-del-document.jpeg",
+   "media": "image10.jpeg",
+   "md5": "8822ca721d7809d79767e6e870760768",
+   "dims": [
+    473,
+    210
+   ],
+   "bytes": 14249,
+   "phash": "bfc1e060c03f6a4f",
+   "slot": "static_plantilla",
+   "static_of": "image10.jpeg",
+   "caption": "",
+   "shared_caption": false,
+   "after": "(final del document)",
+   "heading": "4.3. FONAMENTACIÓ",
+   "para": 537
+  }
+ ]
+}

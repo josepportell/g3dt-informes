@@ -1,0 +1,220 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_sondeig.pdf",
+ "source_md5": "2295eafdfbaf24a22d916a124ea308d0",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_sondeig",
+ "what_it_is": "Full de sondeig a rotació amb bateria contínua (plantilla G3), sondeig S-1 del projecte Castellar del Vallès: capçalera de camp + registre de mostra SPT-1 (p.1), fotografies de màquina i material recuperat (p.2).",
+ "issuer": "G3 (tècnic: Eva Vázquez Marcet, geòloga col. 4302); sondeig executat per TPS (sondista Sr. Daniel Fernández)",
+ "date": "24/10/25 (data d'inici i de fi del sondeig)",
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "Eva Vázquez Marcet (G3), a partir del treball de camp del sondeig a rotació S-1 executat per TPS (sondista Daniel Fernández)",
+  "for_whom": "l'informe geotècnic del projecte, encarregat per qui figura com a 'Client' al capçalera (WOOD COMFORT PROM.)",
+  "why": "documentar el sondeig a rotació S-1: litologia i nivells travessats, mostra SPT presa, cota i UTM del punt, per alimentar l'informe geotècnic",
+  "expected_fields": [
+   "cota_referencia",
+   "utm_x",
+   "utm_y",
+   "num_soil_levels",
+   "soil_levels (litologia+fondàries)",
+   "field_date (dia del sondeig)",
+   "lab_sample_id",
+   "lab_depth",
+   "nivell_freatic",
+   "spt/n30"
+  ],
+  "not_expected": [
+   "expedient",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "num_dpsh_tests"
+  ],
+  "relation_to_others": "font primària (Pas 3b) per a nivells del sòl i litologia del projecte; el 'Client:' del capçalera és el sol·licitant segons regla Pas 0, no necessàriament el promotor — creuar amb pressupost MODF i ACCEPTACIO",
+  "authority_for": [
+   "cota_referencia",
+   "utm_x",
+   "utm_y",
+   "num_soil_levels",
+   "field_date",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "lab_testing_company",
+   "client_name",
+   "street_address",
+   "municipality",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "570.90 msnm (segons el plànol ICGC)",
+   "location": "p.1 capçalera, camp 'Cota (Z):'",
+   "quote": "570.90 msnm  (segons el plànol ICGC)",
+   "confidence": 0.85,
+   "note": "font citada explícitament (ICGC); l'annex de sondeig és font prioritària per a cota_referencia (Pas 3)"
+  },
+  {
+   "concept_id": "utm_x",
+   "value": "423182.0",
+   "location": "p.1 capçalera, camp 'UTM:' línia 1",
+   "quote": "423182.0 E(x)",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "utm_y",
+   "value": "4609623.0",
+   "location": "p.1 capçalera, camp 'UTM:' línia 2",
+   "quote": "4609623.0 N(y)",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "p.1 columna 'Unitat litològica'",
+   "quote": "NIVELL 1",
+   "confidence": 0.5,
+   "note": "ambigüitat: dues descripcions de material clarament diferenciades (terreny vegetal 0.00-0.50; substrat rocós 0.50-1.20) sota una única etiqueta 'NIVELL 1' — candidat alternatiu: 2 nivells pel canvi de material a -0.50 m; consolidar amb el tall/altres annexos"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/25",
+   "location": "p.1 capçalera, camps 'Data d'inici' i 'Data de fi'",
+   "quote": "24/10/25",
+   "confidence": 0.5,
+   "note": "dia d'execució del sondeig — candidat 2 per field_date (regla Pas 3: mana la fitxa de camp F38 / DPSH si difereixen)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.1 taula 'Mostres i assaigs in situ', columna 'Tipus de mostra'",
+   "quote": "SPT-1",
+   "confidence": 0.75,
+   "note": "annex de l'Eva mana per a l'etiqueta de mostra (regla Pas 3)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "-1.00 a -1.20 m",
+   "location": "p.1 taula, columna 'Prof. de extracció (m)'",
+   "quote": "-1,00 a -1,20",
+   "confidence": 0.75,
+   "note": null
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.1 capçalera, camp 'Sondeig nº:'",
+   "quote": "S-1",
+   "confidence": 0.7,
+   "note": "punt d'assaig d'on surt la mostra SPT-1"
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS",
+   "location": "p.1 capçalera, camp 'Empresa:'",
+   "quote": "TPS",
+   "confidence": 0.35,
+   "note": "camp 'Empresa' identifica qui executa el SONDEIG (TPS), no explícitament el laboratori d'assaigs — candidat feble; corroborar amb el GTL de laboratori"
+  },
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROM.",
+   "location": "p.1 capçalera, camp 'Client:'",
+   "quote": "WOOD COMFORT PROM.",
+   "confidence": 0.35,
+   "note": "segons Pas 0, el 'Client:' d'un annex de sondeig és el sol·licitant, no necessàriament el promotor — candidat feble; el sufix 'PROM.' suggereix promotora i és coherent amb el canvi de nom vist al pressupost MODF (GRUP ALMA → WOOD COMFORT), a confirmar creuant fonts"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells, Nº 18A-18B-20",
+   "location": "p.1 capçalera, camp 'Obra:'",
+   "quote": "AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.6,
+   "note": null
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès (Barcelona)",
+   "location": "p.1 capçalera, camp 'Obra:'",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.65,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "p.1 capçalera, camp 'Obra:'",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS...",
+   "confidence": 0.6,
+   "note": null
+  }
+ ],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "570.90 msnm (segons el plànol ICGC)",
+    "profunditat_assolida": "1.20 m",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": null,
+    "location": "p.1 capçalera + taula completa",
+    "quote": "Cota (Z): 570.90 msnm (segons el plànol ICGC); SPT-1 -1,00 a -1,20: Registre R",
+    "note": "el sondeig s'atura a 1.20 m amb rebuig (R) registrat durant l'SPT-1 al tram -1,00/-1,20; no hi ha dades per sota"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,20",
+    "litologia": "Substrat rocós: bretxes amb intercalacions de lutites i gresos vermells (nivell 0.50-1.20)",
+    "n30": {
+     "registre": "R",
+     "candidates": [
+      "R (rebuig)"
+     ]
+    },
+    "location": "p.1 taula 'Mostres i assaigs in situ'",
+    "quote": "SPT-1 | -1,00 a -1,20 | R",
+    "note": "n30 mai segur per contracte; registre literal 'R' — pot considerar-se segur segons lliçó pròpia del skill per a Castellar (R al primer/únic tram)"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "NIVELL 1 (etiqueta única a l'annex)",
+    "litologia_candidats": [
+     "0.00-0.50 m: Terreny vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+     "0.50-1.20 m: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+    ],
+    "de": "0.00",
+    "a": "1.20",
+    "mostra_del_nivell": true,
+    "location": "p.1 columnes 'Unitat litològica' + 'Descripció dels materials'",
+    "quote": "0.00-0.50 -Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels. / 0.50-1.20 - Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "note": "possible 2n nivell al canvi de material a -0.50 m; l'annex només etiqueta 'NIVELL 1' — consolidar amb tall/altres fonts"
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text de les 2 pàgines és brossa (fonts sense ToUnicode, Acrobat Distiller/PScript5.dll — patró FreeHand estàndard dels annexos de l'Eva); lectura 100% visual (pàgina sencera + meitats esquerra/dreta a 220 dpi). No ha calgut render_clip: capçalera i taula prou llegibles. Pàgina 2 només aporta fotografies (màquina + caixa de mostres; etiqueta manuscrita 'Sondeig Nº S-1... Profunditat de 0,00 Mts A 1,20 Mts Caixa Nº 1' llegible i coherent amb la taula de p.1, no aporta dades noves de nivell A)."
+}

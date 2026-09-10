@@ -1,0 +1,95 @@
+{
+ "source_path": "PENETROS.pdf",
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escaneig TPS de 3 pàgines: albarà, full de camp DPSH (3 columnes) i full d'assaig SPT/MI/MA (2 assaigs)",
+ "issuer": "TPS Prospecció del Subsòl (operari PC-KRM, equip ML60A)",
+ "date": "19-2-26",
+ "pages_or_sheets": "3 pàgines escanejades",
+ "context": {
+  "who_made_it": "TPS, subcontractista de penetròmetres, per a G3",
+  "for_whom": "G3 (les caselles DADES CLIENT: Empresa G3 / Responsable Eva són la relació TPS→G3, cap rol al projecte)",
+  "why": "registre primari de camp; l'Excel DPSH n'és la transcripció revisada i mana per als valors",
+  "expected_fields": [
+   "data",
+   "punt 0 / cota referència",
+   "N20 per tram",
+   "rebuigs",
+   "nivell freàtic",
+   "assaigs SPT amb colpeig i material"
+  ],
+  "not_expected": [
+   "client de l'informe, plantes, superfícies"
+  ],
+  "relation_to_others": "transcrit a ANEXOS/4001671_DPSH.xls; l'albarà corrobora 3 penetròmetres i 2 SPT",
+  "authority_for": [
+   "field_date",
+   "dpsh_tests (corroboració)",
+   "spt_ma_tests (registre + descripció de materials)",
+   "nivell freàtic ('Humitat a P3')"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "19/02/2026",
+   "location": "p.1 Data + p.2 Data + p.3 Data",
+   "quote": "19.2.26",
+   "confidence": 0.9,
+   "note": "coincideix amb comanda DATA DE PRESA i foto WhatsApp 2026-02-19"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "punt 0 = CARRER, inici manuscrit -0'3",
+    "profunditat_assolida": "R-1'48",
+    "rebuig": "Si",
+    "location": "p.2 columna 1",
+    "quote": "Cota Inici: -0'3 ... R-1'48"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "punt 0 = CARRER, inici manuscrit -0'3",
+    "profunditat_assolida": "R-2'18",
+    "rebuig": "Si",
+    "location": "p.2 columna 2",
+    "quote": "Cota Inici: -0'3 ... R-2'18"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "punt 0 = CARRER, inici manuscrit -0'2",
+    "profunditat_assolida": "R-3'78",
+    "rebuig": "Si",
+    "nivell_freatic": "'Humitat a P3' (bloc NIVELL FREÀTIC)",
+    "location": "p.2 columna 3 + bloc NIVELL FREÀTIC",
+    "quote": "Hi ha nivell freàtic? HUMITAT A P3"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT 1 P3",
+    "punt": "P-3",
+    "profunditat": "de 0'8 fins a 1'4",
+    "registre": "3/4/6/5",
+    "litologia": "ARGILA LLIMOSA I SORRENCA, AMB ALGUNES GRAVES.",
+    "location": "p.3 bloc 1 (SPT marcat)",
+    "quote": "Assaig de referència: SPT 1 P3 | Colpeig 15/30/45/60: 3/4/6/5 | Argila llimosa i sorrenca, amb algunes graves."
+   },
+   {
+    "id": "SPT 1 P1",
+    "punt": "P-1",
+    "profunditat": "de 0'8 fins a 1'4",
+    "registre": "13/10/14/24",
+    "litologia": "SORRA FINA-MITJA, COMPACTA (gres alterat?)",
+    "location": "p.3 bloc 2 (cap casella de tipus marcada; colpeig = SPT)",
+    "quote": "Assaig de referència: SPT 1 P1 | Colpeig: 13/10/14/24 | Sorra fina-mitja, compacta (...)"
+   }
+  ],
+  "__nota": "albarà p.1: 'Nº de penetròmetres realitzats: 3', 'Ml de penetròmetre: 7,45', 'Assaigs SPT o MI: 2', 'Ml previs perforació per assaig SPT o MI: 1,6'. Croquis p.2 amb distàncies entre punts, MUR i notes 'zona en cota inferior' / 'zona amb materials que segurament s'han sobreposat'"
+ },
+ "not_present": [
+  "cota msnm (el punt 0 manuscrit és el carrer, no una cota absoluta)"
+ ],
+ "reading_notes": "escaneig sense text → render 130 dpi + lectura visual; manuscrit del parèntesi de la litologia del SPT P1 parcialment il·legible ('gres alterat?'); id del bloc 2 llegit 'SPT 1 P1' amb traç dubtós"
+}

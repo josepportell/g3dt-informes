@@ -1,0 +1,147 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+ "source_md5": "9e23b4e41034c5993ac390a4079c37a7",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geotècnic (perfils AA' i BB') que relaciona els 3 punts DPSH (P-1, P-2, P-3) amb dos nivells de sòl i la cota de fonamentació; còpia Distiller (text brossa) del FH11 original.",
+ "issuer": "G3 (Eva)",
+ "date": "Octubre 2023 (caixetí)",
+ "pages_or_sheets": "1/1",
+ "context": {
+  "who_made_it": "Eva (G3), síntesi gràfica dels 3 punts DPSH del projecte",
+  "for_whom": "annex/figura de l'informe geotècnic",
+  "why": "correlacionar els nivells de sòl detectats a P-1, P-2 i P-3 i mostrar la relació amb la cota de fonamentació prevista",
+  "expected_fields": [
+   "num_soil_levels",
+   "soil_levels.litologia",
+   "expedient",
+   "street_address/municipality/building_type (títol)",
+   "num_dpsh_tests (corroboració)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date (dia exacte)",
+   "lab_*",
+   "cte_*",
+   "referencia_catastral",
+   "utm_x_utm_y"
+  ],
+  "relation_to_others": "còpia neta (Acrobat Distiller) de ANNEXES/4001607_tall de correlació.FH11 (mateix disseny, il·legible en text natiu, exclosa d'aquesta lectura); tall.pdf a l'arrel del projecte és presumiblement una altra còpia/versió del mateix tall — no llegida en aquesta crida --only (document diferent). Cap annex de sondeig en aquest projecte (no hi és a l'inventari): aquest tall és la font primària per a num_soil_levels i litologia.",
+  "authority_for": [
+   "num_soil_levels",
+   "tables.soil_levels.litologia"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "peu, cel·la 'Exp:'",
+   "quote": "Exp: 4001607",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna nº16",
+   "location": "peu, descripció del títol del projecte",
+   "quote": "habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.7,
+   "note": "document no és font primària per a street_address (Pas 3); corroboració"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "peu, descripció del títol del projecte",
+   "quote": "habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.7,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge",
+   "location": "peu, descripció del títol del projecte",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.55,
+   "note": "document no és font primària per a building_type; no especifica 'unifamiliar' aquí"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2023",
+   "location": "peu, cel·la 'Data:'",
+   "quote": "Data: Octubre 2023",
+   "confidence": 0.3,
+   "note": "només precisió de mes, sense dia; aquest document no és font llistada per a field_date (Pas 3) — útil només per contrastar amb fitxa/annex DPSH/albarà"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "requadre llegenda",
+   "quote": "Nivell 1: Llims argilsoso i sorrencs. / Nivell 2: Lutites i sorrenques, Substrat.",
+   "confidence": 0.85,
+   "note": "sense annex de sondeig en aquest projecte; la llegenda del tall és la font primària per a aquest camp. Sense capa de cobertura addicional sense número (els dos nivells numerats arrenquen a superfície)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "perfils AA' i BB', etiquetes de punts",
+   "quote": "P-1, P-3 (secció AA'); P-1, P-2 (secció BB')",
+   "confidence": 0.55,
+   "note": "corroboració gràfica (3 punts diferents: P-1, P-2, P-3); no és font primària, l'Excel DPSH mana"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "≈245 msnm (superfície del terreny natural a l'eix del tall)",
+   "location": "eix (msnm) dels dos perfils",
+   "quote": "(msnm) 245...241",
+   "confidence": 0.3,
+   "note": "lectura gràfica de l'eix, no hi ha 'Cota inici: +NNN,NN' imprès com a l'annex DPSH; corroboració feble, mai font primària"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "superficie_parcela",
+  "num_floors",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Llims argilsoso i sorrencs."
+    ],
+    "de": "0,00 (superfície, ~245 msnm, terreny natural)",
+    "a": "interfície amb Nivell 2, variable per punt: ~243,6-243,7 msnm a P-1 (AA' i BB'); ~243,6 msnm a P-3 (marca N=R); ~244,6-244,7 msnm a P-2 (BB', pendent ascendent) — cap valor numèric imprès, lectura gràfica sobre l'eix",
+    "mostra_del_nivell": false,
+    "location": "banda marró superior dels dos perfils (AA' i BB') + LLEGENDA",
+    "quote": "Nivell 1: Llims argilsoso i sorrencs.",
+    "rule": "Litologia = llegenda del tall (sense annex de sondeig, és la font primària, v0.8); fondàries llegides gràficament sobre l'eix msnm -> mai segur, candidats."
+   },
+   {
+    "nom": "Nivell 2",
+    "litologia_candidats": [
+     "Lutites i sorrenques, Substrat."
+    ],
+    "de": "interfície amb Nivell 1 (vegeu fila anterior, variable per punt)",
+    "a": "base del gràfic (~241 msnm, límit de dibuix; cap fondària real documentada al tall)",
+    "mostra_del_nivell": false,
+    "location": "banda taronja inferior dels dos perfils (AA' i BB') + LLEGENDA",
+    "quote": "Nivell 2: Lutites i sorrenques, Substrat.",
+    "rule": "Litologia = llegenda del tall; substrat, sense base real dibuixada (el gràfic simplement talla a 241 msnm)."
+   }
+  ],
+  "__nota": "Anotacions Nb del tall (síntesi Eva, inputs Tier B, no candidats de nivell A): secció AA' P-1 Nb=11/Nb=38/Nb=R, P-3 Nb=15/N=R/Nb=R; secció BB' P-1 Nb=11/Nb=38/Nb=R, P-2 Nb=24/Nb=R. Línia vermella discontínua 'Fonamentació' segueix aproximadament la interfície Nivell1/Nivell2 (~243,4 msnm a P-1, pujant fins ~244,6 msnm a P-2). Inset amb planta de situació dels punts P-1/P-2/P-3 i seccions AA'/BB' sobre la planta de l'habitatge, amb cotes de replanteig (0,70 / 0,90 / 3,20 / 8,90 / 12,2 / 11,4) — dimensions de la planta i posició de punts, no dades de nivell A."
+ },
+ "reading_notes": "FreeHand/Distiller -> text brossa confirmat (page-1.txt il·legible); lectura visual a la pàgina sencera (150 dpi) i zoom dels dos perfils (render_clip.py, 350 dpi) per confirmar que no hi ha cotes numèriques impreses a les interfícies de nivell (només posició gràfica sobre l'eix)."
+}

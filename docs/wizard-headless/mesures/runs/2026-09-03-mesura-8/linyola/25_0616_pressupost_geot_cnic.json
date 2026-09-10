@@ -1,0 +1,143 @@
+{
+ "source_path": "25.0616/pressupost geotècnic.msg",
+ "source_md5": "e73ae749ecc3f1e63347d1e7b84b67cf",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu d'encàrrec inicial de l'arquitecta a G3 sol·licitant pressupost d'estudi geotècnic per a un habitatge unifamiliar a Linyola",
+ "issuer": "Laia Alarcon <laia.alarcon@bunyesc.com>",
+ "date": "2025-08-19",
+ "pages_or_sheets": null,
+ "context": {
+  "who_made_it": "Laia Alarcón, arquitecta del despatx Bunyesc Arquitectura Eficient SLP (Lleida)",
+  "for_whom": "G3DT (Dolors Maqueda) — sol·licitud de pressupost",
+  "why": "Encàrrec inicial: Bunyesc redacta el projecte bàsic d'un habitatge unifamiliar a Linyola per a la seva clienta Sílvia Eroles Balagueró i demana a G3 pressupost per a l'estudi geotècnic, adjuntant els plànols del projecte i el plànol dels 3 punts de sondeig previstos.",
+  "expected_fields": [
+   "adreça de l'obra",
+   "municipi",
+   "tipus d'edificació",
+   "dades del client (nom, DNI, contacte)",
+   "nom de l'arquitecta i despatx",
+   "nombre de punts de sondeig previstos"
+  ],
+  "not_expected": [
+   "dates de camp",
+   "cota de referència",
+   "resultats de laboratori",
+   "dades tècniques del sondeig/DPSH",
+   "referència cadastral",
+   "superfícies de parcel·la/plantes"
+  ],
+  "relation_to_others": "Correu ORIGINAL de la cadena (sense prefix RE:/RV:) — és l'encàrrec que dispara el projecte. Porta 3 adjunts: 'punts_de_sondeig_silvia_jaume.pdf' i '2_02b_dg_silvia_jaume.pdf' ja són solts a la carpeta (already_in_folder a l'inventari; es llegeixen com a documents independents) i 'image.png' (31.575 B) que és el logotip de signatura de Bunyesc, no una dada de projecte. La mateixa cadena continua a 'RE_ pressupost geotècnic.msg' i 'RV_ pressupost geotècnic.msg' (no llegits en aquesta crida --only).",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "architect_company",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Sílvia Eroles Balagueró",
+   "location": "cos del correu, bloc 'Dades Clienta:'",
+   "quote": "Dades Clienta:\n\nSílvia Eroles Balagueró.\ndni: 47697437Z\ndirecció facturació: C/ Llibertat 13, 1r 2a -25240-  LINYOLA\ntelf: 618 10 86 12\ncorreu: serolesba@gmail.com",
+   "confidence": 0.6,
+   "note": "Etiquetat explícitament 'Dades Clienta' (no 'CLIENT:' de sol·licitant) — nom + DNI + adreça de facturació + contacte. Candidat fort per client_name; únic document en aquesta crida, cal creuar amb el caixetí del plànol (Promotor) i amb ACCEPTACIO. L'adreça de facturació (C/ Llibertat 13, LINYOLA) és la del client, NO l'adreça de l'obra."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "Laia Alarcon / Bunyesc Arquitectura Eficient SLP",
+   "location": "capçalera 'From:' i signatura del correu",
+   "quote": "From: Laia Alarcon <laia.alarcon@bunyesc.com>",
+   "confidence": 0.0,
+   "note": "Descartat com a client: és la sol·licitant (arquitecta que escriu l'encàrrec en nom de la seva clienta), no la propietària de l'obra."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Laia Alarcón",
+   "location": "signatura del correu",
+   "quote": "Laia Alarcón\n\narquitecta",
+   "confidence": 0.55,
+   "note": "Forma persona. Existeix també la forma despatx 'BUNYESC ARQUITECTES' / 'Bunyesc Arquitectura Eficient SLP' (peu de correu + logo de l'adjunt image.png) — quan conviuen persona i despatx, candidats [persona | despatx], mai segur (regla coneguda a Linyola)."
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Bunyesc Arquitectura Eficient SLP",
+   "location": "peu de correu (dades identificatives) i logotip de l'adjunt image.png ('BUNYESC ARQUITECTES · ARQUITECTURA EFICIENT')",
+   "quote": "Dades identificatives: Bunyesc Arquitectura Eficient Slp, B25828922, Carrer Arboretum 17,25199, Lleida.",
+   "confidence": 0.6,
+   "note": "Forma despatx; veure nota a architect_name sobre la parella persona/despatx."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+   "location": "cos del correu, primer punt de la llista, immediatament després de la introducció del projecte",
+   "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.\n\nCarrer Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.6,
+   "note": "No porta etiqueta 'OBRA:' explícita, però el context (frase anterior sobre l'habitatge) deixa clar que és l'adreça de l'obra, no del client (l'adreça del client és una altra, C/ Llibertat 13)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "cos del correu, primer punt de la llista",
+   "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+   "confidence": 0.6,
+   "note": "Concepte extra (Pas 3, adreça estructurada); no és cap dels 15 camps."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "cos del correu (frase introductòria + adreça de l'obra)",
+   "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+   "confidence": 0.6,
+   "note": "Coincideix amb el nom de la carpeta del projecte (4001607 LINYOLA)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "cos del correu, primera frase",
+   "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+   "confidence": 0.5,
+   "note": "Redacció de l'arquitecta; comparació CLOSE amb la redacció de l'informe."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "cos del correu, llista d'adjunts",
+   "quote": "plànol dels 3 punts de sondeig.",
+   "confidence": 0.35,
+   "note": "'Punts de sondeig' és ambigu (podria incloure DPSH i/o sondeig a rotació); coincideix amb els 3 fulls P-1/P-2/P-3 de l'Excel DPSH del projecte — corroboració indirecta, no lectura directa de l'Excel ni del plànol adjunt."
+  }
+ ],
+ "tables": {},
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_floors",
+  "superficie_parcela",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit únicament body.txt (pre-extracció v1.4, mode --only). L'adjunt image.png s'ha obert amb Read per confirmar que és el logotip de signatura de Bunyesc Arquitectes (sense dades de projecte) — descartat. Els altres 2 adjunts (punts de sondeig, plànol) no s'han obert aquí perquè ja consten solts a la carpeta amb entrada pròpia a l'inventari (already_in_folder) i es llegeixen com a documents independents."
+}

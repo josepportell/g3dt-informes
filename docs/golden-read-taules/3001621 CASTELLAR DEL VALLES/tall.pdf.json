@@ -1,0 +1,73 @@
+{
+  "source_path": "tall.pdf (= PDF/ANNEXES/3001621_tall de correlació.pdf, mateix dibuix FH11; la còpia Print To PDF té text net)",
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació A-A' amb els 5 punts (P-1, P-2, S-1, P-4, P-3), llegenda de materials i cota de fonamentació recomanada.",
+  "issuer": "G3 (Eva); Print To PDF 2025-11-03 16:27",
+  "date": "Data: Octubre 2025",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva (G3), síntesi dels assaigs",
+    "for_whom": "annex de l'informe 3001621",
+    "why": "correlacionar nivells entre punts",
+    "expected_fields": [
+      "num_soil_levels (llegenda)",
+      "litologies",
+      "cotes de transició",
+      "NF si n'hi ha",
+      "Nb per punt"
+    ],
+    "not_expected": [
+      "client",
+      "data de camp exacta",
+      "superfícies"
+    ],
+    "relation_to_others": "síntesi de l'annex de sondeig + DPSH; duplicat exacte de PDF/ANNEXES/3001621_tall de correlació.pdf (mateix FH11, no font independent d'aquell)",
+    "authority_for": [
+      "num_soil_levels",
+      "soil_levels.litologia (2a font)",
+      "soil_levels.de/a (cotes absolutes)"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "num_soil_levels",
+      "value": 1,
+      "location": "LLEGENDA",
+      "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (Terreny Vegetal apareix a la llegenda SENSE numeració de nivell)",
+      "confidence": 0.9,
+      "note": "coincideix amb l'annex de sondeig: 1 nivell"
+    }
+  ],
+  "tables": {
+    "soil_levels": [
+      {
+        "nom": "Terreny Vegetal (sense numeració)",
+        "litologia_candidats": [
+          "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels."
+        ],
+        "de": "superfície (~571,4-571,8 msnm segons punt)",
+        "a": "~570,9-571,4 msnm (gruix ~0,4-0,5 m, variable per punt)",
+        "mostra_del_nivell": false,
+        "location": "llegenda + secció",
+        "quote": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels."
+      },
+      {
+        "nom": "Nivell 1",
+        "litologia_candidats": [
+          "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+        ],
+        "de": "~570,9-571,4 msnm",
+        "a": "base del dibuix (569 msnm)",
+        "mostra_del_nivell": true,
+        "location": "llegenda + secció",
+        "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+      }
+    ],
+    "__nota": "Nb anotats al tall: P-1 16/R, P-2 18/R, S-1 N=R, P-4 10/33/R, P-3 19/R (coherents amb Excel DPSH i SPT). Cap marca de NF. La línia vermella 'Cota de fonamentació recomanada' és Tier B (no transcrita com a dada)."
+  },
+  "not_present": [
+    "nivell freàtic",
+    "fondàries relatives numèriques de transició (el tall és en msnm, gràfic)"
+  ],
+  "reading_notes": "Text net del Print To PDF + lectura visual del render 130 dpi per a la geometria; cotes de transició estimades del gràfic (eix 569-572)."
+}

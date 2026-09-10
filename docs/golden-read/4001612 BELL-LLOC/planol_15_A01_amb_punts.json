@@ -1,0 +1,11 @@
+{
+  "source_path": "A.01 amb punts.pdf",
+  "document_type": "planol",
+  "what_it_is": "Mateix A.01.pdf amb 4 cotes afegides a mà (8.5, 22.0, 10.0, 9.0) que situen els punts d'assaig dins la parcel·la (versió de treball d'Eva/César per marcar P-1, P-2, S-1).",
+  "issuer": "arquitecte (base) + G3 (anotacions)",
+  "date": "2025-09-30 (base)",
+  "pages_or_sheets": 1,
+  "tier_a": [],
+  "not_present": ["idèntic a planol_14_A01.json; les 4 cotes noves són distàncies de replanteig dels punts (nivell B / plànol de situació)"],
+  "reading_notes": "Dedup per contingut: mateix creationDate i mateix text excepte 4 blocs. Regla: un fitxer 'X amb punts' és X + marques de G3; no és font independent."
+}

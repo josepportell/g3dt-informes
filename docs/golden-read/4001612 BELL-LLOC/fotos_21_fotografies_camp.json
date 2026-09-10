@@ -1,0 +1,15 @@
+{
+  "source_path": "FOTOGRAFIES/ (10 jpg: DPSH/ ×3, arrel ×3, SONDEIG/ ×4; 3 Thumbs.db ignorats)",
+  "document_type": "foto",
+  "what_it_is": "Fotos de camp de WhatsApp (sense EXIF): 1 foto del full de camp DPSH, 2 de la màquina DPSH (P1, P2), 3 de la parcel·la (01/10), 1 de la màquina de sondeig (01/10), 3 de caixes/mostres del sondeig (06/10) amb etiqueta manuscrita.",
+  "issuer": "G3 (camp)",
+  "date": "2025-10-01 (7 fotos) i 2025-10-06 (3 fotos), pels noms de fitxer 'Imagen de WhatsApp YYYY-MM-DD a las HH.MM.SS'",
+  "pages_or_sheets": 10,
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-01 (DPSH) i 2025-10-06 (sondeig)", "location": "noms de fitxer", "quote": "Imagen de WhatsApp 2025-10-01 a las 12.54.41 … | Imagen de WhatsApp 2025-10-06 a las 12.03.25 …", "confidence": 0.85, "note": "EXIF absent (WhatsApp l'elimina); el nom de fitxer porta la data d'enviament = dia de camp. 7 fotos de l'1 d'oct, 3 del 6 d'oct: dos dies de camp."},
+    {"concept_id": "street_address", "value": "c/ Antoni Bellet", "location": "foto 9 i 10: etiqueta manuscrita de la caixa", "quote": "Obra: c/Antoni Bellet | Localitat: Bell-lloc | Punt: S1 | Mostra: SPT-1 | Data: 6-10-2025 | Prof. 1.00-1.60 | Colpeig 24 34 28 30 | Client: G3-Eva", "confidence": 0.5, "note": "text manuscrit en una foto; només corrobora"},
+    {"concept_id": "num_dpsh_tests", "value": "2", "location": "DPSH/P1.jpg, DPSH/P2.jpg", "quote": "(noms de fitxer)", "confidence": 0.6, "note": "noms posats per Eva"}
+  ],
+  "not_present": ["tots els altres; cap rètol, cap placa de carrer llegible"],
+  "reading_notes": "Contact sheet a 520 px és suficient per classificar. DPSH/Imagen…14.16.23 és una foto del full de camp (duplicat de PENETROS.pdf p.2). SONDEIG/…12.54.57 és duplicat de l'arrel. Regla: fotos només al final, i només per a data (nom) i per corroborar; mai per a municipi/adreça si hi ha text."
+}

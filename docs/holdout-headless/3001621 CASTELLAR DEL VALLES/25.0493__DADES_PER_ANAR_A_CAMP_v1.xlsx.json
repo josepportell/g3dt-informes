@@ -1,0 +1,26 @@
+{
+  "source_path": "25.0493/DADES PER ANAR A CAMP_v1.xlsx",
+  "document_type": "fitxa_camp_g3",
+  "what_it_is": "Fitxa interna G3 de preparació del treball de camp (contacte, previsió, logística, data)",
+  "issuer": "G3 (oficina tècnica / Eva)",
+  "date": "sense data pròpia; F38 (dies de camp) = 2025-10-24",
+  "pages_or_sheets": "fulls: fitxa, dades de referencia; 0 imatges incrustades",
+  "context": {
+    "who_made_it": "G3 internament per organitzar la sortida a camp",
+    "for_whom": "L'equip de camp (TPS ERUGA) i la mateixa Eva",
+    "why": "Coordinar accés, contacte i previsió d'assaigs abans d'anar a camp",
+    "expected_fields": ["field_date (F38)", "contacte", "previsió d'assaigs (C13/F13)", "adreça obra (C7)", "empresa de camp (C38)"],
+    "not_expected": ["num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "expedient", "utm", "referencia_catastral", "cte"],
+    "relation_to_others": "C6 'GRUP ALMA' conserva el client VELL (el MODF+acceptació del 07-08/10/25 el canvien a WOOD COMFORT): la fitxa no és autoritat per a client. El contacte 'ROC' lliga amb l'email ROCFLATS@HOTMAIL.COM de l'acceptació. F38=24/10 lliga amb les fotos 'Imagen de WhatsApp 2025-10-24'.",
+    "authority_for": ["field_date"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-24", "location": "fitxa!F38 (etiqueta E38 'dies de camp'; tipus data)", "quote": "datetime(2025, 10, 24)", "confidence": 0.85, "note": "Autoritat A per a la data de camp (regla: fitxa F38 primer)."},
+    {"concept_id": "street_address", "value": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona", "location": "fitxa!C7 (ADREÇA OBRA)", "quote": "Carrer Arbrells, 18A, 08211 Castellar del Vallès, Barcelona", "confidence": 0.6, "note": "Bloc etiquetat ADREÇA OBRA, però només cita el 18A (la fitxa és de l'època de l'encàrrec inicial); el MODF amplia a 18A-18B-20. Aporta el CP 08211."},
+    {"concept_id": "municipality", "value": "Castellar del Vallès", "location": "fitxa!C7", "quote": "08211 Castellar del Vallès, Barcelona", "confidence": 0.7, "note": "Forma oficial amb accent."},
+    {"concept_id": "num_dpsh_tests", "value": 4, "location": "fitxa!F13 (previsió)", "quote": "4 (P) +1 (S)", "confidence": 0.4, "note": "Previstos (4 penetròmetres + 1 sondeig). L'Excel DPSH mana per als executats."},
+    {"concept_id": "NOT_client_name", "value": "GRUP ALMA", "location": "fitxa!C6 (CLIENT)", "quote": "GRUP ALMA ", "confidence": 0.0, "note": "Client VELL conservat a la fitxa; l'acceptació (autoritat A) diu WOOD COMFORT PROMOCIONS SLU. Regla: la fitxa no és autoritat per a client."}
+  ],
+  "not_present": ["expedient", "client_name (vigent)", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab (C38 'TPS ERUGA' és l'empresa de sondeigs/penetròmetres, no el laboratori d'assaigs — coincideix però no és lectura de lab)", "cte"],
+  "reading_notes": "Full 'fitxa' llegit sencer amb openpyxl (data_only). Contacte: ROC, tel. 615557450, a obra 8:30. Notes B43-B45: parcel·la neta amb rampa, trucar mitja hora abans, ROC a la parcel·la."
+}

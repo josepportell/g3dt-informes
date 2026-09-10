@@ -1,0 +1,52 @@
+{
+ "project": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001621 CASTELLAR DEL VALLES",
+ "n_candidats": 15,
+ "exemplars": {
+  "assaigs": 5,
+  "projecte": 5,
+  "situacio": 7
+ },
+ "warnings": [],
+ "rc": 0,
+ "timeout": false,
+ "elapsed_s": 44.9,
+ "model": "sonnet",
+ "effort": "medium",
+ "cli": {
+  "cli_json_ok": true,
+  "num_turns": 7,
+  "duration_ms": 38600,
+  "duration_api_ms": 39082,
+  "cost_usd": 0.348612,
+  "is_error": false,
+  "subtype": "success",
+  "usage": {
+   "input_tokens": 10,
+   "output_tokens": 2305,
+   "cache_creation_input_tokens": 62467,
+   "cache_read_input_tokens": 345960
+  },
+  "models": [
+   "claude-haiku-4-5-20251001",
+   "claude-sonnet-5"
+  ]
+ },
+ "selection": {
+  "assaigs": {
+   "idx": 1,
+   "kind": "annex_crop",
+   "rel": "plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+   "page": null,
+   "src": "/home/josep/g3dt-prod-cache/images/plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+   "crop": null
+  },
+  "projecte": [],
+  "situacio": null
+ },
+ "path": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001621 CASTELLAR DEL VALLES/validation/figure_selection.json",
+ "slug": "castellar",
+ "score": {
+  "assaigs": "M (fig 2, ph 6, ncc None)",
+  "projecte1": "—"
+ }
+}

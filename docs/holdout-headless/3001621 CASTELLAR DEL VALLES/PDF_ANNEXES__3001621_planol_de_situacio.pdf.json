@@ -1,0 +1,26 @@
+{
+  "source_path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+  "document_type": "annex_planol_situacio",
+  "what_it_is": "Plànol de situació de l'informe: mapa comarcal + topogràfic + ortofoto amb la zona d'estudi i els punts P-1..P-4, S-1",
+  "issuer": "G3 (Eva)",
+  "date": "2025-11-03 (creationDate); caixetí 'Data: Octubre 2025'",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva (FreeHand → Distiller)",
+    "for_whom": "L'informe final",
+    "why": "Situar la zona d'estudi i els punts d'assaig",
+    "expected_fields": ["expedient (caixetí)", "street_address/municipality/building_type (títol)", "distribució de punts"],
+    "not_expected": ["field_date exacta", "client_name", "architect_name", "cota_referencia", "lab", "superficie_parcela (no porta taula de planejament)"],
+    "relation_to_others": "Mateix caixetí i títol que el tall i el sondeig (mateixa família d'annexos). La disposició dels punts quadra amb COORDENADES.txt. El fons ortofoto porta capa cadastral (etiquetes vermelles/liles, un '32980' visible) però cap referència cadastral completa de 20 caràcters.",
+    "authority_for": ["expedient (corroboració)", "street_address/municipality (redacció informe)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001621", "location": "caixetí inferior dret", "quote": "Exp: 3001621", "confidence": 0.8, "note": "4a aparició coherent."},
+    {"concept_id": "street_address", "value": "carrer Arbrells nº 18A-18B-20", "location": "caixetí, títol del projecte", "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA)", "confidence": 0.7, "note": "El rètol del carrer 'Arbrells' també és visible a l'ortofoto."},
+    {"concept_id": "municipality", "value": "Castellar del Vallès", "location": "caixetí + mapa comarcal", "quote": "Castellar del Vallès", "confidence": 0.7, "note": ""},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí, títol", "quote": "…CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT…", "confidence": 0.6, "note": "Mateixa redacció singular que tall i sondeig."},
+    {"concept_id": "num_dpsh_tests", "value": 4, "location": "plànol (punts blaus P-1..P-4 + S-1 vermell)", "quote": "Llegenda: Assaig de penetració dinàmica DPSH / Sondeig a rotació amb bateria continua", "confidence": 0.5, "note": "Corroboració visual."}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y (punts dibuixats, sense coordenades numèriques)", "referencia_catastral (només etiqueta parcial '32980' de la capa cadastral: insuficient)", "lab", "cte"],
+  "reading_notes": "FreeHand→Distiller: renderitzat a 150 dpi i llegit visualment. Zona d'estudi = polígon únic que abasta les 3 parcel·les, tocant el carrer Arbrells."
+}

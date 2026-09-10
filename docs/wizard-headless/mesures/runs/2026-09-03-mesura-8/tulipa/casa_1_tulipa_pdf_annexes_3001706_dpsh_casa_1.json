@@ -1,0 +1,203 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf",
+ "source_md5": "515f3ce8d2172b8182c2f0817ebc4a5f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "PDF imprès (Excel→PDF, Acrobat Distiller) amb la fitxa de cada assaig DPSH de la Casa 1: capçalera obra/població/data/cota, taula de colpeig per fondària amb columna 'Nivells' colorejada, i gràfica del colpeig. Una pàgina per punt.",
+ "issuer": "G3 (logo G3 al capçal; plantilla estàndard 'ASSAIG DE PENETRACIÓ DINÀMICA')",
+ "date": "07/05/2026 (data de camp impresa; metadades PDF creationDate/modDate 2026-06-04 són de generació/impressió del document, no de camp)",
+ "pages_or_sheets": "2 pàgines (1 per punt: P-1.1 p.1, P-1.2 p.2)",
+ "context": {
+  "who_made_it": "G3 (Eva), a partir de l'Excel de camp DPSH de la Casa 1 imprès a PDF",
+  "for_whom": "arxiu del projecte / font per a l'informe geotècnic de la Casa 1",
+  "why": "documentar el colpeig DPSH per fondària de cada punt, la cota de referència del punt, la fondària de rebuig, i classificar visualment els nivells del sòl per colors",
+  "expected_fields": [
+   "cota_referencia",
+   "field_date",
+   "street_address",
+   "municipality",
+   "expedient",
+   "num_dpsh_tests"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "és la versió PDF (Print/Distiller) de 'CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls' (mateix projecte, route=skip a l'inventari); document propi de la Casa 1 — Casa 2 té el seu equivalent separat '3001706_DPSH_CASA 2.pdf'; no és l'annex de sondeig ni el tall de correlació d'aquesta mateixa casa",
+  "authority_for": [
+   "cota_referencia",
+   "field_date",
+   "street_address",
+   "municipality",
+   "expedient",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": "p.1 i p.2, capçalera NÚMERO D´INFORME",
+   "quote": "NÚMERO D´INFORME: 3001706_CASA 1",
+   "confidence": 0.75,
+   "note": "el document hi afegeix el sufix '_CASA 1' (projecte multi-casa amb 2 informes); la part numèrica 3001706 coincideix amb el nom de la carpeta arrel"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ TULIPA 3",
+   "location": "p.1 i p.2, bloc OBRA",
+   "quote": "OBRA: C/ TULIPA 3",
+   "confidence": 0.55,
+   "note": "bloc etiquetat OBRA, consistent a les 2 pàgines; és l'adreça de la Casa 1 (coherent amb el nom de la subcarpeta 'CASA 1- TULIPA'); no és la font de més autoritat (plànol/pressupost/comanda haurien de confirmar-ho)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA DEL VALLÈS",
+   "location": "p.1 i p.2, bloc POBLACIÓ",
+   "quote": "POBLACIÓ: CERDANYOLA DEL VALLÈS",
+   "confidence": 0.7,
+   "note": "consistent a les 2 pàgines"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "07/05/2026",
+   "location": "p.1 i p.2, camp DATA:",
+   "quote": "DATA: 07/05/2026",
+   "confidence": 0.6,
+   "note": "candidat de segon ordre per field_date segons el Pas 3 (annex DPSH DATA:, per sota de la fitxa de camp F38 si existeix); consistent a les 2 pàgines"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "198 msnm segons el plànol topogràfic ICGC",
+   "location": "p.1 i p.2, capçalera Cota inici",
+   "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC",
+   "confidence": 0.85,
+   "note": "font primària per cota_referencia segons el Pas 3 (annex DPSH 'Cota inici'); mateixa cota absoluta als 2 punts (P-1.1 i P-1.2) d'aquesta casa"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "recompte de pàgines/punts d'aquest document",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1.1 / P-1.2",
+   "confidence": 0.55,
+   "note": "només compta els punts de la Casa 1 (aquest document és el DPSH imprès de la Casa 1); no inclou els punts de la Casa 2. Font més autoritzada seria l'Excel original (route=skip aquí, no llegit) — aquest PDF n'és el print exacte"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "3",
+   "location": "columna 'Nivells' colorejada + llegenda al peu, p.1 i p.2",
+   "quote": "Nivell 1 / Nivell 2 / Nivell 3 (llegenda al peu de cada pàgina)",
+   "confidence": 0.3,
+   "note": "senyal visual (color de cel·la, no text): als 2 punts els 3 colors de la llegenda apareixen omplerts fins al rebuig. La llegenda és de plantilla (sempre mostra 3 nivells); l'annex de sondeig d'aquesta casa ('3001706_sondeig.pdf', present al projecte) hauria de manar per aquest camp, no aquest document"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tulipa",
+    "nom_via_alternatives": [],
+    "portals": [
+     "3"
+    ],
+    "municipi": "Cerdanyola del Vallès",
+    "municipi_alternatives": [
+     "CERDANYOLA DEL VALLÈS"
+    ]
+   },
+   "location": "p.1, blocs OBRA i POBLACIÓ",
+   "quote": "OBRA: C/ TULIPA 3 / POBLACIÓ: CERDANYOLA DEL VALLÈS",
+   "confidence": 0.55,
+   "note": "concepte extra (address_struct), no és cap dels 15 camps; mateixa font i fiabilitat que street_address/municipality d'aquest document"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1.1",
+    "cota_inici": "198",
+    "profunditat_assolida": "-3,70",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1",
+    "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC; Rebuig a -3,70 m",
+    "extra": {
+     "nivells_colors": {
+      "font": "color de la cel·la de la columna 'Nivells' del PDF imprès (no és text); llegit amb scripts/render_clip.py a 400dpi per confirmar els límits de fila, no amb OCR",
+      "confidence": 0.4,
+      "nivell_1": {
+       "de": "0,00",
+       "a": "-1,40",
+       "transicio_a_nivell_seguent": "-1,60"
+      },
+      "nivell_2": {
+       "de": "-1,60",
+       "a": "-2,40",
+       "transicio_a_nivell_seguent": "-2,60"
+      },
+      "nivell_3": {
+       "de": "-2,60",
+       "a": "-3,70 (rebuig, sense litologia impresa en aquest document)"
+      }
+     }
+    }
+   },
+   {
+    "punt": "P-1.2",
+    "cota_inici": "198",
+    "profunditat_assolida": "-2,19",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2",
+    "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC; Rebuig a -2,19 m",
+    "extra": {
+     "nivells_colors": {
+      "font": "color de la cel·la de la columna 'Nivells' del PDF imprès (no és text); llegit amb scripts/render_clip.py a 400dpi",
+      "confidence": 0.4,
+      "nivell_1": {
+       "de": "0,00",
+       "a": "-0,80",
+       "transicio_a_nivell_seguent": "-1,00"
+      },
+      "nivell_2": {
+       "de": "-1,00",
+       "a": "-1,60",
+       "transicio_a_nivell_seguent": "-1,80"
+      },
+      "nivell_3": {
+       "de": "-1,80",
+       "a": "-2,19 (rebuig, sense litologia impresa en aquest document)"
+      }
+     }
+    }
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit via preext (Pas 0 amb _inventory.json, després page-1.txt/page-2.txt i page-1.png/page-2.png; text_ok=true a les 2 pàgines). El PNG sencer a 150dpi no permetia confirmar amb seguretat els límits exactes de fila de la columna 'Nivells' colorejada; s'ha fet zoom amb scripts/render_clip.py a 400dpi (clip de la columna Nivells, 2 crides per pàgina per cobrir 0 a -6,6) per llegir els canvis de color alineats amb les fondàries impreses a la columna esquerra. No s'ha executat fitz/xlrd/altres eines directament — només render_clip.py per a la visió."
+}

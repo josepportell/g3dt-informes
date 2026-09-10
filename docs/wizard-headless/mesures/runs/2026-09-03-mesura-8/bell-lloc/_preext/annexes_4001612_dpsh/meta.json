@@ -1,0 +1,33 @@
+{
+ "source_path": "ANNEXES/4001612_DPSH.xls",
+ "source_md5": "93827593c45c5c2dd67a4fa9df9a9c2b",
+ "kind": "excel",
+ "generated": "2026-09-03T20:11:17",
+ "elapsed_s": 0.086,
+ "dir": "annexes_4001612_dpsh",
+ "files": [
+  "annexes_4001612_dpsh/sheet-0.csv",
+  "annexes_4001612_dpsh/sheet-0.cells.txt",
+  "annexes_4001612_dpsh/sheet-0.colors.txt",
+  "annexes_4001612_dpsh/sheet-1.csv",
+  "annexes_4001612_dpsh/sheet-1.cells.txt",
+  "annexes_4001612_dpsh/sheet-1.colors.txt"
+ ],
+ "sheets": [
+  {
+   "index": 0,
+   "name": "P-1",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 127
+  },
+  {
+   "index": 1,
+   "name": "P-2",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 133
+  }
+ ],
+ "colors": true
+}

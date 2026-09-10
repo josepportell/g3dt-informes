@@ -1,0 +1,28 @@
+{
+ "source_path": "pl. situaci.pdf",
+ "source_md5": "1c37ee19f93c14f8e8420ce8210f6870",
+ "kind": "pdf",
+ "generated": "2026-09-03T20:11:31",
+ "elapsed_s": 1.613,
+ "dir": "pl_situaci",
+ "files": [
+  "pl_situaci/page-1.txt",
+  "pl_situaci/page-1.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   1190.52,
+   841.92
+  ]
+ ],
+ "producer": "Microsoft: Print To PDF",
+ "creator": "",
+ "creationDate": "D:20251024180548+02'00'",
+ "modDate": "D:20251024180548+02'00'",
+ "text_ok": {
+  "1": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

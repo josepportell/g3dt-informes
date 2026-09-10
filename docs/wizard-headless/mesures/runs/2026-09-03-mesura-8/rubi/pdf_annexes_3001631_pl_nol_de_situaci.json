@@ -1,0 +1,137 @@
+{
+ "source_path": "PDF/ANNEXES/3001631_plànol de situació.pdf",
+ "source_md5": "114b0a5148e6cf7fc45df20f0eee86e0",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació (1 pàgina, ortofoto amb mapa de context i zoom a la parcel·la) dibuixat per G3/Eva com a annex il·lustratiu de l'informe, amb la zona d'estudi i els 3 punts DPSH (P-1, P-2, P-3)",
+ "issuer": "G3 Desenvolupament Territorial (Eva) — dibuix FreeHand, PDF via Acrobat Distiller",
+ "date": "2025-12-17 (creationDate/modDate del PDF; peu diu 'Data: Desembre 2025')",
+ "pages_or_sheets": "1 pàgina (1191x842 pt, apaïsat)",
+ "context": {
+  "who_made_it": "G3 (Eva) — dibuix fet amb FreeHand, exportat a PDF via Acrobat Distiller/PScript5.dll",
+  "for_whom": "el mateix informe geotècnic (annex il·lustratiu d'ús intern del projecte, no d'un tercer)",
+  "why": "situar la 'Zona d'estudi' (parcel·la) dins del municipi de Rubí i mostrar la posició exacta dels 3 assaigs DPSH (P-1, P-2, P-3) respecte als límits de parcel·la, el carrer i les edificacions veïnes",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests",
+   "referencia_catastral"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "utm_x",
+   "utm_y",
+   "superficie_parcela",
+   "num_floors"
+  ],
+  "relation_to_others": "Versió llegible (Distiller/Print-to-PDF) del mateix dibuix que 'ANNEXES/3001631_plànol de situació.FH11' (route=skip, text brossa, no llegible). Independent de tall.pdf i PENETROS.pdf, tot i corroborar els mateixos 3 punts P-1/P-2/P-3.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests",
+   "referencia_catastral",
+   "street_address_struct"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "peu de pàgina, cel·la 'Exp:'",
+   "quote": "Exp: 3001631",
+   "confidence": 0.95,
+   "note": "coincideix amb el nom de la carpeta '3001631 RUBI'"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer de la Miranda, 39",
+   "location": "capçalera del títol del projecte + rètol sobre el carrer al plànol principal",
+   "quote": "AL CARRERDE LA MIRANDA Nº 39, PARC. 6-105 B, RUBÍ (BARCELONA)",
+   "confidence": 0.8,
+   "note": "typo del document original ('CARRERDE' sense espai); corroborat pel rètol 'Carrer de la Miranda' dibuixat sobre el vial i pel número '39' junt al límit de parcel·la"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "capçalera del títol del projecte + mapa de context (requadre superior esquerre)",
+   "quote": "RUBÍ (BARCELONA)",
+   "confidence": 0.85,
+   "note": "el mapa de context també mostra 'Rubí' en negreta com a nucli urbà de referència"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "capçalera del títol del projecte",
+   "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.8,
+   "note": "redacció del títol, no d'un bloc de dades estructurat"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "plànol principal, etiquetes P-1/P-2/P-3 + llegenda",
+   "quote": "P-1 / P-2 / P-3 — Llegenda: Assaig de penetració dinàmica DPSH",
+   "confidence": 0.85,
+   "note": "recompte visual de marcadors dins la 'Zona d'estudi'"
+  },
+  {
+   "concept_id": "referencia_catastral",
+   "value": "Polígon 6, Parcel·la 105-B",
+   "location": "capçalera del títol del projecte",
+   "quote": "PARC. 6-105 B",
+   "confidence": 0.5,
+   "note": "format polígon-parcel·la rústega, no la referència cadastral de 20 caràcters; font única (aquest plànol), mai segur sense consulta del Cadastre"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Miranda",
+    "nom_via_alternatives": [],
+    "portals": [
+     "39"
+    ],
+    "municipi": "Rubí",
+    "municipi_alternatives": []
+   },
+   "location": "capçalera del títol + rètol al plànol principal",
+   "quote": "AL CARRERDE LA MIRANDA Nº 39, PARC. 6-105 B, RUBÍ (BARCELONA)",
+   "confidence": 0.8,
+   "note": "concepte extra (Pas 3), no és cap dels 15 camps"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "superficie_parcela",
+  "num_floors"
+ ],
+ "reading_notes": "Text del PDF és brossa (meta.text_ok=false; producer 'Acrobat Distiller 15.0 (Windows)', creator 'PScript5.dll' = FreeHand). Llegit visualment amb page-1.png (150dpi, pàgina sencera) i page-1-right.png (220dpi, meitat dreta) per confirmar el rètol 'Carrer de la Miranda' i les etiquetes P-1/P-2/P-3. creationDate/modDate del PDF = 2025-12-17, coherent amb 'Data: Desembre 2025' del peu — NO s'usa com a candidat de field_date perquè és la data del dibuix/annex, no del treball de camp (regla Pas 3). Els números '27', '26', '10' visibles a la cartografia de fons (Cadastre/ortofoto) no s'interpreten com a referència cadastral: semblen identificadors de parcel·la/edifici del mapa base, sense confirmar."
+}

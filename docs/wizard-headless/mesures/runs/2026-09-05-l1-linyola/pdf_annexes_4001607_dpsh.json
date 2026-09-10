@@ -1,0 +1,201 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_DPSH.pdf",
+ "source_md5": "4f78d04a5c690f4fdb3c9296e52d8eef",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Full de resultats dels 3 assaigs de penetració dinàmica DPSH (P-1, P-2, P-3) del projecte, imprès des de l'Excel DPSH de G3 (una pàgina per punt, amb taula de colpeig i gràfica).",
+ "issuer": "G3 (Eva), imprès des de l'Excel DPSH (PScript5.dll / Acrobat Distiller)",
+ "date": "01/10/2025 (data de camp dels 3 DPSH; el PDF es va generar el 2025-10-28 segons metadades)",
+ "pages_or_sheets": "3 pàgines, una per punt (P-1, P-2, P-3)",
+ "context": {
+  "who_made_it": "G3 (Eva), a partir de l'Excel DPSH de camp",
+  "for_whom": "l'informe geotècnic del projecte 4001607, per a la taula de penetròmetres dinàmics",
+  "why": "documentar el colpeig, la fondària de rebuig i el nivell freàtic de cada assaig DPSH executat",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests",
+   "dpsh_tests (cota_inici, profunditat_assolida, rebuig, nivell_freatic)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cte"
+  ],
+  "relation_to_others": "derivat de ANNEXES/4001607_DPSH.xls (mateixes dades numèriques, format gràfic per a l'informe); complementa PENETROS.pdf (full de camp manuscrit, no llegit en aquesta crida)",
+  "authority_for": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_dpsh_tests",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "peu de cada pàgina (p.1-3)",
+   "quote": "NÚMERO D'NFORME: 4001607",
+   "confidence": 0.85,
+   "note": "el document escriu \"D'NFORME\" (typo de \"D'INFORME\"); idèntic a les 3 pàgines i al nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "01/10/2025",
+   "location": "capçalera de cada pàgina (p.1-3)",
+   "quote": "DATA: 01/10/2025",
+   "confidence": 0.8,
+   "note": "idèntica a les 3 pàgines; coincideix amb el nom de les fotos WhatsApp del projecte (2025-10-01)"
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+   "location": "capçalera de cada pàgina (p.1-3)",
+   "quote": "Cota d'inici:  +245 msnm segons plànol topogràfic del ICGC (‐0,15m carrer)",
+   "confidence": 0.85,
+   "note": "idèntica als 3 punts P-1/P-2/P-3, font ICGC citada explícitament"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "3 pàgines del document, una per punt",
+   "quote": "P‐1 / P‐2 / P‐3",
+   "confidence": 0.85,
+   "note": "3 assaigs executats i documentats (P-1, P-2, P-3)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Clot de la Llacuna 16",
+   "location": "capçalera de cada pàgina, camp OBRA (p.1-3)",
+   "quote": "OBRA : C/ CLOT DE LA LLACUNA 16",
+   "confidence": 0.8,
+   "note": "mateix carrer i número a les 3 pàgines amb petites variants d'espaiat (\"C/\", \"C /\", \":C/\")"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Clot de la Llacuna",
+    "nom_via_alternatives": [],
+    "portals": [
+     "16"
+    ],
+    "municipi": "Linyola",
+    "municipi_alternatives": []
+   },
+   "location": "capçalera de cada pàgina, camp OBRA (p.1-3)",
+   "quote": "OBRA : C/ CLOT DE LA LLACUNA 16",
+   "confidence": 0.8,
+   "note": "concepte extra per a resolució cadastral, no és cap dels 15 camps"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "capçalera de cada pàgina, camp POBLACIÓ (p.1-3)",
+   "quote": "POBLACIÓ: LINYOLA",
+   "confidence": 0.75,
+   "note": "idèntic a les 3 pàgines"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "columna \"Nivells\" (bandes de color) a les 3 pàgines",
+   "quote": "Nivell 1 / Nivell 2 (llegenda de colors)",
+   "confidence": 0.35,
+   "note": "el document mostra sempre 2 bandes, però la fondària de transició varia per punt (P-1 ~-1,8 m, P-2 ~-0,2 m, P-3 ~-1,0 m); és una marca per punt del DPSH, no la classificació de l'annex de tall/sondeig (no llegit en aquesta crida), que té prioritat pel Pas 3 — candidat feble"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "p.3, taula P-3, columna MESURA DE PAR, fila -1,2 m",
+   "quote": "SPT-1",
+   "confidence": 0.5,
+   "note": "mostra extreta durant el mateix DPSH P-3; no confirmada amb GTL ni comanda (no llegits en aquesta crida)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P-3",
+   "location": "p.3, taula P-3, columna MESURA DE PAR",
+   "quote": "SPT-1 (dins la taula del punt P-3)",
+   "confidence": 0.5,
+   "note": "el punt d'assaig d'on surt la mostra SPT-1 és el mateix DPSH P-3"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 a 1,5 m",
+   "location": "p.3, taula P-3, columna MESURA DE PAR, fila -1,4 m",
+   "quote": "1,0 a 1,5",
+   "confidence": 0.5,
+   "note": "interval de fondària de la mostra SPT-1; la fila següent (-1,6 m) marca \"R\" (rebuig), sense registre de cops SPT independent en aquest document"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+    "profunditat_assolida": "-2,90 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1",
+    "quote": "Rebuig a la cota de -2,90 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+    "profunditat_assolida": "-2,15 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2",
+    "quote": "Rebuig a la cota de -2,15 m"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+    "profunditat_assolida": "-1,75 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3",
+    "quote": "Rebuig a la cota de -1,75 m"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "1,0 a 1,5 m",
+    "litologia": null,
+    "n30": null,
+    "location": "p.3, columna MESURA DE PAR",
+    "quote": "SPT-1 / 1,0 a 1,5 / R",
+    "note": "marcador dins de la taula del DPSH P-3, no és un sondeig independent; \"R\" indica rebuig però no hi ha registre de cops per tram en aquest document — comprovar amb GTL/comanda (no llegits en aquesta crida)"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció (text + PNG) suficient; les 3 pàgines tenen text_ok=true i cap necessita meitats. S'ha inspeccionat visualment cada page-N.png (no només el .txt, que barreja els valors de la taula sense columnes) per confirmar que la columna N.F. és buida a les 3 pàgines i per llegir el bloc SPT-1/1,0 a 1,5/R de la columna MESURA DE PAR a P-3, que el text pla no distingeix de la resta de xifres. La columna \"Nivells\" (bandes de color Nivell 1/Nivell 2) apareix a les 3 pàgines amb fondària de transició diferent per punt; no s'ha construït tables.soil_levels amb aquesta font perquè no dona litologia ni un límit unificat — es deixa com a candidat feble a tier_a (num_soil_levels), prioritzant l'annex de tall/sondeig (no llegit en aquesta crida) pel Pas 3."
+}

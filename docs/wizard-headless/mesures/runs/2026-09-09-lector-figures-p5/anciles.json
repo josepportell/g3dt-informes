@@ -1,0 +1,67 @@
+{
+ "project": "/home/josep/g3dt-e2e/projectes/4001679 ANCILES",
+ "n_candidats": 38,
+ "exemplars": {
+  "assaigs": 5,
+  "projecte": 3,
+  "situacio": 7
+ },
+ "warnings": [],
+ "rc": 0,
+ "timeout": false,
+ "elapsed_s": 60.6,
+ "model": "sonnet",
+ "effort": "medium",
+ "cli": {
+  "cli_json_ok": true,
+  "num_turns": 10,
+  "duration_ms": 56385,
+  "duration_api_ms": 57228,
+  "cost_usd": 0.4150457999999999,
+  "is_error": false,
+  "subtype": "success",
+  "usage": {
+   "input_tokens": 10,
+   "output_tokens": 4396,
+   "cache_creation_input_tokens": 72195,
+   "cache_read_input_tokens": 368784
+  },
+  "models": [
+   "claude-haiku-4-5-20251001",
+   "claude-sonnet-5"
+  ]
+ },
+ "selection": {
+  "assaigs": {
+   "idx": 1,
+   "kind": "annex_crop",
+   "rel": "plan_crop_4001679_plano de situación_ecd73dd4b5.jpg",
+   "page": null,
+   "src": "/home/josep/g3dt-prod-cache/images/plan_crop_4001679_plano de situación_ecd73dd4b5.jpg",
+   "crop": null
+  },
+  "projecte": [
+   {
+    "idx": 27,
+    "kind": "project_page",
+    "rel": "24.0807/IV_PLANOS.pdf",
+    "page": 25,
+    "src": "/home/josep/g3dt-e2e/projectes/4001679 ANCILES/validation/_lector_figures/pages/src_IV_PLANOS_3846459e4b_p25.png",
+    "crop": [
+     0.03,
+     0.14,
+     0.84,
+     0.48
+    ],
+    "caption": "Sección longitudinal de la edificación proyectada. Fuente: Proyecto."
+   }
+  ],
+  "situacio": null
+ },
+ "path": "/home/josep/g3dt-e2e/projectes/4001679 ANCILES/validation/figure_selection.json",
+ "slug": "anciles",
+ "score": {
+  "assaigs": "M (fig 4, ph 6, ncc None)",
+  "projecte1": "X (fig 2, ph 30, ncc 0.232)"
+ }
+}

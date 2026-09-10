@@ -1,0 +1,56 @@
+{
+ "source_path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls (fulls P-1.1, P-1.2) i CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_DPSH_CASA 2.xls (fulls P-2.1, P-2.2)",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Dos Excel DPSH d'Eva, un per casa, dos penetròmetres cadascun. Peu de plantilla amb 'Nivell 1' (C79) i 'Nivell 3' (F79).",
+ "issuer": "Eva (G3)",
+ "date": "sense data",
+ "pages_or_sheets": "2 + 2 fulls",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "Eva (i l'annex DPSH)",
+  "why": "transcriure i revisar els N20 del full manuscrit de TPS",
+  "expected_fields": [
+   "num_dpsh_tests (executats)",
+   "N20"
+  ],
+  "not_expected": [
+   "dates",
+   "adreça",
+   "client"
+  ],
+  "relation_to_others": "versió revisada del manuscrit TPS → mana sobre valors; un fitxer per casa",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4 en total: 2 (casa 1: P-1.1, P-1.2) + 2 (casa 2: P-2.1, P-2.2)",
+   "location": "noms dels fulls dels 2 fitxers",
+   "quote": "['P-1.1','P-1.2'] | ['P-2.1','P-2.2']",
+   "confidence": 1.0,
+   "note": "REGLA: amb N Excel DPSH en subcarpetes 'CASA n', el comptador és PER INFORME (2), no global (4). Nomenclatura P-{casa}.{n}."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": "noms dels fitxers",
+   "quote": "3001706_DPSH_CASA 1.xls",
+   "confidence": 0.8,
+   "note": ""
+  },
+  {
+   "concept_id": "num_soil_levels_hint",
+   "value": "3 (etiquetes 'Nivell 1' i 'Nivell 3' al peu)",
+   "location": "C79, F79",
+   "quote": "Nivell 1 | Nivell 3",
+   "confidence": 0.4,
+   "note": "el peu de l'Excel pot tenir etiquetes de colors per nivell; a Bell-lloc només 'Nivell 1'. Suggereix 3 nivells, a confirmar amb l'annex de sondeig."
+  }
+ ],
+ "not_present": [
+  "tots els altres"
+ ],
+ "reading_notes": "Mateixa plantilla que Bell-lloc (fila 16 capçalera, D15=0,83, B80 rebuig — aquí B80 buit: el rebuig és a l'annex PDF). L'estructura de subcarpetes 'CASA 1- TULIPA' / 'CASA 2_ CARRER TOSCA' és el senyal de multi-informe."
+}

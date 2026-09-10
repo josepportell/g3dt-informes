@@ -1,0 +1,34 @@
+{
+ "source": "lector",
+ "assaigs": {
+  "idx": 1,
+  "kind": "annex_crop",
+  "rel": "plan_crop_4001612_plànol de situació_516920bbdd.jpg",
+  "page": null,
+  "src": "/home/josep/g3dt-prod-cache/images/plan_crop_4001612_plànol de situació_516920bbdd.jpg",
+  "crop": null
+ },
+ "projecte": [],
+ "situacio": null,
+ "_lector": {
+  "data": "2026-09-09 12:02",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 41.9,
+  "exclude_slug": "bell-lloc",
+  "lang": "ca",
+  "raons": {
+   "assaigs": "candidat 1 (plan_crop_4001612_plànol de situació_516920bbdd.jpg, annex_crop): el retall del full de l'Eva porta els tres punts P-2, S-1 i P-1 sobre la planta de l'habitatge dins la parcel·la, sencer",
+   "projecte": "cap candidat val: candidats 2 i 3 són fitxes cadastrals (\"Consulta descriptiva y gráfica\", caixetí i taules, no dibuix); candidat 4 (A.01.pdf) és el full sencer amb caixetí, catastre, aèria i taula de planejament, sense secció ni topogràfic; l'única planta neta que té (PLANTA COBERTA) ja és el mateix edifici dins la mateixa parcel·la que l'assaigs (candidat 1) mostra sencer amb els punts — regla \"no afegeixis l'emplaçament si l'assaigs ja mostra l'edifici sencer dins la parcel·la\"; candidat 5 és el mateix full amb punts, redundant amb l'assaigs"
+  },
+  "confianca": {
+   "assaigs": 0.95,
+   "projecte": 0.85
+  },
+  "cap_font": [
+   "projecte"
+  ],
+  "notes": "no hi ha secció/perfil ni plànol topogràfic al projecte de l'arquitecte; l'únic dibuix net (planta coberta) coincideix amb el que ja mostra la figura d'assaigs",
+  "warnings": []
+ }
+}

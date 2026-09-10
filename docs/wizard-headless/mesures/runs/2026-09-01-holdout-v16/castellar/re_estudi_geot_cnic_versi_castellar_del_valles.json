@@ -1,0 +1,95 @@
+{
+ "source_path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+ "source_md5": "9b5696cb7a0a51e3abbd06dc815719ae",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Fil de correu (resposta + missatge original citat) entre Roc Clusa i Dolors Maqueda (G3) sobre l'estudi geotècnic de Castellar del Vallès: el client demana si cal adjuntar prova de laboratori i dicta el títol exacte que ha de portar l'informe.",
+ "issuer": "Roc Clusa <rocflats@hotmail.com> (missatge de 2025-11-18); missatge citat de Dolors Maqueda <dolors@g3dt.com>, G3, de 2025-11-03",
+ "date": "2025-11-18 18:49:25+01:00 (missatge citat: 2025-11-03 17:47:12)",
+ "pages_or_sheets": "n/a (cos de correu, sense adjunts al meta)",
+ "context": {
+  "who_made_it": "Roc Clusa, corresponent directe de G3 per aquest encàrrec, responent a un correu previ de Dolors Maqueda (G3) que adjuntava la 'versió 0' de l'estudi",
+  "for_whom": "G3 (Dolors Maqueda), que redacta l'informe",
+  "why": "Aclarir si cal adjuntar una prova de laboratori a l'estudi i dictar el títol exacte que ha de portar l'informe (tipus d'obra + adreça + municipi)",
+  "expected_fields": [
+   "building_type",
+   "street_address",
+   "municipality"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Instrucció del client POSTERIOR (2025-11-18) al pressupost i a la versió 0 de l'informe enviada per G3 el 2025-11-03 'a falta de resultats de laboratori'; dicta el títol oficial de l'informe. Per la regla del Pas 3 ('instrucció del client posterior al correu d'encàrrec preval sobre la redacció dels annexos anteriors'), aquest text és candidat 1 per a building_type i street_address.",
+  "authority_for": [
+   "building_type",
+   "street_address"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "Construcció d'un grup d'habitatges unifamiliars",
+   "location": "cos del correu, missatge de 2025-11-18 (Roc Clusa), punt 2 'El títol hauria de ser'",
+   "quote": "El títol hauria de ser: \"Estudi geològic / geotècnic per la CONSTRUCCIÓ D’UN GRUP D’HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS",
+   "confidence": 0.75,
+   "note": "Instrucció explícita i posterior del client sobre el títol de l'informe (regla Pas 3: instrucció posterior > redacció d'annexos anteriors). Candidat 1, no segur amb una sola font/document."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A, 18B i 20, Castellar del Vallès",
+   "location": "cos del correu, missatge de 2025-11-18 (Roc Clusa), mateix punt 2",
+   "quote": "AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS",
+   "confidence": 0.7,
+   "note": "Adreça embeguda al títol dictat pel client, no en un bloc OBRA/ADREÇA etiquetat. Tres números de portal (18A, 18B, 20) per a un 'grup d'habitatges unifamiliars' — coherent amb 'PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg' vist a l'inventari (3 habitatges). Confirmar amb altres documents si l'informe és únic per als 3 portals o si cal desglossar per casa."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del correu, missatge de 2025-11-18 (Roc Clusa), mateix punt 2",
+   "quote": "a CASTELLAR DEL VALLÈS",
+   "confidence": 0.55,
+   "note": "Forma llarga oficial, coincident amb el nom de la carpeta del projecte; apareix dins la instrucció del client, no en un bloc Municipi etiquetat. Corroboració, no font primària."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Roc Clusa",
+   "location": "capçalera del correu, missatge de 2025-11-18, camp From:",
+   "quote": "From: Roc Clusa <rocflats@hotmail.com>",
+   "confidence": 0.3,
+   "note": "Corresponent que dóna instruccions directes a G3 sobre el contingut i títol de l'informe; no porta etiqueta 'CLIENT:' ni cap indicació de rol (promotor/arquitecte/propietari). El nom no conté 'ARQUITECT'. Candidat feble; podria ser el promotor/propietari encarregant directament (patró Pas 3 'architect_name absent, particular encarrega directament') o un intermediari familiar."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit des de la pre-extracció (body.txt + meta.json); cap execució de fitz/extract_msg. Fil amb 2 missatges (resposta 2025-11-18 sobre l'original 2025-11-03, que confirma que la 'versió 0' es va enviar sense resultats de laboratori encara). meta.attachments = [] (cap adjunt al .msg). L'inventari mostra una imatge solta 'validation/msg_attachments/.../image008.jpg' (6,3 KB) associada a aquest correu en una extracció anterior — per mida (<25 KB) és signatura/icona, ignorada (Pas 1.2). Punt 1 del missatge (pregunta sobre si cal adjuntar prova de laboratori) no aporta cap valor de nivell A, només confirma que el component de laboratori és pendent en aquesta fase — no s'ha creat entrada tier_a per a cap camp 'lab_*'."
+}

@@ -1,0 +1,125 @@
+{
+  "source_path": "ANNEXES/3001621_DPSH.xls",
+  "document_type": "dpsh_excel",
+  "what_it_is": "Transcripció digital (revisada per Eva) dels 4 assaigs DPSH del projecte, un full per punt.",
+  "issuer": "G3 (Eva), transcripció del full de camp TPS",
+  "date": "no consta dins del fitxer",
+  "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4 (tots amb dades a columna C)",
+  "context": {
+    "who_made_it": "Eva (G3) transcriu els valors del full de camp manuscrit de TPS",
+    "for_whom": "per a l'informe G3 (font dels N20/Nb i de la taula DPSH)",
+    "why": "digitalitzar i revisar el colpeig de camp",
+    "expected_fields": [
+      "num_dpsh_tests",
+      "profunditat_assolida (peu B80)",
+      "rebuig",
+      "nivell_freatic (col F)",
+      "marques de nivell (col G / C79)"
+    ],
+    "not_expected": [
+      "metadades de projecte (client, adreça, municipi)",
+      "cota_inici (nomes a l'annex PDF)"
+    ],
+    "relation_to_others": "versió revisada del manuscrit PENETROS + SONDEIG.pdf → l'Excel mana per als valors; PDF/ANNEXES/3001621_DPSH.pdf n'és la impressió amb capçaleres de cota",
+    "authority_for": [
+      "num_dpsh_tests",
+      "dpsh_tests.profunditat_assolida",
+      "dpsh_tests.rebuig",
+      "dpsh_tests.nivell_freatic"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": 4,
+      "location": "fulls P-1..P-4 amb colpeig a columna C",
+      "quote": "sheets: P-1, P-2, P-3, P-4 (tots amb C19.. amb valors)",
+      "confidence": 0.95,
+      "note": "executats; tots 4 amb dades"
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": null,
+        "profunditat_assolida": "-1,08 m",
+        "rebuig": "Si",
+        "nivell_freatic": "No detectat",
+        "location": "P-1!B80; col F buida",
+        "quote": "Rebuig  a -1,08 m",
+        "detall_colpeig": {
+          "-0,4": 6,
+          "-0,6": 10,
+          "-0,8": 13,
+          "-1,0": 38,
+          "-1,2": 100
+        }
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": null,
+        "profunditat_assolida": "-0,48 m",
+        "rebuig": "Si",
+        "nivell_freatic": "No detectat",
+        "location": "P-2!B80; col F buida",
+        "quote": "Rebuig  a -0,48 m",
+        "detall_colpeig": {
+          "-0,4": 15,
+          "-0,6": 100
+        }
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": null,
+        "profunditat_assolida": "-0,76 m",
+        "rebuig": "Si",
+        "nivell_freatic": "No detectat",
+        "location": "P-3!B80; col F buida",
+        "quote": "Rebuig  a -0,76 m",
+        "detall_colpeig": {
+          "-0,4": 16,
+          "-0,6": 46,
+          "-0,8": 100
+        }
+      },
+      {
+        "punt": "P-4",
+        "cota_inici": null,
+        "profunditat_assolida": "-1,55 m",
+        "rebuig": "Si",
+        "nivell_freatic": "No detectat",
+        "location": "P-4!B80; col F buida",
+        "quote": "Rebuig  a -1,55 m",
+        "detall_colpeig": {
+          "-0,4": 8,
+          "-0,6": 8,
+          "-0,8": 12,
+          "-1,0": 27,
+          "-1,2": 21,
+          "-1,4": 28,
+          "-1,6": 100
+        }
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "Nivell 1 (marca Excel)",
+        "litologia_candidats": [],
+        "de": null,
+        "a": null,
+        "mostra_del_nivell": false,
+        "location": "C79 de cada full",
+        "quote": "Nivell 1",
+        "note": "una sola marca 'Nivell 1' a tots 4 fulls: dins l'abast DPSH nomes hi ha 1 nivell; fondaries de transicio no hi consten"
+      }
+    ],
+    "__nota": "cota_inici no es dins l'Excel (nomes a la capcalera de PDF/ANNEXES/3001621_DPSH.pdf). N.F.: columna F buida als 4 fulls -> 'No detectat' per regla v0.7. Colpeig 100 = R (rebuig) a l'interval final."
+  },
+  "not_present": [
+    "cota_inici",
+    "field_date",
+    "metadades de projecte"
+  ],
+  "reading_notes": "xlrd; dump complet de cel·les no buides; peus B80 presents als 4 fulls; col F (N.F.) buida a tots; C79='Nivell 1' a tots."
+}

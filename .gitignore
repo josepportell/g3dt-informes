@@ -31,35 +31,55 @@ demo/extracted-images/
 # Proof/test generated docs
 templates/proof_generated_balaguer.docx
 
-# ── Reference material: generated outputs (NOT originals from Eva) ──
-# Generated/edited reports (our outputs)
-reference-material/4001612-bell-lloc/4001612_generated.docx
-reference-material/4001612-bell-lloc/4001612_generated_edited.docx
-reference-material/4001612-bell-lloc/4001612_AUDIT_VISUAL.docx
-reference-material/4001612-bell-lloc/4001612_AUDIT_VISUAL_v9.docx
-reference-material/4001612-bell-lloc/validation/4001612_generated_AUDIT_VISUAL.docx
-
-# PDF copies (originals are the .doc/.docx)
-reference-material/4001612-bell-lloc/PDF/
-reference-material/4001612-bell-lloc/PDF V0/
-
 # Generated samples (our test outputs)
 samples/4001612_generated.docx
 samples/test_belllloc_automatitzat.docx
 
-# ── Folders with large binary content ──
-reference-material/4001612-bell-lloc/FOTOGRAFIES/
-reference-material/4001612-bell-lloc/ACCEPTACIO/
-reference-material/4001612-bell-lloc/25.0647/
+# ── Projectes de referència ──────────────────────────────────────────────────
+# Model: el material del CLIENT (PDFs, plànols, fotos, Excel) NO es versiona —molt
+# pes i cap valor a git—; `validation/` SÍ, perquè és feina nostra i és el que fan
+# servir els tests (`eva_reference_values.json`, tria de fotos, concept_map).
+#
+# Per defecte, doncs, un projecte NOU entra ignorat excepte el seu `validation/`.
+# Fins al 2026-09-01 no hi havia regla per defecte i les úniques que hi havia
+# apuntaven a `4001612-bell-lloc` i `4001607 LINYOLA2`, carpetes que ja no
+# existeixen (renom a majúscules): per això quatre projectes van acabar versionats
+# sencers sense que ningú ho decidís.
+reference-material/*/*
+!reference-material/*/validation/
 
-# ── New reference projects (large, on disk only) ──
-reference-material/4001607 LINYOLA2/
-reference-material/4001670 ALCOLETGE/
-reference-material/4001671 VILANOVA DE SEGRIA/
-reference-material/4001679 ANCILES/
+# Excepció explícita als quatre que JA tenen el material del client versionat i els
+# tests dels quals hi depenen. Ignorar-los ara no els trauria del repo —el
+# .gitignore no desversiona res— i faria que aquest fitxer descrigués una cosa que
+# no és. Treure'ls del repo seria un `git rm --cached`, que és una altra decisió.
+!reference-material/3001621 CASTELLAR DEL VALLES/*
+!reference-material/3001631 RUBI/*
+!reference-material/4001607 LINYOLA/*
+!reference-material/4001612 BELL-LLOC/*
+
+# Sortides GENERADES per nosaltres: mai versionades, visquin on visquin. Substitueix
+# la llista de rutes concretes de Bell-lloc que hi havia abans.
+reference-material/**/*_generated*.doc*
+reference-material/**/*AUDIT_VISUAL*.doc*
+reference-material/**/PDF/
+reference-material/**/PDF V0/
 
 # Environment variables (API keys - NEVER commit)
 .env
 
 # Database files (may contain credentials)
 *.db
+
+# Fase 13(a): cache d'`AutoExtractionResult` (reconstruïble, mai versionada)
+**/validation/_auto_result.json
+
+# Runs de mesura (`docs/wizard-headless/mesures/runs/`): els renders de pàgina que fa la
+# pre-extracció es regeneren sols des dels PDFs i pesen el 99% del run — al holdout-v16,
+# 97 MB dels 98. El TEXT sí que es versiona (~1,3 MB): les lectures per document, els
+# `_decisions.json` (que són el corpus de no-regressió del 0-diff), els logs i les mesures.
+docs/wizard-headless/mesures/runs/**/*.png
+
+# peça 2 (2026-09-07): carpeta de treball del lector de fotos (graelles, annex renderitzat, exemplars, prompt, log)
+reference-material/*/validation/_lector_fotos/
+# peça 7b (2026-09-09): carpeta de treball del lector de figures (renders amb quadrícula, exemplars, prompt, log)
+reference-material/*/validation/_lector_figures/

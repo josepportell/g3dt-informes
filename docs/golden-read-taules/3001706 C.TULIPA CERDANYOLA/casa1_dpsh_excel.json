@@ -1,0 +1,57 @@
+{
+ "source_path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Excel DPSH de casa 1 (plantilla G3): transcripció revisada per Eva dels colpeigs de camp dels 2 penetròmetres de la parcel·la de C/ Tulipa 3.",
+ "issuer": "G3 (Eva), a partir del full de camp TPS",
+ "date": "camp 07/05/2026 (segons annex DPSH i manuscrit)",
+ "pages_or_sheets": "fulls P-1.1, P-1.2",
+ "context": {
+  "who_made_it": "Eva (G3) transcriu i revisa el full de camp manuscrit de TPS",
+  "for_whom": "per a ella mateixa: és la font digital dels valors N20 de l'informe de casa 1",
+  "why": "digitalitzar i validar el colpeig de camp",
+  "expected_fields": [
+   "dpsh_tests (N20 per fondària)",
+   "peu Rebuig",
+   "columna N.F.",
+   "columna Nivells"
+  ],
+  "not_expected": [
+   "metadades de projecte",
+   "cota inici absoluta"
+  ],
+  "relation_to_others": "versió revisada del full de camp manuscrit (PENETROS + SONDEIG.pdf p.2); l'Excel mana per als valors. PDF/ANNEXES/3001706_DPSH_CASA 1.pdf n'és la impressió amb capçalera.",
+  "authority_for": [
+   "num_dpsh_tests (casa 1)",
+   "dpsh_tests.profunditat_assolida",
+   "dpsh_tests.rebuig",
+   "dpsh_tests.nivell_freatic"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1.1",
+    "profunditat_assolida": "-3,70 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat (columna N.F. buida)",
+    "location": "full P-1.1: peu B81; columna F (N.F.) buida a totes les fondàries; última lectura amb cops a -3,8 (100)",
+    "quote": "Rebuig a -3,70  m"
+   },
+   {
+    "punt": "P-1.2",
+    "profunditat_assolida": "-2,19 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat (columna N.F. buida)",
+    "location": "full P-1.2: peu B81; columna F (N.F.) buida; última lectura amb cops a -2,2 (100)",
+    "quote": "Rebuig a -2,19  m"
+   }
+  ],
+  "__nota": "Les etiquetes 'Nivell 1'/'Nivell 2'/'Nivell 3' de les files 79-80 apareixen idèntiques als 4 fulls dels 2 Excels (casa 1 i casa 2): són llegenda de plantilla del gràfic, no marques de transició per fondària. La columna G 'Nivells' és buida a tots els fulls."
+ },
+ "not_present": [
+  "cota_inici (no consta a l'Excel; és a la capçalera de l'annex PDF)",
+  "nivell freàtic (columna buida = no detectat)"
+ ],
+ "reading_notes": "xlrd; capçalera fila 16; dades B17:D38 (P-1.1) i B17:B28 (P-1.2); colpeig NB = columna D derivada (factor 0,83 a D15)."
+}

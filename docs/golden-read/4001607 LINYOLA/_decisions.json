@@ -1,0 +1,470 @@
+{
+ "project": "4001607 LINYOLA",
+ "read_on": "2026-08-23",
+ "reader": "2 subagents amb el skill v0.3; decisions i comparació: Claude Code en sessió",
+ "sources_read": 26,
+ "bias_disclosure": "Del handoff sabia explícitament: 'Linyola: fitxa diu BUNYESC (arquitecte), l'Eva posa Sílvia Eroles (propietària, al projecte)' com a client. Els subagents no ho sabien i ho han trobat sols (acceptació + correu 'Clienta' + fitxa 'silvia la propietària').",
+ "decisions": {
+  "expedient": {
+   "status": "segur",
+   "value": "4001607",
+   "rule": "carpeta = comanda N19 = annex DPSH = GTL = caixetins",
+   "candidates": [
+    {
+     "value": "4001607",
+     "source": "comanda Hoja1!N19",
+     "quote": "NÚM. D'EXPEDIENT | 4001607"
+    },
+    {
+     "value": "4001607",
+     "source": "annex DPSH",
+     "quote": "NÚMERO D'INFORME 4001607"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "annex_17",
+    "lab_07",
+    "annex_21"
+   ]
+  },
+  "client_name": {
+   "status": "segur",
+   "value": "Sílvia Eroles Balagueró",
+   "rule": "formulari de l'acceptació (tipografiat, NIF 47697437Z) + correu de l'arquitecta ('Clienta Sílvia Eroles Balagueró' + DNI) + fitxa ('silvia la propietària') — 3 fonts, 2 independents. El caixetí del projecte diu PROMOTORS Sílvia + Jaume Nadal Andreu → candidat 2 (parella; l'informe va a nom de qui accepta).",
+   "candidates": [
+    {
+     "value": "SÍLVIA EROLES BALAGUERÓ (47697437Z)",
+     "source": "ACCEPTACIO G3DT_Silvia_Jaume signat.pdf p.3",
+     "quote": "SÍLVIA EROLES BALAGUERÓ | 47697437Z"
+    },
+    {
+     "value": "Sílvia Eroles Balagueró i Jaume Nadal Andreu (PROMOTORS)",
+     "source": "projecte 2_02B caixetí",
+     "quote": "PROMOTORS: Sílvia Eroles Balagueró + Jaume Nadal Andreu"
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT SLP (sol·licitant)",
+     "source": "PRESSUPOST p.1",
+     "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT SLP"
+    }
+   ],
+   "sources_checked": [
+    "acceptacio_02",
+    "correu_09",
+    "g3_03",
+    "projecte_14",
+    "g3_01",
+    "correu_12",
+    "correu_13"
+   ]
+  },
+  "street_address": {
+   "status": "segur",
+   "value": "Carrer Clot de la Llacuna, 16",
+   "rule": "pressupost OBRA + fitxa + comanda + correu + projecte + annex DPSH + TPS (unànime). L'annex de situació etiqueta 'CARRER FONT' (error d'Eva heretat, desmentit per l'ortofoto del mateix annex i el projecte) → descartat pel creuament. 'Carrer Sitjar' només com a via limítrof (S).",
+   "candidates": [
+    {
+     "value": "Clot de la Llacuna, 16",
+     "source": "PRESSUPOST p.1 bloc OBRA",
+     "quote": "Clot de la Llacuna, 16 -25240- Linyola"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna, 16",
+     "source": "fitxa!C7",
+     "quote": "Carrer Clot de la Llacuna, 16, 25240 Linyola"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "g3_03",
+    "g3_05",
+    "correu_09",
+    "projecte_14",
+    "annex_17",
+    "camp_20",
+    "annex_21 (FONT descartat)",
+    "fotos_26"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Linyola",
+   "rule": "unànime (pressupost, fitxa, comanda, GTL, annexos, TPS)",
+   "candidates": [
+    {
+     "value": "LINYOLA",
+     "source": "comanda Hoja1!N21",
+     "quote": "POBLACIÓ | LINYOLA"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "g3_01",
+    "lab_07",
+    "annex_17",
+    "camp_20"
+   ]
+  },
+  "architect_name": {
+   "status": "segur",
+   "value": "Josep Bunyesc Palacín",
+   "rule": "caixetí del projecte 'REDACTOR Josep Bunyesc Palacín, Dr. Arquitecte' (persona) + pressupost CLIENT = despatx BUNYESC ARQUITECTURA EFICIENT SLP + fitxa. Laia Alarcón és l'arquitecta del despatx que gestiona (candidat 3).",
+   "candidates": [
+    {
+     "value": "Josep Bunyesc Palacín, Dr. Arquitecte",
+     "source": "projecte 2_02B caixetí",
+     "quote": "REDACTOR: Josep Bunyesc Palacín, Dr. Arquitecte"
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT SLP",
+     "source": "PRESSUPOST p.1",
+     "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT SLP"
+    },
+    {
+     "value": "Laia Alarcón (arquitecta, gestió)",
+     "source": "correu 19/08",
+     "quote": "(signatura del correu)"
+    }
+   ],
+   "sources_checked": [
+    "projecte_14",
+    "g3_01",
+    "g3_03",
+    "correu_09"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "habitatge unifamiliar aïllat",
+   "rule": "projecte 'HABITATGE UNIFAMILIAR AÏLLAT' + comanda 'CONSTR HABITATGE' + correu + tall ('un habitatge')",
+   "candidates": [
+    {
+     "value": "HABITATGE UNIFAMILIAR AÏLLAT",
+     "source": "projecte 2_02B",
+     "quote": "HABITATGE UNIFAMILIAR AÏLLAT"
+    },
+    {
+     "value": "CONSTR HABITATGE",
+     "source": "comanda N18",
+     "quote": "CONSTR HABITATGE"
+    }
+   ],
+   "sources_checked": [
+    "projecte_14",
+    "g3_05",
+    "correu_09",
+    "annex_22"
+   ]
+  },
+  "num_floors": {
+   "status": "segur",
+   "value": "PB (planta baixa)",
+   "rule": "projecte: només PB (construïda 250,91 m², carener +4,35; normativa permet PB+2 però el projecte és PB)",
+   "candidates": [
+    {
+     "value": "PB",
+     "source": "projecte 2_02B",
+     "quote": "només PB; construïda 250,91 m²; carener +4,35"
+    }
+   ],
+   "sources_checked": [
+    "projecte_14",
+    "projecte_24",
+    "correu_09"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "segur",
+   "value": "571 m²",
+   "rule": "projecte de l'arquitecte (declarada) + ref. cadastral pròpia. 1 font A del proveïdor sense contradicció (regla Bell-lloc: el projecte mana sobre el Cadastre).",
+   "candidates": [
+    {
+     "value": "571 m²",
+     "source": "projecte 2_02B",
+     "quote": "parcel·la 571 m², ref. 5098344CG2159N0000US"
+    }
+   ],
+   "sources_checked": [
+    "projecte_14",
+    "projecte_24",
+    "annex_21 (parcel·la 44, illa 50983)"
+   ]
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2025-10-01",
+   "rule": "fitxa F38 + comanda DATA DE PRESA + GTL extracció + annex DPSH 'DATA 01/10/2025' + albarà TPS + fotos WhatsApp 2025-10-01 + correu de Sílvia ('veniu demà', 30/09). Unànime, ≥ 4 independents.",
+   "candidates": [
+    {
+     "value": "2025-10-01",
+     "source": "fitxa!F38",
+     "quote": "dies de camp | 2025-10-01"
+    },
+    {
+     "value": "01/10/2025",
+     "source": "annex DPSH",
+     "quote": "DATA 01/10/2025"
+    }
+   ],
+   "sources_checked": [
+    "g3_03",
+    "g3_05",
+    "lab_07",
+    "annex_17",
+    "camp_20",
+    "fotos_26",
+    "correu_12"
+   ]
+  },
+  "cota_referencia": {
+   "status": "segur",
+   "value": "+245",
+   "rule": "annex DPSH '+245 msnm (ICGC −0,15 carrer)' + z GPS 244,9-245,1 (coincideixen) + tall (gràfic ≈245). El '720 m' del projecte és un error de plantilla de l'arquitecte (mai usar).",
+   "candidates": [
+    {
+     "value": "+245 msnm (ICGC −0,15 carrer)",
+     "source": "annex DPSH",
+     "quote": "Cota d'inici +245 msnm (ICGC −0,15 carrer)"
+    },
+    {
+     "value": "244,9-245,1 (z GPS)",
+     "source": "COORDENADES.txt",
+     "quote": "P-1 324935;4619561;244,9"
+    }
+   ],
+   "sources_checked": [
+    "annex_17",
+    "coord (dins altres_16)",
+    "annex_22",
+    "projecte_14 (720 m descartat)"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "segur",
+   "value": "2",
+   "rule": "llegenda del tall (2 nivells: llims argilosos i sorrencs / lutites i sorrenques substrat); sense sondeig a rotació (única font = criteri Eva al tall). 1 font A sense contradicció.",
+   "candidates": [
+    {
+     "value": "2",
+     "source": "tall.pdf llegenda",
+     "quote": "Nivell 1: Llims argilsoso i sorrencs | Nivell 2: Lutites i sorrenques, Substrat"
+    }
+   ],
+   "sources_checked": [
+    "annex_18 (text)",
+    "annex_22",
+    "camp_20"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "3",
+   "rule": "Excel (3 fulls) + albarà TPS (3; 6,8 ml) + pressupost/PLAN_COST (3 previstos) + annexos",
+   "candidates": [
+    {
+     "value": "3",
+     "source": "ANNEXES/4001607_DPSH.xls",
+     "quote": "3 fulls; rebuig -2,90/-2,15/-1,75"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "camp_20",
+    "g3_01",
+    "g3_04",
+    "annex_17"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "segur",
+   "value": "X 324935 ; Y 4619561 (P-1)",
+   "rule": "COORDENADES.txt (3 punts; z coincideix amb ICGC). Regla: l'informe usa P-1.",
+   "candidates": [
+    {
+     "value": "324935 / 4619561 / 244,9",
+     "source": "COORDENADES.txt",
+     "quote": "P-1 324935;4619561;244,9"
+    }
+   ],
+   "sources_checked": [
+    "altres_16"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "segur",
+   "value": "5098344CG2159N0000US",
+   "rule": "projecte de l'arquitecte (declarada); coherent amb l'ortofoto de l'annex (illa 50983, parcel·la 44)",
+   "candidates": [
+    {
+     "value": "5098344CG2159N0000US",
+     "source": "projecte 2_02B",
+     "quote": "ref. 5098344CG2159N0000US"
+    }
+   ],
+   "sources_checked": [
+    "projecte_14",
+    "annex_21"
+   ]
+  },
+  "lab": {
+   "status": "segur",
+   "value": {
+    "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+    "lab_sample_id": "SPT-1 (P3)",
+    "lab_depth": "1,0 - 1,15 m",
+    "lab_location": "P-3"
+   },
+   "rule": "GTL 4672-GTL-25 (TPS B64803075; SPT1 P3, 1,0-1,15) + comanda. El full de camp/etiqueta diu 1,0-1,75 (fondària de rebuig del P-3, no de la mostra) i l'Excel 1,0-1,5: el GTL mana per a la profunditat (regla Rubí).",
+   "candidates": [
+    {
+     "value": "SPT1 P3, 1,0-1,15",
+     "source": "GTL p.2",
+     "quote": "Mostra: SPT1 P3 | 1,0-1,15"
+    },
+    {
+     "value": "1,0-1,5 (Excel) / 1,0-1,75 (camp)",
+     "source": "Excel DPSH / full TPS",
+     "quote": "SPT-1 1,0 a 1,5 R | 1,0 a 1,75, 50 cops"
+    }
+   ],
+   "sources_checked": [
+    "lab_07",
+    "g3_05",
+    "g3_06",
+    "camp_20",
+    "fotos_26",
+    "annex_08 (dup)"
+   ]
+  },
+  "cte": {
+   "status": "candidats",
+   "value": {
+    "cte_edificacio": "C-0 (derivat)",
+    "cte_sol": "T-1 (per defecte)"
+   },
+   "rule": "el pressupost de Linyola té 3 pàgines i NO porta la línia CTE (2/8 sense). Derivat: 250,91 m² totals (< 300) i PB (< 4) → C0; T-1 = valor de tots els pressupostos que porten la línia. Tots dos candidats, cap segur.",
+   "candidates": [
+    {
+     "value": "C0 (250,91 m² < 300, PB)",
+     "source": "definició Eva + projecte",
+     "quote": "construïda PB 250,91 m²"
+    },
+    {
+     "value": "T-1 (per defecte del patró)",
+     "source": "regla del skill (Castellar)",
+     "quote": "—"
+    }
+   ],
+   "sources_checked": [
+    "g3_01 (sense pàgina CTE)",
+    "projecte_14"
+   ]
+  }
+ },
+ "summary": {
+  "segur": 14,
+  "candidats": 1,
+  "no_trobat": 0,
+  "notes": "el projecte de l'arquitecte (2_02B) resol superfície, plantes, ref. cadastral i arquitecte: quan hi ha projecte, gairebé tot el nivell A hi és."
+ },
+ "comparison_with_eva": {
+  "reference": "reference-material/4001607 LINYOLA/validation/eva_reference_values.json (de 4001607_informe.doc, signat)",
+  "opened_after_decisions": true,
+  "per_field": {
+   "expedient": {
+    "eva": "4001607",
+    "mine": "4001607",
+    "result": "OK"
+   },
+   "client_name": {
+    "eva": "SRA. SÍLVIA EROLES BALAGUERÓ",
+    "mine": "Sílvia Eroles Balagueró",
+    "result": "OK",
+    "note": "Sílvia sola (no la parella): l'informe va a nom de qui accepta"
+   },
+   "street_address": {
+    "eva": "(al títol) Carrer Clot de la Llacuna",
+    "mine": "Carrer Clot de la Llacuna, 16",
+    "result": "OK"
+   },
+   "municipality": {
+    "eva": "Linyola",
+    "mine": "Linyola",
+    "result": "OK"
+   },
+   "architect_name": {
+    "eva": "BUNYESC ARQUITECTURA EFICIENT (el despatx)",
+    "mine": "segur: Josep Bunyesc Palacín (persona)",
+    "result": "ERR",
+    "note": "ERR-AMB-CONFIANÇA #2: l'Eva escriu el DESPATX (= CLIENT del pressupost), no la persona del caixetí. Bell-lloc: persona (Jordi Bosch Novell). REGLA: persona vs despatx no és decidible per endavant → candidats [persona del caixetí | despatx del pressupost], mai segur quan totes dues formes existeixen."
+   },
+   "building_type": {
+    "eva": "un nou habitatge unifamiliar",
+    "mine": "habitatge unifamiliar aïllat",
+    "result": "OK (CLOSE)"
+   },
+   "num_floors": {
+    "eva": "Pb",
+    "mine": "PB",
+    "result": "OK"
+   },
+   "superficie_parcela": {
+    "eva": "571",
+    "mine": "571 m²",
+    "result": "OK",
+    "note": "regla Bell-lloc confirmada: el projecte mana"
+   },
+   "field_date": {
+    "eva": "1 d'octubre de 2025",
+    "mine": "2025-10-01",
+    "result": "OK"
+   },
+   "cota_referencia": {
+    "eva": "+245.0",
+    "mine": "+245",
+    "result": "OK"
+   },
+   "num_soil_levels": {
+    "eva": "dos nivells",
+    "mine": "2",
+    "result": "OK"
+   },
+   "num_dpsh_tests": {
+    "eva": "3",
+    "mine": "3",
+    "result": "OK"
+   },
+   "utm_ref_catastral": {
+    "eva": "324935 / 4619561 (= P-1)",
+    "mine": "P-1 324935/4619561; ref 5098344CG2159N0000US",
+    "result": "OK",
+    "note": "regla P-1 confirmada (3 de 3)"
+   },
+   "lab": {
+    "eva": "TPS / SPT-1 / -1.00 a -1.15 / P-3",
+    "mine": "TPS / SPT-1 (P3) / 1,0-1,15 / P-3",
+    "result": "OK",
+    "note": "regla 'GTL mana per a la profunditat' confirmada (camp deia 1,75; Excel 1,5)"
+   },
+   "cte": {
+    "eva": "C-0 / T-1",
+    "mine": "candidats [C0 derivat | T-1 per defecte]",
+    "result": "CAND",
+    "note": "tots dos correctes a la llista; les derivacions (superfície total + T-1 defecte) funcionen"
+   }
+  },
+  "totals": {
+   "OK": 13,
+   "CAND": 1,
+   "NT": 0,
+   "NA": 0,
+   "ERR": 1
+  },
+  "rules_learned": [
+   "architect_name: quan existeixen persona (caixetí) i despatx (pressupost), l'Eva pot usar qualsevol dels dos (Bell-lloc: persona; Linyola: despatx) → candidats, mai segur",
+   "client quan el projecte diu 2 promotors: l'informe va a nom de qui signa l'acceptació (Sílvia, no la parella)",
+   "cte derivat (C0 per superfície total + T-1 per defecte) encerta quan el pressupost no porta la línia"
+  ]
+ }
+}

@@ -1,0 +1,376 @@
+{
+ "source_path": "PENETROS + SONDEIGS.pdf",
+ "source_md5": "fb66391f0ee776d8c0e7e3dd877b1a35",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escaneig (Print To PDF) de fulls de camp manuscrits TPS: 2 albarans (DPSH i sondeig a rotació), 2 fitxes de camp de penetròmetre dinàmic (punts P1-P6), 2 fulls de camp de sondeig a rotació (S-1, S-2) i un croquis d'emplaçament dels punts respecte un camí.",
+ "issuer": "TPS, Prospecció del Subsòl, SL (subcontractista d'assaigs de camp de G3); operari/sondista Daniel Fernández",
+ "date": "19-2-2026 (repetida a totes les pàgines com a data de camp)",
+ "pages_or_sheets": "7 pàgines (p.1-4 retrat A4, p.5-7 apaïsat A4)",
+ "context": {
+  "who_made_it": "TPS (subcontractista d'assaigs de camp: penetròmetres DPSH i sondeig a rotació) fa aquests fulls per registrar en brut les lectures de l'operari Daniel Fernández a obra",
+  "for_whom": "G3 (Eva), que ha encarregat els assaigs a TPS per a aquest projecte",
+  "why": "Deixar constància de camp de les lectures DPSH (colpeig cada 20 cm, rebuig), del sondeig a rotació (litologia per tram, nivell freàtic, mostres SPT/MA) i de l'emplaçament dels punts, com a base per a la transcripció posterior a l'Excel DPSH i a l'annex de sondeig de l'Eva",
+  "expected_fields": [
+   "data de camp",
+   "nombre de penetròmetres executats",
+   "lectures N20/colpeig i fondària de rebuig per punt DPSH",
+   "nivell freàtic (marcat o en blanc) per punt",
+   "litologia bruta per tram de fondària (sondeig)",
+   "mostres SPT/MA amb profunditat i colpeig",
+   "croquis d'emplaçament dels punts"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "architect_name",
+   "street_address (carrer)",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cte_edificacio/cte_sol",
+   "expedient"
+  ],
+  "relation_to_others": "Font MÉS primària (full de camp original manuscrit) de dues fonts que no es llegeixen en aquesta crida i que tenen més autoritat per als valors finals: (a) l'Excel DPSH revisat per l'Eva (ANEJOS/4001679_DPSH.xls) mana per als valors definitius de rebuig/N20 i N.F.; (b) l'annex de sondeig (ANEJOS/4001679_sondeos.FH11) mana per a la litologia redactada i la numeració de 'nivells'. Aquest document és útil per creuar dades (punt 0, N.F., croquis, data) però no és autoritat final per a cap dels 15 camps del nivell A.",
+  "authority_for": [
+   "field_date"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "19-2-2026",
+   "location": "Full de Camp Penetròmetre Dinàmic, Fitxa 01 (p.2), camp 'Data'; repetit a p.1 (albarà DPSH), p.3 (Fitxa 01 cont.), p.4 (albarà sondeig, 'Data inici'/'Data final'), p.5 (full de camp S-1, 'Data inici'), p.6 (full de camp S-2, 'Data inici'; 'Data finalització' en blanc)",
+   "quote": "Data: 19-2-2026",
+   "confidence": 0.85,
+   "note": "Coincideix a 6 aparicions independents dins del mateix document (mateix full de camp, no fonts independents entre elles). És la data dels assaigs DPSH i del sondeig; candidat fort a 'primer dia de camp' si no hi ha cap altra data anterior a la fitxa 'DADES PER ANAR A CAMP' (no llegida en aquesta crida)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 6,
+   "location": "Albarà DPSH, p.1, bloc 'ML DE PERFORACIÓ', camp 'Nº de penetròmetres realitzats'",
+   "quote": "N° de penetròmetres realitzats: 6",
+   "confidence": 0.75,
+   "note": "Coincideix amb els 6 punts identificats a les fitxes de camp (P1, P2, P3 a p.2; P4, S-2-P5, S1-P6 a p.3) i al croquis d'emplaçament (p.7). És el nombre EXECUTAT segons l'albarà TPS (no el previst del pressupost, no llegit en aquesta crida)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "Albarà DPSH p.1 (camps 'Adreça'/'Població'), Fitxes DPSH p.2/p.3 (camp 'Adreça de l'obra'), Albarà sondeig p.4 (camps 'Adreça'/'Població'), Fulls de sondeig p.5/p.6 (camp 'Adreça de l'obra')",
+   "quote": "Adreça: Anciles / Població: Anciles (p.1); Adreça de l'obra: Anciles (p.2, p.3, p.5, p.6)",
+   "confidence": 0.5,
+   "note": "Repetit idènticament 6 cops al document, però només com a nom de poble: el camp 'Adreça' i el camp 'Població' porten exactament el mateix text, sense cap carrer diferenciat. No és una de les fonts primàries del Pas 3 (comanda/pressupost/PLAN_COST, no llegides en aquesta crida); es dona com a suport addicional, no com a font independent forta."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 / Eva",
+   "location": "Albarà DPSH p.1, bloc 'DADES CLIENT' (Empresa/Responsable); Albarà sondeig p.4 i fulls de sondeig p.5/p.6, camp 'Empresa/Client'",
+   "quote": "Empresa: G3 / Responsable: Eva (p.1); Empresa/Client: G3 - Eva (p.4, p.5, p.6)",
+   "confidence": 0.0,
+   "note": "Descartat per la regla del Pas 3/Pas 0: en un albarà o full de camp TPS, el bloc 'client' es refereix a la relació TPS→G3 (el subcontractista factura a G3), no al promotor de l'obra. G3/Eva mai és client_name."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL",
+   "location": "Capçalera/logo de totes les pàgines (p.1-6)",
+   "quote": "tps — prospecció del subsòl",
+   "confidence": 0.35,
+   "note": "Aquest document és emès per TPS com a executora dels assaigs de camp (DPSH + sondeig a rotació), no és un GTL de laboratori. Confirma TPS com a empresa que executa els assaigs in situ i pren les mostres; la identitat exacta de qui signa el GTL de laboratori s'ha de confirmar amb la comanda de laboratori/GTL (no llegits en aquesta crida)."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-3,58 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Fitxa 01 penetròmetre dinàmic, p.2, columna 'P1'",
+    "quote": "R:3,58"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-4,59 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Fitxa 01 penetròmetre dinàmic, p.2, columna 'P2'",
+    "quote": "R:4,59"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-3,77 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Fitxa 01 penetròmetre dinàmic, p.2, columna 'P3'",
+    "quote": "R:3,77"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-5,92 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'P4'",
+    "quote": "R:5,92"
+   },
+   {
+    "punt": "P-5",
+    "cota_inici": null,
+    "profunditat_assolida": "-4,18 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S-2-P5'",
+    "quote": "R:4,18",
+    "note": "Columna ratllada amb l'anotació manuscrita 'Sondejos' (verticalment, entre -2,2 i -3 m aprox.); el valor de rebuig roman llegible sota el ratllat. P5 coincideix amb l'emplaçament del sondeig S-2 (croquis p.7 etiqueta el mateix punt 'S2 / P5')."
+   },
+   {
+    "punt": "P-6",
+    "cota_inici": null,
+    "profunditat_assolida": "-5,70 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Fitxa 01 penetròmetre dinàmic (cont.), p.3, columna 'S1-P6'",
+    "quote": "R:5,70",
+    "note": "Mateix ratllat 'Sondejos' que P5. P6 coincideix amb l'emplaçament del sondeig S-1 (croquis p.7 etiqueta el mateix punt 'S1-P6')."
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": null,
+    "profunditat_assolida": "2,40 m",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "Full de camp sondeig a rotació S1, p.5",
+    "quote": "Sondeig: S1; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+    "note": "El camp 'Nivell Freàtic' del full és una casella dedicada que ha quedat completament en blanc (ni cota, ni 'No' marcat); es tracta amb la mateixa convenció que una cel·la buida ('No detectat'). Camp 'Descriure cota 0 o cota referència' també en blanc.",
+    "extra": {
+     "materials_log": [
+      {
+       "de": "0,00",
+       "a": "1,00",
+       "litologia": "Limos con un bolillo",
+       "corones": "101 W.B"
+      },
+      {
+       "de": "1,60",
+       "a": "2,20",
+       "litologia": "Limos",
+       "corones": "86 W.B"
+      },
+      {
+       "de": "2,20",
+       "a": "2,30",
+       "litologia": "Limos con grava",
+       "corones": "86 W.B"
+      },
+      {
+       "de": "2,30",
+       "a": "2,40",
+       "litologia": "Granito",
+       "corones": "86 W.B"
+      }
+     ]
+    }
+   },
+   {
+    "sondeig": "S-2",
+    "cota": null,
+    "profunditat_assolida": "3,00 m",
+    "spt_ma": {
+     "n_spt": 1,
+     "n_tp": 0,
+     "n_ma": 1
+    },
+    "nivell_freatic": "No detectat",
+    "location": "Full de camp sondeig a rotació S2, p.6",
+    "quote": "Sondeig: S-2; Nivell Freàtic (indicar cota o posar No si no n'hi ha): [en blanc]",
+    "note": "Camp 'Nivell Freàtic' en blanc, mateixa convenció que S-1. Camp 'Descriure cota 0 o cota referència' també en blanc.",
+    "extra": {
+     "materials_log": [
+      {
+       "de": "0,00",
+       "a": "1,00",
+       "litologia": "Limos",
+       "corones": "101 W.B"
+      },
+      {
+       "de": "1,60",
+       "a": "1,70",
+       "litologia": "Arenas",
+       "corones": "86 W.B"
+      },
+      {
+       "de": "1,70",
+       "a": "1,90",
+       "litologia": "Arenas con bola",
+       "corones": "86 W.B"
+      },
+      {
+       "de": "1,90",
+       "a": "2,10",
+       "litologia": "Pizarra",
+       "corones": "86 W.B"
+      },
+      {
+       "de": "2,10",
+       "a": "2,60",
+       "litologia": "Arenas con gravilla",
+       "corones": "86 W.B"
+      },
+      {
+       "de": "2,60",
+       "a": "2,80",
+       "litologia": "Granito",
+       "corones": "86 W.B"
+      },
+      {
+       "de": "2,80",
+       "a": "3,00",
+       "litologia": "Graves",
+       "corones": "86 W.B"
+      }
+     ]
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "1,00 a 1,60 m",
+    "litologia": null,
+    "litologia_candidats": [
+     "Limos con un bolillo (tram anterior, fins a 1,00 m)",
+     "Limos (tram posterior, des de 1,60 m)"
+    ],
+    "n30": {
+     "estat": "candidats",
+     "registre": {
+      "estat": "segur",
+      "value": [
+       2,
+       3,
+       3,
+       3
+      ],
+      "font": "Full de camp sondeig S-1, p.5, columna 'Colpeig'",
+      "quote": "2 | 3 | 3 | 3"
+     },
+     "candidates": [
+      {
+       "value": 6,
+       "font": "suma dels dos trams centrals (3+3)"
+      },
+      {
+       "value": 11,
+       "font": "suma dels 4 trams (2+3+3+3)"
+      }
+     ]
+    },
+    "location": "Full de camp sondeig S-1, p.5, bloc 'Mostres'",
+    "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+    "note": "L'interval de la mostra (1,00-1,60) cau exactament al tram SENSE registre de litologia entre les files 0,00-1,00 i 1,60-2,20 (probablement zona d'entubat sense descripció); litologia candidata dels dos trams veïns, mai segura."
+   },
+   {
+    "id": "SPT-1",
+    "punt": "S-2",
+    "profunditat": "1,00 a 1,60 m",
+    "litologia": null,
+    "litologia_candidats": [
+     "Limos (tram anterior, fins a 1,00 m)",
+     "Arenas (tram posterior, des de 1,60 m)"
+    ],
+    "n30": {
+     "estat": "candidats",
+     "registre": {
+      "estat": "segur",
+      "value": [
+       2,
+       3,
+       3,
+       3
+      ],
+      "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+      "quote": "2 | 3 | 3 | 3"
+     },
+     "candidates": [
+      {
+       "value": 6,
+       "font": "suma dels dos trams centrals (3+3)"
+      },
+      {
+       "value": 11,
+       "font": "suma dels 4 trams (2+3+3+3)"
+      }
+     ]
+    },
+    "location": "Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+    "quote": "Prof 1,00 a 1,60; tipus S.P.T-1; Colpeig 2 3 3 3",
+    "note": "Registre idèntic al de SPT-1 de S-1 (2/3/3/3); mateixa zona sense litologia registrada entre 1,00 i 1,60 m. Etiqueta 'SPT-1' es repeteix per sondeig (no és única per a tot el projecte): l'informe final necessitarà distingir quin SPT-1 (S-1 o S-2) és el que es reporta."
+   },
+   {
+    "id": "MA-1",
+    "punt": "S-2",
+    "profunditat": "2,80 a 3,00 m",
+    "litologia": "Graves",
+    "litologia_candidats": [
+     "Graves"
+    ],
+    "n30": {
+     "estat": "candidats",
+     "registre": {
+      "estat": "candidats",
+      "value": [
+       1,
+       1,
+       1,
+       1
+      ],
+      "font": "Full de camp sondeig S-2, p.6, columna 'Colpeig'",
+      "quote": "1 | 1 | 1(?) | 1",
+      "note": "Tercer valor de lectura incerta al manuscrit (traç feble); llegit com '1' amb confiança baixa."
+     },
+     "candidates": [
+      {
+       "value": 2,
+       "font": "suma dels dos trams centrals (1+1)"
+      },
+      {
+       "value": 4,
+       "font": "suma dels 4 trams (1+1+1+1)"
+      }
+     ]
+    },
+    "location": "Full de camp sondeig S-2, p.6, bloc 'Mostres'",
+    "quote": "Prof 2,80,3,00; tipus M.A-1; Colpeig 1 1 1 1",
+    "note": "Interval de la mostra (2,80-3,00) coincideix EXACTAMENT amb el tram registrat 'Graves' (2,80-3,00): litologia amb confiança alta, a diferència dels dos SPT-1. Inusual que una Mostra Alterada (MA) porti colpeig anotat (habitualment en porten només SPT); es transcriu tal com és."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "street_address",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Document escanejat (Print To PDF, producer 'Microsoft: Print To PDF'), text_ok=false a totes les pàgines (fotografies manuscrites, sense text extraïble): lectura 100% visual sobre page-N.png (150 dpi), amb 4 zooms addicionals via render_clip.py (≥400 dpi) per confirmar fondàries de tram al full S-1 (p.5, taula de/a), la cel·la 'Colpeig' de S-1 i S-2 (p.5/p.6), i el camp 'Responsable' de l'albarà DPSH (p.1, 'Eva'). Ordre de lectura: p.1 albarà DPSH -> p.2-3 fitxes DPSH P1-P6 -> p.4 albarà sondeig -> p.5-6 fulls de sondeig S-1/S-2 -> p.7 croquis d'emplaçament (confirma numeració P1-P6 i coincidència P5=S-2, P6=S-1). Camps 'Descriure punt 0 o cota referència' i 'Esquema situació dels punts' buits a totes les fitxes DPSH (el croquis real és una pàgina apart, p.7). No s'ha llegit cap altre fitxer del projecte (mode --only): les identitats client/arquitecte/adreça de carrer/cota de referència/CTE no són a l'abast d'aquest document i queden a 'not_present'; l'Excel DPSH i l'annex de sondeig (no llegits aquí) tenen més autoritat per als valors finals de rebuig/N20/litologia numerada."
+}

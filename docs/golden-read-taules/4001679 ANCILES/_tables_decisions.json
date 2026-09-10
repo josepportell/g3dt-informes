@@ -1,0 +1,903 @@
+{
+ "project": "4001679 ANCILES",
+ "read_date": "2026-08-24",
+ "skill_version": "v0.8 (Pas 3b taules)",
+ "scope": "NOMÉS bloc tables (els 15 escalars del nivell A ja llegits a docs/golden-read/4001679 ANCILES/)",
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,40 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.1 capçalera",
+       "quote": "Cota inicio: +1106,40 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "cota_inici = capçalera de cada pàgina de l'annex DPSH; diferent per punt; origen: topogràfic del client."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-3,58 m",
+       "font": "ANEJOS/4001679_DPSH.xls full P-1 B80",
+       "quote": "Rechazo a la penetración: -3,58 m"
+      },
+      {
+       "value": "-3,58 m",
+       "font": "PENETROS + SONDEIGS.pdf p.2 col P1",
+       "quote": "R: 3,58"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària exacta del rebuig; corroborat pel full manuscrit TPS (2 fonts)."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "font": "ANEJOS/4001679_DPSH.xls full P-1 B80",
+       "quote": "Rechazo a la penetración: -3,58 m"
+      }
+     ],
+     "rule": "B80 present → rebuig Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "ANEJOS/4001679_DPSH.xls full P-1 columna F (N.F.)",
+       "quote": "(columna buida a tots 6 fulls)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf caselles 'Hi ha nivell freàtic?'",
+       "quote": "(en blanc a tots els fulls; cap marca a columnes N.F.)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és, i el manuscrit tampoc en marca cap."
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,30 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.2 capçalera",
+       "quote": "Cota inicio: +1106,30 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "cota_inici = capçalera de cada pàgina de l'annex DPSH; diferent per punt; origen: topogràfic del client."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-4,59 m",
+       "font": "ANEJOS/4001679_DPSH.xls full P-2 B80",
+       "quote": "Rechazo a la penetración: -4,59 m"
+      },
+      {
+       "value": "-4,59 m",
+       "font": "PENETROS + SONDEIGS.pdf p.2 col P2",
+       "quote": "R: 4,59"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària exacta del rebuig; corroborat pel full manuscrit TPS (2 fonts)."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "font": "ANEJOS/4001679_DPSH.xls full P-2 B80",
+       "quote": "Rechazo a la penetración: -4,59 m"
+      }
+     ],
+     "rule": "B80 present → rebuig Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "ANEJOS/4001679_DPSH.xls full P-2 columna F (N.F.)",
+       "quote": "(columna buida a tots 6 fulls)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf caselles 'Hi ha nivell freàtic?'",
+       "quote": "(en blanc a tots els fulls; cap marca a columnes N.F.)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és, i el manuscrit tampoc en marca cap."
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,40 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.3 capçalera",
+       "quote": "Cota inicio: +1106,40 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "cota_inici = capçalera de cada pàgina de l'annex DPSH; diferent per punt; origen: topogràfic del client."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-3,77 m",
+       "font": "ANEJOS/4001679_DPSH.xls full P-3 B80",
+       "quote": "Rechazo a la penetración: -3,77 m"
+      },
+      {
+       "value": "-3,77 m",
+       "font": "PENETROS + SONDEIGS.pdf p.2 col P3",
+       "quote": "R: 3,77"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària exacta del rebuig; corroborat pel full manuscrit TPS (2 fonts)."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "font": "ANEJOS/4001679_DPSH.xls full P-3 B80",
+       "quote": "Rechazo a la penetración: -3,77 m"
+      }
+     ],
+     "rule": "B80 present → rebuig Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "ANEJOS/4001679_DPSH.xls full P-3 columna F (N.F.)",
+       "quote": "(columna buida a tots 6 fulls)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf caselles 'Hi ha nivell freàtic?'",
+       "quote": "(en blanc a tots els fulls; cap marca a columnes N.F.)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és, i el manuscrit tampoc en marca cap."
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,30 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.4 capçalera",
+       "quote": "Cota inicio: +1106,30 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "cota_inici = capçalera de cada pàgina de l'annex DPSH; diferent per punt; origen: topogràfic del client."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-5,92 m",
+       "font": "ANEJOS/4001679_DPSH.xls full P-4 B80",
+       "quote": "Rechazo a la penetración: -5,92 m"
+      },
+      {
+       "value": "-5,92 m",
+       "font": "PENETROS + SONDEIGS.pdf p.3 col P4",
+       "quote": "R: 5,92"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària exacta del rebuig; corroborat pel full manuscrit TPS (2 fonts)."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "font": "ANEJOS/4001679_DPSH.xls full P-4 B80",
+       "quote": "Rechazo a la penetración: -5,92 m"
+      }
+     ],
+     "rule": "B80 present → rebuig Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "ANEJOS/4001679_DPSH.xls full P-4 columna F (N.F.)",
+       "quote": "(columna buida a tots 6 fulls)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf caselles 'Hi ha nivell freàtic?'",
+       "quote": "(en blanc a tots els fulls; cap marca a columnes N.F.)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és, i el manuscrit tampoc en marca cap."
+    }
+   },
+   {
+    "punt": "P-5",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,42 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.5 capçalera",
+       "quote": "Cota inicio: +1106,42 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "cota_inici = capçalera de cada pàgina de l'annex DPSH; diferent per punt; origen: topogràfic del client."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-4,18 m",
+       "font": "ANEJOS/4001679_DPSH.xls full P-5 B80",
+       "quote": "Rechazo a la penetración: -4,18 m"
+      },
+      {
+       "value": "-4,18 m",
+       "font": "PENETROS + SONDEIGS.pdf p.3 col 'S-2 - P5'",
+       "quote": "R: 4,18"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària exacta del rebuig; corroborat pel full manuscrit TPS (2 fonts)."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "font": "ANEJOS/4001679_DPSH.xls full P-5 B80",
+       "quote": "Rechazo a la penetración: -4,18 m"
+      }
+     ],
+     "rule": "B80 present → rebuig Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "ANEJOS/4001679_DPSH.xls full P-5 columna F (N.F.)",
+       "quote": "(columna buida a tots 6 fulls)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf caselles 'Hi ha nivell freàtic?'",
+       "quote": "(en blanc a tots els fulls; cap marca a columnes N.F.)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és, i el manuscrit tampoc en marca cap."
+    },
+    "note": "Executat dins del forat del sondeig S-2 (C17 Excel = 'Sondeo S-2'): colpeig de -3,2 a -4,2; la cota coincideix amb la z de S-2 (+1106,42)."
+   },
+   {
+    "punt": "P-6",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,65 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.6 capçalera",
+       "quote": "Cota inicio: +1106,65 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "cota_inici = capçalera de cada pàgina de l'annex DPSH; diferent per punt; origen: topogràfic del client."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-5,70 m",
+       "font": "ANEJOS/4001679_DPSH.xls full P-6 B80",
+       "quote": "Rechazo a la penetración: -5,70 m"
+      },
+      {
+       "value": "-5,70 m",
+       "font": "PENETROS + SONDEIGS.pdf p.3 col 'S-1 - P6'",
+       "quote": "R: 5,70"
+      }
+     ],
+     "rule": "peu B80 de l'Excel = fondària exacta del rebuig; corroborat pel full manuscrit TPS (2 fonts)."
+    },
+    "rebuig": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Si",
+       "font": "ANEJOS/4001679_DPSH.xls full P-6 B80",
+       "quote": "Rechazo a la penetración: -5,70 m"
+      }
+     ],
+     "rule": "B80 present → rebuig Si."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "ANEJOS/4001679_DPSH.xls full P-6 columna F (N.F.)",
+       "quote": "(columna buida a tots 6 fulls)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf caselles 'Hi ha nivell freàtic?'",
+       "quote": "(en blanc a tots els fulls; cap marca a columnes N.F.)"
+      }
+     ],
+     "rule": "'No detectat' només si la columna N.F. és buida a tots els fulls — ho és, i el manuscrit tampoc en marca cap."
+    },
+    "note": "Executat dins del forat del sondeig S-1 (C17 Excel = 'Sondeo S-1'): colpeig de -2,6 a -5,8; la cota coincideix amb la z de S-1 (+1106,65)."
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,65 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1 capçalera Z",
+       "quote": "Cota inicio según plano topográfico proporcionado: Z: +1106.65 msnm"
+      },
+      {
+       "value": "+1106,65 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.6 (P-6 (S1))",
+       "quote": "Cota inicio: +1106,65 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "z de la capçalera de l'annex de sondeig; coincideix amb la cota del punt P-6 fet al mateix forat (2 fonts)."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-2,40 m",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.2 Fotografía 2",
+       "quote": "material recuperado en el sondeo S-1 entre las cotas de 0.00 a -2.40 metros de profundidad"
+      },
+      {
+       "value": "-2,40 m",
+       "font": "PENETROS + SONDEIGS.pdf p.5 (full de camp S1)",
+       "quote": "trams fins 2,30-2,40 Granito"
+      }
+     ],
+     "rule": "fons del log = peu de foto de l'annex = últim tram del full de camp; l'albarà de sondeigs (4,90+0,50 ml totals) quadra amb 2,40+3,00."
+    },
+    "spt_ma": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "1/0",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1 bloc Muestras (només SPT-1)",
+       "quote": "SPT-1 | -1.00 a -1.60"
+      },
+      {
+       "value": "1/0",
+       "font": "PENETROS + SONDEIGS.pdf p.5 Mostres",
+       "quote": "1,00 a 1,60 S.P.T-1 (única mostra)"
+      }
+     ],
+     "rule": "comptar assaigs de l'annex + full de camp; cap MA a S-1; format de l'informe '1/0' o '1/--'."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1 columna 'Nivel freático (N.F.)'",
+       "quote": "(cap marca)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf p.5 casella Nivell Freàtic",
+       "quote": "(en blanc)"
+      }
+     ],
+     "rule": "cap marca de NF a cap document del sondeig."
+    }
+   },
+   {
+    "sondeig": "S-2",
+    "cota_inici": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "+1106,42 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 capçalera Z",
+       "quote": "Z: +1106.42 msnm"
+      },
+      {
+       "value": "+1106,42 msnm",
+       "font": "PDF_V0/ANEJOS/4001679_DPSH.pdf p.5 (P-5 (S2))",
+       "quote": "Cota inicio: +1106,42 msnm según el topográfico proporcionado."
+      }
+     ],
+     "rule": "z de la capçalera de l'annex de sondeig; coincideix amb la cota de P-5 (mateix forat)."
+    },
+    "profunditat_assolida": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-3,00 m",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 (log fins -3,0; MA-1 a -2,80/-3,00)",
+       "quote": "MA-1 | -2.80 -3.00"
+      },
+      {
+       "value": "-3,00 m",
+       "font": "PENETROS + SONDEIGS.pdf p.6 (full de camp S-2)",
+       "quote": "últim tram 2,80-3,00 Gravas"
+      }
+     ],
+     "rule": "fons del log = últim tram del full de camp; MA-1 agafada al fons."
+    },
+    "spt_ma": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "1/1",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 bloc Muestras (SPT-1 + MA-1)",
+       "quote": "SPT-1 -1.00 a -1.60 | MA-1 -2.80 -3.00"
+      },
+      {
+       "value": "1/1",
+       "font": "comanda laboratori_4001679_ANCILES.xls Hoja1 fila 35 + PENETROS + SONDEIGS.pdf p.6",
+       "quote": "MA (S-2) 2,8-3,0 | S.P.T-1 + M.A-1 al full de camp"
+      }
+     ],
+     "rule": "comptar de l'annex + comanda + full de camp (3 fonts coherents)."
+    },
+    "nivell_freatic": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "No detectat",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 columna N.F.",
+       "quote": "(cap marca)"
+      },
+      {
+       "value": "No detectat",
+       "font": "PENETROS + SONDEIGS.pdf p.6 casella Nivell Freàtic",
+       "quote": "(en blanc)"
+      }
+     ],
+     "rule": "cap marca de NF a cap document del sondeig."
+    }
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1 (S-1)",
+    "punt": "S-1",
+    "id_estat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "SPT-1",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1",
+       "quote": "SPT-1"
+      },
+      {
+       "value": "S.P.T-1",
+       "font": "PENETROS + SONDEIGS.pdf p.5",
+       "quote": "S.P.T-1"
+      }
+     ],
+     "rule": "etiqueta: annex de l'Eva mana; full de camp coincideix."
+    },
+    "profunditat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-1,00 a -1,60 m",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1",
+       "quote": "-1.00 a -1.60"
+      },
+      {
+       "value": "1,00 a 1,60",
+       "font": "PENETROS + SONDEIGS.pdf p.5",
+       "quote": "1,00a1,60 S.P.T-1"
+      }
+     ],
+     "rule": "annex + full de camp coincideixen."
+    },
+    "registre": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "2/3/3/3",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1 columna Registro (lectura visual)",
+       "quote": "2 3 3 3"
+      },
+      {
+       "value": "2/3/3/3",
+       "font": "PENETROS + SONDEIGS.pdf p.5 Colpeig",
+       "quote": "2 3 3 3"
+      }
+     ],
+     "rule": "Registre = cops per tram de 15 cm; annex imprès i manuscrit coincideixen."
+    },
+    "n30": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "6",
+       "font": "derivat del Registre (suma trams centrals 3+3)",
+       "quote": "2 3 3 3 → 3+3=6"
+      },
+      {
+       "value": "N=6",
+       "font": "tall.pdf anotació a S-1",
+       "quote": "N=6"
+      }
+     ],
+     "rule": "regla v0.8: llegeix els 4 valors i proposa la suma dels trams centrals com a candidat, no en triïs un de sol; el tall corrobora N=6. Sense GTL per contrastar."
+    },
+    "litologia_del_nivell": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Nivell 1 — Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito.",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1 Descripción de los materiales",
+       "quote": "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito."
+      },
+      {
+       "value": "Nivell 1 — Arcillas arenosas con puntualmente bolos.",
+       "font": "tall.pdf llegenda",
+       "quote": "1er nivel: Arcillas arenosas con puntualmente bolos."
+      }
+     ],
+     "rule": "l'assaig (-1,0/-1,6) cau dins del nivell 1; la redacció exacta de litologia és sempre candidats (l'Eva re-redacta)."
+    }
+   },
+   {
+    "id": "SPT-1 (S-2)",
+    "punt": "S-2",
+    "id_estat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "SPT-1",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3",
+       "quote": "SPT-1"
+      },
+      {
+       "value": "S.P.T-1",
+       "font": "PENETROS + SONDEIGS.pdf p.6",
+       "quote": "S.P.T-1"
+      }
+     ],
+     "rule": "etiqueta: annex de l'Eva mana; full de camp coincideix."
+    },
+    "profunditat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-1,00 a -1,60 m",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3",
+       "quote": "-1.00 a -1.60"
+      },
+      {
+       "value": "1,00 a 1,60",
+       "font": "PENETROS + SONDEIGS.pdf p.6",
+       "quote": "1,00a1,60 S.P.T-1"
+      }
+     ],
+     "rule": "annex + full de camp coincideixen."
+    },
+    "registre": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "2/3/3/3",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 columna Registro (lectura visual)",
+       "quote": "2 3 3 3"
+      },
+      {
+       "value": "2/3/3/3",
+       "font": "PENETROS + SONDEIGS.pdf p.6 Colpeig",
+       "quote": "2 3 3 3"
+      }
+     ],
+     "rule": "idèntic a S-1 (coincidència real dels dos assaigs, verificada a les dues fonts independents de cada sondeig)."
+    },
+    "n30": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "6",
+       "font": "derivat del Registre (suma trams centrals 3+3)",
+       "quote": "2 3 3 3 → 3+3=6"
+      },
+      {
+       "value": "N=6",
+       "font": "tall.pdf anotació a S-2",
+       "quote": "N=6"
+      }
+     ],
+     "rule": "com S-1; el tall corrobora N=6. Sense GTL per contrastar."
+    },
+    "litologia_del_nivell": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Nivell 1 — Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito.",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 Descripción de los materiales",
+       "quote": "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito."
+      },
+      {
+       "value": "Nivell 1 — Arcillas arenosas con puntualmente bolos.",
+       "font": "tall.pdf llegenda",
+       "quote": "1er nivel: Arcillas arenosas con puntualmente bolos."
+      }
+     ],
+     "rule": "l'assaig cau dins del nivell 1; redacció exacta sempre candidats."
+    }
+   },
+   {
+    "id": "MA-1 (S-2)",
+    "punt": "S-2",
+    "id_estat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "MA-1",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3",
+       "quote": "MA-1"
+      },
+      {
+       "value": "M.A-1",
+       "font": "PENETROS + SONDEIGS.pdf p.6",
+       "quote": "M.A-1"
+      },
+      {
+       "value": "MA (S-2)",
+       "font": "comanda laboratori_4001679_ANCILES.xls Hoja1 fila 35",
+       "quote": "MA (S-2)"
+      }
+     ],
+     "rule": "etiqueta: annex de l'Eva mana (MA-1); la comanda ('MA (S-2)') és variant compatible sense ordinal, no discrepància.",
+     "note": "Sense GTL a la carpeta per contrastar l'etiqueta del laboratori."
+    },
+    "profunditat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "-2,80 a -3,00 m",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3",
+       "quote": "-2.80 -3.00"
+      },
+      {
+       "value": "2,8 a 3,0 m",
+       "font": "comanda laboratori_4001679_ANCILES.xls Hoja1 fila 35 (J/L)",
+       "quote": "2,8 | 3,0"
+      },
+      {
+       "value": "2,80-3,00",
+       "font": "PENETROS + SONDEIGS.pdf p.6",
+       "quote": "2,80,3,00 M.A-1"
+      }
+     ],
+     "rule": "3 fonts coincidents."
+    },
+    "registre": {
+     "estat": "no_trobat",
+     "candidates": [],
+     "rule": "MA = mostra alterada, sense colpeig (full de camp: '/ / / /').",
+     "sources_checked": [
+      "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 (columna Registro buida per MA-1)",
+      "PENETROS + SONDEIGS.pdf p.6 (Colpeig '/ / / /')"
+     ]
+    },
+    "n30": {
+     "estat": "no_trobat",
+     "candidates": [],
+     "rule": "no aplica a una mostra alterada.",
+     "sources_checked": [
+      "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3",
+      "PENETROS + SONDEIGS.pdf p.6"
+     ]
+    },
+    "assaig_encarregat": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "Agressivitat sòls — només sulfats",
+       "font": "comanda laboratori_4001679_ANCILES.xls Hoja1 fila 35 (AA='X', AD)",
+       "quote": "NOMÉS SULFATS"
+      }
+     ],
+     "rule": "la comanda és l'única font de lab (sense GTL); resultat de sulfats pendent."
+    },
+    "litologia_del_nivell": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Nivell 2 — Bolos y gravas de granito en matriz arenosa y arcillosa.",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 Descripción de los materiales",
+       "quote": "Bolos y gra vas de granito en matriz arenosa y arcillosa."
+      },
+      {
+       "value": "Nivell 2 — Bolos y gravas en matriz arenosa y arcillosa.",
+       "font": "tall.pdf llegenda",
+       "quote": "2do nivel: Bolos y gravas en matriz arenosa y arcillosa."
+      }
+     ],
+     "rule": "la mostra (-2,80/-3,00) cau dins del tram de graves (nivell 2): és la fila de sulfats de l'informe — el nivell de la mostra, no el 1r (regla mostra_del_nivell)."
+    }
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "litologia": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito.",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1 i p.3 'Descripción de los materiales'",
+       "quote": "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito."
+      },
+      {
+       "value": "Arcillas arenosas con puntualmente bolos.",
+       "font": "tall.pdf llegenda",
+       "quote": "1er nivel: Arcillas arenosas con puntualmente bolos."
+      }
+     ],
+     "rule": "v0.8: annex de sondeig ('Descripción de los materiales') PRIMER, tall segon; l'Eva re-redacta a l'informe → mai segur per a la cadena literal."
+    },
+    "de": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "0,00 m (superfície)",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.1/p.3",
+       "quote": "columna litològica des de 0.0"
+      }
+     ],
+     "rule": "el nivell 1 comença en superfície a tots els punts."
+    },
+    "a": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "~-2,55/-2,60 m (a S-2)",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 (canvi de textura, lectura gràfica) + PENETROS + SONDEIGS.pdf p.6 (Granito 2,60-2,80)",
+       "quote": "banda de graves des de ~-2,55/-2,60 | 2,60-2,80 Granito"
+      },
+      {
+       "value": "sostre del 2n nivell entre ~+1103,9 i ~+1104,8 msnm segons punt (≈1,7 a 2,6 m sota superfície)",
+       "font": "tall.pdf (lectura gràfica sobre escala msnm)",
+       "quote": "(superfície de contacte dibuixada ondulada entre S-2 i S-1/P-6)"
+      },
+      {
+       "value": "salt de Nb a l'Excel entre ~-1,8 i -2,6 segons punt",
+       "font": "ANEJOS/4001679_DPSH.xls (P-1: 11→20/37 des de -1,8; P-4: 9→17/21 des de -2,0)",
+       "quote": "readings_n20"
+      }
+     ],
+     "rule": "transició variable per punt i llegida gràficament → candidats, mai segur; S-2 és l'única perforació que travessa el contacte amb registre directe."
+    },
+    "mostra_del_nivell": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "false",
+       "font": "SPT-1 (x2) dins del nivell; la mostra de laboratori (MA-1) NO és d'aquest nivell",
+       "quote": "SPT-1 -1,00/-1,60"
+      }
+     ],
+     "rule": "la fila de sulfats de l'informe porta el nivell de la MA (nivell 2), no el 1r."
+    }
+   },
+   {
+    "nom": "2on nivell",
+    "litologia": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "Bolos y gravas de granito en matriz arenosa y arcillosa.",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 'Descripción de los materiales'",
+       "quote": "Bolos y gra vas de granito en matriz arenosa y arcillosa."
+      },
+      {
+       "value": "Bolos y gravas en matriz arenosa y arcillosa.",
+       "font": "tall.pdf llegenda",
+       "quote": "2do nivel: Bolos y gravas en matriz arenosa y arcillosa."
+      }
+     ],
+     "rule": "annex primer, tall segon; quasi idèntiques (l'annex afegeix 'de granito')."
+    },
+    "de": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "~-2,55/-2,60 m (S-2)",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 + PENETROS + SONDEIGS.pdf p.6",
+       "quote": "2,60-2,80 Granito | 2,80-3,00 Gravas"
+      },
+      {
+       "value": "~+1103,9 a +1104,8 msnm segons punt",
+       "font": "tall.pdf",
+       "quote": "(gràfic)"
+      }
+     ],
+     "rule": "mateixa transició que el sostre del nivell 1."
+    },
+    "a": {
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "fons reconegut: -3,00 m a S-2 (sondeig) i fins -5,92 m als DPSH (P-4)",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 + ANEJOS/4001679_DPSH.xls B80",
+       "quote": "log fins -3,0 | Rechazo a la penetración: -5,92 m"
+      },
+      {
+       "value": "el tall dibuixa el nivell 2 fins a +1100 msnm (límit del dibuix)",
+       "font": "tall.pdf",
+       "quote": "(gràfic)"
+      }
+     ],
+     "rule": "cap perforació no travessa la base del nivell 2 → fons obert; candidats amb el que està documentat."
+    },
+    "mostra_del_nivell": {
+     "estat": "segur",
+     "candidates": [
+      {
+       "value": "true",
+       "font": "PDF_V0/ANEJOS/4001679_sondeos.pdf p.3 (MA-1 -2,80/-3,00 dins del tram de graves)",
+       "quote": "MA-1 | -2.80 -3.00"
+      }
+     ],
+     "rule": "el nivell que conté lab_depth: la fila de sulfats de l'informe porta AQUEST nivell."
+    }
+   }
+  ],
+  "superficie_construida": {
+   "estat": "candidats",
+   "candidates": [
+    {
+     "value": "PB 522,61 + P1 454,70 + Bajo cubierta 188,53 + Sótano 98,42 m² (suma computable 1165,84; total 1264,26)",
+     "font": "24.0807/IV_PLANOS.pdf p.7 (GO5 EDIFICABILIDAD POR PLANTAS)",
+     "quote": "EDIFICABILIDAD PLANTA BAJA 522.61 m2 | PLANTA PRIMERA 454.70 m2 | PLANTA BAJO CUBIERTA 188.53 m2 (solo computa altura > 1,50 m) | PLANTA SÓTANO 98.42 m2 (no computa)",
+     "font_etiqueta": "segons projecte"
+    }
+   ],
+   "rule": "superficie_construida: taula del projecte vigent (Proyecto Básico Revisado oct. 2025); emet la font amb el valor ('segons projecte'); les sumes són derivació → candidats. El correu d'encàrrec (2024-11-18) descriu '7 adosados de PB+1PP+BC' sense m²; A01_TIPOL és l'anteproyecto (versió vella).",
+   "sources_checked": [
+    "24.0807/Presupuesto Parcela Anciles.msg (cos: sense m²)",
+    "24.0807/A01_TIPOL.pdf (superfícies per tipologia, anteproyecto 2024 — substituït)",
+    "24.0807/PRESUPUESTO GEOTEC.ANCILES.pdf (sense superfícies)",
+    "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf (no obert aquí: pressupost, no font de superfícies de projecte)"
+   ]
+  }
+ },
+ "global_notes": [
+  "Cap GTL a la carpeta (només la comanda): el resultat de sulfats de MA-1 i el contrast de laboratori dels SPT queden pendents — sources_checked: arrel del projecte, 24.0807/, ACCEPTACIO/, ANEJOS/, adjunts dels .msg.",
+  "P-5 i P-6 són DPSH executats DINS dels forats dels sondeigs S-2 i S-1 (colpeig des de -3,2 i -2,6): el nombre de punts DPSH és 6 igualment; les cotes d'inici coincideixen amb les z dels sondeigs.",
+  "Nivell freàtic: cap marca a cap document (Excel N.F. buit als 6 fulls, caselles TPS en blanc, cap marca als logs) → 'No detectat'.",
+  "El log de sondeig només etiqueta NIVEL 1 però descriu i dibuixa el segon material; el TALL mana per al NOMBRE de nivells → 2 (cas Anciles ja conegut a v0.8).",
+  "Els Nb del tall (P-1: 6/33/R, P-2: 6/44/R, P-3: 4/13/R, P-4: 5/32/17/R, S-2/P-5: 38/R, S-1/P-6: 14/26/R) són mitjanes derivades per l'Eva, anotades com a corroboració — no substitueixen l'Excel."
+ ]
+}

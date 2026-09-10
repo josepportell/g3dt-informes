@@ -1,0 +1,46 @@
+{
+ "Df_user": 0.3,
+ "num_soil_levels_user": 2,
+ "soil_types_user": [
+  "limo",
+  "grava"
+ ],
+ "dpsh_overall_n20": 25.12,
+ "bearing_layer_idx": null,
+ "bearing_layer_description": "",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Graves amb sorres",
+   "from": 0.0,
+   "to": 2.6,
+   "n20_avg": 34.3,
+   "Nb": 41.3,
+   "soil_type": "grava"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2.0,
+  "cohesion": 0.0,
+  "phi": 37.02008032128514,
+  "E": 469.06199999999995
+ },
+ "terzaghi": {
+  "phi": 37.02008032128514,
+  "cohesion": 0.0,
+  "gamma": 2.0,
+  "B": 1.0,
+  "Df": 0.3,
+  "qu": 7.940393574297191,
+  "safety_factor": 3.0,
+  "Qa": 2.5,
+  "settlement_cm": 1.7,
+  "settlement_type": "immediat",
+  "Es_used": 76,
+  "qa_terzaghi_peck": 2.2394726836339434,
+  "Qa_uncapped": 2.6467978580990636,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.099,
+  "qa_governs": "terzaghi"
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_fotografies.pdf",
+ "source_md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Plafó fotogràfic G3 (2 pàgines, F-1 a F-4) de l'emplaçament de la màquina DPSH als punts P-1, P-2, P-3 i P-4.",
+ "issuer": "G3 (Eva) — exportat de l'annex FreeHand original (ANNEXES/3001621_fotografies.FH11)",
+ "date": "sense data visible al document; metadata PDF creationDate 2025-11-03 (data d'exportació/impressió, no necessàriament la de camp)",
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 (Eva), muntant fotos de la visita de camp en un plafó per a l'annex de l'informe",
+  "for_whom": "per a l'informe geotècnic mateix (annex fotogràfic)",
+  "why": "documentar visualment on i com es van fer els assaigs DPSH",
+  "expected_fields": [
+   "expedient (capçalera de cada pàgina)",
+   "corroboració visual dels punts DPSH (P-1..P-4)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "exportat (Acrobat Distiller / PScript5.dll) de l'annex FreeHand original ANNEXES/3001621_fotografies.FH11 (no llegible directament); duplicat exacte (mateix md5 73cea90d5c4d74a91bd2c88a56fe1970) a PDF-V0/ANNEXES/3001621_fotografies.pdf (carpeta exclosa, versió anterior, no llegit per separat)",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1 i p.2, capçalera 'Fotografies - pàgina N | 3001621'",
+   "quote": "3001621",
+   "confidence": 0.5,
+   "note": "concorda amb el nom de carpeta i altres fonts, però és una capçalera de plafó fotogràfic, no font primària (Pas 2: pressupost/comanda/DPSH excel manen); mai segur des d'aquest document sol"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "p.1 llegenda sota F-1/F-2; p.2 llegenda sota F-3/F-4",
+   "quote": "Fotografia 1-2: Detall de l'emplaçament de la màquina realitzant l'assaig de penetració dinàmica DPSH, P-1 i P-2, respectivament. / Fotografia 3-4: Detall de l'emplaçament de la màquina realitzant l'assaig de penetració dinàmica DPSH, P-3 i P-4, respectivament.",
+   "confidence": 0.6,
+   "note": "corrobora visualment 4 punts DPSH (P-1 a P-4); no és font primària (Pas 2: Excel DPSH executats mana)"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF exportat de FreeHand (creator PScript5.dll, producer Acrobat Distiller) amb text_ok=false a les 2 pàgines (confirmat a meta.json): lectura íntegrament visual sobre page-1.png i page-2.png (150dpi), prou resolució per llegir requadres F-1..F-4 i llegendes; no ha calgut render_clip ni les meitats top/bottom. Duplicat exacte (mateix md5) a PDF-V0/ANNEXES/3001621_fotografies.pdf (carpeta PDF-V0 exclosa de l'abast, no llegit)."
+}

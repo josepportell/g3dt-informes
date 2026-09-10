@@ -1,0 +1,124 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+ "source_md5": "3f3035ff2113238d74e3e22e5cffb26a",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic G3 25·0493 (versió WOOD COMFORT, 07/10/25) ACCEPTAT: formulari p.5 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' omplert a mà i signat pel client.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L. (m4PRO ERP, Acrobat Distiller); omplert i signat pel client",
+ "date": "07/10/25 (p.1, data del pressupost) · 25/06/25 (p.5, data del pressupost original) · PDF creationDate 2025-10-07, modDate 2025-10-08",
+ "pages_or_sheets": "7 pàgines (p.1 portada CLIENT/OBRA; p.2 pla de treball i campanya; p.3 índex i terminis; p.4 valoració; p.5 condicions + formulari d'acceptació signat; p.6-7 condicions específiques)",
+ "context": {
+  "who_made_it": "G3 (Eva) emet el pressupost al sol·licitant; el client l'omple a mà (tinta vermella) i el signa a p.5.",
+  "for_whom": "Per a WOOD COMFORT PROMOCIONS SLU (promotor), que retorna l'acceptació a G3.",
+  "why": "Contracte-pressupost de l'estudi geotècnic per a l'obra de C/ARBRELLS 18A-18B-20, Castellar del Vallès. La casella CLIENT de p.1 és el sol·licitant; en aquest cas coincideix amb el promotor (societat promotora, no arquitecte).",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests",
+   "cte_edificacio",
+   "cte_sol",
+   "architect_name (si el sol·licitant fos arquitecte o consta a la casella ARQUITECTE de p.5)"
+  ],
+  "not_expected": [
+   "expedient (només codi comercial 25·0493)",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "superficie_parcela",
+   "num_floors",
+   "lab_*"
+  ],
+  "relation_to_others": "Versió acceptada i signada del pressupost 25·0493. A la carpeta hi ha dues versions prèvies (25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf i .MODF.; route python, no llegides aquí): segons la lliçó del corpus, la primera anava a nom de GRUP ALMA i la MODF a WOOD COMFORT — aquesta acceptació confirma WOOD COMFORT. Les aparicions de CLIENT a p.1, fitxa de camp i correus deriven del mateix encàrrec: NO són fonts independents entre elles; el formulari p.5 signat sí que és autoritat A. El correu '25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg' (no llegit aquí) i l'adreça 18A-18B-20 suggereixen 3 habitatges.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.5 formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' → NOM I COGNOMS (manuscrit, tinta vermella) + N.I.F./C.I.F. (tipografiat); signat a 'El client'",
+   "quote": "NOM I COGNOMS: WOOD COMFORT PROMOCIONS SLU · N.I.F./C.I.F.: B19935212 · ADREÇA: FERRAN VALLS I TABERNER 14 BIS 1-2 · CP I POBLACIÓ: 08006 BARCELONA",
+   "confidence": 0.92,
+   "note": "Autoritat A (acceptació signada). Manuscrit llegit amb clip 400 dpi; coincideix lletra per lletra amb el bloc CLIENT tipografiat de p.1 (mateix encàrrec, no font independent). Societat promotora, no arquitecte. Substitueix versions anteriors del pressupost si en diuen un altre (GRUP ALMA). L'adreça d'aquest bloc és la del client (Barcelona), NO la de l'obra."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.1 bloc CLIENT (tipografiat)",
+   "quote": "CLIENT: WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA / Tel:",
+   "confidence": 0.75,
+   "note": "Sol·licitant del pressupost. Mateix nom que el formulari p.5 → aquí sol·licitant = promotor. Derivat del mateix encàrrec: no compta com a segona font independent."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "location": "p.1 bloc OBRA, línia 2",
+   "quote": "OBRA: ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES",
+   "confidence": 0.85,
+   "note": "Adreça de l'obra (bloc OBRA, no CLIENT). Tres números (18A-18B-20) coherent amb un encàrrec de 3 habitatges. Grafia G3 en majúscules sense accents; el nom oficial del carrer pot ser 'carrer dels Arbrells'. Blocs CLIENT/OBRA ordenats per posició (el text natural els barreja)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1 bloc OBRA, línia 3",
+   "quote": "CASTELLAR DEL VALLES",
+   "confidence": 0.85,
+   "note": "Forma curta G3 sense accent; forma oficial 'Castellar del Vallès'. Mai la població del client (BARCELONA, p.1/p.5)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.2 campanya de camp + p.4 valoració línia 002.001",
+   "quote": "4 assaigs de penetració dinàmica DPSH · UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH 4,00",
+   "confidence": 0.7,
+   "note": "PREVISTOS (pressupost), no executats: mana l'Excel ANNEXES/3001621_DPSH.xls. Dues aparicions del mateix document."
+  },
+  {
+   "concept_id": "num_sondeig_tests",
+   "value": "1",
+   "location": "p.2 campanya de camp + p.4 valoració línia 001.001",
+   "quote": "1Sondeig a rotació amb bateria continua, que inclou desplaçament, perforació i execució d'assaigs SPT's · SONDEIG A ROTACIO AMB BATERIA CONTINUA 1,00 · INCLOU DESPLAÇAMENT I ASSAIG SPT",
+   "confidence": 0.7,
+   "note": "Previst: 1 sondeig a rotació amb SPT + partida de laboratori (003.001). Dada de context per a sondeig_tests/lab (no és cap dels 15 escalars); l'annex de sondeig i el GTL manen."
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "25·0493 P#",
+   "location": "p.1 peu, p.4 i p.5 capçalera",
+   "quote": "25·0493 P#",
+   "confidence": 0.0,
+   "note": "Codi comercial del pressupost, NO l'expedient (expedient = 3001621, nom de la carpeta / comanda N19). Descartat explícitament."
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": "07/10/25 · 25/06/25",
+   "location": "p.1 DATA · p.5 DATA",
+   "quote": "DATA: 07/10/25 · DATA 25/06/25",
+   "confidence": 0.0,
+   "note": "Dates del pressupost (versió 07/10/25) i del pressupost original (25/06/25). Mai són la data de camp. Descartades."
+  }
+ ],
+ "not_present": [
+  "expedient (només codi comercial 25·0493)",
+  "architect_name (casella ARQUITECTE de p.5 buida; el sol·licitant és el promotor, no un arquitecte)",
+  "building_type (p.1 OBRA només diu 'ESTUDI GEOTECNIC'; cap descripció d'edifici)",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (només dates del pressupost)",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company / lab_sample_id / lab_depth / lab_location (només la partida 'ASSAIGS DE LABORATORI' sense mostra)",
+  "cte_edificacio / cte_sol (p.2 NO porta les línies 'Tipus d'edifici' / 'Tipus de Terreny' → derivar per superfície construïda total + T-1 per defecte, sempre candidats)"
+ ],
+ "reading_notes": "Pre-extracció: text_ok a les 7 pàgines (text net tot i el Distiller). Llegits page-1..7.txt; visualment page-1.png (blocs CLIENT/OBRA), page-5.png (formulari d'acceptació) i clip 400 dpi de p.5 y=0.33-0.52 per al manuscrit vermell (NOM I COGNOMS, ADREÇA, CP, DADES BANCÀRIES, email ROCFLATS@HOTMAIL.COM, ✓ Digital per email, ✓ Informe en català). Signatures: 'Resp. Oficina Tècnica' (Eva Vázquez, blau) i 'El client' (gargot vermell, sense nom llegible). No s'ha llegit cap /Sig digital (preext no permet fitz). Paginació incoherent de plantilla (p.4 'Pág. 1 de 3', p.5 'Pàg. 2 de 2'): sense efecte. p.3, p.6, p.7 = condicions generals, cap dada del nivell A."
+}

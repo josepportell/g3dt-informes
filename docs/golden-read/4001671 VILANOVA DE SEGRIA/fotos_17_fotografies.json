@@ -1,0 +1,25 @@
+{
+ "source_path": "FOTOGRAFIES/ (10 .jpeg)",
+ "document_type": "foto",
+ "what_it_is": "Les 10 fotos de camp del 19/02/2026: 4 d'estat de la parcel·la (DES DE DARRERA, DES DEL CARRER, INTERIOR, ZONA P3), 3 de la màquina als punts (P1, P2, P3), 2 de mostres SPT (SPT 1 P-1, SPT A P3) i 1 foto WhatsApp del full de camp de TPS.",
+ "issuer": "fotos de camp (TPS/Eva); noms descriptius posats per G3; la WhatsApp conserva el nom amb data",
+ "date": "2026-02-19 (nom 'WhatsApp Image 2026-02-19 at 10.28.45.jpeg'; sense EXIF fiable)",
+ "pages_or_sheets": "10 fitxers",
+ "context": {
+  "who_made_it": "l'operari de TPS i/o Eva durant el dia de camp",
+  "for_whom": "G3, per triar les 7 fotos de l'annex fotogràfic",
+  "why": "documentar estat del solar, execució dels assaigs i mostres; els NOMS de fitxer són l'etiquetatge d'Eva → identifiquen punts i mostres",
+  "expected_fields": ["field_date (nom WhatsApp)", "corroboració punts/SPT", "edificació existent"],
+  "not_expected": ["client_name", "architect_name", "street_address", "municipality", "cota", "expedient"],
+  "relation_to_others": "subconjunt publicat a PDF/ANEJOS/4001671_fotografías.pdf (F-1..F-7). 'SPT 1 P-1' ↔ F-6; 'SPT A P3' ↔ F-7 → confirmen els DOS SPT. La WhatsApp és una foto del full p.2 de PENETROS.pdf feta a obra a les 10:28 (data 19-2-26 llegible al full) → corrobora field_date. INTERIOR/DES DE DARRERA/ZONA P3 mostren la parcel·la amb murs, paviment i arbres = 'EDIFICACIÓ EXISTENT? SI' de la fitxa.",
+  "authority_for": ["field_date (nom de fitxer WhatsApp, corroboració)", "identificació de mostres SPT"]
+ },
+ "tier_a": [
+  {"concept_id": "field_date", "value": "2026-02-19", "location": "nom de fitxer 'WhatsApp Image 2026-02-19 at 10.28.45.jpeg' + data '19-2-26' llegible al full fotografiat", "quote": "WhatsApp Image 2026-02-19 at 10.28.45", "confidence": 0.7, "note": "corrobora albarà TPS, annex DPSH i comanda; foto feta a les 10:28 del mateix dia de camp"},
+  {"concept_id": "lab_sample_id", "value": "2 mostres SPT fotografiades: 'SPT 1 P-1' (material sorrenc solt) i 'SPT A P3' (testimoni argilós marró continu)", "location": "noms de fitxer + contingut (canal de mostra amb bossa i etiqueta TPS)", "quote": "SPT 1 P-1.jpeg | SPT A P3.jpeg", "confidence": 0.6, "note": "coherent amb full de camp/Excel/annex; la mostra del lab (sulfats) és la del P3. Etiquetes TPS de les bosses no llegibles al detall (si diguessin 'Client: G3' seria NOT_client per regla)."},
+  {"concept_id": "edificacio_existent", "value": "parcel·la tancada amb murs, zona pavimentada amb barana i arbres grans (vinya vella), cobert; cases veïnes adossades als límits", "location": "DES DE DARRERA / DES DEL CARRER / INTERIOR / ZONA P3 (visual)", "quote": "[noms de fitxer descriptius]", "confidence": 0.5, "note": "corrobora fitxa C16='SI' i el mur + 'zona en cota inferior' del croquis TPS; ZONA P3 mostra la terrassa pavimentada amb tanca de pedra on es va fer P3"},
+  {"concept_id": "client_name", "value": null, "location": "—", "quote": "", "confidence": 0.0, "note": "cap etiqueta de client llegible a les fotos; res a extreure"}
+ ],
+ "not_present": ["client_name", "architect_name", "street_address", "municipality", "expedient", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_depth", "cte"],
+ "reading_notes": "Llegides en contact sheet 4 col. Correspondència amb l'annex: DES DE DARRERA≈F-1, INTERIOR≈F-2, P1=F-3, P2=F-4, P3=F-5, SPT 1 P-1=F-6, SPT A P3=F-7; DES DEL CARRER, ZONA P3 i la WhatsApp no publicades. Màquina DPSH d'erugues (TPS ERUGA ✓). La foto WhatsApp del full de camp mostra el mateix contingut escanejat a PENETROS.pdf p.2 (no és font independent del full, però sí de la DATA en què existia)."
+}

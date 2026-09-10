@@ -1,0 +1,71 @@
+{
+ "source_path": "ACCEPTACIO/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg",
+ "source_md5": "02a50f46b757e4bf72b368d1643ea3c7",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu d'Alba Barrau (client) a Dolors Maqueda (G3) reenviant l'acceptació signada del pressupost geotècnic d'Anciles i preguntant per la data prevista de l'estudi de camp.",
+ "issuer": "Alba Barrau <abarrau@retrateria.com>",
+ "date": "2026-02-05 23:51:01+01:00",
+ "pages_or_sheets": "cos únic (body.txt), fil de correu amb 3 missatges anteriors citats (nov 2024, feb 2026)",
+ "context": {
+  "who_made_it": "Alba Barrau, la persona de contacte del client que gestiona l'encàrrec i l'acceptació del pressupost del projecte Anciles",
+  "for_whom": "G3 (Dolors Maqueda, Dep. Administració), per rebre l'acceptació i planificar l'obra",
+  "why": "reenviar l'acceptació signada del pressupost geotècnic (adjunt ja present a la carpeta com ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf) i demanar quan es preveu l'estudi de camp per gestionar l'accés a la parcel·la",
+  "expected_fields": [
+   "client_name (identitat de qui accepta l'encàrrec)"
+  ],
+  "not_expected": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date exacte",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "és el correu VEHICLE de l'acceptació: l'adjunt facc75f3... (presupuesto_g3_anciles.pdf) ja és a la carpeta com ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf (already_in_folder) i és l'autoritat real per a client_name (formulari p.5, llegit com a document separat). Aquest .msg només corrobora, amb el nom del remitent i la frase 'reenvío aceptación', que Alba Barrau és qui accepta l'encàrrec. El text per sota del primer 'De:' (fil anterior, nov 2024 - feb 2026) no és nou: és el mateix intercanvi ja capturat a altres .msg de la carpeta (p.ex. 24.0807/Re_ PRESUPUESTO GEOTECNICO ANCILES.msg, versió sense l'acceptació adjunta).",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Alba Barrau",
+   "location": "body.txt capçalera 'From:' (línia 2) + text nou línies 6-7",
+   "quote": "From: Alba Barrau <abarrau@retrateria.com> ... reenvío aceptación.",
+   "confidence": 0.4,
+   "note": "corrobora (no és autoritat primària): és el nom del remitent que reenvia l'acceptació, no una casella etiquetada 'Client' d'un formulari. L'autoritat real és el formulari p.5 del PDF adjunt ja present a la carpeta (ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf), llegit com a document separat. Coincideix amb aquell (mateix nom)."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Correu .msg pre-extret (body.txt). Només el text per sobre del primer 'De:' (línies 6-9) és nou; la resta és fil citat ja conegut. L'únic adjunt (presupuesto_g3_anciles.pdf, md5 facc75f3...) ja és solt a la carpeta (already_in_folder=ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf) i es llegeix com a document independent, no aquí. Sense dades tècniques del projecte (adreça, municipi, arquitecte, plantes, etc.) en aquest correu."
+}

@@ -1,0 +1,83 @@
+{
+ "source_path": "26.0049/DADES PER ANAR A CAMP_v1.xlsx",
+ "document_type": "fitxa_camp_g3",
+ "what_it_is": "Fitxa interna G3 'DADES PER ANAR A CAMP' del projecte 26·0049, pràcticament SENSE OMPLIR: només previsió 'PENETROS I MOSTRA', edificació existent SI, ventilació SI, punts marcats a camp SI, empresa 'TPS ERUGA'. Sense client, adreça, contacte ni data de camp.",
+ "issuer": "G3 (Eva / administració)",
+ "date": null,
+ "pages_or_sheets": "2 fulls: 'fitxa' (B2:L47) + 'dades de referencia' (llistes desplegables de plantilla)",
+ "context": {
+  "who_made_it": "G3 (plantilla interna que omple l'Eva/administració abans de la visita)",
+  "for_whom": "l'equip de camp de G3 / TPS",
+  "why": "recollir contacte, accés, previsió de campanya i data de camp abans d'anar a l'obra",
+  "expected_fields": [
+   "client (C6 = sol·licitant)",
+   "street_address + municipality (C7 ADREÇA OBRA)",
+   "contacte (C8/F8)",
+   "previsió DPSH (C13/F13)",
+   "field_date (F38)"
+  ],
+  "not_expected": [
+   "expedient",
+   "plantes",
+   "superfície",
+   "cota",
+   "nivells",
+   "lab",
+   "arquitecte"
+  ],
+  "relation_to_others": "deriva del pressupost 26·0049 (mateixa carpeta). En aquest projecte NO aporta cap dels camps que s'hi esperen (C6, C7, C8, F38 buits): fitxa sense data → field_date des d'annex DPSH / comanda DATA DE PRESA / noms de fotos. El full 'dades de referencia' és plantilla (llistes: TPS ERUGA/TPS CAMIÓ, CESAR, ALFEREZ, ESTANIS, INTECSON, LOLI, EVA R): mai senyal.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": null,
+   "location": "fitxa!C13 'PREVISIÓ DE TREBALL DE CAMP'",
+   "quote": "PENETROS I MOSTRA",
+   "confidence": 0.0,
+   "note": "només el tipus de campanya (penetròmetres + mostra SPT), sense nombre (F13 buit). Coherent amb el pressupost (3 DPSH + 1 SPT)."
+  },
+  {
+   "concept_id": "field_date",
+   "value": null,
+   "location": "fitxa!F38 (etiqueta E38 'dies de camp')",
+   "quote": "",
+   "confidence": 0.0,
+   "note": "F38 BUIT. Fitxa sense data."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": null,
+   "location": "fitxa!C38 'EMPRESA QUE FA LA FEINA'",
+   "quote": "TPS ERUGA",
+   "confidence": 0.0,
+   "note": "TPS (màquina eruga) és qui fa els penetròmetres, NO necessàriament el laboratori. Coneixement previ: G3 treballa amb TPS també per a laboratori, però aquesta cel·la no ho diu. No és senyal de lab."
+  },
+  {
+   "concept_id": "building_type",
+   "value": null,
+   "location": "fitxa!C16 'EDIFICACIÓ EXISTENT ?'",
+   "quote": "SI",
+   "confidence": 0.0,
+   "note": "hi ha edificació existent al solar: coherent amb una AMPLIACIÓ d'habitatge (títol dels correus), però no és el tipus d'edifici."
+  }
+ ],
+ "not_present": [
+  "client_name (C6 buit)",
+  "street_address (C7 buit)",
+  "municipality (C7 buit)",
+  "field_date (F38 buit)",
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests (F13 buit)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Identificada per fitxa!B2 == 'DADES PER ANAR A CAMP'. openpyxl data_only. 0 imatges incrustades (zipfile: cap xl/media/): cap foto. Cel·les omplertes: C12 'ENS HO INDICARÀ EL CLIENT' (tenim plànols), C13 'PENETROS I MOSTRA', C16 'SI', C22 'SI', C27 'SI' (punts marcats a camp), C38 'TPS ERUGA'. B4 'QUI HA QUEDAT?'/E4 'COM?' sense resposta."
+}

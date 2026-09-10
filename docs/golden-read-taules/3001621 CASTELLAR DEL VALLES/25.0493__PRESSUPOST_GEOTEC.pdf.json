@@ -1,0 +1,49 @@
+{
+  "source_path": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf (original 25/06/25) + 25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf (MODF 07/10/25, modDate posterior → MANA)",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost G3 del geotècnic; l'original a nom de GRUP ALMA CONSTRUCCIONS (3HAB, 18A), el MODF a nom de WOOD COMFORT PROMOCIONS SLU (18A-18B-20).",
+  "issuer": "G3 (m4PRO ERP)",
+  "date": "25/06/25 (original) / 07/10/25 (MODF)",
+  "pages_or_sheets": "7 pàgines cadascun; llegides p.1-2",
+  "context": {
+    "who_made_it": "G3",
+    "for_whom": "el sol·licitant (GRUP ALMA → WOOD COMFORT)",
+    "why": "oferta econòmica de la campanya",
+    "expected_fields": [
+      "quantitats previstes (DPSH, sondeig)",
+      "línia CTE (absent en aquest projecte)"
+    ],
+    "not_expected": [
+      "valors de camp",
+      "NF",
+      "cotes"
+    ],
+    "relation_to_others": "el MODF (modDate 20251007) substitueix l'original per a client i abast (regla 'dos pressupostos'); quantitats idèntiques",
+    "authority_for": [
+      "num_dpsh_tests (previstos)",
+      "sondeig previst"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "quantitats_previstes": {
+      "dpsh": {
+        "valor": 4,
+        "quote": "4 assaigs de penetració dinàmica DPSH",
+        "location": "p.2 (tots dos)"
+      },
+      "sondeig": {
+        "valor": 1,
+        "quote": "1Sondeig a rotació amb bateria continua, que inclou desplaçament, perforació i execució d'assaigs SPT's",
+        "location": "p.2 (tots dos)"
+      }
+    },
+    "__nota": "previstos = executats (4 DPSH, 1 sondeig). Cap línia 'Tipus d'edifici/Terreny' (cas Castellar conegut) ni cap superfície."
+  },
+  "not_present": [
+    "superficie_construida",
+    "línia CTE",
+    "cotes"
+  ],
+  "reading_notes": "Blocs ordenats per (y,x); CLIENT canvia entre versions (GRUP ALMA → WOOD COMFORT PROM., que és el 'Client' de l'annex de sondeig)."
+}

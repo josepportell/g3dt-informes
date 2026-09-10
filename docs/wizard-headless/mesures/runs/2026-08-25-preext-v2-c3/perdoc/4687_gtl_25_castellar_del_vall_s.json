@@ -1,0 +1,144 @@
+{
+ "source_path": "4687-GTL-25 Castellar del Vallés.pdf",
+ "source_md5": "ed8a07b662f237b3c9db0b752d54a300",
+ "skill_version": "1.0",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (contingut en ió sulfat) sobre la mostra alterada MA1 S1 del sondeig, emès per TPS/GTL",
+ "issuer": "TPS, Prospecció del Subsòl, SL (B64803075)",
+ "date": "2025-11-19",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "TPS (laboratori GTL, banda del peu de totes les pàgines: 'TPS, PROSPECCIÓ DEL SUBSÒL, SL B64803075')",
+  "for_whom": "G3 Desenvolupament Territorial, SL (bloc 'DADES DEL CLIENT'/'DADES DEL SOL·LICITANT', NIF B25364589), que li ha encarregat l'assaig de la mostra d'aquest projecte",
+  "why": "Determinar el contingut en ió sulfat del sòl (agressivitat) de la mostra MA1 presa al punt S1 entre 1,0 i 1,2 m",
+  "expected_fields": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient (via 'Obra/Projecte')",
+   "street_address i municipality (via 'Situació')"
+  ],
+  "not_expected": [
+   "client_name real (el bloc CLIENT és G3, no el promotor)",
+   "architect_name",
+   "num_floors",
+   "building_type",
+   "cota_referencia",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte"
+  ],
+  "relation_to_others": "La mostra MA1 S1 correspon al mateix punt que l'annex de sondeig i la comanda de laboratori (fila 35); el bloc 'DADES DEL CLIENT'/'DADES DEL SOL·LICITANT' = G3 no és una font independent del client de l'informe (regla: G3 mai és client). Pàgines 1 i 5 repeteixen el mateix caixetí (portada + tancament amb signatures).",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL",
+   "location": "peu de totes les pàgines",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": "emissor del GTL, mai el bloc 'DADES DEL CLIENT' (regla lab)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA1 S1",
+   "location": "p.2 i p.4, camp 'Mostra:'",
+   "quote": "MA1 S1",
+   "confidence": 0.8,
+   "note": "GTL sol; sense annex de sondeig a la carpeta que confirmi l'etiqueta (fitxer no llegit en aquesta crida)"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,2 m",
+   "location": "p.2, camp 'Cota d'extracció (m):'",
+   "quote": "Cota d'extracció (m): / 1,0 - 1,2",
+   "confidence": 0.9,
+   "note": "GTL és font d'autoritat per a lab_depth (regla)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "p.2 i p.4, camp 'Mostra:' (MA1 S1)",
+   "quote": "MA1 S1",
+   "confidence": 0.75,
+   "note": "punt d'assaig d'on surt la mostra, derivat de l'etiqueta 'MA1 S1'"
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.2, camp 'Obra / Projecte:'",
+   "quote": "Castellar del Vallés. Carrer Arbrells. 3001621",
+   "confidence": 0.85,
+   "note": "GTL 'Obra/Projecte' és font d'autoritat per a expedient (regla); coincideix amb el nom de la carpeta"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells",
+   "location": "p.1 i p.5, camp 'Situació:'",
+   "quote": "Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.6,
+   "note": "GTL no és font llistada com a autoritat A per a street_address (regla: només blocs OBRA/ADREÇA OBRA/Situació/Localización); candidat corroborant"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallés",
+   "location": "p.1 i p.5, camp 'Situació:'; també p.2 'Obra / Projecte:'",
+   "quote": "Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.6,
+   "note": "GTL no és una de les 3 fonts 'sempre' (comanda/pressupost/PLAN_COST); candidat corroborant"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/2025",
+   "location": "p.2, camps 'Data recepció:' / 'Data extracció:' / 'Data obertura:'",
+   "quote": "Data recepció: / 24/10/2025 ... Data extracció: / 24/10/2025 ... Data obertura: / 24/10/2025",
+   "confidence": 0.4,
+   "note": "dia d'extracció de la mostra (probablement dia del sondeig), candidat 2 amb nota 'sondeig'; NO és 'Data d'expedició' (19/11/2025), que és la data d'emissió del GTL i mai és field_date (regla)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL (B25364589)",
+   "location": "p.1 i p.5, bloc 'DADES DEL CLIENT:'; p.2, bloc 'DADES DEL SOL.LICITANT:'",
+   "quote": "DADES DEL CLIENT: / G3 Desenvolupament Territorial, SL / NIF: / B25364589",
+   "confidence": 0.0,
+   "note": "descartat: G3 mai és client (regla). És el sol·licitant del laboratori, no el promotor de l'obra"
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "MA1",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,2 m",
+    "litologia": "Grava amb llims",
+    "n30": null,
+    "location": "p.2, camps 'Mostra:'/'Cota d'extracció (m):'/'DESCRIPCIÓ DEL MATERIAL:'",
+    "quote": "Tipus de mostra: Alterada / Cota d'extracció (m): 1,0 - 1,2 / Mostra: MA1 S1 / DESCRIPCIÓ DEL MATERIAL: Grava amb llims",
+    "note": "mostra alterada (MA) sense colpeig SPT; n30 no aplicable (l'assaig d'aquest document és químic, no de penetració)"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name (real, promotor)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Document net (text_ok=true a les 5 pàgines, PDF generat per Excel via Acrobat PDFMaker); no ha calgut renderitzar cap pàgina ni usar render_clip.py. Etiquetes i valors surten intercalats/desordenats a l'extracció de text (típic de taules PDF) però sense ambigüitat entre parelles etiqueta-valor donada l'estructura repetida de la plantilla GTL (verificada a p.1 i p.5, idèntiques). Assaig químic realitzat: Determinació del contingut en ió sulfat (UNE 83963:2008), resultat 0,0 mg SO4-/kg de mostra (p.3-4) — fora d'abast del nivell A (Tier B), no transcrit a tier_a. Pàgina 5 porta signatures digitals de Pere Cervós Flinch (Director tècnic, geòleg col. 3481) i Pere Farrés Bori (Cap d'àrea d'assaig GTL, geòleg col. 5326) — personal de TPS, no de l'arquitecte ni promotor."
+}

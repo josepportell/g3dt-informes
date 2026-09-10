@@ -1,0 +1,219 @@
+{
+ "signat": "3001621_informe_v0.docx",
+ "slug": "castellar",
+ "label": "2026-09-07 veritat des dels signats (pas 1)",
+ "n_images": 11,
+ "n_static": 1,
+ "template": "g3dt-jinja-template.docx",
+ "images": [
+  {
+   "n": 1,
+   "file": "01_fig_situacio_figura-1-situacio-de-la-zona-d-estudi-am.png",
+   "media": "image1.png",
+   "md5": "659913a315d48b95cfc6e7aa2fd6cc32",
+   "dims": [
+    1430,
+    714
+   ],
+   "bytes": 1372127,
+   "phash": "9119e3073d8463fe",
+   "slot": "fig_situacio",
+   "static_of": null,
+   "caption": "Figura 1. Situació de la zona d’estudi, amb color taronja. (mapes topogràfic i ortofoto, ICGC 2025, modificat).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "1.1. ANTECEDENTS",
+   "para": 78
+  },
+  {
+   "n": 2,
+   "file": "02_fig_assaigs_figura-2-emplacament-de-l-habitatge-proj.png",
+   "media": "image2.png",
+   "md5": "f51410232335ae3a509b2745127a5497",
+   "dims": [
+    812,
+    800
+   ],
+   "bytes": 882718,
+   "phash": "ab0edb12f4731664",
+   "slot": "fig_assaigs",
+   "static_of": null,
+   "caption": "Figura 2. Emplaçament de l’habitatge projecte i els assaigs realitzats.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.2. RECONEIXEMENT DEL TERRENY",
+   "para": 150
+  },
+  {
+   "n": 3,
+   "file": "03_foto_dpsh_fotografia-1-vista-de-la-maquina-utilitz.jpeg",
+   "media": "image3.jpeg",
+   "md5": "6d4e049634fc3e13fabb41603d5e476a",
+   "dims": [
+    1920,
+    1080
+   ],
+   "bytes": 432515,
+   "phash": "929686b2c7cdc4d9",
+   "slot": "foto_dpsh",
+   "static_of": null,
+   "caption": "Fotografia 1. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica realitzats.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.4.1. Assaigs de penetració tipus “DPSH”",
+   "para": 175
+  },
+  {
+   "n": 4,
+   "file": "04_foto_sondeig_fotografia-2-vista-de-la-maquina-utilitz.jpeg",
+   "media": "image4.jpeg",
+   "md5": "fa6ed7f9d3e2bdc37f4dadb9186de431",
+   "dims": [
+    1920,
+    1080
+   ],
+   "bytes": 538922,
+   "phash": "929698e17d483cbe",
+   "slot": "foto_sondeig",
+   "static_of": null,
+   "caption": "Fotografia 2. Vista de la màquina utilitzada per a la realització del sondeig a rotació.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.4.2. Sondeig a Rotació amb Bateria Contínua",
+   "para": 187
+  },
+  {
+   "n": 5,
+   "file": "05_fig_spt_cullera_figura-3-cullera-normalitzada-grafic-ext.jpeg",
+   "media": "image5.jpeg",
+   "md5": "194f4466503c4c6b7d5d3fffcb5770e5",
+   "dims": [
+    1552,
+    641
+   ],
+   "bytes": 105135,
+   "phash": "ad18ac99c6d2936d",
+   "slot": "fig_spt_cullera",
+   "static_of": null,
+   "caption": "Figura 3. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.4.3. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+   "para": 193
+  },
+  {
+   "n": 6,
+   "file": "06_fig_geologic_figura-4-mapa-geologic-a-escala-1-25-000.png",
+   "media": "image6.png",
+   "md5": "006a37326f18a7fdefcd5034ed0b52f7",
+   "dims": [
+    1470,
+    806
+   ],
+   "bytes": 1638980,
+   "phash": "b34cb2b399584ea6",
+   "slot": "fig_geologic",
+   "static_of": null,
+   "caption": "Figura 4. Mapa geològic a escala 1:25.000 de la zona en estudi (ICGC, modificat).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "3.1. MARC GEOLÒGIC",
+   "para": 315
+  },
+  {
+   "n": 7,
+   "file": "07_foto_materials_fotografia-4-detall-dels-materials-recup.jpeg",
+   "media": "image7.jpeg",
+   "md5": "c1b1d450421f3943737a503ff11c0227",
+   "dims": [
+    1920,
+    1080
+   ],
+   "bytes": 334206,
+   "phash": "829797d5959695d0",
+   "slot": "foto_materials",
+   "static_of": null,
+   "caption": "Fotografia 4. Detall dels materials recuperats durant la realització del sondeig S-1.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "3.2. CARACTERITZACIÓ DELS MATERIALS",
+   "para": 334
+  },
+  {
+   "n": 8,
+   "file": "08_fig_tall_figura-5-tall-de-correlacio.png",
+   "media": "image8.png",
+   "md5": "03557948d006c98cefd220948d226f76",
+   "dims": [
+    977,
+    293
+   ],
+   "bytes": 23038,
+   "phash": "ff80907f4fc8a036",
+   "slot": "fig_tall",
+   "static_of": null,
+   "caption": "Figura 5. Tall de correlació.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "4.1. GEOLOGIA",
+   "para": 506
+  },
+  {
+   "n": 9,
+   "file": "09_fig_extra_estabilitat_figura-6-i-figura-7-lineas-de-saturacio.wmf",
+   "media": "image9.wmf",
+   "md5": "7ecea29dc2f8b4c024763e0f7cb82503",
+   "dims": [
+    267,
+    398
+   ],
+   "bytes": 424784,
+   "phash": null,
+   "slot": "fig_extra_estabilitat",
+   "static_of": null,
+   "caption": "Figura 6 i Figura 7. Líneas de saturació possibles, es marca la que s’ha escollit. En la segona figura detall de l’àbac nº1 escollit.",
+   "shared_caption": true,
+   "after": null,
+   "heading": "4.5. ESTABILITAT DEL VESSANT",
+   "para": 581
+  },
+  {
+   "n": 10,
+   "file": "10_fig_extra_estabilitat_figura-6-i-figura-7-lineas-de-saturacio.png",
+   "media": "image10.png",
+   "md5": "b5118bd0e8fb106608907b97bff43156",
+   "dims": [
+    678,
+    672
+   ],
+   "bytes": 116467,
+   "phash": "bf81c11fc03fc03d",
+   "slot": "fig_extra_estabilitat",
+   "static_of": null,
+   "caption": "Figura 6 i Figura 7. Líneas de saturació possibles, es marca la que s’ha escollit. En la segona figura detall de l’àbac nº1 escollit.",
+   "shared_caption": true,
+   "after": null,
+   "heading": "4.5. ESTABILITAT DEL VESSANT",
+   "para": 582
+  },
+  {
+   "n": 11,
+   "file": "11_static_plantilla_final-del-document.jpeg",
+   "media": "image11.jpeg",
+   "md5": "2e889157c782c942f92a0d21f350f27f",
+   "dims": [
+    473,
+    210
+   ],
+   "bytes": 14249,
+   "phash": "bfc1e060c03f6a4f",
+   "slot": "static_plantilla",
+   "static_of": "image10.jpeg",
+   "caption": "",
+   "shared_caption": false,
+   "after": "(final del document)",
+   "heading": "4.5. ESTABILITAT DEL VESSANT",
+   "para": 601
+  }
+ ]
+}

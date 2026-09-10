@@ -1,0 +1,29 @@
+{
+  "source_path": "FOTOGRAFIES/ (Imatge de WhatsApp 2025-11-14 a les 11.17.54_936f3908.jpg, Imatge de WhatsApp 2025-11-14 a les 11.49.21_a3e04224.jpg, P1.jpg, P2.jpg, P3.jpg, SPT1.jpg)",
+  "document_type": "foto",
+  "what_it_is": "6 fotos del dia de camp (1920×1080): dues rebudes per WhatsApp el 14/11/2025 (11:17 full de camp DPSH de TPS sobre la caixa de l'equip; 11:49 mostra SPT a la cullera amb etiqueta manuscrita) i quatre reanomenades per l'Eva (P1, P2, P3 = màquina a cada punt; SPT1 = mostra SPT, mateixa escena que la WhatsApp 11:49 des d'una altra distància).",
+  "issuer": "TPS (Daniel Fernández) des del mòbil → WhatsApp a G3; l'Eva les reanomena P1/P2/P3/SPT1 per a l'annex de fotografies",
+  "date": "2025-11-14 (nom dels fitxers WhatsApp: 11:17:54 i 11:49:21; EXIF absent/no fiable). P1-P3/SPT1 sense data al nom però mateixes escenes",
+  "pages_or_sheets": "6 fotos apaïsades; contact sheet 2 columnes",
+  "context": {
+    "who_made_it": "El sondista de TPS a l'obra.",
+    "for_whom": "Per a G3 (Eva): prova de feina feta i material per a l'annex de fotografies.",
+    "why": "Documentar la posició de la màquina a cada punt i la mostra SPT; la foto del full de camp és la transmissió ràpida de les dades abans de l'escaneig (3001631 - PENETROS.pdf prové del mateix WhatsApp, 'IMG-20251114-WA0002').",
+    "expected_fields": ["field_date (pel nom de fitxer WhatsApp)", "etiqueta de mostra: obra/localitat/punt/mostra/profunditat/colpeig", "corroboració de 3 punts + 1 SPT"],
+    "not_expected": ["client_name (l'etiqueta diu 'Client: G3 - Eva' = client de TPS)", "architect_name", "num_floors", "superficie_parcela", "expedient", "cota", "nivells", "referencia_catastral"],
+    "relation_to_others": "La foto 11:17 és el mateix full de camp que 3001631 - PENETROS.pdf p.2 (no font independent). L'etiqueta de la mostra (11:49 i SPT1) repeteix el full SPT de PENETROS p.3 (no font independent). P1/P2/P3/SPT1 són les imatges F-1..F-4 de PDF/ANNEXES/3001631_fotografies.pdf. Corrobora la comanda de laboratori (mostra SPT-1, 0,60-1,20 m) i el GTL.",
+    "authority_for": ["field_date (candidat: noms de fotos WhatsApp, darrer de la cadena)", "lab_sample_id / lab_depth (corroboració)"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-11-14", "location": "noms de fitxer 'Imatge de WhatsApp 2025-11-14 a les 11.17.54' i '… 11.49.21'", "quote": "Imatge de WhatsApp 2025-11-14 a les 11.17.54_936f3908.jpg | Imatge de WhatsApp 2025-11-14 a les 11.49.21_a3e04224.jpg", "confidence": 0.7, "note": "Data de recepció per WhatsApp = dia de camp (el full de camp ja està omplert a les 11:17). Coincideix amb l'albarà TPS (14-11-2025) i l'etiqueta de la mostra."},
+    {"concept_id": "field_date", "value": "2025-11-14", "location": "etiqueta manuscrita TPS sobre la mostra SPT (foto 11:49 / SPT1), casella Data", "quote": "Data: 14-11-2025", "confidence": 0.8, "note": "Mateixa font TPS que l'albarà."},
+    {"concept_id": "street_address", "value": "C/ de la Miranda", "location": "etiqueta de la mostra, casella Obra", "quote": "Obra: C/de la Miranda", "confidence": 0.6, "note": "Manuscrit TPS; grafia 'Miranda' clara. Corroboració, no independent de PENETROS."},
+    {"concept_id": "municipality", "value": "Rubí", "location": "etiqueta de la mostra, casella Localitat", "quote": "Localitat: Rubí", "confidence": 0.6, "note": "Regla: un municipi en una foto té confiança baixa per construcció; aquí és una etiqueta TPS (mateix bloc que l'albarà)."},
+    {"concept_id": "lab_sample_id", "value": "S.P.T-1 al P3, 0,60–1,20 m, colpeig 16/20/20/24", "location": "etiqueta de la mostra (foto 11:49 clip ×2; SPT1.jpg)", "quote": "Punt: P3 | Mostra: S.P.T-1 | Prufunditat de: 0,60  a: 1,20  Rec: [buit] | Golpeig: 16 20 20 24 | Client: G3 - Eva", "confidence": 0.8, "note": "Literal amb typos de l'etiqueta impresa ('Prufunditat', 'Golpeig'). Coincideix amb PENETROS p.3. Corrobora comanda fila 35 i GTL ('SPT 1 (S1)' / 'SPT-1'). Material a la cullera: graves i sorres marró-beix amb còdols."},
+    {"concept_id": "lab_depth", "value": "0,60–1,20 m", "location": "etiqueta de la mostra", "quote": "Prufunditat de: 0,60 a: 1,20", "confidence": 0.8, "note": "Corroboració."},
+    {"concept_id": "num_dpsh_tests", "value": "3 (P1, P2, P3)", "location": "noms de fitxer P1.jpg, P2.jpg, P3.jpg (nomenclatura de l'Eva) + full de camp fotografiat (3 columnes)", "quote": "P1.jpg | P2.jpg | P3.jpg", "confidence": 0.6, "note": "Corroboració de l'albarà i l'Excel."},
+    {"concept_id": "client_name", "value": "NOT_client_name: G3 - Eva", "location": "etiqueta de la mostra, casella Client", "quote": "Client: G3 - Eva", "confidence": 0.0, "note": "Client de TPS (regla 'etiqueta manuscrita de caixa de mostres: Client = G3-Eva → cap'). Descartat."}
+  ],
+  "not_present": ["expedient", "client_name (només G3-Eva)", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "cte"],
+  "reading_notes": "Contact sheet PIL 2×3 a 500 px + clip de l'etiqueta (foto 11:49, zona 18-58 % × 28-62 %, ×1.75). Foto 11:17: full 'Full de Camp Penetròmetre Dinàmic' de TPS sobre la caixa negra de l'equip a l'herba; és el mateix full que PENETROS p.2 (data 14-11-2025, 'C/de la Miranda - Rubí', columnes P1/P2/P3, croquis). P1.jpg: màquina DPSH d'erugues (groga/negra) amb mast hidràulic, solar amb herba alta, mur i casa amb teulada de teula darrere. P2.jpg: màquina vora tanca verda de malla i mur de totxo, arbres. P3.jpg: màquina amb mast vertical en zona oberta amb pins i arbust retallat (aquí s'hi fa l'SPT). SPT1.jpg: cullera SPT oberta sobre el terra amb la mostra de graves/sorres i l'etiqueta. Cap foto mostra sondeig a rotació ni nivell freàtic."
+}

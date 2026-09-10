@@ -1,0 +1,60 @@
+{
+  "label": "2026-08-24-sonnet-c2",
+  "date": "2026-08-24",
+  "project": "3001621 CASTELLAR DEL VALLES",
+  "model": "sonnet (claude-sonnet-5)",
+  "concurrency": 2,
+  "claude_version": "2.1.241",
+  "skill_version": "1.3",
+  "commit_base": "1dab01d + Fase 9 (runner --model/--output-format json, no commitejat en el moment del run)",
+  "conditions": "Castellar SOL (cap altre projecte), WSL, login (subscripcio), MCPs del Josep carregats (cwd repo); effort xhigh (HERETAT de CLAUDE_EFFORT/effortLevel del Josep, no fixat pel runner — descobert 2026-08-25 vespre)",
+  "changes_since_previous": "primera remesura amb 1 projecte sol; runner instrumentat (turns/api_ms/cost)",
+  "contaminated_docs": [
+    "PDF/ANNEXES/3001621_fotografies.pdf",
+    "4687-GTL-25 Castellar del Vallés.pdf"
+  ],
+  "contamination_note": "tall de connexio/suspensio 20:43-22:01 (rellotge de paret); elapsed_s es monotonic (no compta suspensio); paret real del run INVALIDA",
+  "wall_real_s": null,
+  "quality_judgement": {
+    "erroni_amb_confianca_fons": 0,
+    "notes": [
+      "street_address ERR = format (mateix valor)",
+      "spt_ma_tests[0].profunditat ERR = format signe/decimals (mateix valor)",
+      "cota_referencia ALERTA = puja a segur '570.90 msnm' amb 1 font; valor = preferit de l'or (+570,90); exces de confianca, NO valor erroni; guard determinista pendent (Fase 12)",
+      "sondeig_tests[0].spt_ma ALERTA = representacio en comptes (regla v1) + exces de confianca",
+      "building_type ALERTA = CLOSE (article/adjectiu)",
+      "COMPARADOR v2 (2026-08-25): totals regenerats; els ERR/ALERTA de format (dates, -4/-4,0, intervals, adreces, spt_ma, sondeig cota) ja no compten; vegeu comparator_revision."
+    ]
+  },
+  "effort": "xhigh (heretat)",
+  "comparator_revision": {
+    "date": "2026-08-25",
+    "version": "v2 normalitzadors + files alineades per clau + fixture sondeig cota revisat",
+    "escalars_before": {
+      "NOU": 1,
+      "OK": 14,
+      "ALERTA": 2,
+      "CAUTELA": 4,
+      "ERR": 1
+    },
+    "taules_before": {
+      "OK": 20,
+      "ALERTA": 2,
+      "ABSENT": 3,
+      "ERR": 1,
+      "CAUTELA": 1
+    },
+    "escalars_after": {
+      "NOU": 1,
+      "OK": 15,
+      "CAUTELA": 5,
+      "ALERTA": 1
+    },
+    "taules_after": {
+      "OK": 24,
+      "ALERTA": 1,
+      "ABSENT": 3,
+      "CAUTELA": 1
+    }
+  }
+}

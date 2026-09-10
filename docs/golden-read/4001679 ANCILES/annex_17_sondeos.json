@@ -1,0 +1,33 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_sondeos.pdf",
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex de sondeigs de l'informe (FreeHand 4001679_sondeos.FH11 → Distiller, 16/03/2026): 4 pàgines — log S-1 + fotografies S-1 + log S-2 + fotografies S-2. Capçalera amb Cliente, Obra, dates, màquina i cota Z per sondeig.",
+ "issuer": "G3 (Eva/Loli); tècnica de camp: Ariadna Salla M., geòloga; sondista Sr. Daniel Fernández (TPS, S.L.), màquina ML-76A",
+ "date": "2026-03-16 (PDF); camp 19/02/2026 (Fecha inicio = final)",
+ "pages_or_sheets": "4 (p.1 log S-1, p.2 fotos S-1, p.3 log S-2, p.4 fotos S-2)",
+ "context": {
+  "who_made_it": "l'Eva dibuixa el log en FreeHand a partir del full de camp de TPS i del criteri propi de nivells",
+  "for_whom": "l'informe 4001679 (annex)",
+  "why": "presentar la columna litològica, mostres i nivells de cada sondeig",
+  "expected_fields": ["num_soil_levels (columna 'Unidad litológica')", "cota_referencia (Z per sondeig)", "building_type + street_address + municipality (casella Obra, redacció de l'informe)", "field_date", "lab_sample (MA-1, SPT)", "nivell freàtic"],
+  "not_expected": ["client_name com a promotor (la casella 'Cliente' és el sol·licitant de l'encàrrec)", "superficie_parcela", "referencia_catastral", "utm (aquesta plantilla no porta caselles x/y)"],
+  "relation_to_others": "versió d'informe dels fulls manuscrits p.5-6 de PENETROS + SONDEIGS.pdf (els trams de material del manuscrit s'agrupen: NIVELL únic). Z coincideix amb 'Cota inicio' de l'annex DPSH (S1=P-6 +1106,65; S2=P-5 +1106,42). MA-1 (-2,80 a -3,00) = comanda de laboratori. La casella 'Cliente' repeteix la del p.5 signat del pressupost (mateixa cadena).",
+  "authority_for": ["num_soil_levels", "cota_referencia (Z)", "building_type/street_address/municipality (redacció de l'informe)", "field_date", "lab_sample_id/lab_depth"]
+ },
+ "tier_a": [
+  {"concept_id": "num_soil_levels", "value": "1 (NIVEL 1 únic a S-1 i a S-2)", "location": "columna 'Unidad litológica' de p.1 (S-1) i p.3 (S-2)", "quote": "NIVEL 1 (vertical, tota la columna; cap NIVEL 2 — verificat amb zoom 200 dpi a S-2)", "confidence": 0.85, "note": "S-2 té dos trams de material (arcillas limosas… 0-2,55 / bolos y gravas de granito 2,55-3,00) però UNA sola unitat litològica. Criteri de l'Eva: nivells = columna Unidad litológica, no trams de material."},
+  {"concept_id": "cota_referencia", "value": "S-1: Z = +1106,65 msnm; S-2: Z = +1106,42 msnm ('según plano topográfico proporcionado')", "location": "capçalera 'Cota inicio según plano topográfico proporcionado' p.1/p.3", "quote": "Z: +1106.65 msnm | Z: +1106.42 msnm", "confidence": 0.85, "note": "= cotes P-6 (S1) i P-5 (S2) de l'annex DPSH. Font: topogràfic G03 del projecte."},
+  {"concept_id": "building_type", "value": "7 habitatges adossats (redacció de l'informe)", "location": "casella Obra (p.1-p.4)", "quote": "Estudio Geológico / Geotécnico para la construcción de 7 viviendas adosadas en la Calle Gral Ferraz 20 de Anciles, Benasque", "confidence": 0.85, "note": "frase-encàrrec que l'informe reutilitza: '7 viviendas adosadas'."},
+  {"concept_id": "street_address", "value": "Calle Gral. Ferraz 20", "location": "casella Obra", "quote": "…en la Calle Gral Ferraz 20 de Anciles, Benasque", "confidence": 0.85, "note": "grafia 'Gral' de l'Eva."},
+  {"concept_id": "municipality", "value": "Anciles, Benasque", "location": "casella Obra", "quote": "…de Anciles, Benasque", "confidence": 0.9, "note": ""},
+  {"concept_id": "field_date", "value": "2026-02-19", "location": "Fecha incio / Fecha final (p.1/p.3)", "quote": "19/02/2026 | 19/02/2026", "confidence": 0.9, "note": "sondeigs el mateix dia que els DPSH."},
+  {"concept_id": "client_name", "value": "SRA. ALBA MARIA BARRAU CASTÁN (casella Cliente)", "location": "capçalera Cliente (p.1-p.4)", "quote": "Cliente: SRA. ALBA MARIA BARRAU CASTÁN", "confidence": 0.5, "note": "La casella 'Cliente' de l'annex deriva de l'encàrrec/p.5 signat (NO font independent). És l'arquitecta-sol·licitant. Ordre del nom invertit respecte del p.5 ('MARIA ALBA'). Conflicte amb el Promotor dels plànols (PICO DE OLA / Amat-Gardeta): vegeu _decisions."},
+  {"concept_id": "lab_sample_id", "value": "MA-1 al S-2; SPT-1 a S-1 i a S-2 (1,00-1,60, colpeig 2/3/3/3)", "location": "columnes Muestras y ensayos in situ (p.1/p.3)", "quote": "SPT-1 | -1.00 a -1.60 | 2 3 3 3 || MA-1 | -2.80 -3.00", "confidence": 0.8, "note": "MA-1 = mostra de la comanda (només sulfats)."},
+  {"concept_id": "lab_depth", "value": "-2,80 a -3,00 m (MA-1, S-2)", "location": "p.3 columna Prof. de extracción", "quote": "-2.80 -3.00", "confidence": 0.8, "note": "= comanda J35/L35."},
+  {"concept_id": "nivell_freatic", "value": "no indicat", "location": "columna 'Nivel freático (N.F.)' buida a p.1 i p.3", "quote": "[buida]", "confidence": 0.6, "note": "coherent amb el manuscrit i l'Excel."},
+  {"concept_id": "sondeig_profunditats", "value": "S-1: 0,00 a -2,40 m; S-2: 0,00 a -3,00 m", "location": "columna litològica + peus de foto p.2/p.4", "quote": "material recuperado en el sondeo S-1 entre las cotas de 0.00 a -2.40 | S-2 … 0.00 a -3.00", "confidence": 0.85, "note": "total 5,40 ml = albarà TPS (4,90 sòls + 0,50 graves/bolos)."},
+  {"concept_id": "tecnic_camp", "value": "Ariadna Salla M., geòloga (tècnica de camp G3)", "location": "capçalera Técnico", "quote": "Técnico: Ariadna Salla M. Geológa", "confidence": 0.8, "note": "no és camp del nivell A; la tècnica que va supervisar el camp (no l'Eva)."}
+ ],
+ "not_present": ["expedient (no consta al log)", "architect_name (Alba hi surt com a 'Cliente', no com a arquitecta)", "num_floors", "superficie_parcela", "utm_x_utm_y", "referencia_catastral", "cte", "num_dpsh_tests"],
+ "reading_notes": "Text FreeHand = brossa (sense ToUnicode) → renderitzat 110 dpi (4 p.) + zoom 200 dpi de la columna litològica de S-2 per confirmar que NO hi ha NIVEL 2. Descripcions: NIVEL 1 'Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito'; tram basal S-2 'Bolos y gravas de granito en matriz arenosa y arcillosa' (dins NIVEL 1). Corones BW 101 → BW 86. R.Q.D./fractures no anotats. Fotos: caixes porta-testimonis etiquetades a mà 'Sondeo S-1/S-2, Obra Anciles' (DADES CLIENT no hi surt)."
+}

@@ -1,0 +1,154 @@
+{
+ "architect_name": "Jordi Bosch Novell",
+ "architect_company": "Arquitectura Bosch Novell",
+ "client_name": "RAMON MITJANA S.L.",
+ "street_address": "Carrer Mestre Ramon Ortiz",
+ "site_municipality": "Bell-Lloc d'Urgell",
+ "building_type": "habitatge unifamiliar aïllat",
+ "num_floors": "",
+ "superficie_construida_m2": "297",
+ "superficie_parcela_m2": "607",
+ "superficie_cadastral_m2": "607",
+ "building_height_m": "",
+ "site_description": "parcel·la de forma quadrada amb superfície de 607 m2. El terreny es presenta antropitzat",
+ "access_description": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del Carrer Mestre Ramon Ortiz existent al est.",
+ "adjacent_north": "parcel·la buida",
+ "adjacent_south": "parcel·la buida",
+ "adjacent_east": "Carrer Mestre Ramon Ortiz",
+ "adjacent_west": "parcel·la amb construcció",
+ "is_anthropized": true,
+ "num_soil_levels": 2,
+ "soil_types": [
+  "limo",
+  "grava"
+ ],
+ "foundation_depth_m": 0.3,
+ "cota_referencia": "+199.50",
+ "has_basement": false,
+ "has_retaining_walls": false,
+ "utm_x": 314418.9,
+ "utm_y": 4611117.6,
+ "icgc_unit_code": "Qvpu",
+ "icgc_unit_description": "Graves amb matriu lutítica i llentillons sorrencs",
+ "icgc_unit_epoch": "Plistocè",
+ "_sources": {
+  "site_address": "docs intel (PRESSUPOST text)",
+  "client_name": "planol A.01.pdf",
+  "contact_name": "contingut:25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+  "client_nif": "contingut:ACCEPTACIO/DADES CLIENT.txt",
+  "client_email": "contingut:ACCEPTACIO/DADES CLIENT.txt",
+  "utm_x": "contingut:ANNEXES/ALTRES/COORDENADES.txt",
+  "utm_y": "contingut:ANNEXES/ALTRES/COORDENADES.txt",
+  "utm_points": "contingut:ANNEXES/ALTRES/COORDENADES.txt",
+  "architect_company": "planol A.01.pdf",
+  "historia_geologica_template": "Eva template: 'Lleida (via comarca)' (tier 3)",
+  "client_phone": "fileminer:25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+  "street_address": "planol A.01.pdf",
+  "access_url": "fileminer:25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+  "building_type": "planol A.01.pdf",
+  "field_date": "fileminer:ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+  "utm_coordinates": "fileminer:ANNEXES/ALTRES/COORDENADES.txt",
+  "expedient": "fileminer:PDF V0/4001612_informe_v0.pdf",
+  "municipality": "fileminer:comanda laboratori_4001612_BELL-LLOC.xls",
+  "Es_settlement": "2.5×Nb (Nb=30.3)",
+  "field_work_dates": "DPSH/Lab PDF",
+  "field_work_dates_text": "DPSH/Lab PDF",
+  "sulfate_mg_kg": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/PDF/ANNEXES/LAB-SIG.pdf",
+  "lab_tests": "/home/josep/projects/claudecode-job/clients/g3dt/reference-material/4001612 BELL-LLOC/PDF/ANNEXES/LAB-SIG.pdf",
+  "icgc_unit_code": "ICGC WMS 1:50k",
+  "icgc_unit_description": "ICGC WMS 1:50k",
+  "icgc_unit_epoch": "ICGC WMS 1:50k",
+  "cota_referencia": "sondeig elevation_z",
+  "is_sloped": "ICGC MDT (3% W)",
+  "slope_percent": "ICGC MDT 2m",
+  "slope_direction": "ICGC MDT 2m",
+  "superficie_cadastral_m2": "user",
+  "adjacent_north": "Cadastre API (geocode(CARRER MESTRE RAMON ORTIZ 15))",
+  "adjacent_south": "Cadastre API (geocode(CARRER MESTRE RAMON ORTIZ 15))",
+  "adjacent_east": "Cadastre API (geocode(CARRER MESTRE RAMON ORTIZ 15))",
+  "adjacent_west": "Cadastre API (geocode(CARRER MESTRE RAMON ORTIZ 15))",
+  "is_anthropized": "default estandard",
+  "has_basement": "default estandard",
+  "has_retaining_walls": "default estandard",
+  "foundation_depth_m": "DPSH (2 assaigs)",
+  "num_soil_levels": "sondeig S-1",
+  "soil_type_level_1": "sondeig descripció",
+  "soil_type_level_2": "sondeig descripció",
+  "architect_name": "planol A.01.pdf",
+  "superficie_construida_m2": "planol A.01.pdf",
+  "site_municipality": "planol A.01.pdf",
+  "superficie_parcela_m2": "user",
+  "num_planned_dpsh": "docs intel (PRESSUPOST text)",
+  "num_planned_sondeig": "docs intel (PRESSUPOST text)",
+  "site_description": "plantilla generada",
+  "access_description": "plantilla generada",
+  "geomech_gamma": "user",
+  "geomech_cohesion": "user",
+  "geomech_phi": "Schmertmann Nb=30",
+  "geomech_E": "user",
+  "qa_value": "Terzaghi-Peck",
+  "settlement": "Schmertmann",
+  "k30_value": "Winkler",
+  "soil_types": "user"
+ },
+ "_metadata": {
+  "generated_at": "2026-03-30T16:39:25",
+  "wizard_used": true
+ },
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "+199.50",
+    "depth": "-1.35",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "+199.50",
+    "depth": "-2.45",
+    "refusal": "Si",
+    "water": "No detectat"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "test_id": "S-1",
+    "cota": "+199.50",
+    "depth": "-1.80",
+    "spt_ma": "1/0",
+    "water": "No detectat"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT1 S1",
+    "location": "S-1",
+    "depth_range": "-1.00 a -1.60",
+    "n30": "62",
+    "lithology": "Grava amb matriu sorrenca"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "Sòls vegetals (cobertura, sense número)",
+    "litologia": "Sòls vegetals",
+    "de": "0,00",
+    "a": null
+   },
+   {
+    "name": "NIVELL 1",
+    "litologia": "Graves amb sorres",
+    "de": "0,00",
+    "a": "fins al fons d'investigació (rebuig DPSH: -1,35/-2,45 m per punt; sondeig S-1: -1,80 m)"
+   }
+  ],
+  "superficie_construida": "397",
+  "lab": {
+   "sample_id": "SPT-1",
+   "location": "S-1",
+   "depth": "-1,00 a -1,60 m"
+  }
+ }
+}

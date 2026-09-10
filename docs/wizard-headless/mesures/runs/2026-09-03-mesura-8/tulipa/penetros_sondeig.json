@@ -1,0 +1,301 @@
+{
+ "source_path": "PENETROS + SONDEIG.pdf",
+ "source_md5": "d0c3e6d42431ca65f5c5940cb4dad5c7",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Bundle escanejat (Print To PDF, sense text) dels albarans i fulls de camp de TPS de la jornada de camp: 2 albarans (DPSH i sondeig a rotació), 2 fitxes de camp DPSH (Casa 1 i Casa 2) i 1 full de camp del sondeig S-1.",
+ "issuer": "TPS, Prospecció del Subsòl (subcontractista de camp de G3); operari/sondista Daniel Fernández",
+ "date": "7-5-2026 (4 de les 5 pàgines); p.5 full de camp del sondeig porta '7-6-2025', discrepant",
+ "pages_or_sheets": "5 pàgines escanejades (p.1 albarà DPSH; p.2 fitxa camp DPSH Casa 1; p.3 fitxa camp DPSH Casa 2; p.4 albarà sondeig a rotació; p.5 full de camp sondeig S-1)",
+ "context": {
+  "who_made_it": "TPS (Prospecció del Subsòl), subcontractista de camp de G3; operari i sondista Daniel Fernández",
+  "for_whom": "G3 (responsable Eva), que encarrega a TPS els DPSH i el sondeig a rotació d'aquest projecte",
+  "why": "Documentar in situ el treball de camp fet el dia de la visita: recompte de colpeig dels 4 penetròmetres DPSH (2 per casa), litologia i mostres SPT del sondeig a rotació S-1, i confirmar administrativament (albarans) els metres lineals i assaigs executats",
+  "expected_fields": [
+   "field_date",
+   "num_dpsh_tests (i el desglossament per casa)",
+   "cota_inici i profunditat de rebuig per punt DPSH",
+   "nivell_freatic per punt",
+   "litologia i mostres SPT del sondeig S-1",
+   "adreça de l'obra (sense número de portal)"
+  ],
+  "not_expected": [
+   "client_name real (promotor)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y absolutes",
+   "cota_referencia absoluta en msnm"
+  ],
+  "relation_to_others": "Font manuscrita de camp darrere de 3001706_DPSH_CASA 1.xls i 3001706_DPSH_CASA 2.xls (mecanografiats per l'Eva) i darrere dels annexos de sondeig .../3001706_sondeig.pdf de cada casa (aquests dos últims no llegits en aquesta crida). Si discrepen en valors numèrics, l'Excel i l'annex de sondeig manen; aquest full es llegeix pel que aquells no tenen: punt 0/cota inici per punt, marca de nivell freàtic, croquis de situació i la data de camp.",
+  "authority_for": [
+   "num_dpsh_tests",
+   "field_date"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 / Eva",
+   "location": "p.1 ALBARÀ DPSH, bloc DADES CLIENT; p.4 ALBARÀ SONDEIG, bloc DADES CLIENT; p.5 capçalera 'Empresa/Client'",
+   "quote": "Empresa: G3 · Responsable: Eva",
+   "confidence": 0.95,
+   "note": "G3 és el client del subcontractista TPS (regla Pas 3: G3 mai és client de l'informe). Descartat explícitament."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/Tulipan (Cerdanyola)",
+   "location": "p.1 DADES OBRA 'Adreça'; repetit p.2, p.3, p.4, p.5",
+   "quote": "Adreça: C/ Tulipan · Població: Cerdanyola",
+   "confidence": 0.4,
+   "note": "Sense número de portal enlloc del document. Municipi en forma curta, no oficial. Els croquis mostren cantonada amb 'C/ de Tosca' però mai etiquen aquest carrer com a adreça de l'obra: no s'afegeix com a alternativa (regla: mai un carrer veí)."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tulipan",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Cerdanyola",
+    "municipi_alternatives": []
+   },
+   "location": "p.1, p.2, p.3, p.4, p.5 (repetit)",
+   "quote": "C/Tulipan - Cerdanyola",
+   "confidence": 0.4,
+   "note": "Sense portal ni forma oficial llarga del municipi en aquest document."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola",
+   "location": "p.1 DADES OBRA 'Població'; repetit a totes les pàgines",
+   "quote": "Població: Cerdanyola",
+   "confidence": 0.4,
+   "note": "Forma curta, no la denominació oficial (probablement 'Cerdanyola del Vallès'); confirmar amb altres fonts."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-05-07",
+   "location": "p.1 ALBARÀ DPSH 'Data'; p.2 Fitxa Casa 1 'Data'; p.3 Fitxa Casa 2 'Data'; p.4 ALBARÀ SONDEIG 'Data inici'/'Data final'",
+   "quote": "7-5-2026",
+   "confidence": 0.75,
+   "note": "Coincident a 4 de les 5 pàgines del document."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-06-07",
+   "location": "p.5 Full de camp sondeig a rotació S-1, 'Data inici'",
+   "quote": "7 - 6 - 2025",
+   "confidence": 0.15,
+   "note": "Discrepant amb la resta del document i amb l'albarà de sondeig de la mateixa jornada (p.4: 7-5-2026 inici i final). Verificat amb clip a 500dpi, la lectura '7-6-2025' és clara i no és error d'OCR. Probable lapsus de l'operari (any i mes), però no es pot descartar sense confirmació externa."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 4,
+   "location": "p.1 ALBARÀ DPSH, camp 'Nº de penetròmetres realitzats'",
+   "quote": "4",
+   "confidence": 0.85,
+   "note": "Total del projecte (2 cases × 2 punts P1/P2). Consistent amb les 2 fitxes de camp (p.2, p.3)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 2,
+   "location": "p.2 Fitxa de Camp Penetròmetre Dinàmic, Casa 1",
+   "quote": "P1 / P2",
+   "confidence": 0.7,
+   "note": "Casa 1: 2 punts (P1, P2)."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 2,
+   "location": "p.3 Fitxa de Camp Penetròmetre Dinàmic, Casa 2",
+   "quote": "P1 / P2",
+   "confidence": 0.7,
+   "note": "Casa 2: 2 punts (P1, P2)."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS (Prospecció del Subsòl)",
+   "location": "logo de capçalera, totes les pàgines",
+   "quote": "tps · prospecció del subsòl",
+   "confidence": 0.5,
+   "note": "Nom de marca de l'emissor, sense NIF ni raó social completa en aquest document (no és un GTL de laboratori)."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S-1",
+   "location": "p.5 capçalera 'Sondeig:'",
+   "quote": "S-1",
+   "confidence": 0.55,
+   "note": "Únic sondeig documentat en aquest full; no s'indica a quina de les dues cases pertany la parcel·la del sondeig."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "S.P.T-1",
+   "location": "p.5 taula, fila 1, columna 'Mostres / tipus'",
+   "quote": "S.P.T-1",
+   "confidence": 0.5,
+   "note": "Detall complet a tables.spt_ma_tests."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "S.P.T-2",
+   "location": "p.5 taula, fila 2, columna 'Mostres / tipus'",
+   "quote": "S.P.T-2",
+   "confidence": 0.5,
+   "note": "Detall complet a tables.spt_ma_tests."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,00 a 1,60",
+   "location": "p.5 taula, fila 1, columna 'Mostres / Prof'",
+   "quote": "1,00 a 1,60",
+   "confidence": 0.5,
+   "note": "Fondària de la mostra S.P.T-1."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "3,00 a 3,54",
+   "location": "p.5 taula, fila 2, columna 'Mostres / Prof'",
+   "quote": "3,00 a 3,54",
+   "confidence": 0.5,
+   "note": "Fondària de la mostra S.P.T-2."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "casa_1_P1",
+    "cota_inici": "+/-0",
+    "profunditat_assolida": "-3,70",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 Fitxa Camp DPSH Casa 1, columna P1",
+    "quote": "Cota Inici +/-0 … R:3,70"
+   },
+   {
+    "punt": "casa_1_P2",
+    "cota_inici": "+/-0",
+    "profunditat_assolida": "-2,19",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2 Fitxa Camp DPSH Casa 1, columna P2",
+    "quote": "Cota Inici +/-0 … R:2,19"
+   },
+   {
+    "punt": "casa_2_P1",
+    "cota_inici": "+2,20",
+    "profunditat_assolida": "-4,13",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3 Fitxa Camp DPSH Casa 2, columna P1",
+    "quote": "Cota Inici +2,20 … R:4,13"
+   },
+   {
+    "punt": "casa_2_P2",
+    "cota_inici": "+2,50",
+    "profunditat_assolida": "-5,11",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.3 Fitxa Camp DPSH Casa 2, columna P2",
+    "quote": "Cota Inici +2,50 … R:5,11"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": "C/Tulipan +1m (relativa a punt 0, no absoluta)",
+    "profunditat_assolida": "≥3,54 (última mostra registrada, sense cel·la explícita de fondària final)",
+    "spt_ma": {
+     "n_spt": 2,
+     "n_tp": 0,
+     "n_ma": 0
+    },
+    "nivell_freatic": "No detectat",
+    "location": "p.5 Full de camp sondeig a rotació, capçalera + taula",
+    "quote": "Decriure cota 0 o cota referència: C/Tulipan +1m"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "S.P.T-1",
+    "punt": "S-1",
+    "profunditat": "1,00 a 1,60",
+    "litologia": "Limos arenosos con gravilla (interval de corona 0,00-1,00 just per sobre)",
+    "n30": {
+     "estat": "candidats",
+     "value": null,
+     "registre": {
+      "estat": "no_trobat",
+      "value": null,
+      "note": "aquest full no porta el registre de cops per tram de 15 cm, només el resultat de la corona"
+     }
+    },
+    "location": "p.5 taula, fila 1",
+    "quote": "de 0,00 a 1,00 · Limos arenosos con gravilla · corones dia 101 W.B · Mostres 1,00 a 1,60 S.P.T-1"
+   },
+   {
+    "id": "S.P.T-2",
+    "punt": "S-1",
+    "profunditat": "3,00 a 3,54",
+    "litologia": "Lutita (interval de corona 1,60-3,00 just per sobre)",
+    "n30": {
+     "estat": "no_trobat",
+     "value": null,
+     "registre": {
+      "estat": "no_trobat",
+      "value": null,
+      "note": "sense registre de cops per tram en aquest full"
+     }
+    },
+    "location": "p.5 taula, fila 2",
+    "quote": "de 1,60 a 3,00 · Lutita · corones dia 86 W.B · Mostres 3,00 a 3,54 S.P.T-2"
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "1er nivell (candidat, full de camp brut, sense etiqueta 'Unitat litològica')",
+    "litologia_candidats": [
+     "Limos arenosos con gravilla"
+    ],
+    "de": "0,00",
+    "a": "1,00",
+    "mostra_del_nivell": true,
+    "location": "p.5 taula, fila 1",
+    "quote": "Limos arenosos con gravilla",
+    "note": "Redacció bruta en castellà; l'annex de sondeig mecanografiat (no llegit en aquesta crida) sol re-redactar en català. La mostra S.P.T-1 (1,00-1,60) surt just per sota d'aquest tram."
+   },
+   {
+    "nom": "2on nivell (candidat, full de camp brut, sense etiqueta 'Unitat litològica')",
+    "litologia_candidats": [
+     "Lutita"
+    ],
+    "de": "1,60",
+    "a": "3,00",
+    "mostra_del_nivell": true,
+    "location": "p.5 taula, fila 2",
+    "quote": "Lutita",
+    "note": "La mostra S.P.T-2 (3,00-3,54) surt just per sota d'aquest tram. Nombre total de nivells (2) és candidat: confirmar amb l'annex de sondeig / tall de correlació, no llegits en aquesta crida."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name (real)",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia (valor absolut)",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Les 5 pàgines són escanejos 'Microsoft: Print To PDF' sense capa de text (text_ok=false a totes); lectura íntegrament visual sobre page-N.png (150dpi) amb clips a 400-500dpi (scripts/render_clip.py) per confirmar la data de p.5 ('7-6-2025', discrepant) i els valors de rebuig P1/P2 de la Casa 1 (R:3,70 / R:2,19). Les caselles 'Nivell Freàtic' (p.2, p.3, p.5) estan totes en blanc (sense marca ni xifra) → 'No detectat' a les 3. Els croquis de situació (p.2, p.3) donen distàncies relatives dels punts als carrers però no coordenades; no s'han usat per a utm_x_utm_y. 'Carència de colpeig Mesura 1: 15' (p.2, p.3) és una dada de calibratge de l'equip, fora de l'abast del nivell A i de les taules del Pas 3b — no transcrita."
+}

@@ -1,0 +1,33 @@
+{
+ "source_path": "26.0049/RE_ geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+ "source_md5": "f386b34c21a0aa702e7f6a39c715564c",
+ "kind": "msg",
+ "generated": "2026-09-04T15:41:11",
+ "elapsed_s": 1.759,
+ "dir": "26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge",
+ "files": [
+  "26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/body.txt",
+  "26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image011.jpg",
+  "26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image011.jpg.preext/image.png"
+ ],
+ "subject": "RE: geotècnic Ampliació Albert Sans municipi d'Alcoletge",
+ "from": "Eva Vazquez <eva@g3dt.com>",
+ "to": "Cesar Morillas <cesar@g3dt.com>; Dolors Maqueda <dolors@g3dt.com>",
+ "date": "2026-01-27 07:18:33+01:00",
+ "attachments": [
+  {
+   "name": "plan_cost_alcoletge.xlsx",
+   "size": 112018,
+   "md5": "4aa20587ab22da5b90c7b8bd3f954522",
+   "already_in_folder": "26.0049/PLAN_COST_ALCOLETGE.xlsx",
+   "preext_dir": null
+  },
+  {
+   "name": "image011.jpg",
+   "size": 56700,
+   "md5": "ed4844ac845030d4e9ef3bce4f4091c6",
+   "already_in_folder": null,
+   "preext_dir": "26_0049_re_geot_cnic_ampliaci_albert_sans_municipi_d_alcoletge/attachments/image011.jpg.preext"
+  }
+ ]
+}

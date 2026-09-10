@@ -1,0 +1,17 @@
+
+## castellar/t2
+| taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
+|---|--:|--:|--:|---|---|
+| plantes | 2 | 2 | 2 |  | fila0[1] MISM «»↔«Pb+1Pp»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la (m2)»; fila1[1] MISM «440»↔«1.284»; fila2[1] CLOS «120»↔«120 m2» |
+| cte_edificacio | 3 | 0 | 1 |  | fila1[1] MISM «T-2»↔«T-1» |
+| dpsh | 20 | 0 | 0 |  |  |
+| sondeig | 4 | 0 | 1 |  | s-1[1] MISM «-4.00»↔«-4.20» |
+| spt_ma | 4 | 0 | 1 |  | spt-1[4] MISM «Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)»↔«Limolites i bretxes» |
+| mostra_lab | 1 | 4 | 0 |  | fila0[0] CLOS «Mostra :»↔«Mostra : SPT-1»; fila0[1] CLOS «Punt:»↔«Punt: S-1»; fila0[2] CLOS «Profunditat: -1.0 a -1.2»↔«Profunditat:  -1.00  a -1.20 m»; fila1[1] CLOS «Contingut en sulfats solubles UNE 83963:2008»↔«1 assaig de contingut en sulfats UNE 83963 : 2008» |
+| soil_levels | 0 | 2 | 0 |  | 1r[0] CLOS «1er nivell.»↔«1er nivell»; 1r[1] CLOS «Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.»↔«Bretxes amb intercalacions de lutites i gresos vermells. Substrat rocós.» |
+| permeabilitat | 1 | 1 | 1 |  | 1r[1] MISM «10^-3 a 10^-5»↔«10⁻5 – 10⁻7»; 1r[2] CLOS «Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.»↔«Bretxes amb intercalacions de lutites i gresos vermells.» |
+| sulfats | 3 | 1 | 0 |  | 1r[2] CLOS «---»↔«--» |
+| sismica | 3 | 0 | 1 |  | 1[2] MISM «1.60»↔«1.15*» |
+| geotecnica | 5 | 1 | 1 |  | 1r[0] CLOS «1er nivell. Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.»↔«1er nivell: Bretxes amb intercalacions de lutites i gresos»; 1r[1] MISM «27-R»↔«17-R» |
+
+**castellar/t2: 46 MATCH · 11 CLOSE · 8 MISMATCH · 0 files extra · 0 files absents → 88 % (M+C)/comparables**

@@ -1,0 +1,37 @@
+# rubi/viaA — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 11 | 2 | 3 | 2 | 81 % |
+| calc | 11 | 1 | 3 | 0 | 80 % |
+| narr | 2 | 5 | 7 | 2 | 50 % |
+| resta | 2 | 0 | 1 | 1 | 67 % |
+
+- [narr] `access_street` **NO_DATA** gen=«None» ↔ eva=«carrer de la Miranda»
+- [narr] `adjacent_east_fmt` **MISMATCH** gen=«Per la part est, sense informació.» ↔ eva=«Finalment, Per la part est i oest, amb construccions de característiques similars.»
+- [narr] `adjacent_intro` **CLOSE** gen=«La parcel·la objecte d'estudi es situa al municipi de Rubí, pren una morfologia rectangula» ↔ eva=«La parcel·la objecte d’estudi es situa al sud-oest del municipi de Rubí, pren una morfolog»
+- [narr] `adjacent_north_fmt` **MISMATCH** gen=«Per la part nord, sense informació.» ↔ eva=«Per la part nord, amb parcel·les sense edificacions i amb vegetació de petita alçada i arb»
+- [narr] `adjacent_south_fmt` **MISMATCH** gen=«Per la part sud, sense informació.» ↔ eva=«Per la part sud, amb el carrer de la Miranda»
+- [narr] `adjacent_west_fmt` **MISMATCH** gen=«Per la part oest, sense informació.» ↔ eva=«Finalment, Per la part est i oest, amb construccions de característiques similars.»
+- [A] `architect_name_upper` **MISMATCH** gen=«JOANA MARTÍNEZ» ↔ eva=«JOANA MARTINEZ»
+- [A] `building_type_lower` **CLOSE** gen=«habitatge unifamiliar aïllat» ↔ eva=«un habitatge unifamiliar aïllat modular»
+- [A] `client` **MISMATCH** gen=«JOANA MARTÍNEZ» ↔ eva=«SRA. JOANA MARTINEZ»
+- [narr] `conclusions_aggressivity_statement` **CLOSE** gen=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on» ↔ eva=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on»
+- [narr] `conclusions_levels_detected` **CLOSE** gen=«Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl » ↔ eva=«Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsò»
+- [resta] `data_signatura_text` **MISMATCH** gen=«06 de setembre de 2026» ↔ eva=«17 de desembre de 2025»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Concretament, i segons l’ICGC, a la zona d’estudi afloren els materials de la unitat NMgo,»
+- [calc] `geomech_cohesion` **MISMATCH** gen=«0.0» ↔ eva=«0.05»
+- [narr] `lab_tests_text` **MISMATCH** gen=«Contingut en sulfats solubles UNE 83963:2008» ↔ eva=«Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
+Determinació de Límits d’Atterb»
+- [narr] `materials_intro` **CLOSE** gen=«A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del » ↔ eva=«A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des de»
+- [A] `municipality` **CLOSE** gen=«Rubí» ↔ eva=«Rubí (Barcelona)»
+- [narr] `photo_site_text` **MISMATCH** gen=«Fotografia 1 i Fotografia 2» ↔ eva=«Fotografia 1. Vista general de la zona d’estudi (Google Earth, Agost 2024).»
+- [A] `plantes` **MISMATCH** gen=«PB (planta baixa)+porxada, sense pis superior» ↔ eva=«PB + Porxo»
+- [calc] `qa_value` **CLOSE** gen=«3.00» ↔ eva=«3.50»
+- [narr] `radon_sentence` **CLOSE** gen=«La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula » ↔ eva=«La parcel·la concreta d’estudi es localitza al terme municipal de RUBÍ i, segons la taula »
+- [calc] `seismic_ab_text` **MISMATCH** gen=«0,04» ↔ eva=«AB  =0,08 g  (essent g el valor de la gravetat)»
+- [narr] `site_condition` **MISMATCH** gen=«Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'ero» ↔ eva=«Al solar, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’es»
+- [narr] `site_description` **NO_DATA** gen=«None» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer »
+- [calc] `table_dpsh_range` **MISMATCH** gen=«3, 4 i 5» ↔ eva=«3 i 4»
+- [A] `utm_x` **NO_DATA** gen=«None» ↔ eva=«418215»
+- [A] `utm_y` **NO_DATA** gen=«None» ↔ eva=«4595648»

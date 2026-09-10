@@ -1,0 +1,26 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_plano de situación.pdf + pl situació.pdf",
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Esquema de situació de l'Eva (FreeHand → 2 versions PDF del mateix dibuix): mapa topogràfic de la zona (la Serra / el Secà), ortofoto amb la parcel·la marcada, i emplaçament (calcat del plànol 1.0 de ROCAR) amb els punts P-1/P-2/P-3 i 'CARRER DE SANTA GEMMA' retolat.",
+ "issuer": "Eva (G3); FreeHand 4001671_plano de situación.FH11",
+ "date": "impressions 16/03/2026 (pl situació.pdf 10:15 Print To PDF; plano de situación.pdf 17:03 Distiller); caixetí 'Fecha: Marzo 2025' = mateix TYPO que el tall",
+ "pages_or_sheets": "1 pàgina cadascun (mateix dibuix); pl situació.pdf pesa 5,9 MB (1119 imatges: ortofoto+mapa rasteritzats a trossos)",
+ "context": {
+  "who_made_it": "Eva, combinant mapa ICGC, ortofoto i l'emplaçament de ROCAR",
+  "for_whom": "annex de l'informe (Esquema de situación)",
+  "why": "situar obra i punts d'assaig; el nom del carrer retolat i la posició relativa dels punts són el criteri final de l'Eva",
+  "expected_fields": ["street_address (retolació del carrer)", "municipality (context del mapa)", "posició dels punts P-1/P-2/P-3", "expedient (caixetí)", "building_type (títol)"],
+  "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "client_name", "architect_name", "utm (cap coordenada escrita)", "referencia_catastral"],
+  "relation_to_others": "el plano de situación.pdf (Distiller, text brossa) i el pl situació.pdf (Print To PDF, text net) són el MATEIX dibuix → una sola font. L'emplaçament calca el plànol 1.0 de ROCAR (mateixes cotes 21,62/18,80/22,86/17,85 i piscina). La posició dels punts al dibuix de l'Eva (P-1 NO, P-2 centre, P-3 SE) reordena el croquis de TPS (que posava el carrer amunt). El mapa topogràfic mostra els topònims 'La Serra' I 'el Secà' com a partides veïnes → explica la discrepància La Serra/El Secà del manuscrit TPS.",
+  "authority_for": ["street_address (nom oficial del carrer)", "posicions relatives dels punts d'assaig"]
+ },
+ "tier_a": [
+  {"concept_id": "street_address", "value": "Carrer de Santa Gemma (l'obra hi fa front pel costat oest)", "location": "retolació del vial a l'emplaçament (visual + text net del pl situació.pdf)", "quote": "CARRER DE SANTA GEMMA", "confidence": 0.85, "note": "nom complet del vial; el títol del caixetí diu 'EN LA CALLE SANTA GEMMA Nº4'"},
+  {"concept_id": "building_type", "value": "vivienda unifamiliar", "location": "caixetí TÍTULO DEL PROYECTO", "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR EN LA CALLE SANTA GEMMA Nº4 DEL MUNICIPIO DE VILANOVA DE SEGRIÀ.", "confidence": 0.85, "note": "mateix títol que el tall (mateixa maquetació, no font independent)"},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "caixetí + mapa topogràfic (nucli, N-230, partides la Serra / el Secà)", "quote": "DEL MUNICIPIO DE VILANOVA DE SEGRIÀ", "confidence": 0.85, "note": ""},
+  {"concept_id": "expedient", "value": "4001671", "location": "caixetí Exp", "quote": "Exp: 4001671", "confidence": 0.9, "note": "'Fecha: Marzo 2025' = typo idèntic al del tall (plantilla FreeHand)"},
+  {"concept_id": "dpsh_positions", "value": "P-1 sector NO de la casa (5 m del carrer), P-2 centre, P-3 sector E-SE (distàncies parcials 4 m / 5 m / 3 m / 1 m en vermell)", "location": "emplaçament amb llegenda 'Ensayo de penetración dinámica DPSH' (visual)", "quote": "P-1 | P-2 | P-3 | Zona de estudio", "confidence": 0.6, "note": "no és camp del nivell A; útil per validar el croquis TPS. L'ortofoto mostra la parcel·la amb vegetació i edificacions veïnes; a la meitat nord de la parcel·la s'hi veu una construcció petita (coherent amb 'EDIFICACIÓ EXISTENT = SI')."}
+ ],
+ "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+ "reading_notes": "Text llegit del pl situació.pdf (Print To PDF, net: 'Zona de estudio', 'Ensayo de penetración dinámica DPSH', títol, Exp); el Distiller és brossa. Dibuix verificat a 80 dpi. El mapa topogràfic (inset NO) mostra: la Serra, el Secà (i el Secà de Tabac / el Secà de Merlet), Pantà de Tabac, N-230, la Costa dels Carros — tots dos topònims del conflicte d'adreça (Urb. La Serra vs El Secà) existeixen com a partides veïnes del nucli."
+}

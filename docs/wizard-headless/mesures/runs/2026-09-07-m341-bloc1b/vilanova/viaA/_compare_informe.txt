@@ -1,0 +1,16 @@
+
+## vilanova/viaA
+| taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
+|---|--:|--:|--:|---|---|
+| plantes | 0 | 4 | 2 |  | fila0[0] CLOS «Nº de plantes per habitatge»↔«Nº de plantas previstas»; fila0[1] CLOS «PB (planta baixa, 1 planta)»↔«Pb»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superficie construida total (m2)»; fila1[1] MISM «406.0»↔«100»; fila2[0] CLOS «Superfície construïda total (m2)»↔«Superficie de la parcela según catastro (m2)»; fila2[1] MISM «100»↔«406» |
+| cte_edificacio | 2 | 2 | 0 |  | fila0[0] CLOS «Tipus d’edificació considerada:»↔«Tipo de edificación considerada:»; fila1[0] CLOS «Tipus de sòl considerat :»↔«Tipo de suelo considerado:» |
+| dpsh | 9 | 2 | 4 |  | p-1[1] MISM «+321.69»↔«+321.00»; p-1[4] CLOS «No detectat»↔«No detectado»; p-2[1] MISM «+321.69»↔«+321.00»; p-2[4] CLOS «No detectat»↔«No detectado»; p-3[1] MISM «+321.69»↔«+320.00»; p-3[4] MISM «Aigua»↔«-1.00» |
+| spt_ma | 6 | 0 | 4 |  | fila0[3] MISM «24»↔«10»; fila0[4] MISM «Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)»↔«Arcilla limosa y arenosa con algunas gravas»; fila1[3] MISM «10»↔«24»; fila1[4] MISM «Argila limosa i sorrenca, amb algunes graves»↔«Arena fina-media» |
+| mostra_lab | 0 | 2 | 3 |  | fila0[0] MISM «Mostra :»↔«Muestra: SPT-1»; fila0[1] CLOS «Punt:»↔«Punto:  P-3»; fila0[2] MISM «Profunditat:»↔«Profundidad: -1.00 a -1.60 m»; fila1[0] CLOS «Assaigs realitzats»↔«Ensayos realizados»; fila1[1] MISM «»↔«Determinación del contenido en ion sulfato en suelos UNE 83963 / 08» |
+| soil_levels | 0 | 3 | 1 |  | fila0[0] CLOS «1er nivell.»↔«1er nivel:»; fila0[1] CLOS «Arcilla limosa y arenosa con algunas gravas.»↔«Arcilla limosa y arenosa con algunas gravas»; fila1[0] CLOS «2n nivell.»↔«2do nivel:»; fila1[1] MISM «Arenas finas-medias, carbonatadas.»↔«Areniscas, arenas, sustrato» |
+| permeabilitat | 0 | 5 | 1 |  | fila0[0] CLOS «1er nivell»↔«1er nivel»; fila0[1] CLOS «10^-2 a 10^-4»↔«10-2-10-4»; fila0[2] CLOS «Arcilla limosa y arenosa con algunas gravas.»↔«Arcilla limosa y arenosa con algunas gravas»; fila1[0] CLOS «2n nivell»↔«2do nivel»; fila1[1] CLOS «10^-3 a 10^-5»↔«10-3-10-6»; fila1[2] MISM «Arenas finas-medias, carbonatadas.»↔«Areniscas, arenas, sustrato» |
+| sulfats | 1 | 1 | 0 |  | 1r[0] CLOS «1er nivell»↔«1er nivel» |
+| sismica | 3 | 3 | 2 |  | 1[1] CLOS «Tipus IV»↔«Tipo IV»; 1[2] MISM «0.80»↔«2.20»; 2[1] CLOS «Tipus II»↔«Tipo II-I»; 2[2] MISM «2.98*»↔«1.58*»; 2[3] CLOS «1.3»↔«1.3-1.0» |
+| geotecnica | 6 | 2 | 6 |  | fila0[0] CLOS «1er nivell. Arcilla limosa y arenosa con algunas gravas.»↔«1er nivel:  Arcilla limosa y arenosa con gravas»; fila0[1] MISM «7»↔«9»; fila1[0] CLOS «2n nivell. Arenas finas-medias, carbonatadas.»↔«2do nivel: Areniscas, arenas, sustrato»; fila1[1] MISM «22-R»↔«57-R»; fila1[3] MISM «2.00»↔«2.20»; fila1[4] MISM «0.00»↔«0.50»; fila1[5] MISM «38°»↔«34º»; fila1[6] MISM «450»↔«550» |
+
+**vilanova/viaA: 27 MATCH · 24 CLOSE · 23 MISMATCH · 0 files extra · 0 files absents → 69 % (M+C)/comparables**

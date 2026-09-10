@@ -1,0 +1,55 @@
+{
+ "source_path": "comanda laboratori_3001706_CERDANYOLA.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3 per a les 2 mostres SPT del sondeig S-1 (límits d'Atterberg + agressivitat 'NOMÉS SULFATS').",
+ "issuer": "G3 (Eva Vázquez)",
+ "date": "DATA DE PRESA 07/05/2026 (serial 46149); DATA DE SOL.LICITUD 01/06/2026 (46174)",
+ "pages_or_sheets": "Hoja1",
+ "context": {
+  "who_made_it": "G3 (sol·licitant)",
+  "for_whom": "laboratori (el nom del lab NO hi consta)",
+  "why": "encarregar els assaigs de les mostres del sondeig",
+  "expected_fields": [
+   "mostres (id, cotes)",
+   "expedient",
+   "DADES DE L'OBRA"
+  ],
+  "not_expected": [
+   "promotor",
+   "resultats"
+  ],
+  "relation_to_others": "el bloc DADES DEL SOL.LICITANT (G3, B25364589) s'ignora per regla; sense GTL a la carpeta, la comanda és l'única font de lab. La cota final de SPT2 (3,6) discrepa de l'annex/full de camp (3,54): transcripció de comanda, l'annex mana.",
+  "authority_for": [
+   "spt_ma_tests.id (candidat 2, rere l'annex)",
+   "lab_depth (candidat 2)",
+   "sondeig_tests.spt_ma (recompte)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT 1 (S1)",
+    "punt": "S-1",
+    "profunditat": "1,0 a 1,6 m",
+    "assaigs": "Límits d'Atterberg + Agressivitat sòls (NOMÉS SULFATS)",
+    "location": "Hoja1 fila 35 (C, J, L, O, AA, AD)",
+    "quote": "SPT 1  (S1) | 1.0 | 1.6 | X | X | NOMÉS SULFATS"
+   },
+   {
+    "id": "SPT2 (S1)",
+    "punt": "S-1",
+    "profunditat": "3,0 a 3,6 m (annex/full de camp: 3,00 a 3,54 — la comanda arrodoneix)",
+    "assaigs": "Límits d'Atterberg + Agressivitat sòls (NOMÉS SULFATS)",
+    "location": "Hoja1 fila 36",
+    "quote": "SPT2 (S1) | 3.0 | 3.6 | X | X | NOMÉS SULFATS"
+   }
+  ],
+  "__nota": "DADES DE L'OBRA: OBRA 'CONSTR DOS NOUS HAB AÏLLATS' (confirma 1 expedient / 2 informes) | NÚM. D'EXPEDIENT 3001706 | ADREÇA C TULIPA | POBLACIÓ CERDANYOLA DEL VALLÈS. Observacions fila 58: 'DEPENENT DELS LIMITS, LAMBE'."
+ },
+ "not_present": [
+  "nom del laboratori",
+  "resultats (GTL no present a la carpeta)"
+ ],
+ "reading_notes": "xlrd; dates en serial Excel convertides (epoch 1899-12-30)."
+}

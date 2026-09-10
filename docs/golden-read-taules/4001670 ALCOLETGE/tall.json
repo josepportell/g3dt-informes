@@ -1,0 +1,71 @@
+{
+ "source_path": "tall.pdf",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació A-A' de l'informe: 2 nivells amb llegenda, línia d'humitat, cota de fonamentació recomanada i Nb per punt",
+ "issuer": "G3 (Eva), FreeHand; aquesta còpia és 'Microsoft: Print To PDF' amb text net",
+ "date": "Febrer 2026 (caixetí 'Data: Febrer 2026'); PDF 16/03/2026",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva (G3), síntesi interpretativa dels 3 DPSH + SPT",
+  "for_whom": "annex de l'informe 4001670",
+  "why": "correlacionar els punts i definir els nivells del terreny",
+  "expected_fields": [
+   "soil_levels (nombre, litologia, geometria)",
+   "línia d'humitat",
+   "N/Nb per punt",
+   "títol del projecte"
+  ],
+  "not_expected": [
+   "client",
+   "dates de camp"
+  ],
+  "relation_to_others": "PDF/ANNEXES/4001670_tall de correlació.pdf és el MATEIX dibuix (FreeHand→Distiller, text brossa): duplicat, no font independent. Sense annex de sondeig en aquest projecte, el tall és LA font de nivells i litologies",
+  "authority_for": [
+   "num_soil_levels",
+   "soil_levels.litologia",
+   "spt_ma_tests.n30 (corroboració N=20)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Rebliment antròpic"
+    ],
+    "de": "0,00 (cota +188,2 msnm)",
+    "a": "límit ondulant ~+186,9/+187,1 msnm (≈ -1,1 a -1,3 m)",
+    "mostra_del_nivell": null,
+    "location": "LLEGENDA + secció A-A'",
+    "quote": "Nivell 1: Rebliment antròpic."
+   },
+   {
+    "nom": "Nivell 2",
+    "litologia_candidats": [
+     "Lutites, substrat"
+    ],
+    "de": "~+186,9/+187,1 msnm",
+    "a": "base del dibuix (+186; substrat, potència no determinada)",
+    "mostra_del_nivell": null,
+    "location": "LLEGENDA + secció A-A'",
+    "quote": "Nivell 2:  Lutites, substrat."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1 (implícit)",
+    "punt": "P-3",
+    "n30": "20",
+    "location": "secció A-A', etiqueta a la traça de P-3",
+    "quote": "N=20"
+   }
+  ],
+  "__nota": "Línia blava discontínua 'Augment de la humitat detectada' a ~+187,2 msnm (= -1,0 m sota la cota +188,2): corrobora la marca d'humitat de l'Excel. Nb per punt: Nb=3 (P-1), Nb=5 i Nb=14 (P-3), Nb=7 (P-2), Nb=R al fons dels tres. 'Cota de fonamentació recomanada' (vermell) és Tier B, no es transcriu."
+ },
+ "not_present": [
+  "fondàries numèriques de transició (només gràfiques)",
+  "nivell freàtic franc"
+ ],
+ "reading_notes": "Text net per Print To PDF; geometria llegida en render 140 dpi. Títol: ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE — confirma AMPLIACIÓ."
+}

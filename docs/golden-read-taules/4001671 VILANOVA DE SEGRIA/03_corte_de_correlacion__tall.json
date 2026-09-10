@@ -1,0 +1,78 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_corte de correlación.pdf (+ duplicat 'tall.pdf' Print To PDF amb text net)",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació A-A' per P-1/P-2/P-3 amb llegenda de 2 nivells, Nb per tram i marca de nivell freàtic a P-3",
+ "issuer": "G3 (Eva, FreeHand)",
+ "date": "caixetí: 'Fecha: Marzo 2025' (error de còpia: el camp és 19/02/2026 i l'encàrrec de gener 2026)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "annex de l'informe",
+  "why": "síntesi geològica dels 3 DPSH: geometria dels nivells que l'informe transcriu",
+  "expected_fields": [
+   "llegenda de nivells amb litologia",
+   "cotes de transició",
+   "NF",
+   "Nb mitjans per tram"
+  ],
+  "not_expected": [
+   "client, promotor, dates de camp fiables"
+  ],
+  "relation_to_others": "tall.pdf (Microsoft Print To PDF) és el MATEIX dibuix amb text net; el title del PDF delata plantilla FreeHand reutilitzada de l'exp. 4000939 ('5. 4000939_corte de correlación_VS.FH11') i el caixetí arrossega 'Marzo 2025'",
+  "authority_for": [
+   "num_soil_levels",
+   "soil_levels.litologia (sense annex de sondeig: el tall és la font)",
+   "soil_levels.de/a",
+   "dpsh_tests.nivell_freatic (marca a P-3)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "LEYENDA",
+   "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas. / Nivel 2: Arenas finas-medias, carbonatadas.",
+   "confidence": 0.9,
+   "note": "única font de síntesi (no hi ha annex de sondeig); coherent amb full de camp SPT"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivel 1",
+    "litologia_candidats": [
+     "Arcilla limosa y arenosa con algunas gravas."
+    ],
+    "de": "0,00 m (superfície, cota dibuixada ≈321,7)",
+    "a": "transició inclinada: ≈-0,85 m a P-1 (cota ≈320,9) / ≈-1,6 m a P-2 (≈320,1) / ≈-2,4 m a P-3 (≈319,3)",
+    "mostra_del_nivell": true,
+    "location": "llegenda + mesura gràfica calibrada amb l'eix msnm (322-318)",
+    "quote": "Nivel 1 : Arcilla limosa y arenosa con algunas gravas."
+   },
+   {
+    "nom": "Nivel 2",
+    "litologia_candidats": [
+     "Arenas finas-medias, carbonatadas."
+    ],
+    "de": "la mateixa transició inclinada",
+    "a": "base dibuixada ≈318,0 msnm (= rebuig -3,78 m a P-3)",
+    "mostra_del_nivell": false,
+    "location": "llegenda + mesura gràfica",
+    "quote": "Nivel 2: Arenas finas-medias, carbonatadas."
+   }
+  ],
+  "dpsh_tests": [
+   {
+    "punt": "P-3",
+    "nivell_freatic": "línia blava discontínua (llegenda: 'Cota de nivel freático') només a P-3, cota mesurada ≈320,78 msnm (≈-0,9 m)",
+    "location": "tram P-3 del tall; llegenda",
+    "quote": "Cota de nivel freático"
+   }
+  ],
+  "__nota": "Nb impresos per tram (derivats, no lectura primària): P-1 8/25/R, P-2 11/46/R, P-3 8/28/R. Cap línia vermella de 'Cota de cimentación' dibuixada (0 px vermells a la secció)."
+ },
+ "not_present": [
+  "cota de cimentació (a la llegenda però no dibuixada)"
+ ],
+ "reading_notes": "FreeHand→Distiller: text brossa a la versió ANEJOS → render 150/300 dpi + lectura visual; cotes mesurades per calibratge píxel-eix (polyfit amb els rètols 322..318) sobre les DUES versions: resultats idèntics (±0,05 m). El text net s'ha llegit del duplicat tall.pdf."
+}

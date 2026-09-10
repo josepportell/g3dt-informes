@@ -1,0 +1,36 @@
+# bell-lloc/t2 — escalars i narrativa vs signat (`eva_reference_values.json`)
+
+| grup | MATCH | CLOSE | MISMATCH | NO_DATA | % (M+C)/comparables |
+|---|--:|--:|--:|--:|--:|
+| A | 16 | 0 | 8 | 1 | 67 % |
+| calc | 10 | 0 | 4 | 0 | 71 % |
+| narr | 4 | 4 | 8 | 0 | 50 % |
+| resta | 2 | 0 | 1 | 1 | 67 % |
+
+- [narr] `access_street` **MISMATCH** gen=«Carrer Mestre Ramon Ortiz» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del C»
+- [narr] `adjacent_south_fmt` **CLOSE** gen=«Per la part sud amb una parcel·la buida.» ↔ eva=«Per la part sud amb el Carrer Antoni Bellet.»
+- [narr] `adjacent_west_fmt` **CLOSE** gen=«I finalment, per la part oest amb una parcel·la amb construcció.» ↔ eva=«I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos»
+- [narr] `building_structure_desc` **MISMATCH** gen=«habitatge unifamiliar aïllat» ↔ eva=«en planta baixa, i per tant, no es preveu cap excavació important, únicament l’excavació p»
+- [A] `building_type_lower` **MISMATCH** gen=«habitatge unifamiliar aïllat» ↔ eva=«un habitatge unifamiliar»
+- [narr] `conclusions_aggressivity_statement` **MISMATCH** gen=«El contingut en sulfats del terreny es de 90 mg/kg. El terreny es classifica com a NO AGRE» ↔ eva=«A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on»
+- [narr] `csn_radon_text` **MISMATCH** gen=«Addicionalment, segons la cartografia del potencial de radó del Consell de Seguretat Nucle» ↔ eva=«En l’apèndix inclou un llistat de termes municipals als que, en base a les mesures realitz»
+- [calc] `cte_edificacio` **MISMATCH** gen=«C-0» ↔ eva=«C-1»
+- [calc] `cte_sol` **MISMATCH** gen=«T-2» ↔ eva=«T-1»
+- [A] `data_camp_text` **MISMATCH** gen=«1 i 6 d'octubre de 2025» ↔ eva=«1 d’octubre de 2025»
+- [resta] `data_signatura_text` **MISMATCH** gen=«06 de setembre de 2026» ↔ eva=«27 d’octubre de 2025»
+- [resta] `geo_p` **NO_DATA** gen=«None» ↔ eva=«Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar c»
+- [calc] `geomech_E` **MISMATCH** gen=«450» ↔ eva=«650»
+- [narr] `lab_tests_text` **CLOSE** gen=«Contingut en sulfats solubles UNE 83963:2008» ↔ eva=«1 assaig de contingut en sulfats UNE 83963 : 2008»
+- [A] `location_sentence` **MISMATCH** gen=«al Carrer Mestre Ramon Ortiz de Bell-Lloc d'Urgell» ↔ eva=«L’edificació que es preveu construir presentarà les següents característiques:»
+- [narr] `materials_intro` **MISMATCH** gen=«A partir dels resultats dels assaigs de penetracio dinamica realitzats, s'han identificat » ↔ eva=«A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des de»
+- [narr] `photo_site_text` **CLOSE** gen=«Fotografia 1 i Fotografia 2» ↔ eva=«Fotografia 1 i Fotografia 2. Vistes generals de la zona d’estudi.»
+- [A] `plantes` **NO_DATA** gen=«None» ↔ eva=«Pb+1Pp»
+- [narr] `radon_zone_description` **MISMATCH** gen=«, municipi amb concentracions mitjanes de gas radó en edificis tancats. Es recomana la imp» ↔ eva=«La parcel·la concreta d’estudi es localitza al terme municipal de BELL-LLOC D’URGELL i, se»
+- [calc] `settlement` **MISMATCH** gen=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o in» ↔ eva=«Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a»
+- [narr] `site_condition` **MISMATCH** gen=«antropitzat» ↔ eva=«Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de pro»
+- [narr] `site_description` **MISMATCH** gen=«parcel·la de forma quadrada amb superfície de 607 m2. El terreny es presenta antropitzat» ↔ eva=«El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del C»
+- [A] `spt_lithology` **MISMATCH** gen=«Grava amb matriu sorrenca» ↔ eva=«Graves en matriu sorrenca»
+- [A] `spt_n30` **MISMATCH** gen=«62» ↔ eva=«54»
+- [A] `spt_test_id` **MISMATCH** gen=«SPT1 S1» ↔ eva=«SPT-1»
+- [A] `superficie_construida` **MISMATCH** gen=«297» ↔ eva=«280+86»
+- [A] `superficie_parcela` **MISMATCH** gen=«607» ↔ eva=«995»

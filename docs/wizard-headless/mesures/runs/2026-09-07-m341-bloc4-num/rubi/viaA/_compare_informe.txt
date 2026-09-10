@@ -1,0 +1,20 @@
+
+## rubi/viaA
+| taula | MATCH | CLOSE | MISMATCH | files ±extra/−absents | detall no-MATCH |
+|---|--:|--:|--:|---|---|
+| plantes | 4 | 2 | 0 |  | fila0[1] CLOS «Pb+Porxo»↔«PB + Porxo»; fila1[0] CLOS «Superfície de la parcel·la segons plànols cadastrals  (m2)»↔«Superfície de la parcel·la (m2)» |
+| cte_edificacio | 4 | 0 | 0 |  |  |
+| dpsh | 15 | 0 | 0 |  |  |
+| spt_ma | 4 | 0 | 1 |  | spt-1[4] MISM «Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)»↔«Graves i sorres» |
+| mostra_lab | 3 | 2 | 0 |  | fila0[2] CLOS «Profunditat: -0.6 a -1.2»↔«Profunditat:  -0.60  a -1.20 m»; fila1[1] CLOS «Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
+Assaig de Límits d'Atterberg UNE 103103/94 – 104/93
+Assaig de contingut en sulfats UNE 83963 : 2008»↔«Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95
+Determinació de Límits d’Atterberg d'un sòl UNE 103103/94-104/93
+Assaig de contingut en su |
+| soil_levels | 1 | 1 | 0 | +1 extra | 1r[1] CLOS «Graves i sorres. Carbonatat.»↔«Graves i sorres, carbonatades»; 2n[*] ROW_ «2n nivell. | Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)»↔«» |
+| permeabilitat | 1 | 2 | 0 | +1 extra | 1r[1] CLOS «10^-2 a 10^-4»↔«10-10-1»; 1r[2] CLOS «Graves i sorres. Carbonatat.»↔«Graves i sorres, carbonatades»; 2n[*] ROW_ «2n nivell | 10^-3 a 10^-5 | Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)»↔«» |
+| sulfats | 4 | 0 | 0 |  |  |
+| sismica | 3 | 0 | 1 | +1 extra | 1[2] MISM «3.35»↔«4.55»; 2[*] ROW_ «2 | Tipus II | 1.20 | 1.3»↔«» |
+| geotecnica | 4 | 1 | 2 | +1 extra | 1r[0] CLOS «1er nivell. Graves i sorres. Carbonatat.»↔«1er nivell. Graves i sorres.»; 1r[1] MISM «42-R»↔«47-R»; 1r[4] MISM «0.00»↔«0.05»; 2n[*] ROW_ «2n nivell. Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2). | 52-R | -- | 2.20 | 1.00 | 35° | >500»↔«» |
+
+**rubi/viaA: 43 MATCH · 8 CLOSE · 4 MISMATCH · 4 files extra · 0 files absents → 93 % (M+C)/comparables**

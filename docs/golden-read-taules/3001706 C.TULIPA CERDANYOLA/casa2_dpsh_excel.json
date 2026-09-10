@@ -1,0 +1,54 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_DPSH_CASA 2.xls",
+ "document_type": "dpsh_excel",
+ "what_it_is": "Excel DPSH de casa 2 (plantilla G3): transcripció revisada per Eva dels colpeigs dels 2 penetròmetres de la parcel·la de C/ Tosca 16.",
+ "issuer": "G3 (Eva), a partir del full de camp TPS",
+ "date": "camp 07/05/2026",
+ "pages_or_sheets": "fulls P-2.1, P-2.2",
+ "context": {
+  "who_made_it": "Eva (G3)",
+  "for_whom": "informe de casa 2",
+  "why": "digitalitzar el colpeig de camp",
+  "expected_fields": [
+   "dpsh_tests",
+   "peu Rebuig",
+   "columna N.F."
+  ],
+  "not_expected": [
+   "cota inici absoluta"
+  ],
+  "relation_to_others": "versió revisada del full de camp manuscrit (PENETROS + SONDEIG.pdf p.3, retolat 'Casa 2'); CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf n'és la impressió.",
+  "authority_for": [
+   "num_dpsh_tests (casa 2)",
+   "dpsh_tests.profunditat_assolida",
+   "dpsh_tests.rebuig",
+   "dpsh_tests.nivell_freatic"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-2.1",
+    "profunditat_assolida": "-4,13 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat (columna N.F. buida)",
+    "location": "full P-2.1: peu B81; columna F buida; última lectura amb cops a -4,2 (100)",
+    "quote": "Rebuig a -4,13  m"
+   },
+   {
+    "punt": "P-2.2",
+    "profunditat_assolida": "-5,11 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat (columna N.F. buida)",
+    "location": "full P-2.2: peu B81; columna F buida; última lectura amb cops a -5,2 (100)",
+    "quote": "Rebuig a -5,11  m"
+   }
+  ]
+ },
+ "not_present": [
+  "cota_inici",
+  "nivell freàtic (columna buida)"
+ ],
+ "reading_notes": "xlrd; mateixa estructura que casa 1; dades fins a -4,2 (P-2.1) i -5,2 (P-2.2)."
+}

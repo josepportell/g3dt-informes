@@ -1,0 +1,155 @@
+{
+ "source_path": "ANNEXES/4001670_DPSH.xls",
+ "source_md5": "aceb14c002c47df476efc008cc11b63f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Excel amb la transcripció manual dels valors de camp dels 3 penetròmetres DPSH (P-1, P-2, P-3): colpeig cada 20 cm, columna de nivells per color, columna N.F./Humitat per color, i peu amb la cota de rebuig.",
+ "issuer": "Eva (G3) — transcripció manual del full de camp PENETROS.pdf",
+ "date": null,
+ "pages_or_sheets": "3 fulls: P-1 (index 0), P-3 (index 1), P-2 (index 2), 81 files x 7 columnes cadascun",
+ "context": {
+  "who_made_it": "Eva (G3), transcrivint a mà els valors del full de camp manuscrit (PENETROS.pdf) a aquest Excel per a cada punt DPSH.",
+  "for_whom": "Ús intern G3 — alimenta la taula 'Penetròmetres dinàmics DPSH' de l'informe i la revisió de l'Eva al wizard.",
+  "why": "Registrar colpeig DPSH/NB cada 20 cm per punt, marcar per color la transició de nivell del sòl i la humitat/nivell freàtic, i anotar la cota de rebuig al peu de cada full.",
+  "expected_fields": [
+   "colpeig DPSH i NB cada 20 cm (columnes C, D)",
+   "columna N.F. / Humitat (F) marcada per color, sense text",
+   "columna Nivells (G) marcada per color (vermell=Nivell 1, groc=Nivell 2)",
+   "peu 'Rebuig a la cota de -X,XX m' (fila 81)",
+   "ocasionalment, dades d'una mostra SPT incrustada en un full DPSH (columna E)"
+  ],
+  "not_expected": [
+   "cap metadada de projecte: files 1-14 de cada full estan buides (sense expedient, client, municipi, cota d'inici ni data)"
+  ],
+  "relation_to_others": "Font digital revisada del full de camp manuscrit PENETROS.pdf (l'Excel mana per als valors; el manuscrit es llegeix només per si porta alguna cosa que l'Excel no té, com el punt 0 o un croquis). El mateix contingut, amb capçalera de projecte afegida (cota d'inici, OBRA, POBLACIÓ, DATA, NÚMERO D'INFORME), és PDF/ANNEXES/4001670_DPSH.pdf — aquell PDF és qui porta cota_inici, no aquest Excel.",
+  "authority_for": [
+   "num_dpsh_tests",
+   "num_soil_levels",
+   "lab_sample_id",
+   "lab_depth"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "Llibre sencer: fulls P-1, P-3, P-2 (index 0,1,2)",
+   "quote": "3 fulls anomenats P-1, P-3, P-2, cadascun amb la columna C (Colpeig DPSH) omplerta des de C17 fins a la fila de rebuig",
+   "confidence": 0.85,
+   "note": "Font única (Excel DPSH) sense contradicció interna -> regla del Pas 3b: l'Excel DPSH (executats) mana per al nombre de penetròmetres executats."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "Full P-1 (i P-2, P-3), columna G 'Nivells' (color) + llegenda files 79-80",
+   "quote": "C79='Nivell 1' (cel·la de mostra B79 en vermell #FF8080); F79='Nivell 2' (cel·la de mostra E79 en groc #FFFF99). A cada full, la columna G comença en vermell i canvia a groc abans del rebuig; cap tercera color apareix.",
+   "confidence": 0.5,
+   "note": "Candidat, no segur: aquest projecte no té annex de sondeig (no hi ha *_sondeig.pdf a la carpeta), que és la font preferent per a num_soil_levels. El senyal ve només de la llegenda de colors d'aquest Excel DPSH. Pas 3b: 'Sense annex -> candidats amb el nombre de trams i nota confirmar'."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1",
+   "location": "Full P-3 (index 1), cel·la E22",
+   "quote": "E22: 'SPT-1'",
+   "confidence": 0.4,
+   "note": "Candidat feble: aquest Excel DPSH no és l'annex de l'Eva ni el GTL del laboratori (autoritat preferent per a l'etiqueta de mostra); és una anotació incrustada dins del full de colpeig del punt P-3."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,80 a 1,40",
+   "location": "Full P-3 (index 1), cel·la E23",
+   "quote": "E23: '0,80 a 1,40'",
+   "confidence": 0.45,
+   "note": "Candidat: Pas 3 diu 'GTL > Excel DPSH/annex sondeig > comanda per a lab_depth' -- l'Excel és font vàlida però no la primera prioritat si hi ha GTL."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,60",
+    "rebuig": "Si",
+    "nivell_freatic": "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+    "matis": "humitat",
+    "location": "Full P-1: peu B81; columna F files 22-24; llegenda E80/F80",
+    "quote": "B81: 'Rebuig a la cota de  -1,60 m'. F22,F23,F24: bg=#A6CAF0 sense text. E80: bg=#A6CAF0 (mostra de color) al costat de F80: 'Humitat'.",
+    "reading_notes": "cota_inici no consta en aquest full (les files 1-14 són buides); ve de PDF/ANNEXES/4001670_DPSH.pdf, no llegit en aquesta crida --only."
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,69",
+    "rebuig": "Si",
+    "nivell_freatic": "Humitat (candidat, sense text: cel·les F22-F26 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,80 m",
+    "matis": "humitat",
+    "location": "Full P-3: peu B81; columna F files 22-26; llegenda E80/F80; mostra SPT-1 a E22-E24",
+    "quote": "B81: 'Rebuig a la cota de  -1,69 m'. F22-F26: bg=#A6CAF0 sense text.",
+    "reading_notes": "Únic dels 3 punts amb una mostra SPT incrustada (vegeu tables.spt_ma_tests). Cota de rebuig no coincideix amb cap fila exacta de 0,2 m (interpolada per l'Eva)."
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,30",
+    "rebuig": "Si",
+    "nivell_freatic": "Humitat (candidat, sense text: cel·les F22-F24 pintades de blau #A6CAF0, sense valor escrit) — fondària de primera aparició -1,00 m; abast pintat fins a -1,40 m",
+    "matis": "humitat",
+    "location": "Full P-2: peu B81; columna F files 22-24; llegenda E80/F80",
+    "quote": "B81: 'Rebuig a la cota de  -1,30 m'. F22,F23,F24: bg=#A6CAF0 sense text.",
+    "reading_notes": "Cota de rebuig (-1,30) no coincideix amb la fila de refús C24=100 (fondària de graella -1,40); es manté el valor literal del peu, tal com indica el Pas 3b."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "0,80 a 1,40",
+    "litologia": null,
+    "n30": {
+     "registre": [
+      5,
+      9,
+      11,
+      33
+     ],
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": "20",
+       "font": "suma dels 2 trams centrals (9+11)",
+       "quote": "E24: '5/9/11/33'"
+      },
+      {
+       "value": "58",
+       "font": "suma dels 4 trams",
+       "quote": "E24: '5/9/11/33'"
+      }
+     ]
+    },
+    "location": "Full P-3 (index 1): E22 (id), E23 (profunditat), E24 (registre)",
+    "quote": "E22: 'SPT-1'; E23: '0,80 a 1,40'; E24: '5/9/11/33'",
+    "reading_notes": "litologia no consta en aquest Excel (no hi ha annex de sondeig en aquest projecte); n30 mai segur per contracte -- es dona el registre complet i les dues sumes candidates."
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Mode --only amb pre-extracció: llegits sheet-{0,1,2}.cells.txt, .colors.txt i .csv (sense xlrd/openpyxl directes). Files 1-14 buides a tots 3 fulls (confirmat via csv): cap metadada de projecte en aquest document. Llegenda de colors (files 79-80) interpretada creuant les 3 llegendes visibles: vermell #FF8080 -> 'Nivell 1' (B79/C79), groc #FFFF99 -> 'Nivell 2' (E79/F79), blau #A6CAF0 -> 'Humitat' (E80/F80, mateix to que la resta de la graella, per això mai segur). Aquesta interpretació ja es dona per feta al text del skill (Pas 3b, exemple literal 'Alcoletge: 5/9/11/33 -> 20' i '-1,00 a Alcoletge, d'humitat'), i les xifres llegides aquí hi encaixen exactament."
+}

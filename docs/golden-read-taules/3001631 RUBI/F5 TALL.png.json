@@ -1,0 +1,74 @@
+{
+  "source_path": "ANNEXES/Altres/F5 TALL.png",
+  "document_type": "annex_tall",
+  "what_it_is": "ESBORRANY del tall de correlació (figura del cos de l'informe), versió ANTERIOR amb 2 nivells",
+  "issuer": "G3 (Eva)",
+  "date": "no consta",
+  "pages_or_sheets": "1 imatge",
+  "context": {
+    "who_made_it": "Eva (G3)",
+    "for_whom": "figura del cos de l'informe (F5)",
+    "why": "versió de treball; la regla d'esborranys (v0.8, cas Rubí citat al skill) diu que Altres/*.png poden ser ANTERIORS als annexos PDF",
+    "expected_fields": [
+      "soil_levels",
+      "cotes per punt",
+      "profunditats"
+    ],
+    "not_expected": [],
+    "relation_to_others": "DISCREPA de l'annex PDF vigent: 2 nivells (N1/N2) vs 1; cotes +211,90/+211,4/+211,40 vs +212,50/+212/+212,50; profunditats -4,55/-3,58/-3,13 COINCIDEIXEN",
+    "authority_for": []
+  },
+  "tier_a": [],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": "+211,90 m",
+        "profunditat_assolida": "-4,55 m",
+        "location": "etiqueta blava sobre P-1",
+        "quote": "P-1 +211,90 m / -4,55 m"
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": "+211,4 m",
+        "profunditat_assolida": "-3,58 m",
+        "location": "etiqueta blava sobre P-2",
+        "quote": "P-2 +211,4 m / -3,58 m"
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": "+211,40 m",
+        "profunditat_assolida": "-3,13 m",
+        "location": "etiqueta blava sobre P-3",
+        "quote": "P-3 +211,40 m / -3,13 m"
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "Nivell 1 (N1)",
+        "litologia_candidats": [
+          "Graves i sorres"
+        ],
+        "de": "superfície (~211,9-212 msnm al dibuix)",
+        "a": "~208 msnm al SW pujant a ~210 al NE (sota P-1 ~-3,9 m)",
+        "mostra_del_nivell": true,
+        "location": "LLEGENDA + perfil",
+        "quote": "Nivell 1 (N1): Graves i sorres"
+      },
+      {
+        "nom": "Nivell 2 (N2)",
+        "litologia_candidats": [
+          "Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics."
+        ],
+        "de": "~208 msnm (SW) / ~210 (NE)",
+        "a": "base del dibuix (204 msnm)",
+        "mostra_del_nivell": false,
+        "location": "LLEGENDA + perfil",
+        "quote": "Nivell 2 (N2): Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics."
+      }
+    ],
+    "__nota": "ESBORRANY: prioritat PDF/ANNEXES > tall.pdf > aquest PNG; on discrepa → candidats amb el PDF primer"
+  },
+  "not_present": [],
+  "reading_notes": "lectura visual del PNG; tall A(SW)-A'(NE)"
+}

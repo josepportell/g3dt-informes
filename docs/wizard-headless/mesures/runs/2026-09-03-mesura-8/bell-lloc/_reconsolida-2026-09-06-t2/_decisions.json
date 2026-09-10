@@ -1,0 +1,2986 @@
+{
+ "schema_version": 1,
+ "project": "4001612 BELL-LLOC",
+ "generated": "2026-09-06T13:34:00",
+ "skill_version": "1.6",
+ "consolidation": {
+  "consolidator": "python-1.0",
+  "elapsed_s": 0.05,
+  "n_docs": 18,
+  "n_conflicts": 1,
+  "docs_skill_versions": [
+   "1.6"
+  ],
+  "llm_only_fields": null
+ },
+ "fields": {
+  "architect_company": {
+   "estat": "segur",
+   "value": "ABN Arquitectura Bosch Novell",
+   "candidates": [
+    {
+     "value": "ABN Arquitectura Bosch Novell",
+     "font": "A.01 amb punts.pdf caixetí, capçalera/logotip",
+     "quote": "abn ARQUITECTURA BOSCH NOVELL",
+     "note": "Despatx; el nom de persona (Jordi Bosch Novell) és el candidat preferent per architect_name"
+    },
+    {
+     "value": "Arquitectura Bosch Novell",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:35",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+     "note": "forma despatx, mateixa línia que la persona"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "Arquitectura Bosch Novell",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc CLIENT:",
+     "quote": "ARQUITECTURA BOSCH NOVELL",
+     "note": "bloc CLIENT: del pressupost = sol·licitant (despatx), no és client_name de l'informe"
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf"
+   ],
+   "note": "forma despatx, mateixa línia que la persona"
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "Jordi Bosch Novell",
+   "candidates": [
+    {
+     "value": "Jordi Bosch Novell",
+     "font": "25.0647/A.01.pdf caixetí inferior dret, bloc 'Arquitecte'",
+     "quote": "Arquitecte / Jordi Bosch Novell",
+     "note": "Persona (no despatx); despatx associat visible al logo 'ABN ARQUITECTURA BOSCH NOVELL'."
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc CLIENT",
+     "quote": "ARQUITECTURA BOSCH NOVELL",
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    },
+    {
+     "value": "ARQ BOSCH NOVELL",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, casella 'Client:'",
+     "quote": "Client: ARQ BOSCH NOVELL",
+     "note": "La casella 'Client:' d'aquest annex és el sol·licitant, no el promotor; el prefix 'ARQ' indica arquitecte → candidat a architect_name, mai a client_name (regla del Pas 3)."
+    }
+   ],
+   "rule": "contradiccio: ARQUITECTURA BOSCH NOVELL (1 doc, conf max 0.50); ARQ BOSCH NOVELL (1 doc, conf max 0.50)",
+   "altres": [
+    {
+     "value": "Jordi Bosch Novell",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:35",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+     "note": "etiquetat 'CLIENT:' però el nom conté ARQUITECTURA -> és el sol·licitant/arquitecte (regla Pas 3), mai client_name; forma persona"
+    },
+    {
+     "value": "Jordi Bosch Novell",
+     "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'CLIENT'",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+     "note": "etiquetat 'CLIENT' al correu però el nom conté ARQUITECT(URA) -> tractat com a sol·licitant/arquitecte (regla Pas 3), no client_name. Persona (Jordi Bosch Novell) preferida sobre despatx (ARQUITECTURA BOSCH NOVELL)"
+    },
+    {
+     "value": "Jordi Bosch Novell",
+     "font": "A.01 amb punts.pdf caixetí, bloc 'Arquitecte'",
+     "quote": "Arquitecte / Jordi Bosch Novell",
+     "note": "Persona (no despatx) — etiqueta explícita al caixetí"
+    },
+    {
+     "value": "Jordi Bosch Novell",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.5 signatura digital de l'acceptació",
+     "quote": "Firmado digitalmente por JORDI BOSCH NOVELL / num:37655-8",
+     "note": "col·legiat 37655-8; signa a la casella etiquetada 'El client' de l'acceptació, però el caixetí p.1 l'identifica com a sol·licitant/despatx (ARQUITECTURA BOSCH NOVELL) — persona, tractar com arquitecte, no com a client"
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.1 bloc CLIENT",
+     "quote": "ARQUITECTURA BOSCH NOVELL",
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    }
+   ],
+   "sources_checked": [
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf"
+   ],
+   "note": "Persona (no despatx); despatx associat visible al logo 'ABN ARQUITECTURA BOSCH NOVELL'."
+  },
+  "building_type": {
+   "estat": "segur",
+   "value": "Habitatge unifamiliar aïllat",
+   "candidates": [
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "A.01 amb punts.pdf caixetí, títol del projecte",
+     "quote": "HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "Coincideix amb la classificació urbanística (Edificació aïllada unifamiliar) de la mateixa taula"
+    },
+    {
+     "value": "EG HAB UNIF BELL-LLOC",
+     "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx 'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG HAB UNIF BELL-LLOC",
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "value": "habitatge unifamiliar",
+     "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'GEO'",
+     "quote": "son dos parcel.les contigües on hi haura una sola casa",
+     "note": "inferit ('una sola casa'); no diu literalment 'habitatge unifamiliar'; candidat feble"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "casa / habitatge unifamiliar",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:25",
+     "quote": "son dos parcel.les contigües on hi haura una sola casa",
+     "note": "redacció informal ('casa'), no és el títol formal del projecte; candidat feble"
+    },
+    {
+     "value": "CONSTR HABITATGE",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR HABITATGE"
+    },
+    {
+     "value": "HABITATGE UNIFAMILIAR AÏLLAT",
+     "font": "25.0647/A.01.pdf caixetí inferior dret, títol del projecte",
+     "quote": "HABITATGE UNIFAMILIAR AÏLLAT"
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "PDF/ANNEXES/4001612_plànol de situació.pdf caixetí, bloc TÍTOL DEL PROJECTE",
+     "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "Redacció pròpia de l'annex; coincideix amb la redacció habitual de l'informe ('un habitatge unifamiliar') — comparació CLOSE, no cita literal d'una plantilla G3."
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, bloc 'Obra:'",
+     "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT"
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "pl. situaci.pdf caixetí, bloc TÍTOL DEL PROJECTE",
+     "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "Redacció del propi annex (comparació CLOSE amb altres fonts, no cita textual d'una plantilla G3)."
+    },
+    {
+     "value": "habitatge unifamiliar aïllat",
+     "font": "tall.pdf caixetí, subtítol",
+     "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "Redacció pròpia de l'annex, no de plantilla G3; coincideix amb la redacció habitual de l'informe (comparació CLOSE)."
+    }
+   ],
+   "sources_checked": [
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "SONDEIG.pdf",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf"
+   ],
+   "note": "Coincideix amb la classificació urbanística (Edificació aïllada unifamiliar) de la mateixa taula"
+  },
+  "client_name": {
+   "estat": "segur",
+   "value": "RAMON MITJANA SL",
+   "candidates": [
+    {
+     "value": "RAMON MITJANA SL",
+     "font": "25.0647/A.01.pdf caixetí inferior dret, bloc 'Promotor'",
+     "quote": "Promotor / RAMON MITJANA SL",
+     "note": "Caixetí del plànol amb etiqueta 'Promotor' — font de màxima prioritat per client_name segons Pas 3."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "RAMON MITJANA SL",
+     "font": "A.01 amb punts.pdf caixetí, bloc 'Promotor'",
+     "quote": "Promotor / RAMON MITJANA SL",
+     "note": "Etiqueta explícita 'Promotor' al caixetí del plànol — autoritat màxima per client_name (Pas 3)"
+    },
+    {
+     "value": "RAMON MITJANA SL",
+     "font": "ACCEPTACIO/DADES CLIENT.txt línia 4, sota l'encapçalament \"DADES CLIENT\"",
+     "quote": "DADES CLIENT\nRAMON MITJANA SL       B25771726",
+     "note": "Empresa client amb NIF B25771726. El document afegeix un representant individual (línia 6: RAMON MITJANA GRÍFOL, NIF 78058457E) sota l'etiqueta \"Representant:\" — mateixa persona/família, no un client diferent; no és una ambigüitat de fonts, és estructura empresa+representant."
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL",
+     "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "ARQUITECTURA BOSCH NOVELL / 25100 / Tel: 620199571",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "ARQUITECCTURA BOSCH NOVELL",
+     "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!C6 (CLIENT)",
+     "quote": "ARQUITECCTURA BOSCH NOVELL",
+     "note": "= sol·licitant (regla G3); NO autoritat de client_name"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "25.0647/A.01.pdf",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/DADES CLIENT.txt"
+   ],
+   "note": "Caixetí del plànol amb etiqueta 'Promotor' — font de màxima prioritat per client_name segons Pas 3.",
+   "descartats": [
+    {
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL / Jordi Bosch Novell descartat com a client_name",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:35",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell",
+     "note": "el nom conté ARQUITECT -> és el sol·licitant, no el promotor/client de l'obra (regla Pas 3); reclassificat com architect_name/architect_company"
+    },
+    {
+     "value": "ARQUITECTURA BOSCH NOVELL / Jordi Bosch Novell",
+     "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'CLIENT'",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+     "note": "descartat com client_name: etiquetat CLIENT però el nom conté ARQUITECT -> és el sol·licitant/arquitecte, no el promotor de l'obra (regla Pas 3)"
+    },
+    {
+     "value": "G3 Desenvolupament Territorial, SL (descartat)",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.1/p.5 DADES DEL CLIENT; p.2 DADES DEL SOL·LICITANT",
+     "quote": "DADES DEL CLIENT: ... Nom: G3 Desenvolupament Territorial, SL",
+     "note": "G3 és el client del laboratori (qui encarrega l'assaig), no el client de l'obra — descartat per la regla 'G3 mai és client' (Pas 3)"
+    },
+    {
+     "value": null,
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc CLIENT: i p.5 formulari + signatura",
+     "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL (p.1); 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME: NOM I COGNOMS:' en blanc (p.5); signatura 'El client' = JORDI BOSCH NOVELL (p.5)",
+     "note": "descartat com a client_name: el bloc CLIENT: del pressupost és el sol·licitant/arquitecte, no el propietari; el formulari d'identitat per a factura/informe (NOM I COGNOMS, ADREÇA, CP I POBLACIÓ, NIF, TELF.) està completament en blanc; qui signa com 'El client' és de fet l'arquitecte"
+    },
+    {
+     "value": "G3 Desenvolupament Territorial, SL (descartat)",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.1/p.5 DADES DEL CLIENT; p.2 DADES DEL SOL·LICITANT",
+     "quote": "DADES DEL CLIENT: ... Nom: G3 Desenvolupament Territorial, SL",
+     "note": "G3 és el client del laboratori (qui encarrega l'assaig), no el client de l'obra — descartat per la regla 'G3 mai és client' (Pas 3)"
+    },
+    {
+     "value": "G3 (Empresa) / EVA (Responsable)",
+     "font": "PENETROS.pdf p.1 bloc 'DADES CLIENT'",
+     "quote": "DADES CLIENT: Empresa: G 3 / Responsable: EVA",
+     "note": "Descartat com a client_name: és la relació TPS→G3 (client del subcontractista de camp), no el client/promotor de l'informe (regla del Pas 0, taula 'Albarà / full de camp TPS')."
+    },
+    {
+     "value": "G3 / Eva",
+     "font": "SONDEIG.pdf p.1, bloc 'DADES CLIENT'",
+     "quote": "DADES CLIENT: Empresa: G3, Responsable: Eva",
+     "note": "Descartat: és la relació TPS (sondista) → G3 (encarregant del sondeig), no el promotor/client de l'obra"
+    }
+   ]
+  },
+  "cota_referencia": {
+   "estat": "segur",
+   "value": "199,50 m",
+   "candidates": [
+    {
+     "value": "199,50 m",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, bloc 'Coordenades UTM', casella z:",
+     "quote": "z: 199.50m",
+     "note": "Caselles x i y buides; només z omplerta. Coincideix amb el criteri de l'Eva (z de l'annex de sondeig com a font de cota_referencia)."
+    },
+    {
+     "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1, peu del gràfic P-1",
+     "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer).",
+     "note": "P-1; confirmat per P-2 (mateixa cota) però és 1 sola font/plantilla, no independent d'ella mateixa; falta creuar amb annex de sondeig (z:) i COORDENADES.txt, no llegits en aquesta crida."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.2, peu del gràfic P-2",
+     "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0.15 carrer)",
+     "note": "P-2; mateix valor que P-1 (nota tipogràfica: aquí '-0.15' amb punt, a P-1 amb coma), mateix document/plantilla, no és font independent."
+    },
+    {
+     "value": "+/-0,00 respecte C/Antoni Bellet (cota relativa al carrer)",
+     "font": "SONDEIG.pdf p.2, camp 'Decriure cota 0 o cota referència'",
+     "quote": "Decriure cota 0 o cota referència: C/antoni Bellet +/-0",
+     "note": "Cota relativa (0,00 = nivell del carrer), coherent amb el criteri habitual de l'Eva d'usar el carrer com a referència"
+    },
+    {
+     "value": "198.9",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1 z)",
+     "quote": "P-1: 314418.9 ; 4611117.6 ; 198.9",
+     "note": "GPS de camp: l'Eva no l'usa com a cota de referencia (~0,6 m de diferencia amb l'ICGC)"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "SONDEIG.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ],
+   "note": "P-1; confirmat per P-2 (mateixa cota) però és 1 sola font/plantilla, no independent d'ella mateixa; falta creuar amb annex de sondeig (z:) i COORDENADES.txt, no llegits en aquesta crida."
+  },
+  "cte_edificacio": {
+   "estat": "candidats",
+   "value": "C1",
+   "candidates": [
+    {
+     "value": "C1",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:25",
+     "quote": "GEO : És un C1 Pb de 280m + p1 de 86 - son dos parcel.les contigües on hi haura una sola casa.",
+     "note": "correu d'encàrrec; coherent amb el 'Tipus d'edifici' del pressupost"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "altres": [
+    {
+     "value": "C1",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.2",
+     "quote": "Tipus d’edifici: C1"
+    },
+    {
+     "value": "C1",
+     "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.2",
+     "quote": "Tipus d’edifici: C1"
+    },
+    {
+     "value": "C1",
+     "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'GEO' (citant César Morillas, 2025-09-03 11:26)",
+     "quote": "GEO : És un C1 Pb de 280m + p1 de 86 - son dos parcel.les contigües on hi haura una sola casa.",
+     "note": "encàrrec intern, coherent amb el pressupost G3 (Tipus d'edifici: C1); citat, no font independent addicional a l'email original"
+    },
+    {
+     "value": "C1",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.2",
+     "quote": "Tipus d'edifici: C1",
+     "note": "única font d'aquest document"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg"
+   ],
+   "note": "correu d'encàrrec; coherent amb el 'Tipus d'edifici' del pressupost"
+  },
+  "cte_sol": {
+   "estat": "candidats",
+   "value": "T1",
+   "candidates": [
+    {
+     "value": "T1",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.2",
+     "quote": "Tipus de Terreny : T1"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "altres": [
+    {
+     "value": "T1",
+     "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.2",
+     "quote": "Tipus de Terreny : T1"
+    },
+    {
+     "value": "T1",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.2",
+     "quote": "Tipus de Terreny : T1",
+     "note": "única font d'aquest document"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf"
+   ],
+   "note": "única font d'aquest document"
+  },
+  "expedient": {
+   "estat": "segur",
+   "value": "4001612",
+   "candidates": [
+    {
+     "value": "4001612",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001612.0"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "4001612",
+     "font": "ANNEXES/4001612_DPSH.xls nom del fitxer",
+     "quote": "4001612_DPSH.xls"
+    },
+    {
+     "value": "4001612",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DADES INICIALS / Obra-Projecte",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet. 4001612",
+     "note": "coincideix amb el nom de la carpeta del projecte; font secundària (no plantilla G3 primària)"
+    },
+    {
+     "value": "4001612",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1 i p.2, peu 'NÚMERO D´INFORME:'",
+     "quote": "NÚMERO D´INFORME: 4001612",
+     "note": "coincideix amb el nom de la carpeta del projecte (4001612 BELL-LLOC)."
+    },
+    {
+     "value": "4001612",
+     "font": "PDF/ANNEXES/4001612_fotografies.pdf p.1 i p.2, capçalera 'Reportatge fotogràfic'",
+     "quote": "4001612",
+     "note": "aparició corroborant al capçalera del reportatge fotogràfic; coincideix amb el nom de la carpeta i amb la resta de fonts (comanda, annex DPSH, GTL), però aquest document no és la font primària de l'expedient (Pas 3): candidat de suport, no segur per si sol"
+    },
+    {
+     "value": "4001612",
+     "font": "PDF/ANNEXES/4001612_tall de correlació.pdf quadre de rètol, cel·la 'Exp:'",
+     "quote": "Exp: 4001612",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001612",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS / Obra-Projecte",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet. 4001612",
+     "note": "coincideix amb el nom de la carpeta del projecte; mateixa dada que l'altre GTL (no independent), font secundària (no plantilla G3 primària)"
+    },
+    {
+     "value": "4001612",
+     "font": "tall.pdf caixetí inferior, cel·la 'Exp:'",
+     "quote": "Exp: 4001612",
+     "note": "Coincideix amb el nom de la carpeta del projecte; document bessó del FreeHand PDF/ANNEXES/4001612_tall de correlació.pdf, no és font independent"
+    },
+    {
+     "value": "4001612",
+     "font": "nom de la carpeta del projecte",
+     "quote": "4001612 BELL-LLOC",
+     "note": "regla Pas 3: nom de la carpeta = NNNNNNN MUNICIPI"
+    },
+    {
+     "value": "4001621",
+     "font": "PDF/ANNEXES/4001612_plànol de situació.pdf caixetí, cel·la 'Exp:'",
+     "quote": "Exp: 4001621",
+     "note": "TYPO conegut d'aquest annex (transposició de xifres) — contradiu el nom de la carpeta del projecte i l'expedient de comanda/GTL/Excel/altres annexos (4001612, p.ex. confirmat a l'annex de tall 'pdf_annexes_4001612_tall_de_correlaci.json'). No usar com a candidat principal, es dona només per registre."
+    },
+    {
+     "value": "4001621",
+     "font": "pl. situaci.pdf caixetí, cel·la Exp:",
+     "quote": "Exp: 4001621",
+     "note": "TYPO conegut d'aquest tipus d'annex (caixetins FreeHand de l'Eva): contradiu el nom de la carpeta del projecte ('4001612 BELL-LLOC') i l'ordre de xifres. No fer servir com a candidat principal — es dona només per registre."
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "SONDEIG.pdf",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "ANNEXES/4001612_DPSH.xls",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf",
+    "(carpeta)"
+   ],
+   "note": "coincideix amb el nom de la carpeta del projecte; font secundària (no plantilla G3 primària)",
+   "descartats": [
+    {
+     "value": "EXP25.34/SET.25",
+     "font": "A.01 amb punts.pdf caixetí, peu inferior esquerre",
+     "quote": "EXP25.34/SET.25",
+     "note": "Codi d'expedient intern de l'ARQUITECTE, no de G3 — descartat com a expedient (regla Pas 3: 'NO són l'expedient... EXP25.34/SET.25 (arquitecte)')"
+    }
+   ]
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2025-10-01",
+   "candidates": [
+    {
+     "value": "2025-10-01",
+     "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!F38 (E38 'dies de camp')",
+     "quote": "datetime.datetime(2025, 10, 1, 0, 0)",
+     "note": "primer dia de camp (autoritat A)"
+    },
+    {
+     "value": "01/10/2025",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1 i p.2, peu 'DATA:'",
+     "quote": "DATA: 01/10/2025",
+     "note": "candidat 2 segons regla del skill (fitxa de camp F38 mana, no llegida en aquesta crida --only); idèntica a P-1 i P-2, no és 2 fonts independents."
+    },
+    {
+     "value": "2025-10-06",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N23 (DATA DE PRESA)",
+     "quote": "45936.0",
+     "note": "altre dia de camp (sondeig / presa de mostra); regla d'Eva: «si la data del sondeig no es igual, posar els dos dies»; dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    }
+   ],
+   "rule": "1 font A sense contradiccio; campanya de 2 dies (2025-10-01, 2025-10-06): la data del sondeig no contradiu la de camp (R2)",
+   "extra": {
+    "dies_de_camp": [
+     "2025-10-01",
+     "2025-10-06"
+    ]
+   },
+   "altres": [
+    {
+     "value": "01/10/2025",
+     "font": "PENETROS.pdf p.1 bloc DADES OBRA camp 'Data'; p.2 capçalera camp 'Data'",
+     "quote": "Data: 1-10-25 (p.1) / Data: 1-10-25 (p.2)",
+     "note": "Coincideix exactament amb 'DATA: 01/10/2025' de PDF/ANNEXES/4001612_DPSH.pdf (ja llegit). Per la regla del skill l'albarà/full de camp TPS és candidat per sota de la fitxa F38 (no llegida en aquesta crida --only) i de l'annex DPSH DATA (ja amb el mateix valor) — no aporta una tercera font independent, és el mateix dia confirmat des de l'origen manuscrit."
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf",
+    "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "PENETROS.pdf",
+    "SONDEIG.pdf"
+   ],
+   "note": "primer dia de camp (autoritat A)"
+  },
+  "lab_depth": {
+   "estat": "segur",
+   "value": "-1,00 a -1,60 m",
+   "candidates": [
+    {
+     "value": "-1,00 a -1,60 m",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, columna 'Prof. de extracció (m)'",
+     "quote": "-1.00 a -1.60"
+    },
+    {
+     "value": "1,0 - 1,6",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DADES INICIALS / Cota d'extracció (m)",
+     "quote": "Cota d'extracció (m): 1,0 - 1,6",
+     "note": "el GTL mana per a la profunditat (Pas 3)"
+    },
+    {
+     "value": "1.0 - 1.6",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!J35/L35",
+     "quote": "INICIAL 1.0 / FINAL 1.6",
+     "note": "el GTL mana si discrepa"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "1,00 - 1,60 m",
+     "font": "SONDEIG.pdf p.2, taula 'Mostres', columna 'Prof'",
+     "quote": "Prof: 100 a 1.60",
+     "note": "Interval de fondària de la mostra SPT-1"
+    },
+    {
+     "value": "1,0 - 1,6",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS / Cota d'extracció (m)",
+     "quote": "Cota d'extracció (m): 1,0 - 1,6",
+     "note": "el GTL mana per a la profunditat (Pas 3)"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "SONDEIG.pdf"
+   ],
+   "note": "el GTL mana si discrepa"
+  },
+  "lab_location": {
+   "estat": "segur",
+   "value": "S-1",
+   "candidates": [
+    {
+     "value": "S-1",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, casella 'Sondeig nº:'",
+     "quote": "Sondeig nº: S-1",
+     "note": "Punt d'assaig d'on surt la mostra SPT-1 = l'únic sondeig del document."
+    },
+    {
+     "value": "S1",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!C35 (parèntesi)",
+     "quote": "SPT 1 (S1)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "S1",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DADES INICIALS / Mostra (SPT1 S1)",
+     "quote": "Mostra: SPT1 S1",
+     "note": "punt d'assaig derivat de l'etiqueta de la mostra (sondeig S1)"
+    },
+    {
+     "value": "S1",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS / Mostra (SPT1 S1)",
+     "quote": "Mostra: SPT1 S1",
+     "note": "punt d'assaig derivat de l'etiqueta de la mostra (sondeig S1)"
+    },
+    {
+     "value": "S-1",
+     "font": "SONDEIG.pdf p.2, capçalera 'Sondeig'",
+     "quote": "Sondeig: S-1",
+     "note": "La mostra SPT-1 surt del sondeig S-1 (únic sondeig d'aquest full)"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "SONDEIG.pdf"
+   ],
+   "note": "punt d'assaig derivat de l'etiqueta de la mostra (sondeig S1)"
+  },
+  "lab_sample_id": {
+   "estat": "segur",
+   "value": "SPT-1",
+   "candidates": [
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, bloc 'Muestras y ensayos in situ', columna 'Tipus de mostra'",
+     "quote": "SPT-1",
+     "note": "Annex de l'Eva = font d'autoritat per a l'etiqueta de mostra que apareix a l'informe."
+    },
+    {
+     "value": "SPT 1 (S1)",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!C35",
+     "quote": "SPT 1 (S1)",
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "value": "SPT1 S1",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DADES INICIALS / Mostra",
+     "quote": "Mostra: SPT1 S1",
+     "note": "etiqueta del GTL; l'annex de l'Eva té prioritat sobre el GTL per a l'etiqueta (Pas 3) — pendent de creuar"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "SPT1 S1",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DADES INICIALS / Mostra",
+     "quote": "Mostra: SPT1 S1",
+     "note": "etiqueta del GTL; l'annex de l'Eva té prioritat sobre el GTL per a l'etiqueta (Pas 3) — pendent de creuar"
+    },
+    {
+     "value": "SPT-1",
+     "font": "SONDEIG.pdf p.2, taula 'Mostres', columna 'tipus'",
+     "quote": "tipus: S.P.T-1",
+     "note": "Font primària de camp (full manuscrit), abans de l'annex/GTL"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "SONDEIG.pdf"
+   ],
+   "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+  },
+  "lab_testing_company": {
+   "estat": "segur",
+   "value": "TPS, Prospecció del Subsòl, SL (NIF B64803075)",
+   "candidates": [
+    {
+     "value": "TPS, Prospecció del Subsòl, SL (NIF B64803075)",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf marge esquerre vertical i peu, totes les pàgines",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+     "note": "emissor del GTL (banda amb registre mercantil) — autoritat A per aquest camp"
+    },
+    {
+     "value": "TPS, S.L.",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, casella 'Empresa:'",
+     "quote": "Empresa: TPS, S.L.",
+     "note": "Casella 'Empresa' d'aquest annex és l'executora del sondeig (sondista); no diu explícitament 'laboratori', però és la mateixa raó social que emet el GTL en aquest projecte."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "TPS, Prospecció del Subsòl, SL (NIF B64803075)",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf marge esquerre vertical i peu, totes les pàgines",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+     "note": "emissor del GTL (banda amb registre mercantil) — autoritat A per aquest camp"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf"
+   ],
+   "note": "emissor del GTL (banda amb registre mercantil) — autoritat A per aquest camp"
+  },
+  "municipality": {
+   "estat": "candidats",
+   "value": "BELL.LLOC D'URGELL (Lleida)",
+   "candidates": [
+    {
+     "value": "BELL.LLOC D'URGELL (Lleida)",
+     "font": "25.0647/A.01.pdf caixetí inferior dret, bloc 'Situació'",
+     "quote": "25220 BELL.LLOC D'URGELL (Lleida)",
+     "note": "Grafia amb punt ('BELL.LLOC') en lloc del guionet oficial ('Bell-lloc d'Urgell'); mateix municipi."
+    },
+    {
+     "value": "Bell-lloc d'Urgell",
+     "font": "A.01 amb punts.pdf caixetí bloc 'Situació' + taula 'JUSTIFICACIO PLANEJAMENT' fila 'Ordenació urbanística'",
+     "quote": "25220 BELL.LLOC D'URGELL (Lleida) / POUM Bell-lloc d'Urgell",
+     "note": "Forma oficial llarga 'Bell-lloc d'Urgell' (taula planejament) coincideix amb la forma del caixetí (amb punt ortogràfic diferent)"
+    },
+    {
+     "value": "BELL-LLOC",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "BELL-LLOC"
+    }
+   ],
+   "rule": "formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes",
+   "altres": [
+    {
+     "value": "BELL-LLOCH",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.2, peu 'POBLACIÓ:'",
+     "quote": "POBLACIÓ: BELL-LLOCH",
+     "note": "grafia alternativa dins del mateix document (P-1 diu 'BELL-LLOC'); forma oficial llarga no impresa en aquest full."
+    },
+    {
+     "value": "BELL-LLOC",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "BELL-LLOC",
+     "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "BELL-LLOC",
+     "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx 'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG HAB UNIF BELL-LLOC",
+     "note": "«BELL-LLOC» és la forma curta de «Bell-lloc d'Urgell» segons el padró de municipis; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "Bell-lloc",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:29",
+     "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+     "note": "forma curta; bloc OBRA"
+    },
+    {
+     "value": "Bell-lloc d'Urgell",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:39 (URL Google Maps)",
+     "quote": "25220+Bell-lloc+d'Urgell,+L%C3%A9rida (dins la URL de Google Maps)",
+     "note": "forma llarga oficial, però extreta d'un paràmetre de cerca de Google Maps, no redactada per l'autor del correu"
+    },
+    {
+     "value": "Bell-lloc",
+     "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'OBRA'",
+     "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+     "note": "forma curta G3; forma oficial llarga 'Bell-lloc d'Urgell' consta en altres documents (GTL, Cadastre)"
+    },
+    {
+     "value": "Bell-Lloc d'Urgell",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.1 MATERIAL A ASSAJAR / Situació; p.2 Obra-Projecte",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+     "note": "forma oficial llarga; repetida a p.1, p.2 i p.5 (mateix contingut, no independent)"
+    },
+    {
+     "value": "BELL-LLOC",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA:",
+     "quote": "BELL-LLOC",
+     "note": "forma curta G3; forma oficial llarga probable 'Bell-lloc d'Urgell' (a confirmar amb Cadastre/GTL/plànol)"
+    },
+    {
+     "value": "BELL-LLOC",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1, peu 'POBLACIÓ:'",
+     "quote": "POBLACIÓ: BELL-LLOC",
+     "note": "grafia curta G3; P-2 del mateix document diu 'BELL-LLOCH' (candidat alternatiu, mateixa plantilla, no font independent)."
+    },
+    {
+     "value": "Bell-lloc d'Urgell",
+     "font": "PDF/ANNEXES/4001612_plànol de situació.pdf mapa d'emplaçament municipal (requadre superior esquerre)",
+     "quote": "Bell-lloc d'Urgell",
+     "note": "Forma oficial llarga al mapa base d'emplaçament. El caixetí i el títol usen la forma curta ('BELL-LLOC' / 'DE BELL-LLOC'), mateix document."
+    },
+    {
+     "value": "Bell-lloc",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, bloc 'Obra:'",
+     "quote": "EN EL MUNICIPI DE BELL-LLOC",
+     "note": "Forma curta; corroborada per l'etiqueta manuscrita 'Bell·lloc' a les fotografies de p.2."
+    },
+    {
+     "value": "Bell-lloc",
+     "font": "PDF/ANNEXES/4001612_tall de correlació.pdf quadre de rètol, sota TÍTOL DEL PROJECTE",
+     "quote": "DE BELL-LLOC",
+     "note": "forma curta; aquest document sol no basta per segur (regla: calen 3 fonts habituals — comanda, pressupost, PLAN_COST)"
+    },
+    {
+     "value": "Bell-Lloc d'Urgell",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.1 MATERIAL A ASSAJAR / Situació; p.2 Obra-Projecte; p.5 Situació",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+     "note": "forma oficial llarga; repetida a p.1, p.2 i p.5 (mateix contingut, no independent entre si, ni respecte l'altre GTL)"
+    },
+    {
+     "value": "BELL-LLOCH",
+     "font": "PENETROS.pdf p.1 bloc DADES OBRA camp 'Població'; p.2 camp 'Adreça de l'obra' (mal etiquetat: hi ha escrita la població, no un carrer)",
+     "quote": "Població: BELL-LLOCH (p.1) / Adreça de l'obra: BELL-LLOCH (p.2)",
+     "note": "Grafia de camp (amb 'H' final), coincident amb la grafia de la p.2 de PDF/ANNEXES/4001612_DPSH.pdf ('BELL-LLOCH'), ja llegit. No és cap de les 3 fonts 'sempre' (comanda/pressupost/PLAN_COST, cap llegida en aquesta crida) i per tant no és autoritat per si sola — candidat."
+    },
+    {
+     "value": "Bell-lloc d'Urgell",
+     "font": "pl. situaci.pdf mapa d'emplaçament (requadre superior esquerre)",
+     "quote": "Bell-lloc d'Urgell",
+     "note": "Forma oficial llarga al mapa d'emplaçament; el caixetí i el títol usen la forma curta 'BELL-LLOC' / 'DE BELL-LLOC'."
+    },
+    {
+     "value": "Bell-lloc",
+     "font": "SONDEIG.pdf p.1 camp 'Població' + p.2 camp 'Adreça de l'obra'",
+     "quote": "Població: Bell-lloc",
+     "note": "Forma curta manuscrita, mateix document (p.1 i p.2 no són fonts independents); forma oficial llarga (Bell-lloc d'Urgell) cal confirmar-la a comanda/pressupost/PLAN_COST"
+    },
+    {
+     "value": "Bell-lloc",
+     "font": "tall.pdf caixetí, subtítol",
+     "quote": "... DE BELL-LLOC",
+     "note": "Forma curta tal com surt en aquest document; no dona la forma oficial llarga."
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "PENETROS.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf"
+   ],
+   "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+  },
+  "num_dpsh_tests": {
+   "estat": "segur",
+   "value": 2,
+   "candidates": [
+    {
+     "value": 2,
+     "font": "ANNEXES/4001612_DPSH.xls fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2']",
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 2,
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.2 campanya",
+     "quote": "2 assaigs de penetració dinàmica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "value": 2,
+     "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.2 campanya",
+     "quote": "2 assaigs de penetració dinàmica",
+     "note": "PREVISTOS; si l'Excel DPSH en diu un altre, mana l'Excel"
+    },
+    {
+     "value": 2,
+     "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx OFERTA!B21",
+     "quote": "2",
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "value": "2",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.2 i p.4 taula VALORACIÓ",
+     "quote": "2 assaigs de penetració dinàmica DPSH / UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH ... 2,00",
+     "note": "quantitat PREVISTA/contractada, no executada; l'Excel DPSH (ANNEXES/4001612_DPSH.xls) mana per al recompte real"
+    },
+    {
+     "value": 2,
+     "font": "ANNEXES/4001612_DPSH.xls noms de full (Hoja1 sheet names)",
+     "quote": "P-1; P-2 (ambdós fulls amb colpeig real a la columna C, files 17-30)",
+     "note": "2 fulls amb dades executades a la columna 'Colpeig DPSH' (P-1 fins fila 24, P-2 fins fila 30); no hi ha cap altre full ni cap indicació de previstos en aquest document."
+    },
+    {
+     "value": "2",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf document sencer (2 pàgines)",
+     "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 (p.1) / ASSAIG DE PENETRACIÓ DINÀMICA: P-2 (p.2)",
+     "note": "2 punts/fulls presents en aquesta versió PDF (equivalent als 2 fulls P-1/P-2 de l'Excel origen); no distingeix previstos vs executats."
+    },
+    {
+     "value": "2",
+     "font": "PDF/ANNEXES/4001612_plànol de situació.pdf planta, marcadors verds P-1 i P-2 + llegenda 'Assaig de penetració dinàmica DPSH'",
+     "quote": "Assaig de penetració dinàmica DPSH (llegenda); marcadors 'P-1' i 'P-2' sobre la planta",
+     "note": "Recompte visual dels punts dibuixats a la planta; no és font d'autoritat A per aquest camp (mana l'Excel DPSH amb fulls executats), es dona com a corroboració."
+    },
+    {
+     "value": 2,
+     "font": "PENETROS.pdf p.1 bloc 'ML DE PERFORACIÓ', camp 'Nº de penetròmetres realitzats'",
+     "quote": "Nº de penetròmetres realitzats: 2",
+     "note": "Font independent de ANNEXES/4001612_DPSH.xls (2 fulls P-1/P-2 amb dades executades, ja llegit): aquí és TPS (qui fa físicament l'assaig) qui declara el nombre fet, no una transcripció de G3. Amb aquesta segona font independent coincident, num_dpsh_tests compleix el criteri de 'segur'."
+    },
+    {
+     "value": "2",
+     "font": "pl. situaci.pdf planta, marcadors verds P-1 i P-2 + llegenda 'Assaig de penetració dinàmica DPSH'",
+     "quote": "P-1 / P-2 (marcador verd) — llegenda: Assaig de penetració dinàmica DPSH",
+     "note": "Recompte visual dels punts dibuixats a la planta; no és font d'autoritat A per aquest camp (mana l'Excel DPSH), es dona com a corroboració."
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "ANNEXES/4001612_DPSH.xls",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "25.0647/PLAN_COST_BELL-LLOC.xlsx",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PENETROS.pdf",
+    "pl. situaci.pdf"
+   ],
+   "note": "EXECUTATS (autoritat sobre els previstos)"
+  },
+  "num_floors": {
+   "estat": "segur",
+   "value": "PB+PP",
+   "candidates": [
+    {
+     "value": "PB+PP",
+     "font": "A.01 amb punts.pdf taula 'JUSTIFICACIO PLANEJAMENT', fila 'N. plantes', columna 'Projecte'",
+     "quote": "N. plantes / PB+PP (Planejament) / PB+PP (Projecte)",
+     "note": "Planta Baixa + Planta Pis = 2 plantes; el projecte coincideix amb el màxim de planejament"
+    },
+    {
+     "value": "PB+1 (planta baixa + pis 1)",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:25",
+     "quote": "Pb de 280m + p1 de 86",
+     "note": "derivat directe de l'exemple del skill (Pas 3, regla num_floors)"
+    },
+    {
+     "value": "PB+1 (2 plantes)",
+     "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'GEO'",
+     "quote": "Pb de 280m + p1 de 86",
+     "note": "PB de 280 m2 + P1 de 86 m2; citat de l'email original de César Morillas"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "PB+PP",
+     "font": "25.0647/A.01.pdf taula 'JUSTIFICACIO PLANEJAMENT', fila 'N. plantes', columna 'Projecte'",
+     "quote": "N. plantes | PB+PP | PB+PP",
+     "note": "PB+PP = Planta Baixa + Planta Pis = 2 plantes. Valor idèntic a planejament i projecte."
+    }
+   ],
+   "sources_checked": [
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf"
+   ],
+   "note": "PB+PP = Planta Baixa + Planta Pis = 2 plantes. Valor idèntic a planejament i projecte."
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": 1,
+   "candidates": [
+    {
+     "value": 1,
+     "font": "tall.pdf LLEGENDA (requadre superior dret) + perfil gràfic",
+     "quote": "1er nivell: Graves amb sorres",
+     "note": "El tall només delimita 'Sòls vegetals' (cobertura, sense número a la llegenda) i un únic '1er nivell'; no hi ha cap 2n nivell marcat al perfil. Per la regla del Pas 3b, el TALL mana pel nombre de nivells."
+    },
+    {
+     "value": "1 (senyal feble, no autoritat)",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1 i p.2, columna 'Nivells'",
+     "quote": "Nivell 1",
+     "note": "cada punt (P-1, P-2) només marca 'Nivell 1', sense 'Nivell 2'; per regla del skill l'autoritat per a num_soil_levels és l'annex de sondeig / llegenda del tall (no llegits en aquesta crida) — candidat molt feble, no consolidar sense creuar."
+    }
+   ],
+   "rule": "autoritat de camp (R5): annex_sondeig + annex_tall declara el valor (conf ≥ 0.5) sense contradiccio",
+   "altres": [
+    {
+     "value": 1,
+     "font": "ANNEXES/4001612_DPSH.xls Full P-1, cel·la C79; Full P-2, cel·la C79",
+     "quote": "Nivell 1",
+     "note": "La mateixa marca 'Nivell 1' apareix idèntica a P-1 i P-2, a la fila de peu (79), no lligada a cap fondària de transició. És un senyal per punt DPSH, feble: el nombre de nivells de l'informe el determina l'annex de sondeig o la llegenda del tall, que aquí no s'ha llegit."
+    },
+    {
+     "value": "1",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 columna 'Unitat litològica'",
+     "quote": "NIVELL 1",
+     "note": "Únic nivell etiquetat, però el sondeig només arriba a -1,80 m (coincident amb Fotografia 2/3): no descarta nivells més profunds no travessats per aquest sondeig. Creuar amb annex_tall i DPSH per al nombre total de nivells del projecte."
+    },
+    {
+     "value": 1,
+     "font": "PDF/ANNEXES/4001612_tall de correlació.pdf requadre LLEGENDA",
+     "quote": "1er nivell: Graves amb sorres",
+     "note": "la capa 'Sòls vegetals' de la llegenda NO porta número (cobertura); només hi ha un nivell numerat en aquest tall. El TALL mana pel nombre quan discrepa amb l'annex de sondeig (regla existent), però aquí només s'ha llegit aquest document"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "ANNEXES/4001612_DPSH.xls",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "pl. situaci.pdf",
+    "tall.pdf"
+   ],
+   "note": "La mateixa marca 'Nivell 1' apareix idèntica a P-1 i P-2, a la fila de peu (79), no lligada a cap fondària de transició. És un senyal per punt DPSH, feble: el nombre de nivells de l'informe el determina l'annex de sondeig o la llegenda del tall, que aquí no s'ha llegit."
+  },
+  "referencia_catastral": {
+   "estat": "candidats",
+   "value": "4613173CG1141S0001ZU",
+   "candidates": [
+    {
+     "value": "4613173CG1141S0001ZU",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg adjunt del correu (nom de fitxer)",
+     "quote": "4613173cg1141s0001zu.pdf (attachment name, meta.json)",
+     "note": "nom de l'adjunt PDF de consulta cadastral, ja no obert en aquesta lectura (already_in_folder: 25.0647/4613173CG1141S0001ZU-13.pdf); una de les dues parcel·les contigües esmentades a la línia 25"
+    },
+    {
+     "value": "4613172CG1141S0001SU",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg adjunt del correu (nom de fitxer)",
+     "quote": "4613172cg1141s0001su.pdf (attachment name, meta.json)",
+     "note": "nom de l'adjunt PDF de consulta cadastral, ja no obert en aquesta lectura (already_in_folder: 25.0647/4613172CG1141S0001SU-15.pdf); segona de les dues parcel·les contigües"
+    }
+   ],
+   "rule": "contradiccio: 4613172CG1141S0001SU (1 doc, conf max 0.60)",
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg"
+   ],
+   "note": "nom de l'adjunt PDF de consulta cadastral, ja no obert en aquesta lectura (already_in_folder: 25.0647/4613173CG1141S0001ZU-13.pdf); una de les dues parcel·les contigües esmentades a la línia 25"
+  },
+  "street_address": {
+   "estat": "candidats",
+   "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+   "candidates": [
+    {
+     "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+     "font": "PDF/ANNEXES/4001612_plànol de situació.pdf caixetí, bloc TÍTOL DEL PROJECTE",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+     "note": "Adreça de cantonada (dues vies reals, no competeixen — regla de cantonada). Els mateixos noms surten rotulats directament sobre la planta ('CARRER MESTRE RAMON ORTIZ' vertical a la dreta, 'CARRER ANTONI BELLET' horitzontal a baix). Sense número de portal enlloc del document."
+    },
+    {
+     "value": "Carrer Mestre Ramon Ortiz, 15",
+     "font": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg body.txt:29",
+     "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+     "note": "bloc etiquetat OBRA, autoritat A per a l'adreça"
+    },
+    {
+     "value": "C/ ANTONI BALLET",
+     "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C/ ANTONI BALLET"
+    }
+   ],
+   "rule": "contradiccio: C/ ANTONI BALLET (2 doc, conf max 0.90); Carrer Mestre Ramon Ortiz, 25220 Bell-l… (1 doc, conf max 0.90); Carrer Antoni Bellet (4 doc, conf max 0.65); Pas 3: frase 'entre el carrer X i el carrer Y' dels annexos = redaccio de l'informe → candidat 1",
+   "altres": [
+    {
+     "value": "Carrer Mestre Ramon Ortiz, 25220 Bell-lloc d'Urgell (Lleida)",
+     "font": "A.01 amb punts.pdf caixetí, bloc 'Situació'",
+     "quote": "Situació / CARRER MESTRE RAMON ORTIZ / 25220 BELL.LLOC D'URGELL (Lleida)",
+     "note": "Adreça oficial del bloc Situació del caixetí"
+    },
+    {
+     "value": "C/Antoni Bellet - Bell-lloc",
+     "font": "SONDEIG.pdf p.2, camp 'Adreça de l'obra'",
+     "quote": "Adreça de l'obra: C/antoni Bellet - Bell-lloc",
+     "note": "Manuscrit; grafia 'Bellet' (p.2) vs 'Ballet' (p.1) del mateix carrer — normalitzar cap a la grafia del document imprès (annex/plànol)"
+    },
+    {
+     "value": "Entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz",
+     "font": "PDF/ANNEXES/4001612_tall de correlació.pdf quadre de rètol, sota TÍTOL DEL PROJECTE",
+     "quote": "SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+     "note": "cantonada (dues vies) — redacció pròpia de l'informe (regla existent); els mateixos noms de carrer surten rotulats a l'esquema de situació encastat (inset) a dalt a l'esquerra"
+    },
+    {
+     "value": "C7 MESTRE RAMON ORTIZ 15",
+     "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1 i p.2, peu 'OBRA:'",
+     "quote": "OBRA: C7 MESTRE RAMON ORTIZ 15",
+     "note": "'C7' és probablement un artefacte tipogràfic/de plantilla per 'C/' (carrer); candidat, falta creuar amb pressupost/plànol per a la forma normalitzada."
+    },
+    {
+     "value": "cantonada carrer Antoni Bellet / carrer Mestre Ramon Ortiz",
+     "font": "PENETROS.pdf p.2, camp 'Descriure punt 0 o cota referència' + esquema de situació dels punts",
+     "quote": "Carrer ANTONI BELLET (camp de text) / 'carrer ANTONI BELLET' (vertical, vora esquerra del croòuis) + 'carrer MESTRE RAMON ORTIZ' (vora inferior del croòuis)",
+     "note": "El croòuis dibuixa la parcel·la com una cantonada entre DUES víes (regla del skill: 'poden existir dues adreces vertaderes'). 'Mestre Ramon Ortiz' ja consta com a candidat (portal 15) a PDF/ANNEXES/4001612_DPSH.pdf, ja llegit. 'Antoni Bellet' és una via NOVA no vista en els altres documents llegits fins ara en aquesta run — cal encreuar amb el plànol/pressupost per confirmar-ne la grafia impresa (possible 'Ballet' vs 'Bellet', patró conegut d'aquest skill). Les xifres del croòuis (9, 22, 8,5, 10) són DISTÀNCIES en metres del punt P1/P2 als límits de parcel·la, NO números de portal — no s'interpreten com a tals."
+    },
+    {
+     "value": "C/MESTRE RAMON ORTIZ 15",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC"
+    },
+    {
+     "value": "Carrer Mestre Ramon Ortiz, 15, Bell-lloc",
+     "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'OBRA'",
+     "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+     "note": "citat de l'email original; coincideix amb el nom del fitxer del projecte ('...Mestre Ramon Ortiz...')"
+    },
+    {
+     "value": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+     "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!C7 (ADREÇA OBRA)",
+     "quote": "C/ MESTRE RAMON ORTIZ 15 BELL-LLOC",
+     "note": "C7 porta adreça + municipi a la mateixa cel·la"
+    },
+    {
+     "value": "CARRER MESTRE RAMON ORTIZ",
+     "font": "25.0647/A.01.pdf caixetí inferior dret, bloc 'Situació'",
+     "quote": "Situació / CARRER MESTRE RAMON ORTIZ",
+     "note": "Sense número de portal imprès en aquest bloc. Coherent amb el rètol del plànol de planta (CARRER MESTRE RAMON ORTIZ / CARRER ANTONI BELLET com a carrers de façana i testera de la parcel·la)."
+    },
+    {
+     "value": "C/Mestre Ramon Ortiz",
+     "font": "SONDEIG.pdf p.3, croquis d'emplaçament (carrer de la cantonada)",
+     "quote": "C/Mestre Ramon Ortiz",
+     "note": "Segona adreça vàlida: el croquis dibuixa la parcel·la fent cantonada entre C/Antoni Bellet i C/Mestre Ramon Ortiz — no competeix amb l'altra, corroborat pel nom d'un correu de l'inventari ('...Mestre Ramon Ortiz - Jordi Bosch.msg')"
+    },
+    {
+     "value": "C/Antoni Ballet",
+     "font": "SONDEIG.pdf p.1, bloc 'DADES OBRA: Adreça'",
+     "quote": "DADES OBRA: Adreça: C/antoni Ballet",
+     "note": "Mateix carrer que street_address candidat 1, grafia alternativa manuscrita"
+    },
+    {
+     "value": "Carrer Antoni Bellet",
+     "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.1 MATERIAL A ASSAJAR / Situació; p.2 Obra-Projecte",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+     "note": "sense número de portal imprès"
+    },
+    {
+     "value": "Situat entre el carrer Antoni Bellet i carrer Mestre Ramon Ortiz, Bell-lloc",
+     "font": "pl. situaci.pdf caixetí, bloc TÍTOL DEL PROJECTE",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+     "note": "Redacció de cantonada (dues adreces reals, no competeixen — regla de cantonada). Sense número de portal enlloc del document; el mapa cadastral de l'esquerra mostra la parcel·la 72 (Polígon Industrial Senpa) marcada en vermell però no dona referència cadastral completa ni portal."
+    },
+    {
+     "value": "Entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+     "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, bloc 'Obra:'",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT ENTRE EL CARRER ANTONI BELLET I EL CARRER MESTRE RAMON ORTIZ EN EL MUNICIPI DE BELL-LLOC",
+     "note": "Parcel·la de cantonada entre dos carrers; candidat 1 (redacció pròpia de l'Eva, idèntica a p.1 i p.2). Corroborat per l'etiqueta manuscrita de la caixa de mostres (Fotografia 2/3): 'S-1  c/Antoni Bellet - Bell·lloc'."
+    },
+    {
+     "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz (Bell-lloc)",
+     "font": "tall.pdf caixetí, subtítol de 'TÍTOL DEL PROJECTE'",
+     "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER  LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+     "note": "Redacció de cantonada — regla Pas 3: aquesta frase és la que sol usar l'informe (candidat 1). Els dos noms de carrer també apareixen al plànol clau (inset)."
+    },
+    {
+     "value": "C/MESTRE RAMON ORTIZ 15",
+     "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.1 bloc OBRA",
+     "quote": "ESTUDI GEOTECNIC / C/MESTRE RAMON ORTIZ 15 / BELL-LLOC / PRESSUPOST GEOTECNIC"
+    },
+    {
+     "value": "C/Mestre Ramon Ortiz 15",
+     "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA:",
+     "quote": "C/MESTRE RAMON ORTIZ 15",
+     "note": "bloc OBRA del caixetí (adreça de l'obra); única font d'aquest document"
+    },
+    {
+     "value": "Carrer Antoni Bellet",
+     "font": "A.01 amb punts.pdf vora sud de la parcel·la, planta general del plànol",
+     "quote": "CARRER ANTONI BELLET",
+     "note": "La parcel·la fa cantonada entre Carrer Mestre Ramon Ortiz i Carrer Antoni Bellet (regla de cantonada, Pas 3): dues adreces vertaderes, no competeixen. Només 'Mestre Ramon Ortiz' consta al bloc Situació del caixetí"
+    },
+    {
+     "value": "Carrer Antoni Bellet",
+     "font": "PDF/ANNEXES/LAB-SIG.pdf p.1 MATERIAL A ASSAJAR / Situació; p.2 Obra-Projecte",
+     "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+     "note": "sense número de portal imprès"
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf",
+    "25.0647/DADES PER ANAR A CAMP_v1.xlsx",
+    "comanda laboratori_4001612_BELL-LLOC.xls",
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "PENETROS.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf"
+   ],
+   "note": "C7 porta adreça + municipi a la mateixa cel·la"
+  },
+  "superficie_parcela": {
+   "estat": "candidats",
+   "value": "995,00 m2",
+   "candidates": [
+    {
+     "value": "995,00 m2",
+     "font": "25.0647/A.01.pdf taula 'JUSTIFICACIO PLANEJAMENT', fila 'Parcel.la mínima', columna 'Projecte'",
+     "quote": "Parcel.la mínima | CLAU 6B min 600.00 m2 | 995,00m2",
+     "note": "Única font d'aquest document (taula de planejament del projecte); regla Pas 3 'única font sense contradicció' -> pot pujar a segur si cap altre document la contradiu."
+    }
+   ],
+   "rule": "guard: 2+ referencies cadastrals a la carpeta (parcel·les contigues, Pas 3): candidats",
+   "altres": [
+    {
+     "value": "995,00 m2",
+     "font": "A.01 amb punts.pdf taula 'JUSTIFICACIO PLANEJAMENT', fila 'Parcel·la mínima', columna 'Projecte'",
+     "quote": "Parcel.la mínima / CLAU 6B min 600.00 m2 / 995,00m2",
+     "note": "Única font dins d'aquest document; creuar amb Cadastre. La parcel·la vermella del requadre CATASTRE sembla resultar de la unió de dues parcel·les cadastrals (72 i 73) — hi ha dues consultes cadastrals separades a la carpeta (sufixos -15 i -13), no llegides en aquesta crida"
+    }
+   ],
+   "sources_checked": [
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/4001612_plànol de situació.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "pl. situaci.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf",
+    "25.0647/A.01.pdf",
+    "A.01 amb punts.pdf"
+   ],
+   "note": "Única font d'aquest document (taula de planejament del projecte); regla Pas 3 'única font sense contradicció' -> pot pujar a segur si cap altre document la contradiu."
+  },
+  "utm_x": {
+   "estat": "segur",
+   "value": "314418.9",
+   "candidates": [
+    {
+     "value": "314418.9",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 314418.9 ; 4611117.6 ; 198.9",
+     "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 314418.9/4611117.6",
+     "extra": {
+      "punts": [
+       {
+        "punt": "P-1",
+        "x": "314418.9",
+        "y": "4611117.6",
+        "z": "198.9",
+        "raw": "P-1: 314418.9 ; 4611117.6 ; 198.9"
+       }
+      ]
+     }
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ],
+   "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 314418.9/4611117.6"
+  },
+  "utm_y": {
+   "estat": "segur",
+   "value": "4611117.6",
+   "candidates": [
+    {
+     "value": "4611117.6",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 314418.9 ; 4611117.6 ; 198.9",
+     "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 314418.9/4611117.6",
+     "extra": {
+      "punts": [
+       {
+        "punt": "P-1",
+        "x": "314418.9",
+        "y": "4611117.6",
+        "z": "198.9",
+        "raw": "P-1: 314418.9 ; 4611117.6 ; 198.9"
+       }
+      ]
+     }
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "25.0647/A.01.pdf",
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "A.01 amb punts.pdf",
+    "PDF/ANNEXES/4001612_fotografies.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ],
+   "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 314418.9/4611117.6"
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "segur",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+      "candidates": [
+       {
+        "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de  -1,35 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-1,35 m",
+      "candidates": [
+       {
+        "value": "-1,35 m",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de  -1,35 m"
+       },
+       {
+        "value": "-1,35",
+        "font": "ANNEXES/4001612_DPSH.xls Full P-1, cel·la B80",
+        "quote": "Rebuig a la cota de  -1,35 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-1,35",
+        "font": "PENETROS.pdf p.2, taula full de camp, columna P1, fila '-1,6' (marca R); bloc NIVELL FREÀTIC",
+        "quote": "R | 1,35 (columna P1, fila -1,6); 'Hi ha nivell freàtic? NO'"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001612_DPSH.xls Full P-1, cel·la B80",
+        "quote": "Rebuig a la cota de  -1,35 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de  -1,35 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, taula full de camp, columna P1, fila '-1,6' (marca R); bloc NIVELL FREÀTIC",
+        "quote": "R | 1,35 (columna P1, fila -1,6); 'Hi ha nivell freàtic? NO'"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf perfil gràfic, columna P-1",
+        "quote": "Nb=27 / Nb=R",
+        "note": "Nb llegits directament del gràfic (text imprès); cap fondària numèrica impresa al costat — no derivada per mesura de píxels. Fondària exacta: veure Excel DPSH."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Nb llegits directament del gràfic (text imprès); cap fondària numèrica impresa al costat — no derivada per mesura de píxels. Fondària exacta: veure Excel DPSH."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/4001612_DPSH.xls Full P-1, cel·la B80",
+        "quote": "Rebuig a la cota de  -1,35 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de  -1,35 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2, taula full de camp, columna P1, fila '-1,6' (marca R); bloc NIVELL FREÀTIC",
+        "quote": "R | 1,35 (columna P1, fila -1,6); 'Hi ha nivell freàtic? NO'",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf perfil gràfic, columna P-1",
+        "quote": "Nb=27 / Nb=R",
+        "note": "Nb llegits directament del gràfic (text imprès); cap fondària numèrica impresa al costat — no derivada per mesura de píxels. Fondària exacta: veure Excel DPSH.",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Nb llegits directament del gràfic (text imprès); cap fondària numèrica impresa al costat — no derivada per mesura de píxels. Fondària exacta: veure Excel DPSH.",
+      "matis": null
+     },
+     "extra": {
+      "PENETROS.pdf": {
+       "cota_inici_camp_raw": "~0,15",
+       "cota_inici_camp_location": "p.2, capçalera taula, columna P1, fila 'Cota Inici'",
+       "note": "Valor manuscrit no interpretat com a cota_inici: podria estar relacionat amb l'ajust '-0,15 carrer' de PDF/ANNEXES/4001612_DPSH.pdf (cota absoluta +199,50 msnm, ja llegit), però el signe és ambigu en aquest full (símbol '~' abans del número, no un signe '-' net) i el valor no és una cota absoluta comparable — no s'assigna a cota_inici."
+      }
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0.15 carrer)",
+      "candidates": [
+       {
+        "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0.15 carrer)",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de  -2,45 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-2,45 m",
+      "candidates": [
+       {
+        "value": "-2,45 m",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de  -2,45 m"
+       },
+       {
+        "value": "-2,45",
+        "font": "ANNEXES/4001612_DPSH.xls Full P-2, cel·la B80",
+        "quote": "Rebuig a la cota de  -2,45 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-2,45",
+        "font": "PENETROS.pdf p.2, taula full de camp, columna P2, fila '-2,8' (marca R); bloc NIVELL FREÀTIC",
+        "quote": "R | 2,45 (columna P2, fila -2,8); 'Hi ha nivell freàtic? NO'"
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ]
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001612_DPSH.xls Full P-2, cel·la B80",
+        "quote": "Rebuig a la cota de  -2,45 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de  -2,45 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, taula full de camp, columna P2, fila '-2,8' (marca R); bloc NIVELL FREÀTIC",
+        "quote": "R | 2,45 (columna P2, fila -2,8); 'Hi ha nivell freàtic? NO'"
+       },
+       {
+        "value": "Si",
+        "font": "tall.pdf perfil gràfic, columna P-2",
+        "quote": "Nb=22 / Nb=56 / Nb=R",
+        "note": "Mateixa nota que P-1."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Mateixa nota que P-1."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/4001612_DPSH.xls Full P-2, cel·la B80",
+        "quote": "Rebuig a la cota de  -2,45 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001612_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de  -2,45 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2, taula full de camp, columna P2, fila '-2,8' (marca R); bloc NIVELL FREÀTIC",
+        "quote": "R | 2,45 (columna P2, fila -2,8); 'Hi ha nivell freàtic? NO'",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf perfil gràfic, columna P-2",
+        "quote": "Nb=22 / Nb=56 / Nb=R",
+        "note": "Mateixa nota que P-1.",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001612_DPSH.xls",
+       "PDF/ANNEXES/4001612_DPSH.pdf",
+       "PENETROS.pdf",
+       "tall.pdf"
+      ],
+      "note": "Mateixa nota que P-1.",
+      "matis": null
+     },
+     "extra": {
+      "PENETROS.pdf": {
+       "cota_inici_camp_raw": "0,15",
+       "cota_inici_camp_location": "p.2, capçalera taula, columna P2, fila 'Cota Inici'",
+       "note": "Mateix valor de capçalera que P-1 ('0,15', sense símbol '~' visible a la columna P2); mateixa reserva d'interpretació."
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "ANNEXES/4001612_DPSH.xls",
+    "PDF/ANNEXES/4001612_DPSH.pdf",
+    "PENETROS.pdf",
+    "tall.pdf"
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "sondeig": "S-1",
+     "cota": {
+      "estat": "segur",
+      "value": "199,50 m",
+      "candidates": [
+       {
+        "value": "199,50 m",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí (z) + p.2 fotografies (llegendes de les caixes de mostres)",
+        "quote": "z: 199.50m · Fotografia 2: 'Material recuperat en el sondeig S-1 entre les cotes de 0.00 a -1.80 metres de profunditat' · etiqueta manuscrita caixa: '0,00 → 1,80 mts'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "+/-0,00 (relatiu, referència C/Antoni Bellet)",
+        "font": "SONDEIG.pdf p.1 'ML de perf. en graves entre 0-20m' + p.2 taula, fila 2 columna 'a'",
+        "quote": "1,80 Ml de perf. en graves entre 0-20 m (p.1); de 1,60 a 1,80 (p.2)"
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-1,80 m",
+      "candidates": [
+       {
+        "value": "-1,80 m",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí (z) + p.2 fotografies (llegendes de les caixes de mostres)",
+        "quote": "z: 199.50m · Fotografia 2: 'Material recuperat en el sondeig S-1 entre les cotes de 0.00 a -1.80 metres de profunditat' · etiqueta manuscrita caixa: '0,00 → 1,80 mts'"
+       },
+       {
+        "value": "1,80",
+        "font": "SONDEIG.pdf p.1 'ML de perf. en graves entre 0-20m' + p.2 taula, fila 2 columna 'a'",
+        "quote": "1,80 Ml de perf. en graves entre 0-20 m (p.1); de 1,60 a 1,80 (p.2)"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "sources_checked": [
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ]
+     },
+     "spt_ma": {
+      "estat": "candidats",
+      "value": "1/0",
+      "candidates": [
+       {
+        "value": "1/0",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí (z) + p.2 fotografies (llegendes de les caixes de mostres)",
+        "quote": "z: 199.50m · Fotografia 2: 'Material recuperat en el sondeig S-1 entre les cotes de 0.00 a -1.80 metres de profunditat' · etiqueta manuscrita caixa: '0,00 → 1,80 mts'",
+        "extra": {
+         "counts": {
+          "n_spt": 1,
+          "n_tp": 0,
+          "n_ma": 0
+         }
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "1/0",
+        "font": "SONDEIG.pdf p.1 'ML de perf. en graves entre 0-20m' + p.2 taula, fila 2 columna 'a'",
+        "quote": "1,80 Ml de perf. en graves entre 0-20 m (p.1); de 1,60 a 1,80 (p.2)",
+        "extra": {
+         "counts": {
+          "n_spt": 1,
+          "n_tp": 0,
+          "n_ma": 0
+         }
+        }
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ],
+      "counts": {
+       "n_spt": 1,
+       "n_tp": 0,
+       "n_ma": 0
+      }
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí (z) + p.2 fotografies (llegendes de les caixes de mostres)",
+        "quote": "z: 199.50m · Fotografia 2: 'Material recuperat en el sondeig S-1 entre les cotes de 0.00 a -1.80 metres de profunditat' · etiqueta manuscrita caixa: '0,00 → 1,80 mts'",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "SONDEIG.pdf p.1 'ML de perf. en graves entre 0-20m' + p.2 taula, fila 2 columna 'a'",
+        "quote": "1,80 Ml de perf. en graves entre 0-20 m (p.1); de 1,60 a 1,80 (p.2)",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "tall.pdf perfil gràfic, columna S-1",
+        "quote": "N=58",
+        "note": "Valor N imprès al costat de la columna litològica de S-1, sense indicar si és N30, N60 o un altre criteri; sense fondària impresa. No es correlaciona aquí amb cap n30 de spt_ma_tests — veure annex de sondeig per l'assaig SPT detallat.",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ],
+      "note": "Valor N imprès al costat de la columna litològica de S-1, sense indicar si és N30, N60 o un altre criteri; sense fondària impresa. No es correlaciona aquí amb cap n30 de spt_ma_tests — veure annex de sondeig per l'assaig SPT detallat.",
+      "matis": null
+     }
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf"
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "id": {
+      "estat": "candidats",
+      "value": "SPT1 S1",
+      "candidates": [
+       {
+        "value": "SPT1 S1",
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+       },
+       {
+        "value": "SPT-1",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, bloc 'Muestras y ensayos in situ'",
+        "quote": "SPT-1 · Prof. de extracció -1.00 a -1.60 · Registre: 24 / 34 / 28 / 30"
+       }
+      ],
+      "rule": "Pas 3: annex de l'Eva > GTL > comanda per a l'etiqueta; si discrepen, candidats (annex primer), mai segur",
+      "altres": [
+       {
+        "value": "SPT1 S1",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal; mateixa dada que l'altre GTL"
+       },
+       {
+        "value": "SPT-1",
+        "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+        "quote": "Prof 1,00-1,60 S.P.T-1 Colpeig 24 34 28 30"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf"
+      ],
+      "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+     },
+     "punt": {
+      "estat": "segur",
+      "value": "S-1",
+      "candidates": [
+       {
+        "value": "S-1",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, bloc 'Muestras y ensayos in situ'",
+        "quote": "SPT-1 · Prof. de extracció -1.00 a -1.60 · Registre: 24 / 34 / 28 / 30"
+       },
+       {
+        "value": "S1",
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "S1",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal; mateixa dada que l'altre GTL"
+       },
+       {
+        "value": "S-1",
+        "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+        "quote": "Prof 1,00-1,60 S.P.T-1 Colpeig 24 34 28 30"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf"
+      ],
+      "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+     },
+     "profunditat": {
+      "estat": "segur",
+      "value": "-1,00 a -1,60 m",
+      "candidates": [
+       {
+        "value": "-1,00 a -1,60 m",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, bloc 'Muestras y ensayos in situ'",
+        "quote": "SPT-1 · Prof. de extracció -1.00 a -1.60 · Registre: 24 / 34 / 28 / 30"
+       },
+       {
+        "value": "1,0 - 1,6",
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+       },
+       {
+        "value": "1,00-1,60",
+        "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+        "quote": "Prof 1,00-1,60 S.P.T-1 Colpeig 24 34 28 30"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "1,0 - 1,6",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal; mateixa dada que l'altre GTL"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf"
+      ],
+      "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "Grava amb matriu sorrenca",
+      "candidates": [
+       {
+        "value": "Grava amb matriu sorrenca",
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+       },
+       {
+        "value": "NIVELL 1",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, bloc 'Muestras y ensayos in situ'",
+        "quote": "SPT-1 · Prof. de extracció -1.00 a -1.60 · Registre: 24 / 34 / 28 / 30"
+       },
+       {
+        "value": "Graves con arena / Graves carbonatades (mostra a cavall de la transició, veure nota)",
+        "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+        "quote": "Prof 1,00-1,60 S.P.T-1 Colpeig 24 34 28 30"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la; 1.4/D5: + litologia del nivell que conté la mostra (derivat, candidats)",
+      "altres": [
+       {
+        "value": "Graves amb sorres (NIVELL 1)",
+        "font": "(derivat: litologia del nivell que conté el tram de la mostra, [-0,00; -1,80] m a S-1) ← PDF/ANNEXES/4001612_tall de correlació.pdf",
+        "quote": "",
+        "note": "1.4/D5: la litologia del nivell que conté la mostra per interval; l'Eva re-redacta"
+       },
+       {
+        "value": "Grava amb matriu sorrenca",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal; mateixa dada que l'altre GTL"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf"
+      ],
+      "note": "n30 no consta en aquest document (informe de laboratori, no full de camp); litologia és redacció pròpia del laboratori, no de l'Eva — candidata, mai segura per a la cadena literal"
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": "62 (suma dels 2 trams centrals 34+28, criteri habitual)",
+      "candidates": [
+       {
+        "value": "62 (suma dels 2 trams centrals 34+28, criteri habitual)",
+        "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+        "quote": "Prof 1,00-1,60 S.P.T-1 Colpeig 24 34 28 30",
+        "extra": {
+         "registre": [
+          24,
+          34,
+          28,
+          30
+         ]
+        }
+       },
+       {
+        "value": "116 (suma dels 4 trams)",
+        "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+        "quote": "Prof 1,00-1,60 S.P.T-1 Colpeig 24 34 28 30",
+        "extra": {
+         "registre": [
+          24,
+          34,
+          28,
+          30
+         ]
+        }
+       },
+       {
+        "value": 62,
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, bloc 'Muestras y ensayos in situ'",
+        "quote": "SPT-1 · Prof. de extracció -1.00 a -1.60 · Registre: 24 / 34 / 28 / 30",
+        "note": "(derivat: suma dels 2 trams centrals del registre — criteri majoritari d'Eva, PREGUNTA OBERTA Bell-lloc)",
+        "extra": {
+         "registre": [
+          "24",
+          "34",
+          "28",
+          "30"
+         ]
+        }
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf"
+      ],
+      "note": "(derivat: suma dels 2 trams centrals del registre — criteri majoritari d'Eva, PREGUNTA OBERTA Bell-lloc)",
+      "registre": {
+       "estat": "candidats",
+       "value": [
+        "24",
+        "34",
+        "28",
+        "30"
+       ],
+       "candidates": [
+        {
+         "value": [
+          "24",
+          "34",
+          "28",
+          "30"
+         ],
+         "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 taula dreta, bloc 'Muestras y ensayos in situ'",
+         "quote": "SPT-1 · Prof. de extracció -1.00 a -1.60 · Registre: 24 / 34 / 28 / 30"
+        },
+        {
+         "value": [
+          24,
+          34,
+          28,
+          30
+         ],
+         "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+         "quote": ""
+        },
+        {
+         "value": [
+          24,
+          34,
+          28,
+          30
+         ],
+         "font": "SONDEIG.pdf p.2, taula 'Mostres', fila 1",
+         "quote": ""
+        }
+       ],
+       "sources_checked": [
+        "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+        "PDF/ANNEXES/4001612_sondeig.pdf",
+        "PDF/ANNEXES/LAB-SIG.pdf",
+        "SONDEIG.pdf"
+       ],
+       "rule": "registre de cops per tram de 15 cm (Pas 3b)"
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "SONDEIG.pdf"
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "nom": "Sòls vegetals (cobertura, sense número)",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Sòls vegetals",
+      "candidates": [
+       {
+        "value": "Sòls vegetals",
+        "font": "PDF/ANNEXES/4001612_tall de correlació.pdf",
+        "quote": ""
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Sòls vegetals",
+        "font": "tall.pdf LLEGENDA",
+        "quote": "Sòls vegetals"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "segur",
+      "value": "0,00",
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ],
+      "candidates": [
+       {
+        "value": "0,00",
+        "font": "(definició: la cobertura arrenca a la superfície)",
+        "quote": ""
+       }
+      ],
+      "rule": "Pas 3b: la capa de cobertura comença a 0,00 per definició"
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ]
+     }
+    },
+    {
+     "nom": "NIVELL 1",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Graves amb sorres",
+      "candidates": [
+       {
+        "value": "Graves amb sorres",
+        "font": "PDF/ANNEXES/4001612_tall de correlació.pdf",
+        "quote": ""
+       },
+       {
+        "value": "Grava amb matriu sorrenca",
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       },
+       {
+        "value": "Llims argilosos amb graves cohesives de coloració marronosa. Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares. Tram totalment carbonatat.",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 columnes 'Unitat litològica' + 'Descripció dels materials'",
+        "quote": "NIVELL 1 / 'Llims argilosos amb graves cohesives de coloració marronosa.' 'Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares.' 'Tram totalment carbonatat.'"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Graves con arena",
+        "font": "SONDEIG.pdf",
+        "quote": "",
+        "note": "El full de camp no numera 'NIVELL 1/2'; regla del skill: els trams del full de camp NO compten per a num_soil_levels. La mostra SPT-1 (1,00-1,60) comença just al final d'aquest tram"
+       },
+       {
+        "value": "Graves carbonatades",
+        "font": "SONDEIG.pdf",
+        "quote": "",
+        "note": "Gap sense descripció explícita entre 1,00 i 1,60 m; la mostra SPT-1 hi acaba (fins a 1,60), a cavall de la transició cap a aquest tram"
+       },
+       {
+        "value": "Graves amb sorres",
+        "font": "tall.pdf LLEGENDA + perfil gràfic",
+        "quote": "1er nivell: Graves amb sorres"
+       },
+       {
+        "value": "Grava amb matriu sorrenca",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ]
+     },
+     "de": {
+      "estat": "candidats",
+      "value": "0,00",
+      "candidates": [
+       {
+        "value": "0,00",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 columnes 'Unitat litològica' + 'Descripció dels materials'",
+        "quote": "NIVELL 1 / 'Llims argilosos amb graves cohesives de coloració marronosa.' 'Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares.' 'Tram totalment carbonatat.'"
+       }
+      ],
+      "rule": "Pas 3b: hi ha capa de cobertura (llegenda del tall) sense fondàries llegides i el nivell 1 arrenca a 0,00 → la transició cobertura/nivell 1 no està documentada numèricament: candidats (pregunta 3 a l'Eva)",
+      "altres": [
+       {
+        "value": "0,00",
+        "font": "SONDEIG.pdf",
+        "quote": "",
+        "note": "El full de camp no numera 'NIVELL 1/2'; regla del skill: els trams del full de camp NO compten per a num_soil_levels. La mostra SPT-1 (1,00-1,60) comença just al final d'aquest tram"
+       },
+       {
+        "value": "1,0",
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       },
+       {
+        "value": "1,0",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       },
+       {
+        "value": "1,60",
+        "font": "SONDEIG.pdf",
+        "quote": "",
+        "note": "Gap sense descripció explícita entre 1,00 i 1,60 m; la mostra SPT-1 hi acaba (fins a 1,60), a cavall de la transició cap a aquest tram"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ],
+      "note": "El full de camp no numera 'NIVELL 1/2'; regla del skill: els trams del full de camp NO compten per a num_soil_levels. La mostra SPT-1 (1,00-1,60) comença just al final d'aquest tram"
+     },
+     "a": {
+      "estat": "candidats",
+      "value": "fins al fons d'investigació (rebuig DPSH: -1,35/-2,45 m per punt; sondeig S-1: -1,80 m)",
+      "candidates": [
+       {
+        "value": "fins al fons d'investigació (rebuig DPSH: -1,35/-2,45 m per punt; sondeig S-1: -1,80 m)",
+        "font": "(derivat: la base de l'últim nivell és el fons d'investigació) ← PDF/ANNEXES/4001612_DPSH.pdf p.1; PDF/ANNEXES/4001612_DPSH.pdf p.2; PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí (z) + p.2 fotografies (llegendes de les caixes de mostres)",
+        "quote": "Rebuig a la cota de  -1,35 m",
+        "note": "1.4/D3: cap document dona la base de l'últim nivell (el substrat no es travessa): el límit conegut és fins on arriba el reconeixement"
+       },
+       {
+        "value": "-1,80",
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 columnes 'Unitat litològica' + 'Descripció dels materials'",
+        "quote": "NIVELL 1 / 'Llims argilosos amb graves cohesives de coloració marronosa.' 'Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares.' 'Tram totalment carbonatat.'"
+       },
+       {
+        "value": "1,80",
+        "font": "SONDEIG.pdf",
+        "quote": "",
+        "note": "Gap sense descripció explícita entre 1,00 i 1,60 m; la mostra SPT-1 hi acaba (fins a 1,60), a cavall de la transició cap a aquest tram"
+       }
+      ],
+      "rule": "Pas 3b: la base de l'ultim nivell es el final del reconeixement, no una transicio → candidats; 1.4/D3: la base llegida coincideix amb el fons d'investigació (rebuig DPSH / fondària del sondeig): és el final del reconeixement, no una transició → el fons primer, per punt",
+      "altres": [
+       {
+        "value": "1,6",
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       },
+       {
+        "value": "1,6",
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       },
+       {
+        "value": "1,00",
+        "font": "SONDEIG.pdf",
+        "quote": "",
+        "note": "El full de camp no numera 'NIVELL 1/2'; regla del skill: els trams del full de camp NO compten per a num_soil_levels. La mostra SPT-1 (1,00-1,60) comença just al final d'aquest tram"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ],
+      "note": "Gap sense descripció explícita entre 1,00 i 1,60 m; la mostra SPT-1 hi acaba (fins a 1,60), a cavall de la transició cap a aquest tram"
+     },
+     "mostra_del_nivell": {
+      "estat": "segur",
+      "value": true,
+      "candidates": [
+       {
+        "value": true,
+        "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 columnes 'Unitat litològica' + 'Descripció dels materials'",
+        "quote": "NIVELL 1 / 'Llims argilosos amb graves cohesives de coloració marronosa.' 'Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares.' 'Tram totalment carbonatat.'"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": true,
+        "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       },
+       {
+        "value": true,
+        "font": "PDF/ANNEXES/LAB-SIG.pdf p.2 DESCRIPCIÓ DEL MATERIAL",
+        "quote": "Grava amb matriu sorrenca",
+        "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+       },
+       {
+        "value": true,
+        "font": "SONDEIG.pdf",
+        "quote": "",
+        "note": "El full de camp no numera 'NIVELL 1/2'; regla del skill: els trams del full de camp NO compten per a num_soil_levels. La mostra SPT-1 (1,00-1,60) comença just al final d'aquest tram"
+       }
+      ],
+      "sources_checked": [
+       "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+       "PDF/ANNEXES/4001612_sondeig.pdf",
+       "PDF/ANNEXES/4001612_tall de correlació.pdf",
+       "PDF/ANNEXES/LAB-SIG.pdf",
+       "SONDEIG.pdf",
+       "tall.pdf"
+      ],
+      "note": "interval de la mostra SPT1 S1, no una fondària de transició de nivell verificada; nombre de nivell no indicat pel GTL — creuar amb annex de sondeig/tall"
+     }
+    }
+   ],
+   "sources_checked": [
+    "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+    "PDF/ANNEXES/4001612_sondeig.pdf",
+    "PDF/ANNEXES/4001612_tall de correlació.pdf",
+    "PDF/ANNEXES/LAB-SIG.pdf",
+    "SONDEIG.pdf",
+    "tall.pdf"
+   ]
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "value": "397,00 m2",
+   "candidates": [
+    {
+     "value": "397,00 m2",
+     "font": "A.01 amb punts.pdf",
+     "quote": "",
+     "note": "Sostre màxim edificable segons el projecte (fila IEN, columna Projecte) — proxy feble de superfície construïda: no és una etiqueta explícita 'superfície construïda' ni dona components per planta; 'Ocupacio 296.80 m2' (fila Ocupació) és la petjada en planta baixa, no el total construït. Candidata de baixa confiança, a contrastar amb correu d'encàrrec / taula de planejament d'altres documents",
+     "extra": {
+      "components": [],
+      "etiqueta_font": "IEN (Índex d'Edificabilitat Net) segons projecte, taula JUSTIFICACIO PLANEJAMENT"
+     }
+    }
+   ],
+   "rule": "Pas 3b: l'Eva escriu de vegades la suma i de vegades els sumands; multi-habitatge pot ser per casa → sempre candidats",
+   "sources_checked": [
+    "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+    "A.01 amb punts.pdf"
+   ],
+   "note": "Sostre màxim edificable segons el projecte (fila IEN, columna Projecte) — proxy feble de superfície construïda: no és una etiqueta explícita 'superfície construïda' ni dona components per planta; 'Ocupacio 296.80 m2' (fila Ocupació) és la petjada en planta baixa, no el total construït. Candidata de baixa confiança, a contrastar amb correu d'encàrrec / taula de planejament d'altres documents",
+   "components": [
+    {
+     "doc": "A.01 amb punts.pdf",
+     "components": [],
+     "total": "397,00 m2"
+    }
+   ],
+   "etiqueta_font": "IEN (Índex d'Edificabilitat Net) segons projecte, taula JUSTIFICACIO PLANEJAMENT"
+  }
+ },
+ "conflicts": [
+  {
+   "path": "fields.street_address",
+   "why": "dues fonts d'autoritat A discrepen",
+   "clusters": [
+    {
+     "value": "C/MESTRE RAMON ORTIZ 15",
+     "fonts": [
+      "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA",
+      "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.1 bloc OBRA",
+      "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!C7 (ADREÇA OBRA)"
+     ]
+    },
+    {
+     "value": "C/ ANTONI BALLET",
+     "fonts": [
+      "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+      "SONDEIG.pdf p.1, bloc 'DADES OBRA: Adreça'"
+     ]
+    },
+    {
+     "value": "Carrer Mestre Ramon Ortiz, 25220 Bell-l…",
+     "fonts": [
+      "A.01 amb punts.pdf caixetí, bloc 'Situació'"
+     ]
+    }
+   ]
+  }
+ ],
+ "extra_concepts": {
+  "contact_person": [
+   {
+    "value": "JORDI",
+    "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!C8 (PERSONA DE CONTACTE)",
+    "quote": "JORDI",
+    "doc": "25.0647/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "contact_phone": [
+   {
+    "value": "TEL. 620199571",
+    "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!F8",
+    "quote": "TEL. 620199571",
+    "doc": "25.0647/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "value": "PENETROS I MOSTRA",
+    "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "doc": "25.0647/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp_unitats": [
+   {
+    "value": "2 (P)",
+    "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!F13",
+    "quote": "2 (P)",
+    "note": "p. ex. '2 (P)', '5P+2S' — previstos, no executats",
+    "doc": "25.0647/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "value": "SI",
+    "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "doc": "25.0647/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "value": "TPS ERUGA",
+    "font": "25.0647/DADES PER ANAR A CAMP_v1.xlsx fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "doc": "25.0647/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "tecnic": [
+   {
+    "value": "Eva Vázquez Marcet",
+    "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx 'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "doc": "25.0647/PLAN_COST_BELL-LLOC.xlsx"
+   }
+  ],
+  "sondeig_ml": [
+   {
+    "value": 5,
+    "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx OFERTA!B6",
+    "quote": "5",
+    "note": "ml de perforació",
+    "doc": "25.0647/PLAN_COST_BELL-LLOC.xlsx"
+   }
+  ],
+  "num_spt": [
+   {
+    "value": 3,
+    "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx OFERTA!B14",
+    "quote": "3",
+    "note": "assaigs SPT previstos",
+    "doc": "25.0647/PLAN_COST_BELL-LLOC.xlsx"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "value": "TPS",
+    "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx OFERTA!G3",
+    "quote": "TPS",
+    "note": "plantilla: mai senyal fort",
+    "doc": "25.0647/PLAN_COST_BELL-LLOC.xlsx"
+   },
+   {
+    "value": "SOIL-ASSAIG",
+    "font": "25.0647/PLAN_COST_BELL-LLOC.xlsx OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "note": "plantilla: mai senyal fort",
+    "doc": "25.0647/PLAN_COST_BELL-LLOC.xlsx"
+   }
+  ],
+  "expedient_comercial": [
+   {
+    "value": "25·0647",
+    "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 peu / capçaleres",
+    "quote": "25·0647",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf"
+   },
+   {
+    "value": "25·0647",
+    "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.1 peu / capçaleres",
+    "quote": "25·0647",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf"
+   }
+  ],
+  "num_sondeigs": [
+   {
+    "value": 1,
+    "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "note": "previstos",
+    "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf"
+   },
+   {
+    "value": 1,
+    "font": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf p.2 campanya",
+    "quote": "1Sondeig a rotació",
+    "note": "previstos",
+    "doc": "25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "value": "Rebuig a la cota de -1,35 m",
+    "font": "ANNEXES/4001612_DPSH.xls P-1!B80",
+    "quote": "Rebuig a la cota de -1,35 m",
+    "doc": "ANNEXES/4001612_DPSH.xls"
+   },
+   {
+    "value": "Rebuig a la cota de -2,45 m",
+    "font": "ANNEXES/4001612_DPSH.xls P-2!B80",
+    "quote": "Rebuig a la cota de -2,45 m",
+    "doc": "ANNEXES/4001612_DPSH.xls"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "value": "2025-10-10",
+    "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!AH23",
+    "quote": "45940.0",
+    "doc": "comanda laboratori_4001612_BELL-LLOC.xls"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "value": "NOMÉS SULFATS",
+    "font": "comanda laboratori_4001612_BELL-LLOC.xls Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "doc": "comanda laboratori_4001612_BELL-LLOC.xls"
+   }
+  ],
+  "street_address_struct": [
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Mestre Ramon Ortiz",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Bell-lloc d'Urgell",
+     "municipi_alternatives": [
+      "BELL.LLOC D'URGELL"
+     ]
+    },
+    "font": "25.0647/A.01.pdf caixetí inferior dret, bloc 'Situació'",
+    "quote": "CARRER MESTRE RAMON ORTIZ / 25220 BELL.LLOC D'URGELL (Lleida)",
+    "note": "Concepte extra (address_struct), no és cap dels 15 camps.",
+    "doc": "25.0647/A.01.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Mestre Ramon Ortiz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "15"
+     ],
+     "municipi": "Bell-lloc d'Urgell",
+     "municipi_alternatives": [
+      "Bell-lloc"
+     ]
+    },
+    "font": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg cos del correu, paràgraf 'OBRA'",
+    "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+    "note": "concepte extra (address_struct), no és cap dels 15 camps; municipi oficial 'Bell-lloc d'Urgell' assumit per la forma curta G3 'Bell-lloc'",
+    "doc": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Antoni Bellet",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Bell-Lloc d'Urgell",
+     "municipi_alternatives": []
+    },
+    "font": "4677-GTL-25 Bell-Lloc d'Urgell.pdf p.1/p.2 Situació / Obra-Projecte",
+    "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+    "note": "cap portal imprès en aquest document",
+    "doc": "4677-GTL-25 Bell-Lloc d'Urgell.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Mestre Ramon Ortiz",
+     "nom_via_alternatives": [
+      "Ortiz"
+     ],
+     "portals": [
+      "15",
+      "13"
+     ],
+     "municipi": "Bell-lloc d'Urgell",
+     "municipi_alternatives": [
+      "BELL.LLOC D'URGELL"
+     ]
+    },
+    "font": "A.01 amb punts.pdf caixetí 'Situació' + requadre CATASTRE (E. 1/750)",
+    "quote": "CARRER MESTRE RAMON ORTIZ; requadre CATASTRE: parcel·les 72/15 i 73/13 acolorides en vermell",
+    "note": "Portals 15 i 13 llegits visualment de les etiquetes blaves del requadre CATASTRE al costat de les parcel·les 72 i 73 ressaltades en vermell (mateixa parcel·la del projecte); coincideix amb els sufixos -15 i -13 dels noms dels dos fitxers de consulta cadastral de la carpeta (no llegits en aquesta crida) — corroboració indirecta, no confirmació directa d'un document de Cadastre",
+    "doc": "A.01 amb punts.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Mestre Ramon Ortiz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "15"
+     ],
+     "municipi": "Bell-lloc d'Urgell",
+     "municipi_alternatives": [
+      "BELL-LLOC"
+     ]
+    },
+    "font": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf p.1 bloc OBRA:",
+    "quote": "C/MESTRE RAMON ORTIZ 15 BELL-LLOC",
+    "note": "municipi oficial inferit de la forma curta G3; a confirmar amb altres documents",
+    "doc": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Mestre Ramon Ortiz",
+     "nom_via_alternatives": [],
+     "portals": [
+      "15"
+     ],
+     "municipi": "BELL-LLOC",
+     "municipi_alternatives": [
+      "BELL-LLOCH"
+     ]
+    },
+    "font": "PDF/ANNEXES/4001612_DPSH.pdf p.1 i p.2, peu 'OBRA:' / 'POBLACIÓ:'",
+    "quote": "OBRA: C7 MESTRE RAMON ORTIZ 15 / POBLACIÓ: BELL-LLOC (p.1) / BELL-LLOCH (p.2)",
+    "note": "portal i nom de via de la línia OBRA; municipi tal com l'escriu aquest full (grafia curta G3, no la forma oficial llarga: no confirmada en aquesta crida).",
+    "doc": "PDF/ANNEXES/4001612_DPSH.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Antoni Bellet",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Bell-lloc d'Urgell",
+     "municipi_alternatives": [
+      "BELL-LLOC"
+     ]
+    },
+    "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí bloc 'Obra:' + etiqueta manuscrita p.2",
+    "quote": "...ENTRE EL CARRER ANTONI BELLET... EN EL MUNICIPI DE BELL-LLOC / 'c/Antoni Bellet - Bell·lloc'",
+    "note": "Carrer límit (1 de 2) de la parcel·la de cantonada; sense número de portal imprès enlloc del document.",
+    "doc": "PDF/ANNEXES/4001612_sondeig.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Mestre Ramon Ortiz",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Bell-lloc d'Urgell",
+     "municipi_alternatives": [
+      "BELL-LLOC"
+     ]
+    },
+    "font": "PDF/ANNEXES/4001612_sondeig.pdf p.1 caixetí, bloc 'Obra:'",
+    "quote": "...I EL CARRER MESTRE RAMON ORTIZ EN EL MUNICIPI DE BELL-LLOC",
+    "note": "Carrer límit (2 de 2) de la parcel·la de cantonada; sense número de portal imprès enlloc del document.",
+    "doc": "PDF/ANNEXES/4001612_sondeig.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Antoni Bellet",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Bell-Lloc d'Urgell",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/LAB-SIG.pdf p.1/p.2/p.5 Situació / Obra-Projecte",
+    "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.",
+    "note": "cap portal imprès en aquest document",
+    "doc": "PDF/ANNEXES/LAB-SIG.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Antoni Bellet",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "BELL-LLOCH",
+     "municipi_alternatives": []
+    },
+    "font": "PENETROS.pdf p.2, camp 'Descriure punt 0 o cota referència' i croòuis de situació",
+    "quote": "Carrer ANTONI BELLET",
+    "note": "Via nova (cantonada amb Mestre Ramon Ortiz, ja registrada per un altre document). Sense número de portal visible en aquest full (només distàncies de croòuis). Grafia 'Bellet' tal com apareix aquí; no confirmada contra cap document imprès en aquesta crida --only.",
+    "doc": "PENETROS.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Antoni Bellet",
+     "nom_via_alternatives": [
+      "Antoni Ballet"
+     ],
+     "portals": [],
+     "municipi": "Bell-lloc",
+     "municipi_alternatives": []
+    },
+    "font": "SONDEIG.pdf p.2 camp 'Adreça de l'obra' + p.1 bloc 'DADES OBRA'",
+    "quote": "C/antoni Bellet - Bell-lloc / C/antoni Ballet",
+    "note": "Concepte extra (no és cap dels 15 camps); veure candidats street_address per a la cantonada amb C/Mestre Ramon Ortiz",
+    "doc": "SONDEIG.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Antoni Bellet",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Bell-lloc",
+     "municipi_alternatives": [
+      "BELL-LLOC"
+     ]
+    },
+    "font": "tall.pdf caixetí, subtítol + plànol clau (inset)",
+    "quote": "CARRER ANTONI BELLET",
+    "note": "Un dels dos carrers de la cantonada.",
+    "doc": "tall.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Mestre Ramon Ortiz",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Bell-lloc",
+     "municipi_alternatives": [
+      "BELL-LLOC"
+     ]
+    },
+    "font": "tall.pdf caixetí, subtítol + plànol clau (inset)",
+    "quote": "CARRER MESTRE RAMON ORTIZ",
+    "note": "Segon carrer de la cantonada; també visible al costat dret del solar dins el plànol clau (inset).",
+    "doc": "tall.pdf"
+   }
+  ]
+ },
+ "sources_read": [
+  "_g3_templates.json",
+  "25.0647/A.01.pdf",
+  "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+  "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+  "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+  "A.01 amb punts.pdf",
+  "ACCEPTACIO/DADES CLIENT.txt",
+  "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+  "ANNEXES/4001612_DPSH.xls",
+  "PDF/ANNEXES/4001612_DPSH.pdf",
+  "PDF/ANNEXES/4001612_fotografies.pdf",
+  "PDF/ANNEXES/4001612_plànol de situació.pdf",
+  "PDF/ANNEXES/4001612_sondeig.pdf",
+  "PDF/ANNEXES/4001612_tall de correlació.pdf",
+  "PDF/ANNEXES/LAB-SIG.pdf",
+  "PENETROS.pdf",
+  "pl. situaci.pdf",
+  "SONDEIG.pdf",
+  "tall.pdf"
+ ],
+ "notes_estructurals": [
+  "_decisions.json generat per consolidacio Python-first (Fase 12, python-1.0): 18 documents llegits, 6 plantilles G3, 1 conflictes A-vs-A",
+  "duplicats per md5 (no compten dos cops): A.01.pdf = 25.0647/A.01.pdf"
+ ]
+}

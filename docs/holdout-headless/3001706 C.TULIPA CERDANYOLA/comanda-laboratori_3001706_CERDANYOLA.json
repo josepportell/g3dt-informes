@@ -1,0 +1,31 @@
+{
+  "source_path": "comanda laboratori_3001706_CERDANYOLA.xls",
+  "document_type": "comanda_lab_g3",
+  "what_it_is": "Petició d'assaigs de laboratori de G3 per a les 2 mostres SPT del sondeig S1.",
+  "issuer": "G3 (responsable EVA VÁZQUEZ)",
+  "date": "sol·licitud 2026-06-01 (AH23); presa 2026-05-07 (N23)",
+  "pages_or_sheets": "Hoja1",
+  "context": {
+    "who_made_it": "G3 (Eva) com a sol·licitant d'assaigs",
+    "for_whom": "el laboratori (nom del laboratori NO consta al document)",
+    "why": "encarregar Atterberg + agressivitat (només sulfats) de les 2 mostres SPT del sondeig",
+    "expected_fields": ["expedient (N19)", "municipality (N21)", "street_address (N20)", "building_type (N18)", "lab_sample_id/lab_depth (files 35+)", "data de presa (N23, dia del sondeig)"],
+    "not_expected": ["client_name (el bloc SOL.LICITANT és G3)", "architect_name", "num_floors", "cota_referencia"],
+    "relation_to_others": "files 11-15 DADES DEL SOL.LICITANT = G3 (B25364589) → s'ignoren per regla. No hi ha GTL a la carpeta (arriba setmanes després): la comanda és l'única font de lab. DATA DE PRESA = dia del sondeig, candidat 2 per a field_date.",
+    "authority_for": ["expedient", "municipality", "lab_sample_id", "lab_depth", "building_type (contrast)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001706", "location": "Hoja1!N19", "quote": "NÚM. D'EXPEDIENT | 3001706.0", "confidence": 0.95, "note": "coincideix amb el nom de la carpeta '3001706 C.TULIPA CERDANYOLA' i amb els noms d'annexos"},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "Hoja1!N21", "quote": "POBLACIÓ | CERDANYOLA DEL VALLÈS", "confidence": 0.9, "note": "forma accentuada"},
+    {"concept_id": "street_address", "value": "C/ Tulipa", "location": "Hoja1!N20", "quote": "ADREÇA | C TULIPA", "confidence": 0.6, "note": "sense número; l'expedient té 2 obres (Tulipa 3 i Tosca 16), la comanda només porta Tulipa — el sondeig S1 és a la banda Tulipa?  a creuar amb annexos"},
+    {"concept_id": "building_type", "value": "dos nous habitatges aïllats", "location": "Hoja1!N18", "quote": "OBRA | CONSTR DOS NOUS HAB AÏLLATS", "confidence": 0.7, "note": "expandir en redacció; confirma 2 habitatges, tipologia aïllada"},
+    {"concept_id": "field_date", "value": "2026-05-07 (dia de presa = dia del sondeig)", "location": "Hoja1!N23", "quote": "DATA DE PRESA | 2026-05-07", "confidence": 0.5, "note": "candidat 2: dia del sondeig, pot no ser el primer dia de camp (regla field_date)"},
+    {"concept_id": "lab_sample_id", "value": "SPT 1 (S1) i SPT2 (S1)", "location": "Hoja1!C35, C36", "quote": "SPT 1  (S1) / SPT2 (S1)", "confidence": 0.7, "note": "etiqueta de l'informe la fixa l'annex de l'Eva > GTL > comanda; sense GTL ni etiqueta a l'annex, la comanda és el que hi ha"},
+    {"concept_id": "lab_depth", "value": "SPT 1: 1,00–1,60 m; SPT 2: 3,00–3,60 m", "location": "Hoja1!J35/L35, J36/L36", "quote": "1.0–1.6 / 3.0–3.6", "confidence": 0.65, "note": "GTL > Excel/annex sondeig > comanda; només hi ha comanda — creuar amb annex sondeig"},
+    {"concept_id": "lab_location", "value": "sondeig S1", "location": "Hoja1!C35-C36 (S1)", "quote": "(S1)", "confidence": 0.7, "note": "totes dues mostres del mateix sondeig"},
+    {"concept_id": "lab_testing_company", "value": "(no consta)", "location": "—", "quote": "—", "confidence": 0.0, "note": "el nom del laboratori NO surt a la comanda; candidat per coneixement previ (G3 treballa amb TPS), no lectura"},
+    {"concept_id": "NOT_client_name", "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL (B25364589)", "location": "Hoja1!N11-N12 bloc SOL.LICITANT", "quote": "NOM | G3 DESENVOLUPAMENT TERRITORIAL, SL / NIF | B25364589", "confidence": 0.0, "note": "G3 mai és client (regla); és el sol·licitant del laboratori"}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "cte_*", "assaigs demanats: Atterberg (O) + agressivitat sòls (AA) 'NOMÉS SULFATS' — fora nivell A"],
+  "reading_notes": "xlrd sobre Hoja1; dates convertides amb xldate_as_datetime. Blocs sol·licitant/obra separats per files com mana el skill (11-15 vs 18-23)."
+}

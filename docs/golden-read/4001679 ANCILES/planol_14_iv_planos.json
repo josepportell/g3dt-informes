@@ -1,0 +1,29 @@
+{
+ "source_path": "24.0807/IV_PLANOS.pdf",
+ "document_type": "projecte_arquitecte",
+ "what_it_is": "Joc de plànols (35 p., 43 MB) del 'PROYECTO BÁSICO REVISADO — CASA GRANDE / HUERTO DE CASA SORT – ANCILES' (octubre 2025): G01-G06 informació general + A01-A27 arquitectura. Rebut per Drive el 05/02/2026 (correu_10).",
+ "issuer": "A+M Arquitectura: MIRIAM CASTEL (nºCol. 6.703) i ALBA BARRAU (nºCol. 6.408); PDF 'Acrobat PDFMaker 19 para Word'",
+ "date": "2025-10 (caixetí Fecha OCTUBRE 2025; índex p.2 'Octubre 2025')",
+ "pages_or_sheets": 35,
+ "context": {
+  "who_made_it": "les arquitectes del projecte",
+  "for_whom": "promotor i tramitació (projecte bàsic revisat)",
+  "why": "definir el projecte vigent en el moment del geotècnic (versió posterior a l'estudio de detalle 2023-2024)",
+  "expected_fields": ["client_name (Promotor del caixetí)", "architect_name", "street_address (Situación)", "superficie_parcela (G03 topografia)", "num_floors", "superfícies per planta i habitatge"],
+  "not_expected": ["field_date", "cota_referencia (la topografia és del topògraf, no del geotècnic)", "num_soil_levels", "expedient", "lab"],
+  "relation_to_others": "SUBSTITUEIX l'anteproyecto/estudio de detalle (A01_TIPOL 03/2024, SITE_prop A 11/2023) com a font vigent: el Promotor canvia de 'ANDRÉS AMAT y ENRIQUE M. GARDETA' (persones) a 'PICO DE OLA ARQUITECTURA Y PROMOCION S.L.' (societat). Arribat per Drive el 05/02/2026, el mateix vespre de l'acceptació.",
+  "authority_for": ["client_name (Promotor vigent)", "architect_name", "street_address", "superficie_parcela", "num_floors", "building_type"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L.", "location": "caixetí de totes les pàgines, etiqueta Promotor (p.10 y=1062-1063)", "quote": "Promotor | PICO DE OLA ARQUITECTURA Y PROMOCION S.L.", "confidence": 0.7, "note": "Promotor del joc VIGENT (oct 2025) → per regla 'caixetí Promotor' és el candidat 1 a client_name. CONFLICTE triple: (a) estudio de detalle 2023-24 deia 'ANDRÉS AMAT y ENRIQUE M. GARDETA'; (b) el p.5 signat (05/02/2026) mana factura+informe a nom de 'MARIA ALBA BARRAU CASTÁN'. El nom de la societat conté 'ARQUITECTURA' → podria ser la societat de les mateixes arquitectes-promotores. Mai segur: candidats."},
+  {"concept_id": "architect_name", "value": "MIRIAM CASTEL (nºCol. 6.703) i ALBA BARRAU (nºCol. 6.408)", "location": "caixetí Arquitectura (totes les pàgines)", "quote": "Arquitectura | MIRIAM CASTEL, nºCol. 6.703 | ALBA BARRAU, nºCol. 6.408", "confidence": 0.9, "note": "consistent amb el joc 2023-24."},
+  {"concept_id": "street_address", "value": "C/ General Ferraz 20, Anciles - Benasque (Huesca)", "location": "caixetí Situación (totes les pàgines)", "quote": "Situación | C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)", "confidence": 0.9, "note": "coincideix amb pressupost i fitxa."},
+  {"concept_id": "municipality", "value": "Anciles - Benasque (Huesca)", "location": "caixetí + p.3 emplaçament", "quote": "ANCILES - BENASQUE (HUESCA) | EMPLAZAMIENTO. ANCILES (Valle de Benasque)", "confidence": 0.9, "note": "forma llarga."},
+  {"concept_id": "superficie_parcela", "value": "1.655,01 m²", "location": "p.5 (G03 TOPOGRÁFICO PARCELA), text vectorial y=319", "quote": "Superfície Finca  = 1655.01 m²", "confidence": 0.85, "note": "del plànol topogràfic del projecte vigent. Única xifra de parcel·la del corpus."},
+  {"concept_id": "num_floors", "value": "semisótano/sótano (parcial, no computa) + PB + P1 + bajo cubierta", "location": "p.7 (G05) EDIFICABILIDAD POR PLANTAS + p.10 RESUMEN SUPERFICIES + índex A02-A06", "quote": "PLANTA SÓTANO 98.42 m2 (no computa) | PLANTA BAJA 522.61 m2 | PLANTA PRIMERA 454.70 m2 | PLANTA BAJO CUBIERTA 188.53 m2 (solo computa altura > 1,50 m)", "confidence": 0.8, "note": "PB+1PP+BC amb soterrani parcial (Viviendas 1 i 7 amb P. Sótano + Altillo, segons taula p.10). Redacció informe probable: PB+1+sotacoberta amb semisoterrani parcial."},
+  {"concept_id": "building_type", "value": "7 habitatges adossats ('CASA GRANDE / HUERTO DE CASA SORT')", "location": "p.2 índex + p.10 taula SUPERFICIES ÚTILES INTERIORES VIVIENDAS (VIVIENDA 1..7)", "quote": "PROYECTO BÁSICO REVISADO | CASA GRANDE / HUERTO DE CASA SORT – ANCILES | VIVIENDA 1 … VIVIENDA 7 | TOTAL 931.47", "confidence": 0.85, "note": "7 habitatges; superfícies útils interiors 122,65-142,06 m² per habitatge; total útil 931,47 m²; total construït computable 1.165,84 m² + 98,42 sota rasant."},
+  {"concept_id": "parcel_name", "value": "HUERTO (DE) CASA SORT", "location": "p.2 títol + p.3 ('HUERTO CASA SORT' al plànol de zonificació) + p.4 llegenda", "quote": "CASA GRANDE / HUERTO DE CASA SORT – ANCILES | PARCELA: HUERTO CASA SORT", "confidence": 0.85, "note": "nom tradicional de la finca."}
+ ],
+ "not_present": ["expedient", "field_date", "cota_referencia (topografia amb cotes relatives del solar: no llegides com a cota geotècnica)", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral (delimitació gràfica; el codi és al correu_08)", "lab", "cte"],
+ "reading_notes": "Estratègia 43 MB: fitz text per pàgina + índex p.2; caixetí llegible com a text vectorial a totes les pàgines (cap render de caixetí necessari); només 1 render (p.10 zona RESUMEN SUPERFICIES, 130 dpi, la taula és imatge). p.5 G03 'Superfície Finca = 1655.01 m²' en text vectorial. Pàgines 28-35 = vistes/alçats (imatges grans, no llegides: sense camps del nivell A esperables). Moltes pàgines rot=270."
+}

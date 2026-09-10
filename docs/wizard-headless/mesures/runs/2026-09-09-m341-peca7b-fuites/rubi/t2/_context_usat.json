@@ -1,0 +1,1257 @@
+{
+ "fig_situacio_num": 1,
+ "fig_situacio_2_num": "",
+ "fig_projecte_1_num": "",
+ "fig_projecte_2_num": "",
+ "fig_assaigs_num": 2,
+ "fig_spt_cullera_num": 3,
+ "fig_geological_num": 4,
+ "fig_correlation_num": 5,
+ "fig_cadastre_num": 1,
+ "fig_location_num": 1,
+ "fig_main_plan_num": 2,
+ "fig_building_num": 2,
+ "photo_site_text": "",
+ "_num_site_photos": 0,
+ "photo_dpsh_num": 1,
+ "photo_sondeig_num": "",
+ "photo_materials_num": 2,
+ "photo_materials_source": "de l'assaig SPT",
+ "table_dpsh_range": "3 i 4",
+ "table_lab_num": 5,
+ "table_permeability_num": 6,
+ "table_lab_values_num": 7,
+ "table_seismic_num": 8,
+ "table_soil_chars_num": 9,
+ "section1": "<Section1Content>",
+ "section2": "<Section2Content>",
+ "section3": "<Section3Content>",
+ "section4": "<Section4Content>",
+ "client": "",
+ "client_de": "",
+ "expedient": "3001631",
+ "street_address": "C/ MIRANDA",
+ "municipality": "Rubí",
+ "municipality_de": "de Rubí",
+ "data_camp_text": "14 de novembre de 2025",
+ "data_camp_inici_text": "14 de novembre de 2025",
+ "data_signatura_text": "9 de setembre de 2026",
+ "architect_name": "SR.",
+ "architect_company": "JOANA MARTINEZ",
+ "architect_company_de": ", de la SRA. JOANA MARTINEZ",
+ "architect_name_upper": "SR.",
+ "building_type": "un habitatge unifamiliar",
+ "building_type_lower": "un habitatge unifamiliar",
+ "building_type_de": "d'un habitatge unifamiliar",
+ "num_floors": "Pb",
+ "report_language": "ca",
+ "building_structure_desc": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+ "_narr_building_structure": {
+  "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+  "source": "només planta baixa (Rubí, Bell-lloc)",
+  "candidates": [
+   {
+    "value": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+    "source": "només planta baixa (Rubí, Bell-lloc)"
+   },
+   {
+    "value": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+    "source": "variant (b) dels signats"
+   },
+   {
+    "value": "amb nivell de soterrani, i per tant, es preveu una excavació general fins a la cota de fonamentació del soterrani, a més del sanejament i l'anivellació.",
+    "source": "amb soterrani"
+   }
+  ],
+  "notes": []
+ },
+ "municipality_upper": "RUBI",
+ "street_1": "C/ MIRANDA",
+ "street_2": "Rubi",
+ "cte_building_class": "C-0",
+ "cte_soil_class": "T-1",
+ "cte_edificacio": "C-0",
+ "cte_sol": "T-1",
+ "plantes": "Pb",
+ "superficie_parcela": "1.414",
+ "superficie_cadastral": "1.414",
+ "superficie_parcela_planol": "",
+ "superficie_construida": "64",
+ "access_description": "S'accedeix pel nord.",
+ "site_description": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+ "lab_field_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_field_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_testing_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "cota_referencia": "+211.90",
+ "_parcel_rcs": [],
+ "adjacent_north": "Passeig Miranda",
+ "adjacent_south": "parcel·la amb construcció",
+ "adjacent_east": "parcel·la amb construcció",
+ "adjacent_west": "Avinguda Can Tapis",
+ "adjacent_nearest_street": "Avinguda Can Tapis",
+ "location_sentence": "entre el C/ MIRANDA i l'Avinguda Can Tapis de Rubí",
+ "adjacent_north_fmt": "Per la part nord amb el Passeig Miranda.",
+ "adjacent_south_fmt": "Per la part sud i est amb parcel·les amb construcció.",
+ "adjacent_east_fmt": "",
+ "adjacent_west_fmt": "I finalment, per la part oest, amb la Avinguda Can Tapis.",
+ "access_street": "S'accedeix pel nord.",
+ "adjacent_intro": "La parcel·la objecte d'estudi es situa al nord-oest del municipi de Rubí, pren una morfologia rectangular i limita:",
+ "_narr_parcel": {
+  "position": "nord-oest",
+  "shape": "rectangular",
+  "centroid": [
+   418215,
+   4595658
+  ],
+  "rcs": []
+ },
+ "is_sloped": true,
+ "slope_percent": "25.6",
+ "slope_direction": "NE",
+ "site_condition": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+ "_narr_site_condition": {
+  "value": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "source": "pendent 26 % i no antropitzat (Rubí)",
+  "candidates": [
+   {
+    "value": "Es tracta d'un solar no antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Es tracta d'un solar no antropitzat»"
+   },
+   {
+    "value": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Com que es tracta d'un solar pla»"
+   },
+   {
+    "value": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Tot i no ser un solar pla»"
+   },
+   {
+    "value": "Degut a que es tracta d'un solar antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+    "source": "cap «Degut a que es tracta d'un solar antropitzat»"
+   }
+  ],
+  "notes": []
+ },
+ "_narr_site_description": {
+  "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+  "source": "sense edifici al Cadastre i pendent 26 % > 10 % (Castellar, Rubí)",
+  "candidates": [
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, el solar presenta pendent.",
+    "source": "sense edifici al Cadastre i pendent 26 % > 10 % (Castellar, Rubí)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions. Topogràficament, fa una lleugera baixada, tot i que la zona de treball es mostra totalment plana.",
+    "source": "variant «lleugera baixada» (Rubí)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, s'ha realitzat un desbroç de la zona de treball i s'ha adequat un accés a la zona de treball. Topogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina.",
+    "source": "variant «plataforma de treball» (Castellar)"
+   },
+   {
+    "value": "El solar es localitza sense construccions ni pavimentacions, anivellat a la rasant del carrer.",
+    "source": "cap «buit pla»"
+   },
+   {
+    "value": "El solar està actualment ocupat per una zona explanada i un edifici en planta baixa.",
+    "source": "cap «construit»"
+   }
+  ],
+  "notes": [
+   "construcció pròpia sense font (Cadastre DNPRC no consultat): es suposa sense construccions",
+   "vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita"
+  ]
+ },
+ "_own_parcel_building": null,
+ "has_sondeig": false,
+ "section_sondeig_num": "",
+ "section_spt_num": "2.4.2",
+ "section_resum_num": "2.4.3",
+ "include_geothermal": false,
+ "include_expansivity": false,
+ "include_earth_pressure": true,
+ "include_slope_stability": true,
+ "show_granulometric": false,
+ "section_excavabilitat_num": "3.5",
+ "section_sismica_num": "3.6",
+ "section_rado_num": "3.7",
+ "section_fonamentacio_num": "4.3",
+ "section_empentes_num": "4.4",
+ "section_estabilitat_num": "4.5",
+ "num_dpsh_tests": 3,
+ "dpsh_test_ids": "P-1,P-2,P-3",
+ "dpsh_avg_n20": "42",
+ "dpsh_tests": [
+  {
+   "test_id": "P-1",
+   "cota": "+212.50",
+   "depth": "-4.55",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-2",
+   "cota": "+212.50",
+   "depth": "-3.58",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-3",
+   "cota": "+212.50",
+   "depth": "-3.13",
+   "refusal": "Si",
+   "water": "No detectat"
+  }
+ ],
+ "sondeig_tests": [],
+ "spt_test_id": "SPT-1",
+ "spt_location": "P-3",
+ "spt_depth_range": "-0.60 a -1.20",
+ "spt_n30": "40",
+ "spt_lithology": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)",
+ "spt_ma_tests": [
+  {
+   "test_id": "SPT-1",
+   "location": "P-3",
+   "depth_range": "-0.60 a -1.20",
+   "n30": "40",
+   "lithology": "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)"
+  }
+ ],
+ "lab_sample_id": "SPT-1",
+ "lab_location": "P-3",
+ "lab_depth": "-0.6 a -1.2",
+ "lab_tests_text": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nAssaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
+ "_narr_lab_tests": {
+  "value": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nAssaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
+  "source": "llista en ordre canònic (Rubí, Linyola)",
+  "candidates": [
+   {
+    "value": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nAssaig de Límits d'Atterberg UNE 103103/94 – 104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
+    "source": "llista en ordre canònic (Rubí, Linyola)"
+   },
+   {
+    "value": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101/95\nDeterminació de Límits d'Atterberg d'un sòl UNE 103103/94-104/93\nAssaig de contingut en sulfats UNE 83963 : 2008",
+    "source": "variant «Determinació de Límits d'Atterberg d'un sòl» (Rubí)"
+   },
+   {
+    "value": "Anàlisi granulomètrica d'un sòl per tamissat UNE 103101 / 95\nDeterminació del límit líquid d'un sòl UNE 103103 / 94\nDeterminació del límit plàstic d'un sòl UNE 103104 / 93\nDeterminació del contingut en ió sulfat en sòls UNE 83963 / 08",
+    "source": "línies literals del GTL"
+   }
+  ],
+  "notes": []
+ },
+ "materials_level_1": "El nivell 1 està format per graves i sorres. carbonatat., de coloracions marrons a vermelloses. Aquests materials presenten una composició silícia típica dels dipòsits del Vallès-Penedès, amb components procedents de l'erosió de les serralades adjacents. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials miocè, unitat NMcg segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 4.60 m, amb un gruix de 4.60 m. Aquests materials presenten un valor mitjà de N20 de 35 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+ "materials_intro": "A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+ "seismic_ab_text": "0,04",
+ "radon_zone": "1",
+ "radon_zone_description": "",
+ "radon_sentence": "La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+ "csn_radon_text": "",
+ "geology_para_1": "Història geològica de Rubí",
+ "geology_para_2": "En primer lloc s’ha procedit a la consulta de la bibliografia geològica-geotècnica de les diferents cartografies existents sobre la zona.",
+ "geology_para_3": "Concretament la cartografia geològica utilitzada és el full escala 1:50.000 de l´Hospitalet de Llobregat, nº 420 /36-16 publicat per l Instituto Geológico y Minero de España.",
+ "geology_para_4": "La zona d’estudi es troba situada entre tres grans unitats geomorfològiques: La Depressió del Vallès, la Serralada Pre-litoral i la Depressió de l’Ebre.",
+ "geology_para_5": "La depressió del Vallès-Penedès és una fossa d’origen tectònic producte de la fase distensiva a la que va ser sotmesa la Serralada Costanero-Catalana desde l’Oligocè fins el Miocè superior.",
+ "geology_para_6": "Aquesta depressió ha estat reomplerta de materials neògens producte de l’erosió de les unitats estructurals limitants. Aquests materials, en la zona d’estudi, estan formats per sediments d’antics sistemes aluvials en règim torrencial, (fàcies d’argiles i sorres conglomeràtiques)",
+ "geology_paragraphs": [
+  "Història geològica de Rubí",
+  "En primer lloc s’ha procedit a la consulta de la bibliografia geològica-geotècnica de les diferents cartografies existents sobre la zona.",
+  "Concretament la cartografia geològica utilitzada és el full escala 1:50.000 de l´Hospitalet de Llobregat, nº 420 /36-16 publicat per l Instituto Geológico y Minero de España.",
+  "La zona d’estudi es troba situada entre tres grans unitats geomorfològiques: La Depressió del Vallès, la Serralada Pre-litoral i la Depressió de l’Ebre.",
+  "La depressió del Vallès-Penedès és una fossa d’origen tectònic producte de la fase distensiva a la que va ser sotmesa la Serralada Costanero-Catalana desde l’Oligocè fins el Miocè superior.",
+  "Aquesta depressió ha estat reomplerta de materials neògens producte de l’erosió de les unitats estructurals limitants. Aquests materials, en la zona d’estudi, estan formats per sediments d’antics sistemes aluvials en règim torrencial, (fàcies d’argiles i sorres conglomeràtiques)",
+  "Per sobre d’aquests materials es dipositen sediments quaternaris formats per les lleres dels actuals rius existents i dipòsits de peu de mont en les zones col·lindants amb les zones de relleus elevats.",
+  "En la zona de l’estudi apareixen materials quaternaris formats nivells de llims i llims amb sorres amb algunes graves.",
+  "En concret, i segons l'Institut Cartogràfic i Geològic de Catalunya (ICGC), afloren els materials de la unitat NMcg, corresponents a conglomerats amb matriu sorrenca sense cimentar del Miocè."
+ ],
+ "_narr_radon": {
+  "value": "La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "source": "zona 1 (RD 732/2019, apèndix B)",
+  "candidates": [
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+    "source": "signat: Castellar, Bell-lloc, Alcoletge"
+   },
+   {
+    "value": "La parcel·la concreta d'estudi es localitza al terme municipal de RUBÍ i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1, municipi amb concentracions inadequades de gas radó en edificis tancats.",
+    "source": "signat: Rubí"
+   }
+  ],
+  "notes": []
+ },
+ "materials_depth_text": "",
+ "materials_geomech_text": "",
+ "conclusions_level_1": "El nivell 1 està format per graves i sorres. carbonatat., de coloracions marrons a vermelloses. Aquests materials presenten una composició silícia típica dels dipòsits del Vallès-Penedès, amb components procedents de l'erosió de les serralades adjacents. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials miocè, unitat NMcg segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 4.60 m, amb un gruix de 4.60 m. Aquests materials presenten un valor mitjà de N20 de 35 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+ "soil_levels": [
+  {
+   "description": "Graves i sorres. Carbonatat.",
+   "description_short": "Graves i sorres. Carbonatat.",
+   "ordinal": "1er",
+   "materials_text": "El nivell 1 està format per graves i sorres. carbonatat., de coloracions marrons a vermelloses. Aquests materials presenten una composició silícia típica dels dipòsits del Vallès-Penedès, amb components procedents de l'erosió de les serralades adjacents. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials miocè, unitat NMcg segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 4.60 m, amb un gruix de 4.60 m. Aquests materials presenten un valor mitjà de N20 de 35 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 4.60 m de profunditat, amb potències estudiades de 4.60 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 35 cops, assolint rebuig a la penetració pels trams més profunds."
+  }
+ ],
+ "conclusions_levels_detected": "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+ "soil_level_rows": [
+  {
+   "name": "1er nivell.",
+   "material": "Graves i sorres. Carbonatat.",
+   "material_short": "Graves i sorres. Carbonatat."
+  }
+ ],
+ "perm_rows": [
+  {
+   "name": "1er nivell",
+   "k_value": "10^-2 a 10^-4",
+   "material": "Graves i sorres. Carbonatat.",
+   "material_short": "Graves i sorres. Carbonatat."
+  }
+ ],
+ "sulfate_level_name": "1er nivell",
+ "sulfate_value": "632.3",
+ "sulfate_baumann": "---",
+ "sulfate_classification": "No Agressius",
+ "seismic_rows": [
+  {
+   "num": "1",
+   "terrain_type": "Tipus II",
+   "thickness": "4.60",
+   "c_coeff": "1.3"
+  }
+ ],
+ "geotech_rows": [
+  {
+   "name": "1er nivell. Graves i sorres. Carbonatat.",
+   "material_short": "Graves i sorres. Carbonatat.",
+   "nb": "42-R",
+   "n": "40",
+   "density": "2.00",
+   "cohesion": "0.00",
+   "phi": "39°",
+   "E": "450"
+  }
+ ],
+ "geotech_level_name": "1er nivell. Graves i sorres. Carbonatat.",
+ "geotech_nb": "42-R",
+ "geotech_n": "40",
+ "geotech_density": "2.00",
+ "geotech_cohesion": "0.00",
+ "geotech_phi": "39°",
+ "geotech_E": "450",
+ "_calc_E": "CTE D.23 N20=35 | Rang Eva: 450-650",
+ "_calc_phi": "Schmertmann Nb=42 | Rang Eva: 38-39",
+ "_calc_gamma": "CTE D.27 granular | Rang Eva: 2.0",
+ "_calc_cohesion": "Rang Eva: 0.0-0.05",
+ "soil_level_name": "1er nivell.",
+ "soil_level_material": "Graves i sorres. Carbonatat.",
+ "perm_level_name": "1er nivell",
+ "perm_k_value": "10^-2 a 10^-4",
+ "perm_material": "Graves i sorres. Carbonatat.",
+ "k30_value": "6.0",
+ "_calc_k30": "E/75 = 450/75 (granular)",
+ "qa_value": "3.50",
+ "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.80 cm, immediats en el temps donat el comportament granular dels materials.",
+ "_calc_settlement": "Schmertmann Es=100 (2.5×N SPT 40), B=1 m → 1.80 cm · règim granular → «iguals o inferiors a 1.80 cm» | alt: Es=105 (2.5×Nb 41.9) → 1.70 cm, Es=450 (E del criteri) → 0.40 cm · variant signada (Bell-lloc): «inferiors a» sense «iguals o»",
+ "_calc_Es": "Es=100 (2.5×N SPT 40) · 2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes) | alt: Es=105 (2.5×Nb 41.9) → 1.70 cm, Es=450 (E del criteri) → 0.40 cm",
+ "settlement": "1.80",
+ "_calc_qa": "Nb/12=42/12=3.48 / Fw=1.69 x Fd=1.33 = 7.00 | Cap: 3.50 (3.0)",
+ "conclusions_geologia_summary": "Segons els resultats dels assaigs de penetració realitzats, s'ha identificat un únic nivell geotècnic fins a la fondària investigada. Aquest nivell correspon a graves i sorres. carbonatat. amb un valor mitjà de N20 de 35 cops.\n\nAquest nivell s'ha identificat com materials d'edat Miocè, unitat cartogràfica NMcg (Conglomerats amb matriu sorrenca sense cimentar) del mapa geològic 1:25.000 de l'ICGC.",
+ "conclusions_water_statement": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+ "conclusions_aggressivity_statement": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+ "empentes_paragraph": "",
+ "ka_value": "",
+ "kp_value": "",
+ "estabilitat_paragraph": "",
+ "expansivitat_paragraph": "",
+ "project": {
+  "project": {
+   "expedient": "3001631",
+   "municipality": "Rubi",
+   "report_date": "2026-09-09"
+  },
+  "client": {
+   "company_name": "",
+   "contact_name": "",
+   "nif": "",
+   "address": null
+  },
+  "architect": {
+   "name": "SR.",
+   "company": "JOANA MARTINEZ"
+  },
+  "building": {
+   "type": "un habitatge unifamiliar",
+   "num_floors": "Pb",
+   "superficie_parcela_m2": "",
+   "superficie_cadastral_m2": "1414",
+   "superficie_construida_m2": "64",
+   "has_basement": false,
+   "has_retaining_walls": false
+  },
+  "location": {
+   "street_address": "C/ MIRANDA",
+   "utm_x": 418215,
+   "utm_y": 4595658
+  },
+  "descriptions": {
+   "site_description": "Molt bonic",
+   "access_description": "S'accedeix pel nord.",
+   "cota_referencia": "+211.90",
+   "field_work_dates": [],
+   "field_work_dates_text": "14 de novembre de 2025",
+   "lab_company": "",
+   "lab_company_alias": "",
+   "lab_description": ""
+  },
+  "sondeig_tests": [
+   {
+    "test_id": "P-1",
+    "total_depth_m": 4.55,
+    "num_geological_levels": 2,
+    "layers": [
+     {
+      "depth_from_m": 0.0,
+      "depth_to_m": 3.35,
+      "description": "Graves i sorres (Nivell 1)",
+      "geological_level": 1,
+      "uscs_classification": null,
+      "color": "marro clar (beix)",
+      "moisture": null,
+      "consistency": null,
+      "density": "mitja a densa",
+      "confidence": 0.9,
+      "note": "Depth to base of N1 estimated from section graphic at ~208.55 msnm (elevation 211.90 - ~3.35 m). SPT Nb values: 40, 77, 45 observed in N1 zone of P-1."
+     },
+     {
+      "depth_from_m": 3.35,
+      "depth_to_m": 4.55,
+      "description": "Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)",
+      "geological_level": 2,
+      "uscs_classification": null,
+      "color": "vermell fosc",
+      "moisture": null,
+      "consistency": null,
+      "density": null,
+      "confidence": 0.85,
+      "note": "Nb=30 and Nb=R (refusal) observed in N2 zone of P-1. Depth to N1/N2 boundary estimated from cross-section graphic."
+     }
+    ],
+    "spt_results": [
+     {
+      "test_id": "Nb-1 (P-1)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 40,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-2 (P-1)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 77,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-3 (P-1)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 45,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-4 (P-1)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 30,
+      "confidence": 0.85
+     },
+     {
+      "test_id": "Nb-R (P-1)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": null,
+      "confidence": 0.9
+     }
+    ],
+    "elevation_z": 211.9,
+    "water_level_m": null,
+    "rock_detected": true,
+    "rock_depth_m": 4.55,
+    "extraction_notes": "Elevation +211.90 m, final depth -4.55 m. Layer boundary depths estimated from cross-section graphic. No individual depth intervals given per SPT in this type of document."
+   },
+   {
+    "test_id": "P-2",
+    "total_depth_m": 3.58,
+    "num_geological_levels": 2,
+    "layers": [
+     {
+      "depth_from_m": 0.0,
+      "depth_to_m": 2.78,
+      "description": "Graves i sorres (Nivell 1)",
+      "geological_level": 1,
+      "uscs_classification": null,
+      "color": "marro clar (beix)",
+      "moisture": null,
+      "consistency": null,
+      "density": "mitja a densa",
+      "confidence": 0.85,
+      "note": "Depth to base of N1 estimated from section graphic (~211.40 - ~2.78 m ≈ 208.62 msnm). SPT Nb values: 57, 46, 48 observed in N1 zone of P-2."
+     },
+     {
+      "depth_from_m": 2.78,
+      "depth_to_m": 3.58,
+      "description": "Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)",
+      "geological_level": 2,
+      "uscs_classification": null,
+      "color": "vermell fosc",
+      "moisture": null,
+      "consistency": null,
+      "density": null,
+      "confidence": 0.85,
+      "note": "Nb=65 and Nb=R (refusal) observed in N2 zone of P-2. Boundary depth estimated from graphic."
+     }
+    ],
+    "spt_results": [
+     {
+      "test_id": "Nb-1 (P-2)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 57,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-2 (P-2)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 46,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-3 (P-2)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 48,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-4 (P-2)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 65,
+      "confidence": 0.85
+     },
+     {
+      "test_id": "Nb-R (P-2)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": null,
+      "confidence": 0.9
+     }
+    ],
+    "elevation_z": 211.4,
+    "water_level_m": null,
+    "rock_detected": true,
+    "rock_depth_m": 3.58,
+    "extraction_notes": "Elevation +211.4 m (note: label reads '+211,4 m', likely same as P-3 elevation +211.40 m), final depth -3.58 m. Layer boundary depths estimated from cross-section graphic."
+   },
+   {
+    "test_id": "P-3",
+    "total_depth_m": 3.13,
+    "num_geological_levels": 2,
+    "layers": [
+     {
+      "depth_from_m": 0.0,
+      "depth_to_m": 1.93,
+      "description": "Graves i sorres (Nivell 1)",
+      "geological_level": 1,
+      "uscs_classification": null,
+      "color": "marro clar (beix)",
+      "moisture": null,
+      "consistency": null,
+      "density": "mitja a densa",
+      "confidence": 0.85,
+      "note": "Depth to base of N1 estimated from section graphic (~211.40 - ~1.93 m ≈ 209.47 msnm). SPT Nb values: 39, 47, 72 observed in N1 zone of P-3."
+     },
+     {
+      "depth_from_m": 1.93,
+      "depth_to_m": 3.13,
+      "description": "Gresos amb intercalacions de trams de lutites de color vermellós o gris i conglomerats polimíctics (Nivell 2)",
+      "geological_level": 2,
+      "uscs_classification": null,
+      "color": "vermell fosc",
+      "moisture": null,
+      "consistency": null,
+      "density": null,
+      "confidence": 0.85,
+      "note": "Nb=96 and Nb=R (refusal) observed in N2 zone of P-3. Boundary depth estimated from graphic."
+     }
+    ],
+    "spt_results": [
+     {
+      "test_id": "Nb-1 (P-3)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 39,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-2 (P-3)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 47,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-3 (P-3)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 72,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-4 (P-3)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": 96,
+      "confidence": 0.9
+     },
+     {
+      "test_id": "Nb-R (P-3)",
+      "depth_from_m": null,
+      "depth_to_m": null,
+      "blows": [],
+      "n_spt": null,
+      "confidence": 0.9
+     }
+    ],
+    "elevation_z": 211.4,
+    "water_level_m": null,
+    "rock_detected": true,
+    "rock_depth_m": 3.13,
+    "extraction_notes": "Elevation +211.40 m, final depth -3.13 m. Layer boundary depths estimated from cross-section graphic."
+   }
+  ],
+  "spt_data": null,
+  "lab_tests": [
+   {
+    "type": "Contingut en sulfats solubles UNE 83963:2008",
+    "sample_id": "SPT-1",
+    "location": "P-3",
+    "depth": "-0.6 a -1.2",
+    "value": 632.3,
+    "unit": "mg/kg",
+    "standard": ""
+   }
+  ],
+  "site": {
+   "adjacent_parcels": {
+    "north": "Passeig Miranda",
+    "south": "parcel·la amb construcció",
+    "east": "parcel·la amb construcció",
+    "west": "Avinguda Can Tapis"
+   },
+   "position": "centre",
+   "shape": "rectangular",
+   "is_urban": true,
+   "is_sloped": false,
+   "slope_percent": null,
+   "slope_direction": null,
+   "slope_height_m": null,
+   "is_anthropized": false
+  },
+  "tests": {
+   "has_dpsh": true,
+   "num_dpsh_tests": 3,
+   "has_sondeig": false,
+   "has_spt": true,
+   "water_detected": false
+  },
+  "lab": {
+   "sulfate_mg_kg": 632.3,
+   "aggressivity_class": ""
+  },
+  "cte": {
+   "building_class": "C-0",
+   "soil_class": "T-1"
+  },
+  "soil_levels": [
+   {
+    "level_number": 1,
+    "description": "Graves i sorres. Carbonatat.",
+    "thickness_m": 4.6,
+    "thickness_open": false,
+    "n20_average": 34.79545454545455,
+    "depth_from_m": 0.0,
+    "depth_to_m": 4.6,
+    "n20_min": 10,
+    "n20_max": 80,
+    "soil_type": "granular"
+   }
+  ],
+  "geotechnical_params": {
+   "gamma_g_cm3": 2.0,
+   "cohesion_kg_cm2": 0.0,
+   "phi_deg": 39,
+   "E_kg_cm2": 450
+  },
+  "terzaghi": {
+   "inputs": {
+    "phi_deg": 39,
+    "cohesion_kg_cm2": 0.0,
+    "gamma_g_cm3": 2.0,
+    "B_m": 1.0,
+    "Df_m": 1,
+    "L_m": null,
+    "shape": "square"
+   },
+   "factors": {
+    "Nc": 86.6,
+    "Nq": 71.4,
+    "Ngamma": 83.9,
+    "sc": 1.3,
+    "sq": 1.0,
+    "sgamma": 0.8
+   },
+   "results": {
+    "qu_kg_cm2": 20.992,
+    "safety_factor": 3.0,
+    "Qa_kg_cm2": 3.5,
+    "Qa_uncapped_kg_cm2": 7.0,
+    "settlement_cm": 1.8,
+    "settlement_type": "immediat",
+    "Es_used_kg_cm2": 100.0,
+    "qa_terzaghi_peck_kg_cm2": 2.75,
+    "Fw": 1.69,
+    "Fd_tp": 1.33,
+    "qa_governs": "cap"
+   }
+  },
+  "conditional_sections": {
+   "include_expansivity": false,
+   "include_earth_pressure": false,
+   "include_slope_stability": false,
+   "include_geothermal": false,
+   "show_granulometric": false
+  },
+  "dpsh": {
+   "expedient": "3001631",
+   "source_file": "/home/josep/projects/claudecode-job/clients/g3dt-prod/reference-material/3001631 RUBI/ANNEXES/3001631_DPSH.xls",
+   "num_tests": 3,
+   "test_ids": [
+    "P-1",
+    "P-2",
+    "P-3"
+   ],
+   "overall_average_n20": 34.68,
+   "any_water_detected": false,
+   "tests": [
+    {
+     "test_id": "P-1",
+     "correction_factor": 0.83,
+     "depth_reached_m": 4.6,
+     "average_n20": 38.64,
+     "refusal_reached": true,
+     "refusal_depth_m": 4.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 22,
+       "nb": 26.51,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 33,
+       "nb": 39.76,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 30,
+       "nb": 36.14,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 25,
+       "nb": 30.12,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 22,
+       "nb": 26.51,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 24,
+       "nb": 28.92,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 20,
+       "nb": 24.1,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 34,
+       "nb": 40.96,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 35,
+       "nb": 42.17,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 60,
+       "nb": 72.29,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 64,
+       "nb": 77.11,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 47,
+       "nb": 56.63,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 27,
+       "nb": 32.53,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 26,
+       "nb": 31.33,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 36,
+       "nb": 43.37,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 37,
+       "nb": 44.58,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.8,
+       "n20": 28,
+       "nb": 33.73,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.0,
+       "n20": 30,
+       "nb": 36.14,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.2,
+       "n20": 52,
+       "nb": 62.65,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.4,
+       "n20": 66,
+       "nb": 79.52,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-2",
+     "correction_factor": 0.83,
+     "depth_reached_m": 3.6,
+     "average_n20": 36.29,
+     "refusal_reached": true,
+     "refusal_depth_m": 3.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 24,
+       "nb": 28.92,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 28,
+       "nb": 33.73,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 42,
+       "nb": 50.6,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 47,
+       "nb": 56.63,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 33,
+       "nb": 39.76,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 28,
+       "nb": 33.73,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 35,
+       "nb": 42.17,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 38,
+       "nb": 45.78,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 24,
+       "nb": 28.92,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 40,
+       "nb": 48.19,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 30,
+       "nb": 36.14,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 20,
+       "nb": 24.1,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 27,
+       "nb": 32.53,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 37,
+       "nb": 44.58,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 54,
+       "nb": 65.06,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-3",
+     "correction_factor": 0.83,
+     "depth_reached_m": 3.2,
+     "average_n20": 44.47,
+     "refusal_reached": true,
+     "refusal_depth_m": 3.2,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 36,
+       "nb": 43.37,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 28,
+       "nb": 33.73,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 39,
+       "nb": 46.99,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 37,
+       "nb": 44.58,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 60,
+       "nb": 72.29,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 49,
+       "nb": 59.04,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 34,
+       "nb": 40.96,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 25,
+       "nb": 30.12,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 36,
+       "nb": 43.37,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 47,
+       "nb": 56.63,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 80,
+       "nb": 96.39,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "fig_spt_cullera_image": "<InlineImage>",
+ "photo_site_image_1": "",
+ "photo_site_image_2": "",
+ "photo_dpsh_image": "<InlineImage>",
+ "photo_sondeig_image": "[Imatge pendent]",
+ "photo_materials_image": "<InlineImage>",
+ "fig_situacio_image_1": "<InlineImage>",
+ "fig_situacio_image_2": "",
+ "fig_assaigs_image": "<InlineImage>",
+ "fig_projecte_image_1": "",
+ "fig_projecte_caption_1": "",
+ "fig_projecte_image_2": "",
+ "fig_projecte_caption_2": "",
+ "has_plan_crops": true,
+ "fig_cadastre_image": "<InlineImage>",
+ "fig_location_image": "<InlineImage>",
+ "fig_main_plan_image": "<InlineImage>",
+ "fig_building_image": "<InlineImage>",
+ "fig_geological_image": "<InlineImage>",
+ "fig_correlation_image": "<InlineImage>"
+}

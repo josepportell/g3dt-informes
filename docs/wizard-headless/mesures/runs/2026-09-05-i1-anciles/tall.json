@@ -1,0 +1,204 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "539cdef6e4d29459cc20a5d0204e13a7",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Corte de correlacio (seccio transversal A-A') del sondeig de camp, plantilla propia de G3: mostra els 2 nivells de sol, els punts DPSH P-1 a P-6, els sondeigs S-1/S-2, la cota de nivell de sotano i la cota recomanada de cimentacio.",
+ "issuer": "G3 (Eva) - plantilla propia, sense signatura explicita",
+ "date": "Febrero 2026 (nomes mes/any, cap dia)",
+ "pages_or_sheets": "Pagina 1/1",
+ "context": {
+  "who_made_it": "G3 (Eva), amb la plantilla propia 'Corte de correlacion'",
+  "for_whom": "el mateix informe geotecnic (n'es un annex visual)",
+  "why": "correlacionar graficament els nivells de sol trobats als punts DPSH (P-1..P-6) i sondeigs (S-1, S-2) al llarg d'una linia A-A', amb la cota de nivell de sotano i la cota recomanada de cimentacio",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia dels nivells",
+   "expedient",
+   "adreca/municipi (titol)",
+   "tipus d'edifici (titol)",
+   "recompte de punts DPSH/sondeigs",
+   "rebuig per punt"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "num_floors",
+   "superficie_parcela",
+   "field_date (dia)",
+   "cota_referencia explicita",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "dades de laboratori (lab_*)",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Versio llegible (Microsoft Print To PDF) del mateix dibuix 'corte de correlacion' que a ANEJOS/4001679_corte de correlacion.FH11 es il·legible (route=skip, text brossa FreeHand) i que a PDF_V0/ANEJOS/4001679_corte de correlacion.pdf es una versio antiga exclosa (carpeta V0). En aquest projecte no hi ha cap annex de sondeig llegible (4001679_sondeos.FH11 tambe es FreeHand il·legible), per la qual cosa aquest tall.pdf es l'unica font visual de la litologia dels nivells.",
+  "authority_for": [
+   "num_soil_levels"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001679",
+   "location": "peu de pagina, cel·la Exp:",
+   "quote": "Exp: 4001679",
+   "confidence": 0.95,
+   "note": null
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Benasque",
+   "location": "peu de pagina, titol del projecte",
+   "quote": "ADOSADAS EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.75,
+   "note": "El municipi legible es 'BENASQUE'; 'ARCILES' sembla ser una localitat/pedania dins de Benasque (possible errata d'impremta per 'Anciles', que es el nom real d'aquest nucli i coincideix amb el nom de la carpeta del projecte '4001679 ANCILES'). Creuar amb altres documents del projecte."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Gral Ferraz nº20, Arciles (Benasque)",
+   "location": "peu de pagina, titol del projecte",
+   "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.7,
+   "note": "'ARCILES' probablement errata d'impremta per 'ANCILES' (nom de la carpeta del projecte); no hi ha cap altre document llegit encara en aquesta crida que ho confirmi."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Gral Ferraz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Benasque",
+    "municipi_alternatives": []
+   },
+   "location": "peu de pagina, titol del projecte",
+   "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.7,
+   "note": "No s'ha inclos 'Arciles/Anciles' com a alternativa de municipi perque sembla una localitat/pedania dins de Benasque, no una grafia alternativa del mateix municipi."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "vivienda adosada (7 unitats)",
+   "location": "peu de pagina, titol del projecte",
+   "quote": "CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "2",
+   "location": "requadre LEYENDA",
+   "quote": "1er nivel: Arcillas arenosas con puntualmente bolos. / 2do nivel: Bolos y gravas en matriz arenosa y arcillosa.",
+   "confidence": 0.9,
+   "note": "El tall mana per al nombre de nivells (regla del skill). Cap capa de cobertura numerada a la llegenda."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "6",
+   "location": "grafic del tall, capcaleres de columna",
+   "quote": "P-5, P-1, P-2, P-3, P-4, P-6",
+   "confidence": 0.55,
+   "note": "Recompte de punts DPSH (P-i) visibles en aquesta seccio; candidat/corroboracio, no font primaria (l'Excel DPSH mana)."
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "litologia": "Arcillas arenosas con puntualmente bolos",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "requadre LEYENDA",
+    "quote": "1er nivel: Arcillas arenosas con puntualmente bolos."
+   },
+   {
+    "nom": "2on nivell",
+    "litologia": "Bolos y gravas en matriz arenosa y arcillosa",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "requadre LEYENDA",
+    "quote": "2do nivel: Bolos y gravas en matriz arenosa y arcillosa."
+   }
+  ],
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "grafic tall, columna P-1",
+    "quote": "Nb=6 / Nb=33 / Nb=R"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "grafic tall, columna P-2",
+    "quote": "Nb=6 / Nb=44 / Nb=R"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "grafic tall, columna P-3",
+    "quote": "Nb=4 / Nb=13 / Nb=R"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "grafic tall, columna P-4",
+    "quote": "Nb=5 / Nb=32 / Nb=17 / Nb=R"
+   },
+   {
+    "punt": "P-5",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "grafic tall, columna S-2/P-5",
+    "quote": "N=6 / Nb=38 / Nb=R"
+   },
+   {
+    "punt": "P-6",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": "Si",
+    "nivell_freatic": null,
+    "location": "grafic tall, columna S-1/P-6",
+    "quote": "N=6 / Nb=14 / Nb=26 / Nb=R"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (Print To PDF, text_ok=true), imatge page-1.png llegida sencera (caixetí i llegenda perfectament llegibles, sense clip ni rotacio). Les fondaries de transicio de nivell i les cotes de cada punt nomes son grafiques (escala msnm 1100-1107): no s'han estimat per pixels (regla del Pas 3b). S-1/S-2 mostren un valor 'N=6' prop de la superficie (possible SPT) sense identificador d'assaig explicit: no s'ha forcat a spt_ma_tests per no inventar un ID. Discrepancia ortografica notable: aquest document escriu 'ARCILES' mentre la carpeta del projecte es '4001679 ANCILES' -- probable errata d'impremta (el poble real proper a Benasque es diu 'Anciles')."
+}

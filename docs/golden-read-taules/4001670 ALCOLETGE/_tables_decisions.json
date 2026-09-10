@@ -1,0 +1,456 @@
+{
+ "project": "4001670 ALCOLETGE",
+ "skill_version": "0.8",
+ "read_date": "2026-08-24",
+ "scope": "Nomes bloc tables (Pas 3b) + superficie_construida; els 15 escalars del nivell A ja fets en una lectura anterior",
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "3 files",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "+188,20 msnm",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf capçalera P-1",
+        "cita": "Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC."
+       }
+      ],
+      "rule": "cota_inici = capçalera de cada pàgina de PDF/ANNEXES/{exp}_DPSH.pdf; una sola cota → val per a tots els punts (Pas 3b).",
+      "note": "COORDENADES.txt (només P-1) dona z GPS 198,9 — ~10,7 m sobre la cota ICGC: z GPS no fiable, l'Eva no l'usa (regla cota_referencia); no competeix."
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "-1,60 m",
+        "font": "ANNEXES/4001670_DPSH.xls full P-1 peu B81",
+        "cita": "Rebuig a la cota de  -1,60 m"
+       },
+       {
+        "valor": "-1,60 m",
+        "font": "PENETROS.pdf p.2 (manuscrit)",
+        "cita": "encerclat 1'6"
+       }
+      ],
+      "rule": "profunditat_assolida = peu 'Rebuig a…' de l'Excel DPSH (aquí B81, no B80) = fondària EXACTA del rebuig; signe negatiu a l'informe (Pas 3b).",
+      "note": "2 fonts coincidents (Excel revisat + manuscrit encerclat)."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "Si",
+        "font": "ANNEXES/4001670_DPSH.xls B81 + última lectura 100 cops",
+        "cita": "Rebuig a la cota de …"
+       }
+      ],
+      "rule": "rebuig Si perquè el peu 'Rebuig a…' existeix (Pas 3b)."
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "-1,00 m (humitat)",
+        "font": "ANNEXES/4001670_DPSH.xls full P-1 columna F (N.F.)",
+        "cita": "primera fila marcada en blau (color 44, llegenda 'Humitat') = -1,0; marques fins al fons de l'assaig"
+       },
+       {
+        "valor": "-0,80 m (humitat)",
+        "font": "PENETROS.pdf p.2 quadre NIVELL FREÀTIC",
+        "cita": "Hi ha nivell freàtic? → 'Humitat 0'8~' (manuscrit, segon dígit poc segur)"
+       }
+      ],
+      "rule": "nivell_freatic = columna N.F. de l'Excel DPSH (marques de color, primera fila marcada) > manuscrit PENETROS (Pas 3b).",
+      "note": "No és aigua franca: totes les fonts diuen HUMITAT (Excel llegenda 'Humitat'; tall 'Augment de la humitat detectada' a ~-1,0; manuscrit 'Humitat'). L'Excel mana → candidat 1 = -1,00; manuscrit 0,8 com a candidat 2. Mateixa lectura als 3 punts."
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "+188,20 msnm",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf capçalera P-2",
+        "cita": "Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC."
+       }
+      ],
+      "rule": "cota_inici = capçalera de cada pàgina de PDF/ANNEXES/{exp}_DPSH.pdf; una sola cota → val per a tots els punts (Pas 3b).",
+      "note": "COORDENADES.txt (només P-1) dona z GPS 198,9 — ~10,7 m sobre la cota ICGC: z GPS no fiable, l'Eva no l'usa (regla cota_referencia); no competeix."
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "-1,30 m",
+        "font": "ANNEXES/4001670_DPSH.xls full P-2 peu B81",
+        "cita": "Rebuig a la cota de  -1,30 m"
+       },
+       {
+        "valor": "-1,30 m",
+        "font": "PENETROS.pdf p.2 (manuscrit)",
+        "cita": "encerclat 1'3"
+       }
+      ],
+      "rule": "profunditat_assolida = peu 'Rebuig a…' de l'Excel DPSH (aquí B81, no B80) = fondària EXACTA del rebuig; signe negatiu a l'informe (Pas 3b).",
+      "note": "2 fonts coincidents (Excel revisat + manuscrit encerclat)."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "Si",
+        "font": "ANNEXES/4001670_DPSH.xls B81 + última lectura 100 cops",
+        "cita": "Rebuig a la cota de …"
+       }
+      ],
+      "rule": "rebuig Si perquè el peu 'Rebuig a…' existeix (Pas 3b)."
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "-1,00 m (humitat)",
+        "font": "ANNEXES/4001670_DPSH.xls full P-2 columna F (N.F.)",
+        "cita": "primera fila marcada en blau (color 44, llegenda 'Humitat') = -1,0; marques fins al fons de l'assaig"
+       },
+       {
+        "valor": "-0,80 m (humitat)",
+        "font": "PENETROS.pdf p.2 quadre NIVELL FREÀTIC",
+        "cita": "Hi ha nivell freàtic? → 'Humitat 0'8~' (manuscrit, segon dígit poc segur)"
+       }
+      ],
+      "rule": "nivell_freatic = columna N.F. de l'Excel DPSH (marques de color, primera fila marcada) > manuscrit PENETROS (Pas 3b).",
+      "note": "No és aigua franca: totes les fonts diuen HUMITAT (Excel llegenda 'Humitat'; tall 'Augment de la humitat detectada' a ~-1,0; manuscrit 'Humitat'). L'Excel mana → candidat 1 = -1,00; manuscrit 0,8 com a candidat 2. Mateixa lectura als 3 punts."
+     }
+    },
+    {
+     "punt": "P-3",
+     "cota_inici": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "+188,20 msnm",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf capçalera P-3",
+        "cita": "Cota inici:  +188,20 msnm segons el plànol topogràfic de l'ICGC."
+       }
+      ],
+      "rule": "cota_inici = capçalera de cada pàgina de PDF/ANNEXES/{exp}_DPSH.pdf; una sola cota → val per a tots els punts (Pas 3b).",
+      "note": "COORDENADES.txt (només P-1) dona z GPS 198,9 — ~10,7 m sobre la cota ICGC: z GPS no fiable, l'Eva no l'usa (regla cota_referencia); no competeix."
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "-1,69 m",
+        "font": "ANNEXES/4001670_DPSH.xls full P-3 peu B81",
+        "cita": "Rebuig a la cota de  -1,69 m"
+       },
+       {
+        "valor": "-1,69 m",
+        "font": "PENETROS.pdf p.2 (manuscrit)",
+        "cita": "encerclat 169"
+       }
+      ],
+      "rule": "profunditat_assolida = peu 'Rebuig a…' de l'Excel DPSH (aquí B81, no B80) = fondària EXACTA del rebuig; signe negatiu a l'informe (Pas 3b).",
+      "note": "2 fonts coincidents (Excel revisat + manuscrit encerclat)."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "Si",
+        "font": "ANNEXES/4001670_DPSH.xls B81 + última lectura 100 cops",
+        "cita": "Rebuig a la cota de …"
+       }
+      ],
+      "rule": "rebuig Si perquè el peu 'Rebuig a…' existeix (Pas 3b)."
+     },
+     "nivell_freatic": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "-1,00 m (humitat)",
+        "font": "ANNEXES/4001670_DPSH.xls full P-3 columna F (N.F.)",
+        "cita": "primera fila marcada en blau (color 44, llegenda 'Humitat') = -1,0; marques fins al fons de l'assaig"
+       },
+       {
+        "valor": "-0,80 m (humitat)",
+        "font": "PENETROS.pdf p.2 quadre NIVELL FREÀTIC",
+        "cita": "Hi ha nivell freàtic? → 'Humitat 0'8~' (manuscrit, segon dígit poc segur)"
+       }
+      ],
+      "rule": "nivell_freatic = columna N.F. de l'Excel DPSH (marques de color, primera fila marcada) > manuscrit PENETROS (Pas 3b).",
+      "note": "No és aigua franca: totes les fonts diuen HUMITAT (Excel llegenda 'Humitat'; tall 'Augment de la humitat detectada' a ~-1,0; manuscrit 'Humitat'). L'Excel mana → candidat 1 = -1,00; manuscrit 0,8 com a candidat 2. Mateixa lectura als 3 punts."
+     }
+    }
+   ],
+   "nota_bloc": "P-2: última fila amb cops és -1,4 però B81 diu -1,30 → B81 mana (fondària exacta del rebuig, regla Pas 3b). Corroboració del nombre: albarà TPS 'Nº de penetròmetres realitzats: 3', pressupost p.2 i PLAN_COST B21=3."
+  },
+  "sondeig_tests": {
+   "estat_bloc": "buit — el projecte NO té sondeig a rotació",
+   "rows": [],
+   "sources_checked": [
+    "pressupost p.2 (cap línia de sondeig; només 3 DPSH + 1 SPT)",
+    "PLAN_COST OFERTA (cap unitat a les línies de ml de perforació)",
+    "albarà TPS p.1 (només penetròmetres i 1 assaig SPT; 'ml previs perforació per assaig SPT: 0,8')",
+    "carpeta PDF/ANNEXES/ (no existeix cap {exp}_sondeig.pdf)",
+    "fitxa de camp C13 = 'PENETROS I MOSTRA'"
+   ],
+   "rule": "Sense sondeig a rotació: bloc buit; nivells = tall, SPT/mostres = comanda (+ GTL quan arribi) (Pas 3b, anatomia annex sondeig)."
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "1 fila",
+   "rows": [
+    {
+     "id": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "SPT-1",
+        "font": "PDF/ANNEXES/4001670_DPSH.pdf p.3 (annex de l'Eva)",
+        "cita": "SPT-1"
+       },
+       {
+        "valor": "SPT -1 (P3)",
+        "font": "comanda laboratori Hoja1!C35",
+        "cita": "SPT -1 (P3)"
+       }
+      ],
+      "rule": "L'etiqueta de l'annex de l'Eva mana per a la denominació (regla lab_sample_id); annex i comanda coincideixen (SPT-1)."
+     },
+     "punt": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "P-3",
+        "font": "annex DPSH p.3 + comanda C35 '(P3)' + full SPT TPS 'SPT P3' + etiqueta bossa 'Punt: P3'",
+        "cita": "SPT -1 (P3)"
+       }
+      ],
+      "rule": "lab_location = punt d'assaig del parèntesi de la comanda = annex = full de camp (Pas 3)."
+     },
+     "profunditat": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "0,80 a 1,40 m",
+        "font": "annex DPSH p.3",
+        "cita": "0,80 a 1,40"
+       },
+       {
+        "valor": "0,8 a 1,4",
+        "font": "comanda Hoja1!J35/L35 + full SPT TPS + etiqueta bossa",
+        "cita": "de la cota de: 0,8 / fins a la cota: 1,4"
+       }
+      ],
+      "rule": "GTL > Excel/annex > comanda per a la profunditat; sense GTL, annex+comanda+camp coincideixen → segur (4 fonts)."
+     },
+     "n30": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "20 (suma trams centrals 9+11)",
+        "font": "derivat del registre; corroborat pel tall",
+        "cita": "tall.pdf secció A-A': 'N=20' a la traça de P-3"
+       },
+       {
+        "valor": "registre complet 5/9/11/33 (trams de 15 cm)",
+        "font": "annex DPSH p.3 = full SPT TPS = etiqueta bossa",
+        "cita": "Colpeig: 5 9 11 33"
+       }
+      ],
+      "rule": "Llegeix els 4 valors del registre i proposa'ls amb la suma dels trams centrals, sense triar-ne un de sol (Pas 3b); sense GTL per creuar → candidats.",
+      "note": "Registre 5/9/11/33 idèntic a 3 fonts (annex, full TPS, etiqueta bossa): la LECTURA és segura; l'estat candidats és pel pas registre→N30 (derivació que l'informe pot fer diferent). El 33 de l'últim tram suggereix entrada al substrat."
+     },
+     "litologia": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "Lutites (Nivell 2)",
+        "font": "PENETROS.pdf p.3 full SPT, descripció de camp",
+        "cita": "Descripció dels materials: LUTITA MARRÓ"
+       },
+       {
+        "valor": "Rebliment antròpic (Nivell 1)",
+        "font": "ANNEXES/4001670_DPSH.xls marques Nivells P-3",
+        "cita": "interval 0,8-1,4 dins el Nivell 1 (color 29 fins a -1,4)"
+       }
+      ],
+      "rule": "litologia = la del nivell d'on surt la mostra (Pas 3b); les dues fonts assignen nivells diferents → candidats.",
+      "note": "Ambigüitat real: l'interval 0,8-1,4 acaba just a la transició N1→N2 de P-3 (-1,4) i el material RECUPERAT descrit a camp és 'lutita marró' (N2). Sense annex de sondeig ni GTL per resoldre-ho."
+     }
+    }
+   ],
+   "nota_bloc": "1 SPT contractat (pressupost p.2, PLAN_COST B23=1, albarà 'Assaigs SPT o MI: 1'). Assaigs demanats: 'NOMÉS SULFATS' + Atterberg + agressivitat (comanda fila 35). GTL absent de la carpeta (arriba setmanes després): cap contrast de laboratori."
+  },
+  "soil_levels": {
+   "estat_bloc": "2 files",
+   "rows": [
+    {
+     "nom": "1er nivell",
+     "litologia_candidats": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "Rebliment antròpic",
+        "font": "tall.pdf LLEGENDA",
+        "cita": "Nivell 1: Rebliment antròpic."
+       }
+      ],
+      "rule": "Sense annex de sondeig, el tall és l'única font de litologia; l'Eva re-redacta a l'informe → la cadena literal mai és segura (Pas 3b).",
+      "note": "Única font (tall); cap contradicció."
+     },
+     "de": {
+      "estat": "segur",
+      "candidates": [
+       {
+        "valor": "0,00 m (cota +188,20 msnm)",
+        "font": "annex DPSH capçaleres + tall (sostre del dibuix a +188,2)",
+        "cita": "Cota inici: +188,20 msnm"
+       }
+      ],
+      "rule": "El nivell superior comença a la superfície (cota d'inici dels assaigs)."
+     },
+     "a": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "-1,4 m (P-1 i P-3) / -1,2 m (P-2)",
+        "font": "ANNEXES/4001670_DPSH.xls columna G (Nivells), canvi color 29→43",
+        "cita": "P-1: color 43 a la fila -1,6 (interval -1,4→-1,6); P-2: fila -1,4; P-3: files -1,6/-1,8"
+       },
+       {
+        "valor": "~ -1,1 a -1,3 m (límit ondulant a +186,9/+187,1 msnm)",
+        "font": "tall.pdf secció A-A' (lectura gràfica)",
+        "cita": "límit N1/N2 dibuixat ondulant sota la línia d'humitat"
+       }
+      ],
+      "rule": "Fondàries de transició = tall + marques Nivell N de l'Excel (Pas 3b); transició diferent per punt → candidats, no un valor únic.",
+      "note": "La sísmica usa aquest gruix i la geotècnica el rang de Nb: cal que la UI mostri el rang per punt."
+     },
+     "mostra_del_nivell": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "possible (interval SPT 0,8-1,4 dins N1 per fondàries)",
+        "font": "Excel marques Nivells P-3",
+        "cita": "color 29 fins a -1,4"
+       },
+       {
+        "valor": "possible que no (material recuperat = lutita, N2)",
+        "font": "PENETROS.pdf p.3",
+        "cita": "LUTITA MARRÓ"
+       }
+      ],
+      "rule": "mostra_del_nivell = el nivell que conté lab_depth (Pas 3b); aquí l'interval acaba a la transició → ambigu, vegeu spt_ma_tests.litologia."
+     }
+    },
+    {
+     "nom": "2on nivell",
+     "litologia_candidats": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "Lutites, substrat",
+        "font": "tall.pdf LLEGENDA",
+        "cita": "Nivell 2:  Lutites, substrat."
+       },
+       {
+        "valor": "Lutita marró",
+        "font": "PENETROS.pdf p.3 (descripció de camp de la mostra SPT)",
+        "cita": "LUTITA MARRÓ"
+       }
+      ],
+      "rule": "Tall primer (síntesi de l'Eva); descripció de camp com a segona redacció; l'Eva re-redacta → mai segur (Pas 3b)."
+     },
+     "de": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "-1,4 m (P-1/P-3) / -1,2 m (P-2)",
+        "font": "Excel columna G color 43",
+        "cita": "vegeu 1er nivell"
+       },
+       {
+        "valor": "~ -1,1 a -1,3 m",
+        "font": "tall.pdf (gràfic)",
+        "cita": "límit ondulant"
+       }
+      ],
+      "rule": "Mateixa transició que el sostre del nivell 1."
+     },
+     "a": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "fins al fons d'investigació (rebuig DPSH: -1,60/-1,30/-1,69 m per punt)",
+        "font": "ANNEXES/4001670_DPSH.xls fulls P-1/P-2/P-3, peu B81 (derivat: la base de l'últim nivell és el fons d'investigació)",
+        "cita": "B81: 'Rebuig a la cota de -1,60 m' (P-1) / '-1,30 m' (P-2) / '-1,69 m' (P-3)"
+       }
+      ],
+      "rule": "El substrat no es perfora: els 3 DPSH aturen per rebuig dins el nivell 2; cap document en dona la base → el límit conegut és el fons d'investigació per punt (candidats, mai segur), com Linyola/Vilanova/Rubí/Anciles. El signat usa el fons: gruix sísmic del nivell 2 = 0,29* → base a -1,69 (rebuig P-3).",
+      "sources_checked": [
+       "Excel DPSH (rebuig a -1,30/-1,60/-1,69)",
+       "tall.pdf (dibuix fins a +186 sense base)",
+       "cap sondeig a rotació al projecte"
+      ],
+      "note": "Revisió 2026-09-06 (STATUS §Pendents de revisió, punt 1; DECISION-LOG 2026-09-05 (nit, 4) decisió 7): abans `no_trobat` («potència no determinada per cap document»), incoherent amb els altres quatre ors i amb el signat."
+     },
+     "mostra_del_nivell": {
+      "estat": "candidats",
+      "candidates": [
+       {
+        "valor": "probable (lutita marró recuperada a l'SPT)",
+        "font": "PENETROS.pdf p.3",
+        "cita": "LUTITA MARRÓ"
+       }
+      ],
+      "rule": "Vegeu l'ambigüitat de spt_ma_tests.litologia; la fila de sulfats de l'informe portarà el nivell que l'Eva assigni a la mostra."
+     }
+    }
+   ],
+   "nota_bloc": "num_soil_levels = 2 (tall, única font estructural: sense annex de sondeig el TALL mana — regla v0.8). Humitat marcada a ~-1,0 als 3 punts (Excel color 44 + tall línia blava + manuscrit)."
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "candidates": [
+    {
+     "valor": "uns 100 m² (ampliació)",
+     "font": "26.0049/geotècnic Ampliació Albert Sans….msg (correu d'encàrrec, César 26/01/2026)",
+     "cita": "GEO: És un ampliació d'uns 100 m a la part posterior de l'edificació existent ( mirar plànols)"
+    }
+   ],
+   "rule": "Taula de planejament > correu d'encàrrec > pressupost (Pas 3b); aquí només el correu en parla → candidats (única font, valor aproximat 'uns').",
+   "note": "ENCÀRREC = AMPLIACIÓ → l'informe escriu 'Superfície construïda ampliació' (regla v0.7). Cap taula de superfícies als plànols: A.01.pdf (=PLANO 2.pdf, md5 idèntic) és el plànol de situació 2022 del 'PROJECTE DE TANCAMENT DE PORXO' (David Graus); planol-1.pdf idem; planol 3.pdf croquis 2024; 'ampliació habitatge v2.png' delimita la zona (ratllat vermell + p1/p2/p3) sense xifres.",
+   "sources_checked": [
+    "A.01.pdf / 26.0049/PLANO 2.pdf (render: cap taula)",
+    "26.0049/planol-1.pdf (caixetí, cap superfície)",
+    "26.0049/planol 3.pdf (sense text)",
+    "FOTOS DE CAMP + PLANOL PUNTS/ampliació habitatge v2.png",
+    "pressupost p.1-2",
+    "PLAN_COST"
+   ]
+  }
+ },
+ "documents_read": [
+  "ANNEXES/4001670_DPSH.xls",
+  "PDF/ANNEXES/4001670_DPSH.pdf",
+  "tall.pdf",
+  "PDF/ANNEXES/4001670_tall de correlació.pdf (duplicat del tall.pdf, FreeHand/Distiller — no font independent)",
+  "comanda laboratori_4001670_ALCOLETGE.xls",
+  "PENETROS.pdf",
+  "FOTOS DE CAMP + PLANOL PUNTS/spt alcoletge.png",
+  "26.0049/geotècnic Ampliació Albert Sans municipi d'Alcoletge.msg",
+  "26.0049/RE_ … .msg (cap text nou; adjunt PLAN_COST)",
+  "26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf (p.2)",
+  "26.0049/PLAN_COST_ALCOLETGE.xlsx (OFERTA)",
+  "26.0049/DADES PER ANAR A CAMP_v1.xlsx (context: previsió 'PENETROS I MOSTRA', F38 buit)",
+  "ANNEXES/COORDENADES.txt (P-1 sol: 308781,86; 4613950.63; z GPS 198.9 — z no usada)",
+  "26.0049/A.01.pdf + planol-1.pdf + planol 3.pdf (render/caixetí: cap superfície d'ampliació)",
+  "DTE.txt (nota de facturació, irrellevant)"
+ ]
+}

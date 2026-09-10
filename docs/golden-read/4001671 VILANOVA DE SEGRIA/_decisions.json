@@ -1,0 +1,468 @@
+{
+ "project": "4001671 VILANOVA DE SEGRIA",
+ "read_on": "2026-08-23",
+ "reader": "1 subagent amb el skill v0.3 (va caure per error de connexió DESPRÉS d'escriure els 18 JSON); decisions i comparació: Claude Code en sessió",
+ "sources_read": 18,
+ "bias_disclosure": "De l'anàlisi sabia: 'arquitecte de Vilanova: en cap text' (truth-map 0 docs), informe en castellà, 18 fotos. El subagent no ho sabia i ha trobat l'arquitecte (Jordi Carner, ROCAR) al caixetí del plànol 1.0 i al correu d'encàrrec.",
+ "decisions": {
+  "expedient": {
+   "status": "segur",
+   "value": "4001671",
+   "rule": "carpeta = comanda N19 = annex DPSH = caixetins",
+   "candidates": [
+    {
+     "value": "4001671",
+     "source": "comanda Hoja1!N19",
+     "quote": "NÚM. D'EXPEDIENT | 4001671"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "annex_12",
+    "annex_13"
+   ]
+  },
+  "client_name": {
+   "status": "segur",
+   "value": "Grupo Cuenca Guerrero SL",
+   "rule": "formulari p.5 de l'acceptació (NIF B26604942) + caixetí del plànol 1.0 'Promotor' + correu d'encàrrec (2 fonts A independents). Aquí sol·licitant = promotor (la SL encarrega directament).",
+   "candidates": [
+    {
+     "value": "Grupo Cuenca Guerrero SL (B26604942)",
+     "source": "acceptació p.5",
+     "quote": "Grupo Cuenca Guerrero SL | B26604942"
+    },
+    {
+     "value": "Grupo CUENCA GUERRERO",
+     "source": "plànol 1.0 caixetí 'Promotor'",
+     "quote": "Promotor: Grupo CUENCA GUERRERO"
+    },
+    {
+     "value": "Antonio Cuenca Lara (persona de contacte)",
+     "source": "acceptació p.5",
+     "quote": "ANTONIO CUENCA LARA"
+    }
+   ],
+   "sources_checked": [
+    "acceptacio_02",
+    "planol_09",
+    "correu_07",
+    "g3_01",
+    "camp_11"
+   ]
+  },
+  "street_address": {
+   "status": "segur",
+   "value": "C/ Santa Gemma, 4 (Urb. La Serra)",
+   "rule": "pressupost OBRA + comanda + plànol 1.0 + annexos. El manuscrit TPS diu 'EL SECÀ' (topònim de la zona veïna): descartat pel creuament.",
+   "candidates": [
+    {
+     "value": "C/ Sta. Gemma 4, Urb. La Serra",
+     "source": "PRESSUPOST p.1 bloc OBRA",
+     "quote": "C/ Sta. Gemma 4, Urb. La Serra"
+    },
+    {
+     "value": "Calle Santa Gemma nº 4",
+     "source": "annex DPSH",
+     "quote": "Calle Santa Gemma nº 4"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "g3_05",
+    "planol_09",
+    "annex_12",
+    "annex_14",
+    "camp_11 (EL SECÀ descartat)",
+    "annex_16"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Vilanova de Segrià",
+   "rule": "unànime (pressupost, comanda amb accent, annexos, plànol)",
+   "candidates": [
+    {
+     "value": "Vilanova de Segrià",
+     "source": "comanda Hoja1!N21",
+     "quote": "VILANOVA DE SEGRIÀ"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "g3_01",
+    "annex_12",
+    "planol_09"
+   ]
+  },
+  "architect_name": {
+   "status": "candidats",
+   "value": "Jordi Carner (ROCAR arquitectura i enginyeria)",
+   "rule": "caixetí del plànol 1.0 + correu d'encàrrec (2 fonts). PERÒ és arquitecte TÈCNIC (regla Alcoletge: l'Eva pot posar el client) i persona vs despatx no és decidible (regla Linyola). → candidats, mai segur.",
+   "candidates": [
+    {
+     "value": "Jordi Carner (arquitecte tècnic, ROCAR)",
+     "source": "plànol 1.0 caixetí + correu 27/01",
+     "quote": "Jordi Carner … ROCAR arquitectura i enginyeria"
+    },
+    {
+     "value": "ROCAR arquitectura i enginyeria (despatx)",
+     "source": "plànol 1.0 caixetí",
+     "quote": "ROCAR arquitectura i enginyeria"
+    },
+    {
+     "value": "Grupo Cuenca Guerrero SL (pràctica Eva: client)",
+     "source": "regla del skill",
+     "quote": "—"
+    }
+   ],
+   "sources_checked": [
+    "planol_09",
+    "correu_07",
+    "acceptacio_02 (casella no consta)"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "habitatge unifamiliar aïllat (vivienda unifamiliar)",
+   "rule": "plànol 1.0 (avantprojecte) + correu + comanda 'CONSTR HAB UNIF' + títol dels annexos ('vivienda unifamiliar', castellà)",
+   "candidates": [
+    {
+     "value": "habitatge unifamiliar aïllat",
+     "source": "plànol 1.0 + correu",
+     "quote": "habitatge unifamiliar aïllat"
+    },
+    {
+     "value": "vivienda unifamiliar",
+     "source": "annex tall títol",
+     "quote": "…UNA VIVIENDA UNIFAMILIAR…"
+    }
+   ],
+   "sources_checked": [
+    "planol_09",
+    "correu_07",
+    "g3_05",
+    "annex_13",
+    "g3_04 (E9 sense tipologia)"
+   ]
+  },
+  "num_floors": {
+   "status": "segur",
+   "value": "PB (~100 m²)",
+   "rule": "correu d'encàrrec ('pb 100m2') + lectura visual del plànol 1.0 (volum d'una planta). Regla: descripció del proveïdor amb superfície per planta → segur amb nota.",
+   "candidates": [
+    {
+     "value": "PB, ~100 m²",
+     "source": "correu 27/01",
+     "quote": "pb 100m2"
+    },
+    {
+     "value": "PB (visual)",
+     "source": "plànol 1.0",
+     "quote": "(volum d'una planta)"
+    }
+   ],
+   "sources_checked": [
+    "correu_07",
+    "planol_09"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap valor declarat (avantprojecte sense taula de planejament; cap Cadastre a la carpeta). El contorn acotat del plànol (21,62/18,80/22,86/17,85) donaria ≈ 405-410 m² per CÀLCUL: mai omplir per càlcul propi → proposta Cadastre.",
+   "candidates": [
+    {
+     "value": "≈ 405-410 m² (càlcul de cotes del plànol, NO declarat)",
+     "source": "plànol 1.0",
+     "quote": "21,62 / 18,80 / 22,86 / 17,85"
+    }
+   ],
+   "sources_checked": [
+    "planol_09",
+    "annex_16 (mançana 86067 parcial)",
+    "correu_07"
+   ],
+   "fora_carpeta": {
+    "value": "406",
+    "font": "Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 4 = 8606709CG9280N (406 m²)",
+    "note": "no és lectura de la carpeta; mesurat 2026-09-04 (mesura dels 8); signat: «406 según catastro»"
+   }
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2026-02-19",
+   "rule": "albarà TPS 19-2-26 + annex DPSH + comanda DATA DE PRESA + foto WhatsApp 2026-02-19 (fitxa buida)",
+   "candidates": [
+    {
+     "value": "2026-02-19",
+     "source": "annex DPSH",
+     "quote": "19/02/2026"
+    },
+    {
+     "value": "19-2-26",
+     "source": "albarà TPS",
+     "quote": "Data: 19-2-26"
+    }
+   ],
+   "sources_checked": [
+    "camp_11",
+    "annex_12",
+    "g3_05",
+    "fotos_17",
+    "g3_03 (buida)"
+   ]
+  },
+  "cota_referencia": {
+   "status": "segur",
+   "value": "+321,69",
+   "rule": "annex DPSH '+321,69 msnm (visor ICGC)' (3 punts iguals) + tall coherent (~321,7). TPS només relativa (−0,2/−0,3 del carrer). Sense COORDENADES.txt.",
+   "candidates": [
+    {
+     "value": "+321,69 msnm (visor ICGC)",
+     "source": "annex DPSH",
+     "quote": "Cota inici: +321,69 msnm (visor ICGC)"
+    }
+   ],
+   "sources_checked": [
+    "annex_12",
+    "annex_13",
+    "camp_11",
+    "annex_16"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "segur",
+   "value": "2",
+   "rule": "llegenda del tall (2 nivells) + MULTICA (model de càlcul bicapa 2 capes). Sense sondeig.",
+   "candidates": [
+    {
+     "value": "2",
+     "source": "annex tall llegenda",
+     "quote": "(2 nivells litològics)"
+    },
+    {
+     "value": "2 (capes de càlcul)",
+     "source": "MULTICA_61.xls",
+     "quote": "CAPA 1 0→2,6 N=10 | CAPA 2 2,6→3,78 N=24"
+    }
+   ],
+   "sources_checked": [
+    "annex_13",
+    "altres_10",
+    "g3_06"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "3",
+   "rule": "Excel (3) + albarà TPS (3; 7,45 ml = suma de refussos) + pressupost (3 previstos) + annexos",
+   "candidates": [
+    {
+     "value": "3",
+     "source": "ANEXOS/4001671_DPSH.xls",
+     "quote": "P-1 -1,48 | P-2 -2,18 | P-3 -3,78"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "camp_11",
+    "g3_01",
+    "annex_12"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "sense COORDENADES.txt ni annex de sondeig amb UTM. Proposta: visor ICGC (com la cota) o geocodificació estricta de 'C/ Santa Gemma 4, Vilanova de Segrià'.",
+   "candidates": [],
+   "sources_checked": [
+    "inventari",
+    "annex_12",
+    "annex_14"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap consulta; només la mançana '86067' retolada a la capa cadastral de F2 (parcial, no és la referència)",
+   "candidates": [
+    {
+     "value": "mançana 86067 (parcial)",
+     "source": "annex_16 F2 PUNTS",
+     "quote": "86067"
+    }
+   ],
+   "sources_checked": [
+    "annex_16",
+    "planol_09"
+   ]
+  },
+  "lab": {
+   "status": "candidats",
+   "value": {
+    "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL (cap GTL a la carpeta)",
+    "lab_sample_id": "SPT-1 (P3)",
+    "lab_depth": "0,8 - 1,4 m",
+    "lab_location": "P-3"
+   },
+   "rule": "sense GTL: comanda (SPT1 (P3) 0,8-1,4) = Excel = full TPS (cap discrepància). ATENCIÓ: es van fer DOS SPT (P3 i P1, tots dos 0,8-1,4); la mostra del laboratori és la del P3 (comanda). Nom del lab per coneixement previ → candidat.",
+   "candidates": [
+    {
+     "value": "SPT1 (P3) 0,8-1,4",
+     "source": "comanda fila 35",
+     "quote": "SPT1 (P3) | 0.8 | 1.4"
+    },
+    {
+     "value": "TPS (coneixement previ)",
+     "source": "memòria gtl_lab_identity",
+     "quote": "—"
+    },
+    {
+     "value": "2n SPT al P1 (13/10/14/24), no enviat al lab",
+     "source": "full TPS / Excel P-1",
+     "quote": "SPT1 P-1 0,8-1,4"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "g3_06",
+    "camp_11",
+    "fotos_17",
+    "annex_15"
+   ]
+  },
+  "cte": {
+   "status": "segur",
+   "value": {
+    "cte_edificacio": "C-0",
+    "cte_sol": "T-1"
+   },
+   "rule": "pressupost p.2 'C0 / T1'; coherent amb PB de ~100 m²",
+   "candidates": [
+    {
+     "value": "C0 / T1",
+     "source": "PRESSUPOST p.2",
+     "quote": "Tipus d’edifici: C0 | Tipus de Terreny : T1"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "acceptacio_02",
+    "correu_07"
+   ]
+  }
+ },
+ "summary": {
+  "segur": 11,
+  "candidats": 2,
+  "no_trobat": 2,
+  "notes": "candidats: architect (tècnic/despatx/client), lab (nom absent). NT: superficie (≈408 només per càlcul), utm, ref (mançana parcial) — utm i ref agrupats = 1 camp NT."
+ },
+ "comparison_with_eva": {
+  "reference": "reference-material/…/validation/eva_reference_values.json (de 4001671_informe.docx, NO present a la còpia de Windows; l'únic informe allà és PDF/4001671_informe.pdf, gairebé tot imatge — 9.877 chars/19 p.). Referència amb soroll conegut (municipality = frase sencera; superficie_parcela/construida probablement intercanviades).",
+  "opened_after_decisions": true,
+  "per_field": {
+   "expedient": {
+    "eva": "4001671",
+    "mine": "4001671",
+    "result": "OK"
+   },
+   "client_name": {
+    "eva": "GRUPO CUENCA GUERRERO, S.L",
+    "mine": "Grupo Cuenca Guerrero SL",
+    "result": "OK"
+   },
+   "street_address": {
+    "eva": "(títol) Calle Santa Gemma nº4",
+    "mine": "C/ Santa Gemma, 4 (Urb. La Serra)",
+    "result": "OK"
+   },
+   "municipality": {
+    "eva": "VILANOVA DE SEGRIÀ (referència sorollosa)",
+    "mine": "Vilanova de Segrià",
+    "result": "OK"
+   },
+   "architect_name": {
+    "eva": "JUAN JOSÉ TORRES POVEDANO",
+    "mine": "candidats [Jordi Carner (ROCAR) | ROCAR | client]",
+    "result": "NT* (correcte ilocalitzable)",
+    "note": "'TORRES POVEDANO' NO apareix en CAP document de la carpeta (ni al PDF de l'informe, text escàs): és el cas previst 'arquitecte de Vilanova: enlloc'. L'Eva ho sap per fora (telèfon/expedient previ?). Comportament correcte del lector: candidats + 'no consta a la carpeta'. Jordi Carner (ROCAR) és qui signa l'avantprojecte: candidat legítim però no el que l'Eva va escriure."
+   },
+   "building_type": {
+    "eva": "una vivienda unifamiliar aislada",
+    "mine": "habitatge unifamiliar aïllat (vivienda unifamiliar)",
+    "result": "OK (CLOSE)"
+   },
+   "num_floors": {
+    "eva": "Pb",
+    "mine": "PB (~100 m²)",
+    "result": "OK"
+   },
+   "superficie_parcela": {
+    "eva": "'100' (probablement intercanviat amb superficie_construida '406')",
+    "mine": "no_trobat (nota: ≈405-410 per càlcul de cotes)",
+    "result": "NT",
+    "note": "si l'informe diu 406 (parcel·la), l'Eva ho va obtenir fora de la carpeta (Cadastre/mesura); el meu càlcul de cotes donava ≈408 — la proposta 'Cadastre' l'hauria resolt. No verificable: l'informe no té text."
+   },
+   "field_date": {
+    "eva": "19 de febrero de 2026",
+    "mine": "2026-02-19",
+    "result": "OK"
+   },
+   "cota_referencia": {
+    "eva": "+321.00 (referència) / +321,69 (PDF de l'informe)",
+    "mine": "+321,69",
+    "result": "OK",
+    "note": "el PDF real diu 321,69: la referència arrodonida és soroll d'extracció"
+   },
+   "num_soil_levels": {
+    "eva": "dos niveles",
+    "mine": "2",
+    "result": "OK"
+   },
+   "num_dpsh_tests": {
+    "eva": "3",
+    "mine": "3",
+    "result": "OK"
+   },
+   "utm_ref_catastral": {
+    "eva": "(absents de la referència)",
+    "mine": "no_trobat",
+    "result": "N/A"
+   },
+   "lab": {
+    "eva": "TPS / SPT-1 / '-1.00 a -1.60' / P-3",
+    "mine": "candidats: TPS / SPT-1 (P3) / 0,8-1,4 / P-3",
+    "result": "CAND ⚠",
+    "note": "NO RESOLUBLE: totes les fonts de la carpeta (comanda, Excel, full TPS) diuen 0,8-1,4; la referència diu 1,00-1,60 (sospitós de plantilla/soroll — el .docx no és a la còpia de Windows i el PDF no té text). PENDENT: verificar amb el .docx real. Si l'informe diu 1,00-1,60, seria un error de l'Eva o una mostra diferent."
+   },
+   "cte": {
+    "eva": "C-0 / T-1",
+    "mine": "C-0 / T-1",
+    "result": "OK"
+   }
+  },
+  "totals": {
+   "OK": 11,
+   "CAND": 1,
+   "NT": 2,
+   "NA": 1,
+   "ERR": 0
+  },
+  "rules_learned": [
+   "architect: pot NO ser en cap document (Vilanova: TORRES POVEDANO) → el 'no consta a la carpeta; candidats' és el comportament correcte, i el popup ha de deixar escriure",
+   "superficie_parcela: el càlcul de cotes del plànol (≈408 vs 406 real) és bona PISTA per validar el Cadastre, mai valor final",
+   "referències extretes de .docx poden intercanviar camps veïns (100/406) i arrodonir cotes: sempre contrastar amb l'informe si es pot"
+  ]
+ },
+ "comparison_addendum_2026-08-23": {
+  "source": "PDF/4001671_informe.pdf (informe real de l'Eva, PDF amb capa de text — la premissa 'el PDF és imatge' era falsa per al cos; només els annexos són imatge)",
+  "lab": {
+   "old": "CAND ⚠ (referència '-1,00 a -1,60' vs carpeta 0,8-1,4, no resoluble)",
+   "new": "CAND (resolt)",
+   "evidence": "p.7 'SPT1 0,80-1,40m' i p.9 'SPT-1 0.80-1,40m': l'informe real diu 0,80-1,40. La referència eva_reference_values ('-1.00 a -1.60') era soroll de l'extractor (slot desalineat), NO un valor de l'Eva. La decisió de la lectura d'or (candidats amb 0,8-1,4 primer) era correcta."
+  },
+  "utm_ref_catastral": "es manté N/A: cap UTM/RC a la capa de text de l'informe (els annexos amb caselles x/y són imatge)"
+ }
+}

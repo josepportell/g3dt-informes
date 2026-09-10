@@ -1,0 +1,22 @@
+{
+  "source_path": "ANNEXES/3001621_DPSH.xls",
+  "document_type": "dpsh_excel",
+  "what_it_is": "Transcripció digital (revisada per Eva) dels 4 assaigs DPSH de camp",
+  "issuer": "G3 (Eva, a partir dels fulls de camp de TPS)",
+  "date": "sense data dins del fitxer",
+  "pages_or_sheets": "fulls P-1, P-2, P-3, P-4 (capçalera fila 16, dades des de fila 17)",
+  "context": {
+    "who_made_it": "Eva transcriu els fulls de camp manuscrits de TPS",
+    "for_whom": "L'informe (gràfics DPSH de l'annex)",
+    "why": "Versió digital i revisada dels valors N20 de camp",
+    "expected_fields": ["num_dpsh_tests (fulls amb dades)", "cotes de rebuig (B80)"],
+    "not_expected": ["cap metadada de projecte (client, adreça, municipi, expedient, dates) dins del fitxer"],
+    "relation_to_others": "Versió revisada dels fulls manuscrits de PENETROS + SONDEIG.pdf: l'Excel mana per als valors. PDF/ANNEXES/3001621_DPSH.pdf n'és la impressió (aquell sí que porta capçalera amb obra/cota/data).",
+    "authority_for": ["num_dpsh_tests"]
+  },
+  "tier_a": [
+    {"concept_id": "num_dpsh_tests", "value": 4, "location": "fulls P-1..P-4, columna C amb dades (7/4/5/9 lectures)", "quote": "P-1 'Rebuig a -1,08 m' | P-2 'Rebuig a -0,48 m' | P-3 'Rebuig a -0,76 m' | P-4 'Rebuig a -1,55 m'", "confidence": 0.95, "note": "4 assaigs EXECUTATS = 4 previstos (pressupost/fitxa/PLAN_COST): sense discrepància."}
+  ],
+  "not_present": ["expedient", "client_name", "street_address", "municipality", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia (B80 dona cotes de rebuig relatives, no la cota de referència)", "num_soil_levels (C79 'Nivell 1' és etiqueta de plantilla del gràfic)", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+  "reading_notes": "xlrd; comptats fulls amb valors numèrics a la columna C des de fila 17. Tots 4 amb rebuig somer (0,48-1,55 m): terreny molt resistent en superfície."
+}

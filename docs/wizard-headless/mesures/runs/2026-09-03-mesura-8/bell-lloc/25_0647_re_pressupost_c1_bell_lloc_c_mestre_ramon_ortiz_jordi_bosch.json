@@ -1,0 +1,146 @@
+{
+ "source_path": "25.0647/RE_ Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+ "source_md5": "e697618a53d214d51049213bd8169fbe",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu reenviat (RE:) d'Eva Vázquez sense text nou propi, que cita íntegrament l'encàrrec original de César Morillas (assumpte, plantes, adreça, arquitecte/client) per iniciar l'estudi geotècnic de Bell-lloc",
+ "issuer": "Eva Vázquez <eva@g3dt.com> (reenviament); contingut citat original de César Morillas <cesar@g3dt.com>",
+ "date": "2025-09-03 11:58:54+02:00 (reenviament d'Eva); original 2025-09-03 11:26 (César Morillas, citat dins del cos)",
+ "pages_or_sheets": "n/a (correu)",
+ "context": {
+  "who_made_it": "César Morillas (Dir. Dept. Assessor a G3) escriu l'encàrrec intern original a l'Eva Vázquez (Responsable Dept Geologia) i la Dolors Maqueda amb les dades bàsiques de l'obra; Eva reenvia (RE:) sense afegir-hi text propi",
+  "for_whom": "Eva Vázquez i Dolors Maqueda, per preparar el pressupost i l'estudi geotècnic",
+  "why": "encàrrec intern de G3 per obrir l'expedient del C1 a Bell-lloc, abans de fer el pressupost",
+  "expected_fields": [
+   "cte_edificacio",
+   "num_floors",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "superficie_construida"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "referencia_catastral",
+   "lab_testing_company"
+  ],
+  "relation_to_others": "El cos propi d'Eva (entre les capçaleres de correu i el primer 'De:') és buit de dades del projecte (només firma i avís legal). Tot el contingut útil és una CITA de l'email original de César Morillas, subjecte 'Pressupost C1 - Bell-lloc -c/ Mestre Ramon Ortiz - Jordi Bosch', que existeix com a fitxer independent a la carpeta ('25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg', md5 diferent). Aquest document NO és una font independent d'aquell: mateix text, mateix autor, mateixa data d'origen. Els adjunts (plan_cost_bell_lloc.xlsx, image013.jpg, image014.jpg) ja són al meta com a 'already_in_folder' (PLAN_COST_BELL-LLOC.xlsx i imatges de firma d'una altra cadena) — no aporten res nou.",
+  "authority_for": [
+   "cte_edificacio",
+   "num_floors"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C1",
+   "location": "cos del correu, paràgraf 'GEO' (citant César Morillas, 2025-09-03 11:26)",
+   "quote": "GEO : És un C1 Pb de 280m + p1 de 86 - son dos parcel.les contigües on hi haura una sola casa.",
+   "confidence": 0.85,
+   "note": "encàrrec intern, coherent amb el pressupost G3 (Tipus d'edifici: C1); citat, no font independent addicional a l'email original"
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+1 (2 plantes)",
+   "location": "cos del correu, paràgraf 'GEO'",
+   "quote": "Pb de 280m + p1 de 86",
+   "confidence": 0.8,
+   "note": "PB de 280 m2 + P1 de 86 m2; citat de l'email original de César Morillas"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "cos del correu, paràgraf 'GEO'",
+   "quote": "son dos parcel.les contigües on hi haura una sola casa",
+   "confidence": 0.5,
+   "note": "inferit ('una sola casa'); no diu literalment 'habitatge unifamiliar'; candidat feble"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Mestre Ramon Ortiz, 15, Bell-lloc",
+   "location": "cos del correu, paràgraf 'OBRA'",
+   "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+   "confidence": 0.8,
+   "note": "citat de l'email original; coincideix amb el nom del fitxer del projecte ('...Mestre Ramon Ortiz...')"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "15"
+    ],
+    "municipi": "Bell-lloc d'Urgell",
+    "municipi_alternatives": [
+     "Bell-lloc"
+    ]
+   },
+   "location": "cos del correu, paràgraf 'OBRA'",
+   "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+   "confidence": 0.75,
+   "note": "concepte extra (address_struct), no és cap dels 15 camps; municipi oficial 'Bell-lloc d'Urgell' assumit per la forma curta G3 'Bell-lloc'"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc",
+   "location": "cos del correu, paràgraf 'OBRA'",
+   "quote": "OBRA: Bell-lloc - CL MESTRE RAMON ORTIZ 15",
+   "confidence": 0.7,
+   "note": "forma curta G3; forma oficial llarga 'Bell-lloc d'Urgell' consta en altres documents (GTL, Cadastre)"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Bosch Novell",
+   "location": "cos del correu, paràgraf 'CLIENT'",
+   "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+   "confidence": 0.6,
+   "note": "etiquetat 'CLIENT' al correu però el nom conté ARQUITECT(URA) -> tractat com a sol·licitant/arquitecte (regla Pas 3), no client_name. Persona (Jordi Bosch Novell) preferida sobre despatx (ARQUITECTURA BOSCH NOVELL)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "ARQUITECTURA BOSCH NOVELL / Jordi Bosch Novell",
+   "location": "cos del correu, paràgraf 'CLIENT'",
+   "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571- e.arquitectura@boschnovell.com",
+   "confidence": 0.0,
+   "note": "descartat com client_name: etiquetat CLIENT però el nom conté ARQUITECT -> és el sol·licitant/arquitecte, no el promotor de l'obra (regla Pas 3)"
+  }
+ ],
+ "tables": {
+  "superficie_construida": [
+   {
+    "components": [
+     "280 (PB)",
+     "86 (P1)"
+    ],
+    "total": null,
+    "etiqueta_font": "correu d'encàrrec de César Morillas, 2025-09-03 (citat dins d'aquest RE:)",
+    "location": "cos del correu, paràgraf 'GEO'",
+    "quote": "Pb de 280m + p1 de 86"
+   }
+  ],
+  "__nota": "l'Eva escriu els sumands (280+86), no la suma; regla del skill (Pas 3b) confirmada literalment en aquest projecte"
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_sol",
+  "superficie_parcela"
+ ],
+ "reading_notes": "El cos propi d'Eva (RE:) no conté cap dada nova del projecte (buit entre capçaleres i firma + avís legal). Tot el nivell A extret prové de la cita de l'email original de César Morillas (2025-09-03 11:26, assumpte 'Pressupost C1 - Bell-lloc -c/ Mestre Ramon Ortiz - Jordi Bosch'), que existeix com a fitxer separat a la carpeta -> tractat com a NO independent d'aquell (mateix autor, mateix text, mateixa data). Els 3 adjunts (plan_cost_bell_lloc.xlsx, image013.jpg, image014.jpg) ja son 'already_in_folder' segons el meta de pre-extracció -> no reprocessats. El correu esmenta explícitament 'dos parcel.les contigües on hi haura una sola casa', el que confirma l'escenari de multiplicitat de superficie_parcela (regla Pas 3: 2+ consultes cadastrals + 'parcel·les contigües' al correu -> candidats), coherent amb les 2 consultes de Cadastre presents a la carpeta (25.0647/4613172CG1141S0001SU-15.pdf i 4613173CG1141S0001ZU-13.pdf); cap valor numèric de superfície de parcel·la surt en aquest correu. Un enllaç de Google Maps (coordenades WGS84 graus/minuts/segons, no UTM) apareix al cos citat: no s'ha usat per a utm_x/utm_y ('no geocodificar aquí', regla Pas 3) ni s'ha extret cap valor d'ell."
+}

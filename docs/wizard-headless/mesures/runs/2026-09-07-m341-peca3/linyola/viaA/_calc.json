@@ -1,0 +1,73 @@
+{
+ "Df_user": 1.7,
+ "num_soil_levels_user": 2,
+ "soil_types_user": [
+  "limo",
+  "rock"
+ ],
+ "dpsh_overall_n20": 18.8,
+ "bearing_layer_idx": 1,
+ "bearing_layer_description": "Lutites i sorrenques, Substrat",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Llims argilsoso i sorrencs",
+   "from": 0.0,
+   "to": 1.4,
+   "n20_avg": 12.94,
+   "Nb": 15.6,
+   "soil_type": "limo"
+  },
+  {
+   "n": 2,
+   "desc": "Lutites i sorrenques, Substrat",
+   "from": 1.4,
+   "to": null,
+   "n20_avg": 31.36,
+   "Nb": 37.8,
+   "soil_type": "rock"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2.2,
+  "cohesion": 1.0,
+  "phi": 30,
+  "E": 500
+ },
+ "terzaghi": {
+  "phi": 30,
+  "cohesion": 1.0,
+  "gamma": 2.2,
+  "B": 1.0,
+  "Df": 1.7,
+  "qu": 58.50860000000001,
+  "safety_factor": 3.0,
+  "Qa": 3.0,
+  "settlement_cm": 1.6,
+  "settlement_type": "diferit",
+  "Es_used": 94.44922547332186,
+  "qa_terzaghi_peck": null,
+  "Qa_uncapped": 19.50286666666667,
+  "Fw": null,
+  "Fd_tp": null,
+  "qa_governs": "cap",
+  "settlement_generic": true,
+  "settlement_regime": "roca",
+  "Es_source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
+  "Es_candidates": [
+   {
+    "value": 94.44922547332186,
+    "display": "Es=94 (2.5×Nb 37.8)",
+    "source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
+    "settlement_cm": 1.6
+   },
+   {
+    "value": 500.0,
+    "display": "Es=500 (E del criteri)",
+    "source": "E de la taula geotècnica com a Es",
+    "settlement_cm": 0.3
+   }
+  ],
+  "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm."
+ }
+}

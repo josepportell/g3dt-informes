@@ -1,0 +1,24 @@
+{
+  "source_path": "26.0254/PLAN_COST_CERDANYOLA.xlsx (+ duplicat 26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx)",
+  "document_type": "plan_cost_g3",
+  "what_it_is": "Full intern de costos de G3 per a l'oferta; la versió '_2 CASES' té quantitats IDÈNTIQUES (no actualitzada).",
+  "issuer": "G3 (tècnic E21: Eva Vázquez Marcet)",
+  "date": "sense data llegible",
+  "pages_or_sheets": "fulls Plan Cost + OFERTA (+5 de plantilla)",
+  "context": {
+    "who_made_it": "G3, intern, per calcular el cost de l'oferta",
+    "for_whom": "G3 mateix (no surt de la casa)",
+    "why": "dimensionar la campanya i el preu",
+    "expected_fields": ["descripció E9 (tipus edifici + municipi)", "unitats DPSH OFERTA!B21", "ml sondeig B6", "SPT B14"],
+    "not_expected": ["client_name", "adreces", "dates de camp", "cotes"],
+    "relation_to_others": "PLAN_COST no s'actualitza: és l'ÚLTIMA font per a quantitats (regla del skill); aquí les dues versions porten 2 DPSH mentre el pressupost MODF en porta 4 → confirma que PLAN_COST va quedar vell. Tota la resta del full és plantilla (SOIL-ASSAIG, TPS, LLEIDA, preus): mai senyal.",
+    "authority_for": ["building_type (contrast dèbil)", "municipality (1 de 3 fonts)"]
+  },
+  "tier_a": [
+    {"concept_id": "building_type", "value": "habitatge unifamiliar (EG HAB UNIF)", "location": "'Plan Cost'!E9", "quote": "EG HAB UNIF CERDANYOLA", "confidence": 0.6, "note": "expandir; coherent amb comanda 'DOS NOUS HAB AÏLLATS' → habitatges unifamiliars aïllats"},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "'Plan Cost'!E9", "quote": "EG HAB UNIF CERDANYOLA", "confidence": 0.6, "note": "forma curta G3"},
+    {"concept_id": "num_dpsh_tests", "value": "2 (OFERTA, versió vella d'1 casa)", "location": "OFERTA!B21", "quote": "unitat de penetració dinàmica DPSH | 2", "confidence": 0.2, "note": "quantitat NO actualitzada a 2 cases (pressupost MODF: 4); manen els Excel executats"}
+  ],
+  "not_present": ["expedient", "client_name", "street_address", "architect_name", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Dues versions comparades cel·la a cel·la (E9/E21/OFERTA B6=5 ml, B14=3 SPT, B21=2 DPSH): idèntiques → '_2 CASES' anotada com a duplicat, no font independent."
+}

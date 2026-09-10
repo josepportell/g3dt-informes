@@ -1,0 +1,79 @@
+{
+ "source_path": "comanda laboratori_4001612_BELL-LLOC.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3 a TPS per a la mostra del sondeig",
+ "issuer": "G3 (responsable Eva Vázquez)",
+ "date": "DATA DE PRESA 2025-10-06; DATA DE SOL.LICITUD 2025-10-10",
+ "pages_or_sheets": "Hoja1",
+ "context": {
+  "who_made_it": "G3 (Eva) encarrega assaigs al laboratori",
+  "for_whom": "TPS (laboratori); el bloc DADES DEL SOL.LICITANT és la relació G3->lab",
+  "why": "demanar sulfats de la mostra SPT del sondeig",
+  "expected_fields": [
+   "spt_ma_tests.id/punt (C35)",
+   "lab_depth (J35/L35)",
+   "data del sondeig (N23)"
+  ],
+  "not_expected": [
+   "client de l'informe",
+   "N30",
+   "litologia detallada (columna LITOLOGIA buida aquí)"
+  ],
+  "relation_to_others": "la mostra C35 'SPT 1 (S1)' = GTL 'SPT1 S1' = annex sondeig 'SPT-1'; cotes 1,0-1,6 coincideixen amb GTL i annex",
+  "authority_for": [
+   "spt_ma_tests.punt (parèntesi de C35)",
+   "lab_depth (tercer, rere GTL i annex)",
+   "field_date candidat 2 (dia sondeig)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001612",
+   "location": "Hoja1!N19",
+   "quote": "4001612.0",
+   "confidence": 0.95,
+   "note": "float d'Excel"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2025-10-06",
+   "location": "Hoja1!N23 (serial 45936)",
+   "quote": "DATA DE PRESA -> 45936",
+   "confidence": 0.5,
+   "note": "dia del sondeig/mostra, no primer dia de camp (DPSH 01/10) — candidat 2 amb nota 'sondeig'"
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT 1 (forma comanda)",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,6 m",
+    "n30_candidats": [],
+    "location": "Hoja1!C35 (mostra), J35/L35 (cotes inicial/final), AA35 (Agressivitat sòls: X), AD35",
+    "quote": "SPT 1 (S1) | 1.0 | 1.6 | NOMÉS SULFATS",
+    "rule": "Comanda fila 35: id + parèntesi = punt d'assaig; per a l'etiqueta de l'informe mana l'annex de l'Eva (SPT-1); per a la profunditat, GTL > Excel/annex > comanda."
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S1 (referit)",
+    "cota": null,
+    "profunditat_assolida": null,
+    "spt_ma": "1 SPT / 0 MA (una única mostra demanada)",
+    "nivell_freatic": null,
+    "location": "Hoja1 files 26-35: una sola fila de mostra",
+    "quote": "DADES DE LA/LES MOSTRA/ES -> SPT 1 (S1)",
+    "rule": "Recompte SPT/MA per al format 'N_SPT/N_MA' de la taula de sondeig: comanda + GTL + annex coincideixen en 1 SPT i cap MA."
+   }
+  ],
+  "__nota": "Bloc DADES DE L'OBRA: OBRA 'CONSTR HABITATGE', ADREÇA 'C/ ANTONI BALLET' (grafia Ballet - el doc imprès diu Bellet), POBLACIÓ 'BELL-LLOC'."
+ },
+ "not_present": [
+  "N30",
+  "litologia (columna LITOLOGIA buida)",
+  "nom del laboratori (no consta)"
+ ],
+ "reading_notes": "xlrd; dos blocs amb les mateixes etiquetes: files 11-15 = sol·licitant G3 (ignorat, regla Pas 0); serials Excel convertits (45936=2025-10-06, 45940=2025-10-10)."
+}

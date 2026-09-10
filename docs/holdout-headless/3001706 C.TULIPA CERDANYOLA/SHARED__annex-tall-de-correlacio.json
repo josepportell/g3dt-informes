@@ -1,0 +1,27 @@
+{
+  "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_tall de correlació.pdf (duplicat: CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf)",
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació A–A' que travessa les DUES parcel·les (síntesi estratigràfica d'Eva amb els 4 DPSH i el S-1).",
+  "issuer": "G3 (Eva)",
+  "date": "caixetí Data: Maig 2026; modDate 2026-06-04",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva (G3)",
+    "for_whom": "els dos informes (el tall és compartit)",
+    "why": "correlacionar P-1.1, P-1.2, S-1, P-2.1, P-2.2 en una secció única",
+    "expected_fields": ["num_soil_levels (llegenda)", "cota (eix msnm)", "expedient (caixetí)", "building_type/street (títol)"],
+    "not_expected": ["client", "arquitecte", "dates de camp", "lab"],
+    "relation_to_others": "síntesi de l'annex sondeig + Excels DPSH; el TALL mana per a num_soil_levels quan discrepa del log (regla); aquí coincideixen (3). Les dues còpies (casa 1 i casa 2) són el mateix dibuix (101710 vs 101712 bytes).",
+    "authority_for": ["num_soil_levels (les dues cases)", "expedient", "building_type (títol conjunt)"]
+  },
+  "tier_a": [
+    {"concept_id": "num_soil_levels", "value": "3 (les dues cases)", "location": "llegenda", "quote": "Nivell 1: Sorres llimoses disgregades amb graves. / Nivell 2: Llims argilosos cohesius. / Nivell 3: Substrat alterat.", "confidence": 0.85, "note": "el tall cobreix casa 1 i casa 2; per a la casa 2 (sense sondeig propi) és la font principal → candidats + confirmar"},
+    {"concept_id": "expedient", "value": "3001706", "location": "caixetí", "quote": "Exp: 3001706", "confidence": 0.8, "note": "sense sufix _CASA aquí"},
+    {"concept_id": "building_type", "value": "un habitatge unifamiliar (Tulipà 3) i un altre (Tosca 16)", "location": "caixetí TÍTOL DEL PROJECTE", "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16 de Cerdanyola del Vallès", "confidence": 0.75, "note": "redacció conjunta que confirma les dues obres i adreces"},
+    {"concept_id": "street_address", "value": "casa 1: Carrer Tulipà nº3; casa 2: Carrer Tosca nº16", "location": "caixetí TÍTOL", "quote": "al Carrer Tulipà nº3 i un altre al Carrer Tosca nº16", "confidence": 0.75, "note": "grafia 'Tulipà' amb accent aquí; 'Tulipa' als altres annexos i al carrerer del plànol ('Carrer de la Tulipa')"},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "caixetí TÍTOL", "quote": "de Cerdanyola del Vallès", "confidence": 0.7, "note": ""},
+    {"concept_id": "cota_referencia", "value": "casa 1 superfície ~198 (extrem oest); casa 2 ~201,2–203 (Base Pb marcada a ~201,2)", "location": "eix msnm del tall", "quote": "eix 192–203 msnm; línia 'Base Pb' i 'Fonamentació' (traç vermell)", "confidence": 0.4, "note": "lectura gràfica aproximada, corrobora les cotes dels annexos DPSH/sondeig; no font primària"}
+  ],
+  "not_present": ["client_name", "architect_name", "field_date", "num_dpsh_tests (els 5 punts hi són però és síntesi)", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "FreeHand/Distiller → render 150 dpi i lectura visual. Inset amb topogràfic ICGC (cotes de carrer 195,9–198,7 costat Tulipa)."
+}

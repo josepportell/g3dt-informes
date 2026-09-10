@@ -143,23 +143,14 @@
       "template_text": "",
       "reference_text": "+1106.40"
     },
-    "csn_radon_text": {
-      "value": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de que los edificios construidos en la zona sin soluciones específicas de protección frente al radón presenten concentraciones de radón superiores al nivel de referencia.",
-      "position": "p385",
-      "position_description": "Body paragraph 385",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "En el apéndice se incluye un listado de términos municipales en los que, en base a las medidas realizadas por el Consejo de Seguridad Nuclear, se considera que existe una probabilidad significativa de..."
-    },
     "data_camp_text": {
-      "value": "El día 19 de febrero de 2026, se visitó la obra para:",
-      "position": "p095",
-      "position_description": "Body paragraph 95",
-      "confidence": 0.166,
+      "value": "La campaña de campo, que se ha realizado el día 19 de febrero de 2026, ha consistido en la realización de:",
+      "position": "p136",
+      "position_description": "Body paragraph 136",
+      "confidence": 0.23809523809523808,
       "extraction_method": "paragraph_single",
-      "template_text": "El dia {{ data_camp_text }}, es va visitar l’obra per tal de:",
-      "reference_text": "El día 19 de febrero de 2026, se visitó la obra para:"
+      "template_text": "La campanya de camp, que s’ha realitzat el dia {{ data_camp_text }}, ha consistit en la realització de:",
+      "reference_text": "La campaña de campo, que se ha realizado el día 19 de febrero de 2026, ha consistido en la realización de:"
     },
     "data_signatura_text": {
       "value": "Els Omells de Na Gaia, 16 de marzo de 2026",
@@ -288,6 +279,15 @@
     "geotech_rows": {
       "value": [
         {
+          "name": "1er nivel. Arcillas arenosas",
+          "nb": "5",
+          "n": "6",
+          "density": "1.90",
+          "cohesion": "0.10",
+          "phi": "28º",
+          "E": "90"
+        },
+        {
           "name": "2do nivel. Bolos y gravas en matriz areno-arcillosa",
           "nb": "15-R",
           "n": "--",
@@ -302,7 +302,7 @@
       "confidence": 0.85,
       "extraction_method": "loop_table",
       "template_text": "Loop: ['name', 'nb', 'n', 'density', 'cohesion', 'phi', 'E']",
-      "reference_text": "1 data rows"
+      "reference_text": "2 data rows"
     },
     "lab_depth": {
       "value": "Profundidad: -2.80 a -3.00 m",
@@ -376,15 +376,6 @@
       "template_text": "{{ lab_tests_text }}",
       "reference_text": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08"
     },
-    "location_sentence": {
-      "value": "La edificación que se prevé construir presentará las siguientes características:",
-      "position": "p066",
-      "position_description": "Body paragraph 66",
-      "confidence": 0.191,
-      "extraction_method": "paragraph_single",
-      "template_text": "L'edificació que es preveu construir es situarà {{ location_sentence }}.",
-      "reference_text": "La edificación que se prevé construir presentará las siguientes características:"
-    },
     "materials_intro": {
       "value": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
       "position": "p248",
@@ -393,15 +384,6 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos me..."
-    },
-    "municipality": {
-      "value": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
-      "position": "p340",
-      "position_description": "Body paragraph 340",
-      "confidence": 0.218,
-      "extraction_method": "paragraph_single",
-      "template_text": "A la zona d’estudi, en el municipi de {{ municipality }}, s’estableix una acceleració sísmica bàsica de:",
-      "reference_text": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:"
     },
     "num_dpsh_tests": {
       "value": "2 ensayos SPT con recuperación de muestra (ver registro de los ensayos mecánicos).",
@@ -428,13 +410,13 @@
       "reference_text": "1 data rows"
     },
     "plantes": {
-      "value": "C-1",
+      "value": "5 viviendas con Pb + 1Pp + Bc\n2 viviendas con Ss + Pb + 1Pp + Bc",
       "position": "t0_r0_c1",
       "position_description": "Table 0, row 0, col 1",
       "confidence": 0.95,
       "extraction_method": "table_cell",
       "template_text": "{{ plantes }}",
-      "reference_text": "C-1"
+      "reference_text": "5 viviendas con Pb + 1Pp + Bc\n2 viviendas con Ss + Pb + 1Pp + Bc"
     },
     "qa_value": {
       "value": "2.0 Kg/cm2 con un factor de seguridad incluido de F=3",
@@ -453,15 +435,6 @@
       "extraction_method": "intelligent_analysis",
       "template_text": "",
       "reference_text": "2"
-    },
-    "radon_zone_description": {
-      "value": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
-      "position": "p407",
-      "position_description": "Body paragraph 407",
-      "confidence": 0.9,
-      "extraction_method": "intelligent_analysis",
-      "template_text": "",
-      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2."
     },
     "seismic_ab_text": {
       "value": "AB = 0.05 g (siento g el valor de la gravedad)",
@@ -493,24 +466,6 @@
       "extraction_method": "loop_table",
       "template_text": "Loop: ['num', 'terrain_type', 'thickness', 'c_coeff']",
       "reference_text": "2 data rows"
-    },
-    "settlement": {
-      "value": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm.",
-      "position": "p460",
-      "position_description": "Body paragraph 460",
-      "confidence": 0.178,
-      "extraction_method": "paragraph_single",
-      "template_text": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a {{ settlement }} cm, immediats en el temps donat el comportament granular dels materials.",
-      "reference_text": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm."
-    },
-    "site_condition": {
-      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
-      "position": "p284",
-      "position_description": "Body paragraph 284",
-      "confidence": 0.198,
-      "extraction_method": "paragraph_single",
-      "template_text": "Degut a que es tracta d'un solar {{ site_condition }}, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
-      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
     },
     "site_description": {
       "value": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
@@ -609,13 +564,13 @@
       "reference_text": "2do nivel"
     },
     "superficie_parcela": {
-      "value": "T-1",
+      "value": "1655.01",
       "position": "t0_r1_c1",
       "position_description": "Table 0, row 1, col 1",
       "confidence": 0.95,
       "extraction_method": "table_cell",
       "template_text": "{{ superficie_parcela }}",
-      "reference_text": "T-1"
+      "reference_text": "1655.01"
     },
     "table_dpsh_range": {
       "value": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados.",
@@ -625,6 +580,199 @@
       "extraction_method": "paragraph_single",
       "template_text": "Taula {{ table_dpsh_range }}. Resum dels assaigs in situ realitzat. *msnm: metres sobre el nivell del mar.",
       "reference_text": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados."
+    },
+    "radon_sentence": {
+      "value": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+      "position": "p407",
+      "position_description": "Body paragraph 407",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ radon_sentence }}",
+      "reference_text": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2."
+    },
+    "site_condition": {
+      "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+      "position": "p284",
+      "position_description": "Body paragraph 284",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ site_condition }}",
+      "reference_text": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial."
+    },
+    "adjacent_intro": {
+      "value": "La parcela objeto de estudio se sitúa en el norte del municipio de Anciles, tiene una morfología rectangular y limita:",
+      "position": "p106",
+      "position_description": "Body paragraph 106",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ adjacent_intro }}",
+      "reference_text": "La parcela objeto de estudio se sitúa en el norte del municipio de Anciles, tiene una morfología rectangular y limita:"
+    },
+    "bearing_layer_idx": {
+      "value": 1,
+      "position": "t12.row1",
+      "position_description": "Nivell portant declarat a la frase de la tensió admissible/de treball del signat",
+      "confidence": 0.9,
+      "extraction_method": "bearing_rule",
+      "template_text": "",
+      "reference_text": "Así, para una cimentación mediante pozos de cimentación rellenados con hormigón pobre, empotrados un mínimo de 20-40 cm de los materiales del segundo nivel saneado, se podrá adoptar una tensión de tra"
+    },
+    "cte_edificacio": {
+      "value": "C-1",
+      "position": "t2_r0_c1",
+      "position_description": "Table 2, row 0, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ cte_edificacio }}",
+      "reference_text": "C-1"
+    },
+    "cte_sol": {
+      "value": "T-1",
+      "position": "t2_r1_c1",
+      "position_description": "Table 2, row 1, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ cte_sol }}",
+      "reference_text": "T-1"
+    },
+    "data_camp_inici_text": {
+      "value": "El día 19 de febrero de 2026, se visitó la obra para:",
+      "position": "p095",
+      "position_description": "Body paragraph 95",
+      "confidence": 0.16595744680851063,
+      "extraction_method": "paragraph_single",
+      "template_text": "El dia {{ data_camp_inici_text }}, es va visitar l’obra per tal de:",
+      "reference_text": "El día 19 de febrero de 2026, se visitó la obra para:"
+    },
+    "municipality_de": {
+      "value": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
+      "position": "p348",
+      "position_description": "Body paragraph 348",
+      "confidence": 0.21562499999999998,
+      "extraction_method": "paragraph_single",
+      "template_text": "A la zona d’estudi, en el municipi {{ municipality_de }}, s’estableix una acceleració sísmica bàsica de:",
+      "reference_text": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:"
+    },
+    "settlement_sentence": {
+      "value": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm.",
+      "position": "p467",
+      "position_description": "Body paragraph 467",
+      "confidence": 0.35,
+      "extraction_method": "paragraph_anchor",
+      "template_text": "{{ settlement_sentence }}",
+      "reference_text": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm."
+    },
+    "spt_ma_tests": {
+      "value": [
+        {
+          "test_id": "SPT-1",
+          "location": "S-1",
+          "depth_range": "-1.00 a -1.60",
+          "n30": "6",
+          "lithology": "Arcilla arenosa con gravitas"
+        },
+        {
+          "test_id": "SPT-1",
+          "location": "S-2",
+          "depth_range": "-1.00 a -1.60",
+          "n30": "6",
+          "lithology": "Arcilla arenosa con gravitas"
+        },
+        {
+          "test_id": "MA-1",
+          "location": "S-2",
+          "depth_range": "-2.80 a -3.00",
+          "n30": "--",
+          "lithology": "Bolos y gravas en matriz arenosa arcillosa"
+        }
+      ],
+      "position": "t6",
+      "position_description": "Loop table 6 (spt_ma_tests)",
+      "confidence": 0.85,
+      "extraction_method": "loop_table",
+      "template_text": "Loop: ['test_id', 'location', 'depth_range', 'n30', 'lithology']",
+      "reference_text": "3 data rows"
+    },
+    "superficie_construida": {
+      "value": "1273.79",
+      "position": "t0_r2_c1",
+      "position_description": "Table 0, row 2, col 1",
+      "confidence": 0.95,
+      "extraction_method": "table_cell",
+      "template_text": "{{ superficie_construida }}",
+      "reference_text": "1273.79"
+    },
+    "fig_spt_cullera_num": {
+      "value": "5",
+      "position": "p190",
+      "position_description": "Body paragraph 190",
+      "confidence": 0.94,
+      "extraction_method": "numbering",
+      "template_text": "Figura {{ fig_spt_cullera_num }}. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+      "reference_text": "Figura 5. Cuchara normalizada. Gráfico extraído de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez)."
+    },
+    "section_empentes_num": {
+      "value": "4.4",
+      "position": "p035",
+      "position_description": "Body paragraph 35",
+      "confidence": 0.743,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_empentes_num }}. EMPENTES DE TERRES",
+      "reference_text": "4.4. EMPUJE DE TIERRAS"
+    },
+    "section_excavabilitat_num": {
+      "value": "3.5",
+      "position": "p333",
+      "position_description": "Body paragraph 333",
+      "confidence": 0.846,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_excavabilitat_num }}. EXCAVABILITAT",
+      "reference_text": "3.5. EXCAVABILIDAD"
+    },
+    "section_rado_num": {
+      "value": "3.7",
+      "position": "p381",
+      "position_description": "Body paragraph 381",
+      "confidence": 0.955,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_rado_num }}. EXPOSICIÓ AL GAS RADÓ",
+      "reference_text": "3.7. EXPOSICIÓN AL GAS RADÓN"
+    },
+    "section_resum_num": {
+      "value": "2.4.4",
+      "position": "p194",
+      "position_description": "Body paragraph 194",
+      "confidence": 0.795,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_resum_num }}. Resum dels assaigs in-situ realitzats",
+      "reference_text": "2.4.4. Resumen de los ensayos in-situ realizados"
+    },
+    "section_sismica_num": {
+      "value": "3.6",
+      "position": "p342",
+      "position_description": "Body paragraph 342",
+      "confidence": 0.97,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sismica_num }}. ACCELERACIÓ SISMICA DE REFERÈNCIA",
+      "reference_text": "3.6. ACCELERACIÓ SISMICA DE REFERÉNCIA"
+    },
+    "section_sondeig_num": {
+      "value": "2.4.2",
+      "position": "p175",
+      "position_description": "Body paragraph 175",
+      "confidence": 0.842,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_sondeig_num }}. Sondeig a rotació amb bateria continua",
+      "reference_text": "2.4.2. Sondeo a rotación con batería continua"
+    },
+    "section_spt_num": {
+      "value": "2.4.3",
+      "position": "p186",
+      "position_description": "Body paragraph 186",
+      "confidence": 0.887,
+      "extraction_method": "numbering",
+      "template_text": "{{ section_spt_num }}. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+      "reference_text": "2.4.3. Ensayo tipo S.P.T. (“Standard Penetration Test”)"
     }
   },
   "warnings": [
@@ -655,5 +803,13 @@
     "t2_r1_c1: No matching ref table for 'cte_sol'",
     "Loop table t8 (soil_level_rows): no matching reference table",
     "Merged 22 prior external-method entries: adjacent_east_fmt, adjacent_north_fmt, adjacent_south_fmt, adjacent_west_fmt, architect_name_upper, building_structure_desc, building_type_lower, client..."
+  ],
+  "notes": [
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 3 claus narratives re-extretes (prefix primer); eliminades ['csn_radon_text', 'radon_zone_description']",
+    "refresh_eva_narrativa.py 2026-09-06: 2 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-06: 1 claus narratives re-extretes (prefix primer)",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 3, --keys): 14 claus re-extretes: bearing_layer_idx, cte_edificacio, cte_sol, data_camp_inici_text, data_camp_text, geotech_rows, municipality, municipality_de, plantes, settlement, settlement_sentence, spt_ma_tests, superficie_construida, superficie_parcela",
+    "refresh_eva_narrativa.py 2026-09-07 (bloc 4, numeració) (--keys): 8 claus re-extretes: fig_spt_cullera_num, section_empentes_num, section_excavabilitat_num, section_rado_num, section_resum_num, section_sismica_num, section_sondeig_num, section_spt_num"
   ]
 }

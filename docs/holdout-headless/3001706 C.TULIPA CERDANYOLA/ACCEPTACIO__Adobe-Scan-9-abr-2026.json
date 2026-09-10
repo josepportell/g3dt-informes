@@ -1,0 +1,26 @@
+{
+  "source_path": "ACCEPTACIO/Adobe Scan 9 abr 2026 - Adobe cloud storage.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Escaneig (Adobe Scan, 2026-04-09) del pressupost INICIAL (980 €, 2 DPSH + 1 sondeig) signat, amb el formulari p.5 omplert a mà.",
+  "issuer": "G3 (document) + client signant (manuscrit)",
+  "date": "escanejat 9 abr 2026; pressupost datat 26/03/26",
+  "pages_or_sheets": "7 pàgines escanejades",
+  "context": {
+    "who_made_it": "el client va omplir i signar; algú (client o G3) ho va escanejar amb Adobe Scan",
+    "for_whom": "G3 (retorn de l'acceptació del contracte-pressupost)",
+    "why": "formalitzar l'encàrrec; el formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' fixa el nom de l'informe",
+    "expected_fields": ["client_name (p.5 NOM I COGNOMS + NIF)", "cte (p.2)", "quantitats (p.2)"],
+    "not_expected": ["street_address de l'obra al p.5 (l'adreça del formulari és la del CLIENT)", "field_date", "cota"],
+    "relation_to_others": "és la versió signada del PRESSUPOST GEOTEC.CERDANYOLA.pdf (inicial: 2 DPSH, import 980,00 aquí vs 1.230,00 al MODF; DTE.txt factura 1.185,80 = 980×1,21). Signada ABANS del MODF -2CASES (modDate 29/04) → autoritat per al client de l'encàrrec original (casa 1, Tulipa 3); NO cobreix el segon client del MODF. OCR incrustat no fiable per al manuscrit → clip + visió.",
+    "authority_for": ["client_name (casa 1)", "cte_edificacio", "cte_sol"]
+  },
+  "tier_a": [
+    {"concept_id": "client_name", "value": "ALEIX SUBIRÀ FELIP (NIF 47235352-E)", "location": "p.5 formulari DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME (manuscrit)", "quote": "NOM I COGNOMS: ALEIX SUBIRÀ FELIP / N.I.F./C.I.F.: 47235352-E / TELF.: 626056350", "confidence": 0.9, "note": "autoritat A; coincideix amb CLIENT de la fitxa de camp i el telèfon de contacte; l'acceptació és de la versió d'1 casa → l'assigno a la CASA 1 (Tulipa 3), pendent de creuar amb correus"},
+    {"concept_id": "NOT_street_address", "value": "C/ Joan Miró, 32, Escala 1, 3r-1a, 08110 Montcada i Reixac", "location": "p.5 ADREÇA + CP I POBLACIÓ (manuscrit)", "quote": "ADREÇA: C/JOAN MIRO, 32. ESCALA 1. 3r-1a / CP I POBLACIÓ: 08110, MONTCADA I REIXAC", "confidence": 0.0, "note": "adreça del CLIENT per a factura, NO de l'obra (regla street_address)"},
+    {"concept_id": "cte_edificacio", "value": "C-1", "location": "p.2 (escanejat)", "quote": "Tipus d'edifici: C1", "confidence": 0.85, "note": "coincideix amb el pressupost digital (no font independent: mateix document)"},
+    {"concept_id": "cte_sol", "value": "T-1", "location": "p.2 (escanejat)", "quote": "Tipus de Terreny : T1", "confidence": 0.85, "note": "idem"},
+    {"concept_id": "architect_name", "value": "(cap nom; casella ARQUITECTE marcada X sense nom)", "location": "p.5 PERSONES QUE PODEN REBRE INFORMACIÓ", "quote": "[X] ARQUITECTE .........", "confidence": 0.0, "note": "la creu confirma que hi ha arquitecte però no en dona el nom"}
+  ],
+  "not_present": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "signatura digital /Sig (és escaneig, signatura a mà sense nom llegible)"],
+  "reading_notes": "Renderitzat p.1/p.2 a 100 dpi i clip 20-72% de la p.5 a 180 dpi; lectura visual del manuscrit. Import total 980,00 llegit al requadre. Idioma informe: català (casella marcada)."
+}

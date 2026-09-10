@@ -1,0 +1,56 @@
+{
+ "source_path": "comanda laboratori_4001679_ANCILES.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori de G3: una mostra MA (S-2) 2,80-3,00 m, només sulfats (agressivitat sòls)",
+ "issuer": "G3 (Eva Vázquez, dept. Geotècnia)",
+ "date": "DATA DE PRESA 19/02/2026 (serial 46072); DATA DE SOL.LICITUD 27/02/2026 (serial 46080)",
+ "pages_or_sheets": "Hoja1",
+ "context": {
+  "who_made_it": "G3 (sol·licitant) per al laboratori",
+  "for_whom": "laboratori (TPS habitualment; el nom del laboratori NO consta al document)",
+  "why": "encarregar l'assaig de sulfats de la mostra del sondeig S-2",
+  "expected_fields": [
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient",
+   "municipi",
+   "data de presa"
+  ],
+  "not_expected": [
+   "client del projecte (files 11-15 = G3, sol·licitant del laboratori)",
+   "promotor",
+   "arquitecte"
+  ],
+  "relation_to_others": "coherent amb l'annex de sondeigs (MA-1 a -2,80/-3,00 a S-2); sense GTL a la carpeta (arriba setmanes després) — la comanda és l'única font de lab",
+  "authority_for": [
+   "spt_ma_tests: fila MA (cota i assaig encarregat)",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "MA (S-2)",
+    "punt": "S-2",
+    "profunditat": "2,80 a 3,00 m",
+    "registre": null,
+    "n30_candidats": [],
+    "assaig": "Agressivitat sòls (X) — 'NOMÉS SULFATS'",
+    "litologia_nivell": null,
+    "location": "Hoja1 fila 35: C='MA (S-2)', J=2.8, L=3.0, AA='X', AD='NOMÉS SULFATS'; columna LITOLOGIA (AJ) buida",
+    "quote": "MA (S-2) | 2,8 | 3,0 | X | NOMÉS SULFATS",
+    "rule": "comanda fila 35: el parèntesi dona lab_location (S-2); etiqueta 'MA' sense ordinal — l'annex de l'Eva ('MA-1') mana per a l'etiqueta de l'informe."
+   }
+  ],
+  "__nota": "DADES DE L'OBRA: OBRA='CONSTR GRUPO DE VIVIENDAS', NÚM. D'EXPEDIENT=4001679, POBLACIÓ='ANCILES', ADREÇA buida. Cap fila SPT a la comanda (els SPT no van al laboratori: només es demana sulfats de la MA)."
+ },
+ "not_present": [
+  "nom del laboratori",
+  "litologia de la mostra (columna AJ buida)",
+  "files de mostres addicionals"
+ ],
+ "reading_notes": "xlrd; blocs files 11-15 (sol·licitant G3, ignorat per rol) i 18-23 (obra); fila 35 única mostra; dates convertides de serial Excel (46072→19/02/2026, 46080→27/02/2026)."
+}

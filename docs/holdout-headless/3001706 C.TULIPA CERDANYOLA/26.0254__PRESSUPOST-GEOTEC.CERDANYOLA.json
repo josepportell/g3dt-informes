@@ -1,0 +1,24 @@
+{
+  "source_path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+  "document_type": "pressupost_g3",
+  "what_it_is": "Pressupost G3 inicial (1 casa, 2 DPSH + 1 sondeig), substituït pel MODF -2CASES.",
+  "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L. via m4PRO ERP",
+  "date": "26/03/26; modDate PDF 2026-03-26 12:04",
+  "pages_or_sheets": "7 pàgines",
+  "context": {
+    "who_made_it": "G3 (oficina tècnica)",
+    "for_whom": "VUA, VISUALIZING UNBUILT ARCHITECTURE (sol·licitant)",
+    "why": "oferta inicial per a UNA casa (C/Tulipa 3); després l'encàrrec es va ampliar a dues cases",
+    "expected_fields": ["mateixos que el MODF"],
+    "not_expected": ["quantitats vigents (2 DPSH és la versió vella)"],
+    "relation_to_others": "SUBSTITUÏT per PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf (modDate posterior). No compta com a font independent: mateix codi 26·0254, mateix sol·licitant, mateixa obra.",
+    "authority_for": []
+  },
+  "tier_a": [
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "p.1 bloc OBRA", "quote": "CERDANYOLA DEL VALLES", "confidence": 0.3, "note": "duplicat del MODF, no font independent"},
+    {"concept_id": "cte_edificacio", "value": "C-1", "location": "p.2", "quote": "Tipus d’edifici: C1", "confidence": 0.3, "note": "duplicat del MODF"},
+    {"concept_id": "cte_sol", "value": "T-1", "location": "p.2", "quote": "Tipus de Terreny : T1", "confidence": 0.3, "note": "duplicat del MODF"}
+  ],
+  "not_present": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*"],
+  "reading_notes": "Només comparat amb el MODF per decidir vigència (2 DPSH vs 4; sense nota DOS INFORMES). No es fa servir per a decisions."
+}

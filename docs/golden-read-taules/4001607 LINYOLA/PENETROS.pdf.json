@@ -1,0 +1,84 @@
+{
+ "source_path": "PENETROS.pdf",
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escaneig TPS de 3 pàgines: albarà, full de camp DPSH manuscrit (P1-P3) i full d'assaig SPT/MI amb la mostra SPT1 P3.",
+ "issuer": "TPS (operari 'Siny', equip ML60A)",
+ "date": "01-10-25 (les 3 pàgines)",
+ "pages_or_sheets": "3 pàgines escanejades (0 text: lectura visual)",
+ "context": {
+  "who_made_it": "TPS (subcontractista de penetròmetres) per a G3",
+  "for_whom": "G3 ('DADES CLIENT: Empresa G3 / Responsable Eva' = relació TPS→G3, cap rol al projecte)",
+  "why": "Registre primari de camp: albarà de feina + colpeig manuscrit + assaig SPT",
+  "expected_fields": [
+   "nivell freàtic (casella)",
+   "rebuig per punt",
+   "num_dpsh_tests",
+   "spt (colpeig 15/30/45/60, cotes, materials)",
+   "field_date"
+  ],
+  "not_expected": [
+   "client de l'informe",
+   "nivells de sòl sintetitzats",
+   "cotes msnm absolutes"
+  ],
+  "relation_to_others": "Versió manuscrita original de l'Excel DPSH (l'Excel, revisat per l'Eva, mana per als valors); el full SPT és el registre primari de la mostra que la comanda demana assajar i el GTL analitza.",
+  "authority_for": [
+   "dpsh_tests[].nivell_freatic (corroboració)",
+   "spt_ma_tests[].n30",
+   "spt_ma_tests[].profunditat (corroboració)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "rebuig": "Si",
+    "profunditat_assolida": "-2,9 m (manuscrit 'R 2,9')",
+    "nivell_freatic": "No ('Hi ha nivell freàtic? NO')",
+    "cota_inici": "-0,15 (capçalera de columna 'Cota Inici', relativa al carrer)",
+    "location": "p.2 columna P1 + casella NIVELL FREÀTIC",
+    "quote": "R 2,9 | Hi ha nivell freàtic? NO | Cota Inici -0,15"
+   },
+   {
+    "punt": "P-2",
+    "rebuig": "Si",
+    "profunditat_assolida": "-2,15 m (manuscrit 'R 2,15')",
+    "nivell_freatic": "No",
+    "cota_inici": "-0,15",
+    "location": "p.2 columna P2",
+    "quote": "R 2,15"
+   },
+   {
+    "punt": "P-3",
+    "rebuig": "Si",
+    "profunditat_assolida": "-1,75 m (manuscrit 'R 1,75')",
+    "nivell_freatic": "No",
+    "cota_inici": "-0,15",
+    "location": "p.2 columna P3",
+    "quote": "R 1,75"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P3",
+    "profunditat": "1,0 a 1,15 m",
+    "n30": {
+     "estat": "segur",
+     "valor": "R (rebuig: 50 cops al primer tram de 15 cm)"
+    },
+    "litologia": "Lutita marró i tram d'argila amb graves (manuscrit)",
+    "location": "p.3 'Full de assaig SPT/MI/Mostra alterada'",
+    "quote": "Assaig de referència: SPT1 P3 | de la cota de: 1,0 fins a la cota: 1,15 | Colpeig 15/30/45/60: 50 [només 1a casella] | Descripció dels materials: LUTITA MARRÓ I TRAM D'ARGILA AMB GRAVES",
+    "note": "Registre primari TPS. Confirma la cota 1,0-1,15 del GTL/comanda (l'Excel deia '1,0 a 1,5' = interval nominal). Manuscrit dubtós a 'D'ARGILA' (podria ser 'p argila'); lectura amb reserva."
+   }
+  ],
+  "__nota": "Albarà p.1: 'Nº de penetròmetres realitzats: 3', 'ml de penetròmetre: 6,8' (=2,90+2,15+1,75), 'Assaigs SPT o MI: 1', 'ml previs perforació per assaig SPT o MI: 1,0'. Colpeigs manuscrits p.2 coincideixen amb l'Excel (mostreig)."
+ },
+ "not_present": [
+  "cota msnm absoluta (només -0,15 relatiu al carrer)",
+  "litologia per nivells"
+ ],
+ "reading_notes": "0 text: render 120 dpi i lectura visual de les 3 pàgines. Croquis de situació amb distàncies (0,90/0,92, 3,21/8,89, 12,20, 11,42, 'casa veïna') no transcrit (no alimenta cap taula)."
+}

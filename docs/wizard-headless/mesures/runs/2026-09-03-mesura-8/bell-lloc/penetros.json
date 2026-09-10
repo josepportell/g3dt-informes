@@ -1,0 +1,147 @@
+{
+ "source_path": "PENETROS.pdf",
+ "source_md5": "dcd4861bb04b1d01c1ffe14cd41c5af9",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escanejat (NAPS2, sense OCR) de 2 pàgines de TPS: p.1 albarà de lliurament del treball de camp DPSH, p.2 full de camp del penetròmetre dinàmic amb el colpeig N20 manuscrit per punt (P-1, P-2)",
+ "issuer": "TPS, Prospecció del Subsòl SL (tècnic de camp, firma 'Siny')",
+ "date": "1-10-25 (manuscrit, idèntic a totes dues pàgines)",
+ "pages_or_sheets": "2 pàgines escanejades, sense text OCR (text_ok=false a totes dues; NAPS2)",
+ "context": {
+  "who_made_it": "TPS (subcontractista de sondeigs/DPSH), tècnic de camp 'Siny', el dia de l'assaig",
+  "for_whom": "p.1 (albarà): justificant de treball fet, per facturar a G3; p.2 (full de camp): registre original de TPS, que Eva (G3) transcriu després a ANNEXES/4001612_DPSH.xls",
+  "why": "documentar el treball de camp fet (nombre de penetròmetres, ml perforats) i registrar el colpeig cada 20 cm de cada punt DPSH abans de cap transcripció",
+  "expected_fields": [
+   "field_date",
+   "municipality (grafia de camp)",
+   "num_dpsh_tests",
+   "dpsh_tests[].profunditat_assolida (rebuig)",
+   "dpsh_tests[].nivell_freatic",
+   "street_address (esbós de situació, sense número)"
+  ],
+  "not_expected": [
+   "expedient",
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia (absoluta)",
+   "num_soil_levels",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Font ORIGINAL (abans de cap transcripció) de ANNEXES/4001612_DPSH.xls i de PDF/ANNEXES/4001612_DPSH.pdf (ambdós ja llegits en aquesta run): les fondàries de rebuig (-1,35 P-1, -2,45 P-2) i 'Hi ha nivell freàtic? NO' d'aquest full coincideixen exactament amb aquells dos documents, confirmant la cadena de transcripció sense pèrdua. El bloc 'DADES CLIENT: Empresa G3 / Responsable EVA' (p.1) és la relació TPS→G3 (sol·licitant del servei de camp), no el client de l'informe (taula del Pas 0, fila 'Albarà / full de camp TPS').",
+  "authority_for": [
+   "field_date",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "field_date",
+   "value": "01/10/2025",
+   "location": "p.1 bloc DADES OBRA camp 'Data'; p.2 capçalera camp 'Data'",
+   "quote": "Data: 1-10-25 (p.1) / Data: 1-10-25 (p.2)",
+   "confidence": 0.65,
+   "note": "Coincideix exactament amb 'DATA: 01/10/2025' de PDF/ANNEXES/4001612_DPSH.pdf (ja llegit). Per la regla del skill l'albarà/full de camp TPS és candidat per sota de la fitxa F38 (no llegida en aquesta crida --only) i de l'annex DPSH DATA (ja amb el mateix valor) — no aporta una tercera font independent, és el mateix dia confirmat des de l'origen manuscrit."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 2,
+   "location": "p.1 bloc 'ML DE PERFORACIÓ', camp 'Nº de penetròmetres realitzats'",
+   "quote": "Nº de penetròmetres realitzats: 2",
+   "confidence": 0.85,
+   "note": "Font independent de ANNEXES/4001612_DPSH.xls (2 fulls P-1/P-2 amb dades executades, ja llegit): aquí és TPS (qui fa físicament l'assaig) qui declara el nombre fet, no una transcripció de G3. Amb aquesta segona font independent coincident, num_dpsh_tests compleix el criteri de 'segur'."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "BELL-LLOCH",
+   "location": "p.1 bloc DADES OBRA camp 'Població'; p.2 camp 'Adreça de l'obra' (mal etiquetat: hi ha escrita la població, no un carrer)",
+   "quote": "Població: BELL-LLOCH (p.1) / Adreça de l'obra: BELL-LLOCH (p.2)",
+   "confidence": 0.45,
+   "note": "Grafia de camp (amb 'H' final), coincident amb la grafia de la p.2 de PDF/ANNEXES/4001612_DPSH.pdf ('BELL-LLOCH'), ja llegit. No és cap de les 3 fonts 'sempre' (comanda/pressupost/PLAN_COST, cap llegida en aquesta crida) i per tant no és autoritat per si sola — candidat."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "cantonada carrer Antoni Bellet / carrer Mestre Ramon Ortiz",
+   "location": "p.2, camp 'Descriure punt 0 o cota referència' + esquema de situació dels punts",
+   "quote": "Carrer ANTONI BELLET (camp de text) / 'carrer ANTONI BELLET' (vertical, vora esquerra del croòuis) + 'carrer MESTRE RAMON ORTIZ' (vora inferior del croòuis)",
+   "confidence": 0.4,
+   "note": "El croòuis dibuixa la parcel·la com una cantonada entre DUES víes (regla del skill: 'poden existir dues adreces vertaderes'). 'Mestre Ramon Ortiz' ja consta com a candidat (portal 15) a PDF/ANNEXES/4001612_DPSH.pdf, ja llegit. 'Antoni Bellet' és una via NOVA no vista en els altres documents llegits fins ara en aquesta run — cal encreuar amb el plànol/pressupost per confirmar-ne la grafia impresa (possible 'Ballet' vs 'Bellet', patró conegut d'aquest skill). Les xifres del croòuis (9, 22, 8,5, 10) són DISTÀNCIES en metres del punt P1/P2 als límits de parcel·la, NO números de portal — no s'interpreten com a tals."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Antoni Bellet",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "BELL-LLOCH",
+    "municipi_alternatives": []
+   },
+   "location": "p.2, camp 'Descriure punt 0 o cota referència' i croòuis de situació",
+   "quote": "Carrer ANTONI BELLET",
+   "confidence": 0.35,
+   "note": "Via nova (cantonada amb Mestre Ramon Ortiz, ja registrada per un altre document). Sense número de portal visible en aquest full (només distàncies de croòuis). Grafia 'Bellet' tal com apareix aquí; no confirmada contra cap document imprès en aquesta crida --only."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 (Empresa) / EVA (Responsable)",
+   "location": "p.1 bloc 'DADES CLIENT'",
+   "quote": "DADES CLIENT: Empresa: G 3 / Responsable: EVA",
+   "confidence": 0.9,
+   "note": "Descartat com a client_name: és la relació TPS→G3 (client del subcontractista de camp), no el client/promotor de l'informe (regla del Pas 0, taula 'Albarà / full de camp TPS')."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,35",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, taula full de camp, columna P1, fila '-1,6' (marca R); bloc NIVELL FREÀTIC",
+    "quote": "R | 1,35 (columna P1, fila -1,6); 'Hi ha nivell freàtic? NO'",
+    "extra": {
+     "cota_inici_camp_raw": "~0,15",
+     "cota_inici_camp_location": "p.2, capçalera taula, columna P1, fila 'Cota Inici'",
+     "note": "Valor manuscrit no interpretat com a cota_inici: podria estar relacionat amb l'ajust '-0,15 carrer' de PDF/ANNEXES/4001612_DPSH.pdf (cota absoluta +199,50 msnm, ja llegit), però el signe és ambigu en aquest full (símbol '~' abans del número, no un signe '-' net) i el valor no és una cota absoluta comparable — no s'assigna a cota_inici."
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,45",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2, taula full de camp, columna P2, fila '-2,8' (marca R); bloc NIVELL FREÀTIC",
+    "quote": "R | 2,45 (columna P2, fila -2,8); 'Hi ha nivell freàtic? NO'",
+    "extra": {
+     "cota_inici_camp_raw": "0,15",
+     "cota_inici_camp_location": "p.2, capçalera taula, columna P2, fila 'Cota Inici'",
+     "note": "Mateix valor de capçalera que P-1 ('0,15', sense símbol '~' visible a la columna P2); mateixa reserva d'interpretació."
+    }
+   }
+  ]
+ },
+ "not_present": [
+  "expedient: cap número d'expedient/informe en aquest full (camp 'Informe:' de la p.2 en blanc)",
+  "client_name: només consta G3/Eva (descartat, veure NOT_client_name)",
+  "architect_name, building_type, num_floors, superficie_parcela: cap dada de projecte/edifici en aquest document",
+  "cota_referencia (absoluta): aquest full només dona un valor relatiu no interpretat (veure tables.dpsh_tests[].extra)",
+  "num_soil_levels: cap columna de nivells en aquest full de camp",
+  "referencia_catastral, utm_x_utm_y: no presents",
+  "lab_testing_company, lab_sample_id, lab_depth, lab_location: no presents (aquest full és només DPSH, sense SPT/mostres; camp 'Assaigs SPT o MI: NO' a p.1)",
+  "cte_edificacio, cte_sol: no presents"
+ ],
+ "reading_notes": "Ambdues pàgines sense text extraïble (text_ok=false, halves_pages=[1,2]): lectura visual completa amb page-N.png i zooms d'alta resolució amb scripts/render_clip.py (400-900 dpi) sobre el PDF original per als dígits manuscrits (taula de colpeig, capçalera Cota Inici, text del croòuis). Colpeig N20 llegit sencer per contrast amb ANNEXES/4001612_DPSH.xls: P-1 (-0,2 a -1,4): —, 20, 27, 16, 19, 32, 100, després R a -1,35; P-2 (-0,2 a -2,6): —, 17, 21, 17, 13, 10, 20, 30, 52, 55, 32, 80, 100, després R a -2,45. Totes dues seqüències són coherents (creixents cap al rebuig) i les fondàries de rebuig coincideixen exactament amb l'Excel/PDF DPSH ja llegits — no hi ha discrepància. Columna N.F. buida a totes dues columnes P1/P2, coherent amb 'Hi ha nivell freàtic? NO'. p.1 (albarà): 'Nº de penetròmetres realitzats: 2', 'Assaigs SPT o MI: NO' (aquesta visita només va fer DPSH; el sondeig/SPT del projecte és una campanya separada, documentada a l'annex de sondeig i al GTL, no llegits en aquesta crida). Camp 'Adreça:' de p.1 en blanc; l'única informació de carrer surt del croòuis i del camp 'Descriure punt 0' de p.2."
+}

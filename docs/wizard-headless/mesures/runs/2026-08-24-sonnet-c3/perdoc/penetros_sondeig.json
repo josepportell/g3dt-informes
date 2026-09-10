@@ -1,0 +1,173 @@
+{
+  "source_path": "PENETROS + SONDEIG.pdf",
+  "source_md5": "9c6982925cfde80fd507a53ea8241838",
+  "skill_version": "1.3",
+  "schema_version": 1,
+  "document_type": "full_camp_manuscrit",
+  "what_it_is": "Escaneig de 5 fulls manuscrits de TPS: albara + full de camp del penetrometre dinamic (4 punts P-1 a P-4) i albara + full de camp del sondeig a rotacio S-1; es la font de camp ORIGINAL de la qual deriven l'Excel ANNEXES/3001621_DPSH.xls i l'annex tipat PDF/ANNEXES/3001621_sondeig.pdf",
+  "issuer": "TPS (Daniel Fernandez, operari de penetrometre i sondista)",
+  "date": "24-10-2025",
+  "pages_or_sheets": "5 pagines: p.1 albara DPSH, p.2-3 full de camp penetrometre dinamic (P1-P3, P4), p.4 albara sondeigs, p.5 full de camp sondeig a rotacio (escanejat rotat 90 graus)",
+  "context": {
+    "who_made_it": "TPS (Daniel Fernandez, operari de penetrometre i sondista), full de camp i albarans omplerts a ma durant l'execucio dels assaigs a l'obra",
+    "for_whom": "registre intern de TPS + justificant de treball per a G3 (Eva); font primaria de la qual Eva transcriu l'Excel DPSH i l'annex tipat de sondeig",
+    "why": "enregistrar en temps real el colpeig DPSH als 4 punts, el croquis de situacio, i les dades basiques del sondeig a rotacio S-1 (litologia per tram, profunditat, mostra)",
+    "expected_fields": [
+      "dpsh_tests[] (cota_inici, profunditat_assolida/rebuig per punt)",
+      "sondeig_tests[] (profunditat, litologia basica, mostra)",
+      "field_date",
+      "esquema situacio dels punts"
+    ],
+    "not_expected": [
+      "client_name (promotor)",
+      "architect_name",
+      "building_type",
+      "num_floors",
+      "superficie_parcela",
+      "referencia_catastral",
+      "utm_x_utm_y",
+      "cte_edificacio/cte_sol",
+      "cota_referencia absoluta"
+    ],
+    "relation_to_others": "font manuscrita ORIGINAL: els 4 punts DPSH (P1 -1,08m / P2 -0,48m / P3 -0,76m / P4 -1,55m; cotes inici -4/-4,2/-4/-4m respecte el carrer) coincideixen exactament amb PDF/ANNEXES/3001621_DPSH.pdf (ja llegit) -- mateixa font primaria, no independents entre elles. El full de sondeig (0,00-0,50 'Limos arcillosos con gravas' / 0,50-1,20 'Roca fracturada'; mostra 1,00-1,20 sense colpeig) corrobora PDF/ANNEXES/3001621_sondeig.pdf (NIVELL 1 0.00-1.20; SPT-1 -1,00 a -1,20, Registre R) -- la descripcio manuscrita es la versio breu que Eva amplia a l'annex tipat.",
+    "authority_for": [
+      "field_date",
+      "num_dpsh_tests"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "field_date",
+      "value": "2025-10-24",
+      "location": "p.1 Albara DPSH, camp 'Data'; p.2/p.3 Full de Camp Penetrometre Dinamic, camp 'Data'; p.4 Albara Sondeigs, 'Data inici'/'Data final'",
+      "quote": "Data: 24-10-2025",
+      "confidence": 0.7,
+      "note": "candidat (regla field_date): albara TPS es font valida pero no primera prioritat (fitxa F38 i annex DPSH DATA: manen si existeixen); repetit identic 4 cops dins d'aquest mateix document, no son fonts independents"
+    },
+    {
+      "concept_id": "street_address",
+      "value": "C/ Arbrells",
+      "location": "p.1 Albara DPSH, DADES OBRA > Adreca; p.4 Albara Sondeigs, DADES OBRA > Adreca",
+      "quote": "Adreca: C/Arbrells",
+      "confidence": 0.55,
+      "note": "bloc etiquetat OBRA (regla street_address valida); sense numero de finca -- comparat amb PDF/ANNEXES/3001621_DPSH.pdf que porta 'C/ ARBRELLS 18 A', aquest document es menys complet, candidat feble"
+    },
+    {
+      "concept_id": "municipality",
+      "value": "Castellar del Valles",
+      "location": "p.1 Albara DPSH, DADES OBRA > Poblacio; p.4 Albara Sondeigs, DADES OBRA > Poblacio",
+      "quote": "Poblacio: Castellar del Valles",
+      "confidence": 0.6,
+      "note": null
+    },
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": 4,
+      "location": "p.1 Albara DPSH, CONCEPTES > ML DE PERFORACIO > 'No de penetrometres realitzats'",
+      "quote": "No de penetrometres realitzats: 4",
+      "confidence": 0.7,
+      "note": "coincideix amb els 4 fulls P1-P4 del propi document i amb PDF/ANNEXES/3001621_DPSH.pdf"
+    },
+    {
+      "concept_id": "lab_depth",
+      "value": "-1,00 a -1,20 m",
+      "location": "p.5 Full de camp sondeig a rotacio, columna 'Mostres > Prof.'",
+      "quote": "Mostres Prof: 100 a 120",
+      "confidence": 0.4,
+      "note": "coincideix amb SPT-1 -1,00 a -1,20 m de l'annex tipat de sondeig; aquest full no confirma el tipus d'assaig (columnes 'tipus' i 'Colpeig' en blanc) -- vegeu ambiguitat SPT a sondeig_tests"
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "cota_inici": "-4 m (respecte el carrer)",
+        "profunditat_assolida": "-1,08 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "p.2 Full de Camp Penetrometre Dinamic, columna P1",
+        "quote": "P1 -4m [...] -1,4 R:1,08"
+      },
+      {
+        "punt": "P-2",
+        "cota_inici": "-4,2 m (respecte el carrer)",
+        "profunditat_assolida": "-0,48 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "p.2 Full de Camp Penetrometre Dinamic, columna P2",
+        "quote": "P2 -4,2m [...] -0,8 R:0,48"
+      },
+      {
+        "punt": "P-3",
+        "cota_inici": "-4 m (respecte el carrer)",
+        "profunditat_assolida": "-0,76 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "p.2 Full de Camp Penetrometre Dinamic, columna P3",
+        "quote": "P3 -4m [...] -1 R:0,76"
+      },
+      {
+        "punt": "P-4",
+        "cota_inici": "-4 m (respecte el carrer)",
+        "profunditat_assolida": "-1,55 m",
+        "rebuig": "Si",
+        "nivell_freatic": null,
+        "location": "p.3 Full de Camp Penetrometre Dinamic (fitxa separada), columna P4",
+        "quote": "P4 -4m [...] -1,8 R:1,55"
+      }
+    ],
+    "sondeig_tests": [
+      {
+        "sondeig": "S-1",
+        "cota": "-4 m (respecte el carrer -- mateix punt 0 'C/Arbrells' que els DPSH)",
+        "profunditat_assolida": "-1,20 m",
+        "spt_ma": {
+          "n_spt": null,
+          "n_tp": null,
+          "n_ma": null
+        },
+        "nivell_freatic": {
+          "detectat": false,
+          "matis": null
+        },
+        "location": "p.4 Albara Sondeigs (ML de perforacio 0,50+0,70) + p.5 Full de camp sondeig a rotacio (taula profunditat/litologia/mostres)",
+        "quote": "0,50 Ml de perf. en sols entre 0-20m / 0,70 Ml de perf. en roca dura/formigo entre 0-20m [...] Profunditat de/a: 0,00 a 0,50 / 0,50 a 1,20 [...] Mostres Prof: 100 a 120",
+        "note": "profunditat_assolida (0,50+0,70=1,20m) coincideix exactament amb PDF/ANNEXES/3001621_sondeig.pdf (-1.20 m); cota relativa -4m coincideix amb el sistema DPSH d'aquest projecte (regla d'or Castellar Pas 3b: seguir el sistema relatiu, no l'absolut 570.90 msnm de l'annex). spt_ma ambigu en aquest full: l'albara marca la casella 'Assaigs SPT' com 'Na' (No/N-A) pero es registra una mostra a 1,00-1,20m sense omplir tipus ni colpeig -- l'annex tipat ja llegit l'etiqueta 'SPT-1' amb Registre 'R' (rebuig). Aquest document NO contradiu l'annex, nomes no en confirma el tipus exacte (matis ja previst a la regla Pas 0/3b d'aquest projecte); consolidacio ha de donar prioritat a l'annex tipat."
+      }
+    ],
+    "spt_ma_tests": [],
+    "soil_levels": [
+      {
+        "nom": "NIVELL 1 (agrupacio segons annex tipat -- aquest full manuscrit nomes distingeix trams de material, no nivells)",
+        "litologia_candidats": [
+          "0,00 a 0,50 m: Limos arcillosos con gravas",
+          "0,50 a 1,20 m: Roca fracturada"
+        ],
+        "de": "0,00",
+        "a": "1,20",
+        "mostra_del_nivell": true,
+        "location": "p.5 Full de camp sondeig a rotacio, columnes 'Profunditat de/a' + descripcio litologica manuscrita",
+        "quote": "0,00 0,50 Limos arcillosos con gravas / 0,50 1,20 Roca fracturada",
+        "note": "corrobora, en redaccio mes breu i en castella, la descripcio ja llegida a PDF/ANNEXES/3001621_sondeig.pdf ('Terreny Vegetal. Llims argilosos...' / 'Substrat rocos. Bretxes...'). Els DOS trams d'aquest full NO son dos nivells (regla Pas 3b existent): el tall/annex agrupa tot 0.00-1.20 en un unic 'NIVELL 1'; litologia mai segur per a la cadena literal."
+      }
+    ]
+  },
+  "not_present": [
+    "expedient",
+    "client_name",
+    "architect_name",
+    "building_type",
+    "num_floors",
+    "superficie_parcela",
+    "num_soil_levels (nomes trams de material, no etiquetats com a nivells)",
+    "cota_referencia (valor absolut msnm -- nomes dona el punt 0 relatiu 'C/Arbrells -4m', ja capturat com a cota_inici de cada taula)",
+    "referencia_catastral",
+    "utm_x_utm_y",
+    "lab_testing_company",
+    "lab_sample_id",
+    "lab_location",
+    "cte_edificacio",
+    "cte_sol"
+  ],
+  "reading_notes": "PDF escanejat (fotos d'una carpeta d'anelles), 0 text extraible (fitz get_text() buit a les 5 pagines) -- lectura 100% visual, renderitzat a 200dpi amb PyMuPDF. Pagina 5 (full de camp sondeig a rotacio) esta rotada 90 graus a l'escaneig -- llegida girant el cap, no re-rotada digitalment. El nom de fitxer 'PENETROS + SONDEIG.pdf' es UN SOL fitxer (el '+' forma part del nom), no dos documents diferents, tot i que conte 2 albarans + 2 fulls de camp (DPSH i sondeig). Checkbox 'Assaigs SPT'/'Assaigs SPT o MI' marcat amb un signe llegit com 'Na' (probablement 'No'/'N-A') tant a l'albara DPSH (p.1) com al de sondeig (p.4) -- interpretat com a matis de facturacio del sondista, no com a contradiccio amb la mostra SPT-1 ja documentada a l'annex tipat de sondeig (regla Pas 0/3b existent per aquest projecte: 'l'albara TPS amb Assaigs SPT: No pero SPT documentat al GTL/annex -- el GTL/annex mana')."
+}

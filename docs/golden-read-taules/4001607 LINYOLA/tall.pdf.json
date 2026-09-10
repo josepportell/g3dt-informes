@@ -1,0 +1,92 @@
+{
+ "source_path": "tall.pdf (còpia Print To PDF de PDF/ANNEXES/4001607_tall de correlació.pdf)",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació de l'Eva: 2 seccions (AA' P-1→P-3, BB' P-1→P-2) amb 2 nivells, cotes msnm, Nb per tram i línia de fonamentació.",
+ "issuer": "G3 (Eva), FreeHand; còpia Print To PDF 27/10/2025",
+ "date": "caixetí: 'Octubre 2023' (typo de plantilla; el camp és d'octubre 2025)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva (G3)",
+  "for_whom": "annex de l'informe (síntesi geològica)",
+  "why": "Correlacionar els 3 DPSH i dibuixar els nivells del terreny i la cota de fonamentació",
+  "expected_fields": [
+   "soil_levels[] (llegenda + contacte gràfic)",
+   "num_soil_levels",
+   "cotes msnm",
+   "Nb per tram (inputs Tier B)"
+  ],
+  "not_expected": [
+   "nivell freàtic (no hi és dibuixat)",
+   "dades de laboratori"
+  ],
+  "relation_to_others": "Mateix dibuix que PDF/ANNEXES/4001607_tall de correlació.pdf (FreeHand→Distiller, text brossa): aquest Print To PDF té el text net; una sola font. Prioritat formal: PDF/ANNEXES > tall.pdf, contingut idèntic (verificat visualment).",
+  "authority_for": [
+   "num_soil_levels",
+   "soil_levels[].litologia (sense annex de sondeig: el tall és l'únic candidat)",
+   "soil_levels[].de/a"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "llegenda",
+   "quote": "Nivell 1: Llims argilsoso i sorrencs. / Nivell 2: Lutites i sorrenques, Substrat.",
+   "confidence": 0.9,
+   "note": "context: el TALL mana per al nombre de nivells (regla v0.8)"
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "1er nivell",
+    "litologia_candidats": [
+     "Llims argilosos i sorrencs (llegenda, sic: 'Llims argilsoso i sorrencs.')"
+    ],
+    "de": "0,0 m (superfície, cota +245 msnm)",
+    "a": {
+     "estat": "candidats",
+     "candidats": [
+      "~-1,4 m a P-1 (contacte gràfic ~243,6 msnm)",
+      "~-1,35 m a P-3 (contacte ~243,65 msnm; marca N=R al contacte)",
+      "~-0,2/-0,25 m a P-2 (contacte ~244,75 msnm: el nivell 1 s'aprima cap a P-2)"
+     ]
+    },
+    "mostra_del_nivell": false,
+    "location": "seccions AA' i BB' (lectura gràfica sobre l'eix msnm 241-245)",
+    "quote": "Nivell 1: Llims argilsoso i sorrencs.",
+    "note": "Contacte NO horitzontal: puja cap a P-2. Lectura gràfica (±0,1-0,2 m) -> candidats. Corroboració Excel: salt de colpeig a P-1 entre -1,6 i -1,8, a P-2 des de -0,4 ja hi ha NB~24."
+   },
+   {
+    "nom": "2on nivell",
+    "litologia_candidats": [
+     "Lutites i sorrenques, Substrat (llegenda)",
+     "Lutita gresosa (GTL, descripció de la mostra SPT1 P3)"
+    ],
+    "de": {
+     "estat": "candidats",
+     "candidats": [
+      "contacte per punt: ~-1,4 m (P-1), ~-1,35 m (P-3), ~-0,2/-0,25 m (P-2)"
+     ]
+    },
+    "a": "fins a fons d'investigació (rebuig DPSH; base dibuixada a 241 msnm = límit del dibuix, no del nivell)",
+    "mostra_del_nivell": {
+     "estat": "candidats",
+     "candidats": [
+      "Si — el material de la mostra (GTL 'Lutita gresosa', Roca) és la litologia del nivell 2; N=R del tall al contacte de P-3",
+      "No (per interval estricte: mostra 1,0-1,15 m a P-3 = cotes 244,0-243,85, gràficament DINS del nivell 1, contacte ~243,65)"
+     ]
+    },
+    "location": "seccions AA'/BB' + llegenda",
+    "quote": "Nivell 2: Lutites i sorrenques, Substrat.",
+    "note": "Contradicció interval-vs-material per a la mostra: l'interval GTL (1,0-1,15) cau gràficament al nivell 1 de P-3, però el material és lutita (nivell 2). Es deixa en candidats, material primer."
+   }
+  ],
+  "__nota": "Línia vermella discontínua 'Fonamentació' (243,4 msnm a AA', pujant fins ~244,55 a B') = recomanació Tier B, no es transcriu com a nivell. Nb=11/38/15/24/R = mitjanes per tram (inputs Tier B, ja derivables de l'Excel)."
+ },
+ "not_present": [
+  "nivell freàtic",
+  "mostres etiquetades (cap etiqueta SPT-1 al tall; només N=R)"
+ ],
+ "reading_notes": "Text extret del Print To PDF (net); contactes mesurats visualment sobre renders 150/300 dpi (eix msnm com a referència). L'annex FreeHand equivalent té text brossa (PScript5) i s'ha verificat visualment que és el mateix dibuix."
+}

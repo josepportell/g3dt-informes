@@ -1,0 +1,36 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf",
+ "source_md5": "960114b1585350fc3a2f0907891f83b0",
+ "kind": "pdf",
+ "generated": "2026-09-04T22:42:35",
+ "elapsed_s": 0.111,
+ "dir": "casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2",
+ "files": [
+  "casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-1.txt",
+  "casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-1.png",
+  "casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-2.txt",
+  "casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-2.png"
+ ],
+ "pages": 2,
+ "page_sizes_pt": [
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 15.0 (Windows)",
+ "creator": "PScript5.dll Version 5.2.2",
+ "creationDate": "D:20260604152211+02'00'",
+ "modDate": "D:20260604152211+02'00'",
+ "text_ok": {
+  "1": true,
+  "2": true
+ },
+ "pages_truncated": false,
+ "halves_pages": [],
+ "text_suspect_reason": "producer: Acrobat Distiller 15.0 (Windows)"
+}

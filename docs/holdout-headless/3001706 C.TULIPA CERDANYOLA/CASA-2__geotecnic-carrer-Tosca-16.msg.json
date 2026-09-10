@@ -1,0 +1,25 @@
+{
+  "source_path": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg",
+  "document_type": "correu",
+  "what_it_is": "Correu de Factoria d'Arquitectura (Fina) a Eva, la vigília del camp, amb el plànol de la casa 2 (Tosca 16) adjunt.",
+  "issuer": "factoria@factoriarquitectura.com (Fina, FACTORIA D'ARQUITECTURA SLP, 657873484)",
+  "date": "2026-05-06 10:50",
+  "pages_or_sheets": "cos + 2 adjunts (PLANTA I SECCIO.dwg, PLANTA I SECCIO.pdf)",
+  "context": {
+    "who_made_it": "el despatx d'arquitectura de la casa 2 (Factoria)",
+    "for_whom": "Eva (G3), abans de la sortida de camp",
+    "why": "facilitar el plànol amb topogràfic + edificació projectada i indicar accés ('es pot entrar per la part de la parcel·la que dona al Cami Antic')",
+    "expected_fields": ["street_address (casa 2)", "architect_name (casa 2)", "field_date (implícita: 'demà')"],
+    "not_expected": ["client/promotor (no l'anomena)", "expedient", "lab"],
+    "relation_to_others": "els adjunts són els mateixos fitxers solts de la carpeta CASA 2 (md5 idèntic el .pdf) → dedup. 'demà' respecte 06/05 → camp el 07/05/2026, coincideix amb annexos i comanda.",
+    "authority_for": ["architect_name (casa 2)", "street_address (casa 2)", "field_date (corroboració)"]
+  },
+  "tier_a": [
+    {"concept_id": "architect_name", "value": "FACTORIA D'ARQUITECTURA SLP (casa 2)", "location": "signatura del cos", "quote": "Salutacions / Fina / FACTORIA D'ARQUITECTURA SLP / 657873484", "confidence": 0.7, "note": "despatx; 'Fina' és el contacte, sense constància que sigui l'arquitecta → candidat despatx, cap persona identificada com a arquitecte"},
+    {"concept_id": "street_address", "value": "Carrer Tosca, 16 (casa 2; parcel·la que arriba al Camí Antic)", "location": "assumpte + cos", "quote": "geotecnic carrer Tosca 16 … al carrer Tosca 16 i a la parcel·la veïna … la part de la parcel·la que dona al Cami Antic", "confidence": 0.8, "note": "'i a la parcel·la veïna' = les dues obres del mateix encàrrec de camp"},
+    {"concept_id": "field_date", "value": "2026-05-07 ('demà' respecte del 06-05)", "location": "cos", "quote": "el geotecnic que heyu d'anar a fer dema al carrer Tosca 16", "confidence": 0.6, "note": "corrobora el 07/05/2026"},
+    {"concept_id": "cota_referencia", "value": "cotes d'implantació al plànol adjunt", "location": "cos (referència a l'adjunt)", "quote": "adjunto planol amb superposició del topografic i la edificació projectada on surten tambñe les cotes on anirà situada", "confidence": 0.3, "note": "el plànol marca 201,25 → coincideix amb Cota inici P-2.1"}
+  ],
+  "not_present": ["client_name (no anomena el promotor)", "expedient", "num_floors (al plànol, no al cos)", "superficie_parcela", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "extract_msg; adjunts dedupats per md5 (idèntics als de la carpeta)."
+}

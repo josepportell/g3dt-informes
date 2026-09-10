@@ -60,16 +60,20 @@ def test_select_bearing_layer_idx_empty():
     assert _select_bearing_layer_idx([]) == 0
 
 
-def test_select_bearing_layer_idx_homogeneous_profile_picks_deepest():
-    """Two competent layers → deepest competent is layer 1 (bearing stratum)."""
+def test_select_bearing_layer_idx_homogeneous_profile_picks_the_layer_the_footing_reaches():
+    """Two competent layers → the one the footing reaches at Df (+0,2 m), NOT the deepest.
+
+    Canvi de criteri 2026-09-06 (P2a+P2b, DECISION-LOG): Rubí signat parametritza les
+    graves (0-3,35 m) amb la sabata a 1,0 m, no els gresos de sota. Amb Df al defecte
+    (0,8) la primera capa (0-2,0) ja carrega; amb Df=2,5 la sabata és a la segona."""
     layers = [
         {'depth_from_m': 0.0, 'depth_to_m': 2.0,
          'description': 'Graves compactes', 'n20_average': 30.0},
         {'depth_from_m': 2.0, 'depth_to_m': 5.0,
          'description': 'Bretxes carbonatades', 'n20_average': 50.0},
     ]
-    # Both layers competent → pick deepest (bearing stratum under footing).
-    assert _select_bearing_layer_idx(layers) == 1
+    assert _select_bearing_layer_idx(layers) == 0
+    assert _select_bearing_layer_idx(layers, foundation_depth=2.5) == 1
 
 
 # ---------------------------------------------------------------------------
@@ -122,16 +126,17 @@ def test_bearing_stratum_n20_single_layer_returns_global():
 
 
 # ---------------------------------------------------------------------------
-# Regression: Bell-Lloc-shape profile (all-competent multi-layer) must pick
-# the DEEPEST competent layer, not the shallowest. Previously the helper
-# delegated to bicapa.select_bearing_layer which returns the first competent
-# layer — wrong for Eva's convention on flagship reference projects.
+# Bell-Lloc-shape profile (all-competent multi-layer): the bearing layer is
+# the one the footing reaches. Until 2026-09-06 this test pinned "deepest"
+# (an earlier reading of Eva's convention that the signed reports contradict:
+# Bell-lloc «recolzada en els materials del primer nivell un cop sanejat el
+# tram superficial», Df 0,3 m).
 # ---------------------------------------------------------------------------
 
-def test_select_bearing_layer_idx_bell_lloc_shape_picks_deepest():
+def test_select_bearing_layer_idx_bell_lloc_shape_picks_the_layer_at_df():
     """Bell-Lloc shape: 2 granular layers (0-1.6m, 1.6-1.8m), both competent.
-    Eva computes Qa on the DEEPEST layer (bearing stratum). Helper MUST
-    return idx=1, not idx=0."""
+    Sabata a 0,3 m → nivell portant = capa 0 (0-1,6). Només amb Df ≥ 1,4 m la
+    sabata arriba a la segona."""
     layers = [
         {
             'depth_from_m': 0.0, 'depth_to_m': 1.6,
@@ -144,7 +149,9 @@ def test_select_bearing_layer_idx_bell_lloc_shape_picks_deepest():
             'n20_average': 50.0,
         },
     ]
-    assert _select_bearing_layer_idx(layers) == 1
+    assert _select_bearing_layer_idx(layers, foundation_depth=0.3) == 0
+    assert _select_bearing_layer_idx(layers) == 0            # defecte 0,8 + 0,2 < 1,6
+    assert _select_bearing_layer_idx(layers, foundation_depth=1.4) == 1
 
 
 # ---------------------------------------------------------------------------
@@ -173,7 +180,9 @@ def test_select_bearing_layer_idx_alcoletge_synthesized():
     layers = segment_by_n20_step(combined)
     assert len(layers) >= 2
     bearing_idx = _select_bearing_layer_idx(layers)
-    assert bearing_idx == len(layers) - 1
+    # El rebliment fluix de dalt se salta; el portant és una capa competent de sota
+    assert bearing_idx >= 1
+    assert (layers[bearing_idx].get('n20_average') or 0) > (layers[0].get('n20_average') or 0)
 
 
 def test_build_report_data_synthesized_layers_drive_bearing_n20():

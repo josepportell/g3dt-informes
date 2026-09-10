@@ -1,0 +1,152 @@
+{
+ "source_path": "tall.pdf",
+ "source_md5": "329e9d17752d2ea1ee57a02a860d8db7",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació (perfil A-A') que correlaciona els 3 punts DPSH (P-1, P-3, P-2) en dos nivells de sòl, amb llegenda de nivells, línia d'augment d'humitat detectada i cota de fonamentació recomanada.",
+ "issuer": "G3 (Eva)",
+ "date": "Febrer 2026",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva) - dibuix intern de correlació entre els 3 punts DPSH del projecte",
+  "for_whom": "Per a l'informe mateix (justificar gràficament els nivells del sòl, l'augment d'humitat i la cota de fonamentació recomanada)",
+  "why": "Correlacionar els nivells detectats a P-1, P-3 i P-2 en un tall continu (perfil A-A'), mostrant el pas de Nivell 1 (rebliment antròpic) a Nivell 2 (lutites, substrat)",
+  "expected_fields": [
+   "num_soil_levels",
+   "litologia dels nivells (llegenda)",
+   "street_address i municipality (via títol del projecte)",
+   "building_type (via títol: ampliació)",
+   "expedient",
+   "num_dpsh_tests (recompte de punts P-i al perfil i al plànol de planta)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date",
+   "cota_referencia numèrica explícita (z:)",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x/utm_y",
+   "dades de laboratori (lab_*)",
+   "cte_edificacio/cte_sol"
+  ],
+  "relation_to_others": "Còpia 'Microsoft: Print To PDF' (text net, producer confirmat al metadata) del mateix dibuix que 'PDF/ANNEXES/4001670_tall de correlació.pdf' (md5 diferent, probablement l'exportació FreeHand/Distiller amb text brossa) i que l'original 'ANNEXES/4001670_tall de correlació.FH11' (route=skip, no llegible). Les tres són EL MATEIX tall de correlació: no compten com a fonts independents entre elles per a la regla de 2 fonts de 'segur'.",
+  "authority_for": [
+   "num_soil_levels",
+   "street_address",
+   "street_address_struct",
+   "municipality",
+   "building_type",
+   "expedient",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "pàgina 1, requadre inferior dret del peu de plànol",
+   "quote": "Exp: 4001670",
+   "confidence": 0.9,
+   "note": "Coincideix amb el nom de la carpeta del projecte."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols, Nº 7, Urbanització El Roser, Alcoletge",
+   "location": "pàgina 1, capçalera TÍTOL DEL PROJECTE (i repetit al peu de plànol)",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+   "confidence": 0.65,
+   "note": "Redacció de títol (frase de l'informe), no bloc OBRA/ADREÇA etiquetat; candidat, creuar amb comanda/pressupost/PLAN_COST."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Girasols",
+    "nom_via_alternatives": [],
+    "portals": [
+     "7"
+    ],
+    "municipi": "Alcoletge",
+    "municipi_alternatives": []
+   },
+   "location": "pàgina 1, capçalera TÍTOL DEL PROJECTE",
+   "quote": "CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+   "confidence": 0.65,
+   "note": "Mateixa font que street_address; només aquest document (encara no creuat amb altres grafies)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "pàgina 1, capçalera TÍTOL DEL PROJECTE",
+   "quote": "D'ALCOLETGE",
+   "confidence": 0.75,
+   "note": "Coincideix amb el nom de la carpeta (ALCOLETGE, forma curta/majúscula)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Ampliació d'un edifici",
+   "location": "pàgina 1, capçalera TÍTOL DEL PROJECTE; també etiqueta \"Ampliació\" al plànol de planta",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL",
+   "confidence": 0.6,
+   "note": "El títol diu només 'un edifici' (no especifica habitatge unifamiliar); el croquis de planta mostra una ampliació annexa a un edifici existent. Confirmar amb plànol/projecte de l'arquitecte."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "pàgina 1, etiquetes sobre el perfil A-A' i sobre el plànol de planta",
+   "quote": "P-1 ... P-3 ... P-2",
+   "confidence": 0.75,
+   "note": "Tres punts DPSH diferenciats i etiquetats; corroborar amb l'Excel DPSH (executats) que mana per aquest camp."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "pàgina 1, LLEGENDA",
+   "quote": "Nivell 1: Rebliment antròpic. / Nivell 2:  Lutites, substrat.",
+   "confidence": 0.85,
+   "note": "El tall mana pel NOMBRE de nivells (regla existent); sense annex de sondeig en aquest projecte (només DPSH), aquesta és la font principal."
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Nivell 1",
+    "litologia": "Rebliment antròpic",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "pàgina 1, LLEGENDA",
+    "quote": "Nivell 1: Rebliment antròpic."
+   },
+   {
+    "nom": "Nivell 2",
+    "litologia": "Lutites, substrat",
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "pàgina 1, LLEGENDA",
+    "quote": "Nivell 2:  Lutites, substrat."
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "field_date",
+  "cota_referencia",
+  "superficie_parcela",
+  "num_floors",
+  "referencia_catastral",
+  "utm_x",
+  "utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (Print To PDF, text_ok=true), no calen retalls ni renderitzat addicional. El perfil A-A' mostra dues línies discontínues (blava 'Augment de la humitat detectada' i vermella 'Cota de fonamentació recomanada') que tallen els 3 perfils vora el límit Nivell 1/Nivell 2 (msnm ~187,2-187,4 segons l'escala vertical) i anotacions Nb=3/5/7/14/R i N=20 al llarg dels perfils (probables cops N20 de l'Excel DPSH usats per justificar el límit de nivell). Cap d'aquests valors porta una xifra de fondària impresa en text lligada al punt: no se n'ha derivat cap valor numèric per no mesurar píxels/estimar gruixos gràfics (instrucció del Pas 3b). La fondària de transició de nivells (de/a) no és a soil_levels perquè no hi ha cap xifra impresa; consultar l'Excel DPSH (columna Nivell al peu, B79) o l'annex DPSH per fondàries. No hi ha cota_referencia (z:) impresa en aquest document, només l'escala relativa msnm 186-189 de l'eix vertical."
+}

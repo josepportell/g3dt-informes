@@ -1,0 +1,181 @@
+{
+ "source_path": "PDF/ANNEXES/4001612_DPSH.pdf",
+ "source_md5": "7f165d4a45cc68e40de1bf346e8271ea",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_dpsh",
+ "what_it_is": "Full de resultats de l'assaig de penetració dinàmica DPSH (P-1 i P-2), versió PDF impresa del mateix Excel (ANNEXES/4001612_DPSH.xls): colpeig NB per fondària i cota de rebuig per punt.",
+ "issuer": "G3 (plantilla generada des de l'Excel DPSH)",
+ "date": "01/10/2025 (DATA: al peu de cada full)",
+ "pages_or_sheets": "2 pàgines (P-1, P-2)",
+ "context": {
+  "who_made_it": "G3 (Eva), a partir de les dades de camp de l'assaig DPSH recollides per TPS",
+  "for_whom": "ús intern del projecte; alimenta la taula 'Penetròmetres dinàmics DPSH' de l'informe",
+  "why": "documentar el colpeig NB cada 20 cm i la cota/fondària de rebuig de cada punt DPSH (P-1, P-2)",
+  "expected_fields": [
+   "cota_referencia (Cota inici per punt)",
+   "field_date (DATA)",
+   "expedient (NÚMERO D´INFORME)",
+   "street_address (OBRA)",
+   "municipality (POBLACIÓ)",
+   "num_dpsh_tests (nombre de fulls/punts)",
+   "dpsh_tests[] (cota_inici, profunditat_assolida/rebuig, nivell_freatic per punt)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "num_soil_levels (autoritat = annex de sondeig, no aquest full)"
+  ],
+  "relation_to_others": "versió PDF/impresa de l'Excel ANNEXES/4001612_DPSH.xls (mateixes dades, sense colors de cel·la, no llegit en aquesta crida); duplicat exacte per md5 (7f165d4a45cc68e40de1bf346e8271ea) a 'PDF V0/ANNEXES/4001612_DPSH.pdf', carpeta antiga exclosa (route=skip, exclos_carpeta) — no compta com a font independent",
+  "authority_for": [
+   "cota_referencia",
+   "field_date",
+   "expedient",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "cota_referencia",
+   "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+   "location": "p.1, peu del gràfic P-1",
+   "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0,15 carrer).",
+   "confidence": 0.75,
+   "note": "P-1; confirmat per P-2 (mateixa cota) però és 1 sola font/plantilla, no independent d'ella mateixa; falta creuar amb annex de sondeig (z:) i COORDENADES.txt, no llegits en aquesta crida."
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+   "location": "p.2, peu del gràfic P-2",
+   "quote": "Cota inici: +199.50 msnm segons el plànol topogràfic ICGC (-0.15 carrer)",
+   "confidence": 0.75,
+   "note": "P-2; mateix valor que P-1 (nota tipogràfica: aquí '-0.15' amb punt, a P-1 amb coma), mateix document/plantilla, no és font independent."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "01/10/2025",
+   "location": "p.1 i p.2, peu 'DATA:'",
+   "quote": "DATA: 01/10/2025",
+   "confidence": 0.7,
+   "note": "candidat 2 segons regla del skill (fitxa de camp F38 mana, no llegida en aquesta crida --only); idèntica a P-1 i P-2, no és 2 fonts independents."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001612",
+   "location": "p.1 i p.2, peu 'NÚMERO D´INFORME:'",
+   "quote": "NÚMERO D´INFORME: 4001612",
+   "confidence": 0.85,
+   "note": "coincideix amb el nom de la carpeta del projecte (4001612 BELL-LLOC)."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C7 MESTRE RAMON ORTIZ 15",
+   "location": "p.1 i p.2, peu 'OBRA:'",
+   "quote": "OBRA: C7 MESTRE RAMON ORTIZ 15",
+   "confidence": 0.55,
+   "note": "'C7' és probablement un artefacte tipogràfic/de plantilla per 'C/' (carrer); candidat, falta creuar amb pressupost/plànol per a la forma normalitzada."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "15"
+    ],
+    "municipi": "BELL-LLOC",
+    "municipi_alternatives": [
+     "BELL-LLOCH"
+    ]
+   },
+   "location": "p.1 i p.2, peu 'OBRA:' / 'POBLACIÓ:'",
+   "quote": "OBRA: C7 MESTRE RAMON ORTIZ 15 / POBLACIÓ: BELL-LLOC (p.1) / BELL-LLOCH (p.2)",
+   "confidence": 0.5,
+   "note": "portal i nom de via de la línia OBRA; municipi tal com l'escriu aquest full (grafia curta G3, no la forma oficial llarga: no confirmada en aquesta crida)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "BELL-LLOC",
+   "location": "p.1, peu 'POBLACIÓ:'",
+   "quote": "POBLACIÓ: BELL-LLOC",
+   "confidence": 0.55,
+   "note": "grafia curta G3; P-2 del mateix document diu 'BELL-LLOCH' (candidat alternatiu, mateixa plantilla, no font independent)."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "BELL-LLOCH",
+   "location": "p.2, peu 'POBLACIÓ:'",
+   "quote": "POBLACIÓ: BELL-LLOCH",
+   "confidence": 0.5,
+   "note": "grafia alternativa dins del mateix document (P-1 diu 'BELL-LLOC'); forma oficial llarga no impresa en aquest full."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "document sencer (2 pàgines)",
+   "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1 (p.1) / ASSAIG DE PENETRACIÓ DINÀMICA: P-2 (p.2)",
+   "confidence": 0.8,
+   "note": "2 punts/fulls presents en aquesta versió PDF (equivalent als 2 fulls P-1/P-2 de l'Excel origen); no distingeix previstos vs executats."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1 (senyal feble, no autoritat)",
+   "location": "p.1 i p.2, columna 'Nivells'",
+   "quote": "Nivell 1",
+   "confidence": 0.2,
+   "note": "cada punt (P-1, P-2) només marca 'Nivell 1', sense 'Nivell 2'; per regla del skill l'autoritat per a num_soil_levels és l'annex de sondeig / llegenda del tall (no llegits en aquesta crida) — candidat molt feble, no consolidar sense creuar."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+    "profunditat_assolida": "-1,35 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.1",
+    "quote": "Rebuig a la cota de  -1,35 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": "+199,50 msnm segons el plànol topogràfic ICGC (-0.15 carrer)",
+    "profunditat_assolida": "-2,45 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "p.2",
+    "quote": "Rebuig a la cota de  -2,45 m"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text net (Acrobat Distiller, no FreeHand): llegit directament de page-1.txt i page-2.txt (text_ok=true a totes dues), sense renderitzar cap imatge. No s'ha comprovat el color de les cel·les N.F. (Pas 3b) perquè aquest document és un PDF, no l'Excel amb colors.txt — 'No detectat' es basa només en l'absència de valor textual a la columna N.F./Nivells d'aquest PDF; caldria creuar amb ANNEXES/4001612_DPSH.xls (sheet colors.txt, formatting_info=True) per confirmar, no llegit en aquesta crida --only. 'Rebuig a la cota de -X,XX m' d'aquesta plantilla PDF s'interpreta com el mateix concepte que el peu 'Rebuig a -X,XX m' de l'Excel (Pas 3b), amb redacció lleugerament diferent."
+}

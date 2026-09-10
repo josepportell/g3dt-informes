@@ -1,0 +1,22 @@
+{
+ "source_path": "DTE.txt",
+ "document_type": "altre",
+ "what_it_is": "Nota administrativa d'una línia (76 bytes): l'informe s'ha facturat/descomptat el 23/02 per 1.917,85 € amb venciment 30/03/26.",
+ "issuer": "G3 (administració, probablement Dolors/Loli)",
+ "date": "2026-02-23 (implícita; VCT 30/03/26)",
+ "pages_or_sheets": "1 línia",
+ "context": {
+  "who_made_it": "administració G3",
+  "for_whom": "control intern de facturació",
+  "why": "deixar constància del descompte/emissió de la factura de l'informe",
+  "expected_fields": [],
+  "not_expected": ["tots els camps del nivell A"],
+  "relation_to_others": "1.917,85 € = 1.585,00 € (pressupost 24·0807) + 21% IVA exacte. 'DTE' = descompte d'efecte (finançament de la factura). Data 23/02 = 4 dies després del camp (19/02).",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "facturacio", "value": "factura de 1.917,85 € (1.585 + 21% IVA) el 23/02/2026, venciment 30/03/2026", "location": "línia única", "quote": "EN DATA 23/02 DTO AQUEST INFORME PER UN IMPORT DE 1917,85€ - VCT: 30/03/26", "confidence": 0.8, "note": "cap camp del nivell A; confirma l'import del pressupost acceptat."}
+ ],
+ "not_present": ["tots els 15 camps del nivell A"],
+ "reading_notes": "Fitxer de text pla llegit sencer."
+}

@@ -1,0 +1,52 @@
+{
+ "source_path": "SONDEIG.pdf",
+ "source_md5": "40a9c27260c74eb5a0b5d521a217ea67",
+ "kind": "pdf",
+ "generated": "2026-09-03T20:11:29",
+ "elapsed_s": 3.439,
+ "dir": "sondeig",
+ "files": [
+  "sondeig/page-1.txt",
+  "sondeig/page-1.png",
+  "sondeig/page-1-top.png",
+  "sondeig/page-1-bottom.png",
+  "sondeig/page-2.txt",
+  "sondeig/page-2.png",
+  "sondeig/page-2-top.png",
+  "sondeig/page-2-bottom.png",
+  "sondeig/page-3.txt",
+  "sondeig/page-3.png",
+  "sondeig/page-3-top.png",
+  "sondeig/page-3-bottom.png"
+ ],
+ "pages": 3,
+ "page_sizes_pt": [
+  [
+   595.28,
+   841.89
+  ],
+  [
+   595.28,
+   841.89
+  ],
+  [
+   595.28,
+   841.89
+  ]
+ ],
+ "producer": "Microsoft: Print To PDF",
+ "creator": "",
+ "creationDate": "D:20251006131620+02'00'",
+ "modDate": "D:20251006131736+02'00'",
+ "text_ok": {
+  "1": false,
+  "2": false,
+  "3": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1,
+  2,
+  3
+ ]
+}

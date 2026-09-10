@@ -1,0 +1,24 @@
+{
+  "source_path": "PDF/ANNEXES/4001670_fotografies.pdf",
+  "document_type": "annex_fotografies",
+  "what_it_is": "Annex 'Fotografies' de l'Eva (2 pàgines): F-1 i F-2 (màquina DPSH als punts P-1 i P-2), F-3 (màquina al P-3, arrambada a la casa) i F-4 (materials recuperats a l'SPT-1), amb peus de foto redactats.",
+  "issuer": "G3 — FreeHand 'ANNEXES/4001670_fotografies.FH11' (author 'Loli') → Acrobat Distiller 15.0, 16/03/2026 16:49.",
+  "date": "Sense caixetí de data; PDF 16/03/2026. Les fotos són del dia de camp (16/02/2026).",
+  "pages_or_sheets": "2 pàgines A4 verticals (595×842 pt), 2 fotos per pàgina. Text brossa → llegit visualment a 90 dpi.",
+  "context": {
+    "who_made_it": "L'Eva (G3), amb les fotos de camp de FOTOS DE CAMP + PLANOL PUNTS/ (P1/P2/P3 - ALCOLETGE.jpeg i spt alcoletge.png).",
+    "for_whom": "Annex de l'informe 4001670.",
+    "why": "Documentar visualment l'emplaçament de cada assaig i la mostra recuperada.",
+    "expected_fields": ["expedient (capçalera)", "num_dpsh_tests (una foto per punt)", "identificació de la mostra SPT-1"],
+    "not_expected": ["client_name", "architect_name", "street_address", "municipality", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm", "referencia_catastral", "lab", "cte"],
+    "relation_to_others": "Les 4 fotos són les MATEIXES que la carpeta FOTOS DE CAMP + PLANOL PUNTS/ (F-1 = P1 - ALCOLETGE.jpeg, F-2 = P2, F-3 = P3, F-4 = spt alcoletge.png): duplicat maquetat, no font independent. Els peus de foto són la redacció de l'Eva i fixen la correspondència foto↔punt (memòria eva_geological_levels_and_photo_id: la correspondència l'estableix l'annex).",
+    "authority_for": ["num_dpsh_tests (corroboració: 3 emplaçaments fotografiats)", "correspondència foto↔punt (F-1↔P-1, F-2↔P-2, F-3↔P-3, F-4↔SPT-1)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "4001670", "location": "capçalera de les 2 pàgines, casella dreta", "quote": "Fotografies - pàgina 1  | 4001670 || Fotografies - pàgina 2 | 4001670", "confidence": 0.85, "note": "Coincideix amb carpeta i resta d'annexos."},
+    {"concept_id": "num_dpsh_tests", "value": "3 (P-1, P-2, P-3) + 1 SPT (SPT-1)", "location": "peus de foto p.1 i p.2", "quote": "Fotografies 1 i 2: Vista de l'emplaçament de la màquina per a la realització dels assaigs de penetració dinàmica DPSH P-1 i P-2, respectivament. || Fotografies 3 i 4: Vista de l'emplaçament de la màquina per a la realització de l'assaig de penetració dinàmica DPSH P-3, i detall dels materials recuperats en l'assaig SPT-1, respectivament.", "confidence": 0.7, "note": "Redacció de l'Eva; corrobora 3 DPSH + 1 SPT. L'Excel DPSH mana."},
+    {"concept_id": "lab_sample_id", "value": "SPT-1 (materials recuperats; foto F-4)", "location": "p.2 peu de foto + F-4", "quote": "detall dels materials recuperats en l'assaig SPT-1", "confidence": 0.5, "note": "L'Eva anomena la mostra 'SPT-1' (al full TPS és 'SPT P3'; a l'etiqueta de la bossa 'Mostra: P3'). Nomenclatura de l'informe: SPT-1. La foto mostra el mostrejador partit amb testimoni de sòl fi marró (coherent amb 'LUTITA MARRÓ' del full TPS i el Nivell 2 'Lutites' del tall)."}
+  ],
+  "not_present": ["client_name", "architect_name", "street_address", "municipality", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "lab_depth", "cte"],
+  "reading_notes": "Text brossa (FreeHand) → renderitzades les 2 pàgines a 90 dpi; capçaleres i peus llegibles. F-1: màquina DPSH en esplanada de terra amb tanca i camí de grava (= P1 - ALCOLETGE.jpeg). F-2: màquina vora mur de blocs en construcció amb carretó i palets (= P2 - ALCOLETGE.jpeg) — hi ha obra en curs a la parcel·la el dia de camp. F-3: màquina arrambada a la façana de la casa existent, pèrgola de canyís (= P3 - ALCOLETGE.jpeg). F-4: mostrejador SPT obert amb testimoni, tub, puntassa i bossa amb etiqueta TPS (= spt alcoletge.png). Cap dada nova respecte les fotos originals: valor = correspondència foto↔punt i redacció dels peus."
+}

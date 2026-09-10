@@ -1,0 +1,459 @@
+[
+ {
+  "var": "access_street",
+  "grup": "narr",
+  "eva": "carrer adjacent situat al sud",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "adjacent_east_fmt",
+  "grup": "narr",
+  "eva": "Per la part est, amb una parcel·la construïda amb piscina.",
+  "gen": "Per la part est amb una parcel·la buida.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_north_fmt",
+  "grup": "narr",
+  "eva": "Per la part nord, amb parcel·les sense construir, amb herbes altes i arbres, així com una parcel·la amb planta baixa i una planta pis, paral·lela al carrer Turó Roig.",
+  "gen": "Per la part nord amb una parcel·la buida.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_south_fmt",
+  "grup": "narr",
+  "eva": "Per la part sud, amb el carrer Arbrells.",
+  "gen": "Per la part sud amb el Carrer dels Arbrells.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_west_fmt",
+  "grup": "narr",
+  "eva": "I finalment, per la part oest, amb parcel·les sense construir amb herbes altes i arbres.",
+  "gen": "I finalment, per la part oest amb una parcel·la amb construcció.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "building_structure_desc",
+  "grup": "narr",
+  "eva": "Segons el projecte executiu es preveu la construcció d’estructures sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l’excavació fins a la cota de fonamentació.",
+  "gen": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+  "status": "CLOSE",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "building_type_lower",
+  "grup": "A",
+  "eva": "3 habitatges unifamiliars d’estructura lleugera, fusta",
+  "gen": "habitatge unifamiliar aïllat",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client",
+  "grup": "A",
+  "eva": "WOOD COMFORT PROMOCIONS SLU",
+  "gen": "WOOD COMFORT PROMOCIONS S.L.U.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_aggressivity_statement",
+  "grup": "narr",
+  "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten No Agressius al formigó.",
+  "gen": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_levels_detected",
+  "grup": "narr",
+  "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "gen": "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_water_statement",
+  "grup": "narr",
+  "eva": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin. Tampoc s’ha localitzat cap curs d’aigua i/o torrent proper que pugui afectar a la zona en estudi.",
+  "gen": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "cota_referencia",
+  "grup": "A",
+  "eva": "-4.0",
+  "gen": "+570.90",
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-1",
+  "gen": "C-0",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-2",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "24 de octubre de 2025",
+  "gen": "24 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_signatura_text",
+  "grup": "resta",
+  "eva": "19 de novembre de 2025.",
+  "gen": "06 de setembre de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "empentes_paragraph",
+  "grup": "narr",
+  "eva": "Pel dimensionament del murs que es projectin i pel càlcul de les empentes de terres caldrà tenir en compte els paràmetres geomecànics dels materials del 1er nivell que es considera el més desfavorables.\nCal tenir en compte que en el trasdors del mur, caldrà instal·lar un correcte drenatge per a evitar que s’acumuli aigua i es produeixi un sobrecàrrega en el seu trasdors.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "estabilitat_paragraph",
+  "grup": "narr",
+  "eva": "Per a la realització de les recomanacions d’estabilitat de talussos s’han tingut en compte les següents premisses:\nActualment el solar presenta un pendent d’entre 20-25º.\nTalussos sense presència de nivell freàtic.\nFactor de seguretat F=1.8, factor de seguretat del vessant actual.\nS’ha considerat la columna de materials, dominat pel primer nivell, amb els paràmetres geomecànics obtinguts.\nEl mètode ràpid de càlcul utilitzat per les recomanacions de talussos és el proposat per Hoek & Bray (1977), utilitzant els valors numèrics de cohesió, angle de fregament i densitat exposat anteriors.\nFigura 6 i Figura 7. Líneas de saturació possibles, es marca la que s’ha escollit. En la segona figura detall de l’àbac nº1 escollit.\nAixí per a tots aquests paràmetres exposant el vessant actual presenta factors de seguretat superiors a 3.5. Si els habitatges projectats es recolzen damunt dels materials del primer nivell de substrat, no suposaran una sobrecàrrega important damunt del vessant, i per tant, no modificarà substancialment els factors de seguretat del propi vessant, per tant amb valors sempre superior a 1.8, per tant cumplint les premisses marcades per part del CTE.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "expedient",
+  "grup": "A",
+  "eva": "3001621",
+  "gen": "3001621",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "geo_p",
+  "grup": "resta",
+  "eva": "En concret, i segons l’ICGC, l’estudi s’ha dut a terme damunt una zona on afloren materials de la unitat ECbc, corresponent a bretxes amb intercalacions de lutites i gresos vermells del Eocè- Ipresià.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "geomech_E",
+  "grup": "calc",
+  "eva": ">500",
+  "gen": 500,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_cohesion",
+  "grup": "calc",
+  "eva": "1.0",
+  "gen": 1.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_gamma",
+  "grup": "calc",
+  "eva": "2.20",
+  "gen": 2.2,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_phi",
+  "grup": "calc",
+  "eva": "35",
+  "gen": 35,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "k30_value",
+  "grup": "calc",
+  "eva": "Si s’optés per una fonamentació amb llosa, el valor de coeficient de balast, referit a la placa de 30x30, es podrà adoptar un valor de K30=8.00 kg/cm3.",
+  "gen": "8.0",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "lab_depth",
+  "grup": "A",
+  "eva": "Profunditat:  -1.00  a -1.20 m",
+  "gen": "-1.0 a -1.2",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_field_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL, S.L",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_field_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_location",
+  "grup": "A",
+  "eva": "Punt: S-1",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_sample_id",
+  "grup": "A",
+  "eva": "Mostra : SPT-1",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_testing_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_testing_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_tests_text",
+  "grup": "narr",
+  "eva": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+  "gen": "Contingut en sulfats solubles UNE 83963:2008",
+  "status": "CLOSE",
+  "method": "table_cell"
+ },
+ {
+  "var": "materials_intro",
+  "grup": "narr",
+  "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivel de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "gen": "A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "municipality",
+  "grup": "A",
+  "eva": "Castellar del Vallès",
+  "gen": "Castellar del Vallès",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "num_dpsh_tests",
+  "grup": "A",
+  "eva": "4 assaigs de penetració dinàmica tipus DPSH (veure annex “Registre assaigs mecànics”).",
+  "gen": 4,
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "plantes",
+  "grup": "A",
+  "eva": "Pb+1Pp",
+  "gen": "Pb+1",
+  "status": "CLOSE",
+  "method": "table_cell"
+ },
+ {
+  "var": "qa_value",
+  "grup": "calc",
+  "eva": "3.0",
+  "gen": "3.00",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "radon_sentence",
+  "grup": "narr",
+  "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "gen": "La parcel·la concreta d'estudi es localitza al terme municipal de CASTELLAR DEL VALLÈS i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "radon_zone",
+  "grup": "calc",
+  "eva": "1",
+  "gen": "1",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "seismic_ab_text",
+  "grup": "calc",
+  "eva": "AB  = 0,04 g  (essent g el valor de la gravetat)",
+  "gen": "0,04",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "settlement",
+  "grup": "calc",
+  "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran menyspreables o bé inferiors a 1.0 cm.",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "site_condition",
+  "grup": "narr",
+  "eva": "Tot i no ser un solar pla, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+  "gen": "Tot i no ser un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_description",
+  "grup": "narr",
+  "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través del carrer adjacent situat al sud.\nEl solar es localitza sense construccions ni pavimentacions, s’ha realitzat un desbroç de la zona de treball i s’ha adequat un accés a la zona de treball.\nTopogràficament, el solar presenta pendent, amb una plataforma de treball, la única on es pot emplaçar la màquina, situada aproximadament 4.0 metres respecte el carrer.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials del subsòl del solar ni en la parcel·la objecte d’estudi ni en zones properes.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-1.00 a -1.20",
+  "gen": "-1.00 a -1.20",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Limolites i bretxes",
+  "gen": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (NIVELL 1)",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "S-1",
+  "gen": "S-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "R",
+  "gen": "R",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_baumann",
+  "grup": "calc",
+  "eva": "--",
+  "gen": "---",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_classification",
+  "grup": "calc",
+  "eva": "No Agressius",
+  "gen": "No Agressius",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_level_name",
+  "grup": "calc",
+  "eva": "1er nivell",
+  "gen": "1er nivell",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_value",
+  "grup": "calc",
+  "eva": "0.0",
+  "gen": "0.0",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "120 m2",
+  "gen": "120",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_parcela",
+  "grup": "A",
+  "eva": "1.284",
+  "gen": "1284.0",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "table_dpsh_range",
+  "grup": "calc",
+  "eva": "3, 4 i 5",
+  "gen": "3, 4 i 5",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "utm_x",
+  "grup": "A",
+  "eva": "423167",
+  "gen": 423167.0,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "utm_y",
+  "grup": "A",
+  "eva": "4609608",
+  "gen": 4609608.0,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ }
+]

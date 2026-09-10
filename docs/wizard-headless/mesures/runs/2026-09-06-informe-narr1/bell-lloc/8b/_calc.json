@@ -1,0 +1,76 @@
+{
+ "Df_user": 0.3,
+ "num_soil_levels_user": 2,
+ "soil_types_user": [
+  "limo",
+  "grava"
+ ],
+ "dpsh_overall_n20": 25.12,
+ "bearing_layer_idx": 0,
+ "bearing_layer_description": "Graves carbonatades",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Graves incloses en matriu sorrenca d'aspectes carbonatats, i de coloracions clares",
+   "from": 0.0,
+   "to": 2.6,
+   "n20_avg": 18.75,
+   "Nb": 22.6,
+   "soil_type": "grava"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2,
+  "cohesion": 0.05,
+  "phi": 34.6,
+  "E": 467
+ },
+ "terzaghi": {
+  "phi": 34.6,
+  "cohesion": 0.05,
+  "gamma": 2,
+  "B": 1.0,
+  "Df": 0.3,
+  "qu": 9.175400000000002,
+  "safety_factor": 3.0,
+  "Qa": 3.0,
+  "settlement_cm": 2.1,
+  "settlement_type": "immediat",
+  "Es_used": 76.0,
+  "qa_terzaghi_peck": 1.22420153988736,
+  "Qa_uncapped": 3.0584666666666673,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.099,
+  "qa_governs": "cap",
+  "settlement_generic": false,
+  "settlement_regime": "granular",
+  "Es_source": "wizard: Es assentament",
+  "Es_candidates": [
+   {
+    "value": 76.0,
+    "display": "Es=76 (escrit al wizard)",
+    "source": "wizard: Es assentament",
+    "settlement_cm": 2.1
+   },
+   {
+    "value": 145.0,
+    "display": "Es=145 (2.5×N SPT 58)",
+    "source": "2,5 × colpeig (Nspt del nivell, columna «N»; text dels 7 informes)",
+    "settlement_cm": 1.1
+   },
+   {
+    "value": 56.475903614457835,
+    "display": "Es=56 (2.5×Nb 22.6)",
+    "source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
+    "settlement_cm": 2.8
+   },
+   {
+    "value": 467.0,
+    "display": "Es=467 (E del criteri)",
+    "source": "E de la taula geotècnica com a Es",
+    "settlement_cm": 0.3
+   }
+  ],
+  "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.10 cm, immediats en el temps donat el comportament granular dels materials."
+ }
+}

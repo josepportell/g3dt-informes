@@ -1,0 +1,186 @@
+{
+ "rows": [
+  {
+   "n": 1,
+   "slot_eva": "fig_situacio",
+   "caption": "Figura 1 i Figura 2. Detall de la ubicació de la parcel·la en estudi. Font: Projecte.",
+   "file_eva": "01_fig_situacio_figura-1-i-figura-2-detall-de-la-ubicaci.png",
+   "ours_slot": "fig_cadastre_image",
+   "file_ours": "cadastre_sitplan_pl. situaci_1c37ee19f9.jpg",
+   "status": "MISMATCH",
+   "phash_d": 30,
+   "ncc": 0.289,
+   "psr": 6.2,
+   "ncc_raw": 0.289,
+   "scale": 0.421,
+   "dir": "nostra dins veritat"
+  },
+  {
+   "n": 2,
+   "slot_eva": "fig_situacio",
+   "caption": "Figura 1 i Figura 2. Detall de la ubicació de la parcel·la en estudi. Font: Projecte.",
+   "file_eva": "02_fig_situacio_figura-1-i-figura-2-detall-de-la-ubicaci.png",
+   "ours_slot": "fig_aerea_image",
+   "file_ours": "orthophoto_parcel_314419_4611118.png",
+   "status": "MISMATCH",
+   "phash_d": 30,
+   "ncc": 0.451,
+   "psr": 4.5,
+   "ncc_raw": 0.602,
+   "scale": 0.164,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 3,
+   "slot_eva": "fig_projecte",
+   "caption": "Figura 3. Ubicació de l’habitatge a l’interior de la parcel·la. Font: Projecte.",
+   "file_eva": "03_fig_projecte_figura-3-ubicacio-de-l-habitatge-a-l-int.png",
+   "ours_slot": "fig_main_plan_image",
+   "file_ours": "planol_A.01_ef0272ce32.jpg",
+   "status": "MISMATCH",
+   "phash_d": 24,
+   "ncc": 0.554,
+   "psr": 5.0,
+   "ncc_raw": 0.664,
+   "scale": 0.164,
+   "dir": "nostra dins veritat"
+  },
+  {
+   "n": 4,
+   "slot_eva": "foto_vista",
+   "caption": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d’estudi.",
+   "file_eva": "04_foto_vista_fotografia-1-i-fotografia-2-vistes-gener.jpeg",
+   "ours_slot": "photo_site_image_1",
+   "file_ours": "Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 5,
+   "slot_eva": "foto_vista",
+   "caption": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d’estudi.",
+   "file_eva": "05_foto_vista_fotografia-1-i-fotografia-2-vistes-gener.jpeg",
+   "ours_slot": "photo_site_image_2",
+   "file_ours": "Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+   "status": "MISMATCH",
+   "phash_d": 28,
+   "ncc": 0.269,
+   "psr": 99.0,
+   "ncc_raw": 0.269,
+   "scale": 1.0,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 6,
+   "slot_eva": "foto_dpsh",
+   "caption": "Fotografia 3. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPS",
+   "file_eva": "06_foto_dpsh_fotografia-3-vista-de-la-maquina-utilitz.jpeg",
+   "ours_slot": "photo_dpsh_image",
+   "file_ours": "P1.jpg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 7,
+   "slot_eva": "foto_sondeig",
+   "caption": "Fotografia 4. Vista de la màquina utilitzada per a la realització del sondeig a rotació.",
+   "file_eva": "07_foto_sondeig_fotografia-4-vista-de-la-maquina-utilitz.jpeg",
+   "ours_slot": "photo_sondeig_image",
+   "file_ours": "P2.jpg",
+   "status": "MISMATCH",
+   "phash_d": 30,
+   "ncc": 0.224,
+   "psr": 2.8,
+   "ncc_raw": 0.481,
+   "scale": 0.14,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 9,
+   "slot_eva": "fig_geologic",
+   "caption": "Figura 5. Mapa geològic a escala 1:50.000 de la zona en estudi (Font: ICGC).",
+   "file_eva": "09_fig_geologic_figura-5-mapa-geologic-a-escala-1-50-000.png",
+   "ours_slot": "fig_geological_image",
+   "file_ours": "geological_composite_314419_4611118.png",
+   "status": "MISMATCH",
+   "phash_d": 32,
+   "ncc": 0.314,
+   "psr": 8.8,
+   "ncc_raw": 0.314,
+   "scale": 0.14,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 10,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografia 5. Detall dels materials recuperats en el sondeig a rotació amb bateria continu",
+   "file_eva": "10_foto_materials_fotografia-5-detall-dels-materials-recup.jpeg",
+   "ours_slot": "photo_materials_image",
+   "file_ours": "Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 11,
+   "slot_eva": "fig_tall",
+   "caption": "Figura 6. Detall del tall de correlació que s’adjunta als annexes.",
+   "file_eva": "11_fig_tall_figura-6-detall-del-tall-de-correlacio-q.png",
+   "ours_slot": "fig_correlation_image",
+   "file_ours": "tall_tall_6600f2bff4.jpg",
+   "status": "CLOSE",
+   "phash_d": 32,
+   "ncc": 0.887,
+   "psr": 5.7,
+   "ncc_raw": 0.933,
+   "scale": 0.577,
+   "dir": "veritat dins nostra"
+  }
+ ],
+ "sobrants": [],
+ "sobrants_n": 0,
+ "totals": {
+  "MISMATCH": 6,
+  "MATCH": 3,
+  "CLOSE": 1,
+  "NO_DATA": 0
+ },
+ "by_slot": {
+  "fig_situacio": {
+   "MISMATCH": 2
+  },
+  "fig_projecte": {
+   "MISMATCH": 1
+  },
+  "foto_vista": {
+   "MATCH": 1,
+   "MISMATCH": 1
+  },
+  "foto_dpsh": {
+   "MATCH": 1
+  },
+  "foto_sondeig": {
+   "MISMATCH": 1
+  },
+  "fig_geologic": {
+   "MISMATCH": 1
+  },
+  "foto_materials": {
+   "MATCH": 1
+  },
+  "fig_tall": {
+   "CLOSE": 1
+  }
+ }
+}

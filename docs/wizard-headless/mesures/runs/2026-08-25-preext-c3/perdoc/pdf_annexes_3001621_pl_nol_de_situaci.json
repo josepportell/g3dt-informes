@@ -1,0 +1,105 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+ "source_md5": "7d495516ac2896e3f236b08e7879a41d",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació del projecte: ortofoto amb la parcel·la delimitada, els 4 punts DPSH (P-1 a P-4) i el sondeig (S-1), més dos mapes de localització (comarca i barri)",
+ "issuer": "G3 Desenvolupament Territorial (logo G3 al caixetí)",
+ "date": "Octubre 2025",
+ "pages_or_sheets": "1 pàgina (Pàgina 1/1)",
+ "context": {
+  "who_made_it": "G3 (caixetí amb logo G3 i 'TÍTOL DEL PROJECTE')",
+  "for_whom": "annex intern de l'informe geotècnic, per situar la parcel·la i els punts d'assaig",
+  "why": "documentar gràficament la ubicació de l'obra i la posició dels assaigs de camp (DPSH i sondeig) sobre ortofoto amb el parcel·lari",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "expedient",
+   "building_type",
+   "num_dpsh_tests (candidat, per recompte visual)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "referencia_catastral exacta",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "còpia PDF (Acrobat Distiller 15.0, text no net / brossa) del mateix dibuix que ANNEXES/3001621_plànol de situació.FH11 (FreeHand original, no llegible, route=skip a l'inventari) i idèntica (mateix md5 7d495516ac2896e3f236b08e7879a41d) a PDF-V0/ANNEXES/3001621_plànol de situació.pdf (carpeta de sortida antiga, exclosa per l'inventari)",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "expedient",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí inferior dret, cel·la 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.85,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells, nº 18A-18B-20",
+   "location": "títol del plànol (bloc de títol, línia 2)",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.75,
+   "note": "font única dins d'aquest document; el nom 'Arbrells' també apareix rotulat sobre la carretera al plànol principal"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès (Barcelona)",
+   "location": "títol del plànol + mapa de localització (requadre superior esquerre, etiqueta 'Castellar del Vallès')",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.85,
+   "note": "corroborat pel títol i pel mapa de localització dins del mateix document"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "títol del plànol (bloc de títol, línia 1)",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.7,
+   "note": "redacció pròpia de G3 al títol del plànol"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "plànol principal: 4 icones blaves rotulades P-1, P-2, P-3, P-4; llegenda 'Assaig de penetració dinàmica DPSH'",
+   "quote": "Assaig de penetració dinàmica DPSH",
+   "confidence": 0.55,
+   "note": "recompte visual (icones P-1..P-4); no és la font primària (Excel DPSH), és corroboració"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela",
+  "num_floors",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "utm_x_utm_y"
+ ],
+ "reading_notes": "Text del PDF confirmat brossa (Acrobat Distiller/PScript5.dll, sense ToUnicode; preext meta text_ok=false) → lectura 100% visual (page-1.png + left/right). Zoom addicional (render_clip, clip 0.30,0.28,0.60,0.50, 400dpi) sobre l'etiqueta lila '32900' visible sobre l'ortofoto (a prop d'un rètol vermell semitransparent 'SUELO'): és una etiqueta de polígon/parcel·la del visor de Cadastre, sense format de referència cadastral completa (20 car.) → no s'ha registrat com a candidat de referencia_catastral per no induir a error. La 'Data: Octubre 2025' del caixetí és la data d'elaboració del PLÀNOL, no necessàriament el dia de camp → no s'ha registrat com a candidat de field_date. També es veuen distàncies entre punts (4-22 m) i el sondeig S-1, però són dades espacials de disseny del plànol, no mesures de camp llegibles (cotes/profunditats), per això no s'emplena el bloc 'tables'."
+}

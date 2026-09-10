@@ -1,0 +1,77 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_fotografies.pdf",
+ "source_md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex fotogràfic de 2 pàgines (F-1 a F-4) que documenta la màquina DPSH als punts P-1, P-2, P-3 i P-4.",
+ "issuer": "G3 (logo institucional a cada pàgina); metadata PDF Author='Loli' (probable autora del dibuix FreeHand origen)",
+ "date": "Metadata PDF creation/modDate 2025-11-03 (data de compilació/impressió de l'annex, no necessàriament data de camp)",
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 (equip de camp/Eva); compilat des del dibuix FreeHand ANNEXES/3001621_fotografies.FH11 via PScript5.dll + Acrobat Distiller",
+  "for_whom": "Annex intern del projecte, per adjuntar-lo com a prova fotogràfica a l'informe geotècnic",
+  "why": "Documentar visualment l'emplaçament i execució de la màquina DPSH als 4 punts assajats (P-1 a P-4)",
+  "expected_fields": [
+   "expedient (capçalera de cada pàgina)",
+   "identificació dels punts DPSH fotografiats (F-1..F-4 correlacionats amb P-1..P-4)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_*",
+   "cte_*"
+  ],
+  "relation_to_others": "Duplicat exacte (mateix md5 73cea90d5c4d74a91bd2c88a56fe1970) de PDF-V0/ANNEXES/3001621_fotografies.pdf: no compta com a font independent. És la versió PDF (Distiller) del dibuix FreeHand font ANNEXES/3001621_fotografies.FH11 (marcat 'no llegible' a l'inventari; confirmat aquí: get_text() retorna text brossa sense mapa ToUnicode). Complementa (no substitueix) l'Excel DPSH i l'annex DPSH com a corroboració visual del nombre de punts assajats; no aporta cotes, dates ni identitat del projecte més enllà del número d'expedient.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1 i p.2, capçalera dreta de la taula de títol",
+   "quote": "3001621",
+   "confidence": 0.55,
+   "note": "Capçalera del compilat fotogràfic; concorda amb el nom de la carpeta i altres fonts, però els annexos de l'Eva poden portar typos d'expedient (vist a altres projectes) — no és font d'autoritat per aquest camp, només corrobora."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.1 peu de foto 'Fotografia 1-2'; p.2 peu de foto 'Fotografia 3-4'",
+   "quote": "Fotografia 1-2: Detall de l'emplaçament de la màquina realitzant l'assaig de penetració dinàmica DPSH, P-1 i P-2, respectivament. / Fotografia 3-4: ... P-3 i P-4, respectivament.",
+   "confidence": 0.4,
+   "note": "Corroboració visual de 4 punts DPSH fotografiats (F-1..F-4 = P-1..P-4). No és font d'autoritat (mana l'Excel DPSH executats); no indica rebuig ni si hi ha punts addicionals no fotografiats."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF de 2 pàgines generat via FreeHand -> PScript5.dll -> Acrobat Distiller (mateix patró que altres annexos de l'Eva): get_text() retorna text brossa sense ToUnicode -> renderitzat a 150 dpi (fitz get_pixmap) i llegit visualment, no via extracció de text. Metadata PDF creationDate/modDate = 2025-11-03: probable data de compilació de l'annex, NO proposada com a candidat de field_date perquè no encaixa amb la cadena de prioritat del Pas 3 (fitxa/annex DPSH/albarà/fotos amb data al nom) i podria introduir confusió al consolidador. Verificat a l'inventari: mateix md5 que PDF-V0/ANNEXES/3001621_fotografies.pdf (duplicat exacte, no compta com a font independent). La carpeta FOTOGRAFIES/ conté fotos soltes addicionals (vista general, detall de materials, màquina de sondeig, WhatsApp de S-1) que NO formen part d'aquest PDF de 2 pàgines -- no llegides en aquesta crida perquè no són el document objectiu (--only)."
+}

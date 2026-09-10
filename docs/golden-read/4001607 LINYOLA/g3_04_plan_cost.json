@@ -1,0 +1,26 @@
+{
+ "source_path": "25.0616/PLAN_COST_LINYOLA.xlsx",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "Full de costos intern G3 per a l'oferta 'EG HAB UNIF LINYOLA' (840 €): 3 DPSH + 1 ml previ + 1 SPT (subcontracta TPS 328,9 €), laboratori 1 obertura de mostra + 1 sulfats (39,75 €), 5 h gabinet; tècnic Eva Vázquez Marcet.",
+ "issuer": "G3 (Eva Vázquez Marcet)",
+ "date": null,
+ "pages_or_sheets": "7 fulls (Plan Cost, OFERTA, FACTURA M, Material Cost (lab), Material Cost, Cost Center, Technicians)",
+ "context": {
+  "who_made_it": "G3 (tècnic responsable Eva)",
+  "for_whom": "G3 (control intern de marge)",
+  "why": "calcular cost/marge de l'oferta 25·0616 abans d'enviar-la",
+  "expected_fields": ["building_type + municipality (E9 títol)", "num_dpsh_tests (OFERTA!B21, previst)", "SPT (OFERTA!B23)"],
+  "not_expected": ["client", "arquitecte", "adreça", "expedient (I7/NUM INF buit)", "data de camp", "cota", "nivells"],
+  "relation_to_others": "Mateixes quantitats que el pressupost 25·0616 (3 DPSH, 1 ml previ, 1 SPT, 840 €). OFERTA!B35 'contingut en sulfats'=1 anticipa la comanda de laboratori (sulfats). Tota la resta (preus, 'SOIL-ASSAIG', 'TPS', 'LLEIDA' a J8) és plantilla.",
+  "authority_for": ["building_type (candidat)", "municipality (3a font G3)", "num_dpsh_tests (previst)"]
+ },
+ "tier_a": [
+  {"concept_id": "building_type", "value": "habitatge unifamiliar", "location": "'Plan Cost'!E9 'DESCRIPCIÓ TITÒL'", "quote": "EG HAB UNIF LINYOLA", "confidence": 0.7, "note": "'EG' = estudi geotècnic; 'HAB UNIF' expandit. El projecte diu 'HABITATGE UNIFAMILIAR AÏLLAT'."},
+  {"concept_id": "municipality", "value": "Linyola", "location": "'Plan Cost'!E9", "quote": "EG HAB UNIF LINYOLA", "confidence": 0.9, "note": "majúscules G3. J8='LLEIDA' és la plantilla (centre), NO el municipi."},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "OFERTA!B21", "quote": "A21='unitat de penetració dinàmica DPSH' B21=3 C21=120 D21=360", "confidence": 0.7, "note": "previstos = pressupost"},
+  {"concept_id": "lab_location", "value": "1 SPT (1 ml previ), sense sondeig", "location": "OFERTA!B22/B23; OFERTA!B6 buit", "quote": "A22='ml previ al SPT' B22=1 | A23='Assaig SPT' B23=1 | B6 (ml perforació) buit", "confidence": 0.6, "note": "cap ml de sondeig → el SPT es fa en un punt de penetròmetre"},
+  {"concept_id": "lab_tests", "value": "obertura de mostra + contingut en sulfats", "location": "OFERTA!B26, B35", "quote": "A26='Obertura de mostra ' B26=1 | A35='contingut en sulfats' B35=1", "confidence": 0.8, "note": "nivell B"}
+ ],
+ "not_present": ["client_name", "architect_name", "street_address", "expedient", "field_date", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "lab_sample_id", "lab_depth", "cte_*"],
+ "reading_notes": "Identificat per 'Plan Cost'!B2 == 'PLAN COST  |  G3 DT'. E9 és valor literal (no fórmula). I7 'NUM INF' buit (sense expedient). Persona/telèfon de contacte (B13-B16) buits. Tècnic E21='Eva Vázquez Marcet'."
+}

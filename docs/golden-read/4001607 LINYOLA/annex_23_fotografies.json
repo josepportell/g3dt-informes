@@ -1,0 +1,26 @@
+{
+  "source_path": "PDF/ANNEXES/4001607_fotografies.pdf",
+  "document_type": "annex_fotografies",
+  "what_it_is": "Annex 'Reportatge fotogràfic' de l'Eva: 2 pàgines A4 amb 4 fotos de camp numerades F-1 a F-4 i dos peus de foto; capçalera amb el logo G3 i l'expedient.",
+  "issuer": "G3 — FreeHand '4001607_fotografies.FH11' (author 'Loli') → Acrobat Distiller 15.0 (PScript5.dll) 28/10/2025 12:09",
+  "date": "PDF creat 2025-10-28; les fotos són del dia de camp (01/10/2025, pels noms de FOTOGRAFIES/). El full no porta caixetí amb data.",
+  "pages_or_sheets": "2 pàgines A4 vertical (595×842 pt), 3 imatges per pàgina. Text incrustat brossa → visió a 100 dpi + clip a 500 dpi de l'etiqueta de la mostra",
+  "context": {
+    "who_made_it": "L'Eva (G3) muntant les fotos que TPS li va enviar per WhatsApp el dia de camp (FOTOGRAFIES/).",
+    "for_whom": "Annex de l'informe 4001607.",
+    "why": "Documentar visualment la parcel·la, la maquinària als 3 punts i la mostra recuperada a l'SPT.",
+    "expected_fields": ["expedient (capçalera)", "num_dpsh_tests (les fotos identifiquen P-1, P-2 i P-3)", "corroboració de lab_sample_id / lab_depth (etiqueta de la bossa de mostra)"],
+    "not_expected": ["client_name", "architect_name", "street_address", "municipality", "field_date (no escrita)", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm", "referencia_catastral", "cte"],
+    "relation_to_others": "Les 4 fotos surten de FOTOGRAFIES/ (P1.jpg, P2.jpg, P3.jpg i una imatge WhatsApp del 01/10/2025). L'etiqueta manuscrita de la bossa (F-4) és de TPS i repeteix les dades del full d'assaig SPT (PENETROS.pdf p.3) i de la comanda de laboratori.",
+    "authority_for": ["expedient (corroboració)", "num_dpsh_tests (corroboració visual: 3 emplaçaments)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "4001607", "location": "capçalera de les dues pàgines, a la dreta de 'Reportatge fotogràfic'", "quote": "Reportatge fotogràfic | 4001607", "confidence": 0.85, "note": "Coincideix amb el nom de la carpeta i amb els caixetins dels altres annexos."},
+    {"concept_id": "num_dpsh_tests", "value": "3", "location": "peus de foto de les pàgines 1 i 2", "quote": "Fotografies 1 I 2. Vista general de la parcel·la, i vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-1 i P-2. | Fotografies 3 i 4. Vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-3. A sota, materials recuperats de l'assaig SPT realitzat.", "confidence": 0.8, "note": "Els peus citen explícitament P-1, P-2 i P-3 → 3 assaigs. Typo literal 'Fotografies 1 I 2' (I majúscula)."},
+    {"concept_id": "lab_sample_id", "value": "SPT 1 al punt 3 (lectura parcial de l'etiqueta TPS de la bossa)", "location": "foto F-4 (p.2), etiqueta TPS enganxada a la bossa de mostra", "quote": "Obra: LINYOLA | Localitat: Carrer clot de la llacuna | Punt: 3 | Mostra: SPT 1 | Data: 1-10-25 | Profunditat de: 1,0 a: 1,75 | Client: G3", "confidence": 0.3, "note": "LECTURA POC FIABLE AL PDF (etiqueta petita, bossa de plàstic brillant, ~35 px d'alçada). CONFIRMADA amb l'original FOTOGRAFIES/'Imagen de WhatsApp 2025-10-01 a las 12.04.53_99ada7ae.jpg' (girada 90°), on es llegeix nítidament: 'Obra: LINYOLA | Localitat: Carrer clot de la Llacuna | Punt : 3 | Mostra: SPT 1 | Data: 1-10-25 | Prufunditat de: 1,0 a: 1,75 | Rec: [buit] | Golpeig: 50 | Client: G 3' (vegeu fotos_26_fotografies_camp.json, confiança 0,85). Coincideix amb el full d'assaig SPT de PENETROS.pdf p.3."},
+    {"concept_id": "client_name", "value": "NOT_client_name: G3", "location": "foto F-4, casella 'Client:' de l'etiqueta de la mostra", "quote": "Client: G3", "confidence": 0.0, "note": "Etiqueta de caixa/bossa de mostra de TPS: el 'client' és G3 (qui encarrega a TPS). Descartat per la regla 'G3 mai és client'."},
+    {"concept_id": "field_date", "value": "2025-10-01 (indirecte, per l'etiqueta de la mostra i pels noms dels fitxers originals)", "location": "foto F-4 (etiqueta 'Data: 1-10-25') + FOTOGRAFIES/'Imagen de WhatsApp 2025-10-01 …'", "confidence": 0.3, "note": "L'annex no escriu cap data. Corroboració feble; l'albarà TPS i la fitxa de camp manen."}
+  ],
+  "not_present": ["client_name (només G3 a l'etiqueta, descartat)", "architect_name", "street_address (només dins l'etiqueta de la mostra, il·legible amb fiabilitat)", "municipality", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "cte", "lab_testing_company"],
+  "reading_notes": "Render 100 dpi de les 2 pàgines + clip a 500 dpi de l'etiqueta de la bossa (F-4) i intent de realçat amb PIL (autocontrast + contrast 2.5 + 2x LANCZOS) que NO ha millorat la llegibilitat. Contingut de les fotos: F-1 sonda DPSH (oruga vermella/groga, marca 'ROLATEC ML-60A') al costat d'una mitgera de la casa veïna amb tanca metàl·lica (P-1); F-2 vista general de la parcel·la de terra amb la sonda al mig, cases entre mitgeres i furgoneta blava al fons (P-2); F-3 sonda al costat del mur de tanca posterior, amb porxo de la casa veïna al fons (P-3); F-4 bossa de mostra amb etiqueta TPS, tub portatestimonis i puntassa d'SPT amb material recuperat (llims marrons/argila)."
+}

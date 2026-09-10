@@ -1,0 +1,40 @@
+{"t": 13.5, "ev": "lectura_preext", "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext", "n_docs": 16, "n_errors": 0, "elapsed_s": 13.013}
+{"t": 13.5, "ev": "lectura_inventari", "n_files": 51}
+{"t": 15.5, "ev": "templates_fields", "n_documents": 8}
+{"t": 15.5, "ev": "lectura_inici", "n_claude": 16, "n_python": 6}
+{"t": 15.5, "ev": "lectura_doc_inici", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf"}
+{"t": 15.5, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf"}
+{"t": 307.5, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf", "cached": false, "attempt": 1}
+{"t": 307.5, "ev": "lectura_doc_inici", "doc": "ACCEPTACIO/Adobe Scan 9 abr 2026 - Adobe cloud storage.pdf"}
+{"t": 333.5, "ev": "lectura_doc", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf", "cached": false, "attempt": 1}
+{"t": 333.5, "ev": "lectura_doc_inici", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_tall de correlació.pdf"}
+{"t": 557.6, "ev": "lectura_doc", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"t": 557.6, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf"}
+{"t": 559.8, "ev": "lectura_doc", "doc": "ACCEPTACIO/Adobe Scan 9 abr 2026 - Adobe cloud storage.pdf", "cached": false, "attempt": 1}
+{"t": 559.8, "ev": "lectura_doc_inici", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf"}
+{"t": 732.0, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf", "cached": false, "attempt": 1}
+{"t": 732.0, "ev": "lectura_doc_inici", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_fotografies_CASA 1.pdf"}
+{"t": 843.7, "ev": "lectura_doc", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf", "cached": false, "attempt": 1}
+{"t": 843.7, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf"}
+{"t": 915.6, "ev": "lectura_doc", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_fotografies_CASA 1.pdf", "cached": false, "attempt": 1}
+{"t": 915.6, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_fotografies_CASA 2.pdf"}
+{"t": 1003.5, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_fotografies_CASA 2.pdf", "cached": false, "attempt": 1}
+{"t": 1003.5, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.dwg"}
+{"t": 1053.1, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf", "cached": false, "attempt": 1}
+{"t": 1053.1, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf"}
+{"t": 1351.7, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.dwg", "cached": false, "attempt": 1}
+{"t": 1351.7, "ev": "lectura_doc_inici", "doc": "PENETROS + SONDEIG.pdf"}
+{"t": 1389.0, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf", "cached": false, "attempt": 1}
+{"t": 1389.0, "ev": "lectura_doc_inici", "doc": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg"}
+{"t": 1604.3, "ev": "lectura_doc", "doc": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg", "cached": false, "attempt": 1}
+{"t": 1604.3, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg"}
+{"t": 1763.7, "ev": "lectura_doc", "doc": "PENETROS + SONDEIG.pdf", "cached": false, "attempt": 1}
+{"t": 1763.7, "ev": "lectura_doc_inici", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_plànol de situació_CASA 1.pdf"}
+{"t": 1779.7, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg", "cached": false, "attempt": 1}
+{"t": 1779.7, "ev": "lectura_doc_inici", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_plànol de situació_CASA 2.pdf"}
+{"t": 1980.1, "ev": "lectura_doc", "doc": "CASA 1- TULIPA/PDF/ANNEXES/3001706_plànol de situació_CASA 1.pdf", "cached": false, "attempt": 1}
+{"t": 2027.0, "ev": "lectura_doc", "doc": "CASA 2_ CARRER TOSCA/PDF/3001706_plànol de situació_CASA 2.pdf", "cached": false, "attempt": 1}
+{"t": 2027.0, "ev": "consolidacio_inici", "consolidator": "python"}
+{"t": 2610.0, "ev": "decisions", "cached": false, "consolidator": "python", "n_conflicts": 6, "elapsed_s": 527.826}
+{"t": 2610.0, "ev": "lectura_fi", "n_docs": 16, "elapsed_s_total": 3646.298259026, "degraded": false}
+DONE 3001706 C.TULIPA CERDANYOLA: 43.5 min, degraded=False, mode=document, decisions=OK, docs=16

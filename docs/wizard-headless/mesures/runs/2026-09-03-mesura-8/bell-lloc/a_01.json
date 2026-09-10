@@ -1,0 +1,151 @@
+{
+ "source_path": "A.01.pdf",
+ "source_md5": "ef0272ce32cc3e0a5f65c6995be59200",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol A.01 'Emplaçament i situació' del projecte bàsic i executiu de l'arquitecte, amb caixetí, catastre, aèria i taula de justificació de planejament",
+ "issuer": "ABM Arquitectura Bosch Novell (Jordi Bosch Novell)",
+ "date": "2025-09-30 (creationDate/modDate del PDF; EXP25.34/SET.25)",
+ "pages_or_sheets": "1 pàgina (2384x1684 pt, AutoCAD 2021)",
+ "context": {
+  "who_made_it": "ABM Arquitectura Bosch Novell, despatx de l'arquitecte Jordi Bosch Novell",
+  "for_whom": "Ramon Mitjana SL (promotor de l'obra)",
+  "why": "Plànol d'emplaçament i situació (A.01) del Projecte Bàsic i Executiu d'un habitatge unifamiliar aïllat, per a tramitació/llicència",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "utm_x",
+   "utm_y",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Mateix md5 (ef0272ce32cc3e0a5f65c6995be59200) que '25.0647/A.01.pdf': és el mateix fitxer duplicat a dues carpetes del projecte, no compten com a fonts independents. Existeix també 'A.01 amb punts.pdf' (md5 diferent, fde90fcb...) probablement amb punts de DPSH/sondeig marcats — no llegit en aquesta crida (--only A.01.pdf). Les dues consultes cadastrals PDF de la carpeta 25.0647/ (route python) porten la referència cadastral completa; aquest plànol només mostra el número de parcel·la al mapa CATASTRE (sense codi RC).",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "building_type",
+   "num_floors",
+   "superficie_parcela"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "RAMON MITJANA SL",
+   "location": "caixetí, bloc Promotor",
+   "quote": "Promotor: RAMON MITJANA SL",
+   "confidence": 0.75,
+   "note": "promotor del caixetí de l'arquitecte; autoritat A per client_name segons regla del Pas 3, però única font en aquest document"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "CARRER MESTRE RAMON ORTIZ",
+   "location": "caixetí, bloc Situació",
+   "quote": "Situació: CARRER MESTRE RAMON ORTIZ / 25220 BELL.LLOC D'URGELL (Lleida)",
+   "confidence": 0.75,
+   "note": "parcel·la cantonera: el plànol de situació també mostra CARRER ANTONI BELLET com a carrer lateral (etiqueta al dibuix i a l'aèria 'Carrer Antoni Bellet Perez'), però només Mestre Ramon Ortiz surt etiquetat com a Situació al caixetí"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Bell-lloc d'Urgell",
+    "municipi_alternatives": [
+     "BELL.LLOC D'URGELL"
+    ]
+   },
+   "location": "caixetí, bloc Situació",
+   "quote": "CARRER MESTRE RAMON ORTIZ / 25220 BELL.LLOC D'URGELL (Lleida)",
+   "confidence": 0.7,
+   "note": "cap número de portal imprès enlloc del plànol"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc d'Urgell",
+   "location": "caixetí, bloc Situació + taula Justificació Planejament",
+   "quote": "25220 BELL.LLOC D'URGELL (Lleida); Ordenació urbanística: POUM Bell-lloc d'Urgell",
+   "confidence": 0.9,
+   "note": "dues aparicions dins del mateix document (caixetí + taula planejament), forma oficial 'Bell-lloc d'Urgell' a la taula"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Bosch Novell",
+   "location": "caixetí, bloc Arquitecte",
+   "quote": "Arquitecte: Jordi Bosch Novell",
+   "confidence": 0.85,
+   "note": "etiqueta explícita 'Arquitecte' al caixetí; existeix també el nom del despatx (architect_company) — candidats, no segur, fins creuar amb altres documents"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Arquitectura Bosch Novell",
+   "location": "logo caixetí, cantonada inferior dreta",
+   "quote": "ARQUITECTURA BOSCH NOVELL / arquitectura@boschnovell.com / tel. 620199571",
+   "confidence": 0.6,
+   "note": "nom del despatx (logo), diferent de la persona Jordi Bosch Novell"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, sota Projecte Bàsic i Executiu",
+   "quote": "HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.8,
+   "note": "títol del projecte al plànol de l'arquitecte"
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB+PP",
+   "location": "taula Justificació Planejament, fila 'N. plantes'",
+   "quote": "N. plantes: Planejament PB+PP / Projecte PB+PP",
+   "confidence": 0.75,
+   "note": "el projecte iguala el màxim de planejament; PB+PP = planta baixa + planta pis (2 plantes)"
+  },
+  {
+   "concept_id": "superficie_parcela",
+   "value": "995,00 m2",
+   "location": "taula Justificació Planejament, fila 'Parcel.la mínima', columna Projecte",
+   "quote": "Parcel.la mínima: Planejament CLAU 6B min 600.00 m2 / Projecte 995,00m2",
+   "confidence": 0.8,
+   "note": "única font (aquest document); la parcel·la del catastre abraça 2 referències (72 i 73, vegeu reading_notes)"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pàgina única amb text_ok=true (llegit del page-1.txt), confirmat visualment amb page-1.png a 150dpi. Zoom amb render_clip.py a 400dpi de tres zones: (1) inset CATASTRE (clip 0.59,0.03,0.87,0.33) — mostra que la parcel·la vermella marcada abraça DUES referències cadastrals contigües, '72' i '73' (totes dues 'SUELO'), sense el codi RC complet imprès (les consultes cadastrals completes són fitxers Python a part, 25.0647/4613172CG1141S0001SU-15.pdf i 4613173CG1141S0001ZU-13.pdf); (2) taula Justificació Planejament (clip 0.50,0.83,0.74,1.0); (3) caixetí (clip 0.74,0.83,1.0,1.0). L'expedient de l'arquitecte 'EXP25.34/SET.25' NO és l'expedient G3 (4001612) — descartat per la regla del Pas 3. L'aèria mostra el rètol de carrer 'Carrer Antoni Bellet Perez' (cognom sencer) pel carrer lateral, no usat com a alternativa de nom_via perquè és un carrer diferent (cantonada), no una grafia variant."
+}

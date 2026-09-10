@@ -1,0 +1,552 @@
+{
+ "schema_version": 1,
+ "project": "3001621 CASTELLAR DEL VALLES",
+ "generated": "2026-08-24T22:35:00",
+ "skill_version": "1.3",
+ "fields": {
+  "expedient": {
+   "estat": "segur",
+   "value": "3001621",
+   "candidates": [
+    {"value": "3001621", "font": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls, Hoja1!N19 (NÚM. D'EXPEDIENT)", "quote": "3001621.0"},
+    {"value": "3001621", "font": "PDF/ANNEXES/3001621_DPSH.pdf, capçalera de cada pàgina (NÚMERO D'INFORME)", "quote": "NUMERO D´INFORME: 3001621"},
+    {"value": "3001621", "font": "PDF/ANNEXES/3001621_plànol de situació.pdf, peu de pàgina (Exp:)", "quote": "Exp: 3001621"}
+   ],
+   "rule": "Nom de la carpeta = comanda N19 = annex DPSH NÚMERO D'INFORME = peu 'Exp:' dels annexos gràfics (4+ fonts independents concordants, Pas 3)",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": null
+  },
+  "client_name": {
+   "estat": "segur",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "candidates": [
+    {"value": "WOOD COMFORT PROMOCIONS SLU", "font": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf p.5, full d'acceptació signat, bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' (manuscrit)", "quote": "WOOD COMFORT PROMOCIONS SLU"},
+    {"value": "WOOD COMFORT PROMOCIONS SLU", "font": "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf p.1, bloc CLIENT (versió posterior, modDate 2025-10-07)", "quote": "WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA"},
+    {"value": "GRUP ALMA CONSTRUCCIONS", "font": "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf p.1 (versió original, modDate 2025-06-25) — SUPERADA", "quote": "GRUP ALMA CONSTRUCCIONS / Tel:"}
+   ],
+   "rule": "El full d'acceptació p.5 signat mana fins i tot sobre versions velles del pressupost (Pas 3, cas citat explícitament per aquest mateix projecte: 'Castellar: GRUP ALMA → WOOD COMFORT al MODF')",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": "GRUP ALMA (client original, correu 2025-06-25 i pressupost inicial) va ser substituït per WOOD COMFORT PROMOCIONS SLU a la versió MODF del pressupost (2025-10-07) i a l'ACCEPTACIO signada (2025-10-08); l'annex de sondeig ('Client: WOOD COMFORT PROM.', abreujat) corrobora la versió vigent."
+  },
+  "street_address": {
+   "estat": "candidats",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "candidates": [
+    {"value": "C/ARBRELLS 18A-18B-20", "font": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf p.1, bloc OBRA: (= pressupost MODF, mateix bloc)", "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ARBRELLS 18A-18B-20\nCASTELLAR DEL VALLES"},
+    {"value": "Carrer Arbrells, Nº 18A-18B-20", "font": "PDF/ANNEXES/3001621_sondeig.pdf, PDF/ANNEXES/3001621_tall de correlació.pdf, tall.pdf, PDF/ANNEXES/3001621_plànol de situació.pdf (redacció idèntica del títol del projecte als 4 annexos gràfics — mateixa font/encàrrec, no compten com 4 fonts independents)", "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA)"},
+    {"value": "C/ ARBRELLS 18 A", "font": "ANNEXES/3001621_DPSH.xls i PDF/ANNEXES/3001621_DPSH.pdf, capçalera bloc OBRA (només un número de porta)", "quote": "OBRA: C/ ARBRELLS 18 A"}
+   ],
+   "rule": "El bloc OBRA: del pressupost/ACCEPTACIO (autoritat A) i la redacció dels annexos coincideixen en '18A-18B-20', però l'annex DPSH només en dona un ('18A') — discrepància real de números de porta (no és el cas de cantonada amb 2 adreces vàlides): baixa a candidats (Criteri únic ERR=0)",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": "L'expedient pot cobrir 3 unitats contigües (18A/18B/20, vegeu building_type); el DPSH només esmenta '18A' — possible que el DPSH s'hagi fet només a la primera unitat o que sigui simplement una transcripció incompleta. Confirmar amb l'Eva."
+  },
+  "municipality": {
+   "estat": "segur",
+   "value": "CASTELLAR DEL VALLÈS",
+   "candidates": [
+    {"value": "CASTELLAR DEL VALLÈS", "font": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls, Hoja1!N21 (POBLACIÓ, bloc OBRA)", "quote": "CASTELLAR DEL VALLÈS"},
+    {"value": "CASTELLAR DEL VALLES", "font": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf p.1, bloc OBRA:", "quote": "CASTELLAR DEL VALLES"},
+    {"value": "Castellar del Vallès (Barcelona)", "font": "PDF/ANNEXES/3001621_sondeig.pdf / PDF/ANNEXES/3001621_tall de correlació.pdf / PDF/ANNEXES/3001621_plànol de situació.pdf (redacció + mapa de localització encartat)", "quote": "CASTELLAR DEL VALLÈS (BARCELONA)"}
+   ],
+   "rule": "Comanda + pressupost + PLAN_COST = les 3 fonts 'sempre' del municipi (Pas 3); forma oficial llarga amb accent preferida sobre la forma curta de plantilla",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": null
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "candidates": [
+    {"value": "WOOD COMFORT PROMOCIONS SLU", "font": "pràctica habitual de l'Eva (client al camp arquitecte quan no hi ha arquitecte, Pas 3) — casella 'ARQUITECTE' de l'ACCEPTACIO p.5 buida/sense marcar", "quote": "ARQUITECTE ..............."}
+   ],
+   "rule": "architect_name absent (promotor encarrega directament, sense arquitecte identificat): l'Eva escriu el CLIENT al camp arquitecte — candidats, mai segur (Pas 3)",
+   "sources_checked": ["ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf (casella ARQUITECTE buida, verificat per cerca de text completa)", "tots els altres 17 documents/plantilles (cap esmenta un arquitecte)"],
+   "note": "Roc Clusa (contacte del client, rocflats@hotmail.com, dicta el títol final de l'informe per correu 2025-11-18) podria tenir un rol assimilable, però cap document identifica el seu càrrec professional — no assignat com a arquitecte per criteri de zero-fabricació."
+  },
+  "architect_company": {
+   "estat": "no_trobat",
+   "value": null,
+   "candidates": [],
+   "rule": null,
+   "sources_checked": ["tots els 18 documents/plantilles llegits — cap esmenta un despatx d'arquitectura"],
+   "note": null
+  },
+  "building_type": {
+   "estat": "candidats",
+   "value": "Grup d'habitatges unifamiliars",
+   "candidates": [
+    {"value": "Grup d'habitatges unifamiliars", "font": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg (Roc Clusa, 2025-11-18, instrucció posterior sobre el títol) + comanda laboratori N18 'CONSTR 3 HAB UNIF' + PLAN_COST E9 'EG 3 HAB UNIF'", "quote": "\"Estudi geològic / geotècnic per la CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS\""},
+    {"value": "Habitatge unifamiliar aïllat", "font": "PDF/ANNEXES/3001621_sondeig.pdf, PDF/ANNEXES/3001621_tall de correlació.pdf, tall.pdf, PDF/ANNEXES/3001621_plànol de situació.pdf (redacció repetida dels annexos, tots datats 2025-11-03, anteriors a la instrucció de Roc Clusa)", "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT"}
+   ],
+   "rule": "Instrucció del client POSTERIOR als annexos mana sobre la redacció anterior (Pas 3); reforçat perquè la comanda i el PLAN_COST ja porten '3 HAB' des de l'inici del projecte",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": "Discrepància estructural: els annexos tècnics (sondeig/tall/plànol, tots de 2025-11-03) encara diuen 'una habitatge unifamiliar aïllat' (singular), però la comanda de laboratori i el PLAN_COST (anteriors) ja porten '3 HAB', i el correu del 2025-11-18 ho corregeix explícitament a 'grup d'habitatges unifamiliars'. Possible cas 'un expedient, N informes' (patró Tulipa) NO confirmat: només hi ha una campanya de camp compartida (4 DPSH + 1 sondeig), sense fitxes/pressupostos separats per casa."
+  },
+  "num_floors": {
+   "estat": "candidats",
+   "value": "PB+1 (sense soterrani)",
+   "candidates": [
+    {"value": "PB+1 (sense soterrani)", "font": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg, cos del missatge (text citat del client per WhatsApp, encàrrec original)", "quote": "PB + 1\n\nSense soterrani"}
+   ],
+   "rule": "Correu d'encàrrec és font acceptada per num_floors (Pas 3); però només cobreix la descripció ORIGINAL d'un habitatge (GRUP ALMA), abans que l'obra es corregís a 3 unitats — candidats, no segur (regla explícita: 'si la descripció només cobreix 1 de N unitats → candidats')",
+   "sources_checked": ["tots els 18 documents/plantilles llegits — cap altre esmenta plantes"],
+   "note": "Única font, i pot no aplicar-se a les 3 unitats si no són idèntiques entre elles."
+  },
+  "superficie_parcela": {
+   "estat": "no_trobat",
+   "value": null,
+   "candidates": [],
+   "rule": null,
+   "sources_checked": ["tots els 18 documents/plantilles llegits", "_inventory.json (cap consulta cadastral ni taula de planejament present a la carpeta del projecte)"],
+   "note": null
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2025-10-24",
+   "candidates": [
+    {"value": "2025-10-24", "font": "25.0493/DADES PER ANAR A CAMP_v1.xlsx, fitxa!F38 (dies de camp) — autoritat A, primer dia de camp", "quote": "datetime.datetime(2025, 10, 24, 0, 0)"},
+    {"value": "24/10/25", "font": "PDF/ANNEXES/3001621_DPSH.pdf, capçalera de cada pàgina (DATA:)", "quote": "DATA: 24/10/25"},
+    {"value": "24-10-2025", "font": "PENETROS + SONDEIG.pdf, albarà TPS manuscrit (p.1/p.4, Data)", "quote": "Data: 24-10-2025"}
+   ],
+   "rule": "Fitxa F38 és autoritat A (primer dia de camp); confirmat per annex DPSH, comanda (DATA DE PRESA), annex de sondeig (Data d'inici), albarà TPS i GTL (Data extracció) — 5+ fonts independents concordants, cap contradicció",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": null
+  },
+  "cota_referencia": {
+   "estat": "segur",
+   "value": "570.90 msnm (segons el plànol ICGC)",
+   "candidates": [
+    {"value": "570.90 msnm (segons el plànol ICGC)", "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, capçalera, casella 'Cota (Z):'", "quote": "Cota (Z): 570.90 msnm (segons el plànol ICGC)"}
+   ],
+   "rule": "L'annex de sondeig 'z:' és autoritat A (criteri de l'Eva, Pas 3); font única sense contradicció — les cotes DPSH ('-4 m respecte el carrer') NO contradiuen aquest valor, són un sistema RELATIU diferent (regla d'or de l'ERR de Castellar: 'el z absolut és cota_referencia, no la cel·la de la taula')",
+   "sources_checked": ["PDF/ANNEXES/3001621_sondeig.pdf (única font amb cota absoluta)", "ANNEXES/ALTRES/COORDENADES.txt (route=python, no capturat per aquest skill — no llegit aquí)", "tots els altres 16 documents/plantilles (no en donen cap)"],
+   "note": "ADVERTÈNCIA (regla d'or Castellar): aquest valor absolut NO s'ha d'usar a la cel·la 'cota' de sondeig_tests, que ha de seguir el sistema RELATIU dels DPSH ('respecte el carrer')."
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": 1,
+   "candidates": [
+    {"value": 1, "font": "PDF/ANNEXES/3001621_sondeig.pdf, columna 'Unitat litològica' (0.00-1.20 m, un sol bracket NIVELL 1) — autoritat primària", "quote": "NIVELL 1"},
+    {"value": 1, "font": "PDF/ANNEXES/3001621_tall de correlació.pdf i tall.pdf, requadre LLEGENDA (només 'Nivell 1' numerat) — autoritat secundària", "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."}
+   ],
+   "rule": "Columna 'Unitat litològica' de l'annex de sondeig (autoritat primària) + llegenda del tall (autoritat secundària) coincideixen en 1 (Pas 3b)",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": "La capa superior ('Terreny Vegetal') no porta prefix 'Nivell' a cap document — tractada com a cobertura, no com a nivell comptat, de manera consistent a tot el corpus."
+  },
+  "num_dpsh_tests": {
+   "estat": "segur",
+   "value": 4,
+   "candidates": [
+    {"value": 4, "font": "ANNEXES/3001621_DPSH.xls, 4 fulls (P-1 a P-4) amb columna Colpeig DPSH poblada de dades — executats", "quote": "sheet_names = ['P-1', 'P-2', 'P-3', 'P-4']"},
+    {"value": 4, "font": "PENETROS + SONDEIG.pdf p.1, albarà DPSH, 'Nº de penetròmetres realitzats'", "quote": "No de penetrometres realitzats: 4"}
+   ],
+   "rule": "Excel DPSH (executats) és l'autoritat màxima (Pas 3); corroborat per l'albarà TPS, l'annex DPSH imprès, el plànol de situació i el tall — cap document en dona un altre nombre",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": null
+  },
+  "utm_x": {
+   "estat": "segur",
+   "value": "423182.0",
+   "candidates": [
+    {"value": "423182.0", "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, capçalera, casella 'UTM:'", "quote": "423182.0 E(x)"}
+   ],
+   "rule": "L'annex de sondeig porta UTM (autoritat A, Pas 3); font única sense contradicció (COORDENADES.txt, route=python, no capturat per aquest skill)",
+   "sources_checked": ["PDF/ANNEXES/3001621_sondeig.pdf", "tots els altres 17 documents/plantilles (no en donen)"],
+   "note": null
+  },
+  "utm_y": {
+   "estat": "segur",
+   "value": "4609623.0",
+   "candidates": [
+    {"value": "4609623.0", "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, capçalera, casella 'UTM:'", "quote": "4609623.0 N(y)"}
+   ],
+   "rule": "L'annex de sondeig porta UTM (autoritat A, Pas 3); font única sense contradicció (COORDENADES.txt, route=python, no capturat per aquest skill)",
+   "sources_checked": ["PDF/ANNEXES/3001621_sondeig.pdf", "tots els altres 17 documents/plantilles (no en donen)"],
+   "note": null
+  },
+  "referencia_catastral": {
+   "estat": "no_trobat",
+   "value": null,
+   "candidates": [],
+   "rule": null,
+   "sources_checked": ["tots els 18 documents/plantilles llegits", "_inventory.json (cap fitxer de consulta cadastral present a la carpeta del projecte)"],
+   "note": null
+  },
+  "lab_testing_company": {
+   "estat": "segur",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "candidates": [
+    {"value": "TPS, Prospecció del Subsòl, SL (B64803075)", "font": "4687-GTL-25 Castellar del Vallés.pdf, banda de peu de totes les pàgines (registre mercantil)", "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136"},
+    {"value": "TPS ERUGA", "font": "25.0493/DADES PER ANAR A CAMP_v1.xlsx, fitxa!C38 (EMPRESA QUE FA LA FEINA)", "quote": "TPS ERUGA"}
+   ],
+   "rule": "L'emissor del GTL (banda amb registre mercantil) és l'autoritat per al laboratori (Pas 3); corroborat per la fitxa de camp (empresa de camp) i l'annex de sondeig (Empresa: TPS)",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": null
+  },
+  "lab_sample_id": {
+   "estat": "segur",
+   "value": "MA1 S1",
+   "candidates": [
+    {"value": "MA1 S1", "font": "4687-GTL-25 Castellar del Vallés.pdf p.2/p.4, camp 'Mostra:'", "quote": "Mostra: MA1 S1"},
+    {"value": "MA (S1)", "font": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls, Hoja1!C35", "quote": "MA (S1)"}
+   ],
+   "rule": "GTL és autoritat 2 per a l'etiqueta (Pas 3: annex de l'Eva > GTL > comanda); no hi ha etiqueta 'MA' a l'annex de sondeig (només hi consta SPT-1, un assaig diferent al mateix interval) — GTL i comanda coincideixen en identitat (mostra MA del sondeig S1), només varia el format",
+   "sources_checked": ["PDF/ANNEXES/3001621_sondeig.pdf (només SPT-1, sense etiqueta MA)", "4687-GTL-25 Castellar del Vallés.pdf", "PDF/ANNEXES/LAB-SIG.pdf (duplicat, mateix resultat)", "comanda laboratori"],
+   "note": "SPT-1 (annex de sondeig) i MA1 (GTL) són mostres DIFERENTS preses al mateix interval -1,00/-1,20 m: SPT-1 és l'assaig de colpeig, MA1 és la mostra alterada per a l'assaig químic de sulfats. Aquest camp escalar es refereix a la mostra de laboratori (MA1); l'assaig SPT queda representat a la taula spt_ma_tests."
+  },
+  "lab_depth": {
+   "estat": "segur",
+   "value": "1,0 - 1,2 m",
+   "candidates": [
+    {"value": "1,0 - 1,2 m", "font": "4687-GTL-25 Castellar del Vallés.pdf p.2/p.4, camp 'Cota d'extracció (m):'", "quote": "Cota d'extracció (m): 1,0 - 1,2"},
+    {"value": "-1,00 a -1,20 m", "font": "PDF/ANNEXES/3001621_sondeig.pdf, bloc 'Mostres i assaigs in-situ'", "quote": "-1,00 a -1,20"}
+   ],
+   "rule": "El GTL mana sobre comanda i annex de sondeig si discrepen (Pas 3); en aquest projecte tots tres coincideixen exactament",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": null
+  },
+  "lab_location": {
+   "estat": "segur",
+   "value": "S-1",
+   "candidates": [
+    {"value": "S-1", "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, capçalera 'Sondeig nº:'", "quote": "Sondeig nº: S-1"},
+    {"value": "S1", "font": "4687-GTL-25 Castellar del Vallés.pdf, sufix del camp 'Mostra: MA1 S1'", "quote": "MA1 S1"}
+   ],
+   "rule": "Punt d'assaig derivat de l'etiqueta de mostra / capçalera del sondeig (Pas 3); coincideixen (només varia el guionet S-1 vs S1)",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": null
+  },
+  "cte_edificacio": {
+   "estat": "candidats",
+   "value": "C0",
+   "candidates": [
+    {"value": "C0", "font": "derivat: superfície construïda coneguda (120 m², encàrrec original GRUP ALMA) < 300 m² i < 4 plantes → C0 (criteri de l'Eva, Pas 3)", "quote": null}
+   ],
+   "rule": "Pressupost sense línia CTE (com Linyola/Anciles, citat explícitament al skill — Castellar és l'altre cas citat): C es deriva de la superfície construïda total de l'encàrrec, sempre candidats, mai segur",
+   "sources_checked": ["25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf", "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf", "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf (cerca de text completa per 'C0/C1/C2/T0/T1/T2': cap coincidència)", "tots els altres documents/plantilles"],
+   "note": "Superfície coneguda només per a 1 de possiblement 3 habitatges (120 m² de l'encàrrec original GRUP ALMA); si l'obra final és de 3 unitats similars, cadascuna seguiria sent C0."
+  },
+  "cte_sol": {
+   "estat": "candidats",
+   "value": "T-1",
+   "candidates": [
+    {"value": "T-1", "font": "valor per defecte (Pas 3: 'T-1 com a candidat per defecte, valor de tots els pressupostos que la porten') — cap pressupost d'aquest projecte porta la línia CTE", "quote": null}
+   ],
+   "rule": "Pressupost sense línia CTE — candidat per defecte T-1, mai segur",
+   "sources_checked": ["25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf", "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf", "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf (cerca de text completa: cap coincidència de 'Tipus de Terreny')", "tots els altres documents/plantilles"],
+   "note": null
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "segur",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "segur", "value": "-4 m (respecte el carrer)",
+      "candidates": [
+       {"value": "-4 m (respecte el carrer)", "font": "ANNEXES/3001621_DPSH.xls, full P-1, capçalera", "quote": "P-1     - 4  m  (respecte el carrer)"},
+       {"value": "-4m", "font": "PENETROS + SONDEIG.pdf p.2, Full de Camp Penetròmetre Dinàmic, columna P1", "quote": "P1 -4m"}
+      ], "rule": "Excel DPSH confirmat pel full de camp manuscrit original de TPS (2 fonts independents concordants)"
+     },
+     "profunditat_assolida": {
+      "estat": "segur", "value": "-1,08 m",
+      "candidates": [
+       {"value": "-1,08 m", "font": "ANNEXES/3001621_DPSH.xls, full P-1, peu B80 'Rebuig a'", "quote": "Rebuig a -1,08 m"},
+       {"value": "-1,08 m", "font": "PENETROS + SONDEIG.pdf p.2, columna P1", "quote": "-1,4 R:1,08"}
+      ]
+     },
+     "rebuig": {
+      "estat": "segur", "value": "Si",
+      "candidates": [
+       {"value": "Si", "font": "ANNEXES/3001621_DPSH.xls, full P-1, peu 'Rebuig a -1,08 m'", "quote": "Rebuig a -1,08 m"},
+       {"value": "Si", "font": "PENETROS + SONDEIG.pdf p.2, columna P1", "quote": "R:1,08"}
+      ]
+     },
+     "nivell_freatic": {
+      "estat": "segur", "value": "no detectat", "matis": null,
+      "candidates": [
+       {"value": "no detectat", "font": "ANNEXES/3001621_DPSH.xls, columna N.F. (text i color comprovats, formatting_info=True)", "quote": "colour_idx=9, sense patró real"},
+       {"value": "no detectat", "font": "PDF/ANNEXES/3001621_DPSH.pdf, columna N.F. (comprovat visualment pixel a pixel)", "quote": "Columna N.F.: buida (sense text ni ombrejat de cel·la)"}
+      ]
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "segur", "value": "-4,2 m (respecte el carrer)",
+      "candidates": [
+       {"value": "-4,2 m (respecte el carrer)", "font": "ANNEXES/3001621_DPSH.xls, full P-2, capçalera", "quote": "P-2    cota inici: -4,2 m  (respecte el carrer)"},
+       {"value": "-4,2m", "font": "PENETROS + SONDEIG.pdf p.2, columna P2", "quote": "P2 -4,2m"}
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur", "value": "-0,48 m",
+      "candidates": [
+       {"value": "-0,48 m", "font": "ANNEXES/3001621_DPSH.xls, full P-2, peu B80 'Rebuig a'", "quote": "Rebuig a -0,48 m"},
+       {"value": "-0,48 m", "font": "PENETROS + SONDEIG.pdf p.2, columna P2", "quote": "-0,8 R:0,48"}
+      ]
+     },
+     "rebuig": {
+      "estat": "segur", "value": "Si",
+      "candidates": [
+       {"value": "Si", "font": "ANNEXES/3001621_DPSH.xls, full P-2, peu 'Rebuig a -0,48 m'", "quote": "Rebuig a -0,48 m"},
+       {"value": "Si", "font": "PENETROS + SONDEIG.pdf p.2, columna P2", "quote": "R:0,48"}
+      ]
+     },
+     "nivell_freatic": {
+      "estat": "segur", "value": "no detectat", "matis": null,
+      "candidates": [
+       {"value": "no detectat", "font": "ANNEXES/3001621_DPSH.xls, columna N.F. (text i color comprovats, formatting_info=True)", "quote": "colour_idx=9, sense patró real"},
+       {"value": "no detectat", "font": "PDF/ANNEXES/3001621_DPSH.pdf, columna N.F. (comprovat visualment pixel a pixel)", "quote": "Columna N.F.: buida"}
+      ]
+     }
+    },
+    {
+     "punt": "P-3",
+     "cota_inici": {
+      "estat": "segur", "value": "-4 m (respecte el carrer)",
+      "candidates": [
+       {"value": "-4 m (respecte el carrer)", "font": "ANNEXES/3001621_DPSH.xls, full P-3, capçalera", "quote": "P-3    cota inici: - 4 m  (respecte el carrer)"},
+       {"value": "-4m", "font": "PENETROS + SONDEIG.pdf p.2, columna P3", "quote": "P3 -4m"}
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur", "value": "-0,76 m",
+      "candidates": [
+       {"value": "-0,76 m", "font": "ANNEXES/3001621_DPSH.xls, full P-3, peu B80 'Rebuig a'", "quote": "Rebuig a -0,76 m"},
+       {"value": "-0,76 m", "font": "PENETROS + SONDEIG.pdf p.2, columna P3", "quote": "-1 R:0,76"}
+      ]
+     },
+     "rebuig": {
+      "estat": "segur", "value": "Si",
+      "candidates": [
+       {"value": "Si", "font": "ANNEXES/3001621_DPSH.xls, full P-3, peu 'Rebuig a -0,76 m'", "quote": "Rebuig a -0,76 m"},
+       {"value": "Si", "font": "PENETROS + SONDEIG.pdf p.2, columna P3", "quote": "R:0,76"}
+      ]
+     },
+     "nivell_freatic": {
+      "estat": "segur", "value": "no detectat", "matis": null,
+      "candidates": [
+       {"value": "no detectat", "font": "ANNEXES/3001621_DPSH.xls, columna N.F. (text i color comprovats, formatting_info=True)", "quote": "colour_idx=9, sense patró real"},
+       {"value": "no detectat", "font": "PDF/ANNEXES/3001621_DPSH.pdf, columna N.F. (comprovat visualment pixel a pixel)", "quote": "Columna N.F.: buida"}
+      ]
+     }
+    },
+    {
+     "punt": "P-4",
+     "cota_inici": {
+      "estat": "segur", "value": "-4 m (respecte el carrer)",
+      "candidates": [
+       {"value": "-4 m (respecte el carrer)", "font": "ANNEXES/3001621_DPSH.xls, full P-4, capçalera", "quote": "P-4     - 4  m (respecte el carrer)"},
+       {"value": "-4m", "font": "PENETROS + SONDEIG.pdf p.3, Full de Camp Penetròmetre Dinàmic (fitxa separada), columna P4", "quote": "P4 -4m"}
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur", "value": "-1,55 m",
+      "candidates": [
+       {"value": "-1,55 m", "font": "ANNEXES/3001621_DPSH.xls, full P-4, peu B80 'Rebuig a'", "quote": "Rebuig a -1,55 m"},
+       {"value": "-1,55 m", "font": "PENETROS + SONDEIG.pdf p.3, columna P4", "quote": "-1,8 R:1,55"}
+      ]
+     },
+     "rebuig": {
+      "estat": "segur", "value": "Si",
+      "candidates": [
+       {"value": "Si", "font": "ANNEXES/3001621_DPSH.xls, full P-4, peu 'Rebuig a -1,55 m'", "quote": "Rebuig a -1,55 m"},
+       {"value": "Si", "font": "PENETROS + SONDEIG.pdf p.3, columna P4", "quote": "R:1,55"}
+      ]
+     },
+     "nivell_freatic": {
+      "estat": "segur", "value": "no detectat", "matis": null,
+      "candidates": [
+       {"value": "no detectat", "font": "ANNEXES/3001621_DPSH.xls, columna N.F. (text i color comprovats, formatting_info=True)", "quote": "colour_idx=9, sense patró real"},
+       {"value": "no detectat", "font": "PDF/ANNEXES/3001621_DPSH.pdf, columna N.F. (comprovat visualment pixel a pixel)", "quote": "Columna N.F.: buida"}
+      ]
+     }
+    }
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "sondeig": "S-1",
+     "cota": {
+      "estat": "candidats",
+      "value": "-4 m (respecte el carrer, mateix punt 0 que els DPSH)",
+      "candidates": [
+       {"value": "-4 m (respecte el carrer, mateix punt 0 que els DPSH)", "font": "PENETROS + SONDEIG.pdf p.4-5 (albarà + full de camp del sondeig — inferit per coincidència del punt 0 'C/Arbrells' amb els DPSH, no citat literalment)", "quote": "0,50 Ml de perf. en sols entre 0-20m / 0,70 Ml de perf. en roca dura/formigó entre 0-20m"}
+      ],
+      "rule": "Regla d'or de l'ERR (Castellar): la cota de la taula ha de seguir el sistema RELATIU dels DPSH ('respecte el carrer'), NO l'absolut de l'annex de sondeig (570.90 msnm, que alimenta cota_referencia, no aquesta cel·la). Cap document dona explícitament la cota relativa exacta de S-1: inferida per coincidència de punt 0 amb els DPSH.",
+      "note": "Valor inferit, no citat literalment enlloc — baixat a candidats per aquest motiu, a més de no tenir 2a font independent. NO usar 570.90 msnm aquí (vegeu cota_referencia)."
+     },
+     "profunditat_assolida": {
+      "estat": "segur", "value": "-1,20 m",
+      "candidates": [
+       {"value": "-1.20 m", "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, fila NIVELL 1 0.00-1.20 + Prof. de extracció SPT-1", "quote": "NIVELL 1 | 0.00-1.20"},
+       {"value": "-1,20 m (0,50+0,70)", "font": "PENETROS + SONDEIG.pdf p.4-5, Albarà Sondeigs (ML de perforació) + full de camp", "quote": "0,50 Ml de perf. en sols [...] 0,70 Ml de perf. en roca [...] Profunditat de/a: 0,00 a 0,50 / 0,50 a 1,20"}
+      ]
+     },
+     "spt_ma": {
+      "estat": "segur",
+      "value": {"n_spt": 1, "n_tp": 0, "n_ma": 0},
+      "candidates": [
+       {"value": {"n_spt": 1, "n_tp": 0, "n_ma": 0}, "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, bloc 'Mostres i assaigs in-situ' (1 sola mostra SPT-1)", "quote": "SPT-1 | -1,00 a -1,20 | Registre: R"}
+      ],
+      "note": "L'albarà TPS (PENETROS + SONDEIG.pdf) marca la casella 'Assaigs SPT' com 'Na', però registra una mostra al mateix interval sense confirmar-ne el tipus — no contradiu l'annex tipat (regla existent del projecte: el GTL/annex mana sobre la facturació del sondista)."
+     },
+     "nivell_freatic": {
+      "estat": "segur", "value": "no detectat", "matis": null,
+      "candidates": [
+       {"value": "no detectat", "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, columna 'Nivell freàtic' sense marca en tot el tram enregistrat", "quote": "columna 'Nivell freàtic' sense marca en tot el tram enregistrat"},
+       {"value": "no detectat", "font": "PENETROS + SONDEIG.pdf p.4-5, full de camp sense marca de nivell freàtic", "quote": "[cap marca de N.F. al full de camp]"}
+      ]
+     }
+    }
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "id": "SPT-1",
+     "punt": "S-1",
+     "profunditat": {
+      "estat": "segur", "value": "-1,00 a -1,20 m",
+      "candidates": [
+       {"value": "-1,00 a -1,20 m", "font": "PDF/ANNEXES/3001621_sondeig.pdf, bloc 'Mostres i assaigs in-situ'", "quote": "SPT-1 | -1,00 a -1,20"},
+       {"value": "-1,00 a -1,20 m", "font": "PENETROS + SONDEIG.pdf p.5, full de camp sondeig, columna 'Mostres > Prof.'", "quote": "Mostres Prof: 100 a 120"}
+      ]
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells (Nivell 1, tram 0.50-1.20 m)",
+      "candidates": [
+       {"value": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells (Nivell 1, tram 0.50-1.20 m)", "font": "PDF/ANNEXES/3001621_sondeig.pdf, columna 'Descripció dels materials'", "quote": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."},
+       {"value": "Grava amb llims", "font": "4687-GTL-25 Castellar del Vallés.pdf p.2, DESCRIPCIÓ DEL MATERIAL (mostra MA1, mateix interval)", "quote": "DESCRIPCIÓ DEL MATERIAL: Grava amb llims"}
+      ],
+      "rule": "Litologia mai segur per a la cadena literal (Pas 5)",
+      "note": "La litologia del laboratori (Grava amb llims, mostra química MA1) NO coincideix amb la de l'annex de sondeig (Substrat rocós..., mostra SPT-1) pel mateix interval -1,00/-1,20: probablement descripcions de dues mostres físiques diferents preses al mateix tram (SPT=colpeig, MA=alterada per a química) — matis a resoldre per l'Eva, no contradicció d'estat."
+     },
+     "n30": {
+      "estat": "candidats",
+      "value": "R",
+      "candidates": [
+       {"value": "R", "font": "PDF/ANNEXES/3001621_sondeig.pdf, bloc 'Mostres i assaigs in-situ', columna Registre", "quote": "Registre: R"}
+      ],
+      "registre": {
+       "estat": "segur", "value": "R",
+       "candidates": [
+        {"value": "R", "font": "PDF/ANNEXES/3001621_sondeig.pdf, bloc 'Mostres i assaigs in-situ'", "quote": "SPT-1 | -1,00 a -1,20 | Registre: R"}
+       ],
+       "rule": "Un R al primer tram (rebuig immediat) pot ser segur (Pas 3b, cas citat explícitament: Castellar, Linyola)"
+      },
+      "rule": "n30 mai segur per contracte (independentment del registre); només un valor 'R' (no 4 trams de 15 cm), coherent amb rebuig immediat"
+     }
+    },
+    {
+     "id": "MA1",
+     "punt": "S1",
+     "profunditat": {
+      "estat": "segur", "value": "1,0 - 1,2 m",
+      "candidates": [
+       {"value": "1,0 - 1,2 m", "font": "4687-GTL-25 Castellar del Vallés.pdf p.2, camp 'Cota d'extracció (m):'", "quote": "Cota d'extracció (m): 1,0 - 1,2"},
+       {"value": "1.0 - 1.2 m", "font": "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls, Hoja1!J35/L35", "quote": "INICIAL 1.0 / FINAL 1.2"}
+      ]
+     },
+     "litologia": {
+      "estat": "candidats", "value": "Grava amb llims",
+      "candidates": [
+       {"value": "Grava amb llims", "font": "4687-GTL-25 Castellar del Vallés.pdf p.2, DESCRIPCIÓ DEL MATERIAL", "quote": "DESCRIPCIÓ DEL MATERIAL: Grava amb llims"}
+      ],
+      "rule": "Litologia mai segur per a la cadena literal (Pas 5)"
+     },
+     "n30": {
+      "estat": "no_trobat", "value": null,
+      "candidates": [],
+      "sources_checked": ["4687-GTL-25 Castellar del Vallés.pdf (mostra alterada MA1, sense colpeig registrat)", "PDF/ANNEXES/LAB-SIG.pdf (duplicat, mateix resultat)"],
+      "registre": {
+       "estat": "no_trobat", "value": null, "candidates": [],
+       "sources_checked": ["4687-GTL-25 Castellar del Vallés.pdf", "PDF/ANNEXES/LAB-SIG.pdf (duplicat)"]
+      },
+      "rule": "Mostra alterada (MA) sense colpeig — l'Eva sol escriure '--' (Pas 3b)"
+     }
+    }
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "nom": "NIVELL 1",
+     "litologia": {
+      "estat": "candidats",
+      "value": "0.00-0.50 m: Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels. / 0.50-1.20 m: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+      "candidates": [
+       {"value": "0.00-0.50 m: Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels. / 0.50-1.20 m: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.", "font": "PDF/ANNEXES/3001621_sondeig.pdf, columnes 'Unitat litològica' + 'Descripció dels materials'", "quote": "NIVELL 1 | 0.00-0.50 -Terreny Vegetal... | 0.50-1.20 - Substrat rocós..."},
+       {"value": "0,00 a 0,50: Limos arcillosos con gravas / 0,50 a 1,20: Roca fracturada", "font": "PENETROS + SONDEIG.pdf p.5, full de camp manuscrit (redacció breu, en castellà)", "quote": "0,00 0,50 Limos arcillosos con gravas / 0,50 1,20 Roca fracturada"}
+      ],
+      "rule": "Litologia mai segur per a la cadena literal (Pas 5); annex de sondeig primer, full manuscrit segon (corrobora, no contradiu)"
+     },
+     "de": {
+      "estat": "segur", "value": "0.00",
+      "candidates": [
+       {"value": "0.00", "font": "PDF/ANNEXES/3001621_sondeig.pdf, columna 'Unitat litològica'", "quote": "NIVELL 1 | 0.00-1.20"},
+       {"value": "0,00", "font": "PENETROS + SONDEIG.pdf p.5, columna 'Profunditat de/a'", "quote": "0,00 0,50 [...] 0,50 1,20"}
+      ]
+     },
+     "a": {
+      "estat": "segur", "value": "1.20",
+      "candidates": [
+       {"value": "1.20", "font": "PDF/ANNEXES/3001621_sondeig.pdf, columna 'Unitat litològica'", "quote": "NIVELL 1 | 0.00-1.20"},
+       {"value": "1,20", "font": "PENETROS + SONDEIG.pdf p.5, columna 'Profunditat de/a'", "quote": "0,50 1,20"}
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "segur", "value": true,
+      "candidates": [
+       {"value": true, "font": "PDF/ANNEXES/3001621_sondeig.pdf: SPT-1 (-1,00 a -1,20) i MA1 (1,0-1,2) cauen dins l'únic NIVELL 1 (0.00-1.20)", "quote": "NIVELL 1 | 0.00-1.20; SPT-1 -1,00 a -1,20"}
+      ]
+     }
+    }
+   ]
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "value": {"components": [120], "total": 120, "etiqueta_font": "correu d'encàrrec (client, citat per WhatsApp)"},
+   "candidates": [
+    {"value": {"components": [120], "total": 120, "etiqueta_font": "correu d'encàrrec (client, citat per WhatsApp)"}, "font": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg, cos del missatge", "quote": "120 m2 construits"}
+   ],
+   "rule": "Correu d'encàrrec és font acceptada per superficie_construida (Pas 3b); sense taula de planejament ni línia de superfície al pressupost en aquesta carpeta",
+   "sources_checked": ["tots els 18 documents/plantilles llegits"],
+   "note": "Única font; refereix probablement a NOMÉS 1 de les 3 unitats de l'obra (18A/18B/20) segons l'evolució de l'encàrrec (Pas 3, regla multi-habitatge). Sense confirmació per casa."
+  }
+ },
+ "sources_read": [
+  "25.0493/DADES PER ANAR A CAMP_v1.xlsx (plantilla G3, _g3_templates.json)",
+  "25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx (plantilla G3, _g3_templates.json)",
+  "25.0493/PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf (plantilla G3, _g3_templates.json)",
+  "25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf (plantilla G3, _g3_templates.json)",
+  "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf (plantilla G3 + lectura Claude)",
+  "ANNEXES/3001621_DPSH.xls (plantilla G3 + lectura Claude)",
+  "comanda laboratori_3001621_CASTELLAR DEL VALLÈS.xls (plantilla G3, _g3_templates.json)",
+  "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+  "4687-GTL-25 Castellar del Vallés.pdf",
+  "PDF/ANNEXES/3001621_DPSH.pdf",
+  "PDF/ANNEXES/3001621_fotografies.pdf",
+  "PDF/ANNEXES/3001621_plànol de situació.pdf",
+  "PDF/ANNEXES/3001621_sondeig.pdf",
+  "PDF/ANNEXES/3001621_tall de correlació.pdf",
+  "PDF/ANNEXES/LAB-SIG.pdf",
+  "PENETROS + SONDEIG.pdf",
+  "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+  "tall.pdf"
+ ],
+ "notes_estructurals": [
+  "Situació estructural 'un expedient, N informes' (patró Tulipa) possible però NO confirmada: el projecte sembla cobrir 3 habitatges contigus (18A/18B/20) sota un sol expedient (3001621), inicialment pressupostat com 1 habitatge (GRUP ALMA, PB+1, 120 m²) i corregit posteriorment per correu (Roc Clusa, 2025-11-18) a 'grup d'habitatges unifamiliars'. La comanda de laboratori i el PLAN_COST ja porten '3 HAB UNIF' des de l'inici. No hi ha 3 fitxes de camp ni 3 pressupostos separats: tot el corpus tracta el projecte com una sola campanya de camp compartida (4 DPSH + 1 sondeig).",
+  "Canvi de client GRUP ALMA → WOOD COMFORT PROMOCIONS SLU confirmat pel formulari p.5 signat de l'ACCEPTACIO (Pas 3, cas citat explícitament per aquest projecte).",
+  "Sistema de cotes RELATIU ('respecte el carrer') per als DPSH; cota_referencia (570.90 msnm ICGC) prové només de l'annex de sondeig — regla d'or de l'ERR de Castellar aplicada: l'absolut NO baixa a la cel·la 'cota' de sondeig_tests.",
+  "Pressupost sense línia CTE (com Linyola/Anciles): cte_edificacio/cte_sol derivats, mai segur.",
+  "SPT-1 (annex de sondeig) i MA1 (GTL) són mostres físicament diferents preses al mateix interval -1,00/-1,20 m del sondeig S-1 (SPT=colpeig geotècnic, MA=mostra alterada per a química de sulfats); les seves litologies difereixen ('Substrat rocós...' vs 'Grava amb llims') — matís per a l'Eva, no error de lectura."
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe de casa 2, amb cota inici DIFERENT per punt (parcel·la en pendent).",
+ "issuer": "G3 (Eva)",
+ "date": "modDate 2026-06-04; DATA de camp 07/05/2026",
+ "pages_or_sheets": "2 pàgines (P-2.1, P-2.2)",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "annex de l'informe de casa 2",
+  "why": "presentar el colpeig amb cota per punt",
+  "expected_fields": [
+   "cota_inici per punt",
+   "OBRA",
+   "DATA"
+  ],
+  "not_expected": [
+   "promotor"
+  ],
+  "relation_to_others": "impressió de 3001706_DPSH_CASA 2.xls; el manuscrit TPS dona cotes relatives (+2,20 / +2,50) que no contradiuen aquestes absolutes (sistema de referència diferent).",
+  "authority_for": [
+   "dpsh_tests.cota_inici (casa 2)",
+   "field_date",
+   "expedient per casa (3001706_CASA 2)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-2.1",
+    "cota_inici": "201,25 msnm (segons el plànol topogràfic ICGC)",
+    "location": "p.1 capçalera",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-2.1  Cota inici: 201,25 msnm segons el plànol topogràfic ICGC"
+   },
+   {
+    "punt": "P-2.2",
+    "cota_inici": "202,85 msnm (segons el plànol topogràfic ICGC)",
+    "location": "p.2 capçalera",
+    "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-2.2  Cota inici: 202,85 msnm segons el plànol topogràfic ICGC"
+   }
+  ],
+  "__nota": "Capçaleres: OBRA: C/TOSCA 16 | POBLACIÓ: CERDANYOLA DEL VALLÈS | DATA: 07/05/2026 | NÚMERO D´INFORME: 3001706_CASA 2. La cota 201,25 de P-2.1 coincideix amb la cota d'implantació 201.25 del PLANTA I SECCIO de Factoria."
+ },
+ "not_present": [
+  "nivell freàtic (cap marca)"
+ ],
+ "reading_notes": "text net; cota per punt diferent (201,25 vs 202,85): cap cota única per a la parcel·la."
+}

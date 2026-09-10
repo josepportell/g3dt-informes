@@ -1,0 +1,73 @@
+{
+ "Df_user": 2.9,
+ "num_soil_levels_user": 2,
+ "soil_types_user": [
+  "granular",
+  "grava"
+ ],
+ "dpsh_overall_n20": 14.64,
+ "bearing_layer_idx": 1,
+ "bearing_layer_description": "",
+ "soil_levels": [
+  {
+   "n": 1,
+   "desc": "Arcillas arenosas con puntualmente bolos",
+   "from": 0.0,
+   "to": 2.2,
+   "n20_avg": 5.44,
+   "Nb": 6.5,
+   "soil_type": "granular"
+  },
+  {
+   "n": 2,
+   "desc": "Bolos y gravas en matriz arenosa y arcillosa",
+   "from": 2.2,
+   "to": null,
+   "n20_avg": 21.82,
+   "Nb": 26.3,
+   "soil_type": "grava"
+  }
+ ],
+ "geotechnical_params": {
+  "gamma": 2.0,
+  "cohesion": 0.0,
+  "phi": 38,
+  "E": 450
+ },
+ "terzaghi": {
+  "phi": 38,
+  "cohesion": 0.0,
+  "gamma": 2.0,
+  "B": 1.0,
+  "Df": 2.9,
+  "qu": 41.062,
+  "safety_factor": 3.0,
+  "Qa": 3.0,
+  "settlement_cm": 2.2,
+  "settlement_type": "immediat",
+  "Es_used": 65.71741511500547,
+  "qa_terzaghi_peck": 1.1564817635253224,
+  "Qa_uncapped": 13.687333333333333,
+  "Fw": 1.6900000000000002,
+  "Fd_tp": 1.33,
+  "qa_governs": "cap",
+  "settlement_generic": false,
+  "settlement_regime": "granular",
+  "Es_source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
+  "Es_candidates": [
+   {
+    "value": 65.71741511500547,
+    "display": "Es=66 (2.5×Nb 26.3)",
+    "source": "2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat)",
+    "settlement_cm": 2.2
+   },
+   {
+    "value": 450.0,
+    "display": "Es=450 (E del criteri)",
+    "source": "E de la taula geotècnica com a Es",
+    "settlement_cm": 0.3
+   }
+  ],
+  "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.20 cm, immediats en el temps donat el comportament granular dels materials."
+ }
+}

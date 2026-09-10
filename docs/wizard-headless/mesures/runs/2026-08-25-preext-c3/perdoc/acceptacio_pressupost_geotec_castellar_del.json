@@ -1,0 +1,100 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+ "source_md5": "3f3035ff2113238d74e3e22e5cffb26a",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic de G3 (codi comercial 25·0493 P#) per a l'Estudi geotècnic de l'obra de Wood Comfort Promocions SLU a Castellar del Vallès (4 DPSH + 1 sondeig a rotació), amb el full d'acceptació de la p.5 omplert i signat a mà pel client.",
+ "issuer": "G3 Desenvolupament Territorial, S.L. (B25461443)",
+ "date": "07/10/25 (portada p.1; PDF creationDate 2025-10-07, modDate 2025-10-08)",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (empresa de geotècnia), com a oferta comercial de l'estudi geotècnic",
+  "for_whom": "El sol·licitant/client indicat com a CLIENT: a la portada (Wood Comfort Promocions SLU), que després signa personalment l'acceptació a la p.5",
+  "why": "Formalitzar l'encàrrec de l'estudi geotècnic (4 assaigs DPSH + 1 sondeig a rotació amb bateria contínua) i fixar preu, condicions i dades de facturació abans d'iniciar els treballs de camp",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_dpsh_tests (previstos)",
+   "abast de la campanya de camp"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "architect_name explícit",
+   "cte_edificacio/cte_sol (aquest pressupost no porta la línia CTE)",
+   "referencia_catastral",
+   "utm_x/utm_y",
+   "dades de laboratori"
+  ],
+  "relation_to_others": "Versió MODIFICADA (modDate 2025-10-08, posterior a creationDate 2025-10-07) que substitueix un nom de client anterior conegut per aquest projecte; el text mecanografiat i el full d'acceptació manuscrit de la p.5 ja porten el nom actual, Wood Comfort Promocions SLU. Comparteix el mateix codi comercial 25·0493 P# amb altres pressupostos/adjunts de correu de la carpeta (p.ex. 25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg) — no compten com a font independent addicional sense verificar-ne el contingut.",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.5, bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', camp NOM I COGNOMS (manuscrit en vermell)",
+   "quote": "WOOD COMFORT PROMOCIONS SLU",
+   "confidence": 0.9,
+   "note": "Autoritat A (formulari d'acceptació signat pel client, Pas 3/Pas 2). N.I.F./C.I.F. imprès al costat: B19935212. Cap casella ARQUITECTE marcada al bloc 'PERSONES I/O EMPRESES QUE PODEN REBRE INFORMACIÓ SOBRE L'INFORME', per tant no es tracta d'un intermediari arquitecte."
+  },
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU",
+   "location": "p.1, bloc CLIENT: (mecanografiat)",
+   "quote": "WOOD COMFORT PROMOCIONS SLU / C/FERRAN VALLS I TABERNER 14 BIS 1-2 / 08006 BARCELONA",
+   "confidence": 0.75,
+   "note": "El bloc CLIENT: del pressupost és tècnicament el sol·licitant (Pas 3); aquí coincideix amb el client final confirmat a la p.5. Text ordenat visualment des de page-1.png perquè l'extracció .txt intercala els blocs CLIENT i OBRA."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "location": "p.1, bloc OBRA:",
+   "quote": "ESTUDI GEOTECNIC / C/ARBRELLS 18A-18B-20 / CASTELLAR DEL VALLES",
+   "confidence": 0.8,
+   "note": "Única font d'adreça en aquest document; contrastar amb comanda/plànol/annexos."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "p.1, bloc OBRA:",
+   "quote": "CASTELLAR DEL VALLES",
+   "confidence": 0.85,
+   "note": "Forma sense accents ni majúscules/minúscules normalitzades; normalitzat cap a la forma oficial 'Castellar del Vallès'."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.2 (campanya de camp) i p.4 (partida 002.001)",
+   "quote": "4 assaigs de penetració dinàmica DPSH",
+   "confidence": 0.55,
+   "note": "Valor PREVIST al pressupost, no executat (Pas 3: pressupost és font de menor prioritat que l'Excel DPSH per a aquest camp)."
+  }
+ ],
+ "not_present": [
+  "expedient: només hi consta el codi comercial 25·0493 P#, no el número d'expedient (3001621)",
+  "architect_name: cap nom esmentat; casella ARQUITECTE del bloc de destinataris de l'informe (p.5) no marcada",
+  "architect_company: idem, sense esment de despatx",
+  "building_type: només 'Estudi geotècnic' com a objecte de l'encàrrec, sense descriure el tipus d'edifici",
+  "num_floors: no esmentat",
+  "superficie_parcela: no esmentat",
+  "field_date: pressupost previ a l'inici de camp, sense data de camp (només data del propi pressupost, 07/10/25)",
+  "cota_referencia: no esmentat",
+  "num_soil_levels: no esmentat",
+  "utm_x: no esmentat",
+  "utm_y: no esmentat",
+  "referencia_catastral: no esmentat",
+  "lab_testing_company: no esmentat",
+  "lab_sample_id: no esmentat",
+  "lab_depth: no esmentat",
+  "lab_location: no esmentat",
+  "cte_edificacio: aquest pressupost NO porta la línia 'Tipus d'edifici' (comprovat a totes les pàgines) — cas conegut d'aquest projecte (com Linyola/Anciles)",
+  "cte_sol: idem, sense línia 'Tipus de Terreny'"
+ ],
+ "reading_notes": "Text llegit dels 7 fulls .txt de pre-extracció; als blocs CLIENT/OBRA de p.1 l'extracció de text intercala les dues columnes (verificat visualment amb page-1.png). Zona manuscrita d'acceptació (p.5) verificada amb clip a 400dpi (scripts/render_clip.py, fracció 0.08,0.36,0.85,0.50) per confirmar 'WOOD COMFORT PROMOCIONS SLU', adreça i CP manuscrits, coincidents amb el text mecanografiat de p.1. Pàgines 3, 6 i 7 són abast/condicions generals estàndard, sense dades de nivell A; cercat 'tipus/edifici/terreny/C1/T1' a tot el text sense resultats (aquest pressupost no porta línia CTE). Anomalia detectada: la capçalera de p.5 mostra DATA 25/06/25, anterior tant a la data de portada p.1 (07/10/25) com al modDate del PDF (2025-10-08) — probablement resta d'una versió anterior del pressupost no actualitzada en aquesta cel·la; no s'ha fet servir per a cap camp de nivell A (field_date fa referència a la data de camp, no a la del pressupost)."
+}

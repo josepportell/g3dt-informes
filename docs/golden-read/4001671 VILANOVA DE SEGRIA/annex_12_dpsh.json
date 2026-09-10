@@ -1,0 +1,27 @@
+{
+ "source_path": "PDF/ANEJOS/4001671_DPSH.pdf",
+ "document_type": "annex_dpsh",
+ "what_it_is": "Annex DPSH de l'informe (generat des de 4001671_DPSH.xls, imprès per 'Loli' el 16/03/2026): 3 pàgines P-1/P-2/P-3 amb capçalera completa (cota, obra, població, data, expedient), gràfica de colpeig i refús. EN CASTELLÀ.",
+ "issuer": "G3 (Eva/Loli) — Distiller des de l'Excel DPSH",
+ "date": "2026-03-16 (impressió); FECHA de camp al peu de capçalera: 19/02/2026",
+ "pages_or_sheets": 3,
+ "context": {
+  "who_made_it": "Eva prepara l'Excel; Loli l'imprimeix a PDF per a l'informe",
+  "for_whom": "annex de l'informe final",
+  "why": "l'única capçalera 'oficial' amb cota absoluta + obra + població + data + número d'informe en un sol lloc",
+  "expected_fields": ["cota_referencia (capçalera)", "street_address (OBRA)", "municipality (POBLACIÓN)", "field_date (FECHA)", "expedient (NÚMERO DE INFORME)", "num_dpsh_tests", "refussos"],
+  "not_expected": ["client_name", "architect_name", "num_floors", "superficie_parcela", "utm", "referencia_catastral", "lab_testing_company"],
+  "relation_to_others": "derivat de ANEXOS/4001671_DPSH.xls (mateixos N20, refussos i anotacions SPT: p.1 'SPT1 0,80-1,40m 13/10/14/24', p.3 'SPT-1') → no és font independent per als valors, però SÍ per a la capçalera (cota/obra/data/expedient), que és criteri de l'Eva. L'Eva dibuixa els annexos abans d'obrir el wizard: font vàlida de primera obertura.",
+  "authority_for": ["cota_referencia", "field_date", "expedient", "street_address (forma de l'informe)", "municipality"]
+ },
+ "tier_a": [
+  {"concept_id": "cota_referencia", "value": "+321,69 msnm (visor ICGC)", "location": "capçalera p.1, p.2 i p.3", "quote": "Cota inicio: +321,69 msnm según el visor ICGC", "confidence": 0.9, "note": "criteri de l'Eva (ICGC); idèntica als 3 punts. Coherent amb l'eix del tall (322→318). El manuscrit TPS només donava cota relativa al carrer."},
+  {"concept_id": "street_address", "value": "Calle Santa Gemma nº 4", "location": "capçalera OBRA (les 3 pàgines)", "quote": "OBRA: CALLE SANTA GEMMA Nº4", "confidence": 0.9, "note": "forma de l'informe (castellà); sense 'Urb. La Serra' aquí"},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "capçalera POBLACIÓN", "quote": "POBLACIÓN: VILANOVA DE SEGRIA", "confidence": 0.9, "note": "sense accent a l'annex; el tall escriu 'VILANOVA DE SEGRIÀ'"},
+  {"concept_id": "field_date", "value": "2026-02-19", "location": "capçalera FECHA (les 3 pàgines)", "quote": "FECHA: 19/02/2026", "confidence": 0.9, "note": "coincideix amb el manuscrit TPS (19-2-26), la comanda (DATA DE PRESA) i la foto WhatsApp 2026-02-19 → data de camp única i segura"},
+  {"concept_id": "expedient", "value": "4001671", "location": "capçalera NÚMERO DE INFORME", "quote": "NÚMERO DE INFORME: 4001671", "confidence": 0.95, "note": "coincideix amb carpeta, comanda N19 i caixetins dels annexos"},
+  {"concept_id": "num_dpsh_tests", "value": "3 (P-1, P-2, P-3)", "location": "títols de pàgina", "quote": "ENSAYO DE PENETRACIÓN DINÁMICA: P-1 | P-2 | P-3", "confidence": 0.9, "note": "refussos: -1,48 / -2,18 / -3,78 m (peu de cada pàgina); derivat de l'Excel, no font independent"}
+ ],
+ "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "num_soil_levels (les etiquetes 'Nivel 1/Nivel 2' del peu són la llegenda del gràfic)", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "cte", "nivell freàtic"],
+ "reading_notes": "Text net (PScript5/Distiller des d'Excel, no FreeHand). Anotacions SPT idèntiques a l'Excel: p.1 'SPT1 / 0,80-1,40m / 13/10/14/24' i p.3 'SPT-1' — confirma els DOS SPT. author='Loli', creationDate 16/03/2026 17:01 (dia de maquetació de l'informe, NO data de camp)."
+}

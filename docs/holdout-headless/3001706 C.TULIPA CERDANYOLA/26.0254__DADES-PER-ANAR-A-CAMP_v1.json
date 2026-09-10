@@ -1,0 +1,25 @@
+{
+  "source_path": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+  "document_type": "fitxa_camp_g3",
+  "what_it_is": "Fitxa interna G3 de preparació de la sortida de camp (contacte, previsió, logística).",
+  "issuer": "G3 (oficina: 'QUI HA QUEDAT? LOLI')",
+  "date": "sense data (F38 'dies de camp' BUIT)",
+  "pages_or_sheets": "fulls 'fitxa' + 'dades de referencia'",
+  "context": {
+    "who_made_it": "G3 (Loli, oficina) en preparar la visita de camp",
+    "for_whom": "l'equip de camp de G3/TPS",
+    "why": "coordinar l'accés i la campanya (qui obre, on, quantes proves)",
+    "expected_fields": ["contacte", "previsió (E13)", "adreça obra (C7)", "field_date (F38)"],
+    "not_expected": ["num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "lab"],
+    "relation_to_others": "el CLIENT de la fitxa (C6) deriva de l'encàrrec, no és font independent del correu/pressupost; pot conservar dades velles. F38 buit → field_date s'ha de buscar a annex DPSH / comanda / albarà / fotos.",
+    "authority_for": ["previsió de campanya (contrast per a num_dpsh_tests)"]
+  },
+  "tier_a": [
+    {"concept_id": "street_address", "value": "C/ Tulipa, 3 (Cerdanyola del Vallès)", "location": "fitxa!C7 (etiqueta B7 ADREÇA OBRA)", "quote": "C/TULIPA 3 CERDANYOLA DEL VALLES", "confidence": 0.8, "note": "adreça i municipi a la mateixa cel·la; és l'obra de la CASA 1 (Tulipa); la fitxa no esmenta Tosca 16"},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "fitxa!C7", "quote": "C/TULIPA 3 CERDANYOLA DEL VALLES", "confidence": 0.7, "note": "dins la cel·la d'adreça"},
+    {"concept_id": "num_dpsh_tests", "value": "4 (previstos, total expedient) + 1 sondeig", "location": "fitxa!E13 (previsió C13)", "quote": "PENETROS I SONDEIG PETIT / 4P+1S", "confidence": 0.55, "note": "previstos; manen els Excel DPSH executats"},
+    {"concept_id": "NOT_client_name", "value": "ALEIX SUBIRA FELIP", "location": "fitxa!C6 (etiqueta B6 CLIENT)", "quote": "CLIENT / ALEIX SUBIRA FELIP", "confidence": 0.0, "note": "CLIENT de la fitxa = sol·licitant/contacte de l'encàrrec (també persona de contacte C8, 'ALEIX ESTARA A L'OBRA PER OBRIR'); no autoritat per a client_name, però és un nom de persona candidat a promotor d'una de les cases — a creuar amb acceptació i correus"}
+  ],
+  "not_present": ["field_date (F38 BUIT)", "expedient", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Cel·les del mapa del skill (B2/C6/C7/C8/F8/C13/F38/C38) + escombrat files 1-45. C38 empresa de camp 'TPS ERUGA'. Enllaç maps.app.goo.gl a C15 (no resolt: headless, no és cap dels 15 camps)."
+}

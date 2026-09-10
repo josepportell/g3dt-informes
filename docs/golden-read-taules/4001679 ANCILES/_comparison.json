@@ -1,0 +1,32 @@
+{
+ "compared_by": "sessió principal (agent cec)",
+ "eva_truth": "docs/golden-read-taules/_eva_truth/anciles.json (4001679_informe_V0.pdf, transcripció capa de text)",
+ "date": "2026-08-24",
+ "cells": {
+  "dpsh.P-1..P-6.cota_inici": {"read": "segur per punt +1106,40/,30/,40/,30/,42/,65", "eva": "idèntiques", "class": "OK x6", "note": "cotes DIFERENTS per punt — regla v0.7 validada al cas més exigent"},
+  "dpsh.P-1..P-6.profunditat": {"read": "segur -3,58/-4,59/-3,77/-5,92/-4,18/-5,70 (B80 + manuscrit)", "eva": "idèntiques", "class": "OK x6"},
+  "dpsh.P-1..P-6.rebuig": {"read": "segur Si x6", "eva": "Si x6", "class": "OK x6"},
+  "dpsh.P-1..P-6.nf": {"read": "segur No detectat x6", "eva": "No detectado x6", "class": "OK x6"},
+  "sondeig.S-1.cota_prof_nf": {"read": "segur +1106,65 / -2,40 / ND", "eva": "idèntics", "class": "OK x3"},
+  "sondeig.S-2.cota_prof_nf": {"read": "segur +1106,42 / -3,00 / ND", "eva": "idèntics", "class": "OK x3"},
+  "sondeig.S-1.spt_ma": {"read": "segur '1/0'", "eva": "'1/0/0' (columna triple SPT/TP/MA)", "class": "OK", "note": "comptes equivalents; l'Eva usa format TRIPLE aquí — micro-regla: emetre comptes, no format"},
+  "sondeig.S-2.spt_ma": {"read": "segur '1/1'", "eva": "'1/0/1'", "class": "OK", "note": "equivalent"},
+  "spt.SPT-1xS-1.n30": {"read": "candidats [6] (registre 2/3/3/3, corroborat 'N=6' del tall)", "eva": "6", "class": "CAND", "note": "candidat 1 correcte — tercera confirmació del criteri trams centrals"},
+  "spt.SPT-1xS-2.n30": {"read": "candidats [6]", "eva": "6", "class": "CAND"},
+  "spt.SPT-1.litologia": {"read": "candidats (annex primer)", "eva": "Arcilla arenosa con gravitas", "class": "CAND x2"},
+  "spt.MA-1.id_prof": {"read": "segur MA-1 / -2,80 a -3,00", "eva": "idèntics", "class": "OK x2"},
+  "spt.MA-1.n30": {"read": "no_trobat (és MA)", "eva": "--", "class": "OK", "note": "equivalent: l'Eva escriu '--' per a MA"},
+  "soil.count": {"read": "2 nivells (tall mana sobre log que només etiqueta NIVEL 1)", "eva": "2 nivells", "class": "OK", "note": "regla 'tall 2, log 1' validada en re-execució"},
+  "soil.n1.litologia": {"read": "candidats [annex 'arcillas arenosas…' primer]", "eva": "Arcillas arenosas con gravitas y puntualmente bolos de granito, de coloraciones marrones", "class": "CAND", "note": "candidat 1 ≈ literal"},
+  "soil.n2.litologia": {"read": "candidats", "eva": "Bolos y gravas de granito en matriz arenosa y arcillosa, de coloraciones grisáceos", "class": "CAND"},
+  "soil.transicions": {"read": "candidats per punt (~-2,55/-2,60 a S-2; tall 1103,9-1104,8 msnm segons punt)", "eva": "per punt: P-1 -1.80, P-2 -2.60, P-3 -2.40, P-4 -2.00, S-1/P-6 -4.00, S-2/P-5 -2.50", "class": "CAND", "note": "multiplicitat real per punt; S-2 -2,55 llegit vs -2.50 informe, dins la resolució gràfica"},
+  "spt.mostra_del_nivell": {"read": "segur nivell 2", "eva": "sulfats de MA-1 a la fila '2do nivel'", "class": "OK", "note": "regla fila-sulfats = nivell de la mostra validada"},
+  "superficie_construida": {"read": "candidats (G05: PB 522,61 + P1 454,70 + BC 188,53 + sótano 98,42; sumes derivades)", "eva": "(no llegible al V0 transcrit)", "class": "n/a"}
+ },
+ "totals": {"OK": 31, "CAND": 7, "ERR": 0, "NT": 0, "n/a": 1},
+ "observacions": [
+  "0 ERR en el projecte més gros (6 DPSH + 2 sondeigs + 3 assaigs, tot en castellà).",
+  "P-5/P-6 executats DINS dels forats de S-2/S-1 (colpeig des de -3,2/-2,6): detectat per l'agent i coherent amb el 'S-1/P-6, S-2/P-5' de la narrativa de l'informe.",
+  "Cap GTL a la carpeta: el valor de sulfats no és llegible enlloc — no_trobat correcte (la fila de sulfats del V0 tampoc porta valor)."
+ ]
+}

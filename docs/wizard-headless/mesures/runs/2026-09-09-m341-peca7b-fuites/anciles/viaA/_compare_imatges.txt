@@ -1,0 +1,16 @@
+# Imatges «mateixa font que l'Eva» — anciles/viaA
+
+| # | ranura Eva | peu | nostre forat | estat | phash | ncc | psr | escala | direcció |
+|--:|---|---|---|---|--:|--:|--:|--:|---|
+| 1 | `fig_situacio` | Figura 1. Vista de la zona en estudio. Fuente: Sede electrón | `fig_situacio_image_1` | **MATCH** | 10 | — | — | — | sencera |
+| 2 | `fig_projecte` | Figura 2. Detalle del plano topográfico del emplazamiento fa | `fig_projecte_image_1` | **MISMATCH** | 16 | 0.652 | 99.0 | 0.896 | veritat dins nostra |
+| 3 | `fig_projecte` | Figura 3. Detalle de las viviendas prevista. Fuente: Proyect | `fig_projecte_image_2` | **MISMATCH** | 24 | 0.316 | 8.0 | 0.164 | veritat dins nostra |
+| 4 | `fig_assaigs` | Figura 4. Situación de los ensayos realizados. | `fig_assaigs_image` | **MATCH** | 6 | — | — | — | sencera |
+| 5 | `foto_dpsh` | Fotografía 1. Detalle del emplazamiento de la máquina realiz | `photo_dpsh_image` | **MATCH** | 0 | — | — | — | sencera |
+| 6 | `foto_sondeig` | Fotografía 2. Detalle del emplazamiento de la máquina realiz | `photo_sondeig_image` | **MISMATCH** | 30 | 0.231 | 3.7 | 0.308 | veritat dins nostra |
+| 8 | `fig_geologic` | Figura 6. Mapa geológico a escala 1:1.000.000 de la zona de  | — | **NO_DATA** | — | — | — | — | — |
+| 9 | `foto_materials` | Fotografía 3. Detalle de los materiales recuperados durante  | `photo_materials_image` | **MATCH** | 0 | — | — | — | sencera |
+| 10 | `foto_materials` | Fotografía 4. Detalle de los materiales recuperados durante  | — | **NO_DATA** | — | — | — | — | — |
+| 11 | `fig_tall` | Figura 7. Corte de correlación de los materiales descritos e | `fig_correlation_image` | **MATCH** | 4 | — | — | — | sencera |
+
+Totals: 5 M · 0 C · 3 X · 2 ND → 62 %; sobrants (nostres sense figura de l'Eva): 0 

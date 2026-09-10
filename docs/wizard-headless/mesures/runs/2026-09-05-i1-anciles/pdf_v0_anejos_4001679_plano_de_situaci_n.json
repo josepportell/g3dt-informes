@@ -1,0 +1,127 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_plano de situación.pdf",
+ "source_md5": "ecd73dd4b5466a5f6176123119e699b2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Esquema de situació de l'annex geotècnic (plantilla G3): plànol de planta amb la implantació de l'obra i els punts d'assaig (P-1 a P-6 DPSH, S-1/S-2 sondeig), més dos requadres d'ubicació (mapa cadastral i ortofoto) que situen la parcel·la dins del nucli d'Anciles.",
+ "issuer": "G3 Desenvolupament Territorial, SL (logo G3 al peu; mateix producer/creator Distiller+PScript5.dll que la resta de plantilles G3 del projecte)",
+ "date": "Febrero 2026 (camp \"Fecha\" del caixetí; data de traçat del plànol, no necessàriament el dia de camp)",
+ "pages_or_sheets": "1 pàgina (\"Esquema de situación\", Página 1/1)",
+ "context": {
+  "who_made_it": "G3 (Eva), com a annex propi del seu informe geotècnic",
+  "for_whom": "el propi informe de G3 (annex intern, no és un document d'un tercer)",
+  "why": "situar gràficament la parcel·la dins el nucli d'Anciles (mapa cadastral + ortofoto) i localitzar els punts d'assaig DPSH/sondeig dins la implantació de l'edifici",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte (només mes)",
+   "cota_referencia",
+   "utm_x_utm_y",
+   "lab_*",
+   "cte_*",
+   "num_floors"
+  ],
+  "relation_to_others": "és el render PDF (via Acrobat Distiller/PScript5.dll) de l'original FreeHand 'ANEJOS/4001679_plano de situación.FH11' (mateix contingut, l'FH11 és il·legible directament, route=skip a l'inventari). Existeix també 'pl situ.pdf' a l'arrel del projecte (md5 diferent, molt més gran, 5,49 MB vs 320 KB): probablement una altra còpia/render ('Print To PDF') del mateix o similar annex — no s'ha obert (fora de l'abast --only d'aquesta crida), es deixa constància per si el consolidador el vol creuar.",
+  "authority_for": [
+   "street_address",
+   "building_type",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001679",
+   "location": "caixetí, cel·la \"Exp:\"",
+   "quote": "Exp: 4001679",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte (4001679 ANCILES)"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Calle Gral Ferraz Nº20",
+   "location": "caixetí, títol del projecte",
+   "quote": "ADOSADAS EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.7,
+   "note": "única font d'adreça d'aquest document; \"GRAL\" és abreviatura de \"General\""
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "General Ferraz",
+    "nom_via_alternatives": [
+     "Gral Ferraz"
+    ],
+    "portals": [
+     "20"
+    ],
+    "municipi": "Anciles",
+    "municipi_alternatives": [
+     "Arciles"
+    ]
+   },
+   "location": "caixetí, títol del projecte",
+   "quote": "CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.6,
+   "note": "\"Arciles\" al títol d'aquest document és grafia amb typo de \"Anciles\" (així consta al mapa cadastral inserit i al nom de l'expedient); Anciles és un nucli/entitat de població dins el terme municipal de Benasque (el mapa mostra \"Golf Benasque\" a la mateixa zona) — cal confirmar amb altres fonts si el camp municipality de l'informe ha de dir \"Anciles\" o \"Benasque\""
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Anciles",
+   "location": "requadre mapa cadastral (superior esquerra) + caixetí, títol del projecte",
+   "quote": "Anciles (etiqueta del mapa) / \"...DE ARCILES, BENASQUE\" (caixetí, amb typo)",
+   "confidence": 0.4,
+   "note": "font única d'aquest document (no és cap de les 3 fonts \"sempre\": comanda/pressupost/plan_cost); discrepància de grafia Arciles/Anciles dins el mateix document; Anciles pot ser el nucli de població i Benasque el terme municipal oficial — candidat, no segur"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "vivienda adosada (7 unitats)",
+   "location": "caixetí, títol del projecte",
+   "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE",
+   "confidence": 0.85,
+   "note": "títol del plànol és la font de màxima prioritat per a building_type segons el Pas 3"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 6,
+   "location": "planta, llegenda \"Ensayo de penetración dinámica DPSH\" (símbol blau)",
+   "quote": "P-1, P-2, P-3, P-4, P-5, P-6 (6 símbols blaus a la planta)",
+   "confidence": 0.6,
+   "note": "recompte visual dels punts marcats a la planta; pot representar els assaigs PREVISTOS en planificació, no necessàriament els executats — confirmar amb l'Excel DPSH (autoritat)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Febrero 2026",
+   "location": "caixetí, cel·la \"Fecha:\"",
+   "quote": "Fecha: Febrero 2026",
+   "confidence": 0.25,
+   "note": "és la data de traçat/impressió del plànol per G3, no necessàriament el dia exacte de camp; candidat feble, només mes i any, mai per davant de fitxa F38 / annex DPSH / albarà TPS"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pàgina amb text brossa (text_ok=false, producer Acrobat Distiller 15.0 des de PScript5.dll — patró FreeHand ja conegut al projecte): lectura íntegrament visual sobre page-1.png (150 dpi) + clips amb render_clip.py a 400-1200 dpi per al caixetí, el mapa cadastral inserit i les etiquetes dels subplots. La planta mostra 2 sondeigs a rotació (S-1, S-2, símbol vermell) co-localitzats amb P-6 i P-5 respectivament. Dins la implantació hi ha 3 requadres de subparcel·la numerats 28.1/28.2/28.3 amb superfície; només 28.2 és llegible (\"719.07 m²\") — els valors de 28.1 i 28.3 estan degradats/il·legibles fins i tot ampliant a 1200 dpi (el mateix garbling de FreeHand afecta el glif renderitzat, no només el text extret): no s'emeten com a candidats per no inventar dades. El mapa cadastral inserit mostra un identificador de parcel·la parcialment visible \"61845\" (tapat en part per l'requadre taronja de la parcel·la) que sembla un codi intern del visor/polígon rústic, no la referència cadastral oficial de 20 caràcters — no s'emet com a candidat de referencia_catastral per evitar falsa confiança; caldria una consulta OVC del Cadastre per confirmar-la. No hi ha coordenades UTM impreses (només escala gràfica 1/500 i nord)."
+}

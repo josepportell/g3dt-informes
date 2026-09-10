@@ -1,0 +1,72 @@
+{
+ "source_path": "PDF/ANNEXES/4001612_fotografies.pdf",
+ "source_md5": "d366a8acbeb5c6b37bc5aad22d979909",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Reportatge fotogràfic de G3 (annex propi de l'informe) amb 4 fotografies (F-1 a F-4): vista general de la parcel·la i emplaçament de la maquinària durant els assaigs DPSH P-1 i P-2.",
+ "issuer": "G3 Desenvolupament Territorial (Eva)",
+ "date": null,
+ "pages_or_sheets": "2 pàgines",
+ "context": {
+  "who_made_it": "G3 (Eva), com a annex fotogràfic propi que acompanya l'informe",
+  "for_whom": "l'informe geotècnic mateix; no és un document rebut d'un tercer",
+  "why": "documentar visualment l'estat de la parcel·la i la posició de la maquinària DPSH durant el treball de camp",
+  "expected_fields": [
+   "expedient (repetit al capçalera de cada pàgina)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab",
+   "cte",
+   "building_type",
+   "num_floors",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "versió Print-To-PDF/Distiller de l'original FreeHand ANNEXES/4001612_fotografies.FH11 (no llegible, route=skip); duplicat exacte per md5 (d366a8acbeb5c6b37bc5aad22d979909) de 'PDF V0/ANNEXES/4001612_fotografies.pdf', exclòs per ser de la carpeta V0 (esborrany anterior)",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001612",
+   "location": "p.1 i p.2, capçalera 'Reportatge fotogràfic'",
+   "quote": "4001612",
+   "confidence": 0.5,
+   "note": "aparició corroborant al capçalera del reportatge fotogràfic; coincideix amb el nom de la carpeta i amb la resta de fonts (comanda, annex DPSH, GTL), però aquest document no és la font primària de l'expedient (Pas 3): candidat de suport, no segur per si sol"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "text_ok fals a les 2 pàgines (meta.json: producer Acrobat Distiller 15.0, PScript5.dll — mateix patró FreeHand/Distiller que la resta d'annexos de l'Eva); page-N.txt és brossa. Llegit visualment amb page-1.png i page-2.png (sencera, 150 dpi): totalment llegible (capçalera, etiquetes F-1..F-4 i peus de foto nítids), no ha calgut mirar les meitats (page-N-top/bottom.png) ni fer clip amb render_clip.py. Contingut íntegrament fotogràfic (4 fotos de la parcel·la i de la màquina DPSH ROLATEC); cap dada del nivell A més enllà de l'expedient repetit al capçalera."
+}

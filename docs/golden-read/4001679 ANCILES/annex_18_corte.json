@@ -1,0 +1,28 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_corte de correlación.pdf (+ duplicat Print To PDF: tall.pdf a l'arrel)",
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació A-A' de l'informe (FreeHand 4001679_corte de correlación.FH11): secció per S-2/P-5, P-1, P-2, P-3, P-4, S-1/P-6 amb 2 nivells, cota de soterrani i cota recomanada de fonamentació.",
+ "issuer": "G3 (Eva)",
+ "date": "2026-03-16 (Distiller); tall.pdf imprès el mateix dia 08:27; Fecha del caixetí: Febrero 2026",
+ "pages_or_sheets": "1 pàgina A3 apaïsada",
+ "context": {
+  "who_made_it": "l'Eva dibuixa el tall en FreeHand a partir dels DPSH/sondeigs i del topogràfic",
+  "for_whom": "l'informe 4001679 (annex 'Corte de correlación')",
+  "why": "correlacionar els nivells entre punts i fixar cotes de soterrani i fonamentació",
+  "expected_fields": ["num_soil_levels (llegenda '1er nivel/2do nivel')", "cota_referencia (eix msnm)", "building_type/street_address/municipality (caixetí)", "expedient"],
+  "not_expected": ["field_date exacta (només 'Febrero 2026')", "client_name", "architect_name", "superficie_parcela", "lab"],
+  "relation_to_others": "mateix dibuix que tall.pdf (Print To PDF, text NET → font del text llegit); l'esquema en miniatura de dalt a l'esquerra és el plano de situación. CONTRADIU la columna 'Unidad litológica' de l'annex de sondeigs (només NIVEL 1): aquí hi ha 2 nivells amb nom i el peu de les gràfiques DPSH també diu 'Nivel 1 / Nivel 2'.",
+  "authority_for": ["num_soil_levels (llegenda; en conflicte amb l'annex sondeigs)", "cota soterrani / cota fonamentació (fora del nivell A)", "expedient"]
+ },
+ "tier_a": [
+  {"concept_id": "num_soil_levels", "value": "2 (1er nivel: Arcillas arenosas con puntualmente bolos; 2do nivel: Bolos y gravas en matriz arenosa y arcillosa)", "location": "LEYENDA + secció A-A' (marró/gris)", "quote": "1er nivel: Arcillas arenosas con puntualmente bolos. | 2do nivel: Bolos y gravas en matriz arenosa y arcillosa.", "confidence": 0.7, "note": "CONFLICTE amb l'annex de sondeigs (columna Unidad litológica: només NIVEL 1, tot i el tram basal de bolos a S-2). El tall i el peu de les gràfiques DPSH ('Nivel 1/Nivel 2') diuen 2. Probable omissió d'etiqueta a l'annex de sondeigs. → candidats, 2 primer."},
+  {"concept_id": "expedient", "value": "4001679", "location": "caixetí Exp", "quote": "Exp: 4001679", "confidence": 0.9, "note": ""},
+  {"concept_id": "building_type", "value": "7 habitatges adossats", "location": "caixetí TÍTULO DEL PROYECTO", "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE 7 VIVIENDAS ADOSADAS EN LA CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE", "confidence": 0.8, "note": "títol-redacció de l'informe. TYPO de l'Eva: 'ARCILES' (per ANCILES) — no propagar."},
+  {"concept_id": "street_address", "value": "Calle Gral. Ferraz nº 20", "location": "caixetí", "quote": "…CALLE GRAL FERRAZ Nº20 DE ARCILES, BENASQUE", "confidence": 0.8, "note": "amb 'Nº20'; typo ARCILES al costat."},
+  {"concept_id": "municipality", "value": "Anciles, Benasque", "location": "caixetí", "quote": "…DE ARCILES, BENASQUE", "confidence": 0.6, "note": "typo 'ARCILES' en aquest annex (el plano de situación duplica el typo); la resta de documents diuen ANCILES → normalitzar a Anciles."},
+  {"concept_id": "cota_referencia", "value": "superfície del tall entre ~1106,3 i ~1106,65 msnm (eix 1100-1107)", "location": "eix vertical (msnm) + posició dels punts", "quote": "(msnm) 1107 1106 1105 1104 1103 1102 1101 1100", "confidence": 0.5, "note": "coherent amb les cotes per punt de l'annex DPSH/sondeigs; el tall no fixa una cota única de referència."},
+  {"concept_id": "cotes_recomanades", "value": "cota de nivell de soterrani a -3,0 m (vermell, '−3.0 m Sótano', ~1103,6-1103,9 msnm) i cota recomanada de fonamentació (verd, sostre del 2n nivell, ~1103,4-1104,3 msnm)", "location": "línies discontínues de la secció", "quote": "Cota de nivel de sótano | Cota recomendada de cimentación | -3.0 m Sótano", "confidence": 0.7, "note": "fora del nivell A (conclusions), però útil per validar l'informe."}
+ ],
+ "not_present": ["client_name", "architect_name", "field_date exacta (només 'Febrero 2026')", "num_dpsh_tests explícit (6 punts dibuixats)", "superficie_parcela", "utm_x_utm_y", "referencia_catastral", "lab", "cte", "nivell freàtic"],
+ "reading_notes": "Dues còpies del mateix dibuix: ANEJOS (Distiller, text brossa) i tall.pdf (Print To PDF, text NET, títol intern idèntic '4001679_corte de correlación.FH11') → text llegit de tall.pdf + render 120 dpi per als colors/cotes. Ordre dels punts al tall (A→A'): S-2/P-5, P-1, P-2, P-3, P-4, S-1/P-6 (≠ ordre del croquis de camp: el tall va de NW a SE). Nb visibles: P-1 6/33/R, P-2 6/44/R, P-3 4/13/R, P-4 5/32/17/R, S-2/P-5 N=6, 38/R, S-1/P-6 N=6, 14/26/R. Escala horitzontal 10,00 m."
+}

@@ -1,0 +1,55 @@
+{
+ "source_path": "ACCEPTACIO/Adobe Scan 9 abr 2026 - Adobe cloud storage.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Escaneig (Adobe Scan, 09/04/2026, OCR parcial) del pressupost 26·0254 v1 (980 €) signat a mà, amb el formulari p.5 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' OMPLERT A MÀ.",
+ "issuer": "G3 (document) + client (manuscrit i signatura)",
+ "date": "2026-04-09 (escaneig)",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 (document) + client (omple i signa)",
+  "for_whom": "G3",
+  "why": "acceptar el pressupost i dir qui ha de constar a factura i informe",
+  "expected_fields": [
+   "client_name (formulari p.5)",
+   "NIF",
+   "adreça del client (no de l'obra)"
+  ],
+  "not_expected": [
+   "dades de camp"
+  ],
+  "relation_to_others": "= g3_01 v1 (980 €) + manuscrit; la v2 2CASES no està signada a la carpeta",
+  "authority_for": [
+   "client_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "ALEIX SUBIRÀ FELIP",
+   "location": "p.5 formulari 'NOM I COGNOMS' (manuscrit; OCR dona 'Ale\\'\"- Su?.·,~ °F~Lit>')",
+   "quote": "NOM I COGNOMS: ALEIX SUBIRÀ FELIP | N.I.F./C.I.F.: 47235352-E | ADREÇA: C/ JOAN MIRÓ, 32. ESCALA 1. 3r-1a | CP I POBLACIÓ: 08110, MONTCADA I REIXAC | TELF.: 626056350",
+   "confidence": 0.9,
+   "note": "capçalera explícita 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' = client de l'informe. Persona física amb NIF. És la mateixa persona que l'arquitecte (VUA): client i arquitecte coincideixen a la casa 1. L'adreça és la del client (Montcada), NO de l'obra."
+  },
+  {
+   "concept_id": "architect_hint",
+   "value": "casella ARQUITECTE marcada a 'persones que poden rebre informació'",
+   "location": "p.5",
+   "quote": "[X] ARQUITECTE",
+   "confidence": 0.5,
+   "note": ""
+  },
+  {
+   "concept_id": "data_acceptacio",
+   "value": "≤ 2026-04-09",
+   "location": "nom del fitxer",
+   "quote": "Adobe Scan 9 abr 2026",
+   "confidence": 0.8,
+   "note": "fita: camp posterior"
+  }
+ ],
+ "not_present": [
+  "resta: idèntic al pressupost v1"
+ ],
+ "reading_notes": "L'OCR d'Adobe Scan llegeix bé el text imprès i malament el manuscrit: cal renderitzar la zona del formulari (clip 30-62 % de l'alçada de p.5 a 170 dpi) i llegir-la amb visió. Aquesta és la '5ena pàgina' que l'Eva cita com a font del client (EXPLICACIÓ DETALLS). Regla: a ACCEPTACIO/, si el pressupost és un escaneig, el formulari p.5 pot estar omplert → visió obligatòria."
+}

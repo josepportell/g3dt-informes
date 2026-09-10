@@ -1,0 +1,126 @@
+{
+ "rows": [
+  {
+   "n": 1,
+   "slot_eva": "fig_situacio",
+   "caption": "Figura 1. Situació de la zona d’estudi.",
+   "file_eva": "01_fig_situacio_figura-1-situacio-de-la-zona-d-estudi.png",
+   "ours_slot": "fig_situacio_image_1",
+   "file_ours": "situacio_4001670_plànol de situació_8b280d876d.png",
+   "status": "MATCH",
+   "phash_d": 4,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 2,
+   "slot_eva": "fig_assaigs",
+   "caption": "Figura 2. Situació de l’estructura projectada i els assaigs realitzats.",
+   "file_eva": "02_fig_assaigs_figura-2-situacio-de-l-estructura-projec.png",
+   "ours_slot": "fig_assaigs_image",
+   "file_ours": "plan_crop_4001670_plànol de situació_8b280d876d.jpg",
+   "status": "MATCH",
+   "phash_d": 8,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 3,
+   "slot_eva": "foto_dpsh",
+   "caption": "Fotografia 1. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPS",
+   "file_eva": "03_foto_dpsh_fotografia-1-vista-de-la-maquina-utilitz.jpeg",
+   "ours_slot": "photo_dpsh_image",
+   "file_ours": "P1 - ALCOLETGE.jpeg",
+   "status": "MISMATCH",
+   "phash_d": 32,
+   "ncc": 0.159,
+   "psr": 2.8,
+   "ncc_raw": 0.34,
+   "scale": 0.225,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 5,
+   "slot_eva": "fig_geologic",
+   "caption": "Figura 4. Mapa geològic a escala 1:50.000 de la zona en estudi (Font: ICGC).",
+   "file_eva": "05_fig_geologic_figura-4-mapa-geologic-a-escala-1-50-000.png",
+   "ours_slot": "fig_geological_image",
+   "file_ours": "geological_composite_308782_4613951.png",
+   "status": "MISMATCH",
+   "phash_d": 30,
+   "ncc": 0.522,
+   "psr": 10.8,
+   "ncc_raw": 0.522,
+   "scale": 0.14,
+   "dir": "nostra dins veritat"
+  },
+  {
+   "n": 6,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografia 2. Detall dels materials recuperats en l’assaig SPT-1.",
+   "file_eva": "06_foto_materials_fotografia-2-detall-dels-materials-recup.png",
+   "ours_slot": "photo_materials_image",
+   "file_ours": "spt alcoletge.png",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 7,
+   "slot_eva": "fig_tall",
+   "caption": "Figura 5. Detall del tall de correlació que s’adjunta als annexes.",
+   "file_eva": "07_fig_tall_figura-5-detall-del-tall-de-correlacio-q.png",
+   "ours_slot": "fig_correlation_image",
+   "file_ours": "tall_crop_tall_329e9d1775.jpg",
+   "status": "MATCH",
+   "phash_d": 10,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  }
+ ],
+ "sobrants": [],
+ "sobrants_n": 0,
+ "totals": {
+  "MATCH": 4,
+  "MISMATCH": 2,
+  "CLOSE": 0,
+  "NO_DATA": 0
+ },
+ "by_slot": {
+  "fig_situacio": {
+   "MATCH": 1
+  },
+  "fig_assaigs": {
+   "MATCH": 1
+  },
+  "foto_dpsh": {
+   "MISMATCH": 1
+  },
+  "fig_geologic": {
+   "MISMATCH": 1
+  },
+  "foto_materials": {
+   "MATCH": 1
+  },
+  "fig_tall": {
+   "MATCH": 1
+  }
+ },
+ "ours_paths": {
+  "fig_situacio_image_1": "/home/josep/g3dt-prod-cache/images/situacio_4001670_plànol de situació_8b280d876d.png",
+  "fig_assaigs_image": "/home/josep/g3dt-prod-cache/images/plan_crop_4001670_plànol de situació_8b280d876d.jpg",
+  "fig_geological_image": "/home/josep/g3dt-prod-cache/images/geological_composite_308782_4613951.png",
+  "fig_correlation_image": "/home/josep/g3dt-prod-cache/images/tall_crop_tall_329e9d1775.jpg",
+  "photo_dpsh_image": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE/FOTOS DE CAMP + PLANOL PUNTS/P1 - ALCOLETGE.jpeg",
+  "photo_materials_image": "/home/josep/g3dt-e2e/projectes/4001670 ALCOLETGE/FOTOS DE CAMP + PLANOL PUNTS/spt alcoletge.png"
+ }
+}

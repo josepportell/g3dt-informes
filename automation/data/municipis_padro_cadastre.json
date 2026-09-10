@@ -1,0 +1,8536 @@
+{
+ "metadata": {
+  "description": "Padró de municipis de Catalunya: grafia oficial (INE) aparellada amb la grafia i els codis del Cadastre. Permet resoldre el municipi SENSE xarxa per a qualsevol projecte de l'Eva.",
+  "source": "Cadastre OVCCallejero/ConsultaMunicipio (Municipio buit) per província, aparellat per ine_code amb automation/data/municipalities_catalunya_ine.json",
+  "downloaded_date": "2026-09-01",
+  "total": 947,
+  "matched_with_ine": 947,
+  "join_key": "ine_code == f'{cp:02d}{cm:03d}'",
+  "note": "Fora de Catalunya cal consultar el Cadastre en línia i ampliar aquest fitxer."
+ },
+ "municipalities": [
+  {
+   "ine_code": "08001",
+   "name_ine": "Abrera",
+   "name_cadastre": "ABRERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "1"
+  },
+  {
+   "ine_code": "08002",
+   "name_ine": "Aguilar de Segarra",
+   "name_cadastre": "AGUILAR DE SEGARRA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "2"
+  },
+  {
+   "ine_code": "08014",
+   "name_ine": "Aiguafreda",
+   "name_cadastre": "AIGUAFREDA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "14"
+  },
+  {
+   "ine_code": "08003",
+   "name_ine": "Alella",
+   "name_cadastre": "ALELLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "3"
+  },
+  {
+   "ine_code": "08004",
+   "name_ine": "Alpens",
+   "name_cadastre": "ALPENS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "4"
+  },
+  {
+   "ine_code": "08005",
+   "name_ine": "Ametlla del Vallès, L'",
+   "name_cadastre": "L' AMETLLA DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "5"
+  },
+  {
+   "ine_code": "08006",
+   "name_ine": "Arenys de Mar",
+   "name_cadastre": "ARENYS DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "6"
+  },
+  {
+   "ine_code": "08007",
+   "name_ine": "Arenys de Munt",
+   "name_cadastre": "ARENYS DE MUNT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "7"
+  },
+  {
+   "ine_code": "08009",
+   "name_ine": "Argentona",
+   "name_cadastre": "ARGENTONA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "9"
+  },
+  {
+   "ine_code": "08008",
+   "name_ine": "Argençola",
+   "name_cadastre": "ARGENÇOLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "8"
+  },
+  {
+   "ine_code": "08010",
+   "name_ine": "Artés",
+   "name_cadastre": "ARTES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "10"
+  },
+  {
+   "ine_code": "08013",
+   "name_ine": "Avinyonet del Penedès",
+   "name_cadastre": "AVINYONET DEL PENEDES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "13"
+  },
+  {
+   "ine_code": "08012",
+   "name_ine": "Avinyó",
+   "name_cadastre": "AVINYO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "12"
+  },
+  {
+   "ine_code": "08011",
+   "name_ine": "Avià",
+   "name_cadastre": "AVIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "11"
+  },
+  {
+   "ine_code": "08015",
+   "name_ine": "Badalona",
+   "name_cadastre": "BADALONA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "15"
+  },
+  {
+   "ine_code": "08904",
+   "name_ine": "Badia del Vallès",
+   "name_cadastre": "BADIA DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "904"
+  },
+  {
+   "ine_code": "08016",
+   "name_ine": "Bagà",
+   "name_cadastre": "BAGA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "16"
+  },
+  {
+   "ine_code": "08017",
+   "name_ine": "Balenyà",
+   "name_cadastre": "BALENYA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "17"
+  },
+  {
+   "ine_code": "08018",
+   "name_ine": "Balsareny",
+   "name_cadastre": "BALSARENY",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "18"
+  },
+  {
+   "ine_code": "08252",
+   "name_ine": "Barberà del Vallès",
+   "name_cadastre": "BARBERA DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "252"
+  },
+  {
+   "ine_code": "08019",
+   "name_ine": "Barcelona",
+   "name_cadastre": "BARCELONA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "19"
+  },
+  {
+   "ine_code": "08020",
+   "name_ine": "Begues",
+   "name_cadastre": "BEGUES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "20"
+  },
+  {
+   "ine_code": "08021",
+   "name_ine": "Bellprat",
+   "name_cadastre": "BELLPRAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "21"
+  },
+  {
+   "ine_code": "08022",
+   "name_ine": "Berga",
+   "name_cadastre": "BERGA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "22"
+  },
+  {
+   "ine_code": "08023",
+   "name_ine": "Bigues i Riells del Fai",
+   "name_cadastre": "BIGUES I RIELLS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "23"
+  },
+  {
+   "ine_code": "08024",
+   "name_ine": "Borredà",
+   "name_cadastre": "BORREDA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "24"
+  },
+  {
+   "ine_code": "08025",
+   "name_ine": "Bruc, El",
+   "name_cadastre": "EL BRUC",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "25"
+  },
+  {
+   "ine_code": "08026",
+   "name_ine": "Brull, El",
+   "name_cadastre": "EL BRULL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "26"
+  },
+  {
+   "ine_code": "08027",
+   "name_ine": "Cabanyes, Les",
+   "name_cadastre": "LES CABANYES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "27"
+  },
+  {
+   "ine_code": "08028",
+   "name_ine": "Cabrera d'Anoia",
+   "name_cadastre": "CABRERA D'ANOIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "28"
+  },
+  {
+   "ine_code": "08029",
+   "name_ine": "Cabrera de Mar",
+   "name_cadastre": "CABRERA DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "29"
+  },
+  {
+   "ine_code": "08030",
+   "name_ine": "Cabrils",
+   "name_cadastre": "CABRILS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "30"
+  },
+  {
+   "ine_code": "08031",
+   "name_ine": "Calaf",
+   "name_cadastre": "CALAF",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "31"
+  },
+  {
+   "ine_code": "08034",
+   "name_ine": "Calders",
+   "name_cadastre": "CALDERS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "34"
+  },
+  {
+   "ine_code": "08032",
+   "name_ine": "Caldes d'Estrac",
+   "name_cadastre": "CALDES D'ESTRAC",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "32"
+  },
+  {
+   "ine_code": "08033",
+   "name_ine": "Caldes de Montbui",
+   "name_cadastre": "CALDES DE MONTBUI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "33"
+  },
+  {
+   "ine_code": "08035",
+   "name_ine": "Calella",
+   "name_cadastre": "CALELLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "35"
+  },
+  {
+   "ine_code": "08037",
+   "name_ine": "Calldetenes",
+   "name_cadastre": "CALLDETENES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "37"
+  },
+  {
+   "ine_code": "08038",
+   "name_ine": "Callús",
+   "name_cadastre": "CALLUS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "38"
+  },
+  {
+   "ine_code": "08036",
+   "name_ine": "Calonge de Segarra",
+   "name_cadastre": "CALONGE DE SEGARRA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "36"
+  },
+  {
+   "ine_code": "08039",
+   "name_ine": "Campins",
+   "name_cadastre": "CAMPINS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "39"
+  },
+  {
+   "ine_code": "08040",
+   "name_ine": "Canet de Mar",
+   "name_cadastre": "CANET DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "40"
+  },
+  {
+   "ine_code": "08041",
+   "name_ine": "Canovelles",
+   "name_cadastre": "CANOVELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "41"
+  },
+  {
+   "ine_code": "08043",
+   "name_ine": "Canyelles",
+   "name_cadastre": "CANYELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "43"
+  },
+  {
+   "ine_code": "08044",
+   "name_ine": "Capellades",
+   "name_cadastre": "CAPELLADES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "44"
+  },
+  {
+   "ine_code": "08045",
+   "name_ine": "Capolat",
+   "name_cadastre": "CAPOLAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "45"
+  },
+  {
+   "ine_code": "08046",
+   "name_ine": "Cardedeu",
+   "name_cadastre": "CARDEDEU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "46"
+  },
+  {
+   "ine_code": "08047",
+   "name_ine": "Cardona",
+   "name_cadastre": "CARDONA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "47"
+  },
+  {
+   "ine_code": "08048",
+   "name_ine": "Carme",
+   "name_cadastre": "CARME",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "48"
+  },
+  {
+   "ine_code": "08049",
+   "name_ine": "Casserres",
+   "name_cadastre": "CASSERRES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "49"
+  },
+  {
+   "ine_code": "08057",
+   "name_ine": "Castell de l'Areny",
+   "name_cadastre": "CASTELL DE L'ARENY",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "57"
+  },
+  {
+   "ine_code": "08052",
+   "name_ine": "Castellar de n'Hug",
+   "name_cadastre": "CASTELLAR DE N'HUG",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "52"
+  },
+  {
+   "ine_code": "08050",
+   "name_ine": "Castellar del Riu",
+   "name_cadastre": "CASTELLAR DEL RIU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "50"
+  },
+  {
+   "ine_code": "08051",
+   "name_ine": "Castellar del Vallès",
+   "name_cadastre": "CASTELLAR DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "51"
+  },
+  {
+   "ine_code": "08053",
+   "name_ine": "Castellbell i el Vilar",
+   "name_cadastre": "CASTELLBELL I EL VILAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "53"
+  },
+  {
+   "ine_code": "08054",
+   "name_ine": "Castellbisbal",
+   "name_cadastre": "CASTELLBISBAL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "54"
+  },
+  {
+   "ine_code": "08055",
+   "name_ine": "Castellcir",
+   "name_cadastre": "CASTELLCIR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "55"
+  },
+  {
+   "ine_code": "08056",
+   "name_ine": "Castelldefels",
+   "name_cadastre": "CASTELLDEFELS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "56"
+  },
+  {
+   "ine_code": "08058",
+   "name_ine": "Castellet i la Gornal",
+   "name_cadastre": "CASTELLET I LA GORNAL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "58"
+  },
+  {
+   "ine_code": "08060",
+   "name_ine": "Castellfollit de Riubregós",
+   "name_cadastre": "CASTELLFOLLIT DE RIUBREGOS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "60"
+  },
+  {
+   "ine_code": "08059",
+   "name_ine": "Castellfollit del Boix",
+   "name_cadastre": "CASTELLFOLLIT DEL BOIX",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "59"
+  },
+  {
+   "ine_code": "08061",
+   "name_ine": "Castellgalí",
+   "name_cadastre": "CASTELLGALI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "61"
+  },
+  {
+   "ine_code": "08062",
+   "name_ine": "Castellnou de Bages",
+   "name_cadastre": "CASTELLNOU DE BAGES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "62"
+  },
+  {
+   "ine_code": "08063",
+   "name_ine": "Castellolí",
+   "name_cadastre": "CASTELLOLI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "63"
+  },
+  {
+   "ine_code": "08064",
+   "name_ine": "Castellterçol",
+   "name_cadastre": "CASTELLTERÇOL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "64"
+  },
+  {
+   "ine_code": "08066",
+   "name_ine": "Castellví de Rosanes",
+   "name_cadastre": "CASTELLVI DE ROSANES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "66"
+  },
+  {
+   "ine_code": "08065",
+   "name_ine": "Castellví de la Marca",
+   "name_cadastre": "CASTELLVI DE LA MARCA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "65"
+  },
+  {
+   "ine_code": "08067",
+   "name_ine": "Centelles",
+   "name_cadastre": "CENTELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "67"
+  },
+  {
+   "ine_code": "08268",
+   "name_ine": "Cercs",
+   "name_cadastre": "CERCS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "268"
+  },
+  {
+   "ine_code": "08266",
+   "name_ine": "Cerdanyola del Vallès",
+   "name_cadastre": "CERDANYOLA DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "266"
+  },
+  {
+   "ine_code": "08068",
+   "name_ine": "Cervelló",
+   "name_cadastre": "CERVELLO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "68"
+  },
+  {
+   "ine_code": "08069",
+   "name_ine": "Collbató",
+   "name_cadastre": "COLLBATO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "69"
+  },
+  {
+   "ine_code": "08070",
+   "name_ine": "Collsuspina",
+   "name_cadastre": "COLLSUSPINA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "70"
+  },
+  {
+   "ine_code": "08071",
+   "name_ine": "Copons",
+   "name_cadastre": "COPONS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "71"
+  },
+  {
+   "ine_code": "08072",
+   "name_ine": "Corbera de Llobregat",
+   "name_cadastre": "CORBERA DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "72"
+  },
+  {
+   "ine_code": "08073",
+   "name_ine": "Cornellà de Llobregat",
+   "name_cadastre": "CORNELLA DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "73"
+  },
+  {
+   "ine_code": "08074",
+   "name_ine": "Cubelles",
+   "name_cadastre": "CUBELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "74"
+  },
+  {
+   "ine_code": "08042",
+   "name_ine": "Cànoves i Samalús",
+   "name_cadastre": "CANOVES I SAMALUS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "42"
+  },
+  {
+   "ine_code": "08075",
+   "name_ine": "Dosrius",
+   "name_cadastre": "DOSRIUS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "75"
+  },
+  {
+   "ine_code": "08076",
+   "name_ine": "Esparreguera",
+   "name_cadastre": "ESPARREGUERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "76"
+  },
+  {
+   "ine_code": "08077",
+   "name_ine": "Esplugues de Llobregat",
+   "name_cadastre": "ESPLUGUES DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "77"
+  },
+  {
+   "ine_code": "08078",
+   "name_ine": "Espunyola, L'",
+   "name_cadastre": "L' ESPUNYOLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "78"
+  },
+  {
+   "ine_code": "08254",
+   "name_ine": "Esquirol, L'",
+   "name_cadastre": "ESQUIROL, L'",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "254"
+  },
+  {
+   "ine_code": "08079",
+   "name_ine": "Estany, L'",
+   "name_cadastre": "L' ESTANY",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "79"
+  },
+  {
+   "ine_code": "08134",
+   "name_ine": "Figaró-Montmany",
+   "name_cadastre": "FIGARO-MONTMANY",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "134"
+  },
+  {
+   "ine_code": "08081",
+   "name_ine": "Fogars de Montclús",
+   "name_cadastre": "FOGARS DE MONTCLUS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "81"
+  },
+  {
+   "ine_code": "08082",
+   "name_ine": "Fogars de la Selva",
+   "name_cadastre": "FOGARS DE LA SELVA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "82"
+  },
+  {
+   "ine_code": "08083",
+   "name_ine": "Folgueroles",
+   "name_cadastre": "FOLGUEROLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "83"
+  },
+  {
+   "ine_code": "08084",
+   "name_ine": "Fonollosa",
+   "name_cadastre": "FONOLLOSA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "84"
+  },
+  {
+   "ine_code": "08085",
+   "name_ine": "Font-rubí",
+   "name_cadastre": "FONT-RUBI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "85"
+  },
+  {
+   "ine_code": "08086",
+   "name_ine": "Franqueses del Vallès, Les",
+   "name_cadastre": "LES FRANQUESES DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "86"
+  },
+  {
+   "ine_code": "08080",
+   "name_ine": "Fígols",
+   "name_cadastre": "FIGOLS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "80"
+  },
+  {
+   "ine_code": "08090",
+   "name_ine": "Gaià",
+   "name_cadastre": "GAIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "90"
+  },
+  {
+   "ine_code": "08087",
+   "name_ine": "Gallifa",
+   "name_cadastre": "GALLIFA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "87"
+  },
+  {
+   "ine_code": "08088",
+   "name_ine": "Garriga, La",
+   "name_cadastre": "LA GARRIGA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "88"
+  },
+  {
+   "ine_code": "08089",
+   "name_ine": "Gavà",
+   "name_cadastre": "GAVA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "89"
+  },
+  {
+   "ine_code": "08091",
+   "name_ine": "Gelida",
+   "name_cadastre": "GELIDA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "91"
+  },
+  {
+   "ine_code": "08092",
+   "name_ine": "Gironella",
+   "name_cadastre": "GIRONELLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "92"
+  },
+  {
+   "ine_code": "08093",
+   "name_ine": "Gisclareny",
+   "name_cadastre": "GISCLARENY",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "93"
+  },
+  {
+   "ine_code": "08094",
+   "name_ine": "Granada, La",
+   "name_cadastre": "LA GRANADA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "94"
+  },
+  {
+   "ine_code": "08095",
+   "name_ine": "Granera",
+   "name_cadastre": "GRANERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "95"
+  },
+  {
+   "ine_code": "08096",
+   "name_ine": "Granollers",
+   "name_cadastre": "GRANOLLERS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "96"
+  },
+  {
+   "ine_code": "08097",
+   "name_ine": "Gualba",
+   "name_cadastre": "GUALBA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "97"
+  },
+  {
+   "ine_code": "08099",
+   "name_ine": "Guardiola de Berguedà",
+   "name_cadastre": "GUARDIOLA DE BERGUEDA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "99"
+  },
+  {
+   "ine_code": "08100",
+   "name_ine": "Gurb",
+   "name_cadastre": "GURB",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "100"
+  },
+  {
+   "ine_code": "08101",
+   "name_ine": "Hospitalet de Llobregat, L'",
+   "name_cadastre": "L'HOSPITALET DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "101"
+  },
+  {
+   "ine_code": "08162",
+   "name_ine": "Hostalets de Pierola, Els",
+   "name_cadastre": "ELS HOSTALETS DE PIEROLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "162"
+  },
+  {
+   "ine_code": "08102",
+   "name_ine": "Igualada",
+   "name_cadastre": "IGUALADA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "102"
+  },
+  {
+   "ine_code": "08103",
+   "name_ine": "Jorba",
+   "name_cadastre": "JORBA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "103"
+  },
+  {
+   "ine_code": "08104",
+   "name_ine": "Llacuna, La",
+   "name_cadastre": "LA LLACUNA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "104"
+  },
+  {
+   "ine_code": "08105",
+   "name_ine": "Llagosta, La",
+   "name_cadastre": "LA LLAGOSTA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "105"
+  },
+  {
+   "ine_code": "08106",
+   "name_ine": "Llinars del Vallès",
+   "name_cadastre": "LLINARS DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "106"
+  },
+  {
+   "ine_code": "08107",
+   "name_ine": "Lliçà d'Amunt",
+   "name_cadastre": "LLIÇA D'AMUNT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "107"
+  },
+  {
+   "ine_code": "08108",
+   "name_ine": "Lliçà de Vall",
+   "name_cadastre": "LLIÇA DE VALL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "108"
+  },
+  {
+   "ine_code": "08109",
+   "name_ine": "Lluçà",
+   "name_cadastre": "LLUÇA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "109"
+  },
+  {
+   "ine_code": "08110",
+   "name_ine": "Malgrat de Mar",
+   "name_cadastre": "MALGRAT DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "110"
+  },
+  {
+   "ine_code": "08111",
+   "name_ine": "Malla",
+   "name_cadastre": "MALLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "111"
+  },
+  {
+   "ine_code": "08112",
+   "name_ine": "Manlleu",
+   "name_cadastre": "MANLLEU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "112"
+  },
+  {
+   "ine_code": "08113",
+   "name_ine": "Manresa",
+   "name_cadastre": "MANRESA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "113"
+  },
+  {
+   "ine_code": "08242",
+   "name_ine": "Marganell",
+   "name_cadastre": "MARGANELL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "242"
+  },
+  {
+   "ine_code": "08114",
+   "name_ine": "Martorell",
+   "name_cadastre": "MARTORELL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "114"
+  },
+  {
+   "ine_code": "08115",
+   "name_ine": "Martorelles",
+   "name_cadastre": "MARTORELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "115"
+  },
+  {
+   "ine_code": "08116",
+   "name_ine": "Masies de Roda, Les",
+   "name_cadastre": "LES MASIES DE RODA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "116"
+  },
+  {
+   "ine_code": "08117",
+   "name_ine": "Masies de Voltregà, Les",
+   "name_cadastre": "LES MASIES DE VOLTREGA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "117"
+  },
+  {
+   "ine_code": "08118",
+   "name_ine": "Masnou, El",
+   "name_cadastre": "EL MASNOU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "118"
+  },
+  {
+   "ine_code": "08119",
+   "name_ine": "Masquefa",
+   "name_cadastre": "MASQUEFA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "119"
+  },
+  {
+   "ine_code": "08120",
+   "name_ine": "Matadepera",
+   "name_cadastre": "MATADEPERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "120"
+  },
+  {
+   "ine_code": "08121",
+   "name_ine": "Mataró",
+   "name_cadastre": "MATARO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "121"
+  },
+  {
+   "ine_code": "08122",
+   "name_ine": "Mediona",
+   "name_cadastre": "MEDIONA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "122"
+  },
+  {
+   "ine_code": "08138",
+   "name_ine": "Moià",
+   "name_cadastre": "MOIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "138"
+  },
+  {
+   "ine_code": "08123",
+   "name_ine": "Molins de Rei",
+   "name_cadastre": "MOLINS DE REI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "123"
+  },
+  {
+   "ine_code": "08124",
+   "name_ine": "Mollet del Vallès",
+   "name_cadastre": "MOLLET DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "124"
+  },
+  {
+   "ine_code": "08128",
+   "name_ine": "Monistrol de Calders",
+   "name_cadastre": "MONISTROL DE CALDERS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "128"
+  },
+  {
+   "ine_code": "08127",
+   "name_ine": "Monistrol de Montserrat",
+   "name_cadastre": "MONISTROL DE MONTSERRAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "127"
+  },
+  {
+   "ine_code": "08125",
+   "name_ine": "Montcada i Reixac",
+   "name_cadastre": "MONTCADA I REIXAC",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "125"
+  },
+  {
+   "ine_code": "08130",
+   "name_ine": "Montclar",
+   "name_cadastre": "MONTCLAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "130"
+  },
+  {
+   "ine_code": "08131",
+   "name_ine": "Montesquiu",
+   "name_cadastre": "MONTESQUIU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "131"
+  },
+  {
+   "ine_code": "08126",
+   "name_ine": "Montgat",
+   "name_cadastre": "MONTGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "126"
+  },
+  {
+   "ine_code": "08132",
+   "name_ine": "Montmajor",
+   "name_cadastre": "MONTMAJOR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "132"
+  },
+  {
+   "ine_code": "08133",
+   "name_ine": "Montmaneu",
+   "name_cadastre": "MONTMANEU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "133"
+  },
+  {
+   "ine_code": "08135",
+   "name_ine": "Montmeló",
+   "name_cadastre": "MONTMELO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "135"
+  },
+  {
+   "ine_code": "08136",
+   "name_ine": "Montornès del Vallès",
+   "name_cadastre": "MONTORNES DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "136"
+  },
+  {
+   "ine_code": "08137",
+   "name_ine": "Montseny",
+   "name_cadastre": "MONTSENY",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "137"
+  },
+  {
+   "ine_code": "08129",
+   "name_ine": "Muntanyola",
+   "name_cadastre": "MUNTANYOLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "129"
+  },
+  {
+   "ine_code": "08139",
+   "name_ine": "Mura",
+   "name_cadastre": "MURA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "139"
+  },
+  {
+   "ine_code": "08140",
+   "name_ine": "Navarcles",
+   "name_cadastre": "NAVARCLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "140"
+  },
+  {
+   "ine_code": "08141",
+   "name_ine": "Navàs",
+   "name_cadastre": "NAVAS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "141"
+  },
+  {
+   "ine_code": "08142",
+   "name_ine": "Nou de Berguedà, La",
+   "name_cadastre": "LA NOU DE BERGUEDA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "142"
+  },
+  {
+   "ine_code": "08146",
+   "name_ine": "Olesa de Bonesvalls",
+   "name_cadastre": "OLESA DE BONESVALLS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "146"
+  },
+  {
+   "ine_code": "08147",
+   "name_ine": "Olesa de Montserrat",
+   "name_cadastre": "OLESA DE MONTSERRAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "147"
+  },
+  {
+   "ine_code": "08148",
+   "name_ine": "Olivella",
+   "name_cadastre": "OLIVELLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "148"
+  },
+  {
+   "ine_code": "08149",
+   "name_ine": "Olost",
+   "name_cadastre": "OLOST",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "149"
+  },
+  {
+   "ine_code": "08144",
+   "name_ine": "Olvan",
+   "name_cadastre": "OLVAN",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "144"
+  },
+  {
+   "ine_code": "08145",
+   "name_ine": "Olèrdola",
+   "name_cadastre": "OLERDOLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "145"
+  },
+  {
+   "ine_code": "08151",
+   "name_ine": "Oristà",
+   "name_cadastre": "ORISTA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "151"
+  },
+  {
+   "ine_code": "08152",
+   "name_ine": "Orpí",
+   "name_cadastre": "ORPI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "152"
+  },
+  {
+   "ine_code": "08150",
+   "name_ine": "Orís",
+   "name_cadastre": "ORIS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "150"
+  },
+  {
+   "ine_code": "08154",
+   "name_ine": "Pacs del Penedès",
+   "name_cadastre": "PACS DEL PENEDES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "154"
+  },
+  {
+   "ine_code": "08155",
+   "name_ine": "Palafolls",
+   "name_cadastre": "PALAFOLLS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "155"
+  },
+  {
+   "ine_code": "08156",
+   "name_ine": "Palau-solità i Plegamans",
+   "name_cadastre": "PALAU-SOLITA I PLEGAMANS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "156"
+  },
+  {
+   "ine_code": "08157",
+   "name_ine": "Pallejà",
+   "name_cadastre": "PALLEJA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "157"
+  },
+  {
+   "ine_code": "08905",
+   "name_ine": "Palma de Cervelló, La",
+   "name_cadastre": "LA PALMA DE CERVELLO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "905"
+  },
+  {
+   "ine_code": "08158",
+   "name_ine": "Papiol, El",
+   "name_cadastre": "EL PAPIOL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "158"
+  },
+  {
+   "ine_code": "08159",
+   "name_ine": "Parets del Vallès",
+   "name_cadastre": "PARETS DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "159"
+  },
+  {
+   "ine_code": "08160",
+   "name_ine": "Perafita",
+   "name_cadastre": "PERAFITA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "160"
+  },
+  {
+   "ine_code": "08161",
+   "name_ine": "Piera",
+   "name_cadastre": "PIERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "161"
+  },
+  {
+   "ine_code": "08163",
+   "name_ine": "Pineda de Mar",
+   "name_cadastre": "PINEDA DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "163"
+  },
+  {
+   "ine_code": "08164",
+   "name_ine": "Pla del Penedès, El",
+   "name_cadastre": "EL PLA DEL PENEDES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "164"
+  },
+  {
+   "ine_code": "08165",
+   "name_ine": "Pobla de Claramunt, La",
+   "name_cadastre": "LA POBLA DE CLARAMUNT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "165"
+  },
+  {
+   "ine_code": "08166",
+   "name_ine": "Pobla de Lillet, La",
+   "name_cadastre": "LA POBLA DE LILLET",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "166"
+  },
+  {
+   "ine_code": "08167",
+   "name_ine": "Polinyà",
+   "name_cadastre": "POLINYA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "167"
+  },
+  {
+   "ine_code": "08182",
+   "name_ine": "Pont de Vilomara i Rocafort, El",
+   "name_cadastre": "EL PONT DE VILOMARA I ROCAFORT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "182"
+  },
+  {
+   "ine_code": "08168",
+   "name_ine": "Pontons",
+   "name_cadastre": "PONTONS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "168"
+  },
+  {
+   "ine_code": "08169",
+   "name_ine": "Prat de Llobregat, El",
+   "name_cadastre": "EL PRAT DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "169"
+  },
+  {
+   "ine_code": "08171",
+   "name_ine": "Prats de Lluçanès",
+   "name_cadastre": "PRATS DE LLUÇANES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "171"
+  },
+  {
+   "ine_code": "08170",
+   "name_ine": "Prats de Rei, Els",
+   "name_cadastre": "ELS PRATS DE REI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "170"
+  },
+  {
+   "ine_code": "08230",
+   "name_ine": "Premià de Dalt",
+   "name_cadastre": "PREMIA DE DALT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "230"
+  },
+  {
+   "ine_code": "08172",
+   "name_ine": "Premià de Mar",
+   "name_cadastre": "PREMIA DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "172"
+  },
+  {
+   "ine_code": "08175",
+   "name_ine": "Puig-reig",
+   "name_cadastre": "PUIG-REIG",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "175"
+  },
+  {
+   "ine_code": "08174",
+   "name_ine": "Puigdàlber",
+   "name_cadastre": "PUIGDALBER",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "174"
+  },
+  {
+   "ine_code": "08176",
+   "name_ine": "Pujalt",
+   "name_cadastre": "PUJALT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "176"
+  },
+  {
+   "ine_code": "08177",
+   "name_ine": "Quar, La",
+   "name_cadastre": "LA QUAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "177"
+  },
+  {
+   "ine_code": "08178",
+   "name_ine": "Rajadell",
+   "name_cadastre": "RAJADELL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "178"
+  },
+  {
+   "ine_code": "08179",
+   "name_ine": "Rellinars",
+   "name_cadastre": "RELLINARS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "179"
+  },
+  {
+   "ine_code": "08180",
+   "name_ine": "Ripollet",
+   "name_cadastre": "RIPOLLET",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "180"
+  },
+  {
+   "ine_code": "08181",
+   "name_ine": "Roca del Vallès, La",
+   "name_cadastre": "LA ROCA DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "181"
+  },
+  {
+   "ine_code": "08183",
+   "name_ine": "Roda de Ter",
+   "name_cadastre": "RODA DE TER",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "183"
+  },
+  {
+   "ine_code": "08185",
+   "name_ine": "Rubió",
+   "name_cadastre": "RUBIO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "185"
+  },
+  {
+   "ine_code": "08184",
+   "name_ine": "Rubí",
+   "name_cadastre": "RUBI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "184"
+  },
+  {
+   "ine_code": "08901",
+   "name_ine": "Rupit i Pruit",
+   "name_cadastre": "RUPIT I PRUIT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "901"
+  },
+  {
+   "ine_code": "08187",
+   "name_ine": "Sabadell",
+   "name_cadastre": "SABADELL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "187"
+  },
+  {
+   "ine_code": "08188",
+   "name_ine": "Sagàs",
+   "name_cadastre": "SAGAS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "188"
+  },
+  {
+   "ine_code": "08190",
+   "name_ine": "Saldes",
+   "name_cadastre": "SALDES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "190"
+  },
+  {
+   "ine_code": "08191",
+   "name_ine": "Sallent",
+   "name_cadastre": "SALLENT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "191"
+  },
+  {
+   "ine_code": "08194",
+   "name_ine": "Sant Adrià de Besòs",
+   "name_cadastre": "SANT ADRIA DE BESOS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "194"
+  },
+  {
+   "ine_code": "08195",
+   "name_ine": "Sant Agustí de Lluçanès",
+   "name_cadastre": "SANT AGUSTI DE LLUÇANES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "195"
+  },
+  {
+   "ine_code": "08197",
+   "name_ine": "Sant Andreu de Llavaneres",
+   "name_cadastre": "SANT ANDREU DE LLAVANERES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "197"
+  },
+  {
+   "ine_code": "08196",
+   "name_ine": "Sant Andreu de la Barca",
+   "name_cadastre": "SANT ANDREU DE LA BARCA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "196"
+  },
+  {
+   "ine_code": "08198",
+   "name_ine": "Sant Antoni de Vilamajor",
+   "name_cadastre": "SANT ANTONI DE VILAMAJOR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "198"
+  },
+  {
+   "ine_code": "08199",
+   "name_ine": "Sant Bartomeu del Grau",
+   "name_cadastre": "SANT BARTOMEU DEL GRAU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "199"
+  },
+  {
+   "ine_code": "08200",
+   "name_ine": "Sant Boi de Llobregat",
+   "name_cadastre": "SANT BOI DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "200"
+  },
+  {
+   "ine_code": "08201",
+   "name_ine": "Sant Boi de Lluçanès",
+   "name_cadastre": "SANT BOI DE LLUÇANES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "201"
+  },
+  {
+   "ine_code": "08203",
+   "name_ine": "Sant Cebrià de Vallalta",
+   "name_cadastre": "SANT CEBRIA DE VALLALTA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "203"
+  },
+  {
+   "ine_code": "08202",
+   "name_ine": "Sant Celoni",
+   "name_cadastre": "SANT CELONI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "202"
+  },
+  {
+   "ine_code": "08204",
+   "name_ine": "Sant Climent de Llobregat",
+   "name_cadastre": "SANT CLIMENT DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "204"
+  },
+  {
+   "ine_code": "08206",
+   "name_ine": "Sant Cugat Sesgarrigues",
+   "name_cadastre": "SANT CUGAT SESGARRIGUES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "206"
+  },
+  {
+   "ine_code": "08205",
+   "name_ine": "Sant Cugat del Vallès",
+   "name_cadastre": "SANT CUGAT DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "205"
+  },
+  {
+   "ine_code": "08208",
+   "name_ine": "Sant Esteve Sesrovires",
+   "name_cadastre": "SANT ESTEVE SESROVIRES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "208"
+  },
+  {
+   "ine_code": "08207",
+   "name_ine": "Sant Esteve de Palautordera",
+   "name_cadastre": "SANT ESTEVE DE PALAUTORDERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "207"
+  },
+  {
+   "ine_code": "08212",
+   "name_ine": "Sant Feliu Sasserra",
+   "name_cadastre": "SANT FELIU SASSERRA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "212"
+  },
+  {
+   "ine_code": "08210",
+   "name_ine": "Sant Feliu de Codines",
+   "name_cadastre": "SANT FELIU DE CODINES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "210"
+  },
+  {
+   "ine_code": "08211",
+   "name_ine": "Sant Feliu de Llobregat",
+   "name_cadastre": "SANT FELIU DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "211"
+  },
+  {
+   "ine_code": "08209",
+   "name_ine": "Sant Fost de Campsentelles",
+   "name_cadastre": "SANT FOST DE CAMPSENTELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "209"
+  },
+  {
+   "ine_code": "08213",
+   "name_ine": "Sant Fruitós de Bages",
+   "name_cadastre": "SANT FRUITOS DE BAGES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "213"
+  },
+  {
+   "ine_code": "08215",
+   "name_ine": "Sant Hipòlit de Voltregà",
+   "name_cadastre": "SANT HIPOLIT DE VOLTREGA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "215"
+  },
+  {
+   "ine_code": "08193",
+   "name_ine": "Sant Iscle de Vallalta",
+   "name_cadastre": "SANT ISCLE DE VALLALTA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "193"
+  },
+  {
+   "ine_code": "08216",
+   "name_ine": "Sant Jaume de Frontanyà",
+   "name_cadastre": "SANT JAUME DE FRONTANYA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "216"
+  },
+  {
+   "ine_code": "08217",
+   "name_ine": "Sant Joan Despí",
+   "name_cadastre": "SANT JOAN DESPI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "217"
+  },
+  {
+   "ine_code": "08218",
+   "name_ine": "Sant Joan de Vilatorrada",
+   "name_cadastre": "SANT JOAN DE VILATORRADA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "218"
+  },
+  {
+   "ine_code": "08903",
+   "name_ine": "Sant Julià de Cerdanyola",
+   "name_cadastre": "SANT JULIA DE CERDANYOLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "903"
+  },
+  {
+   "ine_code": "08220",
+   "name_ine": "Sant Julià de Vilatorta",
+   "name_cadastre": "SANT JULIA DE VILATORTA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "220"
+  },
+  {
+   "ine_code": "08221",
+   "name_ine": "Sant Just Desvern",
+   "name_cadastre": "SANT JUST DESVERN",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "221"
+  },
+  {
+   "ine_code": "08223",
+   "name_ine": "Sant Llorenç Savall",
+   "name_cadastre": "SANT LLORENÇ SAVALL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "223"
+  },
+  {
+   "ine_code": "08222",
+   "name_ine": "Sant Llorenç d'Hortons",
+   "name_cadastre": "SANT LLORENÇ D'HORTONS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "222"
+  },
+  {
+   "ine_code": "08227",
+   "name_ine": "Sant Martí Sarroca",
+   "name_cadastre": "SANT MARTI SARROCA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "227"
+  },
+  {
+   "ine_code": "08228",
+   "name_ine": "Sant Martí Sesgueioles",
+   "name_cadastre": "SANT MARTI SESGUEIOLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "228"
+  },
+  {
+   "ine_code": "08225",
+   "name_ine": "Sant Martí d'Albars",
+   "name_cadastre": "SANT MARTI D'ALBARS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "225"
+  },
+  {
+   "ine_code": "08224",
+   "name_ine": "Sant Martí de Centelles",
+   "name_cadastre": "SANT MARTI DE CENTELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "224"
+  },
+  {
+   "ine_code": "08226",
+   "name_ine": "Sant Martí de Tous",
+   "name_cadastre": "SANT MARTI DE TOUS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "226"
+  },
+  {
+   "ine_code": "08229",
+   "name_ine": "Sant Mateu de Bages",
+   "name_cadastre": "SANT MATEU DE BAGES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "229"
+  },
+  {
+   "ine_code": "08189",
+   "name_ine": "Sant Pere Sallavinera",
+   "name_cadastre": "SANT PERE SALLAVINERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "189"
+  },
+  {
+   "ine_code": "08231",
+   "name_ine": "Sant Pere de Ribes",
+   "name_cadastre": "SANT PERE DE RIBES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "231"
+  },
+  {
+   "ine_code": "08232",
+   "name_ine": "Sant Pere de Riudebitlles",
+   "name_cadastre": "SANT PERE DE RIUDEBITLLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "232"
+  },
+  {
+   "ine_code": "08233",
+   "name_ine": "Sant Pere de Torelló",
+   "name_cadastre": "SANT PERE DE TORELLO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "233"
+  },
+  {
+   "ine_code": "08234",
+   "name_ine": "Sant Pere de Vilamajor",
+   "name_cadastre": "SANT PERE DE VILAMAJOR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "234"
+  },
+  {
+   "ine_code": "08235",
+   "name_ine": "Sant Pol de Mar",
+   "name_cadastre": "SANT POL DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "235"
+  },
+  {
+   "ine_code": "08236",
+   "name_ine": "Sant Quintí de Mediona",
+   "name_cadastre": "SANT QUINTI DE MEDIONA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "236"
+  },
+  {
+   "ine_code": "08239",
+   "name_ine": "Sant Quirze Safaja",
+   "name_cadastre": "SANT QUIRZE SAFAJA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "239"
+  },
+  {
+   "ine_code": "08237",
+   "name_ine": "Sant Quirze de Besora",
+   "name_cadastre": "SANT QUIRZE DE BESORA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "237"
+  },
+  {
+   "ine_code": "08238",
+   "name_ine": "Sant Quirze del Vallès",
+   "name_cadastre": "SANT QUIRZE DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "238"
+  },
+  {
+   "ine_code": "08240",
+   "name_ine": "Sant Sadurní d'Anoia",
+   "name_cadastre": "SANT SADURNI D'ANOIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "240"
+  },
+  {
+   "ine_code": "08241",
+   "name_ine": "Sant Sadurní d'Osormort",
+   "name_cadastre": "SANT SADURNI D'OSORMORT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "241"
+  },
+  {
+   "ine_code": "08098",
+   "name_ine": "Sant Salvador de Guardiola",
+   "name_cadastre": "SANT SALVADOR DE GUARDIOLA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "98"
+  },
+  {
+   "ine_code": "08262",
+   "name_ine": "Sant Vicenç de Castellet",
+   "name_cadastre": "SANT VICENÇ DE CASTELLET",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "262"
+  },
+  {
+   "ine_code": "08264",
+   "name_ine": "Sant Vicenç de Montalt",
+   "name_cadastre": "SANT VICENÇ DE MONTALT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "264"
+  },
+  {
+   "ine_code": "08265",
+   "name_ine": "Sant Vicenç de Torelló",
+   "name_cadastre": "SANT VICENÇ DE TORELLO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "265"
+  },
+  {
+   "ine_code": "08263",
+   "name_ine": "Sant Vicenç dels Horts",
+   "name_cadastre": "SANT VICENÇ DELS HORTS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "263"
+  },
+  {
+   "ine_code": "08243",
+   "name_ine": "Santa Cecília de Voltregà",
+   "name_cadastre": "SANTA CECILIA DE VOLTREGA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "243"
+  },
+  {
+   "ine_code": "08244",
+   "name_ine": "Santa Coloma de Cervelló",
+   "name_cadastre": "SANTA COLOMA DE CERVELLO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "244"
+  },
+  {
+   "ine_code": "08245",
+   "name_ine": "Santa Coloma de Gramenet",
+   "name_cadastre": "SANTA COLOMA DE GRAMENET",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "245"
+  },
+  {
+   "ine_code": "08246",
+   "name_ine": "Santa Eugènia de Berga",
+   "name_cadastre": "SANTA EUGENIA DE BERGA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "246"
+  },
+  {
+   "ine_code": "08247",
+   "name_ine": "Santa Eulàlia de Riuprimer",
+   "name_cadastre": "SANTA EULALIA DE RIUPRIMER",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "247"
+  },
+  {
+   "ine_code": "08248",
+   "name_ine": "Santa Eulàlia de Ronçana",
+   "name_cadastre": "SANTA EULALIA DE RONÇANA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "248"
+  },
+  {
+   "ine_code": "08249",
+   "name_ine": "Santa Fe del Penedès",
+   "name_cadastre": "SANTA FE DEL PENEDES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "249"
+  },
+  {
+   "ine_code": "08250",
+   "name_ine": "Santa Margarida de Montbui",
+   "name_cadastre": "SANTA MARGARIDA DE MONTBUI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "250"
+  },
+  {
+   "ine_code": "08251",
+   "name_ine": "Santa Margarida i els Monjos",
+   "name_cadastre": "SANTA MARGARIDA I ELS MONJOS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "251"
+  },
+  {
+   "ine_code": "08258",
+   "name_ine": "Santa Maria d'Oló",
+   "name_cadastre": "SANTA MARIA D'OLO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "258"
+  },
+  {
+   "ine_code": "08253",
+   "name_ine": "Santa Maria de Besora",
+   "name_cadastre": "SANTA MARIA DE BESORA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "253"
+  },
+  {
+   "ine_code": "08256",
+   "name_ine": "Santa Maria de Martorelles",
+   "name_cadastre": "SANTA MARIA DE MARTORELLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "256"
+  },
+  {
+   "ine_code": "08255",
+   "name_ine": "Santa Maria de Merlès",
+   "name_cadastre": "SANTA MARIA DE MERLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "255"
+  },
+  {
+   "ine_code": "08257",
+   "name_ine": "Santa Maria de Miralles",
+   "name_cadastre": "SANTA MARIA DE MIRALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "257"
+  },
+  {
+   "ine_code": "08259",
+   "name_ine": "Santa Maria de Palautordera",
+   "name_cadastre": "SANTA MARIA DE PALAUTORDERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "259"
+  },
+  {
+   "ine_code": "08260",
+   "name_ine": "Santa Perpètua de Mogoda",
+   "name_cadastre": "SANTA PERPETUA DE MOGODA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "260"
+  },
+  {
+   "ine_code": "08261",
+   "name_ine": "Santa Susanna",
+   "name_cadastre": "SANTA SUSANNA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "261"
+  },
+  {
+   "ine_code": "08192",
+   "name_ine": "Santpedor",
+   "name_cadastre": "SANTPEDOR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "192"
+  },
+  {
+   "ine_code": "08267",
+   "name_ine": "Sentmenat",
+   "name_cadastre": "SENTMENAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "267"
+  },
+  {
+   "ine_code": "08269",
+   "name_ine": "Seva",
+   "name_cadastre": "SEVA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "269"
+  },
+  {
+   "ine_code": "08270",
+   "name_ine": "Sitges",
+   "name_cadastre": "SITGES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "270"
+  },
+  {
+   "ine_code": "08271",
+   "name_ine": "Sobremunt",
+   "name_cadastre": "SOBREMUNT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "271"
+  },
+  {
+   "ine_code": "08272",
+   "name_ine": "Sora",
+   "name_cadastre": "SORA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "272"
+  },
+  {
+   "ine_code": "08273",
+   "name_ine": "Subirats",
+   "name_cadastre": "SUBIRATS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "273"
+  },
+  {
+   "ine_code": "08274",
+   "name_ine": "Súria",
+   "name_cadastre": "SURIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "274"
+  },
+  {
+   "ine_code": "08276",
+   "name_ine": "Tagamanent",
+   "name_cadastre": "TAGAMANENT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "276"
+  },
+  {
+   "ine_code": "08277",
+   "name_ine": "Talamanca",
+   "name_cadastre": "TALAMANCA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "277"
+  },
+  {
+   "ine_code": "08278",
+   "name_ine": "Taradell",
+   "name_cadastre": "TARADELL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "278"
+  },
+  {
+   "ine_code": "08280",
+   "name_ine": "Tavertet",
+   "name_cadastre": "TAVERTET",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "280"
+  },
+  {
+   "ine_code": "08275",
+   "name_ine": "Tavèrnoles",
+   "name_cadastre": "TAVERNOLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "275"
+  },
+  {
+   "ine_code": "08281",
+   "name_ine": "Teià",
+   "name_cadastre": "TEIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "281"
+  },
+  {
+   "ine_code": "08279",
+   "name_ine": "Terrassa",
+   "name_cadastre": "TERRASSA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "279"
+  },
+  {
+   "ine_code": "08282",
+   "name_ine": "Tiana",
+   "name_cadastre": "TIANA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "282"
+  },
+  {
+   "ine_code": "08283",
+   "name_ine": "Tona",
+   "name_cadastre": "TONA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "283"
+  },
+  {
+   "ine_code": "08284",
+   "name_ine": "Tordera",
+   "name_cadastre": "TORDERA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "284"
+  },
+  {
+   "ine_code": "08285",
+   "name_ine": "Torelló",
+   "name_cadastre": "TORELLO",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "285"
+  },
+  {
+   "ine_code": "08286",
+   "name_ine": "Torre de Claramunt, La",
+   "name_cadastre": "LA TORRE DE CLARAMUNT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "286"
+  },
+  {
+   "ine_code": "08287",
+   "name_ine": "Torrelavit",
+   "name_cadastre": "TORRELAVIT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "287"
+  },
+  {
+   "ine_code": "08288",
+   "name_ine": "Torrelles de Foix",
+   "name_cadastre": "TORRELLES DE FOIX",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "288"
+  },
+  {
+   "ine_code": "08289",
+   "name_ine": "Torrelles de Llobregat",
+   "name_cadastre": "TORRELLES DE LLOBREGAT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "289"
+  },
+  {
+   "ine_code": "08290",
+   "name_ine": "Ullastrell",
+   "name_cadastre": "ULLASTRELL",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "290"
+  },
+  {
+   "ine_code": "08291",
+   "name_ine": "Vacarisses",
+   "name_cadastre": "VACARISSES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "291"
+  },
+  {
+   "ine_code": "08292",
+   "name_ine": "Vallbona d'Anoia",
+   "name_cadastre": "VALLBONA D'ANOIA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "292"
+  },
+  {
+   "ine_code": "08293",
+   "name_ine": "Vallcebre",
+   "name_cadastre": "VALLCEBRE",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "293"
+  },
+  {
+   "ine_code": "08294",
+   "name_ine": "Vallgorguina",
+   "name_cadastre": "VALLGORGUINA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "294"
+  },
+  {
+   "ine_code": "08295",
+   "name_ine": "Vallirana",
+   "name_cadastre": "VALLIRANA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "295"
+  },
+  {
+   "ine_code": "08296",
+   "name_ine": "Vallromanes",
+   "name_cadastre": "VALLROMANES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "296"
+  },
+  {
+   "ine_code": "08297",
+   "name_ine": "Veciana",
+   "name_cadastre": "VECIANA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "297"
+  },
+  {
+   "ine_code": "08298",
+   "name_ine": "Vic",
+   "name_cadastre": "VIC",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "298"
+  },
+  {
+   "ine_code": "08299",
+   "name_ine": "Vilada",
+   "name_cadastre": "VILADA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "299"
+  },
+  {
+   "ine_code": "08301",
+   "name_ine": "Viladecans",
+   "name_cadastre": "VILADECANS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "301"
+  },
+  {
+   "ine_code": "08300",
+   "name_ine": "Viladecavalls",
+   "name_cadastre": "VILADECAVALLS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "300"
+  },
+  {
+   "ine_code": "08305",
+   "name_ine": "Vilafranca del Penedès",
+   "name_cadastre": "VILAFRANCA DEL PENEDES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "305"
+  },
+  {
+   "ine_code": "08306",
+   "name_ine": "Vilalba Sasserra",
+   "name_cadastre": "VILALBA SASSERRA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "306"
+  },
+  {
+   "ine_code": "08303",
+   "name_ine": "Vilanova de Sau",
+   "name_cadastre": "VILANOVA DE SAU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "303"
+  },
+  {
+   "ine_code": "08302",
+   "name_ine": "Vilanova del Camí",
+   "name_cadastre": "VILANOVA DEL CAMI",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "302"
+  },
+  {
+   "ine_code": "08902",
+   "name_ine": "Vilanova del Vallès",
+   "name_cadastre": "VILANOVA DEL VALLES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "902"
+  },
+  {
+   "ine_code": "08307",
+   "name_ine": "Vilanova i la Geltrú",
+   "name_cadastre": "VILANOVA I LA GELTRU",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "307"
+  },
+  {
+   "ine_code": "08214",
+   "name_ine": "Vilassar de Dalt",
+   "name_cadastre": "VILASSAR DE DALT",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "214"
+  },
+  {
+   "ine_code": "08219",
+   "name_ine": "Vilassar de Mar",
+   "name_cadastre": "VILASSAR DE MAR",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "219"
+  },
+  {
+   "ine_code": "08304",
+   "name_ine": "Vilobí del Penedès",
+   "name_cadastre": "VILOBI DEL PENEDES",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "304"
+  },
+  {
+   "ine_code": "08308",
+   "name_ine": "Viver i Serrateix",
+   "name_cadastre": "VIVER I SERRATEIX",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "308"
+  },
+  {
+   "ine_code": "08143",
+   "name_ine": "Òdena",
+   "name_cadastre": "ODENA",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "143"
+  },
+  {
+   "ine_code": "08153",
+   "name_ine": "Òrrius",
+   "name_cadastre": "ORRIUS",
+   "province": "Barcelona",
+   "province_cadastre": "BARCELONA",
+   "cp": "8",
+   "cm": "153"
+  },
+  {
+   "ine_code": "17001",
+   "name_ine": "Agullana",
+   "name_cadastre": "AGULLANA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "1"
+  },
+  {
+   "ine_code": "17002",
+   "name_ine": "Aiguaviva",
+   "name_cadastre": "AIGUAVIVA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "2"
+  },
+  {
+   "ine_code": "17003",
+   "name_ine": "Albanyà",
+   "name_cadastre": "ALBANYA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "3"
+  },
+  {
+   "ine_code": "17004",
+   "name_ine": "Albons",
+   "name_cadastre": "ALBONS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "4"
+  },
+  {
+   "ine_code": "17006",
+   "name_ine": "Alp",
+   "name_cadastre": "ALP",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "6"
+  },
+  {
+   "ine_code": "17007",
+   "name_ine": "Amer",
+   "name_cadastre": "AMER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "7"
+  },
+  {
+   "ine_code": "17008",
+   "name_ine": "Anglès",
+   "name_cadastre": "ANGLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "8"
+  },
+  {
+   "ine_code": "17009",
+   "name_ine": "Arbúcies",
+   "name_cadastre": "ARBUCIES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "9"
+  },
+  {
+   "ine_code": "17010",
+   "name_ine": "Argelaguer",
+   "name_cadastre": "ARGELAGUER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "10"
+  },
+  {
+   "ine_code": "17011",
+   "name_ine": "Armentera, L'",
+   "name_cadastre": "L'ARMENTERA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "11"
+  },
+  {
+   "ine_code": "17012",
+   "name_ine": "Avinyonet de Puigventós",
+   "name_cadastre": "AVINYONET DE PUIGVENTOS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "12"
+  },
+  {
+   "ine_code": "17015",
+   "name_ine": "Banyoles",
+   "name_cadastre": "BANYOLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "15"
+  },
+  {
+   "ine_code": "17013",
+   "name_ine": "Begur",
+   "name_cadastre": "BEGUR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "13"
+  },
+  {
+   "ine_code": "17018",
+   "name_ine": "Bellcaire d'Empordà",
+   "name_cadastre": "BELLCAIRE D'EMPORDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "18"
+  },
+  {
+   "ine_code": "17019",
+   "name_ine": "Besalú",
+   "name_cadastre": "BESALU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "19"
+  },
+  {
+   "ine_code": "17020",
+   "name_ine": "Bescanó",
+   "name_cadastre": "BESCANO",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "20"
+  },
+  {
+   "ine_code": "17021",
+   "name_ine": "Beuda",
+   "name_cadastre": "BEUDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "21"
+  },
+  {
+   "ine_code": "17022",
+   "name_ine": "Bisbal d'Empordà, La",
+   "name_cadastre": "LA BISBAL D'EMPORDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "22"
+  },
+  {
+   "ine_code": "17234",
+   "name_ine": "Biure",
+   "name_cadastre": "BIURE",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "234"
+  },
+  {
+   "ine_code": "17023",
+   "name_ine": "Blanes",
+   "name_cadastre": "BLANES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "23"
+  },
+  {
+   "ine_code": "17029",
+   "name_ine": "Boadella i les Escaules",
+   "name_cadastre": "BOADELLA I LES ESCAULES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "29"
+  },
+  {
+   "ine_code": "17024",
+   "name_ine": "Bolvir",
+   "name_cadastre": "BOLVIR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "24"
+  },
+  {
+   "ine_code": "17025",
+   "name_ine": "Bordils",
+   "name_cadastre": "BORDILS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "25"
+  },
+  {
+   "ine_code": "17026",
+   "name_ine": "Borrassà",
+   "name_cadastre": "BORRASSA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "26"
+  },
+  {
+   "ine_code": "17027",
+   "name_ine": "Breda",
+   "name_cadastre": "BREDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "27"
+  },
+  {
+   "ine_code": "17028",
+   "name_ine": "Brunyola i Sant Martí Sapresa",
+   "name_cadastre": "BRUNYOLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "28"
+  },
+  {
+   "ine_code": "17016",
+   "name_ine": "Bàscara",
+   "name_cadastre": "BASCARA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "16"
+  },
+  {
+   "ine_code": "17031",
+   "name_ine": "Cabanelles",
+   "name_cadastre": "CABANELLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "31"
+  },
+  {
+   "ine_code": "17030",
+   "name_ine": "Cabanes",
+   "name_cadastre": "CABANES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "30"
+  },
+  {
+   "ine_code": "17032",
+   "name_ine": "Cadaqués",
+   "name_cadastre": "CADAQUES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "32"
+  },
+  {
+   "ine_code": "17033",
+   "name_ine": "Caldes de Malavella",
+   "name_cadastre": "CALDES DE MALAVELLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "33"
+  },
+  {
+   "ine_code": "17034",
+   "name_ine": "Calonge i Sant Antoni",
+   "name_cadastre": "CALONGE I SANT ANTONI",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "34"
+  },
+  {
+   "ine_code": "17036",
+   "name_ine": "Campdevànol",
+   "name_cadastre": "CAMPDEVANOL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "36"
+  },
+  {
+   "ine_code": "17037",
+   "name_ine": "Campelles",
+   "name_cadastre": "CAMPELLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "37"
+  },
+  {
+   "ine_code": "17038",
+   "name_ine": "Campllong",
+   "name_cadastre": "CAMPLLONG",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "38"
+  },
+  {
+   "ine_code": "17039",
+   "name_ine": "Camprodon",
+   "name_cadastre": "CAMPRODON",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "39"
+  },
+  {
+   "ine_code": "17035",
+   "name_ine": "Camós",
+   "name_cadastre": "CAMOS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "35"
+  },
+  {
+   "ine_code": "17040",
+   "name_ine": "Canet d'Adri",
+   "name_cadastre": "CANET D'ADRI",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "40"
+  },
+  {
+   "ine_code": "17041",
+   "name_ine": "Cantallops",
+   "name_cadastre": "CANTALLOPS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "41"
+  },
+  {
+   "ine_code": "17042",
+   "name_ine": "Capmany",
+   "name_cadastre": "CAPMANY",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "42"
+  },
+  {
+   "ine_code": "17044",
+   "name_ine": "Cassà de la Selva",
+   "name_cadastre": "CASSA DE LA SELVA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "44"
+  },
+  {
+   "ine_code": "17048",
+   "name_ine": "Castell d'Aro, Platja d'Aro i s'Agaró",
+   "name_cadastre": "CASTELL-PLATJA D'ARO I S'AGARO",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "48"
+  },
+  {
+   "ine_code": "17046",
+   "name_ine": "Castellfollit de la Roca",
+   "name_cadastre": "CASTELLFOLLIT DE LA ROCA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "46"
+  },
+  {
+   "ine_code": "17047",
+   "name_ine": "Castelló d'Empúries",
+   "name_cadastre": "CASTELLO D'EMPURIES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "47"
+  },
+  {
+   "ine_code": "17189",
+   "name_ine": "Cellera de Ter, La",
+   "name_cadastre": "LA CELLERA DE TER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "189"
+  },
+  {
+   "ine_code": "17049",
+   "name_ine": "Celrà",
+   "name_cadastre": "CELRA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "49"
+  },
+  {
+   "ine_code": "17050",
+   "name_ine": "Cervià de Ter",
+   "name_cadastre": "CERVIA DE TER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "50"
+  },
+  {
+   "ine_code": "17051",
+   "name_ine": "Cistella",
+   "name_cadastre": "CISTELLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "51"
+  },
+  {
+   "ine_code": "17054",
+   "name_ine": "Colera",
+   "name_cadastre": "COLERA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "54"
+  },
+  {
+   "ine_code": "17055",
+   "name_ine": "Colomers",
+   "name_cadastre": "COLOMERS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "55"
+  },
+  {
+   "ine_code": "17056",
+   "name_ine": "Cornellà del Terri",
+   "name_cadastre": "CORNELLA DEL TERRI",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "56"
+  },
+  {
+   "ine_code": "17057",
+   "name_ine": "Corçà",
+   "name_cadastre": "CORÇA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "57"
+  },
+  {
+   "ine_code": "17058",
+   "name_ine": "Crespià",
+   "name_cadastre": "CRESPIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "58"
+  },
+  {
+   "ine_code": "17901",
+   "name_ine": "Cruïlles, Monells i Sant Sadurní de l'Heura",
+   "name_cadastre": "CRUILLES - MONELLS - ST SAD.",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "901"
+  },
+  {
+   "ine_code": "17060",
+   "name_ine": "Darnius",
+   "name_cadastre": "DARNIUS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "60"
+  },
+  {
+   "ine_code": "17061",
+   "name_ine": "Das",
+   "name_cadastre": "DAS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "61"
+  },
+  {
+   "ine_code": "17062",
+   "name_ine": "Escala, L'",
+   "name_cadastre": "L'ESCALA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "62"
+  },
+  {
+   "ine_code": "17063",
+   "name_ine": "Espinelves",
+   "name_cadastre": "ESPINELVES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "63"
+  },
+  {
+   "ine_code": "17064",
+   "name_ine": "Espolla",
+   "name_cadastre": "ESPOLLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "64"
+  },
+  {
+   "ine_code": "17065",
+   "name_ine": "Esponellà",
+   "name_cadastre": "ESPONELLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "65"
+  },
+  {
+   "ine_code": "17005",
+   "name_ine": "Far d'Empordà, El",
+   "name_cadastre": "EL FAR D'EMPORDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "5"
+  },
+  {
+   "ine_code": "17066",
+   "name_ine": "Figueres",
+   "name_cadastre": "FIGUERES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "66"
+  },
+  {
+   "ine_code": "17067",
+   "name_ine": "Flaçà",
+   "name_cadastre": "FLAÇA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "67"
+  },
+  {
+   "ine_code": "17068",
+   "name_ine": "Foixà",
+   "name_cadastre": "FOIXA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "68"
+  },
+  {
+   "ine_code": "17069",
+   "name_ine": "Fontanals de Cerdanya",
+   "name_cadastre": "FONTANALS DE CERDANYA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "69"
+  },
+  {
+   "ine_code": "17070",
+   "name_ine": "Fontanilles",
+   "name_cadastre": "FONTANILLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "70"
+  },
+  {
+   "ine_code": "17071",
+   "name_ine": "Fontcoberta",
+   "name_cadastre": "FONTCOBERTA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "71"
+  },
+  {
+   "ine_code": "17902",
+   "name_ine": "Forallac",
+   "name_cadastre": "FORALLAC",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "902"
+  },
+  {
+   "ine_code": "17073",
+   "name_ine": "Fornells de la Selva",
+   "name_cadastre": "FORNELLS DE LA SELVA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "73"
+  },
+  {
+   "ine_code": "17074",
+   "name_ine": "Fortià",
+   "name_cadastre": "FORTIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "74"
+  },
+  {
+   "ine_code": "17076",
+   "name_ine": "Garrigoles",
+   "name_cadastre": "GARRIGOLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "76"
+  },
+  {
+   "ine_code": "17077",
+   "name_ine": "Garriguella",
+   "name_cadastre": "GARRIGUELLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "77"
+  },
+  {
+   "ine_code": "17075",
+   "name_ine": "Garrigàs",
+   "name_cadastre": "GARRIGAS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "75"
+  },
+  {
+   "ine_code": "17078",
+   "name_ine": "Ger",
+   "name_cadastre": "GER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "78"
+  },
+  {
+   "ine_code": "17079",
+   "name_ine": "Girona",
+   "name_cadastre": "GIRONA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "79"
+  },
+  {
+   "ine_code": "17080",
+   "name_ine": "Gombrèn",
+   "name_cadastre": "GOMBREN",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "80"
+  },
+  {
+   "ine_code": "17081",
+   "name_ine": "Gualta",
+   "name_cadastre": "GUALTA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "81"
+  },
+  {
+   "ine_code": "17082",
+   "name_ine": "Guils de Cerdanya",
+   "name_cadastre": "GUILS DE CERDANYA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "82"
+  },
+  {
+   "ine_code": "17083",
+   "name_ine": "Hostalric",
+   "name_cadastre": "HOSTALRIC",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "83"
+  },
+  {
+   "ine_code": "17084",
+   "name_ine": "Isòvol",
+   "name_cadastre": "ISOVOL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "84"
+  },
+  {
+   "ine_code": "17085",
+   "name_ine": "Jafre",
+   "name_cadastre": "JAFRE",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "85"
+  },
+  {
+   "ine_code": "17086",
+   "name_ine": "Jonquera, La",
+   "name_cadastre": "LA JONQUERA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "86"
+  },
+  {
+   "ine_code": "17087",
+   "name_ine": "Juià",
+   "name_cadastre": "JUIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "87"
+  },
+  {
+   "ine_code": "17088",
+   "name_ine": "Lladó",
+   "name_cadastre": "LLADO",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "88"
+  },
+  {
+   "ine_code": "17089",
+   "name_ine": "Llagostera",
+   "name_cadastre": "LLAGOSTERA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "89"
+  },
+  {
+   "ine_code": "17090",
+   "name_ine": "Llambilles",
+   "name_cadastre": "LLAMBILLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "90"
+  },
+  {
+   "ine_code": "17091",
+   "name_ine": "Llanars",
+   "name_cadastre": "LLANARS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "91"
+  },
+  {
+   "ine_code": "17092",
+   "name_ine": "Llançà",
+   "name_cadastre": "LLANÇA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "92"
+  },
+  {
+   "ine_code": "17093",
+   "name_ine": "Llers",
+   "name_cadastre": "LLERS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "93"
+  },
+  {
+   "ine_code": "17095",
+   "name_ine": "Lloret de Mar",
+   "name_cadastre": "LLORET DE MAR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "95"
+  },
+  {
+   "ine_code": "17096",
+   "name_ine": "Llosses, Les",
+   "name_cadastre": "LES LLOSSES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "96"
+  },
+  {
+   "ine_code": "17094",
+   "name_ine": "Llívia",
+   "name_cadastre": "LLIVIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "94"
+  },
+  {
+   "ine_code": "17097",
+   "name_ine": "Madremanya",
+   "name_cadastre": "MADREMANYA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "97"
+  },
+  {
+   "ine_code": "17098",
+   "name_ine": "Maià de Montcal",
+   "name_cadastre": "MAIA DE MONTCAL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "98"
+  },
+  {
+   "ine_code": "17100",
+   "name_ine": "Masarac",
+   "name_cadastre": "MASARAC",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "100"
+  },
+  {
+   "ine_code": "17101",
+   "name_ine": "Massanes",
+   "name_cadastre": "MASSANES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "101"
+  },
+  {
+   "ine_code": "17102",
+   "name_ine": "Maçanet de Cabrenys",
+   "name_cadastre": "MAÇANET DE CABRENYS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "102"
+  },
+  {
+   "ine_code": "17103",
+   "name_ine": "Maçanet de la Selva",
+   "name_cadastre": "MAÇANET DE LA SELVA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "103"
+  },
+  {
+   "ine_code": "17099",
+   "name_ine": "Meranges",
+   "name_cadastre": "MERANGES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "99"
+  },
+  {
+   "ine_code": "17105",
+   "name_ine": "Mieres",
+   "name_cadastre": "MIERES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "105"
+  },
+  {
+   "ine_code": "17106",
+   "name_ine": "Mollet de Peralada",
+   "name_cadastre": "MOLLET DE PERALADA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "106"
+  },
+  {
+   "ine_code": "17107",
+   "name_ine": "Molló",
+   "name_cadastre": "MOLLO",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "107"
+  },
+  {
+   "ine_code": "17110",
+   "name_ine": "Mont-ras",
+   "name_cadastre": "MONT-RAS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "110"
+  },
+  {
+   "ine_code": "17109",
+   "name_ine": "Montagut i Oix",
+   "name_cadastre": "MONTAGUT I OIX",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "109"
+  },
+  {
+   "ine_code": "17111",
+   "name_ine": "Navata",
+   "name_cadastre": "NAVATA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "111"
+  },
+  {
+   "ine_code": "17112",
+   "name_ine": "Ogassa",
+   "name_cadastre": "OGASSA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "112"
+  },
+  {
+   "ine_code": "17114",
+   "name_ine": "Olot",
+   "name_cadastre": "OLOT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "114"
+  },
+  {
+   "ine_code": "17115",
+   "name_ine": "Ordis",
+   "name_cadastre": "ORDIS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "115"
+  },
+  {
+   "ine_code": "17116",
+   "name_ine": "Osor",
+   "name_cadastre": "OSOR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "116"
+  },
+  {
+   "ine_code": "17117",
+   "name_ine": "Palafrugell",
+   "name_cadastre": "PALAFRUGELL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "117"
+  },
+  {
+   "ine_code": "17118",
+   "name_ine": "Palamós",
+   "name_cadastre": "PALAMOS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "118"
+  },
+  {
+   "ine_code": "17119",
+   "name_ine": "Palau de Santa Eulàlia",
+   "name_cadastre": "PALAU DE SANTA EULALIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "119"
+  },
+  {
+   "ine_code": "17121",
+   "name_ine": "Palau-sator",
+   "name_cadastre": "PALAU-SATOR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "121"
+  },
+  {
+   "ine_code": "17120",
+   "name_ine": "Palau-saverdera",
+   "name_cadastre": "PALAU-SAVERDERA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "120"
+  },
+  {
+   "ine_code": "17123",
+   "name_ine": "Palol de Revardit",
+   "name_cadastre": "PALOL DE REVARDIT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "123"
+  },
+  {
+   "ine_code": "17124",
+   "name_ine": "Pals",
+   "name_cadastre": "PALS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "124"
+  },
+  {
+   "ine_code": "17125",
+   "name_ine": "Pardines",
+   "name_cadastre": "PARDINES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "125"
+  },
+  {
+   "ine_code": "17126",
+   "name_ine": "Parlavà",
+   "name_cadastre": "PARLAVA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "126"
+  },
+  {
+   "ine_code": "17128",
+   "name_ine": "Pau",
+   "name_cadastre": "PAU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "128"
+  },
+  {
+   "ine_code": "17129",
+   "name_ine": "Pedret i Marzà",
+   "name_cadastre": "PEDRET I MARZA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "129"
+  },
+  {
+   "ine_code": "17130",
+   "name_ine": "Pera, La",
+   "name_cadastre": "LA PERA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "130"
+  },
+  {
+   "ine_code": "17132",
+   "name_ine": "Peralada",
+   "name_cadastre": "PERALADA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "132"
+  },
+  {
+   "ine_code": "17133",
+   "name_ine": "Planes d'Hostoles, Les",
+   "name_cadastre": "LES PLANES D'HOSTOLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "133"
+  },
+  {
+   "ine_code": "17134",
+   "name_ine": "Planoles",
+   "name_cadastre": "PLANOLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "134"
+  },
+  {
+   "ine_code": "17135",
+   "name_ine": "Pont de Molins",
+   "name_cadastre": "PONT DE MOLINS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "135"
+  },
+  {
+   "ine_code": "17136",
+   "name_ine": "Pontós",
+   "name_cadastre": "PONTOS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "136"
+  },
+  {
+   "ine_code": "17137",
+   "name_ine": "Porqueres",
+   "name_cadastre": "PORQUERES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "137"
+  },
+  {
+   "ine_code": "17140",
+   "name_ine": "Port de la Selva, El",
+   "name_cadastre": "EL PORT DE LA SELVA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "140"
+  },
+  {
+   "ine_code": "17138",
+   "name_ine": "Portbou",
+   "name_cadastre": "PORTBOU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "138"
+  },
+  {
+   "ine_code": "17139",
+   "name_ine": "Preses, Les",
+   "name_cadastre": "LES PRESES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "139"
+  },
+  {
+   "ine_code": "17141",
+   "name_ine": "Puigcerdà",
+   "name_cadastre": "PUIGCERDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "141"
+  },
+  {
+   "ine_code": "17142",
+   "name_ine": "Quart",
+   "name_cadastre": "QUART",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "142"
+  },
+  {
+   "ine_code": "17043",
+   "name_ine": "Queralbs",
+   "name_cadastre": "QUERALBS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "43"
+  },
+  {
+   "ine_code": "17143",
+   "name_ine": "Rabós",
+   "name_cadastre": "RABOS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "143"
+  },
+  {
+   "ine_code": "17144",
+   "name_ine": "Regencós",
+   "name_cadastre": "REGENCOS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "144"
+  },
+  {
+   "ine_code": "17145",
+   "name_ine": "Ribes de Freser",
+   "name_cadastre": "RIBES DE FRESER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "145"
+  },
+  {
+   "ine_code": "17146",
+   "name_ine": "Riells i Viabrea",
+   "name_cadastre": "RIELLS I VIABREA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "146"
+  },
+  {
+   "ine_code": "17147",
+   "name_ine": "Ripoll",
+   "name_cadastre": "RIPOLL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "147"
+  },
+  {
+   "ine_code": "17148",
+   "name_ine": "Riudarenes",
+   "name_cadastre": "RIUDARENES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "148"
+  },
+  {
+   "ine_code": "17149",
+   "name_ine": "Riudaura",
+   "name_cadastre": "RIUDAURA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "149"
+  },
+  {
+   "ine_code": "17150",
+   "name_ine": "Riudellots de la Selva",
+   "name_cadastre": "RIUDELLOTS DE LA SELVA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "150"
+  },
+  {
+   "ine_code": "17151",
+   "name_ine": "Riumors",
+   "name_cadastre": "RIUMORS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "151"
+  },
+  {
+   "ine_code": "17152",
+   "name_ine": "Roses",
+   "name_cadastre": "ROSES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "152"
+  },
+  {
+   "ine_code": "17153",
+   "name_ine": "Rupià",
+   "name_cadastre": "RUPIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "153"
+  },
+  {
+   "ine_code": "17154",
+   "name_ine": "Sales de Llierca",
+   "name_cadastre": "SALES DE LLIERCA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "154"
+  },
+  {
+   "ine_code": "17155",
+   "name_ine": "Salt",
+   "name_cadastre": "SALT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "155"
+  },
+  {
+   "ine_code": "17157",
+   "name_ine": "Sant Andreu Salou",
+   "name_cadastre": "SANT ANDREU SALOU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "157"
+  },
+  {
+   "ine_code": "17183",
+   "name_ine": "Sant Aniol de Finestres",
+   "name_cadastre": "SANT ANIOL DE FINESTRES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "183"
+  },
+  {
+   "ine_code": "17158",
+   "name_ine": "Sant Climent Sescebes",
+   "name_cadastre": "SANT CLIMENT SESCEBES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "158"
+  },
+  {
+   "ine_code": "17159",
+   "name_ine": "Sant Feliu de Buixalleu",
+   "name_cadastre": "SANT FELIU DE BUIXALLEU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "159"
+  },
+  {
+   "ine_code": "17160",
+   "name_ine": "Sant Feliu de Guíxols",
+   "name_cadastre": "SANT FELIU DE GUIXOLS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "160"
+  },
+  {
+   "ine_code": "17161",
+   "name_ine": "Sant Feliu de Pallerols",
+   "name_cadastre": "SANT FELIU DE PALLEROLS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "161"
+  },
+  {
+   "ine_code": "17162",
+   "name_ine": "Sant Ferriol",
+   "name_cadastre": "SANT FERRIOL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "162"
+  },
+  {
+   "ine_code": "17163",
+   "name_ine": "Sant Gregori",
+   "name_cadastre": "SANT GREGORI",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "163"
+  },
+  {
+   "ine_code": "17164",
+   "name_ine": "Sant Hilari Sacalm",
+   "name_cadastre": "SANT HILARI SACALM",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "164"
+  },
+  {
+   "ine_code": "17165",
+   "name_ine": "Sant Jaume de Llierca",
+   "name_cadastre": "SANT JAUME DE LLIERCA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "165"
+  },
+  {
+   "ine_code": "17168",
+   "name_ine": "Sant Joan de Mollet",
+   "name_cadastre": "SANT JOAN DE MOLLET",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "168"
+  },
+  {
+   "ine_code": "17167",
+   "name_ine": "Sant Joan de les Abadesses",
+   "name_cadastre": "SANT JOAN DE LES ABADESSES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "167"
+  },
+  {
+   "ine_code": "17185",
+   "name_ine": "Sant Joan les Fonts",
+   "name_cadastre": "SANT JOAN LES FONTS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "185"
+  },
+  {
+   "ine_code": "17166",
+   "name_ine": "Sant Jordi Desvalls",
+   "name_cadastre": "SANT JORDI DESVALLS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "166"
+  },
+  {
+   "ine_code": "17169",
+   "name_ine": "Sant Julià de Ramis",
+   "name_cadastre": "SANT JULIA DE RAMIS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "169"
+  },
+  {
+   "ine_code": "17903",
+   "name_ine": "Sant Julià del Llor i Bonmatí",
+   "name_cadastre": "SANT JULIA DEL LLOR I BONMATI",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "903"
+  },
+  {
+   "ine_code": "17171",
+   "name_ine": "Sant Llorenç de la Muga",
+   "name_cadastre": "SANT LLORENÇ DE LA MUGA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "171"
+  },
+  {
+   "ine_code": "17173",
+   "name_ine": "Sant Martí Vell",
+   "name_cadastre": "SANT MARTI VELL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "173"
+  },
+  {
+   "ine_code": "17172",
+   "name_ine": "Sant Martí de Llémena",
+   "name_cadastre": "SANT MARTI DE LLEMENA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "172"
+  },
+  {
+   "ine_code": "17174",
+   "name_ine": "Sant Miquel de Campmajor",
+   "name_cadastre": "SANT MIQUEL DE CAMPMAJOR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "174"
+  },
+  {
+   "ine_code": "17175",
+   "name_ine": "Sant Miquel de Fluvià",
+   "name_cadastre": "SANT MIQUEL DE FLUVIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "175"
+  },
+  {
+   "ine_code": "17176",
+   "name_ine": "Sant Mori",
+   "name_cadastre": "SANT MORI",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "176"
+  },
+  {
+   "ine_code": "17177",
+   "name_ine": "Sant Pau de Segúries",
+   "name_cadastre": "SANT PAU DE SEGURIES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "177"
+  },
+  {
+   "ine_code": "17178",
+   "name_ine": "Sant Pere Pescador",
+   "name_cadastre": "SANT PERE PESCADOR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "178"
+  },
+  {
+   "ine_code": "17180",
+   "name_ine": "Santa Coloma de Farners",
+   "name_cadastre": "SANTA COLOMA DE FARNERS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "180"
+  },
+  {
+   "ine_code": "17181",
+   "name_ine": "Santa Cristina d'Aro",
+   "name_cadastre": "SANTA CRISTINA D'ARO",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "181"
+  },
+  {
+   "ine_code": "17182",
+   "name_ine": "Santa Llogaia d'Àlguema",
+   "name_cadastre": "SANTA LLOGAIA D'ALGUEMA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "182"
+  },
+  {
+   "ine_code": "17184",
+   "name_ine": "Santa Pau",
+   "name_cadastre": "SANTA PAU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "184"
+  },
+  {
+   "ine_code": "17186",
+   "name_ine": "Sarrià de Ter",
+   "name_cadastre": "SARRIA DE TER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "186"
+  },
+  {
+   "ine_code": "17187",
+   "name_ine": "Saus, Camallera i Llampaies",
+   "name_cadastre": "SAUS, CAMALLERA I LLAMPAIES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "187"
+  },
+  {
+   "ine_code": "17188",
+   "name_ine": "Selva de Mar, La",
+   "name_cadastre": "LA SELVA DE MAR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "188"
+  },
+  {
+   "ine_code": "17190",
+   "name_ine": "Serinyà",
+   "name_cadastre": "SERINYA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "190"
+  },
+  {
+   "ine_code": "17191",
+   "name_ine": "Serra de Daró",
+   "name_cadastre": "SERRA DE DARO",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "191"
+  },
+  {
+   "ine_code": "17192",
+   "name_ine": "Setcases",
+   "name_cadastre": "SETCASES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "192"
+  },
+  {
+   "ine_code": "17193",
+   "name_ine": "Sils",
+   "name_cadastre": "SILS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "193"
+  },
+  {
+   "ine_code": "17052",
+   "name_ine": "Siurana",
+   "name_cadastre": "SIURANA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "52"
+  },
+  {
+   "ine_code": "17194",
+   "name_ine": "Susqueda",
+   "name_cadastre": "SUSQUEDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "194"
+  },
+  {
+   "ine_code": "17195",
+   "name_ine": "Tallada d'Empordà, La",
+   "name_cadastre": "LA TALLADA D'EMPORDA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "195"
+  },
+  {
+   "ine_code": "17196",
+   "name_ine": "Terrades",
+   "name_cadastre": "TERRADES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "196"
+  },
+  {
+   "ine_code": "17197",
+   "name_ine": "Torrent",
+   "name_cadastre": "TORRENT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "197"
+  },
+  {
+   "ine_code": "17198",
+   "name_ine": "Torroella de Fluvià",
+   "name_cadastre": "TORROELLA DE FLUVIA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "198"
+  },
+  {
+   "ine_code": "17199",
+   "name_ine": "Torroella de Montgrí",
+   "name_cadastre": "TORROELLA DE MONTGRI",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "199"
+  },
+  {
+   "ine_code": "17200",
+   "name_ine": "Tortellà",
+   "name_cadastre": "TORTELLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "200"
+  },
+  {
+   "ine_code": "17201",
+   "name_ine": "Toses",
+   "name_cadastre": "TOSES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "201"
+  },
+  {
+   "ine_code": "17202",
+   "name_ine": "Tossa de Mar",
+   "name_cadastre": "TOSSA DE MAR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "202"
+  },
+  {
+   "ine_code": "17205",
+   "name_ine": "Ullastret",
+   "name_cadastre": "ULLASTRET",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "205"
+  },
+  {
+   "ine_code": "17204",
+   "name_ine": "Ullà",
+   "name_cadastre": "ULLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "204"
+  },
+  {
+   "ine_code": "17203",
+   "name_ine": "Ultramort",
+   "name_cadastre": "ULTRAMORT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "203"
+  },
+  {
+   "ine_code": "17206",
+   "name_ine": "Urús",
+   "name_cadastre": "URUS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "206"
+  },
+  {
+   "ine_code": "17014",
+   "name_ine": "Vajol, La",
+   "name_cadastre": "LA VAJOL",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "14"
+  },
+  {
+   "ine_code": "17207",
+   "name_ine": "Vall d'en Bas, La",
+   "name_cadastre": "LA VALL D'EN BAS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "207"
+  },
+  {
+   "ine_code": "17208",
+   "name_ine": "Vall de Bianya, La",
+   "name_cadastre": "LA VALL DE BIANYA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "208"
+  },
+  {
+   "ine_code": "17209",
+   "name_ine": "Vall-llobrega",
+   "name_cadastre": "VALL-LLOBREGA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "209"
+  },
+  {
+   "ine_code": "17170",
+   "name_ine": "Vallfogona de Ripollès",
+   "name_cadastre": "VALLFOGONA DE RIPOLLES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "170"
+  },
+  {
+   "ine_code": "17210",
+   "name_ine": "Ventalló",
+   "name_cadastre": "VENTALLO",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "210"
+  },
+  {
+   "ine_code": "17211",
+   "name_ine": "Verges",
+   "name_cadastre": "VERGES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "211"
+  },
+  {
+   "ine_code": "17213",
+   "name_ine": "Vidreres",
+   "name_cadastre": "VIDRERES",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "213"
+  },
+  {
+   "ine_code": "17212",
+   "name_ine": "Vidrà",
+   "name_cadastre": "VIDRA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "212"
+  },
+  {
+   "ine_code": "17230",
+   "name_ine": "Vila-sacra",
+   "name_cadastre": "VILA-SACRA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "230"
+  },
+  {
+   "ine_code": "17214",
+   "name_ine": "Vilabertran",
+   "name_cadastre": "VILABERTRAN",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "214"
+  },
+  {
+   "ine_code": "17215",
+   "name_ine": "Vilablareix",
+   "name_cadastre": "VILABLAREIX",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "215"
+  },
+  {
+   "ine_code": "17217",
+   "name_ine": "Viladamat",
+   "name_cadastre": "VILADAMAT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "217"
+  },
+  {
+   "ine_code": "17216",
+   "name_ine": "Viladasens",
+   "name_cadastre": "VILADASENS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "216"
+  },
+  {
+   "ine_code": "17218",
+   "name_ine": "Vilademuls",
+   "name_cadastre": "VILADEMULS",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "218"
+  },
+  {
+   "ine_code": "17220",
+   "name_ine": "Viladrau",
+   "name_cadastre": "VILADRAU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "220"
+  },
+  {
+   "ine_code": "17221",
+   "name_ine": "Vilafant",
+   "name_cadastre": "VILAFANT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "221"
+  },
+  {
+   "ine_code": "17223",
+   "name_ine": "Vilajuïga",
+   "name_cadastre": "VILAJUÏGA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "223"
+  },
+  {
+   "ine_code": "17224",
+   "name_ine": "Vilallonga de Ter",
+   "name_cadastre": "VILALLONGA DE TER",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "224"
+  },
+  {
+   "ine_code": "17225",
+   "name_ine": "Vilamacolum",
+   "name_cadastre": "VILAMACOLUM",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "225"
+  },
+  {
+   "ine_code": "17226",
+   "name_ine": "Vilamalla",
+   "name_cadastre": "VILAMALLA",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "226"
+  },
+  {
+   "ine_code": "17227",
+   "name_ine": "Vilamaniscle",
+   "name_cadastre": "VILAMANISCLE",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "227"
+  },
+  {
+   "ine_code": "17228",
+   "name_ine": "Vilanant",
+   "name_cadastre": "VILANANT",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "228"
+  },
+  {
+   "ine_code": "17222",
+   "name_ine": "Vilaür",
+   "name_cadastre": "VILAUR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "222"
+  },
+  {
+   "ine_code": "17233",
+   "name_ine": "Vilobí d'Onyar",
+   "name_cadastre": "VILOBI D'ONYAR",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "233"
+  },
+  {
+   "ine_code": "17232",
+   "name_ine": "Vilopriu",
+   "name_cadastre": "VILOPRIU",
+   "province": "Girona",
+   "province_cadastre": "GIRONA",
+   "cp": "17",
+   "cm": "232"
+  },
+  {
+   "ine_code": "25001",
+   "name_ine": "Abella de la Conca",
+   "name_cadastre": "ABELLA DE LA CONCA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "1"
+  },
+  {
+   "ine_code": "25003",
+   "name_ine": "Agramunt",
+   "name_cadastre": "AGRAMUNT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "3"
+  },
+  {
+   "ine_code": "25038",
+   "name_ine": "Aitona",
+   "name_cadastre": "AITONA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "38"
+  },
+  {
+   "ine_code": "25004",
+   "name_ine": "Alamús, Els",
+   "name_cadastre": "ELS ALAMUS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "4"
+  },
+  {
+   "ine_code": "25006",
+   "name_ine": "Albagés, L'",
+   "name_cadastre": "L'ALBAGES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "6"
+  },
+  {
+   "ine_code": "25007",
+   "name_ine": "Albatàrrec",
+   "name_cadastre": "ALBATARREC",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "7"
+  },
+  {
+   "ine_code": "25008",
+   "name_ine": "Albesa",
+   "name_cadastre": "ALBESA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "8"
+  },
+  {
+   "ine_code": "25009",
+   "name_ine": "Albi, L'",
+   "name_cadastre": "L'ALBI",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "9"
+  },
+  {
+   "ine_code": "25010",
+   "name_ine": "Alcanó",
+   "name_cadastre": "ALCANO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "10"
+  },
+  {
+   "ine_code": "25011",
+   "name_ine": "Alcarràs",
+   "name_cadastre": "ALCARRAS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "11"
+  },
+  {
+   "ine_code": "25012",
+   "name_ine": "Alcoletge",
+   "name_cadastre": "ALCOLETGE",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "12"
+  },
+  {
+   "ine_code": "25013",
+   "name_ine": "Alfarràs",
+   "name_cadastre": "ALFARRAS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "13"
+  },
+  {
+   "ine_code": "25014",
+   "name_ine": "Alfés",
+   "name_cadastre": "ALFES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "14"
+  },
+  {
+   "ine_code": "25015",
+   "name_ine": "Algerri",
+   "name_cadastre": "ALGERRI",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "15"
+  },
+  {
+   "ine_code": "25016",
+   "name_ine": "Alguaire",
+   "name_cadastre": "ALGUAIRE",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "16"
+  },
+  {
+   "ine_code": "25017",
+   "name_ine": "Alins",
+   "name_cadastre": "ALINS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "17"
+  },
+  {
+   "ine_code": "25019",
+   "name_ine": "Almacelles",
+   "name_cadastre": "ALMACELLES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "19"
+  },
+  {
+   "ine_code": "25020",
+   "name_ine": "Almatret",
+   "name_cadastre": "ALMATRET",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "20"
+  },
+  {
+   "ine_code": "25021",
+   "name_ine": "Almenar",
+   "name_cadastre": "ALMENAR",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "21"
+  },
+  {
+   "ine_code": "25023",
+   "name_ine": "Alpicat",
+   "name_cadastre": "ALPICAT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "23"
+  },
+  {
+   "ine_code": "25024",
+   "name_ine": "Alt Àneu",
+   "name_cadastre": "ALT ANEU",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "24"
+  },
+  {
+   "ine_code": "25005",
+   "name_ine": "Alàs i Cerc",
+   "name_cadastre": "ALAS I CERC",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "5"
+  },
+  {
+   "ine_code": "25022",
+   "name_ine": "Alòs de Balaguer",
+   "name_cadastre": "ALOS DE BALAGUER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "22"
+  },
+  {
+   "ine_code": "25027",
+   "name_ine": "Anglesola",
+   "name_cadastre": "ANGLESOLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "27"
+  },
+  {
+   "ine_code": "25029",
+   "name_ine": "Arbeca",
+   "name_cadastre": "ARBECA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "29"
+  },
+  {
+   "ine_code": "25031",
+   "name_ine": "Arres",
+   "name_cadastre": "ARRES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "31"
+  },
+  {
+   "ine_code": "25032",
+   "name_ine": "Arsèguel",
+   "name_cadastre": "ARSEGUEL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "32"
+  },
+  {
+   "ine_code": "25033",
+   "name_ine": "Artesa de Lleida",
+   "name_cadastre": "ARTESA DE LLEIDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "33"
+  },
+  {
+   "ine_code": "25034",
+   "name_ine": "Artesa de Segre",
+   "name_cadastre": "ARTESA DE SEGRE",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "34"
+  },
+  {
+   "ine_code": "25036",
+   "name_ine": "Aspa",
+   "name_cadastre": "ASPA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "36"
+  },
+  {
+   "ine_code": "25037",
+   "name_ine": "Avellanes i Santa Linya, Les",
+   "name_cadastre": "LES AVELLANES I SANTA LINYA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "37"
+  },
+  {
+   "ine_code": "25039",
+   "name_ine": "Baix Pallars",
+   "name_cadastre": "BAIX PALLARS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "39"
+  },
+  {
+   "ine_code": "25040",
+   "name_ine": "Balaguer",
+   "name_cadastre": "BALAGUER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "40"
+  },
+  {
+   "ine_code": "25041",
+   "name_ine": "Barbens",
+   "name_cadastre": "BARBENS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "41"
+  },
+  {
+   "ine_code": "25042",
+   "name_ine": "Baronia de Rialb, La",
+   "name_cadastre": "LA BARONIA DE RIALB",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "42"
+  },
+  {
+   "ine_code": "25044",
+   "name_ine": "Bassella",
+   "name_cadastre": "BASSELLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "44"
+  },
+  {
+   "ine_code": "25045",
+   "name_ine": "Bausen",
+   "name_cadastre": "BAUSEN",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "45"
+  },
+  {
+   "ine_code": "25046",
+   "name_ine": "Belianes",
+   "name_cadastre": "BELIANES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "46"
+  },
+  {
+   "ine_code": "25048",
+   "name_ine": "Bell-lloc d'Urgell",
+   "name_cadastre": "BELL-LLOC D'URGELL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "48"
+  },
+  {
+   "ine_code": "25170",
+   "name_ine": "Bellaguarda",
+   "name_cadastre": "BELLAGUARDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "170"
+  },
+  {
+   "ine_code": "25047",
+   "name_ine": "Bellcaire d'Urgell",
+   "name_cadastre": "BELLCAIRE D'URGELL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "47"
+  },
+  {
+   "ine_code": "25049",
+   "name_ine": "Bellmunt d'Urgell",
+   "name_cadastre": "BELLMUNT D'URGELL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "49"
+  },
+  {
+   "ine_code": "25050",
+   "name_ine": "Bellpuig",
+   "name_cadastre": "BELLPUIG",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "50"
+  },
+  {
+   "ine_code": "25051",
+   "name_ine": "Bellver de Cerdanya",
+   "name_cadastre": "BELLVER DE CERDANYA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "51"
+  },
+  {
+   "ine_code": "25052",
+   "name_ine": "Bellvís",
+   "name_cadastre": "BELLVIS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "52"
+  },
+  {
+   "ine_code": "25053",
+   "name_ine": "Benavent de Segrià",
+   "name_cadastre": "BENAVENT DE SEGRIA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "53"
+  },
+  {
+   "ine_code": "25055",
+   "name_ine": "Biosca",
+   "name_cadastre": "BIOSCA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "55"
+  },
+  {
+   "ine_code": "25058",
+   "name_ine": "Borges Blanques, Les",
+   "name_cadastre": "LES BORGES BLANQUES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "58"
+  },
+  {
+   "ine_code": "25059",
+   "name_ine": "Bossòst",
+   "name_cadastre": "BOSSOST",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "59"
+  },
+  {
+   "ine_code": "25056",
+   "name_ine": "Bovera",
+   "name_cadastre": "BOVERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "56"
+  },
+  {
+   "ine_code": "25057",
+   "name_ine": "Bòrdes, Es",
+   "name_cadastre": "ES BORDES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "57"
+  },
+  {
+   "ine_code": "25060",
+   "name_ine": "Cabanabona",
+   "name_cadastre": "CABANABONA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "60"
+  },
+  {
+   "ine_code": "25061",
+   "name_ine": "Cabó",
+   "name_cadastre": "CABO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "61"
+  },
+  {
+   "ine_code": "25062",
+   "name_ine": "Camarasa",
+   "name_cadastre": "CAMARASA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "62"
+  },
+  {
+   "ine_code": "25063",
+   "name_ine": "Canejan",
+   "name_cadastre": "CANEJAN",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "63"
+  },
+  {
+   "ine_code": "25904",
+   "name_ine": "Castell de Mur",
+   "name_cadastre": "CASTELL DE MUR",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "904"
+  },
+  {
+   "ine_code": "25064",
+   "name_ine": "Castellar de la Ribera",
+   "name_cadastre": "CASTELLAR DE LA RIBERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "64"
+  },
+  {
+   "ine_code": "25067",
+   "name_ine": "Castelldans",
+   "name_cadastre": "CASTELLDANS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "67"
+  },
+  {
+   "ine_code": "25068",
+   "name_ine": "Castellnou de Seana",
+   "name_cadastre": "CASTELLNOU DE SEANA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "68"
+  },
+  {
+   "ine_code": "25070",
+   "name_ine": "Castellserà",
+   "name_cadastre": "CASTELLSERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "70"
+  },
+  {
+   "ine_code": "25069",
+   "name_ine": "Castelló de Farfanya",
+   "name_cadastre": "CASTELLO DE FARFANYA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "69"
+  },
+  {
+   "ine_code": "25071",
+   "name_ine": "Cava",
+   "name_cadastre": "CAVA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "71"
+  },
+  {
+   "ine_code": "25072",
+   "name_ine": "Cervera",
+   "name_cadastre": "CERVERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "72"
+  },
+  {
+   "ine_code": "25073",
+   "name_ine": "Cervià de les Garrigues",
+   "name_cadastre": "CERVIA DE LES GARRIGUES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "73"
+  },
+  {
+   "ine_code": "25074",
+   "name_ine": "Ciutadilla",
+   "name_cadastre": "CIUTADILLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "74"
+  },
+  {
+   "ine_code": "25075",
+   "name_ine": "Clariana de Cardener",
+   "name_cadastre": "CLARIANA DE CARDENER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "75"
+  },
+  {
+   "ine_code": "25076",
+   "name_ine": "Cogul, El",
+   "name_cadastre": "EL COGUL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "76"
+  },
+  {
+   "ine_code": "25077",
+   "name_ine": "Coll de Nargó",
+   "name_cadastre": "COLL DE NARGO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "77"
+  },
+  {
+   "ine_code": "25163",
+   "name_ine": "Coma i la Pedra, La",
+   "name_cadastre": "LA COMA I LA PEDRA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "163"
+  },
+  {
+   "ine_code": "25161",
+   "name_ine": "Conca de Dalt",
+   "name_cadastre": "CONCA DE DALT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "161"
+  },
+  {
+   "ine_code": "25078",
+   "name_ine": "Corbins",
+   "name_cadastre": "CORBINS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "78"
+  },
+  {
+   "ine_code": "25079",
+   "name_ine": "Cubells",
+   "name_cadastre": "CUBELLS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "79"
+  },
+  {
+   "ine_code": "25081",
+   "name_ine": "Espluga Calba, L'",
+   "name_cadastre": "L'ESPLUGA CALVA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "81"
+  },
+  {
+   "ine_code": "25082",
+   "name_ine": "Espot",
+   "name_cadastre": "ESPOT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "82"
+  },
+  {
+   "ine_code": "25088",
+   "name_ine": "Estamariu",
+   "name_cadastre": "ESTAMARIU",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "88"
+  },
+  {
+   "ine_code": "25085",
+   "name_ine": "Estaràs",
+   "name_cadastre": "ESTARAS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "85"
+  },
+  {
+   "ine_code": "25086",
+   "name_ine": "Esterri d'Àneu",
+   "name_cadastre": "ESTERRI D'ANEU",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "86"
+  },
+  {
+   "ine_code": "25087",
+   "name_ine": "Esterri de Cardós",
+   "name_cadastre": "ESTERRI DE CARDOS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "87"
+  },
+  {
+   "ine_code": "25089",
+   "name_ine": "Farrera",
+   "name_cadastre": "FARRERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "89"
+  },
+  {
+   "ine_code": "25092",
+   "name_ine": "Floresta, La",
+   "name_cadastre": "LA FLORESTA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "92"
+  },
+  {
+   "ine_code": "25093",
+   "name_ine": "Fondarella",
+   "name_cadastre": "FONDARELLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "93"
+  },
+  {
+   "ine_code": "25094",
+   "name_ine": "Foradada",
+   "name_cadastre": "FORADADA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "94"
+  },
+  {
+   "ine_code": "25096",
+   "name_ine": "Fuliola, La",
+   "name_cadastre": "LA FULIOLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "96"
+  },
+  {
+   "ine_code": "25097",
+   "name_ine": "Fulleda",
+   "name_cadastre": "FULLEDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "97"
+  },
+  {
+   "ine_code": "25908",
+   "name_ine": "Fígols i Alinyà",
+   "name_cadastre": "FIGOLS I ALINYA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "908"
+  },
+  {
+   "ine_code": "25098",
+   "name_ine": "Gavet de la Conca",
+   "name_cadastre": "GAVET DE LA CONCA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "98"
+  },
+  {
+   "ine_code": "25912",
+   "name_ine": "Gimenells i el Pla de la Font",
+   "name_cadastre": "GIMENELLS I EL PLA DE LA FONT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "912"
+  },
+  {
+   "ine_code": "25099",
+   "name_ine": "Golmés",
+   "name_cadastre": "GOLMES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "99"
+  },
+  {
+   "ine_code": "25101",
+   "name_ine": "Granadella, La",
+   "name_cadastre": "LA GRANADELLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "101"
+  },
+  {
+   "ine_code": "25102",
+   "name_ine": "Granja d'Escarp, La",
+   "name_cadastre": "LA GRANJA D'ESCARP",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "102"
+  },
+  {
+   "ine_code": "25103",
+   "name_ine": "Granyanella",
+   "name_cadastre": "GRANYANELLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "103"
+  },
+  {
+   "ine_code": "25104",
+   "name_ine": "Granyena de Segarra",
+   "name_cadastre": "GRANYENA DE SEGARRA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "104"
+  },
+  {
+   "ine_code": "25105",
+   "name_ine": "Granyena de les Garrigues",
+   "name_cadastre": "GRANYENA DE LES GARRIGUES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "105"
+  },
+  {
+   "ine_code": "25109",
+   "name_ine": "Guimerà",
+   "name_cadastre": "GUIMERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "109"
+  },
+  {
+   "ine_code": "25903",
+   "name_ine": "Guingueta d'Àneu, La",
+   "name_cadastre": "LA GUINGUETA D'ANEU",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "903"
+  },
+  {
+   "ine_code": "25110",
+   "name_ine": "Guissona",
+   "name_cadastre": "GUISSONA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "110"
+  },
+  {
+   "ine_code": "25111",
+   "name_ine": "Guixers",
+   "name_cadastre": "GUIXERS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "111"
+  },
+  {
+   "ine_code": "25100",
+   "name_ine": "Gósol",
+   "name_cadastre": "GOSOL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "100"
+  },
+  {
+   "ine_code": "25115",
+   "name_ine": "Isona i Conca Dellà",
+   "name_cadastre": "ISONA I CONCA DELLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "115"
+  },
+  {
+   "ine_code": "25113",
+   "name_ine": "Ivars d'Urgell",
+   "name_cadastre": "IVARS D'URGELL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "113"
+  },
+  {
+   "ine_code": "25112",
+   "name_ine": "Ivars de Noguera",
+   "name_cadastre": "IVARS DE NOGUERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "112"
+  },
+  {
+   "ine_code": "25114",
+   "name_ine": "Ivorra",
+   "name_cadastre": "IVORRA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "114"
+  },
+  {
+   "ine_code": "25910",
+   "name_ine": "Josa i Tuixén",
+   "name_cadastre": "JOSA I TUIXEN",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "910"
+  },
+  {
+   "ine_code": "25118",
+   "name_ine": "Juncosa",
+   "name_cadastre": "JUNCOSA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "118"
+  },
+  {
+   "ine_code": "25119",
+   "name_ine": "Juneda",
+   "name_cadastre": "JUNEDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "119"
+  },
+  {
+   "ine_code": "25121",
+   "name_ine": "Les",
+   "name_cadastre": "LES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "121"
+  },
+  {
+   "ine_code": "25122",
+   "name_ine": "Linyola",
+   "name_cadastre": "LINYOLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "122"
+  },
+  {
+   "ine_code": "25123",
+   "name_ine": "Lladorre",
+   "name_cadastre": "LLADORRE",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "123"
+  },
+  {
+   "ine_code": "25124",
+   "name_ine": "Lladurs",
+   "name_cadastre": "LLADURS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "124"
+  },
+  {
+   "ine_code": "25125",
+   "name_ine": "Llardecans",
+   "name_cadastre": "LLARDECANS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "125"
+  },
+  {
+   "ine_code": "25126",
+   "name_ine": "Llavorsí",
+   "name_cadastre": "LLAVORSI",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "126"
+  },
+  {
+   "ine_code": "25120",
+   "name_ine": "Lleida",
+   "name_cadastre": "LLEIDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "120"
+  },
+  {
+   "ine_code": "25127",
+   "name_ine": "Lles de Cerdanya",
+   "name_cadastre": "LLES DE CERDANYA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "127"
+  },
+  {
+   "ine_code": "25128",
+   "name_ine": "Llimiana",
+   "name_cadastre": "LLIMIANA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "128"
+  },
+  {
+   "ine_code": "25129",
+   "name_ine": "Llobera",
+   "name_cadastre": "LLOBERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "129"
+  },
+  {
+   "ine_code": "25133",
+   "name_ine": "Maials",
+   "name_cadastre": "MAIALS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "133"
+  },
+  {
+   "ine_code": "25130",
+   "name_ine": "Maldà",
+   "name_cadastre": "MALDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "130"
+  },
+  {
+   "ine_code": "25131",
+   "name_ine": "Massalcoreig",
+   "name_cadastre": "MASSALCOREIG",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "131"
+  },
+  {
+   "ine_code": "25132",
+   "name_ine": "Massoteres",
+   "name_cadastre": "MASSOTERES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "132"
+  },
+  {
+   "ine_code": "25134",
+   "name_ine": "Menàrguens",
+   "name_cadastre": "MENARGUENS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "134"
+  },
+  {
+   "ine_code": "25135",
+   "name_ine": "Miralcamp",
+   "name_cadastre": "MIRALCAMP",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "135"
+  },
+  {
+   "ine_code": "25137",
+   "name_ine": "Mollerussa",
+   "name_cadastre": "MOLLERUSSA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "137"
+  },
+  {
+   "ine_code": "25136",
+   "name_ine": "Molsosa, La",
+   "name_cadastre": "LA MOLSOSA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "136"
+  },
+  {
+   "ine_code": "25139",
+   "name_ine": "Montellà i Martinet",
+   "name_cadastre": "MONTELLA I MARTINET",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "139"
+  },
+  {
+   "ine_code": "25140",
+   "name_ine": "Montferrer i Castellbò",
+   "name_cadastre": "MONTFERRER I CASTELLBO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "140"
+  },
+  {
+   "ine_code": "25138",
+   "name_ine": "Montgai",
+   "name_cadastre": "MONTGAI",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "138"
+  },
+  {
+   "ine_code": "25142",
+   "name_ine": "Montoliu de Lleida",
+   "name_cadastre": "MONTOLIU DE LLEIDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "142"
+  },
+  {
+   "ine_code": "25141",
+   "name_ine": "Montoliu de Segarra",
+   "name_cadastre": "MONTOLIU DE SEGARRA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "141"
+  },
+  {
+   "ine_code": "25143",
+   "name_ine": "Montornès de Segarra",
+   "name_cadastre": "MONTORNES DE SEGARRA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "143"
+  },
+  {
+   "ine_code": "25145",
+   "name_ine": "Nalec",
+   "name_cadastre": "NALEC",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "145"
+  },
+  {
+   "ine_code": "25025",
+   "name_ine": "Naut Aran",
+   "name_cadastre": "NAUT ARAN",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "25"
+  },
+  {
+   "ine_code": "25146",
+   "name_ine": "Navès",
+   "name_cadastre": "NAVES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "146"
+  },
+  {
+   "ine_code": "25148",
+   "name_ine": "Odèn",
+   "name_cadastre": "ODEN",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "148"
+  },
+  {
+   "ine_code": "25149",
+   "name_ine": "Oliana",
+   "name_cadastre": "OLIANA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "149"
+  },
+  {
+   "ine_code": "25150",
+   "name_ine": "Oliola",
+   "name_cadastre": "OLIOLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "150"
+  },
+  {
+   "ine_code": "25151",
+   "name_ine": "Olius",
+   "name_cadastre": "OLIUS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "151"
+  },
+  {
+   "ine_code": "25152",
+   "name_ine": "Oluges, Les",
+   "name_cadastre": "LES OLUGES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "152"
+  },
+  {
+   "ine_code": "25153",
+   "name_ine": "Omellons, Els",
+   "name_cadastre": "ELS OMELLONS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "153"
+  },
+  {
+   "ine_code": "25154",
+   "name_ine": "Omells de na Gaia, Els",
+   "name_cadastre": "ELS OMELLS DE NA GAIA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "154"
+  },
+  {
+   "ine_code": "25155",
+   "name_ine": "Organyà",
+   "name_cadastre": "ORGANYA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "155"
+  },
+  {
+   "ine_code": "25156",
+   "name_ine": "Os de Balaguer",
+   "name_cadastre": "OS DE BALAGUER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "156"
+  },
+  {
+   "ine_code": "25157",
+   "name_ine": "Ossó de Sió",
+   "name_cadastre": "OSSO DE SIO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "157"
+  },
+  {
+   "ine_code": "25158",
+   "name_ine": "Palau d'Anglesola, El",
+   "name_cadastre": "EL PALAU D'ANGLESOLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "158"
+  },
+  {
+   "ine_code": "25164",
+   "name_ine": "Penelles",
+   "name_cadastre": "PENELLES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "164"
+  },
+  {
+   "ine_code": "25165",
+   "name_ine": "Peramola",
+   "name_cadastre": "PERAMOLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "165"
+  },
+  {
+   "ine_code": "25166",
+   "name_ine": "Pinell de Solsonès",
+   "name_cadastre": "PINELL DE SOLSONES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "166"
+  },
+  {
+   "ine_code": "25167",
+   "name_ine": "Pinós",
+   "name_cadastre": "PINOS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "167"
+  },
+  {
+   "ine_code": "25911",
+   "name_ine": "Plans de Sió, Els",
+   "name_cadastre": "ELS PLANS DE SIO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "911"
+  },
+  {
+   "ine_code": "25168",
+   "name_ine": "Poal, El",
+   "name_cadastre": "EL POAL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "168"
+  },
+  {
+   "ine_code": "25169",
+   "name_ine": "Pobla de Cérvoles, La",
+   "name_cadastre": "LA POBLA DE CERVOLES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "169"
+  },
+  {
+   "ine_code": "25171",
+   "name_ine": "Pobla de Segur, La",
+   "name_cadastre": "LA POBLA DE SEGUR",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "171"
+  },
+  {
+   "ine_code": "25030",
+   "name_ine": "Pont de Bar, El",
+   "name_cadastre": "EL PONT DE BAR",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "30"
+  },
+  {
+   "ine_code": "25173",
+   "name_ine": "Pont de Suert, El",
+   "name_cadastre": "EL PONT DE SUERT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "173"
+  },
+  {
+   "ine_code": "25172",
+   "name_ine": "Ponts",
+   "name_cadastre": "PONTS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "172"
+  },
+  {
+   "ine_code": "25174",
+   "name_ine": "Portella, La",
+   "name_cadastre": "LA PORTELLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "174"
+  },
+  {
+   "ine_code": "25175",
+   "name_ine": "Prats i Sansor",
+   "name_cadastre": "PRATS I SANSOR",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "175"
+  },
+  {
+   "ine_code": "25176",
+   "name_ine": "Preixana",
+   "name_cadastre": "PREIXANA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "176"
+  },
+  {
+   "ine_code": "25177",
+   "name_ine": "Preixens",
+   "name_cadastre": "PREIXENS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "177"
+  },
+  {
+   "ine_code": "25179",
+   "name_ine": "Prullans",
+   "name_cadastre": "PRULLANS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "179"
+  },
+  {
+   "ine_code": "25180",
+   "name_ine": "Puiggròs",
+   "name_cadastre": "PUIGGROS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "180"
+  },
+  {
+   "ine_code": "25181",
+   "name_ine": "Puigverd d'Agramunt",
+   "name_cadastre": "PUIGVERD D'AGRAMUNT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "181"
+  },
+  {
+   "ine_code": "25182",
+   "name_ine": "Puigverd de Lleida",
+   "name_cadastre": "PUIGVERD DE LLEIDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "182"
+  },
+  {
+   "ine_code": "25183",
+   "name_ine": "Rialp",
+   "name_cadastre": "RIALP",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "183"
+  },
+  {
+   "ine_code": "25905",
+   "name_ine": "Ribera d'Ondara",
+   "name_cadastre": "RIBERA D'ONDARA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "905"
+  },
+  {
+   "ine_code": "25185",
+   "name_ine": "Ribera d'Urgellet",
+   "name_cadastre": "RIBERA D'URGELLET",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "185"
+  },
+  {
+   "ine_code": "25186",
+   "name_ine": "Riner",
+   "name_cadastre": "RINER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "186"
+  },
+  {
+   "ine_code": "25913",
+   "name_ine": "Riu de Cerdanya",
+   "name_cadastre": "RIU DE CERDANYA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "913"
+  },
+  {
+   "ine_code": "25189",
+   "name_ine": "Rosselló",
+   "name_cadastre": "ROSSELLO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "189"
+  },
+  {
+   "ine_code": "25190",
+   "name_ine": "Salàs de Pallars",
+   "name_cadastre": "SALAS DE PALLARS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "190"
+  },
+  {
+   "ine_code": "25191",
+   "name_ine": "Sanaüja",
+   "name_cadastre": "SANAUJA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "191"
+  },
+  {
+   "ine_code": "25196",
+   "name_ine": "Sant Esteve de la Sarga",
+   "name_cadastre": "SANT ESTEVE DE LA SARGA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "196"
+  },
+  {
+   "ine_code": "25192",
+   "name_ine": "Sant Guim de Freixenet",
+   "name_cadastre": "SANT GUIM DE FREIXENET",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "192"
+  },
+  {
+   "ine_code": "25197",
+   "name_ine": "Sant Guim de la Plana",
+   "name_cadastre": "SANT GUIM DE LA PLANA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "197"
+  },
+  {
+   "ine_code": "25193",
+   "name_ine": "Sant Llorenç de Morunys",
+   "name_cadastre": "SANT LLORENÇ DE MORUNYS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "193"
+  },
+  {
+   "ine_code": "25902",
+   "name_ine": "Sant Martí de Riucorb",
+   "name_cadastre": "SANT MARTI DE RIUCORB",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "902"
+  },
+  {
+   "ine_code": "25194",
+   "name_ine": "Sant Ramon",
+   "name_cadastre": "SANT RAMON",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "194"
+  },
+  {
+   "ine_code": "25201",
+   "name_ine": "Sarroca de Bellera",
+   "name_cadastre": "SARROCA DE BELLERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "201"
+  },
+  {
+   "ine_code": "25200",
+   "name_ine": "Sarroca de Lleida",
+   "name_cadastre": "SARROCA DE LLEIDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "200"
+  },
+  {
+   "ine_code": "25202",
+   "name_ine": "Senterada",
+   "name_cadastre": "SENTERADA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "202"
+  },
+  {
+   "ine_code": "25035",
+   "name_ine": "Sentiu de Sió, La",
+   "name_cadastre": "LA SENTIU DE SIO",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "35"
+  },
+  {
+   "ine_code": "25204",
+   "name_ine": "Seròs",
+   "name_cadastre": "SEROS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "204"
+  },
+  {
+   "ine_code": "25203",
+   "name_ine": "Seu d'Urgell, La",
+   "name_cadastre": "LA SEU D'URGELL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "203"
+  },
+  {
+   "ine_code": "25205",
+   "name_ine": "Sidamon",
+   "name_cadastre": "SIDAMON",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "205"
+  },
+  {
+   "ine_code": "25206",
+   "name_ine": "Soleràs, El",
+   "name_cadastre": "EL SOLERAS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "206"
+  },
+  {
+   "ine_code": "25207",
+   "name_ine": "Solsona",
+   "name_cadastre": "SOLSONA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "207"
+  },
+  {
+   "ine_code": "25208",
+   "name_ine": "Soriguera",
+   "name_cadastre": "SORIGUERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "208"
+  },
+  {
+   "ine_code": "25209",
+   "name_ine": "Sort",
+   "name_cadastre": "SORT",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "209"
+  },
+  {
+   "ine_code": "25210",
+   "name_ine": "Soses",
+   "name_cadastre": "SOSES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "210"
+  },
+  {
+   "ine_code": "25211",
+   "name_ine": "Sudanell",
+   "name_cadastre": "SUDANELL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "211"
+  },
+  {
+   "ine_code": "25212",
+   "name_ine": "Sunyer",
+   "name_cadastre": "SUNYER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "212"
+  },
+  {
+   "ine_code": "25215",
+   "name_ine": "Talarn",
+   "name_cadastre": "TALARN",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "215"
+  },
+  {
+   "ine_code": "25216",
+   "name_ine": "Talavera",
+   "name_cadastre": "TALAVERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "216"
+  },
+  {
+   "ine_code": "25219",
+   "name_ine": "Tarroja de Segarra",
+   "name_cadastre": "TARROJA DE SEGARRA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "219"
+  },
+  {
+   "ine_code": "25218",
+   "name_ine": "Tarrés",
+   "name_cadastre": "TARRES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "218"
+  },
+  {
+   "ine_code": "25222",
+   "name_ine": "Tiurana",
+   "name_cadastre": "TIURANA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "222"
+  },
+  {
+   "ine_code": "25224",
+   "name_ine": "Torms, Els",
+   "name_cadastre": "ELS TORMS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "224"
+  },
+  {
+   "ine_code": "25225",
+   "name_ine": "Tornabous",
+   "name_cadastre": "TORNABOUS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "225"
+  },
+  {
+   "ine_code": "25227",
+   "name_ine": "Torre de Cabdella, La",
+   "name_cadastre": "LA TORRE DE CABDELLA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "227"
+  },
+  {
+   "ine_code": "25233",
+   "name_ine": "Torre-serona",
+   "name_cadastre": "TORRE-SERONA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "233"
+  },
+  {
+   "ine_code": "25226",
+   "name_ine": "Torrebesses",
+   "name_cadastre": "TORREBESSES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "226"
+  },
+  {
+   "ine_code": "25228",
+   "name_ine": "Torrefarrera",
+   "name_cadastre": "TORREFARRERA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "228"
+  },
+  {
+   "ine_code": "25907",
+   "name_ine": "Torrefeta i Florejacs",
+   "name_cadastre": "TORREFETA I FLOREJACS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "907"
+  },
+  {
+   "ine_code": "25230",
+   "name_ine": "Torregrossa",
+   "name_cadastre": "TORREGROSSA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "230"
+  },
+  {
+   "ine_code": "25231",
+   "name_ine": "Torrelameu",
+   "name_cadastre": "TORRELAMEU",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "231"
+  },
+  {
+   "ine_code": "25232",
+   "name_ine": "Torres de Segre",
+   "name_cadastre": "TORRES DE SEGRE",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "232"
+  },
+  {
+   "ine_code": "25223",
+   "name_ine": "Torà",
+   "name_cadastre": "TORA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "223"
+  },
+  {
+   "ine_code": "25234",
+   "name_ine": "Tremp",
+   "name_cadastre": "TREMP",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "234"
+  },
+  {
+   "ine_code": "25217",
+   "name_ine": "Tàrrega",
+   "name_cadastre": "TARREGA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "217"
+  },
+  {
+   "ine_code": "25220",
+   "name_ine": "Térmens",
+   "name_cadastre": "TERMENS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "220"
+  },
+  {
+   "ine_code": "25221",
+   "name_ine": "Tírvia",
+   "name_cadastre": "TIRVIA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "221"
+  },
+  {
+   "ine_code": "25043",
+   "name_ine": "Vall de Boí, La",
+   "name_cadastre": "LA VALL DE BOI",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "43"
+  },
+  {
+   "ine_code": "25901",
+   "name_ine": "Vall de Cardós",
+   "name_cadastre": "VALL DE CARDOS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "901"
+  },
+  {
+   "ine_code": "25238",
+   "name_ine": "Vallbona de les Monges",
+   "name_cadastre": "VALLBONA DE LES MONGES",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "238"
+  },
+  {
+   "ine_code": "25240",
+   "name_ine": "Vallfogona de Balaguer",
+   "name_cadastre": "VALLFOGONA DE BALAGUER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "240"
+  },
+  {
+   "ine_code": "25906",
+   "name_ine": "Valls d'Aguilar, Les",
+   "name_cadastre": "LES VALLS D'AGUILAR",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "906"
+  },
+  {
+   "ine_code": "25239",
+   "name_ine": "Valls de Valira, Les",
+   "name_cadastre": "LES VALLS DE VALIRA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "239"
+  },
+  {
+   "ine_code": "25909",
+   "name_ine": "Vansa i Fórnols, La",
+   "name_cadastre": "LA VANSA I FORNOLS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "909"
+  },
+  {
+   "ine_code": "25242",
+   "name_ine": "Verdú",
+   "name_cadastre": "VERDU",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "242"
+  },
+  {
+   "ine_code": "25243",
+   "name_ine": "Vielha e Mijaran",
+   "name_cadastre": "VIELHA E MIJARAN",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "243"
+  },
+  {
+   "ine_code": "25252",
+   "name_ine": "Vila-sana",
+   "name_cadastre": "VILA-SANA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "252"
+  },
+  {
+   "ine_code": "25244",
+   "name_ine": "Vilagrassa",
+   "name_cadastre": "VILAGRASSA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "244"
+  },
+  {
+   "ine_code": "25245",
+   "name_ine": "Vilaller",
+   "name_cadastre": "VILALLER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "245"
+  },
+  {
+   "ine_code": "25247",
+   "name_ine": "Vilamòs",
+   "name_cadastre": "VILAMOS",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "247"
+  },
+  {
+   "ine_code": "25248",
+   "name_ine": "Vilanova de Bellpuig",
+   "name_cadastre": "VILANOVA DE BELLPUIG",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "248"
+  },
+  {
+   "ine_code": "25250",
+   "name_ine": "Vilanova de Meià",
+   "name_cadastre": "VILANOVA DE MEIA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "250"
+  },
+  {
+   "ine_code": "25251",
+   "name_ine": "Vilanova de Segrià",
+   "name_cadastre": "VILANOVA DE SEGRIA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "251"
+  },
+  {
+   "ine_code": "25249",
+   "name_ine": "Vilanova de l'Aguda",
+   "name_cadastre": "VILANOVA DE L'AGUDA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "249"
+  },
+  {
+   "ine_code": "25254",
+   "name_ine": "Vilanova de la Barca",
+   "name_cadastre": "VILANOVA DE LA BARCA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "254"
+  },
+  {
+   "ine_code": "25253",
+   "name_ine": "Vilosell, El",
+   "name_cadastre": "EL VILOSELL",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "253"
+  },
+  {
+   "ine_code": "25255",
+   "name_ine": "Vinaixa",
+   "name_cadastre": "VINAIXA",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "255"
+  },
+  {
+   "ine_code": "25002",
+   "name_ine": "Àger",
+   "name_cadastre": "AGER",
+   "province": "Lleida",
+   "province_cadastre": "LLEIDA",
+   "cp": "25",
+   "cm": "2"
+  },
+  {
+   "ine_code": "43001",
+   "name_ine": "Aiguamúrcia",
+   "name_cadastre": "AIGUAMURCIA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "1"
+  },
+  {
+   "ine_code": "43002",
+   "name_ine": "Albinyana",
+   "name_cadastre": "ALBINYANA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "2"
+  },
+  {
+   "ine_code": "43003",
+   "name_ine": "Albiol, L'",
+   "name_cadastre": "L'ALBIOL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "3"
+  },
+  {
+   "ine_code": "43004",
+   "name_ine": "Alcanar",
+   "name_cadastre": "ALCANAR",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "4"
+  },
+  {
+   "ine_code": "43005",
+   "name_ine": "Alcover",
+   "name_cadastre": "ALCOVER",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "5"
+  },
+  {
+   "ine_code": "43904",
+   "name_ine": "Aldea, L'",
+   "name_cadastre": "L'ALDEA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "904"
+  },
+  {
+   "ine_code": "43006",
+   "name_ine": "Aldover",
+   "name_cadastre": "ALDOVER",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "6"
+  },
+  {
+   "ine_code": "43007",
+   "name_ine": "Aleixar, L'",
+   "name_cadastre": "L'ALEIXAR",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "7"
+  },
+  {
+   "ine_code": "43008",
+   "name_ine": "Alfara de Carles",
+   "name_cadastre": "ALFARA DE CARLES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "8"
+  },
+  {
+   "ine_code": "43009",
+   "name_ine": "Alforja",
+   "name_cadastre": "ALFORJA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "9"
+  },
+  {
+   "ine_code": "43010",
+   "name_ine": "Alió",
+   "name_cadastre": "ALIO",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "10"
+  },
+  {
+   "ine_code": "43011",
+   "name_ine": "Almoster",
+   "name_cadastre": "ALMOSTER",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "11"
+  },
+  {
+   "ine_code": "43012",
+   "name_ine": "Altafulla",
+   "name_cadastre": "ALTAFULLA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "12"
+  },
+  {
+   "ine_code": "43013",
+   "name_ine": "Ametlla de Mar, L'",
+   "name_cadastre": "L'AMETLLA DE MAR",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "13"
+  },
+  {
+   "ine_code": "43906",
+   "name_ine": "Ampolla, L'",
+   "name_cadastre": "L'AMPOLLA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "906"
+  },
+  {
+   "ine_code": "43014",
+   "name_ine": "Amposta",
+   "name_cadastre": "AMPOSTA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "14"
+  },
+  {
+   "ine_code": "43015",
+   "name_ine": "Arbolí",
+   "name_cadastre": "ARBOLI",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "15"
+  },
+  {
+   "ine_code": "43016",
+   "name_ine": "Arboç, L'",
+   "name_cadastre": "L'ARBOÇ",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "16"
+  },
+  {
+   "ine_code": "43017",
+   "name_ine": "Argentera, L'",
+   "name_cadastre": "L'ARGENTERA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "17"
+  },
+  {
+   "ine_code": "43018",
+   "name_ine": "Arnes",
+   "name_cadastre": "ARNES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "18"
+  },
+  {
+   "ine_code": "43019",
+   "name_ine": "Ascó",
+   "name_cadastre": "ASCO",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "19"
+  },
+  {
+   "ine_code": "43020",
+   "name_ine": "Banyeres del Penedès",
+   "name_cadastre": "BANYERES DEL PENEDES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "20"
+  },
+  {
+   "ine_code": "43021",
+   "name_ine": "Barberà de la Conca",
+   "name_cadastre": "BARBERA DE LA CONCA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "21"
+  },
+  {
+   "ine_code": "43022",
+   "name_ine": "Batea",
+   "name_cadastre": "BATEA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "22"
+  },
+  {
+   "ine_code": "43023",
+   "name_ine": "Bellmunt del Priorat",
+   "name_cadastre": "BELLMUNT DEL PRIORAT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "23"
+  },
+  {
+   "ine_code": "43024",
+   "name_ine": "Bellvei",
+   "name_cadastre": "BELLVEI",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "24"
+  },
+  {
+   "ine_code": "43025",
+   "name_ine": "Benifallet",
+   "name_cadastre": "BENIFALLET",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "25"
+  },
+  {
+   "ine_code": "43026",
+   "name_ine": "Benissanet",
+   "name_cadastre": "BENISSANET",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "26"
+  },
+  {
+   "ine_code": "43027",
+   "name_ine": "Bisbal de Falset, La",
+   "name_cadastre": "LA BISBAL DE FALSET",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "27"
+  },
+  {
+   "ine_code": "43028",
+   "name_ine": "Bisbal del Penedès, La",
+   "name_cadastre": "LA BISBAL DEL PENEDES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "28"
+  },
+  {
+   "ine_code": "43029",
+   "name_ine": "Blancafort",
+   "name_cadastre": "BLANCAFORT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "29"
+  },
+  {
+   "ine_code": "43030",
+   "name_ine": "Bonastre",
+   "name_cadastre": "BONASTRE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "30"
+  },
+  {
+   "ine_code": "43031",
+   "name_ine": "Borges del Camp, Les",
+   "name_cadastre": "LES BORGES DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "31"
+  },
+  {
+   "ine_code": "43032",
+   "name_ine": "Bot",
+   "name_cadastre": "BOT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "32"
+  },
+  {
+   "ine_code": "43033",
+   "name_ine": "Botarell",
+   "name_cadastre": "BOTARELL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "33"
+  },
+  {
+   "ine_code": "43034",
+   "name_ine": "Bràfim",
+   "name_cadastre": "BRAFIM",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "34"
+  },
+  {
+   "ine_code": "43035",
+   "name_ine": "Cabacés",
+   "name_cadastre": "CABACES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "35"
+  },
+  {
+   "ine_code": "43036",
+   "name_ine": "Cabra del Camp",
+   "name_cadastre": "CABRA DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "36"
+  },
+  {
+   "ine_code": "43037",
+   "name_ine": "Calafell",
+   "name_cadastre": "CALAFELL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "37"
+  },
+  {
+   "ine_code": "43903",
+   "name_ine": "Camarles",
+   "name_cadastre": "CAMARLES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "903"
+  },
+  {
+   "ine_code": "43038",
+   "name_ine": "Cambrils",
+   "name_cadastre": "CAMBRILS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "38"
+  },
+  {
+   "ine_code": "43907",
+   "name_ine": "Canonja, La",
+   "name_cadastre": "LA CANONJA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "907"
+  },
+  {
+   "ine_code": "43039",
+   "name_ine": "Capafonts",
+   "name_cadastre": "CAPAFONTS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "39"
+  },
+  {
+   "ine_code": "43040",
+   "name_ine": "Capçanes",
+   "name_cadastre": "CAPÇANES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "40"
+  },
+  {
+   "ine_code": "43041",
+   "name_ine": "Caseres",
+   "name_cadastre": "CASERES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "41"
+  },
+  {
+   "ine_code": "43042",
+   "name_ine": "Castellvell del Camp",
+   "name_cadastre": "CASTELLVELL DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "42"
+  },
+  {
+   "ine_code": "43043",
+   "name_ine": "Catllar, El",
+   "name_cadastre": "EL CATLLAR",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "43"
+  },
+  {
+   "ine_code": "43045",
+   "name_ine": "Colldejou",
+   "name_cadastre": "COLLDEJOU",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "45"
+  },
+  {
+   "ine_code": "43046",
+   "name_ine": "Conesa",
+   "name_cadastre": "CONESA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "46"
+  },
+  {
+   "ine_code": "43047",
+   "name_ine": "Constantí",
+   "name_cadastre": "CONSTANTI",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "47"
+  },
+  {
+   "ine_code": "43048",
+   "name_ine": "Corbera d'Ebre",
+   "name_cadastre": "CORBERA D'EBRE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "48"
+  },
+  {
+   "ine_code": "43049",
+   "name_ine": "Cornudella de Montsant",
+   "name_cadastre": "CORNUDELLA DE MONTSANT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "49"
+  },
+  {
+   "ine_code": "43050",
+   "name_ine": "Creixell",
+   "name_cadastre": "CREIXELL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "50"
+  },
+  {
+   "ine_code": "43051",
+   "name_ine": "Cunit",
+   "name_cadastre": "CUNIT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "51"
+  },
+  {
+   "ine_code": "43901",
+   "name_ine": "Deltebre",
+   "name_cadastre": "DELTEBRE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "901"
+  },
+  {
+   "ine_code": "43053",
+   "name_ine": "Duesaigües",
+   "name_cadastre": "DUESAIGUES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "53"
+  },
+  {
+   "ine_code": "43054",
+   "name_ine": "Espluga de Francolí, L'",
+   "name_cadastre": "L'ESPLUGA DE FRANCOLI",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "54"
+  },
+  {
+   "ine_code": "43055",
+   "name_ine": "Falset",
+   "name_cadastre": "FALSET",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "55"
+  },
+  {
+   "ine_code": "43056",
+   "name_ine": "Fatarella, La",
+   "name_cadastre": "LA FATARELLA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "56"
+  },
+  {
+   "ine_code": "43057",
+   "name_ine": "Febró, La",
+   "name_cadastre": "LA FEBRO",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "57"
+  },
+  {
+   "ine_code": "43058",
+   "name_ine": "Figuera, La",
+   "name_cadastre": "LA FIGUERA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "58"
+  },
+  {
+   "ine_code": "43059",
+   "name_ine": "Figuerola del Camp",
+   "name_cadastre": "FIGUEROLA DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "59"
+  },
+  {
+   "ine_code": "43060",
+   "name_ine": "Flix",
+   "name_cadastre": "FLIX",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "60"
+  },
+  {
+   "ine_code": "43061",
+   "name_ine": "Forès",
+   "name_cadastre": "FORES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "61"
+  },
+  {
+   "ine_code": "43062",
+   "name_ine": "Freginals",
+   "name_cadastre": "FREGINALS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "62"
+  },
+  {
+   "ine_code": "43063",
+   "name_ine": "Galera, La",
+   "name_cadastre": "LA GALERA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "63"
+  },
+  {
+   "ine_code": "43064",
+   "name_ine": "Gandesa",
+   "name_cadastre": "GANDESA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "64"
+  },
+  {
+   "ine_code": "43065",
+   "name_ine": "Garcia",
+   "name_cadastre": "GARCIA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "65"
+  },
+  {
+   "ine_code": "43066",
+   "name_ine": "Garidells, Els",
+   "name_cadastre": "ELS GARIDELLS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "66"
+  },
+  {
+   "ine_code": "43067",
+   "name_ine": "Ginestar",
+   "name_cadastre": "GINESTAR",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "67"
+  },
+  {
+   "ine_code": "43068",
+   "name_ine": "Godall",
+   "name_cadastre": "GODALL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "68"
+  },
+  {
+   "ine_code": "43069",
+   "name_ine": "Gratallops",
+   "name_cadastre": "GRATALLOPS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "69"
+  },
+  {
+   "ine_code": "43070",
+   "name_ine": "Guiamets, Els",
+   "name_cadastre": "ELS GUIAMETS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "70"
+  },
+  {
+   "ine_code": "43071",
+   "name_ine": "Horta de Sant Joan",
+   "name_cadastre": "HORTA DE SANT JOAN",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "71"
+  },
+  {
+   "ine_code": "43072",
+   "name_ine": "Lloar, El",
+   "name_cadastre": "EL LLOAR",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "72"
+  },
+  {
+   "ine_code": "43073",
+   "name_ine": "Llorac",
+   "name_cadastre": "LLORAC",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "73"
+  },
+  {
+   "ine_code": "43074",
+   "name_ine": "Llorenç del Penedès",
+   "name_cadastre": "LLORENÇ DEL PENEDES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "74"
+  },
+  {
+   "ine_code": "43075",
+   "name_ine": "Margalef",
+   "name_cadastre": "MARGALEF",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "75"
+  },
+  {
+   "ine_code": "43076",
+   "name_ine": "Marçà",
+   "name_cadastre": "MARÇA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "76"
+  },
+  {
+   "ine_code": "43077",
+   "name_ine": "Mas de Barberans",
+   "name_cadastre": "MAS DE BARBERANS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "77"
+  },
+  {
+   "ine_code": "43078",
+   "name_ine": "Masdenverge",
+   "name_cadastre": "MASDENVERGE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "78"
+  },
+  {
+   "ine_code": "43079",
+   "name_ine": "Masllorenç",
+   "name_cadastre": "MASLLORENÇ",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "79"
+  },
+  {
+   "ine_code": "43081",
+   "name_ine": "Maspujols",
+   "name_cadastre": "MASPUJOLS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "81"
+  },
+  {
+   "ine_code": "43082",
+   "name_ine": "Masroig, El",
+   "name_cadastre": "EL MASROIG",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "82"
+  },
+  {
+   "ine_code": "43080",
+   "name_ine": "Masó, La",
+   "name_cadastre": "LA MASO",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "80"
+  },
+  {
+   "ine_code": "43083",
+   "name_ine": "Milà, El",
+   "name_cadastre": "EL MILA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "83"
+  },
+  {
+   "ine_code": "43084",
+   "name_ine": "Miravet",
+   "name_cadastre": "MIRAVET",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "84"
+  },
+  {
+   "ine_code": "43085",
+   "name_ine": "Molar, El",
+   "name_cadastre": "EL MOLAR",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "85"
+  },
+  {
+   "ine_code": "43091",
+   "name_ine": "Mont-ral",
+   "name_cadastre": "MONT-RAL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "91"
+  },
+  {
+   "ine_code": "43092",
+   "name_ine": "Mont-roig del Camp",
+   "name_cadastre": "MONT-ROIG DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "92"
+  },
+  {
+   "ine_code": "43086",
+   "name_ine": "Montblanc",
+   "name_cadastre": "MONTBLANC",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "86"
+  },
+  {
+   "ine_code": "43088",
+   "name_ine": "Montbrió del Camp",
+   "name_cadastre": "MONTBRIO DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "88"
+  },
+  {
+   "ine_code": "43089",
+   "name_ine": "Montferri",
+   "name_cadastre": "MONTFERRI",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "89"
+  },
+  {
+   "ine_code": "43090",
+   "name_ine": "Montmell, El",
+   "name_cadastre": "EL MONTMELL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "90"
+  },
+  {
+   "ine_code": "43095",
+   "name_ine": "Morell, El",
+   "name_cadastre": "EL MORELL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "95"
+  },
+  {
+   "ine_code": "43096",
+   "name_ine": "Morera de Montsant, La",
+   "name_cadastre": "LA MORERA DE MONTSANT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "96"
+  },
+  {
+   "ine_code": "43093",
+   "name_ine": "Móra d'Ebre",
+   "name_cadastre": "MORA D'EBRE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "93"
+  },
+  {
+   "ine_code": "43094",
+   "name_ine": "Móra la Nova",
+   "name_cadastre": "MORA LA NOVA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "94"
+  },
+  {
+   "ine_code": "43097",
+   "name_ine": "Nou de Gaià, La",
+   "name_cadastre": "LA NOU DE GAIA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "97"
+  },
+  {
+   "ine_code": "43098",
+   "name_ine": "Nulles",
+   "name_cadastre": "NULLES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "98"
+  },
+  {
+   "ine_code": "43100",
+   "name_ine": "Pallaresos, Els",
+   "name_cadastre": "PALLARESOS ELS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "100"
+  },
+  {
+   "ine_code": "43099",
+   "name_ine": "Palma d'Ebre, La",
+   "name_cadastre": "LA PALMA D'EBRE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "99"
+  },
+  {
+   "ine_code": "43101",
+   "name_ine": "Passanant i Belltall",
+   "name_cadastre": "PASSANANT I BELLTALL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "101"
+  },
+  {
+   "ine_code": "43102",
+   "name_ine": "Paüls",
+   "name_cadastre": "PAULS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "102"
+  },
+  {
+   "ine_code": "43103",
+   "name_ine": "Perafort",
+   "name_cadastre": "PERAFORT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "103"
+  },
+  {
+   "ine_code": "43104",
+   "name_ine": "Perelló, El",
+   "name_cadastre": "EL PERELLO",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "104"
+  },
+  {
+   "ine_code": "43105",
+   "name_ine": "Piles, Les",
+   "name_cadastre": "LES PILES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "105"
+  },
+  {
+   "ine_code": "43106",
+   "name_ine": "Pinell de Brai, El",
+   "name_cadastre": "EL PINELL DE BRAI",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "106"
+  },
+  {
+   "ine_code": "43107",
+   "name_ine": "Pira",
+   "name_cadastre": "PIRA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "107"
+  },
+  {
+   "ine_code": "43108",
+   "name_ine": "Pla de Santa Maria, El",
+   "name_cadastre": "EL PLA DE SANTA MARIA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "108"
+  },
+  {
+   "ine_code": "43109",
+   "name_ine": "Pobla de Mafumet, La",
+   "name_cadastre": "LA POBLA DE MAFUMET",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "109"
+  },
+  {
+   "ine_code": "43110",
+   "name_ine": "Pobla de Massaluca, La",
+   "name_cadastre": "LA POBLA DE MASSALUCA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "110"
+  },
+  {
+   "ine_code": "43111",
+   "name_ine": "Pobla de Montornès, La",
+   "name_cadastre": "LA POBLA DE MONTORNES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "111"
+  },
+  {
+   "ine_code": "43112",
+   "name_ine": "Poboleda",
+   "name_cadastre": "POBOLEDA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "112"
+  },
+  {
+   "ine_code": "43113",
+   "name_ine": "Pont d'Armentera, El",
+   "name_cadastre": "EL PONT D'ARMENTERA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "113"
+  },
+  {
+   "ine_code": "43141",
+   "name_ine": "Pontils",
+   "name_cadastre": "PONTILS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "141"
+  },
+  {
+   "ine_code": "43114",
+   "name_ine": "Porrera",
+   "name_cadastre": "PORRERA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "114"
+  },
+  {
+   "ine_code": "43115",
+   "name_ine": "Pradell de la Teixeta",
+   "name_cadastre": "PRADELL DE LA TEIXETA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "115"
+  },
+  {
+   "ine_code": "43116",
+   "name_ine": "Prades",
+   "name_cadastre": "PRADES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "116"
+  },
+  {
+   "ine_code": "43117",
+   "name_ine": "Prat de Comte",
+   "name_cadastre": "PRAT DE COMTE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "117"
+  },
+  {
+   "ine_code": "43118",
+   "name_ine": "Pratdip",
+   "name_cadastre": "PRATDIP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "118"
+  },
+  {
+   "ine_code": "43119",
+   "name_ine": "Puigpelat",
+   "name_cadastre": "PUIGPELAT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "119"
+  },
+  {
+   "ine_code": "43120",
+   "name_ine": "Querol",
+   "name_cadastre": "QUEROL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "120"
+  },
+  {
+   "ine_code": "43121",
+   "name_ine": "Rasquera",
+   "name_cadastre": "RASQUERA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "121"
+  },
+  {
+   "ine_code": "43122",
+   "name_ine": "Renau",
+   "name_cadastre": "RENAU",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "122"
+  },
+  {
+   "ine_code": "43123",
+   "name_ine": "Reus",
+   "name_cadastre": "REUS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "123"
+  },
+  {
+   "ine_code": "43124",
+   "name_ine": "Riba, La",
+   "name_cadastre": "LA RIBA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "124"
+  },
+  {
+   "ine_code": "43125",
+   "name_ine": "Riba-roja d'Ebre",
+   "name_cadastre": "RIBA-ROJA D'EBRE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "125"
+  },
+  {
+   "ine_code": "43126",
+   "name_ine": "Riera de Gaià, La",
+   "name_cadastre": "LA RIERA DE GAIA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "126"
+  },
+  {
+   "ine_code": "43127",
+   "name_ine": "Riudecanyes",
+   "name_cadastre": "RIUDECANYES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "127"
+  },
+  {
+   "ine_code": "43128",
+   "name_ine": "Riudecols",
+   "name_cadastre": "RIUDECOLS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "128"
+  },
+  {
+   "ine_code": "43129",
+   "name_ine": "Riudoms",
+   "name_cadastre": "RIUDOMS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "129"
+  },
+  {
+   "ine_code": "43130",
+   "name_ine": "Rocafort de Queralt",
+   "name_cadastre": "ROCAFORT DE QUERALT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "130"
+  },
+  {
+   "ine_code": "43131",
+   "name_ine": "Roda de Berà",
+   "name_cadastre": "RODA DE BERA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "131"
+  },
+  {
+   "ine_code": "43132",
+   "name_ine": "Rodonyà",
+   "name_cadastre": "RODONYA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "132"
+  },
+  {
+   "ine_code": "43133",
+   "name_ine": "Roquetes",
+   "name_cadastre": "ROQUETES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "133"
+  },
+  {
+   "ine_code": "43134",
+   "name_ine": "Rourell, El",
+   "name_cadastre": "EL ROURELL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "134"
+  },
+  {
+   "ine_code": "43136",
+   "name_ine": "Ràpita, La",
+   "name_cadastre": "LA RAPITA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "136"
+  },
+  {
+   "ine_code": "43135",
+   "name_ine": "Salomó",
+   "name_cadastre": "SALOMO",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "135"
+  },
+  {
+   "ine_code": "43905",
+   "name_ine": "Salou",
+   "name_cadastre": "SALOU",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "905"
+  },
+  {
+   "ine_code": "43902",
+   "name_ine": "Sant Jaume d'Enveja",
+   "name_cadastre": "SANT JAUME D'ENVEJA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "902"
+  },
+  {
+   "ine_code": "43137",
+   "name_ine": "Sant Jaume dels Domenys",
+   "name_cadastre": "SANT JAUME DELS DOMENYS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "137"
+  },
+  {
+   "ine_code": "43138",
+   "name_ine": "Santa Bàrbara",
+   "name_cadastre": "SANTA BARBARA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "138"
+  },
+  {
+   "ine_code": "43139",
+   "name_ine": "Santa Coloma de Queralt",
+   "name_cadastre": "SANTA COLOMA DE QUERALT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "139"
+  },
+  {
+   "ine_code": "43140",
+   "name_ine": "Santa Oliva",
+   "name_cadastre": "SANTA OLIVA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "140"
+  },
+  {
+   "ine_code": "43142",
+   "name_ine": "Sarral",
+   "name_cadastre": "SARRAL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "142"
+  },
+  {
+   "ine_code": "43143",
+   "name_ine": "Savallà del Comtat",
+   "name_cadastre": "SAVALLA DEL COMTAT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "143"
+  },
+  {
+   "ine_code": "43144",
+   "name_ine": "Secuita, La",
+   "name_cadastre": "LA SECUITA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "144"
+  },
+  {
+   "ine_code": "43145",
+   "name_ine": "Selva del Camp, La",
+   "name_cadastre": "LA SELVA DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "145"
+  },
+  {
+   "ine_code": "43146",
+   "name_ine": "Senan",
+   "name_cadastre": "SENAN",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "146"
+  },
+  {
+   "ine_code": "43147",
+   "name_ine": "Solivella",
+   "name_cadastre": "SOLIVELLA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "147"
+  },
+  {
+   "ine_code": "43044",
+   "name_ine": "Sénia, La",
+   "name_cadastre": "LA SENIA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "44"
+  },
+  {
+   "ine_code": "43148",
+   "name_ine": "Tarragona",
+   "name_cadastre": "TARRAGONA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "148"
+  },
+  {
+   "ine_code": "43149",
+   "name_ine": "Tivenys",
+   "name_cadastre": "TIVENYS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "149"
+  },
+  {
+   "ine_code": "43150",
+   "name_ine": "Tivissa",
+   "name_cadastre": "TIVISSA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "150"
+  },
+  {
+   "ine_code": "43151",
+   "name_ine": "Torre de Fontaubella, La",
+   "name_cadastre": "LA TORRE DE FONTAUBELLA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "151"
+  },
+  {
+   "ine_code": "43152",
+   "name_ine": "Torre de l'Espanyol, La",
+   "name_cadastre": "LA TORRE DE L'ESPANYOL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "152"
+  },
+  {
+   "ine_code": "43153",
+   "name_ine": "Torredembarra",
+   "name_cadastre": "TORREDEMBARRA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "153"
+  },
+  {
+   "ine_code": "43154",
+   "name_ine": "Torroja del Priorat",
+   "name_cadastre": "TORROJA DEL PRIORAT",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "154"
+  },
+  {
+   "ine_code": "43155",
+   "name_ine": "Tortosa",
+   "name_cadastre": "TORTOSA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "155"
+  },
+  {
+   "ine_code": "43156",
+   "name_ine": "Ulldecona",
+   "name_cadastre": "ULLDECONA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "156"
+  },
+  {
+   "ine_code": "43157",
+   "name_ine": "Ulldemolins",
+   "name_cadastre": "ULLDEMOLINS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "157"
+  },
+  {
+   "ine_code": "43158",
+   "name_ine": "Vallclara",
+   "name_cadastre": "VALLCLARA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "158"
+  },
+  {
+   "ine_code": "43159",
+   "name_ine": "Vallfogona de Riucorb",
+   "name_cadastre": "VALLFOGONA DE RIUCORB",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "159"
+  },
+  {
+   "ine_code": "43160",
+   "name_ine": "Vallmoll",
+   "name_cadastre": "VALLMOLL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "160"
+  },
+  {
+   "ine_code": "43161",
+   "name_ine": "Valls",
+   "name_cadastre": "VALLS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "161"
+  },
+  {
+   "ine_code": "43162",
+   "name_ine": "Vandellòs i l'Hospitalet de l'Infant",
+   "name_cadastre": "VANDELLOS I L'HOSPITALET DE L",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "162"
+  },
+  {
+   "ine_code": "43163",
+   "name_ine": "Vendrell, El",
+   "name_cadastre": "EL VENDRELL",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "163"
+  },
+  {
+   "ine_code": "43164",
+   "name_ine": "Vespella de Gaià",
+   "name_cadastre": "VESPELLA DE GAIA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "164"
+  },
+  {
+   "ine_code": "43170",
+   "name_ine": "Vila-rodona",
+   "name_cadastre": "VILA-RODONA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "170"
+  },
+  {
+   "ine_code": "43171",
+   "name_ine": "Vila-seca",
+   "name_cadastre": "VILA-SECA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "171"
+  },
+  {
+   "ine_code": "43165",
+   "name_ine": "Vilabella",
+   "name_cadastre": "VILABELLA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "165"
+  },
+  {
+   "ine_code": "43175",
+   "name_ine": "Vilalba dels Arcs",
+   "name_cadastre": "VILALBA DELS ARCS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "175"
+  },
+  {
+   "ine_code": "43166",
+   "name_ine": "Vilallonga del Camp",
+   "name_cadastre": "VILALLONGA DEL CAMP",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "166"
+  },
+  {
+   "ine_code": "43167",
+   "name_ine": "Vilanova d'Escornalbou",
+   "name_cadastre": "VILANOVA D'ESCORNALBOU",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "167"
+  },
+  {
+   "ine_code": "43168",
+   "name_ine": "Vilanova de Prades",
+   "name_cadastre": "VILANOVA DE PRADES",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "168"
+  },
+  {
+   "ine_code": "43169",
+   "name_ine": "Vilaplana",
+   "name_cadastre": "VILAPLANA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "169"
+  },
+  {
+   "ine_code": "43172",
+   "name_ine": "Vilaverd",
+   "name_cadastre": "VILAVERD",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "172"
+  },
+  {
+   "ine_code": "43173",
+   "name_ine": "Vilella Alta, La",
+   "name_cadastre": "LA VILELLA ALTA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "173"
+  },
+  {
+   "ine_code": "43174",
+   "name_ine": "Vilella Baixa, La",
+   "name_cadastre": "LA VILELLA BAIXA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "174"
+  },
+  {
+   "ine_code": "43176",
+   "name_ine": "Vimbodí i Poblet",
+   "name_cadastre": "VIMBODI I POBLET",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "176"
+  },
+  {
+   "ine_code": "43177",
+   "name_ine": "Vinebre",
+   "name_cadastre": "VINEBRE",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "177"
+  },
+  {
+   "ine_code": "43178",
+   "name_ine": "Vinyols i els Arcs",
+   "name_cadastre": "VINYOLS I ELS ARCS",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "178"
+  },
+  {
+   "ine_code": "43052",
+   "name_ine": "Xerta",
+   "name_cadastre": "XERTA",
+   "province": "Tarragona",
+   "province_cadastre": "TARRAGONA",
+   "cp": "43",
+   "cm": "52"
+  }
+ ]
+}

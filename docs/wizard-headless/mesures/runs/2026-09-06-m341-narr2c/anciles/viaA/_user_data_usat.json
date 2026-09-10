@@ -1,0 +1,137 @@
+{
+ "client_name": "Maria Alba Barrau Castán",
+ "street_address": "C/GENERAL FERRAZ 20",
+ "site_municipality": "ANCILES",
+ "architect_name": "ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+ "architect_company": "A+M ARQUITECTURA",
+ "building_type": "vivienda adosada (7 unitats)",
+ "num_floors": "PB+1PP amb dos semisòtans",
+ "superficie_parcela_m2": 1655.01,
+ "num_soil_levels": 2,
+ "lab_testing_company": "TPS, Prospecció del Subsòl, SL",
+ "lab_sample_id": "MA (S-2)",
+ "lab_depth": "2.8 - 3.0",
+ "lab_location": "S-2",
+ "cte_edificacio": "C1",
+ "cte_sol": "T-1",
+ "cadastral_refs": "6184504BH9158N0000SS",
+ "field_work_dates": [
+  "2026-02-19"
+ ],
+ "field_work_dates_text": "19 de febrer de 2026",
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "",
+    "depth": "-3.58",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "",
+    "depth": "-4.59",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-3",
+    "cota": "",
+    "depth": "-3.77",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-4",
+    "cota": "",
+    "depth": "-5.92",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-5",
+    "cota": "",
+    "depth": "-4.18",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-6",
+    "cota": "",
+    "depth": "-5.70",
+    "refusal": "Si",
+    "water": "No detectat"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "test_id": "S-1",
+    "cota": "",
+    "depth": "-2.40",
+    "spt_ma": "1/0",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "S-2",
+    "cota": "",
+    "depth": "-3.00",
+    "spt_ma": "1/1",
+    "water": "No detectat"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT-1",
+    "location": "S-1",
+    "depth_range": "-1.00 a -1.60",
+    "n30": "6",
+    "lithology": ""
+   },
+   {
+    "test_id": "SPT-1",
+    "location": "S-2",
+    "depth_range": "-1.00 a -1.60",
+    "n30": "6",
+    "lithology": ""
+   },
+   {
+    "test_id": "MA-1",
+    "location": "S-2",
+    "depth_range": "-2.80 a -3.00",
+    "n30": "1/1/1/1",
+    "lithology": "Graves"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "1er nivell",
+    "litologia": "Arcillas arenosas con puntualmente bolos",
+    "de": "0,00",
+    "a": null
+   },
+   {
+    "name": "2on nivell",
+    "litologia": "Bolos y gravas en matriz arenosa y arcillosa",
+    "de": null,
+    "a": "fins al fons d'investigació (rebuig DPSH: -3,58/-4,59/-3,77/-5,92/-4,18/-5,70 m per punt; sondeigs S-1: -2,40 m, S-2: -3,00 m)"
+   }
+  ],
+  "superficie_construida": "186.18",
+  "lab": {
+   "sample_id": "MA (S-2)",
+   "location": "S-2",
+   "depth": "2.8 - 3.0"
+  }
+ },
+ "soil_types": [
+  "granular",
+  "grava"
+ ],
+ "foundation_depth_m": 2.9,
+ "expedient": "4001679",
+ "_metadata": {
+  "origen": "mesura_341 viaA: lectura + Df del signat",
+  "Df_assumida": 2.9
+ }
+}

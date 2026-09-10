@@ -1,0 +1,24 @@
+{
+  "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_fotografies_CASA 1.pdf + CASA 2_ CARRER TOSCA/PDF/3001706_fotografies_CASA 2.pdf + FOTOGRAFIA/ (13 jpeg)",
+  "document_type": "annex_fotografies",
+  "what_it_is": "Annexos fotogràfics per casa (F-1/F-2: emplaçament de la màquina DPSH) i carpeta de fotos de camp en brut.",
+  "issuer": "G3 (annexos); fotos de camp (WhatsApp/operari)",
+  "date": "fotos WhatsApp del 2026-05-07 (09:25, 10:09, 11:49, 13:43)",
+  "pages_or_sheets": "annexos 1 pàgina cadascun; FOTOGRAFIA/: P1.jpeg, P2.jpeg, P1 CASA 1.jpeg, P2 CASA 1.jpeg, S1 0-3.jpeg, S1 3-3.54.jpeg, S1_EMPL.jpeg, SPT1.jpeg, SPT 11.jpeg + 4 'WhatsApp Image 2026-05-07 at HH.MM.SS.jpeg'",
+  "context": {
+    "who_made_it": "annexos: Eva; fotos: equip de camp",
+    "for_whom": "els informes",
+    "why": "documentació visual dels emplaçaments i testimonis",
+    "expected_fields": ["field_date (noms WhatsApp)", "corroboració de P-1.x/P-2.x/S-1"],
+    "not_expected": ["municipi, client, cap valor: una foto mai és font d'aquests camps (regla)"],
+    "relation_to_others": "capçalera dels annexos: '3001706_1' (casa 1) i '3001706_2' (casa 2) → tercera variant del sufix per-casa (_CASA 1 / _CASA 2 / _1 / _2). 'S1 3-3.54.jpeg' corrobora la profunditat final 3,54 del sondeig.",
+    "authority_for": ["field_date (corroboració pel nom de fitxer)"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2026-05-07", "location": "noms de fitxer FOTOGRAFIA/", "quote": "WhatsApp Image 2026-05-07 at 09.25.11.jpeg (i 3 més del mateix dia)", "confidence": 0.5, "note": "corroboració; EXIF no comprovat (les WhatsApp no en porten)"},
+    {"concept_id": "num_dpsh_tests", "value": "2 per casa (corroboració)", "location": "peus de foto dels annexos", "quote": "…assaigs de penetració dinàmica DPSH P-1.1 i P-1.2 / …DPSH P-2.1 i P-2.2, respectvament", "confidence": 0.4, "note": ""},
+    {"concept_id": "expedient", "value": "3001706 (variants per casa 3001706_1 / 3001706_2)", "location": "capçalera dels annexos de fotografies", "quote": "Fotografies - pàgina 1 | 3001706_1 / 3001706_2", "confidence": 0.5, "note": "tercera grafia del sufix per-casa"}
+  ],
+  "not_present": ["client_name", "architect_name", "street_address", "municipality", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+  "reading_notes": "Annexos renderitzats a 100 dpi (FreeHand/Distiller). Fotos de la carpeta NO obertes una a una (només noms, per regla): P1/P2 CASA 1, S1 0-3 / 3-3.54, SPT1/SPT11, 4 WhatsApp del 07-05."
+}

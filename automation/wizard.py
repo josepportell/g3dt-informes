@@ -48,6 +48,10 @@ WIZARD_FIELDS = [
     'is_anthropized', 'num_soil_levels', 'soil_types', 'foundation_depth_m',
     'cota_referencia', 'has_basement', 'has_retaining_walls',
     'utm_x', 'utm_y',
+    # Narrativa per criteri (peça 3, 2026-09-07): frases senceres editables amb candidats «+N»
+    'site_condition', 'building_structure_desc', 'access_street', 'lab_tests_text', 'num_site_photos',
+    # Data de signatura (bloc 1, 2026-09-07): la que l'Eva signa (ISO `YYYY-MM-DD`); defecte avui
+    'data_signatura',
 ]
 
 # Expert override fields (optional, for when auto-detection gives wrong results)
@@ -987,6 +991,7 @@ def save_wizard_data(
     wizard_fields: dict,
     expert_overrides: dict | None = None,
     sources: dict[str, str] | None = None,
+    extra: dict | None = None,
 ) -> Path:
     """Merge wizard fields + expert overrides into user_data.json and save.
 
@@ -1000,6 +1005,9 @@ def save_wizard_data(
         sources: Optional dict mapping field names to their original source
             (e.g. 'planol A.01.pdf', 'ICGC WMS 1:50k'). Persisted as _sources
             so original provenance survives save/reload cycles.
+        extra: Optional top-level keys to merge verbatim (Fase 8b:
+            `lectura_tables` / `lectura_selections` — dades de la lectura que
+            no son camps del formulari pero que el generador consumeix).
 
     Returns:
         Path to the saved user_data.json file.
@@ -1040,6 +1048,10 @@ def save_wizard_data(
     # Update historia geologica template
     if 'historia_geologica_template' in wizard_fields:
         existing['historia_geologica_template'] = wizard_fields['historia_geologica_template']
+
+    # Fase 8b: blocs que no son camps del formulari (taules de la lectura)
+    if extra:
+        existing.update(extra)
 
     # Persist original sources so badges survive save/reload
     if sources:

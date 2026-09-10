@@ -1,0 +1,43 @@
+{
+ "source_path": "PDF/ANNEXES/4001670_fotografies.pdf",
+ "source_md5": "a4cea6a5792bd51b1b230b1a162d3982",
+ "kind": "pdf",
+ "generated": "2026-09-04T15:41:24",
+ "elapsed_s": 0.805,
+ "dir": "pdf_annexes_4001670_fotografies",
+ "files": [
+  "pdf_annexes_4001670_fotografies/page-1.txt",
+  "pdf_annexes_4001670_fotografies/page-1.png",
+  "pdf_annexes_4001670_fotografies/page-1-top.png",
+  "pdf_annexes_4001670_fotografies/page-1-bottom.png",
+  "pdf_annexes_4001670_fotografies/page-2.txt",
+  "pdf_annexes_4001670_fotografies/page-2.png",
+  "pdf_annexes_4001670_fotografies/page-2-top.png",
+  "pdf_annexes_4001670_fotografies/page-2-bottom.png"
+ ],
+ "pages": 2,
+ "page_sizes_pt": [
+  [
+   595.22,
+   842.0
+  ],
+  [
+   595.22,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 15.0 (Windows)",
+ "creator": "PScript5.dll Version 5.2.2",
+ "creationDate": "D:20260316164948+01'00'",
+ "modDate": "D:20260316164948+01'00'",
+ "text_ok": {
+  "1": false,
+  "2": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1,
+  2
+ ],
+ "text_suspect_reason": "producer: Acrobat Distiller 15.0 (Windows)"
+}

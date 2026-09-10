@@ -1,8 +1,32 @@
 {
-  "source": "user",
-  "site_1": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
-  "site_2": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
-  "dpsh": "FOTOGRAFIES/DPSH/P1.jpg",
-  "sondeig": "FOTOGRAFIES/DPSH/P2.jpg",
-  "materials": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg"
+ "source": "lector",
+ "site_1": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.41_ccbf024a.jpg",
+ "site_2": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
+ "dpsh": "FOTOGRAFIES/DPSH/P1.jpg",
+ "sondeig": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+ "materials": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg",
+ "_lector": {
+  "data": "2026-09-07 19:03",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 56.0,
+  "exclude_slug": "bell-lloc",
+  "raons": {
+   "site_1": "vista general de la parcel·la sense màquina, és F-3 de l'annex (\"Vista general de la parcel·la en estudi\")",
+   "site_2": "vista general de la parcel·la des del carrer/vorera, F-4 de l'annex, mateix peu que F-3",
+   "dpsh": "màquina DPSH sencera al solar amb el vehicle al costat; és F-1 de l'annex (\"vista de l'emplaçament de la maquinària... DPSH P-1 i P-2\"); F-2 (idx3) és equivalent però tria la primera de l'annex",
+   "sondeig": "màquina compacta sobre erugues a la carpeta SONDEIG/, entorn diferent de les fotos DPSH (edifici modern, tanca blava); coincideix amb l'exemplar d'Anciles (màquina compacta similar)",
+   "materials": "caixa de testimonis blava compartimentada amb els nuclis i el cartell del sondeig (Sondeig S-1, Profunditat 0.00-1.80, Caixa 1); coincideix amb els exemplars de Castellar/Anciles (caixa de testimonis)"
+  },
+  "confianca": {
+   "site_1": 0.85,
+   "site_2": 0.8,
+   "dpsh": 0.6,
+   "sondeig": 0.85,
+   "materials": 0.9
+  },
+  "cap_font": [],
+  "notes": "idx1 (full de camp PENETROS escrit a mà) no va a l'informe. idx5 és duplicat del mateix fitxer que idx7 (mateix hash, orientacions/mides diferents) però idx7 és a la carpeta SONDEIG i té el context correcte. idx8 i idx9 són alternatives de 'materials' (tub/mostra SPT amb etiqueta) però idx10 mostra millor la caixa de testimonis sencera amb el cartell, com als exemplars.",
+  "warnings": []
+ }
 }

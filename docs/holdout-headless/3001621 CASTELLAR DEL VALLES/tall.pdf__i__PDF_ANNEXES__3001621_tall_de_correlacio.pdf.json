@@ -1,0 +1,27 @@
+{
+  "source_path": "tall.pdf (Print To PDF, text net) + PDF/ANNEXES/3001621_tall de correlació.pdf (Distiller, mateix dibuix)",
+  "document_type": "annex_tall",
+  "what_it_is": "Tall de correlació A-A' de l'informe (síntesi de l'Eva): P-1..P-4 + S-1, llegenda de nivells, títol complet del projecte",
+  "issuer": "G3 (Eva)",
+  "date": "tall.pdf creationDate 2025-11-03; caixetí 'Data: Octubre 2025'",
+  "pages_or_sheets": "1 pàgina",
+  "context": {
+    "who_made_it": "Eva (FreeHand); tall.pdf n'és la còpia 'Microsoft: Print To PDF' amb text net, l'annex Distiller és el mateix dibuix",
+    "for_whom": "L'informe final (annex tall de correlació)",
+    "why": "Correlacionar els 5 punts d'assaig i sintetitzar els nivells del terreny",
+    "expected_fields": ["num_soil_levels (llegenda)", "expedient (caixetí Exp)", "street_address/municipality/building_type (títol)", "cota (eix msnm)"],
+    "not_expected": ["client_name", "architect_name", "field_date exacta (només 'Octubre 2025')", "referencia_catastral", "lab"],
+    "relation_to_others": "Mateix títol d'informe que l'annex de sondeig. El TALL és la síntesi de l'Eva: si tall i log discrepessin de nivells, mana el tall (aquí coincideixen: 1 nivell + terreny vegetal). Eix vertical 569-572 msnm coherent amb Cota Z 570,90 del sondeig. Duplicat: els dos fitxers compten com UNA font.",
+    "authority_for": ["num_soil_levels (candidat 1 si discrepància amb log)", "expedient (corroboració)", "building_type/street_address (redacció de l'informe)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001621", "location": "caixetí ('Exp:')", "quote": "Exp: 3001621", "confidence": 0.8, "note": "Coincideix amb comanda, annex DPSH i nom de carpeta."},
+    {"concept_id": "num_soil_levels", "value": 1, "location": "llegenda", "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells. (+ 'Terreny Vegetal…' sense numerar)", "confidence": 0.8, "note": "Un sol nivell numerat; coincideix amb la Unitat litològica del log del sondeig."},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "títol del projecte", "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.6, "note": "Singular, com l'annex sondeig; conflicte amb '3 HAB UNIF' del pressupost/comanda/PLAN_COST."},
+    {"concept_id": "street_address", "value": "carrer Arbrells nº 18A-18B-20", "location": "títol del projecte", "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA)", "confidence": 0.7, "note": "Redacció de l'informe → candidat 1 per regla."},
+    {"concept_id": "municipality", "value": "CASTELLAR DEL VALLÈS", "location": "títol del projecte", "quote": "CASTELLAR DEL VALLÈS (BARCELONA)", "confidence": 0.7, "note": ""},
+    {"concept_id": "cota_referencia", "value": "~570-571 msnm (eix del tall 569-572)", "location": "eix vertical del tall (msnm)", "quote": "(msnm) 569 570 571 572", "confidence": 0.3, "note": "Corroboració feble de la cota absoluta del sondeig (570,90); no és una casella de cota."}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "field_date (només 'Octubre 2025')", "num_dpsh_tests (P-1..P-4 visibles: corrobora 4 + S-1)", "utm_x_utm_y", "referencia_catastral", "lab", "cte"],
+  "reading_notes": "Llegit del text net de tall.pdf (Print To PDF del mateix FH11); l'annex Distiller no s'ha renderitzat (mateix dibuix, anotat com a duplicat). Nb's del tall: 16/R, 18/R, 10-33-19/R… coherents amb l'Excel DPSH. Inclou 'Cota de fonamentació recomanada' (fora del nivell A)."
+}

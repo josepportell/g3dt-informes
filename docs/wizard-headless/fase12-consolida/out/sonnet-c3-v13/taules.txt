@@ -1,0 +1,10 @@
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+-- spt_ma_tests: or 1 files / prod 1 files
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+ALERTA   soil_levels[0].de estat or=segur prod=no_trobat (or value='0,00')
+ALERTA   soil_levels[0].a estat or=segur prod=no_trobat (or value='-0,50')
+ERR      soil_levels[1].de segur discrepant: or='-0,50' prod='0.00'
+CAUTELA  soil_levels[1].a or segur, prod candidats (bo dins): '≥ -1,20 (fins al final del reconeixement; el tall el dibuixa fins a la base)'
+TOTALS: {'OK': 24, 'CAUTELA': 2, 'ALERTA': 2, 'ERR': 1}

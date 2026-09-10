@@ -1,0 +1,28 @@
+{
+ "source_path": "A.01.pdf",
+ "source_md5": "ef0272ce32cc3e0a5f65c6995be59200",
+ "kind": "pdf",
+ "generated": "2026-09-03T20:11:16",
+ "elapsed_s": 2.156,
+ "dir": "a_01",
+ "files": [
+  "a_01/page-1.txt",
+  "a_01/page-1.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   2384.0,
+   1684.0
+  ]
+ ],
+ "producer": "pdfplot16.hdi 16.00.047.00000",
+ "creator": "AutoCAD 2021 - Español (Spanish) 2021 (24.0s (LMS Tech))",
+ "creationDate": "D:20250930165209",
+ "modDate": "D:20250930165209",
+ "text_ok": {
+  "1": true
+ },
+ "pages_truncated": false,
+ "halves_pages": []
+}

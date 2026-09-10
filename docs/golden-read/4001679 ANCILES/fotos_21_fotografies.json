@@ -1,0 +1,27 @@
+{
+ "source_path": "FOTOGRAFIES/ (15 imatges + Thumbs.db)",
+ "document_type": "foto",
+ "what_it_is": "Fotos de camp del 19/02/2026: DPSH P1-P4, emplaçament i caixes dels sondeigs S1/S2, mostres SPT amb targeta TPS, i 2 fotos WhatsApp dels fulls de camp de TPS sobre el terreny.",
+ "issuer": "equip de camp (TPS/G3 - Ariadna); 2 amb nom WhatsApp",
+ "date": "2026-02-19 (noms 'WhatsApp Image 2026-02-19 at 12.16.31 / 16.35.43'; targeta de mostra manuscrita '19-2-2026')",
+ "pages_or_sheets": "15 fitxers: DETALL SPT1 S1/S2, EMPL S1/S2, P1-P4, S1, S2, S2_0-3, SPT1 S1/S2, 2 WhatsApp",
+ "context": {
+  "who_made_it": "l'equip de camp fotografia cada punt, les caixes i les mostres",
+  "for_whom": "G3 (annexos de l'informe i arxiu)",
+  "why": "evidència del treball de camp",
+  "expected_fields": ["field_date (nom de fitxer WhatsApp + targeta)", "corroboració de num_dpsh_tests/num_sondeigs", "descripció del solar"],
+  "not_expected": ["client_name (les targetes diuen G3-Eva)", "street_address", "cota", "num_soil_levels", "superficie_parcela"],
+  "relation_to_others": "P1-P4 = F-1..F-4 de l'annex fotogràfic; S1/S2/S2_0-3 = fotos de caixes dels annexos de sondeigs; les 2 WhatsApp mostren els mateixos fulls de PENETROS + SONDEIGS.pdf en el moment d'omplir-los a camp.",
+  "authority_for": ["field_date (corroboració)", "aparellament fotos↔punts"]
+ },
+ "tier_a": [
+  {"concept_id": "field_date", "value": "2026-02-19", "location": "noms de fitxer WhatsApp + targeta de mostra (DETALL SPT1 S1)", "quote": "WhatsApp Image 2026-02-19 at 12.16.31.jpeg | targeta: 'Data: 19-2-2026'", "confidence": 0.8, "note": "EXIF no comprovat; el nom WhatsApp i la targeta manuscrita coincideixen amb totes les altres fonts."},
+  {"concept_id": "num_dpsh_tests", "value": "fotos de 4 punts DPSH en superfície (P1-P4)", "location": "P1.jpeg..P4.jpeg", "quote": "[visual: màquina DPSH a 4 emplaçaments]", "confidence": 0.4, "note": "P5/P6 no tenen foto pròpia (es feien al costat dels sondeigs). Corroboració."},
+  {"concept_id": "num_sondeigs", "value": "2 (caixes 'Sondeo Nº S-1 … 0,00 a 2,40 Caja Nº 1' i 'S-2 … 0,00 a 3,00')", "location": "S1.jpeg, S2.jpeg, S2_0-3.jpeg (etiquetes de caixa manuscrites)", "quote": "Sondeo Nº S-1 | Obra Anciles | Profundidad de 0,00 Mts. A 2,40 | Caja Nº 1", "confidence": 0.7, "note": "profunditats coincidents amb els annexos (S-1 2,40; S-2 3,00)."},
+  {"concept_id": "municipality", "value": "Anciles", "location": "etiquetes de caixa i targeta de mostra ('Obra: Anciles')", "quote": "Obra Anciles | …: Anciles", "confidence": 0.4, "note": "manuscrit en foto: confiança baixa per construcció (regla: mai una foto com a font de municipi)."},
+  {"concept_id": "client_name", "value": "NOT_client_name: G3 - Eva (targeta de mostra TPS)", "location": "DETALL SPT1 S1.jpeg, targeta (línia inferior)", "quote": "…3 - Eva [G3 - Eva]", "confidence": 0.0, "note": "targeta de mostra de TPS amb el seu client (G3); descartat per regla."},
+  {"concept_id": "lab_sample_id", "value": "S.P.T-1 (targeta; colpeig 3/3/3 visible, 'a: 1,60')", "location": "DETALL SPT1 S1.jpeg targeta", "quote": "S.P.T-1 | a: 1,60 | 3 3 3", "confidence": 0.4, "note": "corrobora SPT-1 1,00-1,60 dels fulls; la mostra de lab real és MA-1 (S-2)."}
+ ],
+ "not_present": ["client_name (només G3-Eva)", "architect_name", "street_address", "expedient", "cota_referencia", "num_soil_levels", "superficie_parcela", "num_floors", "utm_x_utm_y", "referencia_catastral", "cte", "lab_testing_company"],
+ "reading_notes": "Contact sheet 4x4 a 340px + zoom de la targeta de mostra (rotada 90°). Solar: prat amb mur de pedra i cases de pedra del nucli al fons (coincideix amb l'annex fotogràfic). Les 2 fotos WhatsApp són els fulls TPS fotografiats a sobre d'una tapa de màquina: mateix contingut que PENETROS + SONDEIGS.pdf, no font independent. Thumbs.db ignorat."
+}

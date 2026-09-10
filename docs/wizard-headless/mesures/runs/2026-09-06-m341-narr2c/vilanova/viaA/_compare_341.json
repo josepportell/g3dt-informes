@@ -1,0 +1,404 @@
+[
+ {
+  "var": "access_street",
+  "grup": "narr",
+  "eva": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.",
+  "gen": "carrer adjacent situat al oest",
+  "status": "MISMATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "adjacent_east_fmt",
+  "grup": "narr",
+  "eva": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+  "gen": "Per la part est amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant, amb piscina.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_intro",
+  "grup": "narr",
+  "eva": "La parcela objeto de estudio se sitúa al sureste del municipio de VILANOVA DE SEGRIÀ, tiene una morfología cuadrada y limita:",
+  "gen": "La parcel·la objecte d'estudi es situa al oest del municipi de Vilanova de Segrià, pren una morfologia rectangular i limita:",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "adjacent_north_fmt",
+  "grup": "narr",
+  "eva": "Por la parte norte y este, con parcelas de similares características a las proyectadas en el estudio.",
+  "gen": "Per la part nord amb un magatzem.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_south_fmt",
+  "grup": "narr",
+  "eva": "Por la parte sur, con una parcela, sin edificaciones, alguna pavimentación, vegetación herbácea de pequeña altura y algún árbol.",
+  "gen": "Per la part sud amb una parcel·la buida.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_west_fmt",
+  "grup": "narr",
+  "eva": "Y finalmente, Por la parte oeste con la calle STA. GEMMA.",
+  "gen": "I finalment, per la part oest, amb el Carrer Santa Gemma.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_name_upper",
+  "grup": "A",
+  "eva": "JUAN JOSÉ TORRES POVEDANO",
+  "gen": "JORDI CARNER",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "building_type_lower",
+  "grup": "A",
+  "eva": "una vivienda unifamiliar aislada",
+  "gen": "habitatge unifamiliar aïllat",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client",
+  "grup": "A",
+  "eva": "GRUPO CUENCA GUERRERO, S.L",
+  "gen": "GRUPO CUENCA GUERRERO S.L.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_levels_detected",
+  "grup": "narr",
+  "eva": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+  "gen": "Es detecta dos nivells de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_water_statement",
+  "grup": "narr",
+  "eva": "En la fecha que se realizaron los trabajos de campo, y hasta la cota ensayada, se detecta un aumento importante de la humedad de los materiales en uno de los ensayos realizados, en concreto, en el P-1 a -1.00 m.",
+  "gen": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "cota_referencia",
+  "grup": "A",
+  "eva": "+321.00",
+  "gen": "+321,69 msnm según el visor ICGC",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-0",
+  "gen": "C-0",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-2",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "El día 19 de febrero de 2026, se visitó la obra para:",
+  "gen": "19 de febrer de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_signatura_text",
+  "grup": "resta",
+  "eva": "Els Omells de Na Gaia, 16 de marzo de 2026",
+  "gen": "06 de setembre de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "expedient",
+  "grup": "A",
+  "eva": "Expediente Núm.: 4001671",
+  "gen": "4001671",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "geo_p",
+  "grup": "resta",
+  "eva": "Desde finales del Oligoceno hasta la actualidad, la depresión del Ebro ha dejado de actuar como cuenca sedimentaria y se ha convertido en una cubeta donde el agente predominante ha sido la erosión. Localmente, en algunos puntos de la cuenca, existen depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a materiales subconsolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan las costras carbonatadas.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "geomech_E",
+  "grup": "calc",
+  "eva": "50",
+  "gen": 50,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_cohesion",
+  "grup": "calc",
+  "eva": "0.10",
+  "gen": 0.0,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_gamma",
+  "grup": "calc",
+  "eva": "1.90",
+  "gen": 2.0,
+  "status": "CLOSE",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_phi",
+  "grup": "calc",
+  "eva": "25",
+  "gen": 29,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "lab_depth",
+  "grup": "A",
+  "eva": "Profundidad: -1.00 a -1.60 m",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_field_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_field_description",
+  "grup": "resta",
+  "eva": "laboratorio de ensayos para el control de calidad de la edificación",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_location",
+  "grup": "A",
+  "eva": "Punto:  P-3",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_sample_id",
+  "grup": "A",
+  "eva": "Muestra: SPT-1",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_testing_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_testing_description",
+  "grup": "resta",
+  "eva": "laboratorio de ensayos para el control de calidad de la edificación",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_tests_text",
+  "grup": "narr",
+  "eva": "Determinación del contenido en ion sulfato en suelos UNE 83963 / 08",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "materials_intro",
+  "grup": "narr",
+  "eva": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+  "gen": "A partir dels assaigs in situ realitzats, s'ha establert dos nivells de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "municipality",
+  "grup": "A",
+  "eva": "En la zona en estudio, en la población de VILANOVA DE SEGRIÀ, se establece una aceleración sísmica básica de:",
+  "gen": "Vilanova de Segrià",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "num_dpsh_tests",
+  "grup": "A",
+  "eva": "3 ensayos de penetración dinámica DPSH (ver registro de los ensayos mecánicos).",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "photo_site_text",
+  "grup": "narr",
+  "eva": "Fotografía 1. Detalle de la parcela de estudio.",
+  "gen": "Fotografia 1 i Fotografia 2",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "plantes",
+  "grup": "A",
+  "eva": "Pb",
+  "gen": "PB (planta baixa, 1 planta)",
+  "status": "CLOSE",
+  "method": "table_cell"
+ },
+ {
+  "var": "qa_value",
+  "grup": "calc",
+  "eva": "2.50 Kg/cm2 con un factor de seguridad incluido de F=3",
+  "gen": "1.00",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "radon_sentence",
+  "grup": "narr",
+  "eva": "La parcela concreta de estudio se localiza en el término municipal de VILANOVA DE SEGRIÀ y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a Municipios ZONA 1, con concentraciones inadecuadas de Gas Radón procedente del terreno en el interior de los locales habitables.",
+  "gen": "La parcel·la concreta d'estudi es localitza al terme municipal de VILANOVA DE SEGRIÀ i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "radon_zone",
+  "grup": "calc",
+  "eva": "1",
+  "gen": "1",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "seismic_ab_text",
+  "grup": "calc",
+  "eva": "AB < 0,04 g (siento g el valor de la gravedad)",
+  "gen": "0,04",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "settlement",
+  "grup": "calc",
+  "eva": "Los asientos máximos previstos para la carga recomendada anteriormente serán menospreciables o inferiores a 1.0 cm.",
+  "gen": "2.00",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "site_condition",
+  "grup": "narr",
+  "eva": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+  "gen": "Com que es tracta d'un solar pla, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_description",
+  "grup": "narr",
+  "eva": "El día de los trabajos de campo se realiza la entrada en la parcela desde la calle situada al oeste. La parcela se localiza delimitada por los muros de las parcelas contiguas y, el acceso desde la calle se encuentra sin ningún tipo de valla o muro, se encuentra expuesta directamente a la calle.\nLa zona de entrada se encuentra y el patio, se encuentran sin pavimentar y con vegetación de tamaño pequeño. A excepción, del extremo Oeste, se encuentra una franja pavimentada y con vallado.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-0.80 a -1.40",
+  "gen": "-0.80 a -1.40",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Arcilla limosa y arenosa con algunas gravas",
+  "gen": "Sorra fina-mitja, compacta (fragment entre parèntesis il·legible)",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "P-1",
+  "gen": "P-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "10",
+  "gen": "24",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_level_name",
+  "grup": "calc",
+  "eva": "1er nivel",
+  "gen": "1er nivell",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "406",
+  "gen": "100",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_parcela",
+  "grup": "A",
+  "eva": "100",
+  "gen": "406.0",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "table_dpsh_range",
+  "grup": "calc",
+  "eva": "Tabla 3 y 4. Resumen de los ensayos in situ realizados.",
+  "gen": "3, 4 i 5",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ }
+]

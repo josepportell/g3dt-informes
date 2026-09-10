@@ -1,0 +1,22 @@
+{
+  "source_path": "ANNEXES/4001607_DPSH.xls",
+  "document_type": "dpsh_excel",
+  "what_it_is": "Transcripció digital dels assaigs DPSH (fulls P-1, P-2, P-3), capçalera tipus a fila 16",
+  "issuer": "G3-Eva (transcripció revisada del full de camp TPS)",
+  "date": "no consta dins del fitxer (camp: 2025-10-01 segons fitxa)",
+  "pages_or_sheets": "P-1, P-2, P-3",
+  "context": {
+    "who_made_it": "Eva, transcrivint els fulls de camp de TPS",
+    "for_whom": "l'informe (annex DPSH) i els càlculs",
+    "why": "digitalitzar el colpeig N20 per punt",
+    "expected_fields": ["num_dpsh_tests (executats — autoritat)", "cota de rebuig per punt"],
+    "not_expected": ["cap metadada de projecte (adreça, client, data) dins del fitxer"],
+    "relation_to_others": "Versió digital REVISADA del manuscrit PENETROS.pdf → l'Excel mana per als valors; PDF/ANNEXES/4001607_DPSH.pdf n'és la impressió amb capçalera de projecte (cota inici, obra, data).",
+    "authority_for": ["num_dpsh_tests"]
+  },
+  "tier_a": [
+    {"concept_id": "num_dpsh_tests", "value": 3, "location": "fulls P-1, P-2, P-3 amb dades a columna C", "quote": "P-1: 16 files de colpeig (rebuig a -2,90 m); P-2: 12 (rebuig a -2,15 m); P-3: 10 (rebuig a -1,75 m)", "confidence": 0.95, "note": "executats = previstos (3); tots tres arriben a refús (colpeig 100)"}
+  ],
+  "not_present": ["tots els altres camps del nivell A (el fitxer no porta metadades de projecte)"],
+  "reading_notes": "xlrd. Peu B80 per full: 'Rebuig a la cota de -2,90 / -2,15 / -1,75 m'. C79/F79 'Nivell 1/Nivell 2' són llegenda de plantilla del gràfic, no recompte de nivells geològics. Columna F (N.F.) sense valors → cap nivell freàtic anotat a l'Excel."
+}

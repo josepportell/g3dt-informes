@@ -1,0 +1,22 @@
+{
+  "source_path": "comanda laboratori_4001612_BELL-LLOC.xls",
+  "document_type": "comanda_lab_g3",
+  "what_it_is": "Petició d'assaigs de laboratori de G3 al laboratori: dades del sol·licitant (G3), dades de l'obra (tipus, expedient, adreça, població, dates), taula de mostres amb cotes i assaigs marcats.",
+  "issuer": "G3 (responsable EVA VÁZQUEZ, dept. Geotècnia)",
+  "date": "2025-10-10 (DATA DE SOL.LICITUD)",
+  "pages_or_sheets": "1 full 'Hoja1', 66×41",
+  "tier_a": [
+    {"concept_id": "expedient", "value": "4001612", "location": "Hoja1!N19 (etiqueta G19 \"NÚM. D'EXPEDIENT\")", "quote": "4001612.0", "confidence": 1.0, "note": "cel·la numèrica (float) → formatar sense decimals"},
+    {"concept_id": "building_type", "value": "CONSTR HABITATGE", "location": "Hoja1!N18 (G18 'OBRA')", "quote": "CONSTR HABITATGE", "confidence": 0.7, "note": "genèric ('construcció d'habitatge'); no diu unifamiliar"},
+    {"concept_id": "street_address", "value": "C/ ANTONI BALLET", "location": "Hoja1!N20 (G20 'ADREÇA', bloc DADES DE L'OBRA)", "quote": "C/ ANTONI BALLET", "confidence": 0.7, "note": "CONFLICTE amb pressupost/fitxa (C/ MESTRE RAMON ORTIZ 15). Sense número. Possible segona façana (cantonada) o carrer mal escrit ('Ballet' vs 'Bellet'). Candidat, no competidor."},
+    {"concept_id": "municipality", "value": "BELL-LLOC", "location": "Hoja1!N21 (G21 'POBLACIÓ', bloc obra)", "quote": "BELL-LLOC", "confidence": 0.95, "note": "NO confondre amb N14 'ELS OMELLS DE NA GAIA' (població del sol·licitant G3)"},
+    {"concept_id": "field_date", "value": "2025-10-06", "location": "Hoja1!N23 (G23 'DATA DE PRESA')", "quote": "datetime(2025,10,6)", "confidence": 0.6, "note": "data de presa de la MOSTRA (sondeig), no necessàriament el primer dia de camp; la fitxa diu 01/10. Candidat: 'últim dia / dia del sondeig'."},
+    {"concept_id": "lab_sample_id", "value": "SPT 1 (S1)", "location": "Hoja1!C35", "quote": "SPT 1 (S1)", "confidence": 0.95, "note": "única mostra"},
+    {"concept_id": "lab_depth", "value": "1,0 - 1,6 m", "location": "Hoja1!J35 (INICIAL), L35 (FINAL)", "quote": "J35=1.0 L35=1.6", "confidence": 0.95, "note": ""},
+    {"concept_id": "lab_location", "value": "S1 (sondeig 1)", "location": "Hoja1!C35", "quote": "SPT 1 (S1)", "confidence": 0.9, "note": "mostra de l'SPT 1 del sondeig S1"},
+    {"concept_id": "lab_tests", "value": "Agressivitat sòls — només sulfats", "location": "Hoja1!AA35='X', AD35", "quote": "NOMÉS SULFATS", "confidence": 1.0, "note": "no és dels 15; útil per validar el GTL"},
+    {"concept_id": "NOT_client_name", "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL / B25364589", "location": "Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)", "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589 | C/ Vallbona, 22 | ELS OMELLS DE NA GAIA", "confidence": 1.0, "note": "REGLA: el sol·licitant de la comanda és SEMPRE G3. Mai candidat a client_name ni a lab_testing_company."}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x/utm_y", "referencia_catastral", "lab_testing_company (el destinatari de la petició no hi consta)", "cte_edificacio", "cte_sol"],
+  "reading_notes": "Identificació determinista: C3 == \"PETICIÓ D'ASSAIGS DE LABORATORI\". Dos blocs amb etiquetes idèntiques (ADREÇA, POBLACIÓ) sota capçaleres diferents (G10 'DADES DEL SOL.LICITANT' files 11-15; G17 \"DADES DE L'OBRA\" files 18-23): cal llegir per bloc, no per etiqueta. Dates a N23/AH23 de tipus data. El laboratori destinatari no s'anomena enlloc (O65 'NÚM. D'INFORME' buit)."
+}

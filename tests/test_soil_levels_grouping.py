@@ -95,8 +95,11 @@ def test_generate_single_level_when_one_group():
 
     assert len(result) == 1
     assert result[0].level_number == 1
-    # Collapse uses the deepest layer's description (bearing material).
+    # Df defecte 0,8 + 0,2 = 1,0: la capa 0-1,0 no carrega → nivell portant = 1,0-4,0
     assert result[0].description == 'graves carbonatades'
+    # sabata a 0,3 m: el portant és la capa de dalt
+    shallow = _generate_soil_levels(dpsh, num_levels=1, sondeig_layers=layers, foundation_depth=0.3)
+    assert shallow[0].description == 'graves sorrenca'
 
 
 # ---------------------------------------------------------------------------
@@ -104,13 +107,22 @@ def test_generate_single_level_when_one_group():
 # ---------------------------------------------------------------------------
 
 def test_generate_override_collapses_to_one():
+    """Col·lapse a 1 nivell: descripció del NIVELL PORTANT (el que la sabata assoleix
+    a Df + 0,2 m), no de la capa més profunda (criteri 2026-09-06, P2a). Amb Df al
+    defecte (0,8): la capa 0-1,0 acaba a 1,0 ≤ 1,0 i no carrega → «sorres llimoses B»
+    (1,0-2,0). Amb pous a 4,5 m (4,5 + 0,2 > 4,5: «substrat alterat A» ja no carrega) →
+    «substrat alterat B»."""
     dpsh = _make_dpsh([(d / 10, 10 + d) for d in range(2, 62, 2)])
     layers = _tulipa_layers()
     result = _generate_soil_levels(dpsh, num_levels=1, sondeig_layers=layers)
 
     assert len(result) == 1
     assert result[0].level_number == 1
-    assert result[0].description == 'substrat alterat B'  # deepest layer overall
+    assert result[0].description == 'sorres llimoses B'
+    deep = _generate_soil_levels(dpsh, num_levels=1, sondeig_layers=layers, foundation_depth=4.5)
+    assert deep[0].description == 'substrat alterat B'
+    # el N20 del nivell únic és el del tram portant, no el de tot el perfil
+    assert result[0].n20_average < deep[0].n20_average
 
 
 # ---------------------------------------------------------------------------

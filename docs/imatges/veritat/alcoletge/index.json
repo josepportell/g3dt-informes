@@ -1,0 +1,162 @@
+{
+ "signat": "4001670_informe.docx",
+ "slug": "alcoletge",
+ "label": "2026-09-07 veritat des dels signats (pas 1)",
+ "n_images": 8,
+ "n_static": 1,
+ "template": "g3dt-jinja-template.docx",
+ "images": [
+  {
+   "n": 1,
+   "file": "01_fig_situacio_figura-1-situacio-de-la-zona-d-estudi.png",
+   "media": "image1.png",
+   "md5": "c3e9dfd8755a1f2a7e980d0e976b8133",
+   "dims": [
+    1561,
+    682
+   ],
+   "bytes": 1527337,
+   "phash": "c6666aba2c516ad9",
+   "slot": "fig_situacio",
+   "static_of": null,
+   "caption": "Figura 1. Situació de la zona d’estudi.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "1.1. ANTECEDENTS",
+   "para": 78
+  },
+  {
+   "n": 2,
+   "file": "02_fig_assaigs_figura-2-situacio-de-l-estructura-projec.png",
+   "media": "image2.png",
+   "md5": "42ffb7316b4eedf92f7ebbc6b4b1f453",
+   "dims": [
+    710,
+    610
+   ],
+   "bytes": 64904,
+   "phash": "e18cd727c9993c32",
+   "slot": "fig_assaigs",
+   "static_of": null,
+   "caption": "Figura 2. Situació de l’estructura projectada i els assaigs realitzats.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.2. RECONEIXEMENT DEL TERRENY",
+   "para": 148
+  },
+  {
+   "n": 3,
+   "file": "03_foto_dpsh_fotografia-1-vista-de-la-maquina-utilitz.jpeg",
+   "media": "image3.jpeg",
+   "md5": "54154d297e0bd5b6ece30107fb9ff17b",
+   "dims": [
+    1600,
+    739
+   ],
+   "bytes": 228435,
+   "phash": "fb49a0f0d9721317",
+   "slot": "foto_dpsh",
+   "static_of": null,
+   "caption": "Fotografia 1. Vista de la màquina utilitzada en un dels assaigs de penetració dinàmica DPSH.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.4.1. Assaigs de penetració tipus “DPSH”",
+   "para": 176
+  },
+  {
+   "n": 4,
+   "file": "04_fig_spt_cullera_figura-3-cullera-normalitzada-grafic-ext.jpeg",
+   "media": "image4.jpeg",
+   "md5": "681b87cc3d4e23fb68124579cb8d8598",
+   "dims": [
+    1552,
+    641
+   ],
+   "bytes": 105135,
+   "phash": "ad18ac99c6d2936d",
+   "slot": "fig_spt_cullera",
+   "static_of": null,
+   "caption": "Figura 3. Cullera normalitzada. Gràfic extret de “Geotécnia y cimientos II” (J.A. Jiménez Salas, J.L. de Justo Alpañés, A.A. Serrano Gonzàlez).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "2.4.2. Assaig tipus S.P.T. (“Standard Penetration Test”)",
+   "para": 182
+  },
+  {
+   "n": 5,
+   "file": "05_fig_geologic_figura-4-mapa-geologic-a-escala-1-50-000.png",
+   "media": "image5.png",
+   "md5": "dc868588bd1872f9804cd79dcc2e3cab",
+   "dims": [
+    669,
+    454
+   ],
+   "bytes": 15103,
+   "phash": "8771986c67bb528c",
+   "slot": "fig_geologic",
+   "static_of": null,
+   "caption": "Figura 4. Mapa geològic a escala 1:50.000 de la zona en estudi (Font: ICGC).",
+   "shared_caption": false,
+   "after": null,
+   "heading": "3.1. MARC GEOLÒGIC",
+   "para": 265
+  },
+  {
+   "n": 6,
+   "file": "06_foto_materials_fotografia-2-detall-dels-materials-recup.png",
+   "media": "image6.png",
+   "md5": "dedb83af5848efd6f08b8c879ad04efc",
+   "dims": [
+    1600,
+    739
+   ],
+   "bytes": 1653600,
+   "phash": "8936c78972f219b6",
+   "slot": "foto_materials",
+   "static_of": null,
+   "caption": "Fotografia 2. Detall dels materials recuperats en l’assaig SPT-1.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "3.2. CARACTERITZACIÓ DELS MATERIALS",
+   "para": 305
+  },
+  {
+   "n": 7,
+   "file": "07_fig_tall_figura-5-detall-del-tall-de-correlacio-q.png",
+   "media": "image7.png",
+   "md5": "c64ee49ec673c2ed8716e71435db59a4",
+   "dims": [
+    952,
+    276
+   ],
+   "bytes": 19416,
+   "phash": "bf80807fe0857a6e",
+   "slot": "fig_tall",
+   "static_of": null,
+   "caption": "Figura 5. Detall del tall de correlació que s’adjunta als annexes.",
+   "shared_caption": false,
+   "after": null,
+   "heading": "4.1. GEOLOGIA",
+   "para": 481
+  },
+  {
+   "n": 8,
+   "file": "08_static_plantilla_final-del-document.jpeg",
+   "media": "image8.jpeg",
+   "md5": "8822ca721d7809d79767e6e870760768",
+   "dims": [
+    473,
+    210
+   ],
+   "bytes": 14249,
+   "phash": "bfc1e060c03f6a4f",
+   "slot": "static_plantilla",
+   "static_of": "image10.jpeg",
+   "caption": "",
+   "shared_caption": false,
+   "after": "(final del document)",
+   "heading": "4.3. FONAMENTACIÓ",
+   "para": 585
+  }
+ ]
+}

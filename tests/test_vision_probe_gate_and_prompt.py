@@ -357,6 +357,70 @@ def test_all_vision_detectable_concepts_exist_in_registry():
     )
 
 
+# ---------------------------------------------------------------------------
+# Fix C / §6.2 (2026-08-31): a map's block number ("32980" printed on
+# Castellar's aerial-view map) is a parcel/block identifier, never a m² area.
+# Two choke points: `_parse_probe_result` (fresh probes) and
+# `concept_sources_to_signals` (cached `concept_map.json` entries stored under
+# the older `_m2`-suffixed alias, from before this rule existed).
+# ---------------------------------------------------------------------------
+
+def test_parse_probe_result_drops_areas_on_maps():
+    from automation.concept_scout.vision_probe import _parse_probe_result
+
+    map_result = {
+        "document_type": "map",
+        "document_description": "Aerial view with block number",
+        "concepts_found": [
+            {"concept_id": "superficie_parcela", "confidence": 0.8, "signal_preview": "32980", "page": 1},
+            {"concept_id": "site_vegetation_visual", "confidence": 1.0, "signal_preview": "arbrat", "page": 1},
+        ],
+    }
+    detected, _, _, sources = _parse_probe_result(map_result, "ANNEXES/ALTRES/m8.png")
+    assert "superficie_parcela" not in detected
+    assert "superficie_parcela" not in sources
+    assert "site_vegetation_visual" in detected  # altres conceptes del mateix mapa no es toquen
+
+    plan_result = {
+        "document_type": "architect_plan",
+        "document_description": "Plànol amb caixetí",
+        "concepts_found": [
+            {"concept_id": "superficie_parcela", "confidence": 0.9, "signal_preview": "1.284 m2", "page": 1},
+        ],
+    }
+    detected, _, _, sources = _parse_probe_result(plan_result, "A.01.pdf")
+    assert "superficie_parcela" in detected and "superficie_parcela" in sources
+
+
+def test_probe_prompt_forbids_areas_from_maps():
+    from automation.concept_scout.vision_probe import _PROBE_PROMPT
+
+    lower = _PROBE_PROMPT.lower()
+    assert "never return superficie_parcela or superficie_construida from a map" in lower
+
+
+def test_concept_sources_to_signals_drops_stale_m2_area_from_map():
+    """`concept_map.json` cachejat abans del Fix C porta la clau `superficie_parcela_m2`
+    (l'àlies del wizard, no el concept_id nu) amb `extraction_method=vision_probe:map` — ha
+    de quedar exclòs igualment sense re-executar la probe."""
+    from automation.concept_scout import concept_sources_to_signals
+    from automation.concept_scout.models import ConceptSource
+
+    sources = {
+        "superficie_parcela_m2": [
+            ConceptSource(file="ANNEXES/ALTRES/m8.png", confidence=0.8, signal_preview="32980",
+                          extraction_method="vision_probe:map", page=1),
+        ],
+        "architect_name": [
+            ConceptSource(file="A.01.pdf", confidence=0.9, signal_preview="Jordi Bosch Novell",
+                          extraction_method="vision_probe:architect_plan", page=1),
+        ],
+    }
+    signals = concept_sources_to_signals(sources)
+    assert all(s.concept_id != "superficie_parcela_m2" for s in signals)
+    assert any(s.concept_id == "architect_name" for s in signals)
+
+
 def test_probe_prompt_requires_house_number_for_street_address():
     """The street_address definition must require a house number and
     instruct the model to abstain on partial reads. Rubí shipped with

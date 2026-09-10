@@ -1,0 +1,120 @@
+{
+ "source_path": "PDF/ANNEXES/4001607_plànol de situació.pdf",
+ "source_md5": "a08feb2ffa73cefe2933a2fd9ce8ab55",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació de G3 (elaboració pròpia, FreeHand/Distiller original) amb ortofoto de localització, minimapa de Linyola i planta de la parcel·la amb els 3 punts d'assaig DPSH marcats",
+ "issuer": "G3",
+ "date": "Octubre 2025",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (logo G3 al peu, mateixa plantilla de caixetí que la resta d'annexos de l'Eva)",
+  "for_whom": "annex intern del propi informe (localitza la parcel·la i els punts d'assaig; no és document del client ni del laboratori)",
+  "why": "situar l'obra dins Linyola (minimapa), situar la parcel·la dins la trama urbana (ortofoto amb parcel·la ressaltada en vermell, etiquetada '84', sobre el carrer 'CLOT DE LA LLACUNA') i localitzar els 3 punts DPSH (P-1, P-2, P-3) amb les seves distàncies sobre la planta de l'edifici",
+  "expected_fields": [
+   "expedient",
+   "municipality",
+   "street_address",
+   "num_dpsh_tests",
+   "building_type"
+  ],
+  "not_expected": [
+   "architect_name",
+   "client_name",
+   "cota_referencia",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "field_date exacte (només mes/any al caixetí)"
+  ],
+  "relation_to_others": "mateix dibuix que 'pl situ.pdf' (versió 'Microsoft: Print To PDF', ja llegit a pl_situ.json) i que l'annex FreeHand original ANNEXES/4001607_plànol de situació.FH11 (no llegible, exclòs de l'inventari); aquest PDF (Distiller/PScript5) és la font PDF/ANNEXES/*.pdf i té prioritat sobre 'pl situ.pdf' segons el Pas 3 del skill, però el contingut visual és idèntic: no compten com a fonts independents",
+  "authority_for": [
+   "expedient",
+   "municipality",
+   "street_address",
+   "num_dpsh_tests",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001607",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 4001607",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta '4001607 LINYOLA'"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "minimapa (etiqueta de la ciutat sota el punt vermell) i títol del projecte",
+   "quote": "Linyola",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Clot de la Llacuna, 16 (Linyola)",
+   "location": "caixetí, cel·la 'TÍTOL DEL PROJECTE'; confirmat a l'ortofoto (rètol vertical 'CLOT DE LA LLACUNA' al costat de la parcel·la ressaltada en vermell, etiquetada '84')",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.8,
+   "note": "carrer confirmat visualment a l'ortofoto (zoom 400dpi), no només pel títol"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Font",
+   "location": "planta de la parcel·la, rètol vertical al costat esquerre del contorn vermell",
+   "quote": "CARRER FONT",
+   "confidence": 0.45,
+   "note": "possible cantonada: rètol dibuixat a la façana de la planta però no coincideix amb el carrer identificat a l'ortofoto ('Clot de la Llacuna'); candidat 2, no descartar"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3",
+   "location": "planta, llegenda 'Assaig de penetració dinàmica DPSH' + 3 marcadors",
+   "quote": "P-1 / P-2 / P-3",
+   "confidence": 0.75,
+   "note": "coincideix amb els 3 fulls (P-1, P-2, P-3) de l'Excel DPSH de l'inventari"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge",
+   "location": "caixetí, cel·la 'TÍTOL DEL PROJECTE'",
+   "quote": "la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+   "confidence": 0.45,
+   "note": "el títol no especifica unifamiliar/plurifamiliar, només 'un habitatge'"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "caixetí, cel·la 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.3,
+   "note": "data d'elaboració del plànol (mes/any), no el dia exacte de camp; candidat feble"
+  }
+ ],
+ "not_present": [
+  "architect_name",
+  "client_name",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela",
+  "num_floors",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "page-1.txt brossa (text_ok=false, PScript5.dll sense ToUnicode) -> lectura 100% visual: page-1.png sencera (150dpi) mes clips a 400dpi (render_clip.py) per confirmar el rètol del carrer a l'ortofoto i el text del caixetí; halves left/right disponibles pero no calien"
+}

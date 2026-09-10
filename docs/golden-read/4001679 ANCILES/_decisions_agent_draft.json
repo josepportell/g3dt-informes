@@ -1,0 +1,187 @@
+{
+ "project": "4001679 ANCILES",
+ "read_date": "2026-08-23",
+ "skill_version": "g3dt-llegir-projecte v0.3",
+ "documents_read": 22,
+ "language_note": "projecte en castellà (Anciles, nucli de Benasque, Osca); plantilles G3 en versió castellana ('CLIENTE', 'PETICIÓ' en català a la comanda)",
+ "fields": {
+  "expedient": {
+   "state": "segur",
+   "value": "4001679",
+   "rule": "nom de carpeta = comanda N19 = annex DPSH 'NÚMERO DE INFORME' = caixetins annexos 'Exp'. El 24·0807 és codi comercial, NO expedient.",
+   "candidates": [
+    {"value": "4001679", "source": "comanda laboratori Hoja1!N19", "quote": "N19=4001679.0"},
+    {"value": "4001679", "source": "PDF_V0/ANEJOS/4001679_DPSH.pdf capçalera (6 p.)", "quote": "NÚMERO DE INFORME: 4001679"},
+    {"value": "4001679", "source": "tall.pdf / pl situ.pdf caixetí", "quote": "Exp: 4001679"}
+   ]
+  },
+  "client_name": {
+   "state": "candidats",
+   "rule": "caixetí 'Promotor' > formulari p.5 signat; PERÒ aquí el p.5 (05/02/2026, posterior al joc de plànols) mana explícitament què ha de constar A L'INFORME, i l'annex de sondeigs de l'informe (fet per Eva) escriu aquest mateix nom com a 'Cliente' → ordenem per evidència del que l'informe farà. Conflicte real: mai segur.",
+   "candidates": [
+    {"value": "MARIA ALBA BARRAU CASTÁN (NIF 18037382T)", "source": "ACCEPTACIO/PRESUPUESTO G3.ANCILES.pdf p.5 signat + PDF_V0/ANEJOS/4001679_sondeos.pdf capçalera", "quote": "DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME: NOMBRE Y APELLIDO: MARIA ALBA BARRAU CASTÁN | Cliente: SRA. ALBA MARIA BARRAU CASTÁN", "note": "és alhora l'arquitecta sol·licitant (pràctica Eva quan factura ella); l'annex inverteix l'ordre del nom (ALBA MARIA)"},
+    {"value": "PICO DE OLA ARQUITECTURA Y PROMOCION S.L.", "source": "24.0807/IV_PLANOS.pdf caixetí Promotor (PROYECTO BÁSICO REVISADO, oct. 2025, joc vigent)", "quote": "Promotor: PICO DE OLA ARQUITECTURA Y PROMOCION S.L.", "note": "regla del caixetí Promotor; societat possiblement de les mateixes arquitectes-promotores"},
+    {"value": "ANDRÉS AMAT y ENRIQUE M. GARDETA", "source": "24.0807/A01_TIPOL.pdf i SITE_prop A.pdf caixetí Promotor (estudio de detalle 2023-24, SUBSTITUÏT)", "quote": "Promotor: ANDRÉS AMAT y ENRIQUE M. GARDETA", "note": "persones reals implicades (Enrique Gardeta obre la parcel·la el 19/02; Andrés Amat en còpia del correu de visita)"}
+   ]
+  },
+  "street_address": {
+   "state": "segur",
+   "value": "C/ General Ferraz 20, Anciles",
+   "rule": "blocs etiquetats OBRA/ADREÇA OBRA/Situación coincideixen a 3 cadenes independents (encàrrec G3, caixetí de l'arquitecta, annexos de l'Eva). L'adreça de la clienta (Calle La Paul 3 B3, Villanova) descartada.",
+   "candidates": [
+    {"value": "C/GENERAL FERRAZ 20", "source": "pressupost p.1 bloc OBRA + fitxa C7", "quote": "OBRA: ESTUDIO GEOTECNICO ⏎ C/GENERAL FERRAZ 20 ⏎ ANCILES (HUESCA)"},
+    {"value": "C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)", "source": "caixetí Situación (A01_TIPOL, SITE_prop A, IV_PLANOS)", "quote": "Situación | C/ General Ferraz 20. ANCILES - BENASQUE (HUESCA)"},
+    {"value": "CALLE GRAL FERRAZ 20 / Nº20", "source": "annex DPSH capçalera + annexos FreeHand", "quote": "OBRA: CALLE GRAL FERRAZ 20"}
+   ]
+  },
+  "municipality": {
+   "state": "segur",
+   "value": "Anciles (Benasque, Huesca)",
+   "rule": "3+ fonts (pressupost, comanda N21, PLAN_COST E9, caixetins). Forma llarga del plànol/annexos: 'Anciles - Benasque (Huesca)' / 'ANCILES, BENASQUE'. El typo 'ARCILES' dels 2 annexos FreeHand NO es propaga.",
+   "candidates": [
+    {"value": "ANCILES (HUESCA)", "source": "pressupost p.1 OBRA", "quote": "ANCILES (HUESCA)"},
+    {"value": "ANCILES", "source": "comanda N21 + PLAN_COST E9", "quote": "POBLACIÓ: ANCILES | EG 7 VIVIENDAS ANCILES"},
+    {"value": "ANCILES - BENASQUE (HUESCA)", "source": "caixetins dels 3 jocs de plànols + annexos Eva ('ANCILES, BENASQUE')", "quote": "Situación | … ANCILES - BENASQUE (HUESCA)"}
+   ]
+  },
+  "architect_name": {
+   "state": "candidats",
+   "rule": "caixetí 'Arquitectura' (autoritat A) dona DUES arquitectes; el tracte comercial és només amb una (Alba). L'informe pot escriure una o totes dues.",
+   "candidates": [
+    {"value": "ALBA BARRAU (nºCol. 6.408) i MIRIAM CASTEL (nºCol. 6.703) — A+M Arquitectura", "source": "caixetí Arquitectura (A01_TIPOL, SITE_prop A, IV_PLANOS)", "quote": "Arquitectura | MIRIAM CASTEL, nºCol. 6.703 | ALBA BARRAU, nºCol. 6.408"},
+    {"value": "MARIA ALBA BARRAU CASTÁN (Retratería)", "source": "pressupost p.1 CLIENTE + signatura digital + correus", "quote": "RETRATERIA, ALBA BARRAU CASTAN,ARQUITECTA | BARRAU CASTAN MARIA ALBA - 18037382T", "note": "sol·licitant i signant; si l'informe posa el client al camp arquitecte (pràctica Eva), coincideixen en la mateixa persona"}
+   ]
+  },
+  "building_type": {
+   "state": "segur",
+   "value": "7 habitatges adossats (7 viviendas adosadas)",
+   "rule": "correu d'encàrrec + PLAN_COST + comanda + projecte (VIVIENDA 1..7) + redacció de l'Eva a l'annex de sondeigs. Comparació CLOSE amb la redacció de l'informe.",
+   "candidates": [
+    {"value": "7 ADOSADOS (RESIDENCIAL)", "source": "correu d'encàrrec 18/11/2024", "quote": "El proyecto consiste en 7 adosados de PB+1PP+BC. | Tipo edificio: 7 ADOSADOS (RESIDENCIAL)"},
+    {"value": "EG 7 VIVIENDAS ANCILES / CONSTR GRUPO DE VIVIENDAS", "source": "PLAN_COST E9 + comanda N18", "quote": "EG 7 VIVIENDAS ANCILES | CONSTR GRUPO DE VIVIENDAS"},
+    {"value": "construcción de 7 viviendas adosadas", "source": "annex sondeigs casella Obra (redacció informe)", "quote": "Estudio Geológico / Geotécnico para la construcción de 7 viviendas adosadas en la Calle Gral Ferraz 20 de Anciles, Benasque"}
+   ]
+  },
+  "num_floors": {
+   "state": "candidats",
+   "rule": "projecte vigent (IV_PLANOS A02-A06 + G05) > correu d'encàrrec. Cap plantilla G3 ho porta. Multiplicitat real de redaccions.",
+   "candidates": [
+    {"value": "PB + P1 + sotacoberta, amb semisoterrani parcial (2 dels 7 habitatges; ~98 m² sota rasant)", "source": "IV_PLANOS G05/RESUMEN + A01_TIPOL (Ps només a T2.a/T2.b)", "quote": "PLANTA SÓTANO 98.42 m2 (no computa) | PLANTA BAJA 522.61 | PLANTA PRIMERA 454.70 | PLANTA BAJO CUBIERTA 188.53"},
+    {"value": "PB+1PP+BC amb dos semisòtans", "source": "correu d'encàrrec", "quote": "7 adosados de PB+1PP+BC. Habría dos semisótanos."},
+    {"value": "SÓTANO, PLANTA BAJA y PLANTA 1", "source": "correu d'encàrrec (bloc 'Datos')", "quote": "Plantas: SÓTANO, PLANTA BAJA y PLANTA 1"}
+   ]
+  },
+  "superficie_parcela": {
+   "state": "segur",
+   "value": "1.655,01 m²",
+   "rule": "plànol topogràfic del projecte vigent (G03); única xifra de parcel·la del corpus, sense contradiccions (1 font A). Cap consulta cadastral amb superfície a la carpeta.",
+   "candidates": [
+    {"value": "1655.01 m²", "source": "24.0807/IV_PLANOS.pdf p.5 (G03 TOPOGRÁFICO PARCELA), text vectorial", "quote": "Superfície Finca  = 1655.01 m²"}
+   ]
+  },
+  "field_date": {
+   "state": "segur",
+   "value": "2026-02-19",
+   "rule": "fitxa F38 > annex DPSH 'FECHA' > albarà TPS; aquí TOTES les fonts coincideixen (DPSH i sondeigs el mateix dia). Acceptació 05/02 i factura 23/02 emmarquen la data.",
+   "candidates": [
+    {"value": "2026-02-19", "source": "fitxa de camp F38 ('dies de camp', tipus data)", "quote": "F38=datetime(2026, 2, 19)"},
+    {"value": "19-2-2026", "source": "manuscrits TPS (albarans + fulls, 6 mencions) + annex DPSH/sondeigs '19/02/2026' + comanda DATA DE PRESA", "quote": "Data: 19-2-2026 | FECHA: 19/02/2026 | N23=2026-02-19"},
+    {"value": "dijous 19, 9:30", "source": "correu d'Enrique Gardeta 17/02/2026 (font independent de G3/TPS)", "quote": "Te confirmo que estaré a partir de las 0930 en la parcela de Anciles"}
+   ]
+  },
+  "cota_referencia": {
+   "state": "candidats",
+   "rule": "annex DPSH 'Cota inicio' = annex sondeigs 'Z' (criteri Eva: topogràfic del projecte, no ICGC ni GPS). Cotes PER PUNT, cap valor únic de projecte; solar gairebé pla.",
+   "candidates": [
+    {"value": "+1106,30 a +1106,65 msnm segons punt (P-1 1106,40; P-2 1106,30; P-3 1106,40; P-4 1106,30; P-5/S-2 1106,42; P-6/S-1 1106,65)", "source": "PDF_V0/ANEJOS/4001679_DPSH.pdf capçaleres", "quote": "Cota inicio: +1106,40 msnm según el topográfico proporcionado."},
+    {"value": "S-1 Z=+1106,65; S-2 Z=+1106,42 msnm", "source": "PDF_V0/ANEJOS/4001679_sondeos.pdf capçaleres", "quote": "Cota inicio según plano topográfico proporcionado: Z: +1106.65 msnm"}
+   ]
+  },
+  "num_soil_levels": {
+   "state": "candidats",
+   "rule": "columna 'Unidad litológica' de l'annex de sondeigs > llegenda del tall; PERÒ aquí es contradiuen i el tall + peus de gràfiques DPSH anomenen 2 nivells explícits → probable omissió d'etiqueta al log (lliçó Tulipa: mai segur amb annexos discrepants; creuar).",
+   "candidates": [
+    {"value": "2 (1er nivel: Arcillas arenosas con puntualmente bolos; 2do nivel: Bolos y gravas en matriz arenosa y arcillosa)", "source": "tall.pdf LEYENDA + secció A-A' (2 trames) + peu de les 6 gràfiques DPSH ('Nivel 1 / Nivel 2')", "quote": "1er nivel: Arcillas arenosas con puntualmente bolos. | 2do nivel: Bolos y gravas en matriz arenosa y arcillosa."},
+    {"value": "1 (NIVEL 1 únic als logs S-1 i S-2)", "source": "PDF_V0/ANEJOS/4001679_sondeos.pdf columna Unidad litológica (zoom 200 dpi)", "quote": "NIVEL 1 [cap NIVEL 2, tot i el tram basal de bolos dibuixat a S-2]"}
+   ]
+  },
+  "num_dpsh_tests": {
+   "state": "candidats",
+   "rule": "Excel DPSH (executats) > albarà TPS > previstos. Excel i albarà diuen 6; 2 dels 6 són al fons/costat dels sondeigs → la redacció de l'informe pot dir 6, o 4+2. num_sondeigs = 2 (segur: S-1, S-2).",
+   "candidates": [
+    {"value": "6 (P-1..P-4 + P-5 al S-2 + P-6 al S-1)", "source": "ANEJOS/4001679_DPSH.xls (6 fulls amb dades) + albarà TPS + annex DPSH (6 pàgines)", "quote": "6  Nº de penetròmetres realitzats | P‐5 (S2) | P‐6 (S1)"},
+    {"value": "4 des de superfície + 2 associats als sondeigs", "source": "fotos P1-P4 + capçaleres manuscrites 'S.2-P5'/'S1-P6' + P-5/P-6 comencen a -3,2/-2,6 m", "quote": "columnes: P4 | S.2-P5 | S1-P6 (amb 'Sondeig' escrit al tram superior buit)"},
+    {"value": "5 previstos", "source": "pressupost p.2 + fitxa E13 + PLAN_COST OFERTA!B21", "quote": "5 ensayos de penetración dinámica DPSH | 5P+2S", "note": "previstos ≠ executats; mana l'Excel"}
+   ]
+  },
+  "utm_x_utm_y": {
+   "state": "no_trobat",
+   "sources_checked": ["cap COORDENADES.txt (ni ANNEXES/ALTRES/)", "annex sondeigs (la plantilla castellana no porta caselles x/y; només Z)", "annex plano de situación (sense malla UTM)", "IV_PLANOS G01/G03 (sense coordenades llegibles al text)", "correus"],
+   "rule": "COORDENADES.txt > caselles x/y de l'annex de sondeig > res (no geocodificar aquí).",
+   "note": "proposta: derivar del Cadastre (ref. 6184504BH9158N0000SS) o del visor, com fa l'Eva."
+  },
+  "referencia_catastral": {
+   "state": "segur",
+   "value": "6184504BH9158N0000SS",
+   "rule": "referència escrita al correu d'encàrrec (cap consulta Cadastre a la carpeta); 1 font A sense contradicció, coherent amb el polígon 61845 del retall cadastral de l'annex de situació.",
+   "candidates": [
+    {"value": "6184504BH9158N0000SS", "source": "24.0807/Presupuesto Parcela Anciles.msg (cos, bloc 'Datos', escrit per l'arquitecta)", "quote": "Referencia catastral: 6184504BH9158N0000SS", "note": "única font textual; el retall cadastral de l'annex (etiquetes 618xx) hi és coherent"}
+   ]
+  },
+  "lab": {
+   "lab_testing_company": {
+    "state": "candidats",
+    "rule": "sense GTL (arriba setmanes després) el nom del lab no és lectura; la comanda no el porta.",
+    "candidates": [
+     {"value": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075)", "source": "coneixement previ (G3 hi treballa; TPS ha fet el camp)", "quote": "[cap document de la carpeta ho diu]", "note": "candidat per coneixement previ, NO lectura"}
+    ]
+   },
+   "lab_sample_id": {
+    "state": "segur",
+    "value": "MA-1 / 'MA (S-2)' — mostra alterada del sondeig S-2, només sulfats/agressivitat",
+    "rule": "comanda fila 35 = annex sondeigs = full de camp TPS (2 cadenes independents: G3 i TPS).",
+    "candidates": [
+     {"value": "MA (S-2), NOMÉS SULFATS", "source": "comanda Hoja1!C35/AA35/AD35", "quote": "MA (S-2) | X | NOMÉS SULFATS"},
+     {"value": "MA-1", "source": "annex sondeigs p.3 + full de camp TPS p.6", "quote": "MA-1 | -2.80 -3.00 | 2,80 a 3,00 M A - 1"}
+    ]
+   },
+   "lab_depth": {
+    "state": "segur",
+    "value": "2,80-3,00 m",
+    "rule": "comanda (J35/L35) = manuscrit TPS = annex sondeigs; sense GTL, la comanda basta.",
+    "candidates": [
+     {"value": "2,8-3,0", "source": "comanda J35/L35", "quote": "J35=2.8 L35=3.0"},
+     {"value": "2,80 a 3,00", "source": "full de camp TPS S-2 + annex sondeigs", "quote": "2,80 a 3,00 | M A - 1"}
+    ]
+   },
+   "lab_location": {
+    "state": "segur",
+    "value": "sondeig S-2",
+    "rule": "id de mostra 'MA (S-2)' + log S-2.",
+    "candidates": [
+     {"value": "S-2", "source": "comanda C35 + annex sondeigs p.3", "quote": "MA (S-2)"}
+    ]
+   }
+  },
+  "cte": {
+   "cte_edificacio": {
+    "state": "no_trobat",
+    "sources_checked": ["pressupost p.2 'Clasificación CTE' (zona BUIDA, verificat amb render als 2 exemplars)", "correu d'encàrrec (no diu 'es un C1')", "comanda", "annexos"],
+    "note": "cap document el declara. Per la definició de l'Eva (C1 = >300 m² i <4 plantes; superfície construïda 1.165,84 m², PB+1+BC) en resultaria C-1, però això és INFERÈNCIA, no lectura."
+   },
+   "cte_sol": {
+    "state": "no_trobat",
+    "sources_checked": ["pressupost p.2 'Clasificación CTE' (buida)", "correus", "annexos"],
+    "note": "cap T-x escrit enlloc."
+   }
+  }
+ },
+ "cross_document_conflicts": [
+  "client_name: Promotor 2023-24 (Amat+Gardeta) → Promotor 2025 (PICO DE OLA S.L.) → p.5 signat i annex Eva (Alba Barrau). Tres respostes segons la font; l'informe (annex sondeigs) apunta a Alba Barrau.",
+  "num_soil_levels: tall (2 nivells amb nom) vs columna Unidad litológica dels logs (només NIVEL 1).",
+  "num_dpsh_tests: 5 previstos vs 6 executats (2 dels quals en fondària als sondeigs).",
+  "typo 'ARCILES' (per ANCILES) al caixetí dels annexos FreeHand tall + plano de situación.",
+  "cte: la zona 'Clasificación CTE' del pressupost és buida (cas nou: a RUBI hi era)."
+ ],
+ "notes": "PDF_V0/ANEJOS inclosos expressament (única còpia dels annexos de l'Eva). No llegits: 4001679_generated.docx, PDF_V0/4001679_informe_V0.pdf, PDF_V0/LETRA/, validation/, .FH11 (font FreeHand), Thumbs.db. Acceptació: 05/02/2026 (signatura digital); factura 23/02/2026 1.917,85 € (DTE.txt); annexos muntats 16/03/2026."
+}

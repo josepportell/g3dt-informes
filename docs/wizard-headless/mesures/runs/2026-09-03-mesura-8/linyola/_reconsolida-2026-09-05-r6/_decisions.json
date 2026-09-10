@@ -1,0 +1,2956 @@
+{
+ "schema_version": 1,
+ "project": "4001607 LINYOLA",
+ "generated": "2026-09-05T14:22:57",
+ "skill_version": "1.6",
+ "consolidation": {
+  "consolidator": "python-1.0",
+  "elapsed_s": 0.016,
+  "n_docs": 20,
+  "n_conflicts": 0,
+  "docs_skill_versions": [
+   "1.0",
+   "1.6"
+  ],
+  "llm_only_fields": null
+ },
+ "fields": {
+  "architect_company": {
+   "estat": "segur",
+   "value": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+   "candidates": [
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí, bloc REDACTOR/S",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P / C/ ARBORÈTUM NÚM. 17 25199 LLEIDA - TEL. 973157519"
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT SLP",
+     "font": "25.0616/RE_ pressupost geotècnic.msg peu de correu i avís legal del missatge original citat",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT SLP ... Dades identificatives: Bunyesc Arquitectura Eficient Slp, B25828922, Carrer Arboretum 17,25199, Lleida.",
+     "note": "forma despatx; corroborada visualment per l'adjunt image011.png (logo 'BUNYESC ARQUITECTES / ARQUITECTURA EFICIENT', no aporta dades noves, no és font independent). Candidats junt amb 'Laia Alarcón' (persona), mai segur."
+    },
+    {
+     "value": "Bunyesc Arquitectura Eficient, SLP",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 capçalera, bloc 'CLIENT:' (sol·licitant)",
+     "quote": "CLIENT:\nBUNYESC ARQUITECTURA EFICIENT, SLP\nC/ ARBORETUM, 17\n25199    LLEIDA",
+     "note": "El bloc CLIENT: del pressupost és el sol·licitant, no el client de l'informe (Pas 3). Candidat a arquitecte perquè conté 'ARQUITECTURA'; l'adreça (Lleida) és la del despatx, no de l'obra. Mai segur amb aquesta única font — confirmar amb caixetí del plànol o signatura del correu d'encàrrec."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "Bunyesc Arquitectura Eficient",
+     "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, peu legal del correu original citat + logotip adjunt (image.png)",
+     "quote": "Dades identificatives: Bunyesc Arquitectura Eficient Slp, B25828922, Carrer Arboretum 17,25199, Lleida.",
+     "note": "Forma despatx, alternativa a la persona (architect_name). Corroborat pel logotip adjunt image.png ('BUNYESC ARQUITECTES / ARQUITECTURA EFICIENT'), decoratiu (signatura de Laia Alarcón), sense dades noves. No és font independent del correu original ja citat a 25_0616_re_pressupost_geot_cnic.json."
+    },
+    {
+     "value": "Bunyesc Arquitectura Eficient SLP",
+     "font": "25.0616/pressupost geotècnic.msg peu de correu (dades identificatives) i logotip de l'adjunt image.png ('BUNYESC ARQUITECTES · ARQUITECTURA EFICIENT')",
+     "quote": "Dades identificatives: Bunyesc Arquitectura Eficient Slp, B25828922, Carrer Arboretum 17,25199, Lleida.",
+     "note": "Forma despatx; veure nota a architect_name sobre la parella persona/despatx."
+    },
+    {
+     "value": "Bunyesc Arquitectura Eficient, S.L.P",
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc REDACTOR/S",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+     "note": "Despatx redactor; coexisteix amb el nom de la persona (Josep Bunyesc Palacín)."
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc REDACTOR/S",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P"
+    }
+   ],
+   "sources_checked": [
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "pl situ.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"
+   ],
+   "note": "Forma despatx; veure nota a architect_name sobre la parella persona/despatx."
+  },
+  "architect_name": {
+   "estat": "candidats",
+   "value": "Josep Bunyesc Palacín",
+   "candidates": [
+    {
+     "value": "Josep Bunyesc Palacín",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí, bloc REDACTOR/S (totes les pàgines)",
+     "quote": "representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+     "note": "Persona (no despatx), consistent a les 11 pàgines."
+    },
+    {
+     "value": "Laia Alarcón",
+     "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, signatura de l'arquitecta al correu original citat (19/08/2025)",
+     "quote": "Laia Alarcón\narquitecta\n+34 628 57 72 24\n+34 973 15 75 19\nlaia.alarcon@bunyesc.com",
+     "note": "Persona (no despatx). No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json). Coexisteix amb la forma despatx (architect_company) al mateix correu: segons regla Pas 3 ('architect_name amb persona I despatx' — cas Linyola explícitament citat al skill), candidats [persona | despatx], mai segur."
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "font": "25.0616/25·0616.pdf p.1 bloc CLIENT:",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "note": "El bloc CLIENT: del pressupost és el sol·licitant, no el promotor; el nom conté 'ARQUITECTURA' → candidat a architect_name (forma despatx), mai segur ni client_name (regla Pas 3)."
+    }
+   ],
+   "rule": "contradiccio: Laia Alarcón (1 doc, conf max 0.65); BUNYESC ARQUITECTURA EFICIENT, SLP (1 doc, conf max 0.55)",
+   "altres": [
+    {
+     "value": "Josep Bunyesc Palacín",
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc REDACTOR/S",
+     "quote": "JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+     "note": "Persona redactora, 'representat per' el despatx."
+    },
+    {
+     "value": "Josep Bunyesc Palacín",
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc REDACTOR/S",
+     "quote": "representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+     "note": "Persona (Dr. Arquitecte) dins del bloc REDACTOR/S; el despatx és BUNYESC ARQUITECTURA EFICIENT, S.L.P (vegeu architect_company)."
+    },
+    {
+     "value": "Laia Alarcón",
+     "font": "25.0616/pressupost geotècnic.msg signatura del correu",
+     "quote": "Laia Alarcón\n\narquitecta",
+     "note": "Forma persona. Existeix també la forma despatx 'BUNYESC ARQUITECTES' / 'Bunyesc Arquitectura Eficient SLP' (peu de correu + logo de l'adjunt image.png) — quan conviuen persona i despatx, candidats [persona | despatx], mai segur (regla coneguda a Linyola)."
+    },
+    {
+     "value": "Laia Alarcón",
+     "font": "25.0616/RE_ pressupost geotècnic.msg signatura del missatge original citat",
+     "quote": "Laia Alarcón\narquitecta\n+34 628 57 72 24",
+     "note": "forma persona; al mateix correu també apareix la forma despatx 'BUNYESC ARQUITECTURA EFICIENT SLP' (peu legal i logo adjunt) → quan coexisteixen persona i despatx, candidats [persona | despatx], MAI segur (regla coneguda per a Linyola, Pas 3)."
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 bloc CLIENT",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "font": "25.0616/25·0616.pdf p.1 bloc CLIENT",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "note": "despatx del sol·licitant; persona si es pot (regla persona/despatx)"
+    }
+   ],
+   "sources_checked": [
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "25.0616/25·0616.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"
+   ],
+   "note": "Persona (no despatx), consistent a les 11 pàgines."
+  },
+  "building_type": {
+   "estat": "candidats",
+   "value": "Habitatge unifamiliar aïllat",
+   "candidates": [
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí, bloc TÍTOL DEL PROJECTE (totes les pàgines)",
+     "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "Redacció literal de l'informe sol ser 'un habitatge unifamiliar' — comparació CLOSE esperada."
+    },
+    {
+     "value": "EG HAB UNIF LINYOLA",
+     "font": "25.0616/PLAN_COST_LINYOLA.xlsx 'Plan Cost'!E9 (B9 DESCRIPCIÓ TITÒL)",
+     "quote": "EG HAB UNIF LINYOLA",
+     "note": "format 'EG HAB UNIF {MUNICIPI}': expandir tipus; el final és el municipi"
+    },
+    {
+     "value": "habitatge unifamiliar",
+     "font": "25.0616/RE_ pressupost geotècnic.msg primera línia del cos del missatge original citat",
+     "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+     "note": "redacció molt propera a com ho escriu l'informe ('un habitatge unifamiliar'); instrucció del client/arquitecta, anterior a qualsevol annex de l'Eva."
+    }
+   ],
+   "rule": "contradiccio: EG HAB UNIF LINYOLA (1 doc, conf max 0.60)",
+   "altres": [
+    {
+     "value": "CONSTR HABITATGE",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!N18 (G18 OBRA)",
+     "quote": "CONSTR HABITATGE"
+    },
+    {
+     "value": "habitatge",
+     "font": "PDF/ANNEXES/4001607_plànol de situació.pdf TÍTOL DEL PROJECTE (caixetí)",
+     "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "el títol només diu 'un habitatge', no especifica 'unifamiliar'; no s'amplia el valor per no fabricar informació no impresa"
+    },
+    {
+     "value": "habitatge unifamiliar",
+     "font": "25.0616/pressupost geotècnic.msg cos del correu, primera frase",
+     "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+     "note": "Redacció de l'arquitecta; comparació CLOSE amb la redacció de l'informe."
+    },
+    {
+     "value": "habitatge unifamiliar",
+     "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+     "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+     "note": "No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json)."
+    },
+    {
+     "value": "habitatge",
+     "font": "PDF/ANNEXES/4001607_tall de correlació.pdf peu, bloc 'TÍTOL DEL PROJECTE'",
+     "quote": "la construcció d'un habitatge",
+     "note": "no especifica unifamiliar/plurifamiliar; candidat feble"
+    },
+    {
+     "value": "habitatge",
+     "font": "pl situ.pdf caixetí p.1, bloc 'TÍTOL DEL PROJECTE'",
+     "quote": "...la construcció d'un habitatge...",
+     "note": "no s'especifica unifamiliar ni nombre de plantes, només 'un habitatge'"
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc TÍTOL DEL PROJECTE",
+     "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+     "note": "Redacció del títol del projecte de l'arquitecte."
+    },
+    {
+     "value": "Habitatge unifamiliar aïllat",
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc TÍTOL DEL PROJECTE",
+     "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT"
+    },
+    {
+     "value": "habitatge",
+     "font": "tall.pdf peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte",
+     "quote": "la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "redacció genèrica 'habitatge', sense especificar unifamiliar/plurifamiliar; candidat feble"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "RV_ Realització geotècnic.msg",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "25.0616/PLAN_COST_LINYOLA.xlsx",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "tall.pdf"
+   ],
+   "note": "Redacció literal de l'informe sol ser 'un habitatge unifamiliar' — comparació CLOSE esperada."
+  },
+  "client_name": {
+   "estat": "segur",
+   "value": "Sílvia Eroles Balagueró",
+   "candidates": [
+    {
+     "value": "Sílvia Eroles Balagueró",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.3, bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', camp NOM I COGNOMS",
+     "quote": "NOM I COGNOMS:  SÍLVIA EROLES BALAGUERÓ",
+     "note": "Autoritat A (Pas 3: formulari p.5/p.3 del pressupost signat). Coincideix amb 'ADREÇA ON S'HA D'ENVIAR L'INFORME' (mateix nom) i amb la signatura 'El client'. NIF 47697437Z i adreça C/Llibertat 13 1-1, 25240 Linyola són l'adreça personal de la clienta, fora dels 15 camps — no s'emeten com a tier_a."
+    },
+    {
+     "value": "SÍLVIA EROLES BALAGUERÓ i JAUME NADAL ANDREU",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí, bloc PROMOTORS (totes les pàgines 1-11)",
+     "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU",
+     "note": "Promotor doble (parella). Regla: en plànol d'arquitecte, 'Promotor' = client_name (prioritat alta). ATENCIÓ: al caixetí de la pàgina 1 el segon cognom surt 'JAUME ANDAL ANDREU' (verificat visualment a la imatge, no és error d'extracció de text), mentre que a les pàgines 2-11 (10 de 11 aparicions) diu 'JAUME NADAL ANDREU'. Candidats de cognom: [NADAL (majoria, 10/11) | ANDAL (pàgina 1, 1/11)]. Creuar amb ACCEPTACIO/DADES CLIENT.txt i el pressupost/acceptació signada per resoldre."
+    },
+    {
+     "value": "Sílvia Eroles i Jaume Nadal Andreu",
+     "font": "RV_ Realització geotècnic.msg capçalera del correu citat (De/CC) i signatura",
+     "quote": "De: Silvia Eroles <serolesba@gmail.com> ... CC: jaume nadal andreu <jume_540@hotmail.com> ... Moltes gràcies, Sílvia",
+     "note": "Corrobora el nom del client (parella promotora, coherent amb altres fitxers del projecte etiquetats 'silvia_jaume'), però és correspondència, no el formulari d'acceptació (p.5) ni el caixetí del plànol: mai segur com a font única."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "Jaume Nadal Andreu",
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc PROMOTORS",
+     "quote": "JAUME NADAL ANDREU",
+     "note": "Segon promotor, mateix bloc PROMOTORS; vegeu nota del primer candidat."
+    },
+    {
+     "value": "Sílvia Eroles",
+     "font": "ACCEPTACIO/RV_ Realització geotècnic.msg cos, correu 23/09/2025 16:36 (Sílvia Eroles → G3 DT), l.25-41",
+     "quote": "Adjunto l'acceptació del pressupost. […] Sílvia Eroles",
+     "note": "clienta que sol·licita activar l'estudi i envia l'acceptació signada del pressupost 25·0616; no és el formulari p.5 (autoritat A), és correu — candidat, no segur. Possible co-clienta amb Jaume Nadal Andreu (veure candidat següent); noms de fitxer del projecte porten sempre els dos ('Silvia_Jaume')."
+    },
+    {
+     "value": "Sílvia Eroles Balagueró",
+     "font": "25.0616/pressupost geotècnic.msg cos del correu, bloc 'Dades Clienta:'",
+     "quote": "Dades Clienta:\n\nSílvia Eroles Balagueró.\ndni: 47697437Z\ndirecció facturació: C/ Llibertat 13, 1r 2a -25240-  LINYOLA\ntelf: 618 10 86 12\ncorreu: serolesba@gmail.com",
+     "note": "Etiquetat explícitament 'Dades Clienta' (no 'CLIENT:' de sol·licitant) — nom + DNI + adreça de facturació + contacte. Candidat fort per client_name; únic document en aquesta crida, cal creuar amb el caixetí del plànol (Promotor) i amb ACCEPTACIO. L'adreça de facturació (C/ Llibertat 13, LINYOLA) és la del client, NO l'adreça de l'obra."
+    },
+    {
+     "value": "Sílvia Eroles Balagueró",
+     "font": "25.0616/RE_ pressupost geotècnic.msg cos del missatge original citat (Laia Alarcón → Dolors Maqueda, 2025-08-19), bloc 'Dades Clienta'",
+     "quote": "Dades Clienta:\n\tSílvia Eroles Balagueró.\n\tdni: 47697437Z\n\tdirecció facturació: C/ Llibertat 13, 1r 2a -25240-  LINYOLA\n\ttelf: 618 10 86 12\n\tcorreu: serolesba@gmail.com",
+     "note": "L'arquitecta (sol·licitant) declara explícitament 'Dades Clienta' per a Sílvia Eroles Balagueró — no és el 'CLIENT:' ambigu d'una plantilla G3, és una identificació directa de la promotora feta per qui encarrega l'obra. Tot i així, per jerarquia (Pas 3), un plànol amb etiqueta 'Promotor' o l'ACCEPTACIO/DADES CLIENT.txt tenen prioritat superior si existeixen. DNI declarat: 47697437Z."
+    },
+    {
+     "value": "Sílvia Eroles Balagueró",
+     "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, correu original citat de Laia Alarcón (19/08/2025), bloc 'Dades Clienta'",
+     "quote": "Dades Clienta:\n\tSílvia Eroles Balagueró.\n\tdni: 47697437Z\n\tdirecció facturació: C/ Llibertat 13, 1r 2a -25240-  LINYOLA\n\ttelf: 618 10 86 12\n\tcorreu: serolesba@gmail.com",
+     "note": "Correu que etiqueta explícitament 'Dades Clienta' (regla Pas 3: correus que ho diguin). No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json). Coincideix amb l'autoritat superior acceptacio_g3dt_silvia_jaume_signat.json (formulari p.5 signat: 'NOM I COGNOMS: SÍLVIA EROLES BALAGUERÓ')."
+    },
+    {
+     "value": "Jaume Nadal Andreu",
+     "font": "ACCEPTACIO/RV_ Realització geotècnic.msg capçalera correu 23/09/2025 16:36, l.20 (Para:)",
+     "quote": "Para: G3 DT <g3@g3dt.com>; jaume nadal andreu <jume_540@hotmail.com>",
+     "note": "co-destinatari en còpia; no escriu ni signa res en aquest fitxer, però el cognom apareix sempre juntament amb Sílvia als noms dels fitxers del projecte (Silvia_Jaume) → candidat a co-client/co-promotor."
+    },
+    {
+     "value": "Sílvia Eroles Balagueró",
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc PROMOTORS",
+     "quote": "SÍLVIA EROLES BALAGUERÓ",
+     "note": "Projecte amb 2 promotors (Linyola); l'etiqueta PROMOTORS del caixetí és font d'autoritat A però no decideix per si sola quin dels dos consta com a client de l'informe (depèn de qui signa l'acceptació, no llegida en aquesta crida)."
+    },
+    {
+     "value": "Sílvia Eroles Balagueró",
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc PROMOTORS",
+     "quote": "SÍLVIA EROLES BALAGUERÓ",
+     "note": "Dos promotors al mateix encàrrec (vegeu també Jaume Nadal Andreu); l'informe pot anar a nom de qui signa l'acceptació (ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf, no obert en aquesta crida). Candidat, no segur, per la multiplicitat."
+    },
+    {
+     "value": "Jaume Nadal Andreu",
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc PROMOTORS",
+     "quote": "JAUME NADAL ANDREU",
+     "note": "Co-promotor amb Sílvia Eroles Balagueró; mateixa nota de multiplicitat."
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP / C/ ARBORETUM, 17 / 25199 LLEIDA",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "font": "25.0616/25·0616.pdf p.1 bloc CLIENT (y,x)",
+     "quote": "BUNYESC ARQUITECTURA EFICIENT, SLP / C/ ARBORETUM, 17 / 25199 LLEIDA",
+     "note": "= SOL·LICITANT del pressupost (sovint l'arquitecte); NO és autoritat per a client_name (regla G3)"
+    },
+    {
+     "value": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
+     "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!C6 (CLIENT)",
+     "quote": "BUNYESC ARQUITECCTURA EFICIENT, SLP",
+     "note": "= sol·licitant (regla G3); NO autoritat de client_name"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg"
+   ],
+   "note": "Promotor doble (parella). Regla: en plànol d'arquitecte, 'Promotor' = client_name (prioritat alta). ATENCIÓ: al caixetí de la pàgina 1 el segon cognom surt 'JAUME ANDAL ANDREU' (verificat visualment a la imatge, no és error d'extracció de text), mentre que a les pàgines 2-11 (10 de 11 aparicions) diu 'JAUME NADAL ANDREU'. Candidats de cognom: [NADAL (majoria, 10/11) | ANDAL (pàgina 1, 1/11)]. Creuar amb ACCEPTACIO/DADES CLIENT.txt i el pressupost/acceptació signada per resoldre.",
+   "descartats": [
+    {
+     "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!N11-N14 (bloc DADES DEL SOL.LICITANT)",
+     "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+     "note": "G3 = sol·licitant del laboratori, mai client"
+    },
+    {
+     "value": "BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "font": "25.0616/25·0616.pdf p.1 bloc CLIENT:",
+     "quote": "CLIENT: BUNYESC ARQUITECTURA EFICIENT, SLP",
+     "note": "Descartat com a client_name: el bloc CLIENT: del pressupost G3 és el sol·licitant (l'arquitecte), no el promotor/propietari (regla Pas 3). Vegeu candidat architect_name."
+    },
+    {
+     "value": "Laia Alarcon / Bunyesc Arquitectura Eficient SLP",
+     "font": "25.0616/pressupost geotècnic.msg capçalera 'From:' i signatura del correu",
+     "quote": "From: Laia Alarcon <laia.alarcon@bunyesc.com>",
+     "note": "Descartat com a client: és la sol·licitant (arquitecta que escriu l'encàrrec en nom de la seva clienta), no la propietària de l'obra."
+    },
+    {
+     "value": "G3 Desenvolupament Territorial, SL",
+     "font": "4672-GTL-25 Linyola.pdf p.1 bloc 'DADES DEL CLIENT'; p.2 i p.7 bloc 'DADES DEL SOL·LICITANT'/'DADES DEL CLIENT'",
+     "quote": "Nom: G3 Desenvolupament Territorial, SL / NIF: B25364589 / Adreça: C/ Vallbona núm. 22 - 25268 Els Omells de Na Gaia (Lleida)",
+     "note": "Descartat com a client_name: és G3 (client del laboratori), no el promotor de l'obra — regla 'G3 mai és client'"
+    },
+    {
+     "value": "G3 DT / Dolors Maqueda / Eva Roig",
+     "font": "ACCEPTACIO/RV_ Realització geotècnic.msg capçaleres, l.2-3 i signatura l.91",
+     "quote": "From: G3 DT <g3@g3dt.com>  To: Dolors Maqueda <dolors@g3dt.com>",
+     "note": "personal intern de G3 (remitent i destinatària del reenviament; Eva Roig signa el correu antic citat, Dep. Administració) — mai client, és qui gestiona l'encàrrec."
+    },
+    {
+     "value": "G3 Desenvolupament Territorial, SL (B25364589)",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.1/p.7 'DADES DEL CLIENT:' i p.2 'DADES DEL SOL.LICITANT:'",
+     "quote": "DADES DEL CLIENT: ... Nom: G3 Desenvolupament Territorial, SL ... NIF: B25364589 ... Adreça: C/ Vallbona núm. 22 - 25268 Els Omells de Na Gaia (Lleida)",
+     "note": "G3 és el client DEL LABORATORI (qui encarrega l'assaig), no el client/promotor de l'obra de l'informe geotècnic — regla 'G3 mai és client' (Pas 3). Descartat explícitament, no és candidat de client_name."
+    },
+    {
+     "value": null,
+     "font": "PENETROS.pdf p.1 ALBARÀ, bloc DADES CLIENT",
+     "quote": "Empresa: G3 / Responsable: Eva",
+     "note": "Descartat com a client_name: és la relació TPS (subcontractista) → G3 (el seu client), no el client/promotor de l'obra (regla del Pas 0/3 per a albarans TPS)."
+    }
+   ]
+  },
+  "cota_referencia": {
+   "estat": "candidats",
+   "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+   "candidates": [
+    {
+     "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf capçalera de cada pàgina (p.1-3)",
+     "quote": "Cota d'inici:  +245 msnm segons plànol topogràfic del ICGC (‐0,15m carrer)",
+     "note": "idèntica als 3 punts P-1/P-2/P-3, font ICGC citada explícitament"
+    },
+    {
+     "value": "244.9",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1 z)",
+     "quote": "P-1: 324935.0 ; 4619561.0 ; 244.9",
+     "note": "GPS de camp: l'Eva no l'usa com a cota de referencia (~0,6 m de diferencia amb l'ICGC)"
+    }
+   ],
+   "rule": "contradiccio: 244.9 (1 doc, conf max 0.50)",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ],
+   "note": "idèntica als 3 punts P-1/P-2/P-3, font ICGC citada explícitament"
+  },
+  "cte_edificacio": {
+   "estat": "candidats",
+   "value": "C0",
+   "candidates": [
+    {
+     "value": "C0",
+     "font": "(derivat: regla Eva C0 < 300 m² / C1 > 300 m² sobre superficie construida 250.91 m²) ← 25.0616/2_02B_DG_Silvia_Jaume.pdf pàgina 3 i 5, bloc 'SUPERFÍCIES CONSTRUÏDES' / 'Superfície construïda TOTAL PBaixa'",
+     "quote": "250.91",
+     "note": "derivat de la superficie construida, no llegit (Pas 3): sempre candidats"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf"
+   ],
+   "note": "derivat de la superficie construida, no llegit (Pas 3): sempre candidats"
+  },
+  "cte_sol": {
+   "estat": "candidats",
+   "value": "T-1",
+   "candidates": [
+    {
+     "value": "T-1",
+     "font": "(coneixement previ: T-1 a tots els pressupostos G3 que porten la linia CTE)",
+     "quote": "",
+     "note": "cap document de la carpeta ho diu: confirmar"
+    }
+   ],
+   "rule": "guard: mai segur per a aquesta cel·la",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf"
+   ],
+   "note": "cap document de la carpeta ho diu: confirmar"
+  },
+  "expedient": {
+   "estat": "segur",
+   "value": "4001607",
+   "candidates": [
+    {
+     "value": "4001607",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!N19 (G19 NÚM. D'EXPEDIENT)",
+     "quote": "4001607.0"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "4001607",
+     "font": "ANNEXES/4001607_DPSH.xls nom del fitxer",
+     "quote": "4001607_DPSH.xls"
+    },
+    {
+     "value": "4001607",
+     "font": "4672-GTL-25 Linyola.pdf p.2 bloc 'DADES INICIALS' camp 'Obra / Projecte'",
+     "quote": "Obra / Projecte: Linyola. Carrer Clot de la Llacuna. 4001607",
+     "note": "El camp barreja municipi + carrer + expedient en una sola línia; el número coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001607",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf peu de cada pàgina (p.1-3)",
+     "quote": "NÚMERO D'NFORME: 4001607",
+     "note": "el document escriu \"D'NFORME\" (typo de \"D'INFORME\"); idèntic a les 3 pàgines i al nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001607",
+     "font": "PDF/ANNEXES/4001607_fotografies.pdf capçalera de p.1 i p.2, cel·la dreta de 'Reportatge fotogràfic'",
+     "quote": "Reportatge fotogràfic | 4001607",
+     "note": "imprès net (text_ok fals per al cos del document, però la capçalera/caixa és llegible visualment); coincideix amb el nom de la carpeta del projecte. Document de baixa autoritat per aquest camp (Pas 2 no el llista); tractar com a corroboració, no com a font primària."
+    },
+    {
+     "value": "4001607",
+     "font": "PDF/ANNEXES/4001607_plànol de situació.pdf caixetí, cel·la 'Exp:'",
+     "quote": "Exp: 4001607",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001607",
+     "font": "PDF/ANNEXES/4001607_tall de correlació.pdf peu, cel·la 'Exp:'",
+     "quote": "Exp: 4001607",
+     "note": "coincideix amb el nom de la carpeta del projecte (4001607 LINYOLA)"
+    },
+    {
+     "value": "4001607",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.2 'Obra / Projecte:'",
+     "quote": "Linyola. Carrer Clot de la Llacuna. 4001607",
+     "note": "únic camp del document amb el número d'expedient explícit"
+    },
+    {
+     "value": "4001607",
+     "font": "pl situ.pdf caixetí p.1, camp 'Exp:'",
+     "quote": "Exp: 4001607",
+     "note": "coincideix amb el nom de la carpeta del projecte"
+    },
+    {
+     "value": "4001607",
+     "font": "tall.pdf peu de pàgina, taula 'TÍTOL DEL PROJECTE', cel·la 'Exp:'",
+     "quote": "Exp: 4001607",
+     "note": "coincideix amb el nom de la carpeta del projecte (4001607 LINYOLA)"
+    },
+    {
+     "value": "4001607",
+     "font": "nom de la carpeta del projecte",
+     "quote": "4001607 LINYOLA",
+     "note": "regla Pas 3: nom de la carpeta = NNNNNNN MUNICIPI"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "4672-GTL-25 Linyola.pdf",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "pl situ.pdf",
+    "tall.pdf",
+    "(carpeta)"
+   ],
+   "note": "El camp barreja municipi + carrer + expedient en una sola línia; el número coincideix amb el nom de la carpeta del projecte",
+   "descartats": [
+    {
+     "value": "25·0616",
+     "font": "25.0616/25·0616.pdf p.1/p.2/p.3 (repetit)",
+     "quote": "25·0616  P#",
+     "note": "Codi comercial G3, no l'expedient (regla Pas 3: '25·0616' explícitament exclosa com a font d'expedient)."
+    }
+   ]
+  },
+  "field_date": {
+   "estat": "segur",
+   "value": "2025-10-01",
+   "candidates": [
+    {
+     "value": "2025-10-01",
+     "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!F38 (E38 'dies de camp')",
+     "quote": "datetime.datetime(2025, 10, 1, 0, 0)",
+     "note": "primer dia de camp (autoritat A)"
+    },
+    {
+     "value": "01/10/2025",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf capçalera de cada pàgina (p.1-3)",
+     "quote": "DATA: 01/10/2025",
+     "note": "idèntica a les 3 pàgines; coincideix amb el nom de les fotos WhatsApp del projecte (2025-10-01)"
+    },
+    {
+     "value": "Octubre 2025",
+     "font": "pl situ.pdf caixetí p.1, camp 'Data:'",
+     "quote": "Data: Octubre 2025",
+     "note": "és la data del plànol/annex (només mes i any), no necessàriament el primer dia de camp; candidat feble, mai preferent sobre la fitxa F38 o la DATA de l'annex DPSH"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "2025-10-01",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!N23 (DATA DE PRESA)",
+     "quote": "45931.0",
+     "note": "dia de la mostra/sondeig, NO necessàriament el primer dia de camp"
+    },
+    {
+     "value": "01/10/2025",
+     "font": "4672-GTL-25 Linyola.pdf p.2 bloc 'DADES INICIALS' camp 'Data extracció'",
+     "quote": "Data extracció: 01/10/2025",
+     "note": "Data d'extracció de la mostra SPT1 al punt P-3 (verificada visualment); no necessàriament el primer dia de camp del DPSH — candidat 2, mai preferent sobre la fitxa de camp o l'annex DPSH"
+    },
+    {
+     "value": "2025-10-01",
+     "font": "PENETROS.pdf p.1 ALBARÀ, bloc DADES OBRA, camp 'Data:'",
+     "quote": "1-10-25",
+     "note": "Coincideix a les 3 pàgines del document ('01-10-25' a p.2 i p.3). Segons la jerarquia del Pas 3, la fitxa de camp G3 (F38) hauria de manar si conté data; aquí és candidat, no segur."
+    },
+    {
+     "value": "2025-10-01",
+     "font": "PENETROS.pdf p.2 Full de Camp Penetròmetre Dinàmic, camp 'Data:'",
+     "quote": "01-10-25",
+     "note": "Mateixa data que p.1 i p.3."
+    },
+    {
+     "value": "2025-10-01",
+     "font": "RV_ Realització geotècnic.msg cos del correu, primer bloc citat (email de Sílvia Eroles, 2025-09-30 10:16)",
+     "quote": "No sé si vaig parlar amb tu ahir. Li vaig comentar a l'arquitecte que venieu demà i em va dir que ja us havia enviat els punts de sondeig",
+     "note": "'demà' és relatiu a la data del correu citat (2025-09-30) → dia de camp previst 2025-10-01. És correu, no fitxa de camp ni annex de camp: candidat, mai segur en solitari."
+    },
+    {
+     "value": "Octubre 2025",
+     "font": "PDF/ANNEXES/4001607_plànol de situació.pdf caixetí, cel·la 'Data:'",
+     "quote": "Data: Octubre 2025",
+     "note": "és la data de redacció del plànol (mes i any, sense dia exacte), no una font prioritària per field_date segons el Pas 3 (fitxa F38 / annex DPSH DATA / albarà TPS / fotos manen); candidat feble només a falta d'una font amb dia exacte"
+    },
+    {
+     "value": "Octubre 2023",
+     "font": "tall.pdf peu de pàgina, taula 'TÍTOL DEL PROJECTE', cel·la 'Data:'",
+     "quote": "Data: Octubre 2023",
+     "note": "és la data de redacció/emissió d'aquest annex de tall (mes i any, sense dia), no necessàriament el primer dia de camp del DPSH; la fitxa de camp (F38) o l'annex DPSH manen per field_date"
+    },
+    {
+     "value": "octubre 2023",
+     "font": "PDF/ANNEXES/4001607_tall de correlació.pdf peu, cel·la 'Data:'",
+     "quote": "Data: Octubre 2023",
+     "note": "data del document/plànol (mes, sense dia), no necessàriament la data de camp; fora de l'ordre de prioritat del Pas 3 (fitxa F38 / annex DPSH / albarà / fotos) — candidat molt feble, només per contrast"
+    },
+    {
+     "value": "10/10/2025",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.2 'Data extracció:'",
+     "quote": "Data extracció: ... 10/10/2025",
+     "note": "data d'extracció de la mostra SPT1 P3 al camp — probablement el dia del sondeig, no necessàriament el primer dia de camp DPSH (regla: comanda/annex sondeig/GTL donen el dia del sondeig, candidat 2, mai segur); disseny en columnes del PDF fa que etiqueta i valor no estiguin garantidament aparellats a la mateixa línia del text extret"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "4672-GTL-25 Linyola.pdf",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf"
+   ],
+   "note": "primer dia de camp (autoritat A)",
+   "descartats": [
+    {
+     "value": "21/08/25",
+     "font": "25.0616/25·0616.pdf p.1 DATA:",
+     "quote": "DATA: 21/08/25",
+     "note": "Data del pressupost, no de camp (regla Pas 3: mai la data del pressupost per a field_date)."
+    }
+   ]
+  },
+  "lab_depth": {
+   "estat": "candidats",
+   "value": "1,0 - 1,15",
+   "candidates": [
+    {
+     "value": "1,0 - 1,15",
+     "font": "4672-GTL-25 Linyola.pdf p.2 bloc 'DADES INICIALS' camp 'Cota d'extracció (m)'",
+     "quote": "Cota d'extracció (m): 1,0 - 1,15"
+    },
+    {
+     "value": "1,0 a 1,5 m",
+     "font": "ANNEXES/4001607_DPSH.xls P-3!E24",
+     "quote": "1,0 a 1,5",
+     "note": "Profunditat de la mostra SPT-1. Candidat: confirmar amb GTL 4672-GTL-25 Linyola.pdf (Pas 3: GTL mana per a la PROFUNDITAT)."
+    },
+    {
+     "value": "1,00 a 1,75 m",
+     "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Cota d'extracció'",
+     "quote": "de la cota de: 1,0 / fins a la cota: 1,75",
+     "note": "Coincideix amb la fondària de rebuig anotada a P-3 a la graella de p.2 (R 1,75), és a dir la mostra es va prendre fins al rebuig del penetròmetre a P-3."
+    }
+   ],
+   "rule": "contradiccio: 1,0 a 1,5 m (2 doc, conf max 0.50); 1,00 a 1,75 m (1 doc, conf max 0.55)",
+   "altres": [
+    {
+     "value": "1.0 - 1.15",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!J35/L35",
+     "quote": "INICIAL 1.0 / FINAL 1.15",
+     "note": "el GTL mana si discrepa"
+    },
+    {
+     "value": "1,0 - 1,15",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.2 i p.6 'Cota d'extracció (m):'",
+     "quote": "Cota d'extracció (m): 1,0 - 1,15",
+     "note": "cota d'extracció en metres, format inici-fi, coincident a p.2 i a la taula resum p.6"
+    },
+    {
+     "value": "1,0 a 1,5 m",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3, taula P-3, columna MESURA DE PAR, fila -1,4 m",
+     "quote": "1,0 a 1,5",
+     "note": "interval de fondària de la mostra SPT-1; la fila següent (-1,6 m) marca \"R\" (rebuig), sense registre de cops SPT independent en aquest document"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "4672-GTL-25 Linyola.pdf",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf"
+   ],
+   "note": "el GTL mana si discrepa"
+  },
+  "lab_location": {
+   "estat": "candidats",
+   "value": "P-3",
+   "candidates": [
+    {
+     "value": "P-3",
+     "font": "4672-GTL-25 Linyola.pdf p.2 camp 'Mostra' (SPT1 P3)",
+     "quote": "Mostra: SPT1 P3",
+     "note": "Punt d'assaig d'on prové la mostra, extret de l'etiqueta 'SPT1 P3'"
+    },
+    {
+     "value": "SPT1 P3",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.2 'Mostra:'",
+     "quote": "Mostra: SPT1 P3",
+     "note": "punt d'assaig (SPT1 al punt P3); el document no desglossa un camp 'punt' separat de l'etiqueta de mostra"
+    },
+    {
+     "value": "P3",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!C35 (parèntesi)",
+     "quote": "SPT 1 (P3)"
+    }
+   ],
+   "rule": "contradiccio: SPT1 P3 (1 doc, conf max 0.75)",
+   "altres": [
+    {
+     "value": "P-3",
+     "font": "ANNEXES/4001607_DPSH.xls Nom del full P-3",
+     "quote": "P-3",
+     "note": "Punt d'assaig d'on surt la mostra SPT-1 — el mateix DPSH P-3, no un sondeig separat (aquest projecte no té sondeig a rotació al corpus). La cel·la E25 marca 'R' (rebuig) al tram final de la mostra."
+    },
+    {
+     "value": "P-3",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3, taula P-3, columna MESURA DE PAR",
+     "quote": "SPT-1 (dins la taula del punt P-3)",
+     "note": "el punt d'assaig d'on surt la mostra SPT-1 és el mateix DPSH P-3"
+    },
+    {
+     "value": "P3",
+     "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+     "quote": "SPT1  P3",
+     "note": "El punt d'assaig d'on surt la mostra (P-3), llegit del mateix camp que l'etiqueta."
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "4672-GTL-25 Linyola.pdf",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf"
+   ],
+   "note": "Punt d'assaig d'on prové la mostra, extret de l'etiqueta 'SPT1 P3'"
+  },
+  "lab_sample_id": {
+   "estat": "segur",
+   "value": "SPT1 P3",
+   "candidates": [
+    {
+     "value": "SPT1 P3",
+     "font": "4672-GTL-25 Linyola.pdf p.2 bloc 'DADES INICIALS' camp 'Mostra'; p.6 'Referència del client'",
+     "quote": "Mostra: SPT1 P3"
+    },
+    {
+     "value": "SPT 1 (P3)",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!C35",
+     "quote": "SPT 1 (P3)",
+     "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+    },
+    {
+     "value": "SPT-1",
+     "font": "ANNEXES/4001607_DPSH.xls P-3!E23",
+     "quote": "SPT-1",
+     "note": "Mostra SPT presa dins l'assaig DPSH del punt P-3 (única mostra marcada als 3 fulls; P-1 i P-2 no en porten). Candidat: confirmar etiqueta amb l'annex de l'Eva / GTL 4672-GTL-25 Linyola.pdf (Pas 3: l'etiqueta de l'informe és la de l'annex, aquest Excel és font secundària)."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "SPT1",
+     "font": "PENETROS.pdf p.3 Full d'assaig SPT/MI/Mostra alterada, camp 'Assaig de referència'",
+     "quote": "SPT1  P3",
+     "note": "Etiqueta manuscrita; segons el Pas 3 l'annex de sondeig de l'Eva (si n'hi ha) o el GTL del laboratori manen per a l'etiqueta final. Aquí és l'única font vista en aquest document."
+    },
+    {
+     "value": "SPT-1",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3, taula P-3, columna MESURA DE PAR, fila -1,2 m",
+     "quote": "SPT-1",
+     "note": "mostra extreta durant el mateix DPSH P-3; no confirmada amb GTL ni comanda (no llegits en aquesta crida)"
+    },
+    {
+     "value": "SPT1 P3",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.2 bloc 'Mostra:' / p.6 taula resum 'Referència del client'",
+     "quote": "SPT1 P3",
+     "note": "referència del client per a la mostra; coincideix p.2 i p.6 (taula resum dels resultats)"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "4672-GTL-25 Linyola.pdf",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf"
+   ],
+   "note": "etiqueta de la comanda; l'annex de l'Eva mana per a l'etiqueta de l'informe"
+  },
+  "lab_testing_company": {
+   "estat": "segur",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "candidates": [
+    {
+     "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+     "font": "PDF/ANNEXES/lab-sig.pdf capçalera de totes les pàgines (p.1-p.7)",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+     "note": "emissor del GTL (banda superior), repetit idènticament a les 7 pàgines; mai el 'client'/'sol·licitant' del GTL (regla Pas 3)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+     "font": "4672-GTL-25 Linyola.pdf capçalera i peu de totes les pàgines",
+     "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+     "note": "El logo de portada és 'Soilassaig' (marca comercial), però l'entitat legal a la capçalera/peu és sempre TPS B64803075"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "4672-GTL-25 Linyola.pdf",
+    "PDF/ANNEXES/lab-sig.pdf"
+   ],
+   "note": "El logo de portada és 'Soilassaig' (marca comercial), però l'entitat legal a la capçalera/peu és sempre TPS B64803075"
+  },
+  "municipality": {
+   "estat": "segur",
+   "value": "Linyola",
+   "candidates": [
+    {
+     "value": "Linyola",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí, bloc EMPLAÇAMENT; també requadre 'municipi:' pàgina 1",
+     "quote": "municipi: LINYOLA",
+     "note": "Coherent a totes les pàgines. Comarca: Pla Urgell; província: Lleida (context, no és cap dels 15 camps)."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": "LINYOLA",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!N21 (G21 POBLACIÓ, bloc OBRA)",
+     "quote": "LINYOLA"
+    },
+    {
+     "value": "Linyola",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 bloc OBRA",
+     "quote": "Clot de la Llacuna, 16 -25240- Linyola / PRESSUPOST ESTUDI GEOTÈCNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "Linyola",
+     "font": "25.0616/25·0616.pdf p.1 bloc OBRA",
+     "quote": "Clot de la Llacuna, 16 -25240- Linyola / PRESSUPOST ESTUDI GEOTÈCNIC",
+     "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+    },
+    {
+     "value": "LINYOLA",
+     "font": "25.0616/PLAN_COST_LINYOLA.xlsx 'Plan Cost'!E9 (rere el tipus de projecte)",
+     "quote": "EG HAB UNIF LINYOLA"
+    },
+    {
+     "value": "Linyola",
+     "font": "25.0616/25·0616.pdf p.1 bloc OBRA:",
+     "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+     "note": "Forma curta, coincident amb el nom de la carpeta del projecte (4001607 LINYOLA)."
+    },
+    {
+     "value": "Linyola",
+     "font": "25.0616/pressupost geotècnic.msg cos del correu (frase introductòria + adreça de l'obra)",
+     "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.",
+     "note": "Coincideix amb el nom de la carpeta del projecte (4001607 LINYOLA)."
+    },
+    {
+     "value": "Linyola",
+     "font": "25.0616/RE_ pressupost geotècnic.msg cos del missatge original citat, mateixa línia de l'adreça",
+     "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+     "note": "coincideix amb el nom de la carpeta de l'expedient"
+    },
+    {
+     "value": "Linyola",
+     "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+     "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+     "note": "No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json); coincideix amb acceptacio_g3dt_silvia_jaume_signat.json ('-25240- Linyola')."
+    },
+    {
+     "value": "Linyola",
+     "font": "4672-GTL-25 Linyola.pdf p.1 i p.7 bloc 'MATERIAL A ASSAJAR' camp 'Situació'; p.2 camp 'Obra / Projecte'",
+     "quote": "Situació: Linyola. Carrer Clot de la Llacuna."
+    },
+    {
+     "value": "Linyola",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 capçalera, bloc 'OBRA:'",
+     "quote": "-25240- Linyola",
+     "note": "Coincideix amb el nom de la carpeta del projecte (4001607 LINYOLA). El CP 25240 també apareix a l'adreça personal de la clienta (p.3), però allà és la població de la clienta, no de l'obra."
+    },
+    {
+     "value": "Linyola",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf capçalera de cada pàgina, camp POBLACIÓ (p.1-3)",
+     "quote": "POBLACIÓ: LINYOLA",
+     "note": "idèntic a les 3 pàgines"
+    },
+    {
+     "value": "Linyola",
+     "font": "PDF/ANNEXES/4001607_plànol de situació.pdf TÍTOL DEL PROJECTE (caixetí) + mapa d'ubicació (inset esquerre, etiqueta 'Linyola')",
+     "quote": "…construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "confirmat dues vegades DINS del mateix document (text del títol + etiqueta al mapa OSM); és una sola font documental, no dues d'independents"
+    },
+    {
+     "value": "Linyola",
+     "font": "PDF/ANNEXES/4001607_tall de correlació.pdf peu, bloc 'TÍTOL DEL PROJECTE'",
+     "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "mateixa frase narrativa; única font en aquest document"
+    },
+    {
+     "value": "Linyola",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.1 'Situació:' / p.2 'Obra / Projecte:'",
+     "quote": "Linyola. Carrer Clot de la Llacuna.",
+     "note": "forma curta; frase combinada municipi+carrer, sense font d'autoritat A pròpia d'aquest document (regla: municipality mana comanda+pressupost+PLAN_COST)"
+    },
+    {
+     "value": "Linyola",
+     "font": "PENETROS.pdf p.1 ALBARÀ, bloc DADES OBRA, camp 'Població:'",
+     "quote": "LINYOLA",
+     "note": "Corroborat també a p.2 i p.3, camp 'Adreça de l'obra: LINYOLA'."
+    },
+    {
+     "value": "Linyola",
+     "font": "pl situ.pdf caixetí p.1 'TÍTOL DEL PROJECTE' + mapa de localització municipal (inset inferior)",
+     "quote": "...de Linyola / etiqueta 'Linyola' al mapa municipal"
+    },
+    {
+     "value": "Linyola",
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc EMPLAÇAMENT",
+     "quote": "Linyola  (25240)",
+     "note": "Mateix bloc EMPLAÇAMENT que l'adreça."
+    },
+    {
+     "value": "Linyola",
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc EMPLAÇAMENT",
+     "quote": "Linyola  (25240)"
+    },
+    {
+     "value": "Linyola",
+     "font": "tall.pdf peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte (mateixa frase que street_address)",
+     "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "forma curta (topònim sol); no és font independent de street_address (mateixa frase)"
+    }
+   ],
+   "sources_checked": [
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "RV_ Realització geotècnic.msg",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "25.0616/25·0616.pdf",
+    "25.0616/PLAN_COST_LINYOLA.xlsx",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "tall.pdf"
+   ],
+   "note": "forma curta G3; la forma oficial llarga mana (regla municipi)"
+  },
+  "num_dpsh_tests": {
+   "estat": "segur",
+   "value": 3,
+   "candidates": [
+    {
+     "value": 3,
+     "font": "ANNEXES/4001607_DPSH.xls fulls amb dades a la columna C",
+     "quote": "sheets: ['P-1', 'P-2', 'P-3']",
+     "note": "EXECUTATS (autoritat sobre els previstos)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 3,
+     "font": "25.0616/PLAN_COST_LINYOLA.xlsx OFERTA!B21",
+     "quote": "3",
+     "note": "unitats DPSH ofertades (previstes)"
+    },
+    {
+     "value": "3",
+     "font": "25.0616/25·0616.pdf p.2 taula VALORACIÓ, línia 001.001",
+     "quote": "UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH … 3,00",
+     "note": "Previstos al pressupost, no executats; l'Excel DPSH (si n'hi ha al projecte) mana si difereix (regla Pas 3)."
+    },
+    {
+     "value": 3,
+     "font": "25.0616/pressupost geotècnic.msg cos del correu, llista d'adjunts",
+     "quote": "plànol dels 3 punts de sondeig.",
+     "note": "'Punts de sondeig' és ambigu (podria incloure DPSH i/o sondeig a rotació); coincideix amb els 3 fulls P-1/P-2/P-3 de l'Excel DPSH del projecte — corroboració indirecta, no lectura directa de l'Excel ni del plànol adjunt."
+    },
+    {
+     "value": "3",
+     "font": "25.0616/RE_ pressupost geotècnic.msg cos del missatge original citat, llista d'adjunts esmentats",
+     "quote": "plànol dels 3 punts de sondeig.",
+     "note": "PREVIST per l'arquitecta abans de cap encàrrec formal, no EXECUTAT; ambigu si 'punts de sondeig' es refereix a DPSH o a sondeig a rotació. El plànol esmentat NO és adjunt d'aquest .msg concret (només ho seria del missatge original 'pressupost geotècnic.msg', no llegit en aquesta crida). L'Excel DPSH executat i el pressupost p.2 tenen prioritat superior sobre aquest valor."
+    },
+    {
+     "value": 3,
+     "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, llista d'adjunts del correu original citat de Laia Alarcón (19/08/2025)",
+     "quote": "adjuntem:\n\tplànols del projecte bàsic\n\tplànol dels 3 punts de sondeig.",
+     "note": "AMBIGU: 'punts de sondeig' aquí és previsió de l'arquitecta abans de l'encàrrec, no necessàriament el nombre de DPSH executats, i el terme podria referir-se genèricament a punts d'assaig (no específicament DPSH). L'adjunt esmentat ('punts_de_sondeig_silvia_jaume.pdf') ja és solt a la carpeta i es llegeix com a document propi; l'Excel DPSH executat (si existeix) hauria de manar sobre aquesta previsió. Candidat feble, mai segur amb aquesta única font."
+    },
+    {
+     "value": 3,
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.2, taula VALORACIÓ, línia 001.001",
+     "quote": "UNITATS D'ASSAIGS DE PENETRACIO DINAMICA DPSH ... 3,00",
+     "note": "Previstos al pressupost (Pas 3: penúltima font de prioritat, per sota de l'Excel DPSH executat i de l'albarà TPS). Confirmar amb ANNEXES/4001607_DPSH.xls."
+    },
+    {
+     "value": 3,
+     "font": "ANNEXES/4001607_DPSH.xls Noms de full: P-1, P-2, P-3, cadascun amb colpeig registrat a la columna C des de C17 fins al rebuig",
+     "quote": "P-1 / P-2 / P-3",
+     "note": "Executat (Pas 3: mana sobre el previst del pressupost). Els 3 fulls tenen dades reals de colpeig i peu de rebuig propi."
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf 3 pàgines del document, una per punt",
+     "quote": "P‐1 / P‐2 / P‐3",
+     "note": "3 assaigs executats i documentats (P-1, P-2, P-3)"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/4001607_plànol de situació.pdf plànol de planta, punts marcats P-1, P-2, P-3 amb llegenda",
+     "quote": "P-1 / P-2 / P-3 — llegenda: 'Assaig de penetració dinàmica DPSH'",
+     "note": "recompte visual dels punts marcats al plànol; corrobora però no substitueix el recompte de l'Excel DPSH (executats), que és font prioritària"
+    },
+    {
+     "value": 3,
+     "font": "PDF/ANNEXES/4001607_tall de correlació.pdf 3 punts representats a les dues seccions del tall",
+     "quote": "P-1, P-3 (secció A-A'); P-1, P-2 (secció B-B')",
+     "note": "recompte de punts DPSH distints representats al tall (P-1, P-2, P-3); no és la font canònica (Excel DPSH), només corroboració"
+    },
+    {
+     "value": 3,
+     "font": "PENETROS.pdf p.1 ALBARÀ, bloc CONCEPTES, 'Nº de penetròmetres realitzats'",
+     "quote": "3",
+     "note": "Corroborat per les 3 columnes P-1/P-2/P-3 de la graella de p.2 (executats, no previstos: el camp 'MI previs perforació per assaig SPT o MI' de p.1 és un altre concepte)."
+    },
+    {
+     "value": "3",
+     "font": "pl situ.pdf plànol p.1, 3 símbols marcats P-1/P-2/P-3 amb llegenda",
+     "quote": "P-1 · P-2 · P-3, llegenda 'Assaig de penetració dinàmica DPSH'",
+     "note": "recompte visual dels símbols a la planta; coincideix amb els 3 fulls (P-1/P-2/P-3) de l'Excel DPSH de l'inventari"
+    },
+    {
+     "value": 3,
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf planta general, 3 etiquetes en vermell sobre el dibuix",
+     "quote": "1r PUNT SONDEIG / 2n PUNT SONDEIG / 3r PUNT SONDEIG",
+     "note": "Punts PROPOSATS per l'arquitecte al plànol (previstos), no confirma quants es van executar realment. Prioritat per sobre d'aquest document: Excel DPSH (executats) > albarà TPS > pressupost (previstos) > aquest plànol."
+    },
+    {
+     "value": 3,
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf plànol, planta general",
+     "quote": "1r PUNT SONDEIG / 2n PUNT SONDEIG / 3r PUNT SONDEIG",
+     "note": "3 punts marcats i acotats al plànol. 'Sondeig' aquí és terme genèric del camp (no hi ha sondeig a rotació documentat a Linyola); no és font d'autoritat A per al recompte (l'Excel DPSH mana). Candidat corroboratiu."
+    },
+    {
+     "value": 3,
+     "font": "tall.pdf plànol de situació (cantonada superior esquerra) i etiquetes blaves als perfils AA'/BB'",
+     "quote": "P-1, P-3 (secció AA'); P-1, P-2 (secció BB'); P-1/P-2/P-3 al plànol de situació",
+     "note": "el tall mostra 3 punts DPSH correlacionats; l'Excel DPSH és la font d'autoritat pel recompte (executats), no llegit en aquesta crida (--only tall.pdf)"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "25.0616/PLAN_COST_LINYOLA.xlsx",
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "tall.pdf"
+   ],
+   "note": "EXECUTATS (autoritat sobre els previstos)"
+  },
+  "num_floors": {
+   "estat": "segur",
+   "value": "PB (planta baixa, 1 nivell)",
+   "candidates": [
+    {
+     "value": "PB (planta baixa, 1 nivell)",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf pàgina 1, requadre NORMATIVA URBANÍSTICA, columna 'PROJECTE'",
+     "quote": "NOMBRE MAXIM PLANTES: PB",
+     "note": "Etiqueta EXPLÍCITA del projecte (no la del planejament general, que diu PB+2PP). Corroborat: cap de les 11 pàgines mostra planta pis — només 'PLANTA BAIXA' i 'PLANTA COBERTA'. Alçada reguladora màx. projecte: 3,48m."
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf"
+   ],
+   "note": "Etiqueta EXPLÍCITA del projecte (no la del planejament general, que diu PB+2PP). Corroborat: cap de les 11 pàgines mostra planta pis — només 'PLANTA BAIXA' i 'PLANTA COBERTA'. Alçada reguladora màx. projecte: 3,48m."
+  },
+  "num_soil_levels": {
+   "estat": "segur",
+   "value": 2,
+   "candidates": [
+    {
+     "value": 2,
+     "font": "PDF/ANNEXES/4001607_tall de correlació.pdf llegenda, part superior dreta del full",
+     "quote": "Nivell 1: Llims argilsoso i sorrencs. / Nivell 2: Lutites i sorrenques, Substrat.",
+     "note": "el projecte no té annex de sondeig a rotació; el tall és l'única font documental dels nivells (regla Pas 3: llegenda del tall com a font quan no hi ha annex sondeig)"
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "altres": [
+    {
+     "value": 2,
+     "font": "ANNEXES/4001607_DPSH.xls Columna G ('Nivells'), files 17-32 de cada full (color de cel·la) + llegenda C79/F79",
+     "quote": "Nivell 1 / Nivell 2 (llegenda C79/F79); color vermell #FF8080 i groc #FFFF99 a la columna G",
+     "note": "Candidat: només 2 colors (vermell/groc) apareixen als 3 fulls, sense tercer color — consistent amb 2 nivells, però la fondària de transició NO és la mateixa als 3 punts (P-1 entre -1,6/-1,8 m; P-2 entre -0,2/-0,4 m; P-3 entre -1,2/-1,4 m), i aquest full no dona cap litologia. No emeto files a tables.soil_levels des d'aquest document (falta litologia i la fondària varia per punt); confirmar amb PDF/ANNEXES/4001607_tall de correlació.pdf (aquest projecte no té sondeig a rotació al corpus)."
+    },
+    {
+     "value": 2,
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf columna \"Nivells\" (bandes de color) a les 3 pàgines",
+     "quote": "Nivell 1 / Nivell 2 (llegenda de colors)",
+     "note": "el document mostra sempre 2 bandes, però la fondària de transició varia per punt (P-1 ~-1,8 m, P-2 ~-0,2 m, P-3 ~-1,0 m); és una marca per punt del DPSH, no la classificació de l'annex de tall/sondeig (no llegit en aquesta crida), que té prioritat pel Pas 3 — candidat feble"
+    },
+    {
+     "value": 2,
+     "font": "tall.pdf requadre de llegenda, superior dret",
+     "quote": "Nivell 1: Llims argilsoso i sorrencs. / Nivell 2: Lutites i sorrenques, Substrat.",
+     "note": "el tall mana pel nombre de nivells (regla del skill); 2 nivells amb color i litologia diferenciats a la llegenda"
+    }
+   ],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "tall.pdf"
+   ],
+   "note": "Candidat: només 2 colors (vermell/groc) apareixen als 3 fulls, sense tercer color — consistent amb 2 nivells, però la fondària de transició NO és la mateixa als 3 punts (P-1 entre -1,6/-1,8 m; P-2 entre -0,2/-0,4 m; P-3 entre -1,2/-1,4 m), i aquest full no dona cap litologia. No emeto files a tables.soil_levels des d'aquest document (falta litologia i la fondària varia per punt); confirmar amb PDF/ANNEXES/4001607_tall de correlació.pdf (aquest projecte no té sondeig a rotació al corpus)."
+  },
+  "referencia_catastral": {
+   "estat": "candidats",
+   "value": "5098344CG2159N0000US",
+   "candidates": [
+    {
+     "value": "5098344CG2159N0000US",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf pàgina 1 requadre NORMATIVA ('PARÀMETRES NORMATIVA _ 5098344CG2159N0000US'); pàgina 2 plànol de parcel·la",
+     "quote": "ref: 5098344CG2159N0000US",
+     "note": "Impresa al plànol/projecte de l'arquitecte = font vàlida però única (regla: mai segur sense consulta pròpia del Cadastre a la carpeta)."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf"
+   ],
+   "note": "Impresa al plànol/projecte de l'arquitecte = font vàlida però única (regla: mai segur sense consulta pròpia del Cadastre a la carpeta)."
+  },
+  "street_address": {
+   "estat": "candidats",
+   "value": "C/ Clot de la Llacuna, 16, Linyola (25240)",
+   "candidates": [
+    {
+     "value": "C/ Clot de la Llacuna, 16, Linyola (25240)",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí, bloc EMPLAÇAMENT (totes les pàgines)",
+     "quote": "EMPLAÇAMENT: C/ Clot de la Llacuna,16 LINYOLA (25240)",
+     "note": "Consistent a les 11 pàgines (variants tipogràfiques menors: 'C/' vs 'C.', 'LINYOLA' vs 'Linyola', ambdues coherents). El plànol de parcel·la (p.02) també etiqueta el carrer de façana com 'CARRER CLOT DE LA LLACUNA'. La parcel·la també toca 'CARRER SITJAR' pel costat sud (visible al plànol p.02), però aquest carrer només apareix com a referència d'orientació al dibuix, MAI com a etiqueta d'adreça de l'obra enlloc del document — no s'aplica la regla de cantonada (calen dues adreces DOCUMENTADES, no un carrer veí dibuixat sense etiquetar-lo com a adreça)."
+    },
+    {
+     "value": "Clot de la Llacuna, 16, Linyola (CP 25240)",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 capçalera, bloc 'OBRA:'",
+     "quote": "OBRA:\nClot de la Llacuna, 16 -25240- Linyola",
+     "note": "Única font dins d'aquest document; confirmar amb annex de sondeig / fitxa de camp."
+    },
+    {
+     "value": "C. Clot de la Llacuna, 16",
+     "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc EMPLAÇAMENT",
+     "quote": "C. Clot de la Llacuna, 16"
+    }
+   ],
+   "rule": "formes diferents entre fonts A (compatibles per prefix): candidats amb totes les formes",
+   "altres": [
+    {
+     "value": "Clot de la Llacuna, 16",
+     "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 bloc OBRA (línia amb CP)",
+     "quote": "Clot de la Llacuna, 16 -25240- Linyola / PRESSUPOST ESTUDI GEOTÈCNIC"
+    },
+    {
+     "value": "C/ Clot de la Llacuna 16",
+     "font": "PDF/ANNEXES/4001607_DPSH.pdf capçalera de cada pàgina, camp OBRA (p.1-3)",
+     "quote": "OBRA : C/ CLOT DE LA LLACUNA 16",
+     "note": "mateix carrer i número a les 3 pàgines amb petites variants d'espaiat (\"C/\", \"C /\", \":C/\")"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna, 16",
+     "font": "25.0616/RE_ pressupost geotècnic.msg cos del missatge original citat, primer punt de la llista",
+     "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+     "note": "Adreça de l'obra segons l'arquitecta que fa l'encàrrec, en bloc etiquetat implícitament com a ubicació del projecte (primera línia: 'projecte bàsic ... a Linyola')."
+    },
+    {
+     "value": "C/ CLOT DE LA LLACUNA",
+     "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!N20 (G20 ADREÇA, bloc OBRA)",
+     "quote": "C/ CLOT DE LA LLACUNA"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna",
+     "font": "PENETROS.pdf p.1 ALBARÀ, bloc DADES OBRA, camp 'Adreça:'",
+     "quote": "Carrer clot de La Llacuna",
+     "note": "Bloc OBRA (no client), font vàlida. Sense número de portal en aquest document."
+    },
+    {
+     "value": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida",
+     "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!C7 (ADREÇA OBRA)",
+     "quote": "Carrer Clot de la Llacuna, 16, 25240 Linyola, Lleida",
+     "note": "C7 porta adreça + municipi a la mateixa cel·la"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+     "font": "25.0616/pressupost geotècnic.msg cos del correu, primer punt de la llista, immediatament després de la introducció del projecte",
+     "quote": "estem redactant el projecte bàsic per un habitatge unifamiliar a Linyola.\n\nCarrer Clot de la Llacuna, 16 -25240- Linyola",
+     "note": "No porta etiqueta 'OBRA:' explícita, però el context (frase anterior sobre l'habitatge) deixa clar que és l'adreça de l'obra, no del client (l'adreça del client és una altra, C/ Llibertat 13)."
+    },
+    {
+     "value": "Carrer Clot de la Llacuna nº16, Linyola",
+     "font": "pl situ.pdf caixetí p.1, bloc 'TÍTOL DEL PROJECTE'",
+     "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "el mateix plànol rotula 'CARRER FONT' a la façana sud de l'edifici dibuixat (vegeu reading_notes); no es dona explícitament com a adreça de l'obra, només com a nom de carrer al dibuix — per regla de cantonada amb una sola font, és nota, no candidat competidor"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna nº16",
+     "font": "PDF/ANNEXES/4001607_plànol de situació.pdf TÍTOL DEL PROJECTE (caixetí)",
+     "quote": "…construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "el nom del carrer es confirma visualment al mapa cadastral zoom ('CLOT DE LA LLACUNA'); el número de parcel·la etiquetat dins el requadre vermell al mapa (llegible aprox. '44'/'46') no coincideix amb el nº16 del text i és massa il·legible per fer-ne un candidat fiable — no s'inclou com a contradicció, només s'anota"
+    },
+    {
+     "value": "Clot de la Llacuna, 16",
+     "font": "25.0616/25·0616.pdf p.1 bloc OBRA (línia amb CP)",
+     "quote": "Clot de la Llacuna, 16 -25240- Linyola / PRESSUPOST ESTUDI GEOTÈCNIC"
+    },
+    {
+     "value": "Clot de la Llacuna, 16",
+     "font": "25.0616/25·0616.pdf p.1 bloc OBRA:",
+     "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+     "note": "Única adreça d'obra al document; sense confirmació creuada dins d'aquest PDF."
+    },
+    {
+     "value": "Carrer Clot de la Llacuna, 16",
+     "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+     "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+     "note": "Bloc 'OBRA' implícit (adreça de l'obra, no de facturació de la clienta). No és font independent (mateix original que 25_0616_re_pressupost_geot_cnic.json); coincideix amb acceptacio_g3dt_silvia_jaume_signat.json ('OBRA: Clot de la Llacuna, 16 -25240- Linyola')."
+    },
+    {
+     "value": "Carrer Clot de la Llacuna",
+     "font": "4672-GTL-25 Linyola.pdf p.1 i p.7 bloc 'MATERIAL A ASSAJAR' camp 'Situació'",
+     "quote": "Situació: Linyola. Carrer Clot de la Llacuna.",
+     "note": "Camp no esperat en un GTL però present explícitament amb etiqueta 'Situació'; sense número de portal en aquest document"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna nº16",
+     "font": "PDF/ANNEXES/4001607_tall de correlació.pdf peu, bloc 'TÍTOL DEL PROJECTE'",
+     "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "narrativa del títol del projecte (plantilla G3 de l'annex), no un bloc OBRA/ADREÇA dedicat; única font en aquest document — candidat, no segur"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna",
+     "font": "PDF/ANNEXES/lab-sig.pdf p.1 'Situació:' / p.2 'Obra / Projecte:'",
+     "quote": "Linyola. Carrer Clot de la Llacuna.",
+     "note": "sense número de portal en aquest document; candidat feble, no és font d'autoritat A per a street_address (regla: blocs OBRA/ADREÇA OBRA/Situació de documents del projecte)"
+    },
+    {
+     "value": "Carrer Clot de la Llacuna",
+     "font": "PENETROS.pdf p.2 Full de Camp, camp 'Descriure punt 0 o cota referència'",
+     "quote": "Carrer clot de la Llacuna",
+     "note": "Aquest camp és la descripció del punt 0/cota de referència, no un camp 'adreça' pròpiament, però nomena el mateix carrer que p.1 — corroboració."
+    },
+    {
+     "value": "C. Clot de la Llacuna, 16",
+     "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc EMPLAÇAMENT",
+     "quote": "C. Clot de la Llacuna, 16",
+     "note": "Bloc EMPLAÇAMENT del caixetí, autoritat A."
+    },
+    {
+     "value": "Carrer Clot de la Llacuna nº16",
+     "font": "tall.pdf peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte",
+     "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+     "note": "redactat dins la frase del títol, no un camp 'ADREÇA OBRA' etiquetat; candidat, no segur en solitari"
+    }
+   ],
+   "sources_checked": [
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "RV_ Realització geotècnic.msg",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "25.0616/25·0616.pdf",
+    "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+    "comanda laboratori_4001607_LINYOLA.xls",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "tall.pdf"
+   ],
+   "note": "C7 porta adreça + municipi a la mateixa cel·la"
+  },
+  "superficie_parcela": {
+   "estat": "candidats",
+   "value": "571 m²",
+   "candidates": [
+    {
+     "value": "571 m²",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf pàgina 1 requadre NORMATIVA/PROJECTE ('PARCEL.LA MINIMA: 571m²'); pàgina 2 plànol de parcel·la ('PARCEL·LA ref: 5098344CG2159N0000US / 571 m²')",
+     "quote": "PARCEL·LA ref: 5098344CG2159N0000US 571 m²",
+     "note": "Única font (el projecte de l'arquitecte), encara que apareix 2 cops dins del mateix document (no són fonts independents). Cal creuar amb consulta Cadastre pròpia si n'hi ha al projecte."
+    }
+   ],
+   "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf"
+   ],
+   "note": "Única font (el projecte de l'arquitecte), encara que apareix 2 cops dins del mateix document (no són fonts independents). Cal creuar amb consulta Cadastre pròpia si n'hi ha al projecte."
+  },
+  "utm_x": {
+   "estat": "segur",
+   "value": "324935.0",
+   "candidates": [
+    {
+     "value": "324935.0",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 324935.0 ; 4619561.0 ; 244.9",
+     "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 324935.0/4619561.0, P-2 324943.0/4619564.0, P-3 324950.0/4619561.0",
+     "extra": {
+      "punts": [
+       {
+        "punt": "P-1",
+        "x": "324935.0",
+        "y": "4619561.0",
+        "z": "244.9",
+        "raw": "P-1: 324935.0 ; 4619561.0 ; 244.9"
+       },
+       {
+        "punt": "P-2",
+        "x": "324943.0",
+        "y": "4619564.0",
+        "z": "244.9",
+        "raw": "P-2: 324943.0 ; 4619564.0 ; 244.9"
+       },
+       {
+        "punt": "P-3",
+        "x": "324950.0",
+        "y": "4619561.0",
+        "z": "245.1",
+        "raw": "P-3: 324950.0 ; 4619561.0 ; 245.1"
+       }
+      ]
+     }
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "tall.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ],
+   "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 324935.0/4619561.0, P-2 324943.0/4619564.0, P-3 324950.0/4619561.0"
+  },
+  "utm_y": {
+   "estat": "segur",
+   "value": "4619561.0",
+   "candidates": [
+    {
+     "value": "4619561.0",
+     "font": "ANNEXES/ALTRES/COORDENADES.txt (P-1)",
+     "quote": "P-1: 324935.0 ; 4619561.0 ; 244.9",
+     "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 324935.0/4619561.0, P-2 324943.0/4619564.0, P-3 324950.0/4619561.0",
+     "extra": {
+      "punts": [
+       {
+        "punt": "P-1",
+        "x": "324935.0",
+        "y": "4619561.0",
+        "z": "244.9",
+        "raw": "P-1: 324935.0 ; 4619561.0 ; 244.9"
+       },
+       {
+        "punt": "P-2",
+        "x": "324943.0",
+        "y": "4619564.0",
+        "z": "244.9",
+        "raw": "P-2: 324943.0 ; 4619564.0 ; 244.9"
+       },
+       {
+        "punt": "P-3",
+        "x": "324950.0",
+        "y": "4619561.0",
+        "z": "245.1",
+        "raw": "P-3: 324950.0 ; 4619561.0 ; 245.1"
+       }
+      ]
+     }
+    }
+   ],
+   "rule": "1 font A sense contradiccio",
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "tall.pdf",
+    "ANNEXES/ALTRES/COORDENADES.txt"
+   ],
+   "note": "regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: P-1 324935.0/4619561.0, P-2 324943.0/4619564.0, P-3 324950.0/4619561.0"
+  }
+ },
+ "tables": {
+  "dpsh_tests": {
+   "estat_bloc": "segur",
+   "rows": [
+    {
+     "punt": "P-1",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+      "candidates": [
+       {
+        "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de -2,90 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-0,15",
+        "font": "PENETROS.pdf p.2, columna P1, graella N20",
+        "quote": "Cota Inici -0,15; darrer registre a -3,2: 'R  29'",
+        "note": "Rebuig marcat amb 'R' a la fila -3,2 i valor '29' sense coma decimal (a diferència de P-2 'R 2,15' i P-3 'R 1,75', que sí porten fondària exacta en decimals). És ambigu si '29' és un recompte de cops parcial abans del rebuig o una fondària mal transcrita — candidat, no segur. La fondària exacta de rebuig la dona l'Excel/annex DPSH ('Rebuig a -X,XX m'), font d'autoritat superior per aquest camp."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-2,90 m",
+      "candidates": [
+       {
+        "value": "-2,90 m",
+        "font": "ANNEXES/4001607_DPSH.xls P-1!B80 (peu); columna F (N.F.) buida P-1!F17:F77",
+        "quote": "Rebuig a la cota de -2,90 m",
+        "note": "cota_inici (elevació absoluta) no consta en aquest document — només profunditat relativa des de 0; consultar PDF/ANNEXES/4001607_DPSH.pdf. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-2,90 m",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de -2,90 m"
+       },
+       {
+        "value": "-3,20 m (aprox.)",
+        "font": "PENETROS.pdf p.2, columna P1, graella N20",
+        "quote": "Cota Inici -0,15; darrer registre a -3,2: 'R  29'",
+        "note": "Rebuig marcat amb 'R' a la fila -3,2 i valor '29' sense coma decimal (a diferència de P-2 'R 2,15' i P-3 'R 1,75', que sí porten fondària exacta en decimals). És ambigu si '29' és un recompte de cops parcial abans del rebuig o una fondària mal transcrita — candidat, no segur. La fondària exacta de rebuig la dona l'Excel/annex DPSH ('Rebuig a -X,XX m'), font d'autoritat superior per aquest camp."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici (elevació absoluta) no consta en aquest document — només profunditat relativa des de 0; consultar PDF/ANNEXES/4001607_DPSH.pdf. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001607_DPSH.xls P-1!B80 (peu); columna F (N.F.) buida P-1!F17:F77",
+        "quote": "Rebuig a la cota de -2,90 m",
+        "note": "cota_inici (elevació absoluta) no consta en aquest document — només profunditat relativa des de 0; consultar PDF/ANNEXES/4001607_DPSH.pdf. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de -2,90 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, columna P1, graella N20",
+        "quote": "Cota Inici -0,15; darrer registre a -3,2: 'R  29'",
+        "note": "Rebuig marcat amb 'R' a la fila -3,2 i valor '29' sense coma decimal (a diferència de P-2 'R 2,15' i P-3 'R 1,75', que sí porten fondària exacta en decimals). És ambigu si '29' és un recompte de cops parcial abans del rebuig o una fondària mal transcrita — candidat, no segur. La fondària exacta de rebuig la dona l'Excel/annex DPSH ('Rebuig a -X,XX m'), font d'autoritat superior per aquest camp."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici (elevació absoluta) no consta en aquest document — només profunditat relativa des de 0; consultar PDF/ANNEXES/4001607_DPSH.pdf. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/4001607_DPSH.xls P-1!B80 (peu); columna F (N.F.) buida P-1!F17:F77",
+        "quote": "Rebuig a la cota de -2,90 m",
+        "note": "cota_inici (elevació absoluta) no consta en aquest document — només profunditat relativa des de 0; consultar PDF/ANNEXES/4001607_DPSH.pdf. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.1",
+        "quote": "Rebuig a la cota de -2,90 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001607_fotografies.pdf p.1, foto F-1/F-2, peu 'Fotografies 1 i 2'",
+        "quote": "Vista general de la parcel·la, i vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-1 i P-2.",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2, columna P1, graella N20",
+        "quote": "Cota Inici -0,15; darrer registre a -3,2: 'R  29'",
+        "note": "Rebuig marcat amb 'R' a la fila -3,2 i valor '29' sense coma decimal (a diferència de P-2 'R 2,15' i P-3 'R 1,75', que sí porten fondària exacta en decimals). És ambigu si '29' és un recompte de cops parcial abans del rebuig o una fondària mal transcrita — candidat, no segur. La fondària exacta de rebuig la dona l'Excel/annex DPSH ('Rebuig a -X,XX m'), font d'autoritat superior per aquest camp.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici (elevació absoluta) no consta en aquest document — només profunditat relativa des de 0; consultar PDF/ANNEXES/4001607_DPSH.pdf. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color.",
+      "matis": null
+     },
+     "extra": {
+      "ANNEXES/4001607_DPSH.xls": {
+       "colpeig_max": "100 cops a -3,00 m (P-1!C32); l'última fila amb colpeig (-3,00 m) NO coincideix amb la cota de rebuig del peu (-2,90 m) — s'usa el peu per ser autoritat (Pas 3b)",
+       "nivells_color": "vermell (Nivell 1) P-1!G17:G25 (0 a -1,6 m); groc (Nivell 2) P-1!G26:G32 (-1,8 a -3,0 m) — transició entre -1,6 i -1,8 m"
+      }
+     }
+    },
+    {
+     "punt": "P-2",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+      "candidates": [
+       {
+        "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de -2,15 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-0,15",
+        "font": "PENETROS.pdf p.2, columna P2, graella N20, fila -2,4",
+        "quote": "R  2,15",
+        "note": "Fondària de rebuig escrita explícitament en decimals pel tècnic, més precisa que la graella de 0,2 m. Candidat (no segur): la fondària exacta de l'Excel/annex DPSH mana."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-2,15 m",
+      "candidates": [
+       {
+        "value": "-2,15 m",
+        "font": "ANNEXES/4001607_DPSH.xls P-2!B80 (peu); columna F (N.F.) buida P-2!F17:F77",
+        "quote": "Rebuig a la cota de -2,15 m",
+        "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-2,15 m",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de -2,15 m"
+       },
+       {
+        "value": "-2,15 m",
+        "font": "PENETROS.pdf p.2, columna P2, graella N20, fila -2,4",
+        "quote": "R  2,15",
+        "note": "Fondària de rebuig escrita explícitament en decimals pel tècnic, més precisa que la graella de 0,2 m. Candidat (no segur): la fondària exacta de l'Excel/annex DPSH mana."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001607_DPSH.xls P-2!B80 (peu); columna F (N.F.) buida P-2!F17:F77",
+        "quote": "Rebuig a la cota de -2,15 m",
+        "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de -2,15 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, columna P2, graella N20, fila -2,4",
+        "quote": "R  2,15",
+        "note": "Fondària de rebuig escrita explícitament en decimals pel tècnic, més precisa que la graella de 0,2 m. Candidat (no segur): la fondària exacta de l'Excel/annex DPSH mana."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/4001607_DPSH.xls P-2!B80 (peu); columna F (N.F.) buida P-2!F17:F77",
+        "quote": "Rebuig a la cota de -2,15 m",
+        "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.2",
+        "quote": "Rebuig a la cota de -2,15 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001607_fotografies.pdf p.1, foto F-1/F-2, peu 'Fotografies 1 i 2'",
+        "quote": "Vista general de la parcel·la, i vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-1 i P-2.",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2, columna P2, graella N20, fila -2,4",
+        "quote": "R  2,15",
+        "note": "Fondària de rebuig escrita explícitament en decimals pel tècnic, més precisa que la graella de 0,2 m. Candidat (no segur): la fondària exacta de l'Excel/annex DPSH mana.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color.",
+      "matis": null
+     },
+     "extra": {
+      "ANNEXES/4001607_DPSH.xls": {
+       "colpeig_max": "100 cops a -2,20 m (P-2!C28); l'última fila amb colpeig (-2,20 m) NO coincideix exactament amb la cota de rebuig del peu (-2,15 m) — s'usa el peu per ser autoritat (Pas 3b)",
+       "nivells_color": "vermell (Nivell 1) P-2!G17:G18 (0 a -0,2 m); groc (Nivell 2) P-2!G19:G28 (-0,4 a -2,2 m) — transició entre -0,2 i -0,4 m"
+      }
+     }
+    },
+    {
+     "punt": "P-3",
+     "cota_inici": {
+      "estat": "segur",
+      "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+      "candidates": [
+       {
+        "value": "+245 msnm segons plànol topogràfic del ICGC (-0,15m carrer)",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3",
+        "quote": "Rebuig a la cota de -1,75 m"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-0,15",
+        "font": "PENETROS.pdf p.2, columna P3, graella N20, fila -2",
+        "quote": "R  1,75",
+        "note": "Coincideix amb la cota 'fins a la cota: 1,75' del full d'assaig SPT de p.3 per a la mostra SPT1 P3 — corroboració interna del mateix document. Candidat (no segur): l'Excel/annex DPSH mana per a la fondària exacta."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ]
+     },
+     "profunditat_assolida": {
+      "estat": "segur",
+      "value": "-1,75 m",
+      "candidates": [
+       {
+        "value": "-1,75 m",
+        "font": "ANNEXES/4001607_DPSH.xls P-3!B80 (peu); columna F (N.F.) buida P-3!F17:F77",
+        "quote": "Rebuig a la cota de -1,75 m",
+        "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "-1,75 m",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3",
+        "quote": "Rebuig a la cota de -1,75 m"
+       },
+       {
+        "value": "-1,75 m",
+        "font": "PENETROS.pdf p.2, columna P3, graella N20, fila -2",
+        "quote": "R  1,75",
+        "note": "Coincideix amb la cota 'fins a la cota: 1,75' del full d'assaig SPT de p.3 per a la mostra SPT1 P3 — corroboració interna del mateix document. Candidat (no segur): l'Excel/annex DPSH mana per a la fondària exacta."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+     },
+     "rebuig": {
+      "estat": "segur",
+      "value": "Si",
+      "candidates": [
+       {
+        "value": "Si",
+        "font": "ANNEXES/4001607_DPSH.xls P-3!B80 (peu); columna F (N.F.) buida P-3!F17:F77",
+        "quote": "Rebuig a la cota de -1,75 m",
+        "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "Si",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3",
+        "quote": "Rebuig a la cota de -1,75 m"
+       },
+       {
+        "value": "Si",
+        "font": "PENETROS.pdf p.2, columna P3, graella N20, fila -2",
+        "quote": "R  1,75",
+        "note": "Coincideix amb la cota 'fins a la cota: 1,75' del full d'assaig SPT de p.3 per a la mostra SPT1 P3 — corroboració interna del mateix document. Candidat (no segur): l'Excel/annex DPSH mana per a la fondària exacta."
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color."
+     },
+     "nivell_freatic": {
+      "estat": "segur",
+      "value": "No detectat",
+      "candidates": [
+       {
+        "value": "No detectat",
+        "font": "ANNEXES/4001607_DPSH.xls P-3!B80 (peu); columna F (N.F.) buida P-3!F17:F77",
+        "quote": "Rebuig a la cota de -1,75 m",
+        "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3",
+        "quote": "Rebuig a la cota de -1,75 m",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PDF/ANNEXES/4001607_fotografies.pdf p.2, foto F-3/F-4, peu 'Fotografies 3 i 4'",
+        "quote": "Vista de l'emplaçament de la maquinària durant la realització de l'assaig de penetració dinàmica DPSH P-3. A sota, materials recuperats de l'assaig SPT realitzat.",
+        "extra": {
+         "matis": null,
+         "absent_literal": null
+        }
+       },
+       {
+        "value": "No detectat",
+        "font": "PENETROS.pdf p.2, columna P3, graella N20, fila -2",
+        "quote": "R  1,75",
+        "note": "Coincideix amb la cota 'fins a la cota: 1,75' del full d'assaig SPT de p.3 per a la mostra SPT1 P3 — corroboració interna del mateix document. Candidat (no segur): l'Excel/annex DPSH mana per a la fondària exacta.",
+        "extra": {
+         "matis": null,
+         "absent_literal": "No detectat"
+        }
+       }
+      ],
+      "sources_checked": [
+       "ANNEXES/4001607_DPSH.xls",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/4001607_fotografies.pdf",
+       "PENETROS.pdf"
+      ],
+      "note": "cota_inici no consta en aquest document. Nivell freàtic comprovat amb colors (formatting_info=True): columna F buida de text i de color.",
+      "matis": null
+     },
+     "extra": {
+      "ANNEXES/4001607_DPSH.xls": {
+       "colpeig_max": "100 cops a -1,80 m (P-3!C26); l'última fila amb colpeig (-1,80 m) NO coincideix exactament amb la cota de rebuig del peu (-1,75 m) — s'usa el peu per ser autoritat (Pas 3b)",
+       "nivells_color": "vermell (Nivell 1) P-3!G17:G23 (0 a -1,2 m); groc (Nivell 2) P-3!G24:G26 (-1,4 a -1,8 m) — transició entre -1,2 i -1,4 m",
+       "mostra_spt": "SPT-1, 1,0 a 1,5 m, marca 'R' al tram final (P-3!E23:E25) — vegeu tier_a lab_sample_id/lab_depth/lab_location"
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PENETROS.pdf"
+   ]
+  },
+  "sondeig_tests": {
+   "estat_bloc": "no_trobat",
+   "rows": [],
+   "sources_checked": [
+    "25.0616/25·0616.pdf",
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+    "25.0616/pressupost geotècnic.msg",
+    "25.0616/RE_ pressupost geotècnic.msg",
+    "25.0616/RV_ pressupost geotècnic.msg",
+    "4672-GTL-25 Linyola.pdf",
+    "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+    "ACCEPTACIO/RV_ Realització geotècnic.msg",
+    "ANNEXES/4001607_DPSH.xls",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/4001607_fotografies.pdf",
+    "PDF/ANNEXES/4001607_plànol de situació.pdf",
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "PDF/ANNEXES/lab-sig.pdf",
+    "PENETROS.pdf",
+    "pl situ.pdf",
+    "Punts de Sondeig_Silvia_Jaume (1).pdf",
+    "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+    "RV_ Realització geotècnic.msg",
+    "tall.pdf"
+   ]
+  },
+  "spt_ma_tests": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "id": {
+      "estat": "candidats",
+      "value": "SPT1 P3",
+      "candidates": [
+       {
+        "value": "SPT1 P3",
+        "font": "PDF/ANNEXES/lab-sig.pdf p.1-p.2 i p.6 GTL: 'Tipus de mostra/es: Roca', 'DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa', 'Mostra: SPT1 P3', 'Cota d'extracció (m): 1,0 - 1,15'",
+        "quote": "Tipus de mostra/es: Roca / DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa / Mostra: SPT1 P3 / Cota d'extracció (m): 1,0 - 1,15"
+       },
+       {
+        "value": "SPT1",
+        "font": "4672-GTL-25 Linyola.pdf p.2 blocs 'DADES INICIALS' i 'DESCRIPCIÓ DEL MATERIAL'",
+        "quote": "Mostra: SPT1 P3 / Tipus de mostra: SPT / Cota d'extracció (m): 1,0 - 1,15 / Tipus de material: Roca / DESCRIPCIÓ DEL MATERIAL: Lutita gresosa",
+        "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+       },
+       {
+        "value": "SPT-1",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3, columna MESURA DE PAR",
+        "quote": "SPT-1 / 1,0 a 1,5 / R",
+        "note": "marcador dins de la taula del DPSH P-3, no és un sondeig independent; \"R\" indica rebuig però no hi ha registre de cops per tram en aquest document — comprovar amb GTL/comanda (no llegits en aquesta crida)"
+       }
+      ],
+      "rule": "Pas 3: annex de l'Eva > GTL > comanda per a l'etiqueta; si discrepen, candidats (annex primer), mai segur",
+      "sources_checked": [
+       "4672-GTL-25 Linyola.pdf",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/lab-sig.pdf"
+      ],
+      "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+     },
+     "punt": {
+      "estat": "segur",
+      "value": "P-3",
+      "candidates": [
+       {
+        "value": "P-3",
+        "font": "4672-GTL-25 Linyola.pdf p.2 blocs 'DADES INICIALS' i 'DESCRIPCIÓ DEL MATERIAL'",
+        "quote": "Mostra: SPT1 P3 / Tipus de mostra: SPT / Cota d'extracció (m): 1,0 - 1,15 / Tipus de material: Roca / DESCRIPCIÓ DEL MATERIAL: Lutita gresosa",
+        "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+       },
+       {
+        "value": "P3",
+        "font": "PDF/ANNEXES/lab-sig.pdf p.1-p.2 i p.6 GTL: 'Tipus de mostra/es: Roca', 'DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa', 'Mostra: SPT1 P3', 'Cota d'extracció (m): 1,0 - 1,15'",
+        "quote": "Tipus de mostra/es: Roca / DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa / Mostra: SPT1 P3 / Cota d'extracció (m): 1,0 - 1,15"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "P-3",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3, columna MESURA DE PAR",
+        "quote": "SPT-1 / 1,0 a 1,5 / R",
+        "note": "marcador dins de la taula del DPSH P-3, no és un sondeig independent; \"R\" indica rebuig però no hi ha registre de cops per tram en aquest document — comprovar amb GTL/comanda (no llegits en aquesta crida)"
+       }
+      ],
+      "sources_checked": [
+       "4672-GTL-25 Linyola.pdf",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/lab-sig.pdf"
+      ],
+      "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+     },
+     "profunditat": {
+      "estat": "segur",
+      "value": "1,0 - 1,15",
+      "candidates": [
+       {
+        "value": "1,0 - 1,15",
+        "font": "4672-GTL-25 Linyola.pdf p.2 blocs 'DADES INICIALS' i 'DESCRIPCIÓ DEL MATERIAL'",
+        "quote": "Mostra: SPT1 P3 / Tipus de mostra: SPT / Cota d'extracció (m): 1,0 - 1,15 / Tipus de material: Roca / DESCRIPCIÓ DEL MATERIAL: Lutita gresosa",
+        "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+       }
+      ],
+      "rule": "1 font A sense contradiccio",
+      "altres": [
+       {
+        "value": "1,0 - 1,15",
+        "font": "PDF/ANNEXES/lab-sig.pdf p.1-p.2 i p.6 GTL: 'Tipus de mostra/es: Roca', 'DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa', 'Mostra: SPT1 P3', 'Cota d'extracció (m): 1,0 - 1,15'",
+        "quote": "Tipus de mostra/es: Roca / DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa / Mostra: SPT1 P3 / Cota d'extracció (m): 1,0 - 1,15"
+       },
+       {
+        "value": "1,0 a 1,5 m",
+        "font": "PDF/ANNEXES/4001607_DPSH.pdf p.3, columna MESURA DE PAR",
+        "quote": "SPT-1 / 1,0 a 1,5 / R",
+        "note": "marcador dins de la taula del DPSH P-3, no és un sondeig independent; \"R\" indica rebuig però no hi ha registre de cops per tram en aquest document — comprovar amb GTL/comanda (no llegits en aquesta crida)"
+       }
+      ],
+      "sources_checked": [
+       "4672-GTL-25 Linyola.pdf",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/lab-sig.pdf"
+      ],
+      "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+     },
+     "litologia": {
+      "estat": "candidats",
+      "value": "Lutita gresosa",
+      "candidates": [
+       {
+        "value": "Lutita gresosa",
+        "font": "4672-GTL-25 Linyola.pdf p.2 blocs 'DADES INICIALS' i 'DESCRIPCIÓ DEL MATERIAL'",
+        "quote": "Mostra: SPT1 P3 / Tipus de mostra: SPT / Cota d'extracció (m): 1,0 - 1,15 / Tipus de material: Roca / DESCRIPCIÓ DEL MATERIAL: Lutita gresosa",
+        "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+       },
+       {
+        "value": "Roca",
+        "font": "PDF/ANNEXES/lab-sig.pdf p.1-p.2 i p.6 GTL: 'Tipus de mostra/es: Roca', 'DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa', 'Mostra: SPT1 P3', 'Cota d'extracció (m): 1,0 - 1,15'",
+        "quote": "Tipus de mostra/es: Roca / DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa / Mostra: SPT1 P3 / Cota d'extracció (m): 1,0 - 1,15"
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Lutita gresosa",
+        "font": "PDF/ANNEXES/lab-sig.pdf p.1-p.2 i p.6 GTL: 'Tipus de mostra/es: Roca', 'DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa', 'Mostra: SPT1 P3', 'Cota d'extracció (m): 1,0 - 1,15'",
+        "quote": "Tipus de mostra/es: Roca / DESCRIPCIÓ DEL MATERIAL: ... Lutita gresosa / Mostra: SPT1 P3 / Cota d'extracció (m): 1,0 - 1,15"
+       }
+      ],
+      "sources_checked": [
+       "4672-GTL-25 Linyola.pdf",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/lab-sig.pdf"
+      ],
+      "note": "n30 no_trobat: aquest GTL no dona registre de cops (ve del full de camp/annex de sondeig, inexistent en aquest projecte sense sondeig a rotació); litologia mai segur per a la cadena literal (regla del contracte)"
+     },
+     "n30": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "4672-GTL-25 Linyola.pdf",
+       "PDF/ANNEXES/4001607_DPSH.pdf",
+       "PDF/ANNEXES/lab-sig.pdf"
+      ],
+      "registre": {
+       "estat": "no_trobat",
+       "value": null,
+       "sources_checked": [
+        "4672-GTL-25 Linyola.pdf",
+        "PDF/ANNEXES/4001607_DPSH.pdf",
+        "PDF/ANNEXES/lab-sig.pdf"
+       ]
+      }
+     }
+    }
+   ],
+   "sources_checked": [
+    "4672-GTL-25 Linyola.pdf",
+    "PDF/ANNEXES/4001607_DPSH.pdf",
+    "PDF/ANNEXES/lab-sig.pdf"
+   ]
+  },
+  "soil_levels": {
+   "estat_bloc": "candidats",
+   "rows": [
+    {
+     "nom": "Nivell 1",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Llims argilsoso i sorrencs",
+      "candidates": [
+       {
+        "value": "Llims argilsoso i sorrencs",
+        "font": "tall.pdf llegenda, requadre superior dret",
+        "quote": "Nivell 1: Llims argilsoso i sorrencs.",
+        "note": "text del tall (única font en aquest projecte: no hi ha annex de sondeig a la carpeta); l'Eva sol re-redactar el text a l'informe. La cota de transició nivell1/nivell2 NO és plana al gràfic: ~243,4-243,5 msnm a P-1 (igual a AA' i BB'), ~243,6-243,7 msnm a P-3, i puja fins a ~244,6-244,7 msnm a P-2 (secció BB', límit inclinat). No es fixa un únic 'de'/'a' perquè el límit depèn del punt i és una lectura gràfica (graella d'1 m, 241-245 msnm), no una xifra impresa; cal creuar amb cota_referencia + Excel DPSH per convertir a fondària."
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "altres": [
+       {
+        "value": "Llims argilsoso i sorrencs",
+        "font": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+        "quote": ""
+       }
+      ],
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "text del tall (única font en aquest projecte: no hi ha annex de sondeig a la carpeta); l'Eva sol re-redactar el text a l'informe. La cota de transició nivell1/nivell2 NO és plana al gràfic: ~243,4-243,5 msnm a P-1 (igual a AA' i BB'), ~243,6-243,7 msnm a P-3, i puja fins a ~244,6-244,7 msnm a P-2 (secció BB', límit inclinat). No es fixa un únic 'de'/'a' perquè el límit depèn del punt i és una lectura gràfica (graella d'1 m, 241-245 msnm), no una xifra impresa; cal creuar amb cota_referencia + Excel DPSH per convertir a fondària."
+     },
+     "de": {
+      "estat": "candidats",
+      "value": "245 msnm (superfície, escala del tall)",
+      "candidates": [
+       {
+        "value": "245 msnm (superfície, escala del tall)",
+        "font": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+        "quote": ""
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "candidats",
+      "value": "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2 (contacte Nivell 1/Nivell 2, s'aprima cap a P-2)",
+      "candidates": [
+       {
+        "value": "≈243,6 msnm a P-1/P-3; ≈244,6-244,7 msnm a P-2 (contacte Nivell 1/Nivell 2, s'aprima cap a P-2)",
+        "font": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+        "quote": ""
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     }
+    },
+    {
+     "nom": "Nivell 2",
+     "litologia": {
+      "estat": "candidats",
+      "value": "Lutites i sorrenques, Substrat",
+      "candidates": [
+       {
+        "value": "Lutites i sorrenques, Substrat",
+        "font": "tall.pdf llegenda, requadre superior dret",
+        "quote": "Nivell 2: Lutites i sorrenques, Substrat.",
+        "note": "text del tall (única font); vegeu la nota del 1er nivell sobre la variabilitat de la cota de transició per punt. Als tres punts apareix 'Nb=R' prop o poc després del límit nivell1/nivell2 (P-1: Nb=R uns 242 msnm, després de Nb=38; P-3: Nb=R uns 243 msnm, molt a prop del límit, amb 'N=R' just al límit; P-2: Nb=R uns 243,6 msnm, molt a prop del límit) — possible indici de rebuig DPSH proper a l'inici del substrat, NO verificat contra el peu 'Rebuig a' de l'Excel DPSH (fora d'abast d'aquesta lectura)."
+       },
+       {
+        "value": "Lutites i sorrenques, Substrat.",
+        "font": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+        "quote": ""
+       }
+      ],
+      "rule": "guard: mai segur per a aquesta cel·la",
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ],
+      "note": "text del tall (única font); vegeu la nota del 1er nivell sobre la variabilitat de la cota de transició per punt. Als tres punts apareix 'Nb=R' prop o poc després del límit nivell1/nivell2 (P-1: Nb=R uns 242 msnm, després de Nb=38; P-3: Nb=R uns 243 msnm, molt a prop del límit, amb 'N=R' just al límit; P-2: Nb=R uns 243,6 msnm, molt a prop del límit) — possible indici de rebuig DPSH proper a l'inici del substrat, NO verificat contra el peu 'Rebuig a' de l'Excel DPSH (fora d'abast d'aquesta lectura)."
+     },
+     "de": {
+      "estat": "candidats",
+      "value": "mateix contacte que 'a' del Nivell 1 (≈243,6 a ≈244,7 msnm segons el punt)",
+      "candidates": [
+       {
+        "value": "mateix contacte que 'a' del Nivell 1 (≈243,6 a ≈244,7 msnm segons el punt)",
+        "font": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+        "quote": ""
+       }
+      ],
+      "rule": "cap font d'autoritat A (conf < 0,8) i sense convergencia de 3 documents",
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "a": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     },
+     "mostra_del_nivell": {
+      "estat": "no_trobat",
+      "value": null,
+      "sources_checked": [
+       "PDF/ANNEXES/4001607_tall de correlació.pdf",
+       "tall.pdf"
+      ]
+     }
+    }
+   ],
+   "sources_checked": [
+    "PDF/ANNEXES/4001607_tall de correlació.pdf",
+    "tall.pdf"
+   ]
+  },
+  "superficie_construida": {
+   "estat": "candidats",
+   "value": "250.91",
+   "candidates": [
+    {
+     "value": "250.91",
+     "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf pàgina 3 i 5, bloc 'SUPERFÍCIES CONSTRUÏDES' / 'Superfície construïda TOTAL PBaixa'",
+     "quote": "Superfície construïda TOTAL PBaixa: 250.91 m²",
+     "note": "El mateix bloc també dona 'Superfície útil TOTAL Planta Baixa: 515.62 m²' (inclou espais exteriors útils: pati interior 23.85 + jardí 282.61 + no habitable útil 68.88 + habitatge útil 140.27) — és SUPERFÍCIE ÚTIL, no construïda; no confondre-les.",
+     "extra": {
+      "components": [
+       {
+        "label": "No habitable exterior (Porxo 22.15 + Voladís sud 1 3.15 + Voladís sud 2 3.24)",
+        "value": "28.55"
+       },
+       {
+        "label": "No habitable interior (Garatge)",
+        "value": "56.75"
+       },
+       {
+        "label": "Habitatge planta baixa",
+        "value": "165.61"
+       }
+      ],
+      "etiqueta_font": "segons projecte (superfícies construïdes, pàgina 03/05)"
+     }
+    }
+   ],
+   "rule": "Pas 3b: l'Eva escriu de vegades la suma i de vegades els sumands; multi-habitatge pot ser per casa → sempre candidats",
+   "sources_checked": [
+    "25.0616/2_02B_DG_Silvia_Jaume.pdf"
+   ],
+   "note": "El mateix bloc també dona 'Superfície útil TOTAL Planta Baixa: 515.62 m²' (inclou espais exteriors útils: pati interior 23.85 + jardí 282.61 + no habitable útil 68.88 + habitatge útil 140.27) — és SUPERFÍCIE ÚTIL, no construïda; no confondre-les.",
+   "components": [
+    {
+     "doc": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+     "components": [
+      {
+       "label": "No habitable exterior (Porxo 22.15 + Voladís sud 1 3.15 + Voladís sud 2 3.24)",
+       "value": "28.55"
+      },
+      {
+       "label": "No habitable interior (Garatge)",
+       "value": "56.75"
+      },
+      {
+       "label": "Habitatge planta baixa",
+       "value": "165.61"
+      }
+     ],
+     "total": "250.91"
+    }
+   ],
+   "etiqueta_font": "segons projecte (superfícies construïdes, pàgina 03/05)"
+  }
+ },
+ "conflicts": [],
+ "extra_concepts": {
+  "expedient_comercial": [
+   {
+    "value": "25·0616",
+    "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 peu / capçaleres",
+    "quote": "25·0616",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf"
+   },
+   {
+    "value": "25·0616",
+    "font": "25.0616/25·0616.pdf p.1 peu / capçaleres",
+    "quote": "25·0616",
+    "note": "codi comercial m4PRO, NO és l'expedient",
+    "doc": "25.0616/25·0616.pdf"
+   }
+  ],
+  "contact_person": [
+   {
+    "value": "SILVIA EROLES BALAGUERO",
+    "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!C8 (PERSONA DE CONTACTE)",
+    "quote": "SILVIA EROLES BALAGUERO",
+    "doc": "25.0616/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "contact_phone": [
+   {
+    "value": "TEL. 618108612",
+    "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!F8",
+    "quote": "TEL. 618108612",
+    "doc": "25.0616/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp": [
+   {
+    "value": "PENETROS I MOSTRA",
+    "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!C13 (PREVISIÓ DE TREBALL DE CAMP)",
+    "quote": "PENETROS I MOSTRA",
+    "doc": "25.0616/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "previsio_camp_unitats": [
+   {
+    "value": "3 ( P)",
+    "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!F13",
+    "quote": "3 ( P)",
+    "note": "p. ex. '2 (P)', '5P+2S' — previstos, no executats",
+    "doc": "25.0616/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "edificacio_existent": [
+   {
+    "value": "SI",
+    "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!C16 (EDIFICACIÓ EXISTENT ?)",
+    "quote": "SI",
+    "doc": "25.0616/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "lab_field_company": [
+   {
+    "value": "TPS ERUGA",
+    "font": "25.0616/DADES PER ANAR A CAMP_v1.xlsx fitxa!C38 (EMPRESA QUE FA LA FEINA)",
+    "quote": "TPS ERUGA",
+    "doc": "25.0616/DADES PER ANAR A CAMP_v1.xlsx"
+   }
+  ],
+  "tecnic": [
+   {
+    "value": "Eva Vázquez Marcet",
+    "font": "25.0616/PLAN_COST_LINYOLA.xlsx 'Plan Cost'!E21",
+    "quote": "Eva Vázquez Marcet",
+    "doc": "25.0616/PLAN_COST_LINYOLA.xlsx"
+   }
+  ],
+  "subcontractes_hint": [
+   {
+    "value": "TPS",
+    "font": "25.0616/PLAN_COST_LINYOLA.xlsx OFERTA!G3",
+    "quote": "TPS",
+    "note": "plantilla: mai senyal fort",
+    "doc": "25.0616/PLAN_COST_LINYOLA.xlsx"
+   },
+   {
+    "value": "SOIL-ASSAIG",
+    "font": "25.0616/PLAN_COST_LINYOLA.xlsx OFERTA!G27",
+    "quote": "SOIL-ASSAIG",
+    "note": "plantilla: mai senyal fort",
+    "doc": "25.0616/PLAN_COST_LINYOLA.xlsx"
+   }
+  ],
+  "dpsh_refusal": [
+   {
+    "value": "Rebuig a la cota de -2,90 m",
+    "font": "ANNEXES/4001607_DPSH.xls P-1!B80",
+    "quote": "Rebuig a la cota de -2,90 m",
+    "doc": "ANNEXES/4001607_DPSH.xls"
+   },
+   {
+    "value": "Rebuig a la cota de -2,15 m",
+    "font": "ANNEXES/4001607_DPSH.xls P-2!B80",
+    "quote": "Rebuig a la cota de -2,15 m",
+    "doc": "ANNEXES/4001607_DPSH.xls"
+   },
+   {
+    "value": "Rebuig a la cota de -1,75 m",
+    "font": "ANNEXES/4001607_DPSH.xls P-3!B80",
+    "quote": "Rebuig a la cota de -1,75 m",
+    "doc": "ANNEXES/4001607_DPSH.xls"
+   }
+  ],
+  "data_sollicitud_lab": [
+   {
+    "value": "2025-10-10",
+    "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!AH23",
+    "quote": "45940.0",
+    "doc": "comanda laboratori_4001607_LINYOLA.xls"
+   }
+  ],
+  "lab_tests_note": [
+   {
+    "value": "NOMÉS SULFATS",
+    "font": "comanda laboratori_4001607_LINYOLA.xls Hoja1!AD35",
+    "quote": "NOMÉS SULFATS",
+    "doc": "comanda laboratori_4001607_LINYOLA.xls"
+   }
+  ],
+  "street_address_struct": [
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "25.0616/25·0616.pdf p.1 bloc OBRA:",
+    "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+    "note": "Objecte extra (Pas 3) derivat de la mateixa cita d'street_address.",
+    "doc": "25.0616/25·0616.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "25.0616/2_02B_DG_Silvia_Jaume.pdf caixetí, bloc EMPLAÇAMENT",
+    "quote": "C/ Clot de la Llacuna,16 LINYOLA (25240)",
+    "note": "Concepte extra (address_struct), no és cap dels 15 camps.",
+    "doc": "25.0616/2_02B_DG_Silvia_Jaume.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "25.0616/pressupost geotècnic.msg cos del correu, primer punt de la llista",
+    "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+    "note": "Concepte extra (Pas 3, adreça estructurada); no és cap dels 15 camps.",
+    "doc": "25.0616/pressupost geotècnic.msg"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "25.0616/RE_ pressupost geotècnic.msg cos del missatge original citat, primer punt de la llista",
+    "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+    "note": "concepte extra (address_struct), no és cap dels 15 camps",
+    "doc": "25.0616/RE_ pressupost geotècnic.msg"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "25.0616/RV_ pressupost geotècnic.msg cos del correu, correu original citat de Laia Alarcón (19/08/2025)",
+    "quote": "Carrer Clot de la Llacuna, 16 -25240- Linyola",
+    "note": "Concepte extra (Pas 3); no toca cap variable de l'informe directament.",
+    "doc": "25.0616/RV_ pressupost geotècnic.msg"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "4672-GTL-25 Linyola.pdf p.1 i p.7 camp 'Situació'",
+    "quote": "Linyola. Carrer Clot de la Llacuna.",
+    "note": "Sense número de portal en aquest document",
+    "doc": "4672-GTL-25 Linyola.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf p.1 capçalera, bloc 'OBRA:'",
+    "quote": "Clot de la Llacuna, 16 -25240- Linyola",
+    "note": "Objecte estructurat per al Cadastre (concepte extra); no toca cap variable de l'informe.",
+    "doc": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/4001607_DPSH.pdf capçalera de cada pàgina, camp OBRA (p.1-3)",
+    "quote": "OBRA : C/ CLOT DE LA LLACUNA 16",
+    "note": "concepte extra per a resolució cadastral, no és cap dels 15 camps",
+    "doc": "PDF/ANNEXES/4001607_DPSH.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/4001607_plànol de situació.pdf TÍTOL DEL PROJECTE (caixetí) + mapa cadastral zoom",
+    "quote": "…al Carrer Clot de la Llacuna nº16 de Linyola",
+    "note": "estructura derivada del mateix text del títol; nom del carrer corroborat visualment al mapa",
+    "doc": "PDF/ANNEXES/4001607_plànol de situació.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/4001607_tall de correlació.pdf peu, bloc 'TÍTOL DEL PROJECTE'",
+    "quote": "Carrer Clot de la Llacuna nº16 de Linyola",
+    "note": "derivat de la mateixa frase narrativa del títol; concepte extra, no toca cap variable de l'informe directament",
+    "doc": "PDF/ANNEXES/4001607_tall de correlació.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "PDF/ANNEXES/lab-sig.pdf p.1 'Situació:' / p.2 'Obra / Projecte:'",
+    "quote": "Linyola. Carrer Clot de la Llacuna.",
+    "note": "concepte extra (Pas 3); sense portal imprès en aquest document",
+    "doc": "PDF/ANNEXES/lab-sig.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "PENETROS.pdf p.1 DADES OBRA / p.2 Descriure punt 0 o cota referència",
+    "quote": "Carrer clot de La Llacuna / LINYOLA",
+    "note": "Cap número de portal escrit en aquest document; l'esquema de situació de p.2 dona distàncies entre punts i a 'Casa Veïna', no un número de carrer.",
+    "doc": "PENETROS.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "pl situ.pdf caixetí p.1, bloc 'TÍTOL DEL PROJECTE'",
+    "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge al Carrer Clot de la Llacuna nº16 de Linyola",
+    "note": "concepte extra (Pas 3), no és cap dels 15 camps",
+    "doc": "pl situ.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "Punts de Sondeig_Silvia_Jaume (1).pdf peu de plànol, bloc EMPLAÇAMENT",
+    "quote": "C. Clot de la Llacuna, 16 / Linyola  (25240)",
+    "note": "Concepte extra per creuament d'adreça amb el Cadastre.",
+    "doc": "Punts de Sondeig_Silvia_Jaume (1).pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf caixetí, bloc EMPLAÇAMENT",
+    "quote": "C. Clot de la Llacuna, 16 / Linyola (25240)",
+    "note": "Extra concept, no és un dels 15 camps del nivell A.",
+    "doc": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf"
+   },
+   {
+    "value": {
+     "tipus_via": "carrer",
+     "nom_via": "Clot de la Llacuna",
+     "nom_via_alternatives": [],
+     "portals": [
+      "16"
+     ],
+     "municipi": "Linyola",
+     "municipi_alternatives": []
+    },
+    "font": "tall.pdf peu de pàgina, taula 'TÍTOL DEL PROJECTE', subtítol del projecte",
+    "quote": "Carrer Clot de la Llacuna nº16 de Linyola",
+    "note": "extret de la mateixa frase que street_address/municipality; no és font independent",
+    "doc": "tall.pdf"
+   }
+  ]
+ },
+ "sources_read": [
+  "_g3_templates.json",
+  "25.0616/25·0616.pdf",
+  "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+  "25.0616/pressupost geotècnic.msg",
+  "25.0616/RE_ pressupost geotècnic.msg",
+  "25.0616/RV_ pressupost geotècnic.msg",
+  "4672-GTL-25 Linyola.pdf",
+  "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+  "ACCEPTACIO/RV_ Realització geotècnic.msg",
+  "ANNEXES/4001607_DPSH.xls",
+  "PDF/ANNEXES/4001607_DPSH.pdf",
+  "PDF/ANNEXES/4001607_fotografies.pdf",
+  "PDF/ANNEXES/4001607_plànol de situació.pdf",
+  "PDF/ANNEXES/4001607_tall de correlació.pdf",
+  "PDF/ANNEXES/lab-sig.pdf",
+  "PENETROS.pdf",
+  "pl situ.pdf",
+  "Punts de Sondeig_Silvia_Jaume (1).pdf",
+  "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+  "RV_ Realització geotècnic.msg",
+  "tall.pdf"
+ ],
+ "notes_estructurals": [
+  "_decisions.json generat per consolidacio Python-first (Fase 12, python-1.0): 20 documents llegits, 6 plantilles G3, 0 conflictes A-vs-A",
+  "duplicats per md5 (no compten dos cops): 25.0616/Punts de Sondeig_Silvia_Jaume.pdf = Punts de Sondeig_Silvia_Jaume (1).pdf"
+ ]
+}

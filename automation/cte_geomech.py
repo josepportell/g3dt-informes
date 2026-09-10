@@ -264,14 +264,22 @@ def is_rock(nspt: float, description: str = "") -> bool:
     if nspt >= 100:
         return True
 
-    # Description keywords
-    rock_keywords = [
-        "roca", "bretxa", "bretxes", "calcària", "calcàries",
-        "gres", "gresos", "substrat", "conglomerat",
-        "lutita", "lutites", "margues", "pissarra",
-    ]
+    # Description keywords (ca + es; P6 2026-09-07: «Areniscas, sustrato», «brecha», «caliza» eren invisibles).
+    # Les margues TOVES són cohesives, no roca (mateixa excepció que tenia `detect_soil_type`).
     desc_lower = description.lower()
-    return any(kw in desc_lower for kw in rock_keywords)
+    if any(kw in desc_lower for kw in _SOFT_MARL_KEYWORDS):
+        return False
+    return any(kw in desc_lower for kw in _ROCK_KEYWORDS)
+
+
+#: Roca per descripció (ca/es). «gres» també casa «gresos», «gresosa» (Linyola SPT «Lutita gresosa»).
+_ROCK_KEYWORDS = (
+    "roca", "bretxa", "bretxes", "brecha", "brechas", "calcària", "calcàries", "caliza", "calizas",
+    "gres", "gresos", "arenisca", "areniscas", "substrat", "sustrato", "conglomerat", "conglomerado",
+    "lutita", "lutites", "lutitas", "margues", "margas", "pissarra", "pizarra",
+)
+#: Margues toves: cohesiu (llim), mai roca.
+_SOFT_MARL_KEYWORDS = ("marga tova", "margues toves", "marga blanda", "margas blandas")
 
 
 def rock_params_default() -> dict:
@@ -294,84 +302,70 @@ def rock_params_default() -> dict:
 
 # === Soil type auto-detection from lithological description ===
 
-def detect_soil_type(description: str) -> str:
-    """Auto-detect soil type from lithological description.
+#: Primer sintagma nominal → tipus (ca/es, text sense accents). L'ordre d'aparició al text mana:
+#: «Arcilla limosa y arenosa con algunas gravas» → arcilla (no grava), «Bolos y gravas en matriz arenosa» → grava.
+_TYPE_STEMS: tuple[tuple[str, str], ...] = (
+    ("arena_limosa", r"\b(?:sorr\w*|aren\w*)\s+(?:llim|limos)"),
+    ("limo", r"\bllim|\blimo|\bsilt|\bmarg"),
+    ("arcilla", r"\bargil|\barcill|\bclay"),
+    ("grava", r"\bgrav|\bbolo|\bblocs?\b|\bcodol"),
+    ("arena", r"\bsorr|\baren|\bsand"),
+)
 
-    Priority: rock > cohesive > granular sub-types.
-    Rock is checked first because "bretxes amb matriu sorrenca" is rock, not granular.
-    Soft marls ("marga tova", "margues toves") are cohesive, not rock.
 
-    Strategy for non-rock: the FIRST significant noun determines the type.
-    "Llims argilosos i sorrencs" → limo (starts with llim)
-    "Sorres argiloses" → arena (starts with sorr)
-    "Graves en matriu sorrenca" → grava (starts with grav)
-
-    Returns: 'rock', 'grava', 'arena', 'arena_limosa', 'limo', 'arcilla', or 'granular'
-    """
+def _first_material_stem(norm_desc: str) -> str | None:
+    """Tipus del PRIMER material que apareix al text normalitzat (o None si no n'hi ha cap)."""
     import re
-    desc = description.lower()
+    best: tuple[int, str] | None = None
+    for st, rx in _TYPE_STEMS:
+        m = re.search(rx, norm_desc)
+        if m and (best is None or m.start() < best[0]):
+            best = (m.start(), st)
+    return best[1] if best else None
 
-    # --- Rock detection (highest priority) ---
-    # Soft marls are cohesive, not rock — check before rock keywords
-    soft_marl = any(kw in desc for kw in ('marga tova', 'margues toves'))
 
-    rock_keywords = [
-        'substrat rocós', 'roca mare', 'roca',
-        'bretx',  # bretxa, bretxes
-        'calcàri',  # calcària, calcàries
-        'gresos', 'gres',
-        'conglomerat cimentat',
-        'lutites compactes',
-        'pissarra',
-    ]
-    # "margues"/"marga" are rock unless soft
-    rock_keywords_secondary = ['margues', 'marga']
+def detect_soil_type(description: str) -> str:
+    """Tipus de sòl d'una descripció litològica (ca/es) — UN SOL classificador (P6, 2026-09-07).
 
-    has_rock = any(kw in desc for kw in rock_keywords)
-    has_rock_secondary = not soft_marl and any(kw in desc for kw in rock_keywords_secondary)
+    Fins ara aquesta funció tenia el seu propi vocabulari (només català, sense accents normalitzats): «Arcilla limosa
+    y arenosa con algunas gravas» sortia `grava` (per «grav»), «Rebliment antròpic» i «Lutites, substrat» sortien
+    `granular`, «Arcillas arenosas» `granular`. Ara delega a `geotech_criteria._classify` (el criteri que ja decideix
+    γ/c/φ/E i el tipus sísmic), amb `lith_flags` (senyals ca/es sense accents) i `is_rock`, i tradueix la classe al
+    vocabulari del wizard: `rock | grava | arena | arena_limosa | limo | arcilla | granular`.
 
-    # Check for granular/cohesive presence (needed for rock_secondary tie-breaking)
-    has_granular = any(kw in desc for kw in ('grav', 'sorr', 'aren', 'còdol', 'balast'))
+    Regles:
+      - roca (`is_rock`: lutites, gresos/areniscas, substrat/sustrato, bretxes…; margues toves NO) → `rock`
+      - argila (arcilla/argila com a material principal) → `arcilla`
+      - transicional (llims; sorres/arenes argiloses o llimoses) → `limo` o `arena_limosa` segons el primer material
+      - grava / bolos → `grava`; sorra / arena → `arena`
+      - rebliment / terra vegetal → el material del rebliment si es diu («Sorres argiloses de rebliment» → `arena`),
+        si no `granular` (la classe «rebliment» la posen els senyals, no el tipus)
+      - descripció buida o sense cap material → `granular` (defecte de sempre)
+    """
+    from .geotech_criteria import _classify, _norm, lith_flags
 
-    if has_rock:
+    raw = description or ""
+    norm = _norm(raw)
+    if not norm.strip():
+        return "granular"
+    rock = is_rock(0, raw)
+    flags = lith_flags(raw)
+    guess = _first_material_stem(norm)
+    klass = _classify(guess or "granular", flags, rock)
+    if klass == "roca":
         return "rock"
-    if has_rock_secondary and not has_granular:
-        return "rock"
-
-    # --- Soil sub-type detection ---
-    # Compound types: check first (most specific)
-    if re.search(r'sorr.*limos|arena.*limos', desc):
-        return "arena_limosa"
-    if re.search(r'sorra limosa|arena limosa', desc):
-        return "arena_limosa"
-
-    # First-word strategy: the leading material dominates
-    # Strip common prefixes: ordinals, articles
-    stripped = re.sub(r'^(\d+[er|on|rt]+\s+nivell\.?\s*)', '', desc)
-    stripped = re.sub(r'^(el|la|les|els|los|las|un|una)\s+', '', stripped)
-
-    if stripped.startswith(('llim', 'silt')):
-        return "limo"
-    if soft_marl or stripped.startswith('marg'):
-        return "limo"
-    if stripped.startswith(('argil', 'clay')):
+    if klass == "argila":
         return "arcilla"
-    if stripped.startswith(('grav', 'gravel')):
+    if klass == "grava":
         return "grava"
-    if stripped.startswith(('sorr', 'aren', 'sand')):
+    if klass == "sorra":
         return "arena"
-
-    # Fallback: any keyword anywhere in description
-    if any(kw in desc for kw in ('llim', 'silt')):
-        return "limo"
-    if any(kw in desc for kw in ('argil', 'clay', 'argila')):
-        return "arcilla"
-    if any(kw in desc for kw in ('grav', 'gravel')):
-        return "grava"
-    if any(kw in desc for kw in ('sorr', 'arena', 'sand')):
-        return "arena"
-
-    return "granular"
+    if klass == "transicional":
+        if guess in ("limo", "arena_limosa"):
+            return guess
+        return "arena_limosa" if flags["sorra"] else "limo"
+    # rebliment / vegetal
+    return guess or "granular"
 
 
 def permeability_from_type(soil_type: str) -> tuple[float, float]:

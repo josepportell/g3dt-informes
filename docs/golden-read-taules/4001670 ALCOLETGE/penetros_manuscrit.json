@@ -1,0 +1,78 @@
+{
+ "source_path": "PENETROS.pdf",
+ "document_type": "full_camp_manuscrit",
+ "what_it_is": "Escaneig TPS de 3 pàgines: albarà, full de camp DPSH (3 punts) i full d'assaig SPT",
+ "issuer": "TPS (operari AZZI - CESAR, sonda ML60A)",
+ "date": "16/02/2026 (albarà i fulls)",
+ "pages_or_sheets": "3 pàgines escanejades (0 text, lectura visual)",
+ "context": {
+  "who_made_it": "TPS (subcontractista de penetròmetres) per a G3",
+  "for_whom": "G3 ('DADES CLIENT: Empresa G3 / Responsable EVA' = relació TPS→G3, cap rol al projecte)",
+  "why": "registre de camp i albarà de facturació",
+  "expected_fields": [
+   "N20 manuscrits",
+   "N.F./humitat",
+   "rebuigs",
+   "nº penetròmetres",
+   "SPT (registre i descripció)",
+   "data"
+  ],
+  "not_expected": [
+   "client de l'informe",
+   "cota d'inici absoluta"
+  ],
+  "relation_to_others": "versió manuscrita de l'Excel DPSH (l'Excel, revisat per Eva, mana per als valors); l'etiqueta de bossa 'spt alcoletge.png' fotografia la mateixa mostra",
+  "authority_for": [
+   "corroboració de dpsh_tests (rebuigs, humitat)",
+   "spt_ma_tests.registre",
+   "spt_ma_tests.litologia (descripció de camp)",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P1",
+    "profunditat_assolida": "1'6 (encerclat)",
+    "rebuig": "Si (100 a -1,6)",
+    "nivell_freatic": "ratllat N.F. des de ~-1,0",
+    "location": "p.2 columna P1",
+    "quote": "encerclat '1'6'; 100 a -1,6"
+   },
+   {
+    "punt": "P2",
+    "profunditat_assolida": "1'3 (encerclat)",
+    "rebuig": "Si (100 a -1,4)",
+    "nivell_freatic": "ratllat N.F. des de ~-1,0",
+    "location": "p.2 columna P2",
+    "quote": "encerclat '1'3'; 100 a -1,4"
+   },
+   {
+    "punt": "P3",
+    "profunditat_assolida": "169 (=1,69, encerclat)",
+    "rebuig": "Si (84 a -1,6, 100 a -1,8)",
+    "nivell_freatic": "ratllat N.F. des de ~-1,0",
+    "location": "p.2 columna P3",
+    "quote": "encerclat '169'"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT P3",
+    "punt": "P3",
+    "profunditat": "0,8 a 1,4",
+    "registre": "5 / 9 / 11 / 33",
+    "descripcio_materials": "LUTITA MARRÓ",
+    "location": "p.3 'Full de assaig SPT/MI/Mostra alterada'",
+    "quote": "Assaig de referència: SPT P3 | de la cota de: 0,8 / fins a la cota: 1,4 | Colpeig: 5 9 11 33 | Descripció dels materials: LUTITA MARRÓ"
+   }
+  ],
+  "__nota": "Quadre NIVELL FREÀTIC del full DPSH: 'Hi ha nivell freàtic? → Humitat 0'8~' (manuscrit; lectura del segon dígit poc segura, sembla 8). Discrepa lleument de l'Excel (marques des de -1,0): l'Excel mana. Albarà p.1: 'Nº de penetròmetres realitzats: 3', 'Assaigs SPT o MI: 1', 'ml previs perforació per assaig SPT o MI: 0,8', ml penetròmetre 4,59."
+ },
+ "not_present": [
+  "cota d'inici",
+  "punt 0 / cota referència (quadre buit)"
+ ],
+ "reading_notes": "Render 120 dpi + zooms 300 dpi (quadre N.F. i columnes). Croquis p.2: P2 i P1 a la façana posterior, P3 entremig — coincideix amb 'ampliació habitatge v2.png'. Possible 6 (manuscrit) vs 5 (Excel) al primer tram de P3: irrellevant, l'Excel mana."
+}

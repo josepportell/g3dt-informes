@@ -1,0 +1,715 @@
+{
+ "generated": "2026-09-04T22:42:29",
+ "project": "3001706 C.TULIPA CERDANYOLA",
+ "files": [
+  {
+   "path": ".g3dt_network_path",
+   "size": 52,
+   "md5": "cf23c1c4dce7240e0b2aed155b1c1202",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "26.0254/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 78037,
+   "md5": "29a9109dec96166a170fb0518d938e40",
+   "mtime": "2026-06-05T19:36:06",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0254/PLAN_COST_CERDANYOLA.xlsx",
+   "size": 113166,
+   "md5": "03176387f70efd95124d03d549cbe7a1",
+   "mtime": "2026-06-05T19:36:07",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0254/PLAN_COST_CERDANYOLA_2 CASES.xlsx",
+   "size": 113190,
+   "md5": "6903ab0c7c09881952c6c31980dd7878",
+   "mtime": "2026-06-05T19:36:07",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA-2CASES.pdf",
+   "size": 479912,
+   "md5": "70963c53656c0935a758afd8da7adc9e",
+   "mtime": "2026-06-05T19:36:06",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0254/PRESSUPOST GEOTEC.CERDANYOLA.pdf",
+   "size": 360142,
+   "md5": "239de77bf20817fad7b79ca06ea1fa99",
+   "mtime": "2026-06-05T19:36:07",
+   "route": "python",
+   "doc_type_hint": "pressupost_g3",
+   "priority": 0
+  },
+  {
+   "path": "26.0254/RV_ PETICIÓ PRESSUPOST ESTUDI GEOTÈCNIC.msg",
+   "size": 270336,
+   "md5": "0064e047232d64825e8d6668b7408ae8",
+   "mtime": "2026-06-05T19:36:07",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/26_0254_rv_petici_pressupost_estudi_geot_cnic",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/26_0254_rv_petici_pressupost_estudi_geot_cnic/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/26_0254_rv_petici_pressupost_estudi_geot_cnic/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "3001706_TULIPA_INFORME_FIX.docx",
+   "size": 10399185,
+   "md5": "0eb64d89ab299e8a5fe28c4efd2a163c",
+   "mtime": "2026-06-05T23:17:02",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "ACCEPTACIO/Adobe Scan 9 abr 2026 - Adobe cloud storage.pdf",
+   "size": 1764848,
+   "md5": "7b5043283ac6aef9658cd7a4d3b697be",
+   "mtime": "2026-06-05T19:36:07",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/acceptacio_adobe_scan_9_abr_2026_adobe_cloud_storage/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 1- TULIPA/260507_EVA G3_PLANOLS PER GEOTÈCNIC.zip",
+   "size": 17461742,
+   "md5": "0bc54f1c037ba5c3a5b6505264aebc6e",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_DPSH_CASA 1.xls",
+   "size": 96768,
+   "md5": "8f7186c1adebb04a44eb6cf0686f9c49",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_fotografies_CASA 1.FH11",
+   "size": 1140599,
+   "md5": "7871ee392256c8fdd4fa10e1602e21b7",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_plànol de situació_CASA 1.FH11",
+   "size": 2586555,
+   "md5": "f979e38bf7ee7ac281bc775aa4c71e4c",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_sondeig.FH11",
+   "size": 8652509,
+   "md5": "53e03fd97650959f85f73a4958c8b1cc",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 1- TULIPA/ANNEXES_CASA 1/3001706_tall de correlació.FH11",
+   "size": 628098,
+   "md5": "bd8f0d9d2f6e2e8b48a5cee7a6bcc66b",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf",
+   "size": 134574,
+   "md5": "515f3ce8d2172b8182c2f0817ebc4a5f",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_dpsh_casa_1",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_dpsh_casa_1/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_dpsh_casa_1/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_dpsh_casa_1/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_dpsh_casa_1/page-2.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_dpsh_casa_1/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_fotografies_CASA 1.pdf",
+   "size": 202823,
+   "md5": "21b386e1ef3f3efff56b43b81b59d7af",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_fotografies_casa_1",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_fotografies_casa_1/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_fotografies_casa_1/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_fotografies_casa_1/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_fotografies_casa_1/page-1-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_fotografies_casa_1/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_plànol de situació_CASA 1.pdf",
+   "size": 271764,
+   "md5": "5cf3676b9639506f7b727e7a72a23978",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_pl_nol_de_situaci_casa_1",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_pl_nol_de_situaci_casa_1/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_pl_nol_de_situaci_casa_1/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_pl_nol_de_situaci_casa_1/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_pl_nol_de_situaci_casa_1/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_pl_nol_de_situaci_casa_1/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+   "size": 5428726,
+   "md5": "4b2f3e24c7a99af2a35d6b59bebe7b82",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "claude",
+   "doc_type_hint": "annex_sondeig",
+   "priority": 1,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_sondeig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_sondeig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_sondeig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_sondeig/page-2.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_sondeig/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_tall de correlació.pdf",
+   "size": 101710,
+   "md5": "b53c50eaba8b0b2dd18126bcb9286b5c",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_tall_de_correlaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_tall_de_correlaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_tall_de_correlaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_1_tulipa_pdf_annexes_3001706_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_DPSH_CASA 2.xls",
+   "size": 96768,
+   "md5": "3d405a34bc5c2006855889ac488662c8",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_fotografies_CASA 2.FH11",
+   "size": 1195595,
+   "md5": "2823b9dc916d086797de781b5433a65d",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_plànol de situació_CASA 2.FH11",
+   "size": 2586678,
+   "md5": "9f95b48c1bd6987695a80f7b5dac09dc",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_sondeig.FH11",
+   "size": 8652640,
+   "md5": "6a8c9394ef9c86ff7021c99db63c8980",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/ANNEXES_CASA 2/3001706_tall de correlació.FH11",
+   "size": 628098,
+   "md5": "bd8f0d9d2f6e2e8b48a5cee7a6bcc66b",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/PDF/3001706_DPSH_CASA 2.pdf",
+   "size": 133149,
+   "md5": "960114b1585350fc3a2f0907891f83b0",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/page-2.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_dpsh_casa_2/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/PDF/3001706_fotografies_CASA 2.pdf",
+   "size": 232281,
+   "md5": "dd5a81037a7bb967f6bb3ced12e00921",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_fotografies_casa_2",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_fotografies_casa_2/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_fotografies_casa_2/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_fotografies_casa_2/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_fotografies_casa_2/page-1-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_fotografies_casa_2/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/PDF/3001706_plànol de situació_CASA 2.pdf",
+   "size": 271792,
+   "md5": "5918491e5fa9cc6121120954dc64f426",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_pl_nol_de_situaci_casa_2",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_pl_nol_de_situaci_casa_2/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_pl_nol_de_situaci_casa_2/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_pl_nol_de_situaci_casa_2/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_pl_nol_de_situaci_casa_2/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_pl_nol_de_situaci_casa_2/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/PDF/3001706_sondeig.pdf",
+   "size": 350418,
+   "md5": "0ea6fbbd966b7988ff487fdb24ce47b4",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "annex_sondeig",
+   "priority": 1,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-1-right.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-2-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/page-2-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_sondeig/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/PDF/3001706_tall de correlació.pdf",
+   "size": 101712,
+   "md5": "6d4bef5cba59b56fad91ac5fa08cf3f9",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_tall_de_correlaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_tall_de_correlaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_tall_de_correlaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_pdf_3001706_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.dwg",
+   "size": 504041,
+   "md5": "20a70032d1ae5868eb692fcaf316ee73",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio",
+    "kind": "unsupported",
+    "files": [],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/PLANTA I SECCIO.pdf",
+   "size": 347426,
+   "md5": "f3c6c2e8ceef2e0d20dcba361712d748",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_planta_i_seccio/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg",
+   "size": 944128,
+   "md5": "7411da943ecf64a87db72bf76b672d31",
+   "mtime": "2026-06-05T19:36:09",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_geotecnic_carrer_tosca_16",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_geotecnic_carrer_tosca_16/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/casa_2_carrer_tosca_geotecnic_carrer_tosca_16/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "DTE.txt",
+   "size": 76,
+   "md5": "24df5f38bb55f10d4f6245f8366dbb22",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/P1 CASA 1.jpeg",
+   "size": 555028,
+   "md5": "0b0802ea606bfdb3a84b00411bc8aa6e",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/P1.jpeg",
+   "size": 578606,
+   "md5": "fbc7f1f894ac7fc93743423d1d971989",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/P2 CASA 1.jpeg",
+   "size": 555772,
+   "md5": "981b5359172efe64db284195eca7c087",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/P2.jpeg",
+   "size": 586723,
+   "md5": "07fddec4cf1b23811d3277aee4fb63f1",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/S1 0-3.jpeg",
+   "size": 552727,
+   "md5": "4d0f6ad4e5b379abac58163088b8b0d5",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/S1 3-3.54.jpeg",
+   "size": 392790,
+   "md5": "eeff7b52219038408824d7934e7cae53",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/S1_EMPL.jpeg",
+   "size": 584064,
+   "md5": "5720536385ecca083d60e9115d86d692",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/SPT 11.jpeg",
+   "size": 382756,
+   "md5": "210b880ee6dee6df9c8f4c77f4dc1b11",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/SPT1.jpeg",
+   "size": 368570,
+   "md5": "bb43d0ac337ce10960cc5a334e7f00c1",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/Thumbs.db",
+   "size": 210944,
+   "md5": "e4425ebc4988f938fad5eb8fe3772ba1",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/WhatsApp Image 2026-05-07 at 09.25.11.jpeg",
+   "size": 366495,
+   "md5": "409161990bfff04044fea460e5003b1b",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/WhatsApp Image 2026-05-07 at 10.09.10.jpeg",
+   "size": 257889,
+   "md5": "ac9634fa1802a9b18c3cbbc0545005c4",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/WhatsApp Image 2026-05-07 at 11.49.40.jpeg",
+   "size": 294108,
+   "md5": "ace7df4f567c5476ff05d8fd6370a910",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIA/WhatsApp Image 2026-05-07 at 13.43.13.jpeg",
+   "size": 432122,
+   "md5": "f097a7241b4a65c76d80d0a0f3defde2",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS + SONDEIG.pdf",
+   "size": 1778412,
+   "md5": "d0c3e6d42431ca65f5c5940cb4dad5c7",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-3-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-4-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-4-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-5-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/page-5-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext/penetros_sondeig/meta.json",
+    "pages": 5,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "_user_data_prev.json",
+   "size": 4589,
+   "md5": "2195cc8e4718f139ea5e8874c073f2d2",
+   "mtime": "2026-06-05T19:36:11",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "comanda laboratori_3001706_CERDANYOLA.xls",
+   "size": 470528,
+   "md5": "0b6f9acf95b7551e6f8a23722a85bbca",
+   "mtime": "2026-06-05T19:36:10",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  }
+ ],
+ "duplicates": [],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-03-mesura-8/tulipa/_preext",
+  "n_docs": 16,
+  "n_errors": 0,
+  "elapsed_s": 13.013
+ }
+}

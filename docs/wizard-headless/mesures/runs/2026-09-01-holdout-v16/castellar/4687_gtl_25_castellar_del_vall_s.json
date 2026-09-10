@@ -1,0 +1,151 @@
+{
+ "source_path": "4687-GTL-25 Castellar del Vallés.pdf",
+ "source_md5": "ed8a07b662f237b3c9db0b752d54a300",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL) de TPS amb el resultat de l'assaig de contingut en ió sulfat sobre la mostra alterada MA1 extreta al sondeig S1 del projecte de Castellar del Vallès",
+ "issuer": "TPS, Prospecció del Subsòl, SL (B64803075)",
+ "date": "19/11/2025",
+ "pages_or_sheets": "5 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl, SL (laboratori geotècnic, NIF B64803075), signat digitalment pel Director tècnic Pere Farrés i Bori (geòleg col. 3481) i el Cap d'àrea d'assaig GTL Pere Cervós Flinch (geòleg col. 5326)",
+  "for_whom": "G3 Desenvolupament Territorial, SL (sol·licitant/client del laboratori, NIF B25364589) — no és el client del projecte",
+  "why": "Reportar el resultat de l'assaig de contingut en ió sulfat (UNE 83963:2008) sobre la mostra alterada MA1 extreta el 24/10/2025 al sondeig S1 del projecte de Castellar del Vallès, Carrer Arbrells",
+  "expected_fields": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "street_address (Situació)",
+   "municipality (Situació)",
+   "expedient (Obra/Projecte)",
+   "field_date (candidat: dia de sondeig)"
+  ],
+  "not_expected": [
+   "client_name (promotor)",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "utm_x",
+   "utm_y",
+   "referencia_catastral",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "GTL del laboratori (Pas 2 del skill): el bloc 'DADES DEL CLIENT'/'DADES DEL SOL.LICITANT' és G3 (sol·licitant del laboratori), no el client del projecte — descartat explícitament. L'emissor (banda TPS B64803075 al peu de cada pàgina) és lab_testing_company. El número d'informe 4687-GTL-25 i la referència GTL-8230-25 poden creuar-se amb la comanda de laboratori i l'annex de sondeig del mateix projecte (no llegits en aquesta crida).",
+  "authority_for": [
+   "lab_testing_company",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "location": "peu de totes les pàgines (banda emissora)",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": "emissor del GTL; mai G3, que hi apareix com a 'DADES DEL CLIENT' (sol·licitant del laboratori, no el laboratori — regla del Pas 3: G3 mai és client)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "MA1 S1",
+   "location": "p.2 i p.4, camp 'Mostra'",
+   "quote": "Mostra: MA1 S1",
+   "confidence": 0.6,
+   "note": "GTL és font de prioritat 2 per a l'etiqueta (Annex de l'Eva > GTL > comanda); l'annex de sondeig d'aquest projecte pot dir 'SPT-1' (lliçó coneguda del skill per a Castellar) — verificar en creuar amb l'annex"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0 - 1,2 m",
+   "location": "p.2 i p.4, camp 'Cota d'extracció (m)'",
+   "quote": "Cota d'extracció (m): 1,0 - 1,2",
+   "confidence": 0.9,
+   "note": "GTL és font de prioritat 1 per a la profunditat (regla del Pas 3: GTL > Excel DPSH/annex sondeig > comanda)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "p.2 i p.4, camp 'Mostra: MA1 S1'",
+   "quote": "MA1 S1",
+   "confidence": 0.85,
+   "note": "punt d'assaig d'on surt la mostra (sondeig S1)"
+  },
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.2, camp 'Obra / Projecte'",
+   "quote": "Obra / Projecte: Castellar del Vallés. Carrer Arbrells. 3001621",
+   "confidence": 0.85,
+   "note": "coincideix amb el nom de la carpeta; una de les 4 fonts d'igual pes per a expedient (regla del Pas 3: GTL 'Obra/Projecte')"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells",
+   "location": "p.1 i p.5, camp 'Situació'",
+   "quote": "Situació: Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.55,
+   "note": "etiqueta 'Situació' és font vàlida per a street_address (regla del Pas 3); el carrer ve sense número"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallés",
+   "location": "p.1 i p.5, camp 'Situació'",
+   "quote": "Situació: Castellar del Vallés. Carrer Arbrells.",
+   "confidence": 0.7,
+   "note": "GTL és una de les fonts habituals amb forma oficial del municipi"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "24/10/2025",
+   "location": "p.2, camp 'Data extracció'",
+   "quote": "Data extracció: 24/10/2025",
+   "confidence": 0.4,
+   "note": "dia d'extracció de la mostra al sondeig S1; el GTL dona el dia del sondeig, no necessàriament el primer dia de camp (regla del Pas 3) — candidat secundari, mai principal"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL",
+   "location": "p.1, p.2, p.5 — 'DADES DEL CLIENT' / 'DADES DEL SOL.LICITANT'",
+   "quote": "DADES DEL CLIENT: Nom: G3 Desenvolupament Territorial, SL NIF: B25364589",
+   "confidence": 0.0,
+   "note": "G3 és el sol·licitant del laboratori, mai el client del projecte (regla del Pas 3: G3 mai és client) — descartat explícitament"
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "MA1",
+    "punt": "S1",
+    "profunditat": "1,0 - 1,2",
+    "litologia": "Grava amb llims",
+    "n30": null,
+    "location": "p.2 i p.4",
+    "quote": "Tipus de mostra: Alterada; Cota d'extracció (m): 1,0 - 1,2; DESCRIPCIÓ DEL MATERIAL: Grava amb llims",
+    "note": "MA = mostra alterada, sense colpeig SPT; n30 no aplicable/no reportat en aquest document"
+   }
+  ]
+ },
+ "not_present": [
+  "client_name (promotor real del projecte)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura via preext (page-1..5.txt, totes amb text_ok=true). El text extret del PDF surt desordenat (formulari amb etiquetes i valors barrejats fora d'ordre de lectura); reconstruït per coneixement del format GTL (Pas 2 del skill) i per proximitat semàntica entre etiqueta i valor. No ha calgut renderitzar cap pàgina en PNG ni fer clip: text complet i llegible a totes les pàgines. Pàgina 3 (assaig químic de sulfats: 0,0 mg/kg SO4-, massa analitzada 25,0 g, realitzat 18/11/2025 per operador PC) i pàgina 4 (resum general de resultats, majoritàriament en blanc perquè només es va fer l'assaig de sulfats) contenen dades de detall fora d'abast del nivell A (Tier B: qualificació d'agressivitat) i no s'han inclòs com a tier_a."
+}

@@ -1,0 +1,77 @@
+{
+ "source_path": "CASA 2_ CARRER TOSCA/geotecnic  carrer Tosca 16.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu de Factoria d'Arquitectura SLP (Fina) a Eva, 06/05/2026, CC VUA: avisa del geotècnic de l'endemà al carrer Tosca 16 'i a la parcel·la veïna', adjunta PLANTA I SECCIO (.dwg + .pdf) amb topogràfic i cotes de l'edificació projectada; accés pel Camí Antic.",
+ "issuer": "factoria@factoriarquitectura.com (FACTORIA D'ARQUITECTURA SLP, Fina, 657873484)",
+ "date": "2026-05-06",
+ "pages_or_sheets": "1 cos + 2 adjunts (idèntics md5 als de la carpeta)",
+ "context": {
+  "who_made_it": "l'arquitecte de la casa 2 (Factoria) → Eva",
+  "for_whom": "G3",
+  "why": "avisar del camp de l'endemà i passar plànols de la casa 2",
+  "expected_fields": [
+   "adreça casa 2",
+   "arquitecte casa 2",
+   "data de camp (implícita)"
+  ],
+  "not_expected": [
+   "client casa 2",
+   "expedient"
+  ],
+  "relation_to_others": "únic document del proveïdor de la casa 2; adjunts = PLANTA I SECCIO",
+  "authority_for": [
+   "architect_name (casa 2)",
+   "street_address (casa 2)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "carrer Tosca 16 (casa 2)",
+   "location": "assumpte + cos",
+   "quote": "geotecnic carrer Tosca 16 | al carrer Tosca 16 i a la parcel·la veïna",
+   "confidence": 0.95,
+   "note": "'parcel·la veïna' = casa 1 (Tulipa 3): les dues cases són contigües"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "FACTORIA D'ARQUITECTURA SLP (casa 2)",
+   "location": "signatura",
+   "quote": "Fina / FACTORIA D'ARQUITECTURA SLP / 657873484",
+   "confidence": 0.85,
+   "note": "arquitecte de la casa 2 ≠ arquitecte de la casa 1 (VUA)"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-05-07",
+   "location": "cos ('demà') + data del correu (06/05)",
+   "quote": "el geotecnic que heyu d'anar a fer dema",
+   "confidence": 0.8,
+   "note": "derivat: correu del 06/05 + 'demà'"
+  },
+  {
+   "concept_id": "access",
+   "value": "Camí Antic",
+   "location": "cos",
+   "quote": "es pot entrar per la part de la parcel·la que dona al Cami Antic",
+   "confidence": 0.8,
+   "note": "no és dels 15; útil per a la descripció del solar"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name (casa 2: no consta)",
+  "municipality",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "Correu fora de la subcarpeta 26.0254/: els correus poden ser a qualsevol nivell. El DWG adjunt no és llegible (sense conversor)."
+}

@@ -1,0 +1,33 @@
+{
+ "source_path": "A.01.pdf",
+ "source_md5": "68e0df362820f293092e4a06439c4395",
+ "kind": "pdf",
+ "generated": "2026-09-04T15:41:15",
+ "elapsed_s": 1.167,
+ "dir": "a_01",
+ "files": [
+  "a_01/page-1.txt",
+  "a_01/page-1.png",
+  "a_01/page-1-left.png",
+  "a_01/page-1-right.png"
+ ],
+ "pages": 1,
+ "page_sizes_pt": [
+  [
+   1191.0,
+   842.0
+  ]
+ ],
+ "producer": "Acrobat Distiller 10.1.4 (Windows)",
+ "creator": "PScript5.dll Version 5.2.2",
+ "creationDate": "D:20220614093551+02'00'",
+ "modDate": "D:20220614093607+02'00'",
+ "text_ok": {
+  "1": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1
+ ],
+ "text_suspect_reason": "producer: Acrobat Distiller 10.1.4 (Windows)"
+}

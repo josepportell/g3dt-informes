@@ -1,0 +1,225 @@
+"""Peça 2 del pas 3 d'imatges (2026-09-07): lector de fotos amb Claude Code (`automation/imatges/lector_fotos.py`) — la part
+determinista (inventari, aparellament amb l'annex, fulls, prompt, validació, escriptura) i la precedència Eva > lector."""
+import json
+from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
+from PIL import Image, ImageOps
+
+from automation.imatges import lector_fotos as LF
+
+
+def _structured(seed: int, size: int = 320):
+    import numpy as np
+    rng = np.random.default_rng(seed)
+    coarse = rng.integers(0, 256, size=(8, 8, 3), dtype=np.uint8)
+    big = Image.fromarray(coarse, "RGB").resize((size, size), Image.BICUBIC)
+    a = np.asarray(big).astype(np.int16) + rng.integers(-15, 16, size=(size, size, 3), dtype=np.int16)
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), "RGB")
+
+
+def _project(tmp_path, with_annex=True):
+    p = tmp_path / "4009999 PROVA"; (p / "FOTOGRAFIES").mkdir(parents=True); (p / "ANNEXES").mkdir()
+    ims = {n: _structured(k) for k, n in enumerate(["P1.jpg", "P2.jpg", "SPT1.jpg", "PENETROS.jpg"], 1)}
+    for n, im in ims.items():
+        im.save(p / "FOTOGRAFIES" / n, quality=92)
+    (p / "file_mapping.json").write_text(json.dumps({"roles": {"photos_dir": {"path": "FOTOGRAFIES"},
+                                                                "dpsh_field_sheet": {"path": "FOTOGRAFIES/PENETROS.jpg"}}}))
+    if with_annex:
+        import fitz
+        doc = fitz.open(); page = doc.new_page(width=595, height=842)
+        logo = Image.new("RGB", (138, 138), (0, 120, 0)); lp = tmp_path / "logo.png"; logo.save(lp)
+        page.insert_image(fitz.Rect(20, 20, 80, 80), filename=str(lp))
+        page.insert_image(fitz.Rect(60, 120, 540, 420), filename=str(p / "FOTOGRAFIES" / "P2.jpg"))       # foto #1 (dalt)
+        page.insert_image(fitz.Rect(60, 460, 540, 760), filename=str(p / "FOTOGRAFIES" / "SPT1.jpg"))     # foto #2 (baix)
+        doc.save(p / "ANNEXES" / "4009999_fotografies.pdf")
+    return p
+
+
+def test_inventari_aparella_les_fotos_amb_l_annex(tmp_path):
+    p = _project(tmp_path); work = p / "validation" / LF.SUBDIR
+    inv = LF.inventory(p, work)
+    rels = [c["rel"] for c in inv["candidates"]]
+    assert rels == ["FOTOGRAFIES/P1.jpg", "FOTOGRAFIES/P2.jpg", "FOTOGRAFIES/PENETROS.jpg", "FOTOGRAFIES/SPT1.jpg"]
+    by = {c["rel"]: c for c in inv["candidates"]}
+    assert by["FOTOGRAFIES/P2.jpg"]["annex"]["ordinal"] == 1 and by["FOTOGRAFIES/SPT1.jpg"]["annex"]["ordinal"] == 2
+    assert by["FOTOGRAFIES/P1.jpg"]["annex"] is None and by["FOTOGRAFIES/PENETROS.jpg"]["roles"] == ["dpsh_field_sheet"]
+    assert len(inv["annex_images"]) == 2 and len(inv["annex_pages"]) == 1 and Path(inv["annex_pages"][0]).exists()
+
+
+def test_full_de_contacte_i_prompt(tmp_path):
+    p = _project(tmp_path, with_annex=False); work = p / "validation" / LF.SUBDIR
+    inv = LF.inventory(p, work); sheet = LF.contact_sheet(inv, work / "graella.jpg")
+    assert sheet.exists() and Image.open(sheet).width > 1000
+    prompt = LF.build_prompt(inv, sheet, {}, work / LF.RESULT, has_sondeig=False)
+    assert "/g3dt-llegir-fotos" in prompt and "1. `FOTOGRAFIES/P1.jpg`" in prompt and str(sheet) in prompt
+    assert "Annex de fotografies de l'Eva: cap" in prompt and "Sondeig a rotació al projecte: no" in prompt
+    assert str(work / LF.RESULT) in prompt
+
+
+def test_validacio_index_o_cami_i_una_foto_per_forat():
+    cands = [{"idx": 1, "rel": "FOTOGRAFIES/P1.jpg"}, {"idx": 2, "rel": "FOTOGRAFIES/P2.jpg"}, {"idx": 3, "rel": "FOTOGRAFIES/SPT1.jpg"}]
+    clean, w = LF.validate_selection({"site_1": 1, "site_2": "1", "dpsh": "FOTOGRAFIES/P2.jpg", "sondeig": None, "materials": "SPT1.jpg",
+                                      "materials_per_punt": [{"punt": "P-1", "idx": 3}, {"punt": "P-2", "idx": 9}]}, cands)
+    assert clean["site_1"] == "FOTOGRAFIES/P1.jpg" and clean["site_2"] is None and clean["dpsh"] == "FOTOGRAFIES/P2.jpg"
+    assert clean["sondeig"] is None and clean["materials"] == "FOTOGRAFIES/SPT1.jpg"
+    assert clean["materials_per_punt"] == [{"punt": "P-1", "rel": "FOTOGRAFIES/SPT1.jpg"}]
+    assert any("ja assignada" in x for x in w)
+    clean2, w2 = LF.validate_selection({"dpsh": 42}, cands)
+    assert clean2["dpsh"] is None and any("no és cap candidat" in x for x in w2)
+
+
+def test_escriptura_amb_copia_de_seguretat_i_source_lector(tmp_path):
+    p = _project(tmp_path, with_annex=False); v = p / "validation"; v.mkdir()
+    (v / LF.SELECTION).write_text(json.dumps({"site_1": 1, "dpsh": 2}))                   # cau IA antiga
+    out = LF.write_selection(p, {"site_1": None, "site_2": None, "dpsh": "FOTOGRAFIES/P2.jpg", "sondeig": None,
+                                 "materials": "FOTOGRAFIES/SPT1.jpg"}, {"model": "sonnet"})
+    d = json.loads(out.read_text()); assert d["source"] == "lector" and d["dpsh"] == "FOTOGRAFIES/P2.jpg" and d["_lector"]["model"] == "sonnet"
+    assert json.loads((v / LF.BACKUP).read_text()) == {"site_1": 1, "dpsh": 2}
+    LF.write_selection(p, {"dpsh": "FOTOGRAFIES/P1.jpg"}, {})
+    assert json.loads((v / LF.BACKUP).read_text()) == {"site_1": 1, "dpsh": 2}          # la còpia no es sobreescriu
+
+
+def test_image_manager_accepta_lector_i_no_la_cau_ia(tmp_path):
+    from automation.image_manager import ImageManager
+    p = _project(tmp_path, with_annex=False); v = p / "validation"; v.mkdir()
+    im = ImageManager.__new__(ImageManager); im.project_path = p
+    (v / LF.SELECTION).write_text(json.dumps({"source": "lector", "dpsh": "FOTOGRAFIES/P2.jpg", "materials": "FOTOGRAFIES/SPT1.jpg", "site_1": None}))
+    sel = im._load_user_photo_selection()
+    assert [x.name for x in sel["dpsh"]] == ["P2.jpg"] and [x.name for x in sel["materials"]] == ["SPT1.jpg"] and sel["site"] == []
+    (v / LF.SELECTION).write_text(json.dumps({"dpsh": 2, "materials": 3}))                 # cau IA: índexs, sense source
+    assert im._load_user_photo_selection() is None
+
+
+def test_vistes_generals_compten_amb_el_lector(tmp_path):
+    from automation.report_generator import ReportGenerator
+    p = _project(tmp_path, with_annex=False); v = p / "validation"; v.mkdir()
+    g = ReportGenerator.__new__(ReportGenerator); g.project_path = p
+    (v / LF.SELECTION).write_text(json.dumps({"source": "lector", "site_1": "FOTOGRAFIES/P1.jpg", "site_2": None}))
+    assert g._site_photos_from_user_selection() == 1
+    (v / LF.SELECTION).write_text(json.dumps({"site_1": 1, "site_2": 2}))
+    assert g._site_photos_from_user_selection() == 0
+
+
+@pytest.mark.skipif(not (LF.TRUTH_IMG / "castellar").exists(), reason="veritat a mida real fora del repo")
+def test_exemplars_leave_one_out(tmp_path):
+    ex = LF.exemplar_sheets("castellar", tmp_path)
+    assert set(ex) == {"dpsh", "sondeig", "materials", "vistes"}
+    for e in ex.values():
+        assert "castellar" not in e["slugs"] and Path(e["path"]).exists() and e["n"] >= 1
+    assert ex["dpsh"]["n"] == 6 and ex["sondeig"]["n"] == 2          # 7 DPSH menys Castellar; sondeig a Bell-lloc i Anciles
+
+
+def test_inventari_deduplica_per_md5_i_la_validacio_resol_el_duplicat(tmp_path):
+    p = _project(tmp_path, with_annex=False)
+    (p / "FOTOGRAFIES" / "DPSH").mkdir(); (p / "FOTOGRAFIES" / "DPSH" / "maquina_dpsh.jpg").write_bytes((p / "FOTOGRAFIES" / "P1.jpg").read_bytes())
+    inv = LF.inventory(p, p / "validation" / LF.SUBDIR)
+    rels = [c["rel"] for c in inv["candidates"]]
+    assert "FOTOGRAFIES/DPSH/maquina_dpsh.jpg" in rels and "FOTOGRAFIES/P1.jpg" not in rels      # un sol candidat: el de la subcarpeta
+    c = next(c for c in inv["candidates"] if c["rel"] == "FOTOGRAFIES/DPSH/maquina_dpsh.jpg")
+    assert c["duplicates"] == ["FOTOGRAFIES/P1.jpg"] and [x["idx"] for x in inv["candidates"]] == [1, 2, 3, 4]
+    clean, _ = LF.validate_selection({"dpsh": "FOTOGRAFIES/P1.jpg"}, inv["candidates"])
+    assert clean["dpsh"] == "FOTOGRAFIES/DPSH/maquina_dpsh.jpg"
+    prompt = LF.build_prompt(inv, p / "x.jpg", {}, p / "o.json", True)
+    assert "el mateix fitxer també com a `FOTOGRAFIES/P1.jpg`" in prompt and "Sondeig a rotació al projecte: sí" in prompt
+
+
+# --- 2026-09-09, acció 1 de l'anàlisi de discrepàncies: els PNG d'`ALTRES`/`OTROS` de l'Eva també són candidats ---
+
+def _project_amb_altres(tmp_path):
+    p = _project(tmp_path, with_annex=False)
+    alt = p / "ANNEXES" / "Altres"; alt.mkdir()
+    _structured(7).save(alt / "F3 VG.png")                                              # vista del solar d'un visor
+    _structured(8).save(alt / "m1.png")                                                  # peça d'un mapa
+    Image.open(p / "FOTOGRAFIES" / "P1.jpg").save(alt / "P1 copia.png")                  # la mateixa foto re-desada (md5 ≠, phash =)
+    (p / "ANEXOS" / "OTROS").mkdir(parents=True); _structured(9).save(p / "ANEXOS" / "OTROS" / "F1 SIT.png")
+    (p / "validation").mkdir(exist_ok=True); _structured(10).save(p / "validation" / "retall.png")   # mai
+    (p / "ANNEXES" / "Altres" / "_tmp.png").write_bytes(b"x")                            # mai (prefix `_`)
+    fm = json.loads((p / "file_mapping.json").read_text())
+    fm["roles"]["photo_site_overview"] = {"path": "ANNEXES/Altres/F3 VG.png"}
+    (p / "file_mapping.json").write_text(json.dumps(fm))
+    return p
+
+
+def test_inventari_inclou_els_png_d_altres_de_l_eva_despres_de_les_fotos(tmp_path):
+    p = _project_amb_altres(tmp_path)
+    inv = LF.inventory(p, p / "validation" / LF.SUBDIR)
+    rels = [c["rel"] for c in inv["candidates"]]
+    assert rels == ["FOTOGRAFIES/P1.jpg", "FOTOGRAFIES/P2.jpg", "FOTOGRAFIES/PENETROS.jpg", "FOTOGRAFIES/SPT1.jpg",
+                    "ANEXOS/OTROS/F1 SIT.png", "ANNEXES/Altres/F3 VG.png", "ANNEXES/Altres/m1.png"]
+    assert [c["idx"] for c in inv["candidates"]] == [1, 2, 3, 4, 5, 6, 7]
+    by = {c["rel"]: c for c in inv["candidates"]}
+    assert by["ANNEXES/Altres/F3 VG.png"]["kind"] == "eva_png" and by["ANNEXES/Altres/F3 VG.png"]["roles"] == ["photo_site_overview"]
+    assert by["FOTOGRAFIES/P1.jpg"]["kind"] == "foto"
+    assert by["FOTOGRAFIES/P1.jpg"]["duplicates"] == ["ANNEXES/Altres/P1 copia.png"]          # un sol candidat: la foto
+    assert inv["duplicates"] == {"FOTOGRAFIES/P1.jpg": ["ANNEXES/Altres/P1 copia.png"]}
+    sheet = LF.contact_sheet(inv, p / "validation" / LF.SUBDIR / "graella.jpg")
+    prompt = LF.build_prompt(inv, sheet, {}, p / "o.json", False)
+    assert "6. `ANNEXES/Altres/F3 VG.png`" in prompt and "**PNG de l'Eva** (carpeta ALTRES/OTROS" in prompt
+    assert "1. `FOTOGRAFIES/P1.jpg`" in prompt and "PNG de l'Eva" not in prompt.split("5. `ANEXOS")[0].split("### Candidats")[1]
+    clean, w = LF.validate_selection({"site_1": 6, "dpsh": 1, "materials": "P1 copia.png"}, inv["candidates"])
+    assert clean["site_1"] == "ANNEXES/Altres/F3 VG.png" and clean["dpsh"] == "FOTOGRAFIES/P1.jpg"
+    assert clean["materials"] is None and any("ja assignada" in x for x in w)               # la còpia és la mateixa foto
+    from automation.image_manager import ImageManager
+    im = ImageManager.__new__(ImageManager); im.project_path = p
+    LF.write_selection(p, clean, {})
+    assert [x.name for x in im._load_user_photo_selection()["site"]] == ["F3 VG.png"]
+
+
+def test_sense_carpeta_de_fotos_els_png_d_altres_son_candidats(tmp_path):
+    p = tmp_path / "4009998 PROVA"; (p / "ANNEXES" / "ALTRES").mkdir(parents=True)
+    _structured(11).save(p / "ANNEXES" / "ALTRES" / "F3 VG.png"); _structured(11).save(p / "ANNEXES" / "ALTRES" / "m1.png")
+    _structured(12).save(p / "ANNEXES" / "ALTRES" / "m2.png")
+    inv = LF.inventory(p, p / "validation" / LF.SUBDIR)
+    assert "cap carpeta de fotos" in inv["warnings"]
+    assert [c["rel"] for c in inv["candidates"]] == ["ANNEXES/ALTRES/F3 VG.png", "ANNEXES/ALTRES/m2.png"]    # m1 = còpia exacta
+    assert inv["candidates"][0]["duplicates"] == ["ANNEXES/ALTRES/m1.png"] and all(c["kind"] == "eva_png" for c in inv["candidates"])
+    assert LF.run(p, exclude_slug=None, dry_run=True)["n_eva_png"] == 2
+
+
+def test_el_nom_de_fitxer_sol_nomes_resol_si_es_unic():
+    cands = [{"idx": 1, "rel": "FOTOGRAFIES/m1.png"}, {"idx": 2, "rel": "ANNEXES/ALTRES/m1.png"}, {"idx": 3, "rel": "FOTOGRAFIES/P2.jpg"}]
+    clean, w = LF.validate_selection({"dpsh": "m1.png", "materials": "P2.jpg"}, cands)
+    assert clean["dpsh"] is None and any("no és cap candidat" in x for x in w) and clean["materials"] == "FOTOGRAFIES/P2.jpg"
+    assert LF.validate_selection({"dpsh": "ANNEXES/ALTRES/m1.png"}, cands)[0]["dpsh"] == "ANNEXES/ALTRES/m1.png"
+
+
+def test_aparellament_amb_l_annex_invariant_a_la_rotacio(tmp_path):
+    """L'Eva incrusta la foto vertical de la cullera SPT girada 90° (2 de 31 imatges d'annex als 7 projectes)."""
+    import fitz
+    p = _project(tmp_path, with_annex=False)
+    rot = ImageOps.exif_transpose(Image.open(p / "FOTOGRAFIES" / "SPT1.jpg")).rotate(90, expand=True)
+    rp = tmp_path / "spt_girada.jpg"; rot.save(rp, quality=92)
+    doc = fitz.open(); page = doc.new_page(width=595, height=842)
+    page.insert_image(fitz.Rect(60, 120, 540, 420), filename=str(p / "FOTOGRAFIES" / "P2.jpg"))
+    page.insert_image(fitz.Rect(150, 460, 450, 800), filename=str(rp))
+    doc.save(p / "ANNEXES" / "4009999_fotografies.pdf")
+    inv = LF.inventory(p, p / "validation" / LF.SUBDIR)
+    by = {c["rel"]: c for c in inv["candidates"]}
+    assert by["FOTOGRAFIES/P2.jpg"]["annex"] == {"page": 1, "ordinal": 1, "phash_d": by["FOTOGRAFIES/P2.jpg"]["annex"]["phash_d"], "rot": 0}
+    a = by["FOTOGRAFIES/SPT1.jpg"]["annex"]
+    assert a["ordinal"] == 2 and a["rot"] in (90, 270) and a["phash_d"] <= LF.PHASH_MAX
+    assert by["FOTOGRAFIES/P1.jpg"]["annex"] is None
+    prompt = LF.build_prompt(inv, p / "x.jpg", {}, p / "o.json", None)
+    assert f"annex p1 foto #2 (hi és girada {a['rot']}°)" in prompt
+
+
+# --- 2026-09-09, acció 4: alternatives del lector per forat (l'Eva les veu al wizard) ---
+
+def test_alternatives_per_forat_es_validen_i_s_escriuen(tmp_path):
+    cands = [{"idx": 1, "rel": "FOTOGRAFIES/P1.jpg"}, {"idx": 2, "rel": "FOTOGRAFIES/P2.jpg"}, {"idx": 3, "rel": "FOTOGRAFIES/P3.jpg"},
+             {"idx": 4, "rel": "FOTOGRAFIES/SPT1.jpg"}, {"idx": 5, "rel": "FOTOGRAFIES/SPT2.jpg"}]
+    clean, w = LF.validate_selection({"dpsh": 1, "materials": 4,
+                                      "alternatives": {"dpsh": [{"idx": 2, "rao": "P-2"}, 3, {"idx": 1, "rao": "el triat"}, {"idx": 2}, {"idx": 9}],
+                                                       "materials": [{"idx": 5, "rao": "primer pla"}], "site_1": [], "sondeig": "no és cap llista"}}, cands)
+    assert clean["alternatives"] == {"dpsh": [{"rel": "FOTOGRAFIES/P2.jpg", "rao": "P-2"}, {"rel": "FOTOGRAFIES/P3.jpg", "rao": ""}],
+                                     "materials": [{"rel": "FOTOGRAFIES/SPT2.jpg", "rao": "primer pla"}]}   # ni el triat, ni repetits, ni el 9
+    assert any("alternatives dpsh: «9»" in x for x in w)
+    p = tmp_path / "4009999 PROVA"; p.mkdir()
+    d = json.loads(LF.write_selection(p, clean, {}).read_text(encoding="utf-8"))
+    assert d["alternatives"]["dpsh"][0]["rel"] == "FOTOGRAFIES/P2.jpg" and d["source"] == "lector"
+    clean2, _ = LF.validate_selection({"dpsh": 1, "alternatives": {"dpsh": [2, 3, 4, 5]}}, cands)
+    assert len(clean2["alternatives"]["dpsh"]) == LF.MAX_ALTERNATIVES
+    clean3, _ = LF.validate_selection({"dpsh": 1}, cands)
+    assert "alternatives" not in clean3

@@ -1,0 +1,1556 @@
+{
+ "fig_situacio_num": 1,
+ "fig_situacio_2_num": "",
+ "fig_projecte_1_num": 2,
+ "fig_projecte_2_num": "",
+ "fig_assaigs_num": 3,
+ "fig_spt_cullera_num": 4,
+ "fig_geological_num": 5,
+ "fig_correlation_num": 6,
+ "fig_cadastre_num": 1,
+ "fig_location_num": 1,
+ "fig_main_plan_num": 3,
+ "fig_building_num": 3,
+ "photo_site_text": "",
+ "_num_site_photos": 0,
+ "photo_dpsh_num": 1,
+ "photo_sondeig_num": 2,
+ "photo_materials_num": 3,
+ "photo_materials_source": "del sondeo",
+ "table_dpsh_range": "3, 4 i 5",
+ "table_lab_num": 6,
+ "table_permeability_num": 7,
+ "table_lab_values_num": 8,
+ "table_seismic_num": 9,
+ "table_soil_chars_num": 10,
+ "section1": "<Section1Content>",
+ "section2": "<Section2Content>",
+ "section3": "<Section3Content>",
+ "section4": "<Section4Content>",
+ "client": "SRA. MARIA ALBA BARRAU CASTÁN",
+ "client_de": "de la SRA. MARIA ALBA BARRAU CASTÁN",
+ "expedient": "4001679",
+ "street_address": "C/GENERAL FERRAZ 20",
+ "municipality": "ANCILES",
+ "municipality_de": "d'ANCILES",
+ "data_camp_text": "19 de febrer de 2026",
+ "data_camp_inici_text": "19 de febrer de 2026",
+ "data_signatura_text": "16 de març de 2026",
+ "architect_name": "ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+ "architect_company": "A+M ARQUITECTURA",
+ "architect_company_de": ", de A+M ARQUITECTURA",
+ "architect_name_upper": "ALBA BARRAU, NºCOL. 6.408 / MIRIAM CASTEL, NºCOL. 6.703",
+ "building_type": "vivienda adosada (7 unitats)",
+ "building_type_lower": "una vivienda adosada (7 unitats)",
+ "building_type_de": "de una vivienda adosada (7 unitats)",
+ "num_floors": "2Ps+Pb+1Pp",
+ "report_language": "es",
+ "building_structure_desc": "con nivel de sótano, y por tanto se prevé una excavación general hasta la cota de cimentación del sótano, además del saneamiento y la nivelación.",
+ "_narr_building_structure": {
+  "value": "con nivel de sótano, y por tanto se prevé una excavación general hasta la cota de cimentación del sótano, además del saneamiento y la nivelación.",
+  "source": "amb soterrani (sense exemple signat en català)",
+  "candidates": [
+   {
+    "value": "con nivel de sótano, y por tanto se prevé una excavación general hasta la cota de cimentación del sótano, además del saneamiento y la nivelación.",
+    "source": "amb soterrani (sense exemple signat en català)"
+   },
+   {
+    "value": "de planta baja, y por tanto no se prevé ninguna excavación importante, únicamente la excavación para el saneamiento, la nivelación y para la implantación de los elementos de cimentación.",
+    "source": "variant (a) dels signats"
+   },
+   {
+    "value": "sin nivel de sótano, y por tanto, únicamente se prevé el saneamiento, nivelación y la excavación hasta la cota de cimentación.",
+    "source": "variant (b) dels signats"
+   }
+  ],
+  "notes": [
+   "soterrani: cap exemple signat en català (Anciles ES és text lliure)"
+  ]
+ },
+ "municipality_upper": "ANCILES",
+ "street_1": "C/GENERAL FERRAZ 20",
+ "street_2": "ANCILES",
+ "cte_building_class": "C-1",
+ "cte_soil_class": "T-1",
+ "cte_edificacio": "C-1",
+ "cte_sol": "T-1",
+ "plantes": "2Ps+Pb+1Pp",
+ "superficie_parcela": "1.655,01",
+ "superficie_cadastral": "",
+ "superficie_parcela_planol": "1.655,01",
+ "superficie_construida": "186,18",
+ "access_description": "",
+ "site_description": "La parcela se localiza sin construcciones ni pavimentaciones.",
+ "lab_field_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_field_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+ "lab_testing_description": "laboratori d'assaigs per al control de qualitat de l'edificació",
+ "cota_referencia": "",
+ "_parcel_rcs": [
+  "6184504BH9158N"
+ ],
+ "adjacent_north": "Calle General Ferraz",
+ "adjacent_south": "parcel·la buida",
+ "adjacent_east": "Carretera",
+ "adjacent_west": "parcel·la buida",
+ "adjacent_nearest_street": "",
+ "location_sentence": "al C/GENERAL FERRAZ 20 d'ANCILES",
+ "adjacent_north_fmt": "Por la parte norte, con la Calle General Ferraz.",
+ "adjacent_south_fmt": "Por la parte sur y oeste, con parcelas sin edificaciones.",
+ "adjacent_east_fmt": "Y finalmente, por la parte este, con Carretera.",
+ "adjacent_west_fmt": "",
+ "access_street": "calle situada al norte",
+ "_narr_access": {
+  "value": "calle situada al norte",
+  "candidates": [
+   "calle situada al norte",
+   "calle General Ferraz",
+   "calle existente al norte"
+  ]
+ },
+ "adjacent_intro": "La parcela objeto de estudio se sitúa en el municipio de ANCILES, tiene una morfología casi rectangular y limita:",
+ "_narr_parcel": {
+  "position": null,
+  "shape": "casi rectangular",
+  "centroid": [
+   295759.7408727239,
+   4718480.779334424
+  ],
+  "rcs": [
+   "6184504BH9158N"
+  ]
+ },
+ "site_condition": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+ "_narr_site_condition": {
+  "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+  "source": "fórmula única en castellà (Vilanova, Anciles)",
+  "candidates": [
+   {
+    "value": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+    "source": "signat ES"
+   }
+  ],
+  "notes": []
+ },
+ "_narr_site_description": {
+  "value": "La parcela se localiza sin construcciones ni pavimentaciones.",
+  "source": "sense edifici al Cadastre; pendent desconeguda (sense UTM): cap afirmació topogràfica",
+  "candidates": [
+   {
+    "value": "La parcela se localiza sin construcciones ni pavimentaciones.",
+    "source": "sense edifici al Cadastre; pendent desconeguda (sense UTM): cap afirmació topogràfica"
+   },
+   {
+    "value": "La parcela se localiza sin construcciones ni pavimentaciones, nivelada a la rasante de la calle.",
+    "source": "cap «buit pla»"
+   },
+   {
+    "value": "La parcela se localiza sin construcciones ni pavimentaciones. Topográficamente, la parcela presenta pendiente.",
+    "source": "cap «buit pendent»"
+   },
+   {
+    "value": "La parcela está actualmente ocupada por una zona explanada y un edificio de planta baja.",
+    "source": "cap «construit»"
+   }
+  ],
+  "notes": [
+   "vegetació, tanques, desnivell respecte el carrer i plataforma de treball: judici de la visita"
+  ]
+ },
+ "_own_parcel_building": {
+  "has_building": false,
+  "num_floors_above": 0,
+  "num_floors_below": 0,
+  "has_pool": false,
+  "total_built_m2": 0.0,
+  "refs": [
+   "6184504BH9158N"
+  ]
+ },
+ "has_sondeig": true,
+ "section_sondeig_num": "2.4.2",
+ "section_spt_num": "2.4.3",
+ "section_resum_num": "2.4.4",
+ "include_geothermal": false,
+ "include_expansivity": false,
+ "include_earth_pressure": false,
+ "include_slope_stability": false,
+ "show_granulometric": false,
+ "section_excavabilitat_num": "3.5",
+ "section_sismica_num": "3.6",
+ "section_rado_num": "3.7",
+ "section_fonamentacio_num": "4.3",
+ "section_empentes_num": "",
+ "section_estabilitat_num": "",
+ "num_dpsh_tests": 6,
+ "dpsh_test_ids": "P-1,P-2,P-3,P-4,P-5,P-6",
+ "dpsh_avg_n20": "26",
+ "dpsh_tests": [
+  {
+   "test_id": "P-1",
+   "cota": "",
+   "depth": "-3.58",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-2",
+   "cota": "",
+   "depth": "-4.59",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-3",
+   "cota": "",
+   "depth": "-3.77",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-4",
+   "cota": "",
+   "depth": "-5.92",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-5",
+   "cota": "",
+   "depth": "-4.18",
+   "refusal": "Si",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "P-6",
+   "cota": "",
+   "depth": "-5.70",
+   "refusal": "Si",
+   "water": "No detectat"
+  }
+ ],
+ "sondeig_tests": [
+  {
+   "test_id": "S-1",
+   "cota": "",
+   "depth": "-2.40",
+   "spt_ma": "1/0",
+   "water": "No detectat"
+  },
+  {
+   "test_id": "S-2",
+   "cota": "",
+   "depth": "-3.00",
+   "spt_ma": "1/1",
+   "water": "No detectat"
+  }
+ ],
+ "spt_test_id": "SPT-1",
+ "spt_location": "S-1",
+ "spt_depth_range": "-1.00 a -1.60",
+ "spt_n30": "6",
+ "spt_lithology": "",
+ "spt_ma_tests": [
+  {
+   "test_id": "SPT-1",
+   "location": "S-1",
+   "depth_range": "-1.00 a -1.60",
+   "n30": "6",
+   "lithology": ""
+  },
+  {
+   "test_id": "SPT-1",
+   "location": "S-2",
+   "depth_range": "-1.00 a -1.60",
+   "n30": "6",
+   "lithology": ""
+  },
+  {
+   "test_id": "MA-1",
+   "location": "S-2",
+   "depth_range": "-2.80 a -3.00",
+   "n30": "1/1/1/1",
+   "lithology": "Graves"
+  }
+ ],
+ "lab_sample_id": "",
+ "lab_location": "",
+ "lab_depth": "",
+ "lab_tests_text": "",
+ "_narr_lab_tests": {
+  "value": "",
+  "source": "sense bloc «ASSAIGS REALITZATS» del GTL",
+  "candidates": [],
+  "notes": [
+   "laboratori: cap llista d'assaigs llegida"
+  ]
+ },
+ "materials_level_1": "El nivell 1 està format per arcillas arenosas con puntualmente bolos, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials quaternaris, unitat Qx segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.20 m, amb un gruix de 2.20 m. Aquests materials presenten un valor mitjà de N20 de 5 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica es dedueix una consistència fluixa.",
+ "materials_intro": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+ "seismic_ab_text": "0,04",
+ "radon_zone": "2",
+ "radon_zone_description": "",
+ "radon_sentence": "La parcela concreta de estudio se localiza en el término municipal de ANCILES y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+ "csn_radon_text": "",
+ "geology_para_1": "[PENDENT: Text de marc geològic regional]\n\nNo es disposa de coordenades UTM per consultar l'ICGC.\n\nSi us plau, introduïu manualment el text de marc geològic o verifiqueu les coordenades UTM del projecte.",
+ "geology_para_2": "",
+ "geology_para_3": "",
+ "geology_para_4": "",
+ "geology_para_5": "",
+ "geology_para_6": "",
+ "geology_paragraphs": [
+  "[PENDENT: Text de marc geològic regional]\n\nNo es disposa de coordenades UTM per consultar l'ICGC.\n\nSi us plau, introduïu manualment el text de marc geològic o verifiqueu les coordenades UTM del projecte."
+ ],
+ "_narr_radon": {
+  "value": "La parcela concreta de estudio se localiza en el término municipal de ANCILES y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+  "source": "zona 2 (RD 732/2019, apèndix B)",
+  "candidates": [
+   {
+    "value": "La parcela concreta de estudio se localiza en el término municipal de ANCILES y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+    "source": "signat ES"
+   }
+  ],
+  "notes": []
+ },
+ "materials_depth_text": "",
+ "materials_geomech_text": "",
+ "conclusions_level_1": "El nivell 1 està format per arcillas arenosas con puntualmente bolos, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials quaternaris, unitat Qx segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.20 m, amb un gruix de 2.20 m. Aquests materials presenten un valor mitjà de N20 de 5 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica es dedueix una consistència fluixa.",
+ "soil_levels": [
+  {
+   "description": "Arcillas arenosas con puntualmente bolos",
+   "description_short": "Arcillas arenosas con puntualmente bolos",
+   "ordinal": "1er",
+   "materials_text": "El nivell 1 està format per arcillas arenosas con puntualmente bolos, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. Superficialment es detecta un tram de sòl vegetal de petit gruix.\n\nAquest nivell s'ha identificat com a materials quaternaris, unitat Qx segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.20 m, amb un gruix de 2.20 m. Aquests materials presenten un valor mitjà de N20 de 5 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica es dedueix una consistència fluixa.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta superficialment i fins a 2.20 m de profunditat, amb potències estudiades de 2.20 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant baixa a mitja. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 5 cops."
+  },
+  {
+   "description": "Bolos y gravas en matriz arenosa y arcillosa",
+   "description_short": "Bolos y gravas en matriz arenosa y arcillosa",
+   "ordinal": "2n",
+   "materials_text": "El nivell 2 està format per bolos y gravas en matriz arenosa y arcillosa, de coloracions clars a marró clar. Aquests materials presenten característiques carbonatades típiques de la Depressió de l'Ebre. \n\nAquest nivell s'ha identificat com a materials quaternaris, unitat Qx segons l'ICGC.\n\nA partir dels assaigs realitzats, aquest nivell es detecta a partir de 2.20 m i fins a la cota de finalització dels assaigs, amb un gruix estudiat de 3.72 m. Aquests materials presenten un valor mitjà de N20 de 22 cops.\n\nDes del punt de vista geomecànic es tracta d'uns materials de caràcter generalment granulars, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica es dedueix una consistència compacta.",
+   "depth_text": "A partir dels assaigs realitzats, aquest nivell es detecta a partir de 2.20 m i fins a la cota de finalització dels assaigs (rebuig a la penetració), amb potències estudiades de com a mínim 3.72 metres.",
+   "geomech_text": "Des del punt de vista geomecànic es tracta d'uns materials de caràcter granular, amb una densitat i una capacitat portant mitja a elevada. Dels assaigs de penetració dinàmica DPSH s'obté un valor de Nb mig de 22 cops, assolint rebuig a la penetració pels trams més profunds."
+  }
+ ],
+ "conclusions_levels_detected": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+ "soil_level_rows": [
+  {
+   "name": "1er nivell.",
+   "material": "Arcillas arenosas con puntualmente bolos",
+   "material_short": "Arcillas arenosas con puntualmente bolos"
+  },
+  {
+   "name": "2n nivell.",
+   "material": "Bolos y gravas en matriz arenosa y arcillosa",
+   "material_short": "Bolos y gravas en matriz arenosa y arcillosa"
+  }
+ ],
+ "perm_rows": [
+  {
+   "name": "1er nivell",
+   "k_value": "10^-3 a 10^-5",
+   "material": "Arcillas arenosas con puntualmente bolos",
+   "material_short": "Arcillas arenosas con puntualmente bolos"
+  },
+  {
+   "name": "2n nivell",
+   "k_value": "10^-2 a 10^-4",
+   "material": "Bolos y gravas en matriz arenosa y arcillosa",
+   "material_short": "Bolos y gravas en matriz arenosa y arcillosa"
+  }
+ ],
+ "sulfate_level_name": "1er nivell",
+ "sulfate_value": "",
+ "sulfate_baumann": "---",
+ "sulfate_classification": "",
+ "seismic_rows": [
+  {
+   "num": "1",
+   "terrain_type": "Tipus IV",
+   "thickness": "2.20",
+   "c_coeff": "2.0"
+  },
+  {
+   "num": "2",
+   "terrain_type": "Tipus II",
+   "thickness": "3.72*",
+   "c_coeff": "1.3"
+  }
+ ],
+ "geotech_rows": [
+  {
+   "name": "1er nivell. Arcillas arenosas con puntualmente bolos.",
+   "material_short": "Arcillas arenosas con puntualmente bolos",
+   "nb": "7",
+   "n": "6",
+   "density": "1.90",
+   "cohesion": "0.10",
+   "phi": "28°",
+   "E": "50"
+  },
+  {
+   "name": "2n nivell. Bolos y gravas en matriz arenosa y arcillosa.",
+   "material_short": "Bolos y gravas en matriz arenosa y arcillosa",
+   "nb": "26-R",
+   "n": "--",
+   "density": "2.00",
+   "cohesion": "0.00",
+   "phi": "38°",
+   "E": "450"
+  }
+ ],
+ "geotech_level_name": "2n nivell. Bolos y gravas en matriz arenosa y arcillosa.",
+ "geotech_nb": "26-R",
+ "geotech_n": "--",
+ "geotech_density": "2.00",
+ "geotech_cohesion": "0.00",
+ "geotech_phi": "38°",
+ "geotech_E": "450",
+ "_calc_E": "CTE D.23 N20=22 | Rang Eva: 450-650",
+ "_calc_phi": "Schmertmann Nb=26 | Rang Eva: 38-39",
+ "_calc_gamma": "CTE D.27 grava | Rang Eva: 2.0",
+ "_calc_cohesion": "Rang Eva: 0.0-0.05",
+ "soil_level_name": "1er nivell.",
+ "soil_level_material": "Arcillas arenosas con puntualmente bolos",
+ "perm_level_name": "1er nivell",
+ "perm_k_value": "10^-3 a 10^-5",
+ "perm_material": "Arcillas arenosas con puntualmente bolos",
+ "k30_value": "6.0",
+ "_calc_k30": "E/75 = 450/75 (granular)",
+ "qa_value": "3.50",
+ "settlement_sentence": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.60 cm, immediats en el temps donat el comportament granular dels materials.",
+ "_calc_settlement": "Schmertmann Es=66 (2.5×Nb 26.3), B=1 m → 2.60 cm · règim granular → «iguals o inferiors a 2.60 cm» | alt: Es=450 (E del criteri) → 0.40 cm · ⚠ 2.60 cm supera el topall de servei de 2.54 cm (1 polzada) per a sabates · variant signada (Bell-lloc): «inferiors a» sense «iguals o»",
+ "_calc_Es": "Es=66 (2.5×Nb 26.3) · 2,5 × Nb (back-engineering abril 2026: Rubí 1,52 ≈ 1,50 signat) | alt: Es=450 (E del criteri) → 0.40 cm",
+ "settlement": "2.60",
+ "_calc_qa": "Nb/12=18/12=1.47 / Fw=1.69 x Fd=1.33 = 13.69 | Cap: 3.50 (3.0)",
+ "conclusions_geologia_summary": "Segons els resultats dels assaigs de penetració realitzats, s'han identificat 2 nivells geotècnics diferenciats:\n\n- Nivell 1: Arcillas arenosas con puntualmente bolos (de 2.20 m de gruix, N20 mitjà = 5)\n- Nivell 2: Bolos y gravas en matriz arenosa y arcillosa (de 3.72 m de gruix, N20 mitjà = 22)",
+ "conclusions_water_statement": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+ "conclusions_aggressivity_statement": "No se han realizado ensayos de laboratorio para determinar la agresividad de los materiales del subsuelo al hormigón.",
+ "empentes_paragraph": "",
+ "ka_value": "",
+ "kp_value": "",
+ "estabilitat_paragraph": "",
+ "expansivitat_paragraph": "",
+ "project": {
+  "project": {
+   "expedient": "4001679",
+   "municipality": "ANCILES",
+   "report_date": "2026-09-09"
+  },
+  "client": {
+   "company_name": "Maria Alba Barrau Castán",
+   "contact_name": "",
+   "nif": "",
+   "address": null
+  },
+  "architect": {
+   "name": "ALBA BARRAU, nºCol. 6.408 / MIRIAM CASTEL, nºCol. 6.703",
+   "company": "A+M ARQUITECTURA"
+  },
+  "building": {
+   "type": "vivienda adosada (7 unitats)",
+   "num_floors": "PB+1PP amb dos semisòtans",
+   "superficie_parcela_m2": "1655.01",
+   "superficie_cadastral_m2": "",
+   "superficie_construida_m2": "",
+   "has_basement": false,
+   "has_retaining_walls": false
+  },
+  "location": {
+   "street_address": "C/GENERAL FERRAZ 20",
+   "utm_x": null,
+   "utm_y": null
+  },
+  "descriptions": {
+   "site_description": "",
+   "access_description": "",
+   "cota_referencia": "",
+   "field_work_dates": [
+    "2026-02-19"
+   ],
+   "field_work_dates_text": "19 de febrer de 2026",
+   "lab_company": "",
+   "lab_company_alias": "",
+   "lab_description": ""
+  },
+  "sondeig_tests": null,
+  "spt_data": null,
+  "lab_tests": [],
+  "site": {
+   "adjacent_parcels": {
+    "north": "Calle General Ferraz",
+    "south": "parcel·la buida",
+    "east": "Carretera",
+    "west": "parcel·la buida"
+   },
+   "position": "centre",
+   "shape": "rectangular",
+   "is_urban": true,
+   "is_sloped": false,
+   "slope_percent": null,
+   "slope_direction": null,
+   "slope_height_m": null,
+   "is_anthropized": null
+  },
+  "tests": {
+   "has_dpsh": true,
+   "num_dpsh_tests": 6,
+   "has_sondeig": true,
+   "has_spt": false,
+   "water_detected": false
+  },
+  "lab": {
+   "sulfate_mg_kg": null,
+   "aggressivity_class": ""
+  },
+  "cte": {
+   "building_class": "C-1",
+   "soil_class": "T-1"
+  },
+  "soil_levels": [
+   {
+    "level_number": 1,
+    "description": "Arcillas arenosas con puntualmente bolos",
+    "thickness_m": 2.2,
+    "thickness_open": false,
+    "n20_average": 5.435897435897436,
+    "depth_from_m": 0.0,
+    "depth_to_m": 2.2,
+    "n20_min": 1,
+    "n20_max": 20,
+    "soil_type": "arcilla"
+   },
+   {
+    "level_number": 2,
+    "description": "Bolos y gravas en matriz arenosa y arcillosa",
+    "thickness_m": 3.72,
+    "thickness_open": true,
+    "n20_average": 21.818181818181817,
+    "depth_from_m": 2.2,
+    "depth_to_m": null,
+    "n20_min": 3,
+    "n20_max": 64,
+    "soil_type": "grava"
+   }
+  ],
+  "geotechnical_params": {
+   "gamma_g_cm3": 2.0,
+   "cohesion_kg_cm2": 0.0,
+   "phi_deg": 38,
+   "E_kg_cm2": 450
+  },
+  "terzaghi": {
+   "inputs": {
+    "phi_deg": 38,
+    "cohesion_kg_cm2": 0.0,
+    "gamma_g_cm3": 2.0,
+    "B_m": 1.0,
+    "Df_m": 2.9,
+    "L_m": null,
+    "shape": "square"
+   },
+   "factors": {
+    "Nc": 77.5,
+    "Nq": 61.5,
+    "Ngamma": 67.4,
+    "sc": 1.3,
+    "sq": 1.0,
+    "sgamma": 0.8
+   },
+   "results": {
+    "qu_kg_cm2": 41.062,
+    "safety_factor": 3.0,
+    "Qa_kg_cm2": 3.5,
+    "Qa_uncapped_kg_cm2": 13.69,
+    "settlement_cm": 2.6,
+    "settlement_type": "immediat",
+    "Es_used_kg_cm2": 65.7,
+    "qa_terzaghi_peck_kg_cm2": 1.72,
+    "Fw": 1.69,
+    "Fd_tp": 1.33,
+    "qa_governs": "cap"
+   }
+  },
+  "conditional_sections": {
+   "include_expansivity": false,
+   "include_earth_pressure": false,
+   "include_slope_stability": false,
+   "include_geothermal": false,
+   "show_granulometric": false
+  },
+  "dpsh": {
+   "expedient": "4001679",
+   "source_file": "/home/josep/g3dt-e2e/projectes/4001679 ANCILES/ANEJOS/4001679_DPSH.xls",
+   "num_tests": 6,
+   "test_ids": [
+    "P-1",
+    "P-2",
+    "P-3",
+    "P-4",
+    "P-5",
+    "P-6"
+   ],
+   "overall_average_n20": 14.64,
+   "any_water_detected": false,
+   "tests": [
+    {
+     "test_id": "P-1",
+     "correction_factor": 0.83,
+     "depth_reached_m": 3.6,
+     "average_n20": 24.53,
+     "refusal_reached": true,
+     "refusal_depth_m": 3.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 3,
+       "nb": 3.61,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 11,
+       "nb": 13.25,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 20,
+       "nb": 24.1,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 37,
+       "nb": 44.58,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 14,
+       "nb": 16.87,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 47,
+       "nb": 56.63,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 41,
+       "nb": 49.4,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 36,
+       "nb": 43.37,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 64,
+       "nb": 77.11,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-2",
+     "correction_factor": 0.83,
+     "depth_reached_m": 4.6,
+     "average_n20": 18.68,
+     "refusal_reached": true,
+     "refusal_depth_m": 4.6,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 3,
+       "nb": 3.61,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 2,
+       "nb": 2.41,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 8,
+       "nb": 9.64,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 3,
+       "nb": 3.61,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 22,
+       "nb": 26.51,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 3,
+       "nb": 3.61,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 22,
+       "nb": 26.51,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 37,
+       "nb": 44.58,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.8,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.0,
+       "n20": 44,
+       "nb": 53.01,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.2,
+       "n20": 41,
+       "nb": 49.4,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.4,
+       "n20": 42,
+       "nb": 50.6,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.6,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-3",
+     "correction_factor": 0.83,
+     "depth_reached_m": 3.8,
+     "average_n20": 12.18,
+     "refusal_reached": true,
+     "refusal_depth_m": 3.8,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 2,
+       "nb": 2.41,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 2,
+       "nb": 2.41,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 1,
+       "nb": 1.2,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 2,
+       "nb": 2.41,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 18,
+       "nb": 21.69,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.8,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-4",
+     "correction_factor": 0.83,
+     "depth_reached_m": 6.0,
+     "average_n20": 19.34,
+     "refusal_reached": true,
+     "refusal_depth_m": 6.0,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 0.4,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.6,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 0.8,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.0,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.2,
+       "n20": 5,
+       "nb": 6.02,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.4,
+       "n20": 4,
+       "nb": 4.82,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.6,
+       "n20": 2,
+       "nb": 2.41,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 1.8,
+       "n20": 3,
+       "nb": 3.61,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.0,
+       "n20": 9,
+       "nb": 10.84,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.2,
+       "n20": 17,
+       "nb": 20.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.4,
+       "n20": 21,
+       "nb": 25.3,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.6,
+       "n20": 16,
+       "nb": 19.28,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 24,
+       "nb": 28.92,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 21,
+       "nb": 25.3,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 33,
+       "nb": 39.76,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 38,
+       "nb": 45.78,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 31,
+       "nb": 37.35,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.8,
+       "n20": 44,
+       "nb": 53.01,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.0,
+       "n20": 21,
+       "nb": 25.3,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.2,
+       "n20": 14,
+       "nb": 16.87,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.4,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.6,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.8,
+       "n20": 11,
+       "nb": 13.25,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.0,
+       "n20": 11,
+       "nb": 13.25,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.2,
+       "n20": 15,
+       "nb": 18.07,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.4,
+       "n20": 23,
+       "nb": 27.71,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.6,
+       "n20": 25,
+       "nb": 30.12,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.8,
+       "n20": 30,
+       "nb": 36.14,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 6.0,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-5",
+     "correction_factor": 0.83,
+     "depth_reached_m": 4.2,
+     "average_n20": 42.83,
+     "refusal_reached": true,
+     "refusal_depth_m": 4.2,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 3.2,
+       "n20": 18,
+       "nb": 21.69,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 45,
+       "nb": 54.22,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 36,
+       "nb": 43.37,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.8,
+       "n20": 25,
+       "nb": 30.12,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.0,
+       "n20": 33,
+       "nb": 39.76,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.2,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    },
+    {
+     "test_id": "P-6",
+     "correction_factor": 0.83,
+     "depth_reached_m": 5.8,
+     "average_n20": 21.35,
+     "refusal_reached": true,
+     "refusal_depth_m": 5.8,
+     "water_detected": false,
+     "water_depth_m": null,
+     "readings": [
+      {
+       "depth_m": 2.6,
+       "n20": 28,
+       "nb": 33.73,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 2.8,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.0,
+       "n20": 9,
+       "nb": 10.84,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.2,
+       "n20": 11,
+       "nb": 13.25,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.4,
+       "n20": 7,
+       "nb": 8.43,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.6,
+       "n20": 6,
+       "nb": 7.23,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 3.8,
+       "n20": 10,
+       "nb": 12.05,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.0,
+       "n20": 12,
+       "nb": 14.46,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.2,
+       "n20": 15,
+       "nb": 18.07,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.4,
+       "n20": 11,
+       "nb": 13.25,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.6,
+       "n20": 13,
+       "nb": 15.66,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 4.8,
+       "n20": 17,
+       "nb": 20.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.0,
+       "n20": 28,
+       "nb": 33.73,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.2,
+       "n20": 25,
+       "nb": 30.12,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.4,
+       "n20": 29,
+       "nb": 34.94,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.6,
+       "n20": 32,
+       "nb": 38.55,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      },
+      {
+       "depth_m": 5.8,
+       "n20": 100,
+       "nb": 120.48,
+       "torque": null,
+       "water_level": false,
+       "soil_level": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "fig_spt_cullera_image": "<InlineImage>",
+ "photo_site_image_1": "",
+ "photo_site_image_2": "",
+ "photo_dpsh_image": "<InlineImage>",
+ "photo_sondeig_image": "<InlineImage>",
+ "photo_materials_image": "<InlineImage>",
+ "fig_situacio_image_1": "<InlineImage>",
+ "fig_situacio_image_2": "",
+ "fig_assaigs_image": "<InlineImage>",
+ "fig_projecte_image_1": "<InlineImage>",
+ "fig_projecte_caption_1": "Sección longitudinal de la edificación proyectada. Fuente: Proyecto.",
+ "fig_projecte_image_2": "",
+ "fig_projecte_caption_2": "",
+ "has_plan_crops": true,
+ "fig_cadastre_image": "<InlineImage>",
+ "fig_location_image": "<InlineImage>",
+ "fig_main_plan_image": "<InlineImage>",
+ "fig_building_image": "<InlineImage>",
+ "fig_geological_image": "[Imatge pendent]",
+ "fig_correlation_image": "<InlineImage>"
+}

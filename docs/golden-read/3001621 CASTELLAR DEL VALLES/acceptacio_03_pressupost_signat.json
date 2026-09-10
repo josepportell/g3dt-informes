@@ -1,0 +1,101 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC CASTELLAR DEL.....pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 25·0493 MODF (07/10/2025) retornat ACCEPTAT pel client el 08/10/2025: mateix PDF que 25.0493/PRESSUPOST GEOTEC.MODF amb el NIF 'B19935212' teclejat i el formulari p.5 omplert i signat a mà (tinta vectorial vermella, flattened) per WOOD COMFORT PROMOCIONS SLU.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L. (document) · WOOD COMFORT PROMOCIONS SLU (emplenat i signatura del client)",
+ "date": "2025-10-08",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 emet el pressupost (creationDate 07/10/2025 10:20 idèntica a la MODF); el client el retorna omplert i signat (modDate 08/10/2025 10:25). Edició sobre el mateix fitxer: text 'B19935212' afegit al content stream (font Verdana, mateix span que l'etiqueta) + 183 traços vectorials (tinta vermella, rect 82-553 × 303-678) = formulari i signatura 'Fill & Sign' aplanats. NO és un escaneig, NO hi ha /Sig, widgets ni annots.",
+  "for_whom": "G3 (prova d'acceptació del contracte-pressupost)",
+  "why": "acceptar el pressupost i indicar les dades de facturació i d'enviament de l'informe",
+  "expected_fields": [
+   "client_name (formulari p.5 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME': NOM I COGNOMS + NIF) — autoritat A",
+   "architect_name (signatura digital /Sig o casella ARQUITECTE) — aquí absents",
+   "street_address / municipality (bloc OBRA p.1, idèntic a la MODF)"
+  ],
+  "not_expected": [
+   "expedient",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_*",
+   "num_floors",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "= 25.0493/PRESSUPOST GEOTEC.MODF.CASTELLAR DEL VALLES.pdf (mateixa creationDate, text idèntic a p.1-4 i 6-7, única diferència de text: '+B19935212' a p.5) + emplenat manuscrit. Substitueix la 1a versió (GRUP ALMA). Les dades del formulari repeteixen les del bloc CLIENT p.1 (adreça Ferran Valls i Taberner 14 bis 1-2, 08006 Barcelona).",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "WOOD COMFORT PROMOCIONS SLU (NIF B19935212)",
+   "location": "p.5 formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME', línia NOM I COGNOMS (manuscrit) + N.I.F./C.I.F. (teclejat)",
+   "quote": "NOM I COGNOMS: WOOD COMFORT PROMOCIONS SLU [manuscrit] | N.I.F./C.I.F.: B19935212 [text] | ADREÇA: FERRAN VALLS I TABERNER 14 BIS 1-2 [manuscrit] | CP I POBLACIÓ: 08006 BARCELONA [manuscrit]",
+   "confidence": 0.9,
+   "note": "Autoritat A per a client_name (formulari 'han de constar en l'informe' omplert). Coincideix amb el bloc CLIENT p.1 de la MODF. El manuscrit l'he llegit jo d'un render a 120 dpi (lletra clara de pal); l'agent visual pot corroborar-ho (clip a scratchpad/castellar/agentA/acceptacio_p5_clip.png). Cap 'Promotor' enlloc encara: si el plànol/projecte diu un promotor diferent, revisar."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ARBRELLS 18A-18B-20",
+   "location": "p.1 bloc OBRA línia 2 (y=421)",
+   "quote": "ESTUDI GEOTECNIC ⏎ C/ARBRELLS 18A-18B-20 ⏎ CASTELLAR DEL VALLES",
+   "confidence": 0.8,
+   "note": "idèntic a la MODF (no és font independent)"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CASTELLAR DEL VALLES",
+   "location": "p.1 bloc OBRA línia 3 (y=421)",
+   "quote": "CASTELLAR DEL VALLES",
+   "confidence": 0.9,
+   "note": "idèntic a la MODF (no és font independent)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.2 (y=663) + p.4 002.001",
+   "quote": "4 assaigs de penetració dinàmica DPSH | 4,00",
+   "confidence": 0.7,
+   "note": "previstos i acceptats; mana l'Excel DPSH"
+  },
+  {
+   "concept_id": "client_email",
+   "value": "ROCFLATS@HOTMAIL.COM",
+   "location": "p.5 'ADREÇA ON S'HA D'ENVIAR L'INFORME' (manuscrit, sobre la línia ratllada) + 'Email del client:'",
+   "quote": "ROCFLATS@HOTMAIL.COM (2 cops)",
+   "confidence": 0.8,
+   "note": "nivell B (contacte). Caselles marcades: 'Digital per email' ✓ i 'Informe en català' ✓. Caselles ARQUITECTE / ALTRES buides. Línia DADES BANCÀRIES omplerta amb un IBAN manuscrit (no transcrit: dada bancària, fora del nivell A)."
+  },
+  {
+   "concept_id": "NOT_architect_name",
+   "value": null,
+   "location": "p.5 casella ARQUITECTE / signatura",
+   "quote": "ARQUITECTE ............................................... [buit] | 'El client' signatura manuscrita il·legible (gargot), sense nom ni segell",
+   "confidence": 1.0,
+   "note": "cap arquitecte consta al document; la signatura del client no és digital (/Sig absent) i no porta nom llegible"
+  }
+ ],
+ "not_present": [
+  "architect_name",
+  "cte_edificacio",
+  "cte_sol",
+  "expedient",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth"
+ ],
+ "reading_notes": "Identificat per metadata (creator G3, title m4PRO). Cap widget ni /Sig (escaneig complet dels xrefs): la signatura és tinta vectorial aplanada, no certificat digital. Diff text vs MODF: només '+B19935212' a p.5; imatges (md5) idèntiques; drawings p.5: 8 → 191 (183 traços nous en vermell). Render p.5 y=270-720 a 120 dpi per llegir el manuscrit: lletra de pal en majúscules, clarament llegible. La signatura de G3 ('Resp. Oficina Tècnica', tinta blava, imatge xref 95 169x79) ja hi era a la MODF (és d'Eva Vázquez, plantilla)."
+}

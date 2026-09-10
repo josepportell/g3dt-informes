@@ -1,0 +1,90 @@
+{
+ "source_path": "25.0794/PRESSU.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu intern G3 (Eva Roig, administració → Eva Vázquez, cc Dolors Maqueda; 05/11/2025 09:33) demanant pressupost per a 'RUBÍ (1 casa modular)'; adjunta 2 fotos WhatsApp del 04/11 amb 'la info que m'ha passat' JOANA MARTINEZ (696 04 00 77), que no té correu → pressupost per WhatsApp.",
+ "issuer": "Eva Roig <eroig@g3dt.com> (G3, Dep. Administració)",
+ "date": "2025-11-05",
+ "pages_or_sheets": "cos + 8 adjunts (2 fotos útils + 6 imatges de signatura)",
+ "context": {
+  "who_made_it": "G3 administració (Eva Roig)",
+  "for_whom": "Eva Vázquez (geòloga, farà el pressupost)",
+  "why": "traspassar la petició d'una particular (Joana Martinez) perquè es prepari el pressupost 25·0794",
+  "expected_fields": [
+   "client_name / sol·licitant (nom + telèfon)",
+   "municipality",
+   "building_type",
+   "adjunts amb la informació del solar (fotos/plànols)"
+  ],
+  "not_expected": [
+   "expedient (encara no existeix)",
+   "field_date",
+   "cota",
+   "nivells",
+   "lab"
+  ],
+  "relation_to_others": "origen del pressupost 25·0794 (mateix dia, 05/11). El 'CLIENT: JOANA MARTINEZ' del pressupost i del correu són la mateixa font (no independents). Els 2 adjunts IMG-20251104-WA0015/16.jpg ja són solts a 25.0794/ (WA0015 md5 idèntic; WA0016 mateixa mida 2040×1536 però md5 diferent: còpia de la carpeta amb EXIF, la del correu sense → mateix contingut). RE_ PRESSU.msg és la resposta.",
+  "authority_for": [
+   "client_name (candidat: sol·licitant particular)",
+   "building_type (candidat: 'casa modular')",
+   "municipality (corroboració)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "JOANA MARTINEZ",
+   "location": "cos del correu",
+   "quote": "Adjunto la info que m’ha passat ⏎ JOANA MARTINEZ – 696 04 00 77 ⏎ Passar el pressupost per watsap, plis... no te correu.",
+   "confidence": 0.6,
+   "note": "particular que demana el pressupost (sense arquitecte esmentat). Probablement la propietària de la casa modular, però el correu no diu 'propietària' ni 'promotora'. Mateixa font que el pressupost p.1. Telèfon 696040077 = pressupost."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "cos del correu (títol)",
+   "quote": "RUBÍ",
+   "confidence": 0.85,
+   "note": "amb accent; deriva de la mateixa petició que el pressupost"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "1 casa modular",
+   "location": "cos del correu",
+   "quote": "RUBÍ ⏎ (1 casa modular)",
+   "confidence": 0.7,
+   "note": "'casa modular' (habitatge unifamiliar prefabricat); PLAN_COST/comanda diuen 'HAB UNIF'. L'informe redactarà 'habitatge unifamiliar'."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": null,
+   "location": "cos del correu",
+   "quote": "(1 casa modular)",
+   "confidence": 0.0,
+   "note": "'1' és el nombre de cases, NO de plantes. Cap dada de plantes ni superfície al text."
+  },
+  {
+   "concept_id": "attachments_for_vision",
+   "value": "IMG-20251104-WA0015.jpg (2040×1536, 259796 B, md5 435eb44e = còpia solta a 25.0794/) i IMG-20251104-WA0016.jpg (2040×1536, 251548 B, md5 36553ca0; la còpia solta 6e315339 té EXIF, mateixa mida de píxel)",
+   "location": "adjunts",
+   "quote": "Adjunto la info que m’ha passat",
+   "confidence": 0.9,
+   "note": "NO llegides aquí (imatges): per a l'altre agent. Són 'la info' que va passar la Joana Martinez el 04/11 — probablement plànol/emplaçament/foto del solar; poden portar adreça, superfície o plantes."
+  }
+ ],
+ "not_present": [
+  "street_address",
+  "architect_name",
+  "expedient",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_*",
+  "cte_*"
+ ],
+ "reading_notes": "extract_msg: cos net (cap cadena anterior). 6 adjunts d'imatge són signatura (image001.jpg 185×182, image002/003.png 783×3, image004.png 783×5, image005.png 400×200 logo, image006.jpg 230×115): ignorats. Extrets a scratchpad/rubi/agentA/pressu/."
+}

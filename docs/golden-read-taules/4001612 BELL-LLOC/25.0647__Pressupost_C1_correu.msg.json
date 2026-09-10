@@ -1,0 +1,54 @@
+{
+ "source_path": "25.0647/Pressupost C1 - Bell-lloc -c_ Mestre Ramon Ortiz -  Jordi Bosch.msg",
+ "document_type": "correu",
+ "what_it_is": "Correu d'encàrrec intern (Cesar Morillas -> Eva) amb el programa de l'obra i el client sol·licitant",
+ "issuer": "Cesar Morillas <cesar@g3dt.com> (G3, Dir. Dept. Assessor)",
+ "date": "2025-09-03 11:26",
+ "pages_or_sheets": "cos + 10 adjunts (2 consultes Cadastre + imatges signatura)",
+ "context": {
+  "who_made_it": "Cesar (G3) trasllada l'encàrrec a l'Eva",
+  "for_whom": "Eva (G3)",
+  "why": "obrir el projecte: programa, obra, accés, sol·licitant",
+  "expected_fields": [
+   "superficie_construida ('Pb de X + p1 de Y')",
+   "cte ('És un C1')",
+   "situacions (2 parcel·les)"
+  ],
+  "not_expected": [
+   "valors de camp",
+   "litologies",
+   "cotes"
+  ],
+  "relation_to_others": "el RE: de l'Eva (11:58) només afegeix signatura + adjunt PLAN_COST -> cap text nou, no és font independent; adjunts Cadastre 4613172/4613173 (2 parcel·les contigües) també solts a la carpeta",
+  "authority_for": [
+   "superficie_construida (candidat 1, patró Eva '280+86')"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "superficie_construida",
+   "value": "280+86",
+   "location": "cos del correu, línia GEO",
+   "quote": "És un C1 Pb de 280m + p1 de 86 - son dos parcel.les contigües on hi haura una sola casa.",
+   "confidence": 0.7,
+   "note": "PB 280 m² + P1 86 m²; l'Eva escriu '280+86' (patró v0.7)"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "ARQUITECTURA BOSCH NOVELL - Jordi Bosch Novell",
+   "location": "cos, línia CLIENT",
+   "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL -Jordi Bosch Novell -620 199 571",
+   "confidence": 0.0,
+   "note": "sol·licitant (arquitecte), no promotor — regla Pas 3"
+  }
+ ],
+ "tables": {
+  "__nota": "Aporta l'escalar superficie_construida del bloc tables (taula plantes/superfícies). Cap fila d'assaig."
+ },
+ "not_present": [
+  "dpsh_tests",
+  "sondeig_tests",
+  "soil_levels"
+ ],
+ "reading_notes": "extract_msg; RE: llegit i descartat (només signatura Eva + PLAN_COST adjunt); imatges de signatura ignorades (<25KB o logos)."
+}

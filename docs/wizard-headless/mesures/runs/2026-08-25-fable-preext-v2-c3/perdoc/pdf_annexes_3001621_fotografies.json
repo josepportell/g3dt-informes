@@ -1,0 +1,114 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_fotografies.pdf",
+ "source_md5": "73cea90d5c4d74a91bd2c88a56fe1970",
+ "skill_version": "1.3-preext",
+ "schema_version": 1,
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex de fotografies de l'informe (plantilla G3, 2 pàgines, F-1 a F-4): la màquina de penetració dinàmica DPSH emplaçada als punts P-1, P-2, P-3 i P-4.",
+ "issuer": "G3 (Eva) — annex FreeHand exportat via Acrobat Distiller",
+ "date": "2025-11-03 (creationDate/modDate del PDF = data de maquetació de l'annex, NO data de camp)",
+ "pages_or_sheets": "2 pàgines A4 (Fotografies - pàgina 1 / pàgina 2)",
+ "context": {
+  "who_made_it": "Eva (G3) munta l'annex amb les fotos de camp (FOTOGRAFIES/P1..P4.jpg, WhatsApp 2025-10-24) sobre la plantilla FreeHand 3001621_fotografies.FH11.",
+  "for_whom": "Per a l'informe geotècnic 3001621 (client final); és una sortida de l'Eva, no un document d'entrada del proveïdor.",
+  "why": "Documentar visualment l'emplaçament dels 4 assaigs DPSH; és una peça de l'informe que l'Eva dibuixa abans d'obrir el wizard.",
+  "expected_fields": [
+   "expedient (caixetí)",
+   "num_dpsh_tests (recompte de fotos P-i, corroboració)"
+  ],
+  "not_expected": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab",
+   "cte"
+  ],
+  "relation_to_others": "Mateix md5 que PDF-V0/ANNEXES/3001621_fotografies.pdf (còpia, no font independent). Derivat de ANNEXES/3001621_fotografies.FH11 (font FreeHand, no llegible). Les fotos originals són FOTOGRAFIES/P1.jpg..P4.jpg (= maquina_dpsh*.jpg, vista_general_1.jpg per md5) i les 'Imagen de WhatsApp 2025-10-24' — la data de camp surt d'aquells noms de fitxer / fitxa / annex DPSH, no d'aquest annex. Corrobora l'Excel ANNEXES/3001621_DPSH.xls (4 fulls P-1..P-4), que és l'autoritat per a num_dpsh_tests.",
+  "authority_for": []
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "p.1 i p.2, caixetí superior dret",
+   "quote": "3001621",
+   "confidence": 0.7,
+   "note": "Caixetí d'un annex de l'Eva: pot tenir typos de còpia (regla Pas 3); coincideix amb el nom de la carpeta '3001621 CASTELLAR DEL VALLES'. Corroboració, no autoritat A."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "p.1 F-1/F-2 + p.2 F-3/F-4, peus de foto",
+   "quote": "Fotografia 1 -2: Detall de l'emplaçament de la màquina realitzant l'assaig de penetració dinàmica DPSH, P-1 i P-2, respectivament. / Fotografia 3 -4: [...] P-3 i P-4, respectivament.",
+   "confidence": 0.6,
+   "note": "4 punts fotografiats (P-1..P-4) = assaigs executats segons l'Eva. L'Excel DPSH (fulls amb dades) mana; això és corroboració fotogràfica. Cap sondeig fotografiat en aquest annex (les fotos de S1 són a FOTOGRAFIES/S1/ però no hi surten)."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "location": "p.1 F-1 + peu de foto",
+    "quote": "P-1 i P-2, respectivament",
+    "extra": {
+     "only_existence": true,
+     "foto": "F-1"
+    }
+   },
+   {
+    "punt": "P-2",
+    "location": "p.1 F-2 + peu de foto",
+    "quote": "P-1 i P-2, respectivament",
+    "extra": {
+     "only_existence": true,
+     "foto": "F-2"
+    }
+   },
+   {
+    "punt": "P-3",
+    "location": "p.2 F-3 + peu de foto",
+    "quote": "P-3 i P-4, respectivament",
+    "extra": {
+     "only_existence": true,
+     "foto": "F-3"
+    }
+   },
+   {
+    "punt": "P-4",
+    "location": "p.2 F-4 + peu de foto",
+    "quote": "P-3 i P-4, respectivament",
+    "extra": {
+     "only_existence": true,
+     "foto": "F-4"
+    }
+   }
+  ],
+  "__nota": "Només l'EXISTÈNCIA dels 4 punts P-1..P-4 (cap cota, fondària, rebuig ni N.F.: aquest annex no en porta). Serveix per creuar el recompte de files de dpsh_tests amb l'Excel DPSH i l'annex DPSH."
+ },
+ "not_present": [
+  "client_name (annex de fotos, no en porta)",
+  "street_address (cap rètol de carrer visible a les fotos)",
+  "municipality (regla: mai una foto)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (cap data impresa; el creationDate 2025-11-03 és de maquetació; la data de camp és als noms 'Imagen de WhatsApp 2025-10-24' de FOTOGRAFIES/, a la fitxa F38 o a l'annex DPSH)",
+  "cota_referencia",
+  "num_soil_levels (no hi ha fotos de testimoni de sondeig en aquest annex)",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company / lab_sample_id / lab_depth / lab_location",
+  "cte_edificacio / cte_sol"
+ ],
+ "reading_notes": "Pre-extracció: text de page-1/2.txt brossa (text_ok=false, FreeHand→PScript5/Distiller, com preveu el Pas 2) → lectura visual de page-1.png i page-2.png (150 dpi), suficients; no ha calgut mirar les meitats ni fer cap clip. Cap codi executat més enllà de llegir _inventory.json/meta.json. Observacions de camp útils per a la narrativa (fora del nivell A): parcel·la en pendent pronunciat amb vegetació desbrossada i restes de poda; mur de maó amb malla verda i habitatges veïns adjacents (F-1, F-2, F-4); màquina DPSH sobre erugues; una persona i una furgoneta blanca al fons de F-4. Inventari creuat: el fitxer és idèntic (md5) a PDF-V0/ANNEXES/3001621_fotografies.pdf (route skip): no comptar dos cops."
+}

@@ -1,0 +1,153 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC.ALCOLETGE SIGNAT-SCAN.pdf",
+ "source_md5": "be6505f9233ac7ba1bde074c863ece46",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic G3 (26.0049 P#) escanejat i signat pel client en acceptació del contracte-pressupost; inclou el formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' omplert i signatures.",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "27/01/26 (data del pressupost, no de camp)",
+ "pages_or_sheets": "7 pàgines (portada+OBRA; proposta+campanya de camp; índex de continguts de l'informe; valoració Ag.001; pressupost p.2/2 + dades factura + signatures; condicions específiques x2)",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial SL (empresa geotècnica) redacta el pressupost; el client el retorna signat com a acceptació",
+  "for_whom": "Albert Sans Bonvehí, sol·licitant i propietari, que encarrega directament l'estudi geotècnic per a una ampliació a casa seva (sense arquitecte declarat)",
+  "why": "Formalitzar l'encàrrec de l'estudi geotècnic (3 DPSH + 1 SPT amb recuperació de mostra) abans d'iniciar els treballs de camp",
+  "expected_fields": [
+   "client_name (sol·licitant)",
+   "street_address (OBRA)",
+   "municipality",
+   "cte_edificacio",
+   "cte_sol",
+   "num_dpsh_tests (previstos)"
+  ],
+  "not_expected": [
+   "field_date (data de camp)",
+   "architect_name (no hi ha arquitecte declarat)",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_*"
+  ],
+  "relation_to_others": "Mateix pressupost 26.0049 que 26.0049/PRESSUPOST GEOTEC.ALCOLETGE.pdf (md5 diferent: 91c68545f5765ba5e5910e9f30ebb123) però aquesta és la versió ESCANEJADA i SIGNADA (ACCEPTACIO), amb el formulari p.5 omplert a mà i les signatures — autoritat A per a client_name",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "cte_edificacio",
+   "cte_sol",
+   "num_dpsh_tests",
+   "architect_name"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Albert Sans Bonvehí",
+   "location": "p.5 (Pàg. 2 de 2 del pressupost) bloc 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME'",
+   "quote": "NOM I COGNOMS: ALBERT SANS BONVEHÍ",
+   "confidence": 0.95,
+   "note": "Formulari autoritat A (Pas 3). Coincideix amb el bloc CLIENT: de la portada ('SANS BONVEHI, ALBERT') i amb la signatura manuscrita 'Albert Sans'. NIF 47690689M. És també el sol·licitant (particular, sense arquitecte) — coherent amb el patró conegut d'Alcoletge."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/GIRASOLS 7, URB.EL ROSER",
+   "location": "p.1 (portada) bloc 'OBRA:'",
+   "quote": "OBRA:\nESTUDI GEOTECNIC\nC/GIRASOLS 7, URB.EL ROSER\nALCOLETGE",
+   "confidence": 0.85,
+   "note": "Bloc OBRA (autoritat per a adreça de l'obra, no la del client). Grafia alternativa al bloc de factura (p.5): 'C/DELS GIRA-SOLS, 7 (CASA)' — mateix carrer, mateix número; com que el client és el propietari de l'obra, l'adreça del client i la de l'obra coincideixen."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Girasols",
+    "nom_via_alternatives": [
+     "Gira-sols",
+     "dels Gira-sols"
+    ],
+    "portals": [
+     "7"
+    ],
+    "municipi": "Alcoletge",
+    "municipi_alternatives": [
+     "ALCOLETGE"
+    ]
+   },
+   "location": "p.1 bloc OBRA + p.5 bloc DADES FACTURA",
+   "quote": "C/GIRASOLS 7, URB.EL ROSER / C/DELS GIRA-SOLS, 7 (CASA)",
+   "confidence": 0.8,
+   "note": "Extra concept, no és cap dels 15 camps."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "p.1 bloc OBRA ('25660 ALCOLETGE') i p.5 bloc DADES FACTURA ('CP I POBLACIÓ: 25.660 - ALCOLETGE')",
+   "quote": "25660 ALCOLETGE / 25.660 - ALCOLETGE",
+   "confidence": 0.95,
+   "note": "Dues aparicions dins del mateix document (OBRA i factura), coincideixen entre elles i amb el nom de la carpeta del projecte."
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0",
+   "location": "p.2, sota 'Aquesta proposta s'ha elaborat...'",
+   "quote": "Tipus d'edifici: C0",
+   "confidence": 0.9,
+   "note": "Camp explícit del pressupost G3, sense contradicció dins del document."
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2, sota 'Tipus d'edifici: C0'",
+   "quote": "Tipus de Terreny : T1",
+   "confidence": 0.9,
+   "note": "Camp explícit del pressupost G3, sense contradicció dins del document."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.2 'campanya de camp' i p.4 (Ag.001, Pàg 1 de 3) taula VALORACIÓ",
+   "quote": "3 assaigs de penetració dinàmica DPSH / UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH ... 3,00",
+   "confidence": 0.6,
+   "note": "PREVISTOS al pressupost, no executats. Per la regla del Pas 3, l'Excel DPSH (executats) mana sobre el pressupost si discrepen; aquest valor és candidat de menor prioritat."
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Albert Sans Bonvehí",
+   "location": "p.5, checkboxes 'PERSONES I/O EMPRESES QUE PODEN REBRE INFORMACIÓ SOBRE L'INFORME' — cap casella marcada (ni ARQUITECTE ni ALTRES)",
+   "quote": "[ ] ARQUITECTE ... [ ] ALTRES ...",
+   "confidence": 0.3,
+   "note": "Cap arquitecte declarat enlloc del document (particular que encarrega directament). Candidat pel patró conegut d'Eva a Alcoletge: escriure el client al camp arquitecte de l'informe. Mai segur — regla explícita del Pas 3 per aquest cas."
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "26.0049 P#",
+   "location": "p.2 i p.5, capçalera 'PRESSUPOST GEOTECNIC' / 'PRESSUPOST'",
+   "quote": "PRESSUPOST GEOTECNIC 26·0049 P# DATA: 27/01/26",
+   "confidence": 0.0,
+   "note": "Codi COMERCIAL del pressupost (regla Pas 3: '25·NNNN P#' = codi comercial, NO expedient). Descartat explícitament com a font d'expedient; l'expedient real és el nom de carpeta '4001670'."
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": "27/01/26",
+   "location": "p.2 i p.5, camp 'DATA'",
+   "quote": "DATA: 27/01/26",
+   "confidence": 0.0,
+   "note": "Data del PRESSUPOST (emissió), no de camp. Regla explícita del Pas 3: mai la data del pressupost ni de l'acceptació per a field_date. Descartat."
+  }
+ ],
+ "not_present": [
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "superficie_parcela",
+  "num_floors",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location"
+ ],
+ "reading_notes": "Cap dels 7 fulls tenia text_ok=true (escaneig Adobe-style, PDFium, sense capa de text fiable) — lectura íntegrament visual amb les meitats top/bottom a 220dpi. Pàgines 3, 6 i 7 són contingut genèric (índex de continguts previst de l'informe; condicions específiques del contracte) sense dades del nivell A — revisades i descartades. Pàgina 4 (Ag.001, Pàg 1 de 3) és la taula de valoració que confirma els comptes de DPSH/SPT de la p.2. 1 assaig SPT (amb recuperació de mostra) previst, no un sondeig a rotació — no genera entrada a sondeig_tests."
+}

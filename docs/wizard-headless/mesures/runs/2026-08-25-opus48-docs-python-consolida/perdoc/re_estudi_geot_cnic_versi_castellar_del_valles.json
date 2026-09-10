@@ -1,0 +1,93 @@
+{
+ "source_path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+ "source_md5": "9b5696cb7a0a51e3abbd06dc815719ae",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu Re: de Roc Clusa a G3 (Dolors/Loli Maqueda) revisant el v0 de l'informe; demana adjuntar prova de laboratori i dicta el títol exacte de l'informe.",
+ "issuer": "Roc Clusa <rocflats@hotmail.com>",
+ "date": "2025-11-18",
+ "pages_or_sheets": "correu (cos + cadena RE:, sense adjunts)",
+ "context": {
+  "who_made_it": "Roc Clusa (rocflats@hotmail.com), qui rep i revisa la versió 0 de l'informe geotècnic; contacte del costat sol·licitant/client de l'obra.",
+  "for_whom": "G3 (Dolors 'Loli' Maqueda, Dep. Administració) que li ha enviat el v0.",
+  "why": "Roc respon amb dues instruccions: (1) pregunta si cal adjuntar la prova de laboratori; (2) dicta el títol que ha de portar l'informe.",
+  "expected_fields": [
+   "building_type",
+   "street_address",
+   "municipality"
+  ],
+  "not_expected": [
+   "field_date",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "referencia_catastral",
+   "utm",
+   "lab_sample_id",
+   "expedient"
+  ],
+  "relation_to_others": "Cadena RE:: només el text nou de Roc (a dalt del primer 'From:') aporta; la part citada és el correu d'enviament del v0 de G3, sense dades noves. Instrucció del client POSTERIOR als annexos (2025-11-18, després del v0) que DICTA el títol de l'informe -> Pas 3b: mana sobre la redacció dels annexos anteriors per a building_type i street_address (candidat 1 amb nota). Complementa pressupost/acceptacio/comanda.",
+  "authority_for": [
+   "building_type",
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "Grup d'habitatges unifamiliars",
+   "location": "cos nou del correu (Roc Clusa, 2025-11-18)",
+   "quote": "El titol hauria de ser: \"Estudi geologic / geotecnic per la CONSTRUCCIO D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLES\"",
+   "confidence": 0.7,
+   "note": "Instruccio del client que dicta el titol de l'informe (Pas 3b: correu POSTERIOR > redaccio dels annexos anteriors). Candidat 1, mai segur nomes amb aixo. Grup de 3 habitatges unifamiliars (18A, 18B, 20 = '3 HAB')."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A, 18B i 20",
+   "location": "cos nou del correu (Roc Clusa, 2025-11-18)",
+   "quote": "AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLES",
+   "confidence": 0.7,
+   "note": "Adreca de l'obra dictada pel client al titol de l'informe. Tres numeros (grup de 3 habitatges) -> multiplicitat real, no competeixen -> candidats. Grafia 'ARBRELLS' del correu; creuar amb annexos/plànol de situacio."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos nou del correu (Roc Clusa, 2025-11-18)",
+   "quote": "a CASTELLAR DEL VALLES",
+   "confidence": 0.7,
+   "note": "Forma del municipi dins el titol dictat; corrobora nom de carpeta i plantilles G3. Prove d'instruccio de client, no font independent d'autoritat A per si sola."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "Roc Clusa (rocflats@hotmail.com)",
+   "location": "capçalera 'From:' del correu nou",
+   "quote": "From: Roc Clusa <rocflats@hotmail.com>",
+   "confidence": 0.0,
+   "note": "Roc Clusa es el contacte del costat sol·licitant/client que revisa i dicta el titol; NO s'asserta com client_name (autoritat = acceptacio/formulari p.5 del pressupost signat, promotor del plànol). Sense 'arquitecte'/num col·legiat -> tampoc architect_name. Registrat per traçabilitat."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Correu llegit del body.txt pre-extret (kind=msg, sense adjunts a l'inventari). Nomes s'ha usat el text nou de Roc Clusa per sobre del primer 'From:'; la resta es la cadena citada (enviament del v0 per G3) i el peu de privacitat de G3 (adreca C/ Esglesia 18, Els Omells de Na Gaia = seu de G3, NO municipi de l'obra: descartat). Roc pregunta si cal adjuntar prova de laboratori -> confirma que hi ha assaig de lab pendent, pero no dona lab_testing_company ni mostra (no es valor). Cap taula aportada per aquest document."
+}

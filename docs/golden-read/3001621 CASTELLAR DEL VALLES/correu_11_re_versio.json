@@ -1,0 +1,92 @@
+{
+ "source_path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+ "document_type": "correu",
+ "what_it_is": "Resposta del client Roc Clusa (rocflats@hotmail.com) a Dolors (G3) del 18/11/2025 18:49 a l'enviament de la versió 0 de l'informe (03/11/2025): demana que s'hi adjunti la prova de laboratori i dicta el TÍTOL de l'informe: 'Estudi geològic / geotècnic per la CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS'.",
+ "issuer": "Roc Clusa <rocflats@hotmail.com> → Dolors Maqueda (G3); citat: Dolors → rocflats 03/11/2025 17:47",
+ "date": "2025-11-18T18:49:25+01:00",
+ "pages_or_sheets": "1 missatge (RE: amb 1 missatge citat) + 3 imatges de signatura",
+ "context": {
+  "who_made_it": "el client (Roc Clusa, la persona de contacte de WOOD COMFORT PROMOCIONS SLU / 'ROC' de la fitxa)",
+  "for_whom": "G3 (administració)",
+  "why": "correccions a la versió 0 de l'informe: falta el laboratori (el GTL s'expedeix l'endemà, 19/11) i el títol ha de dir el grup d'habitatges i les tres adreces",
+  "expected_fields": [
+   "building_type (redacció volguda pel client)",
+   "street_address (tres números, redacció volguda)",
+   "municipality",
+   "client_name (l'autor és el client, però el correu no diu la raó social)"
+  ],
+  "not_expected": [
+   "expedient",
+   "data de camp",
+   "cota",
+   "nivells",
+   "arquitecte",
+   "plantes",
+   "superfície"
+  ],
+  "relation_to_others": "Tanca el cercle: rocflats@hotmail.com = email manuscrit a l'acceptació (WOOD COMFORT PROMOCIONS SLU) = 'ROC 615557450' de la fitxa i del correu de juny ('GRUP ALMA'). Les tres adreces '18A, 18B i 20' = OBRA de la MODF '18A-18B-20'. 'Grup d'habitatges unifamiliars' = comanda 'CONSTR 3 HAB UNIF'. El missatge citat (Dolors 03/11) només diu 'adjunto estudi geotècnic versió 0, a falta de resultats de laboratori' (→ PDF-V0/). Cap adjunt nou (3 imatges de signatura ≤ 8,6 KB).",
+  "authority_for": [
+   "building_type (redacció del títol de l'informe)",
+   "street_address (redacció de l'informe)",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "building_type",
+   "value": "construcció d'un grup d'habitatges unifamiliars",
+   "location": "cos del correu (text nou, sobre 'From:')",
+   "quote": "El títol hauria de ser: \"Estudi geològic / geotècnic per la CONSTRUCCIÓ D’UN GRUP D’HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS",
+   "confidence": 0.85,
+   "note": "és la redacció que el client vol al títol de l'informe → molt probablement la que l'Eva fa servir a l'informe definitiu. Coherent amb '3 HAB UNIF'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A, 18B i 20",
+   "location": "cos del correu (títol dictat)",
+   "quote": "AL CARRER ARBRELLS 18A, 18B i 20",
+   "confidence": 0.85,
+   "note": "tres números = tres parcel·les; redacció volguda pel client. = MODF '18A-18B-20'."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "cos del correu (títol dictat) + assumpte",
+   "quote": "a CASTELLAR DEL VALLÈS",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Roc Clusa (persona de contacte; entitat: WOOD COMFORT PROMOCIONS SLU segons acceptació)",
+   "location": "capçalera From + signatura absent",
+   "quote": "FROM: Roc Clusa <rocflats@hotmail.com>",
+   "confidence": 0.4,
+   "note": "el correu no diu cap raó social. rocflats@hotmail.com és l'email del formulari d'acceptació a nom de WOOD COMFORT PROMOCIONS SLU. No afegir 'Roc Clusa' com a client_name; serveix per lligar ROC ↔ WOOD COMFORT. Cap indici que sigui arquitecte ('haig de fer un geotècnic', 'compraré les parcel·les' → promotor)."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": null,
+   "location": "cos del correu",
+   "quote": "Tinc entès que en l'estudi s'hi ha d'adjuntar alguna prova de laboratori, pot ser?",
+   "confidence": 0.0,
+   "note": "només confirma que la v0 (03/11) no portava laboratori; el GTL 4687-GTL-25 és del 19/11 (l'endemà)."
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_sample_id",
+  "lab_depth",
+  "cte_*"
+ ],
+ "reading_notes": "Extret amb extract_msg. Cadena RE: només el text sobre '________________________________ From: Dolors Maqueda' és nou; el citat (03/11/2025) és l'enviament de la v0. Adjunts: image001.jpg 8,6 KB, image007.png 405 B, image008.jpg 6,3 KB = signatura (≤ 25 KB), ignorades. Fitxers a scratchpad/castellar/agentA/msg2/."
+}

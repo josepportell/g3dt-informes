@@ -1,0 +1,24 @@
+{
+ "source_path": "26.0050/PRESSUPOST LLEIDA.msg",
+ "source_md5": "718b7dfb4c9850cc66475b12886a112c",
+ "kind": "msg",
+ "generated": "2026-09-04T16:36:23",
+ "elapsed_s": 0.739,
+ "dir": "26_0050_pressupost_lleida",
+ "files": [
+  "26_0050_pressupost_lleida/body.txt"
+ ],
+ "subject": "PRESSUPOST LLEIDA",
+ "from": "Dolors Maqueda",
+ "to": "Eva Vazquez <eva@g3dt.com>",
+ "date": "2026-01-27 11:37:50.335566+01:00",
+ "attachments": [
+  {
+   "name": "1_0.pdf",
+   "size": 211554,
+   "md5": "8af7e4a33e71f95d9f31fbc8d5d25880",
+   "already_in_folder": "26.0050/1.0.pdf",
+   "preext_dir": null
+  }
+ ]
+}

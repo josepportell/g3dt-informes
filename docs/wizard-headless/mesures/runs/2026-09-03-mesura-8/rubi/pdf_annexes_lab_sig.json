@@ -1,0 +1,169 @@
+{
+ "source_path": "PDF/ANNEXES/LAB-SIG.pdf",
+ "source_md5": "8bc2f8d744bfa74b91bd79e4e84420f1",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "informe_laboratori",
+ "what_it_is": "Còpia signada digitalment de l'informe de resultats d'assaigs de laboratori (GTL-8270-25 / Núm. informe 4703-GTL-25) de TPS sobre la mostra SPT1 P3 del projecte 3001631 Rubí: granulometria, límits d'Atterberg, classificació SUCS i contingut en ió sulfat.",
+ "issuer": "TPS, Prospecció del Subsòl, SL (marca comercial \"Soilassaig\"), laboratori NIF B64803075",
+ "date": "17/12/2025 (Data d'expedició)",
+ "pages_or_sheets": "8 pàgines",
+ "context": {
+  "who_made_it": "TPS, Prospecció del Subsòl SL (laboratori de sòls subcontractat); aquesta còpia porta les signatures digitals del Director tècnic i del Cap d'àrea d'assaig GTL a la p.8, absents (o no verificades) a la còpia sense signar del mateix informe.",
+  "for_whom": "G3 Desenvolupament Territorial SL, que figura com a 'DADES DEL SOL·LICITANT'/'DADES DEL CLIENT' del laboratori",
+  "why": "Versió final/signada del mateix informe de resultats de laboratori (granulometria, límits d'Atterberg, classificació SUCS, sulfats) fet sobre la mostra SPT1 extreta al punt P3 del projecte",
+  "expected_fields": [
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "expedient",
+   "street_address",
+   "municipality"
+  ],
+  "not_expected": [
+   "architect_name",
+   "client_name (promotor)",
+   "building_type",
+   "num_floors",
+   "superficie_parcela",
+   "cota_referencia",
+   "num_soil_levels",
+   "num_dpsh_tests",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "DUPLICAT/versió signada de '4703-GTL-25 Rubí.pdf' (ja llegit en aquesta carpeta, JSON 4703_gtl_25_rub.json): mateix número d'informe 4703-GTL-25, mateixa referència de laboratori GTL-8270-25, mateixa mostra SPT1 P3, mateixa cota d'extracció 0,6-1,2, mateix expedient/adreça/municipi. NO és font independent per a la regla d'independència de fonts (Pas 0/5) — compta com UNA sola aparició del GTL, no dues. L'única informació nova respecte a la còpia sense signar és el bloc de signatures digitals de p.8 (Director tècnic Pere Cervós Flinch, geòleg col. 3481; Cap d'àrea d'assaig GTL Pere Farrés Bori), que no correspon a cap concepte del nivell A.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001631",
+   "location": "p.2 camp 'Obra / Projecte:' (bloc DADES INICIALS)",
+   "quote": "Rubí. Carrer Miranda. 3001631",
+   "confidence": 0.85,
+   "note": "Duplicat del GTL ja llegit (4703-GTL-25 Rubí.pdf): no és font independent addicional, mateix valor."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Miranda",
+   "location": "p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+   "quote": "Rubí. Carrer Miranda.",
+   "confidence": 0.6,
+   "note": "Duplicat del GTL ja llegit; no dona número de portal ni confirmació de cantonada."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Rubí",
+   "location": "p.1/p.8 camp 'Situació:'; p.2 camp 'Obra / Projecte:'",
+   "quote": "Rubí. Carrer Miranda.",
+   "confidence": 0.75,
+   "note": "Duplicat del GTL ja llegit; forma curta, no és cap de les 3 fonts 'sempre'."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Miranda",
+    "nom_via_alternatives": [],
+    "portals": [],
+    "municipi": "Rubí",
+    "municipi_alternatives": []
+   },
+   "location": "p.1/p.2/p.8 camp 'Situació:' / 'Obra / Projecte:'",
+   "quote": "Rubí. Carrer Miranda.",
+   "confidence": 0.6,
+   "note": "Duplicat del GTL ja llegit; cap portal imprès en aquest document."
+  },
+  {
+   "concept_id": "lab_testing_company",
+   "value": "TPS, Prospecció del Subsòl, SL (B64803075)",
+   "location": "peu de totes les pàgines; p.8 bloc de signatures digitals (Director tècnic i Cap d'àrea d'assaig GTL)",
+   "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136",
+   "confidence": 0.95,
+   "note": "Emissor real (banda amb registre mercantil), confirmat ara amb signatures digitals nominals (Pere Cervós Flinch, Pere Farrés Bori) que no aporten un valor diferent per a aquest concepte."
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT1 P3",
+   "location": "p.2 camp 'Mostra:' (bloc DADES INICIALS); p.7 'Referència del client'",
+   "quote": "Mostra: SPT1 P3",
+   "confidence": 0.85,
+   "note": "Duplicat del GTL ja llegit; mateixa etiqueta."
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "0,6 - 1,2",
+   "location": "p.2 camp 'Cota d'extracció (m):'; p.7 resum",
+   "quote": "Cota d'extracció (m): 0,6 - 1,2",
+   "confidence": 0.9,
+   "note": "Duplicat del GTL ja llegit; mateix valor."
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "P3",
+   "location": "derivat de p.2 camp 'Mostra: SPT1 P3'",
+   "quote": "Mostra: SPT1 P3",
+   "confidence": 0.6,
+   "note": "Duplicat del GTL ja llegit; derivat del text de la mostra."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "14/11/2025",
+   "location": "p.2 camp 'Data extracció:' (bloc Dimensions de la mostra)",
+   "quote": "Data extracció: 14/11/2025",
+   "confidence": 0.45,
+   "note": "Duplicat del GTL ja llegit; candidat 2 (dia de la mostra/sondeig, no necessàriament el primer dia de camp DPSH)."
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 Desenvolupament Territorial, SL",
+   "location": "p.1/p.2/p.8 bloc 'DADES DEL SOL·LICITANT:' / 'DADES DEL CLIENT:'",
+   "quote": "DADES DEL SOL.LICITANT: Nom: G3 Desenvolupament Territorial, SL / NIF: B25364589",
+   "confidence": 0.95,
+   "note": "G3 mai és client (regla Pas 3): sol·licitant dels assaigs, no promotor/client de l'informe geotècnic. Descartat explícitament."
+  }
+ ],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P3",
+    "profunditat": "0,6 - 1,2",
+    "litologia_candidats": [
+     "Sorres llimoses amb graves (classificació SUCS: SM, ASTM D 2487/06)"
+    ],
+    "n30": null,
+    "location": "p.2 DADES INICIALS + DESCRIPCIÓ DEL MATERIAL; p.5 CLASSIFICACIÓ DEL MATERIAL; p.7 RESUM DELS RESULTATS",
+    "quote": "Mostra: SPT1 P3; Cota d'extracció (m): 0,6 - 1,2; Descripció del material: Sorres i graves; Descripció: Sorres llimoses amb graves; SM"
+   }
+  ],
+  "__nota": "Duplicat del bloc spt_ma_tests ja emès per 4703-GTL-25 Rubí.pdf (mateix informe, ara signat): no compta com a segona font independent. Sense registre de cops (n30) — prové del full de camp / annex de sondeig, no llegit en aquesta crida."
+ },
+ "not_present": [
+  "client_name (promotor)",
+  "architect_name",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció v1.4: text net (Acrobat PDFMaker des d'Excel / Distiller), text_ok a totes les 8 pàgines, halves_pages buit. Lectura directa dels page-N.txt (1-8). Document IDÈNTIC en contingut a '4703-GTL-25 Rubí.pdf' (ja llegit en aquest run): mateix número d'informe, mateixa mostra, mateixes dades de projecte; l'única diferència és el bloc de signatures digitals de la p.8 (Director tècnic Pere Cervós Flinch geòleg col. 3481; Cap d'àrea d'assaig GTL Pere Farrés Bori), sense valor per al nivell A. Tractat com a duplicat/no font independent (Pas 0). Cap clip ni render necessari."
+}

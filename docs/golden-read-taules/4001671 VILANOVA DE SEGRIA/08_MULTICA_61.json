@@ -1,0 +1,25 @@
+{
+ "source_path": "MULTICA_61.xls / MULTICA_61.pdf",
+ "document_type": "altre",
+ "what_it_is": "Full de càlcul de tensions admissibles i assentaments de l'Eva (eina pròpia): NO és font de lectura (Tier B)",
+ "issuer": "G3 (Eva)",
+ "date": "n/d",
+ "pages_or_sheets": "1 full imprès",
+ "context": {
+  "who_made_it": "Eva",
+  "for_whom": "ella mateixa (càlcul Qa/assentaments)",
+  "why": "derivar tensions admissibles: fora d'abast del skill",
+  "expected_fields": [],
+  "not_expected": [
+   "cap dada primària de camp"
+  ],
+  "relation_to_others": "consumeix la interpretació del tall i els Nb de l'Excel",
+  "authority_for": []
+ },
+ "tier_a": [],
+ "tables": {
+  "__nota": "NOMÉS corroboració feble (no font): CAPA 1 de 0 a 2,6 m amb N=10 i CAPA 2 de 2,6 a 3,78 m amb N=24, NF=100 (absent) - compatible amb la transició del tall a P-3 (≈2,4 m gràfic) i amb el rebuig -3,78"
+ },
+ "not_present": [],
+ "reading_notes": "identificat com a eina de càlcul (taules ALFA/C.SEG/CAPA amb #DIV/0! de plantilla); no se n'extreu cap fila"
+}

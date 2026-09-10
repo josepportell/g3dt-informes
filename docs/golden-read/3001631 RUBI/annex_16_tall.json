@@ -1,0 +1,29 @@
+{
+  "source_path": "PDF/ANNEXES/3001631_tall de correlació.pdf (duplicat net: tall.pdf a l'arrel, 'Microsoft: Print To PDF' 17/12/2025 09:12, text llegible)",
+  "document_type": "annex_tall",
+  "what_it_is": "Annex 'Tall de correlació' A–A' de l'Eva: planta reduïda amb la traça A–A' pels punts P-1, P-2, P-3, llegenda de materials (sòls superficials + Nivell 1), perfil amb cotes msnm 208–213 i corbes Nb de cada DPSH, línia vermella de cota de fonamentació recomanada, caixetí G3.",
+  "issuer": "G3 — FreeHand '3001631_tall de correlació.FH11' (author 'Loli') → Acrobat Distiller 15.0 (PScript5.dll) 17/12/2025 10:02; còpia 'tall.pdf' Print To PDF 17/12/2025 09:12 (mateix dibuix, mateix títol)",
+  "date": "Caixetí 'Data: Desembre 2025' (data de l'annex); PDF 2025-12-17",
+  "pages_or_sheets": "1 pàgina A4 apaïsada (842×595 pt, rot 270). Text brossa a PDF/ANNEXES; text net a tall.pdf",
+  "context": {
+    "who_made_it": "L'Eva (G3), a partir dels N20 de l'Excel DPSH (convertits a Nb) i de la cota ICGC del carrer.",
+    "for_whom": "Annex de l'informe 3001631.",
+    "why": "Mostrar la correlació entre els 3 penetròmetres, la potència dels sòls superficials, el nivell geotècnic i la cota de fonamentació recomanada.",
+    "expected_fields": ["num_soil_levels (llegenda)", "cota_referencia (escala msnm: cota de boca dels assaigs)", "expedient", "street_address/municipality/building_type (caixetí)", "num_dpsh_tests (P-1..P-3)", "cota de fonamentació recomanada (nivell B)"],
+    "not_expected": ["field_date", "client_name", "architect_name", "num_floors", "superficie_parcela", "lab", "referencia_catastral", "utm"],
+    "relation_to_others": "Mateix caixetí i mateixa planta que 'annex_15_planol_situacio' (no font independent per al títol). 'tall.pdf' a l'arrel és el MATEIX dibuix (duplicat, no font independent). La figura ANNEXES/Altres/F5 TALL.png és probablement el mateix perfil exportat per a l'informe. La cota exacta de boca ('Cota inici: +NNN.NN msnm') és a PDF/ANNEXES/3001631_DPSH.pdf (text) → aquell annex mana; aquí només es llegeix gràficament.",
+    "authority_for": ["num_soil_levels (llegenda del tall: autoritat quan no hi ha annex de sondeig)", "cota_referencia (gràfica, aproximada; l'annex DPSH mana)"]
+  },
+  "tier_a": [
+    {"concept_id": "expedient", "value": "3001631", "location": "caixetí 'Exp:'", "quote": "Exp: 3001631", "confidence": 0.9, "note": "Mateix caixetí que el plànol de situació (copiat)."},
+    {"concept_id": "street_address", "value": "Carrer de la Miranda nº 39 (parc. 6-105 B)", "location": "caixetí 'TÍTOL DEL PROJECTE'", "quote": "AL CARRERDE LA MIRANDA Nº 39,  PARC. 6-105 B, RUBÍ (BARCELONA)", "confidence": 0.85, "note": "Text confirmat literalment a tall.pdf (text net). Typo 'CARRERDE'. Duplicat del caixetí de l'annex 15."},
+    {"concept_id": "municipality", "value": "Rubí", "location": "caixetí títol", "quote": "RUBÍ (BARCELONA)", "confidence": 0.9, "note": "Duplicat del caixetí."},
+    {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí títol", "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.85, "note": "Duplicat del caixetí."},
+    {"concept_id": "num_soil_levels", "value": "1 (Nivell 1: graves i sorres carbonatades) + sòls superficials", "location": "LLEGENDA", "quote": "Sòls superficials | Nivell 1 : Graves i sorres. Carbonatat. | Cota de fonamentació recomanada", "confidence": 0.7, "note": "La llegenda només té UN nivell numerat ('Nivell 1') sota una capa prima de 'Sòls superficials' (~0,3-0,5 m al perfil). Sense annex de sondeig (no hi ha sondeig a rotació en aquest projecte: només DPSH + 1 SPT) → la llegenda del tall és la millor font. L'Eva pot comptar els sòls superficials com a nivell 0 o no: candidat '1' amb nota 'confirmar'."},
+    {"concept_id": "cota_referencia", "value": "≈ 212,5 msnm (boca dels assaigs, lectura gràfica)", "location": "perfil: línia de superfície respecte l'escala (msnm) 208–213", "quote": "(msnm) 213 / 212 / 211 / 210 / 209 / 208 ; P-1 P-2 P-3 a la superfície", "confidence": 0.4, "note": "Lectura GRÀFICA: la superfície negra és a mig camí entre 212 i 213 (~212,4-212,5). Coherent amb els rebuigs: P-1 R a 4,55 m → ~207,9; P-2 R a 3,58 → ~208,9; P-3 R a 3,13 → ~209,4, que encaixen amb les corbes dibuixades. La cota numèrica exacta és a PDF/ANNEXES/3001631_DPSH.pdf ('Cota inici: +NNN.NN msnm') → mana aquella. Cota de fonamentació recomanada (línia vermella): ≈ 212,0 msnm (≈ −0,5 m)."},
+    {"concept_id": "num_dpsh_tests", "value": "3", "location": "perfil i planta: P-1, P-2, P-3", "quote": "P-1 | P-2 | P-3 | Nb=R", "confidence": 0.85, "note": "Tots tres acaben en 'Nb=R' (rebuig). Valors Nb anotats (nivell B): P-1 Nb=40, 77, 45; P-2 Nb=48; P-3 Nb=47."},
+    {"concept_id": "field_date", "value": "Desembre 2025 (data de l'annex)", "location": "caixetí 'Data:'", "quote": "Data: Desembre 2025", "confidence": 0.1, "note": "NOT_field_date. Camp: 14/11/2025 (TPS)."}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "field_date", "utm_x_utm_y", "referencia_catastral", "lab", "cte", "cota numèrica exacta"],
+  "reading_notes": "PDF/ANNEXES versió: text brossa → render 100 dpi + clips a 200 dpi (perfil, llegenda). Duplicat net tall.pdf (arrel): get_text() dona el text complet del caixetí, la llegenda i les etiquetes Nb, usat per confirmar literals. Planta reduïda: traça A (SW, al carrer) → A' (NE) passant per P-1, P-2 i P-3 (P-3 lleugerament fora de la traça, a l'est). Escala gràfica '10 m'. Perfil: superfície pràcticament horitzontal entre 212 i 213 msnm; capa fosca de sòls superficials ~0,3-0,5 m; línia vermella de fonamentació recomanada a ~212,0."
+}

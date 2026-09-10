@@ -1,0 +1,23 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_fotografies.pdf",
+ "document_type": "annex_fotografies",
+ "what_it_is": "Annex 'Fotografies' de l'Eva, 2 pàgines A4 verticals amb 4 fotos (F-1…F-4) de la màquina DPSH (eruga groga ML76A) als punts P-1, P-2, P-3 i P-4, amb peu de foto i capçalera amb l'expedient.",
+ "issuer": "G3 (Eva) — FreeHand 3001621_fotografies.FH11 → Acrobat Distiller 15.0 (PScript5.dll)",
+ "date": "PDF creat 2025-11-03 17:36; fotos del camp (24/10/2025 segons la resta de documents; cap data a l'annex)",
+ "pages_or_sheets": "2 pàgines A4 vertical",
+ "context": {
+  "who_made_it": "l'Eva (G3), al despatx, amb les fotos de FOTOGRAFIES/ (maquina_dpsh*.jpg, P1-P4.jpg)",
+  "for_whom": "l'informe (annex fotogràfic)",
+  "why": "documentar l'emplaçament de la màquina a cada assaig DPSH",
+  "expected_fields": ["expedient (capçalera)", "num_dpsh_tests (una foto per punt)"],
+  "not_expected": ["field_date", "client_name", "street_address", "municipality", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "lab", "cte"],
+  "relation_to_others": "DUPLICAT exacte a PDF-V0/ANNEXES/ (mateix md5 73cea90d). Les 4 fotos són les de FOTOGRAFIES/ (P1.jpg…P4.jpg / maquina_dpsh*.jpg): no és font independent d'aquelles. Cap foto del sondeig (les del S-1 són a la p.2 de l'annex sondeig).",
+  "authority_for": ["expedient (capçalera, corroboració)", "num_dpsh_tests (corroboració: 4 fotos P-1…P-4)"]
+ },
+ "tier_a": [
+  {"concept_id": "expedient", "value": "3001621", "location": "capçalera de p.1 i p.2, casella dreta", "quote": "Fotografies - pàgina 1 | 3001621", "confidence": 0.9, "note": "Coincideix amb el nom de la carpeta."},
+  {"concept_id": "num_dpsh_tests", "value": "4", "location": "peus de foto p.1 i p.2", "quote": "Fotografia 1 -2:  Detall de l'emplaçament de la màquina realitzant l'assaig de penetració dinàmica DPSH, P-1 i P-2, respectivament. | Fotografia 3 -4:  Detall de l'emplaçament de la màquina realitzant l'assaig de penetració dinàmica DPSH, P-3 i P-4, respectivament.", "confidence": 0.8, "note": "Una foto per punt DPSH: P-1, P-2, P-3, P-4. Corroboració; l'Excel DPSH mana."}
+ ],
+ "not_present": ["client_name", "street_address", "municipality", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*"],
+ "reading_notes": "Text del PDF és brossa (FreeHand/Distiller): llegit visualment des del render a 100 dpi (2 pàgines). Contingut: logo G3; capçalera 'Fotografies - pàgina 1' / 'pàgina 2' + '3001621'; F-1: màquina DPSH sobre eruga al peu d'un mur de maó amb malla verda, solar desbrossat amb restes de poda (P-1); F-2: màquina DPSH amb pi al davant, casa blanca veïna i malla verda al fons (P-2); F-3: màquina DPSH entre matolls amb caseta/llenyera i tanca al fons (P-3); F-4: màquina DPSH (torre vertical) en vessant amb matolls, casa blanca amb tanca metàl·lica i una persona a la dreta (P-4). Sense etiquetes manuscrites ni text dins de les fotos. El 'Client' no apareix enlloc."
+}

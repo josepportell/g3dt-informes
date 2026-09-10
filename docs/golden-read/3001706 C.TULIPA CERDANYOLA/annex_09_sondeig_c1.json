@@ -1,0 +1,116 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_sondeig.pdf",
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex del sondeig S-1 (casa 1), 2 p. (columna + fotos), FreeHand, 5,4 MB. Capçalera: client, obra, dates, màquina, empresa, sondista, z, tècnic. 3 unitats litològiques, SPT-1 i SPT-2.",
+ "issuer": "Eva Vázquez Marcet (G3)",
+ "date": "2026-06-04 (PDF) / camp 07/05/2026",
+ "pages_or_sheets": 2,
+ "context": {
+  "who_made_it": "Eva (FreeHand)",
+  "for_whom": "l'informe (annex)",
+  "why": "columna litològica amb el criteri d'Eva (unitats) + SPT",
+  "expected_fields": [
+   "cota z",
+   "unitats litològiques",
+   "SPT",
+   "dates",
+   "màquina/empresa"
+  ],
+  "not_expected": [
+   "promotor (el 'Client' és el sol·licitant)",
+   "superfície"
+  ],
+  "relation_to_others": "versió interpretada del full manuscrit TPS del sondeig; conflicte de cota amb annex DPSH",
+  "authority_for": [
+   "num_soil_levels",
+   "cota_referencia",
+   "field_date (sondeig)"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "SR.ALEIX SUBIÀ FELIP",
+   "location": "p.1 'Client:'",
+   "quote": "SR.ALEIX SUBIÀ FELIP",
+   "confidence": 0.6,
+   "note": "typo 'SUBIÀ' (per SUBIRÀ). Coincideix amb el formulari d'acceptació."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "p.1 'Obra:'",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+   "confidence": 0.95,
+   "note": "redacció d'Eva; sense 'aïllat'"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tulipa nº3",
+   "location": "p.1 'Obra:'",
+   "quote": "al Carrer Tulipa nº3 de Cerdanyola del Vallès",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "p.1 'Obra:'",
+   "quote": "Cerdanyola del Vallès",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-05-07",
+   "location": "p.1 'Data d'inici' / 'Data de fi' + columna 'Data de perforació'",
+   "quote": "07/05/2026 | 07/05/2026 | 07/05/26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "concept_id": "cota_referencia",
+   "value": "+199.0 msnm (ICGC)",
+   "location": "p.1 'Cota: Z:'",
+   "quote": "+199.0 msnm (segons el plànol ICGC)",
+   "confidence": 0.8,
+   "note": "CONFLICTE amb l'annex DPSH casa 1 (198 msnm). Dues fonts d'Eva no coincideixen → candidats."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "3",
+   "location": "p.1 columna 'Unitat litològica'",
+   "quote": "NIVELL 1 (0,00-1,10) | NIVELL 2 (1,10-2,20) | NIVELL 3 (2,20-3,54)",
+   "confidence": 0.95,
+   "note": "4 descripcions de material (sòl vegetal+sorres llimoses; argiles; lutites alterades; lutites menys alterades) agrupades en 3 unitats"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT-1 (1,00-1,60; 6/9/9/9) i SPT-2 (3,00-3,54; 19/31/33/50R)",
+   "location": "p.1 columna mostres",
+   "quote": "SPT-1 -1.00 a -1.60 6 9 9 9 | SPT-2 -3.00 a -3.54 19 31 33 50R",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "lab_field_company",
+   "value": "TPS, S.L. (ML76A, Sr. Daniel Fernandez)",
+   "location": "p.1",
+   "quote": "TPS, S.L. | ML76A | Sr. Daniel Fernandez",
+   "confidence": 0.95,
+   "note": ""
+  }
+ ],
+ "not_present": [
+  "expedient (només al nom)",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "num_dpsh_tests",
+  "utm (caselles no presents)",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "FreeHand → visió a 100 dpi. Hi ha un sol sondeig per a les dues cases; l'annex de la casa 2 (llegit per subagent) reutilitza el mateix S-1?"
+}

@@ -1,0 +1,126 @@
+{
+ "source_path": "PDF/ANNEXES/4001670_plànol de situació.pdf",
+ "source_md5": "8b280d876defc8420b6aa789af286934",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació (mapa de localització + planta amb zona d'ampliació i punts DPSH) de l'expedient 4001670, Alcoletge",
+ "issuer": "G3",
+ "date": "Febrer 2026 (data del plànol; no és necessàriament la data de camp)",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (logo G3 al peu del plànol; caixetí propi de la plantilla G3)",
+  "for_whom": "l'expedient 4001670 (Alcoletge); plànol intern per acompanyar l'informe geotècnic i documentar la ubicació dels assaigs",
+  "why": "situar l'edifici/parcel·la dins el municipi i marcar la ubicació exacta dels 3 assaigs de penetració dinàmica (P-1, P-2, P-3) dins la zona d'ampliació",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests",
+   "street_address_struct"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date",
+   "cota_referencia",
+   "num_floors",
+   "superficie_parcela",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "versió PDF (Acrobat Distiller 15.0 / PScript5.dll) de l'original FreeHand 'ANNEXES/4001670_plànol de situació.FH11' (route=skip a l'inventari, no llegible); text brossa (text_ok=false a meta.json), lectura íntegrament visual. No hi ha còpia 'Print To PDF' de text net d'aquest document a la carpeta.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests",
+   "street_address_struct"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "4001670",
+   "location": "caixetí inferior dret, cel·la 'Exp:'",
+   "quote": "Exp: 4001670",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Girasols, 7 (Urbanització El Roser), Alcoletge",
+   "location": "caixetí inferior, títol del projecte",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+   "confidence": 0.85,
+   "note": "document etiquetat 'Plànol de situació'; una sola font en aquest document"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Alcoletge",
+   "location": "caixetí (títol) + rètol del mapa de localització (superior esquerra)",
+   "quote": "D'ALCOLETGE / Alcoletge (rètol al mapa)",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Ampliació d'un edifici (habitatge)",
+   "location": "caixetí (títol) + etiqueta a la zona ampliada de la planta",
+   "quote": "AMPLIACIÓ D'UN EDIFICI SITUAT AL... / \"Ampliació\" / \"ampliació habitatge\"",
+   "confidence": 0.75,
+   "note": "la redacció exacta de l'informe pot variar"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "planta, 3 marcadors P-1/P-2/P-3 amb llegenda 'Assaig de penetració dinàmica DPSH'",
+   "quote": "P-1, P-2, P-3 — llegenda: Assaig de penetració dinàmica DPSH",
+   "confidence": 0.6,
+   "note": "font corroborant (recompte visual de marcadors al plànol), no és la font d'autoritat primària (Excel DPSH); coincideix amb els 3 fulls P-1/P-3/P-2 de l'Excel DPSH del projecte"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Girasols",
+    "nom_via_alternatives": [],
+    "portals": [
+     "7"
+    ],
+    "municipi": "Alcoletge",
+    "municipi_alternatives": []
+   },
+   "location": "caixetí (títol del projecte)",
+   "quote": "CARRER GIRASOLS Nº7, URBANITZACIÓ EL ROSER, D'ALCOLETGE",
+   "confidence": 0.85,
+   "note": "concepte extra (Pas 3), no és cap dels 15 camps"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "field_date",
+  "cota_referencia",
+  "num_floors",
+  "superficie_parcela",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pàgina única (1191x842pt), sortida Distiller/PScript5.dll des de FreeHand: text OCR brossa (text_ok=false a meta.json) → lectura 100% visual de page-1.png (150dpi) i page-1-right.png (220dpi, meitat amb el detall de la planta i el caixetí) per confirmar adreça, municipi, tipus d'obra i recompte de punts DPSH. Resolució suficient; no ha calgut render_clip."
+}

@@ -1,0 +1,141 @@
+{
+ "source_path": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+ "source_md5": "296c5aa75d57fe64ec2f5cbfb96fe57f",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "planol",
+ "what_it_is": "Plànol de l'arquitecte 'PLANTA GENERAL - PARCEL·LA' (full 03, A3 1:100) amb els 3 punts de sondeig marcats en vermell sobre la planta de l'habitatge",
+ "issuer": "BUNYESC ARQUITECTURA EFICIENT, S.L.P (representada per Josep Bunyesc Palacín, Dr. Arquitecte)",
+ "date": "AGOST 2025 (data del plànol, no del camp)",
+ "pages_or_sheets": "1 pàgina (full 03 del joc de plànols de l'arquitecte)",
+ "context": {
+  "who_made_it": "El despatx d'arquitectura BUNYESC ARQUITECTURA EFICIENT, representat per Josep Bunyesc Palacín",
+  "for_whom": "Els promotors de l'obra, Sílvia Eroles Balagueró i Jaume Nadal Andreu, dins el 'Projecte Bàsic' de l'habitatge",
+  "why": "Full de planta general de la parcel·la del projecte bàsic de l'arquitecte, amb els 3 punts de sondeig (assaigs de penetració) localitzats sobre el dibuix per orientar el geotècnic",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "client_name (promotors)",
+   "architect_name",
+   "building_type",
+   "num_dpsh_tests (localització, no xifra oficial)"
+  ],
+  "not_expected": [
+   "expedient de G3",
+   "field_date de camp",
+   "cota_referencia",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "dades de laboratori",
+   "cte"
+  ],
+  "relation_to_others": "Duplicat exacte (mateix md5 296c5aa7...) de '25.0616/Punts de Sondeig_Silvia_Jaume.pdf', arrel del projecte en lloc de la subcarpeta 25.0616/ (parella anotada a _inventory.json.duplicates). Existeix també 'Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf' (md5 diferent) que sembla un redibuix del mateix plànol — no llegit en aquesta crida perquè --only limita a aquest fitxer.",
+  "authority_for": [
+   "client_name",
+   "architect_name",
+   "street_address",
+   "municipality",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "SÍLVIA EROLES BALAGUERÓ i JAUME NADAL ANDREU",
+   "location": "caixetí, bloc PROMOTORS:",
+   "quote": "PROMOTORS: SÍLVIA EROLES BALAGUERÓ / JAUME NADAL ANDREU",
+   "confidence": 0.9,
+   "note": "caixetí del plànol amb etiqueta 'Promotors' = font de màxima prioritat per client_name (Pas 3)"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Josep Bunyesc Palacín",
+   "location": "caixetí, bloc REDACTOR/S:",
+   "quote": "JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+   "confidence": 0.7,
+   "note": "persona designada al caixetí; existeix també el despatx com a forma alternativa (candidat separat) — Pas 3: quan coexisteixen persona i despatx, candidats, mai segur"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "BUNYESC ARQUITECTURA EFICIENT, S.L.P",
+   "location": "caixetí, bloc REDACTOR/S:",
+   "quote": "BUNYESC ARQUITECTURA EFICIENT, S.L.P representat per: JOSEP BUNYESC PALACÍN - Dr. Arquitecte",
+   "confidence": 0.55,
+   "note": "forma despatx, alternativa a la persona"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C. Clot de la Llacuna, 16",
+   "location": "caixetí, bloc EMPLAÇAMENT:",
+   "quote": "EMPLAÇAMENT: C. Clot de la Llacuna, 16",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Linyola",
+   "location": "caixetí, bloc EMPLAÇAMENT: (mateixa cel·la que l'adreça)",
+   "quote": "Linyola (25240)",
+   "confidence": 0.9,
+   "note": "coincideix amb el nom de la carpeta del projecte '4001607 LINYOLA'"
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, bloc TÍTOL DEL PROJECTE:",
+   "quote": "PROJECTE BÀSIC D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "1 (aparent, no confirmat)",
+   "location": "planta dibuixada (full únic 'PLANTA GENERAL')",
+   "quote": "PLANTA GENERAL - PARCEL·LA",
+   "confidence": 0.25,
+   "note": "aquest full només mostra una planta i no hi ha indicador exprés de plantes superiors/inferiors; és un sol full del joc de plànols — no es pot confirmar el nombre total de plantes només amb aquest document"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "3 (corroboració per localització, no xifra oficial)",
+   "location": "planta, marques vermelles '1r/2n/3r PUNT SONDEIG'",
+   "quote": "1r PUNT SONDEIG / 2n PUNT SONDEIG / 3r PUNT SONDEIG",
+   "confidence": 0.5,
+   "note": "l'arquitecte usa 'punt sondeig' de forma genèrica (no distingeix DPSH de sondeig a rotació); coincideix en nombre amb els 3 fulls P-1/P-2/P-3 de l'Excel DPSH del projecte, però aquest document no és la font d'autoritat per a la xifra — només localització"
+  },
+  {
+   "concept_id": "NOT_expedient",
+   "value": "13/52/04",
+   "location": "caixetí, bloc EXPEDIENT:",
+   "quote": "EXPEDIENT: 13/52/04",
+   "confidence": 0.0,
+   "note": "codi d'expedient intern del despatx d'arquitectura (Bunyesc), NO l'expedient de G3 (regla Pas 3: codis d'arquitecte s'exclouen)"
+  },
+  {
+   "concept_id": "NOT_field_date",
+   "value": "AGOST 2025",
+   "location": "caixetí, bloc DATA:",
+   "quote": "DATA: AGOST 2025",
+   "confidence": 0.0,
+   "note": "data d'emissió del plànol del projecte bàsic de l'arquitecte, no data de camp del geotècnic (regla Pas 3: mai la data del pressupost/acceptació/plànol com a field_date)"
+  }
+ ],
+ "not_present": [
+  "expedient",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "superficie_parcela",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "PDF vectorial d'AutoCAD amb text net (text_ok=true a la pre-extracció); llegit directament de page-1.txt + page-1.png sense necessitat de clip ni render addicional. Cap taula del Pas 3b alimentada per aquest document (només localització visual dels 3 punts de sondeig, sense fondàries ni altres dades per fila)."
+}

@@ -1,0 +1,34 @@
+{
+ "source": "lector",
+ "site_1": null,
+ "site_2": null,
+ "dpsh": "FOTOGRAFIES/P1.jpg",
+ "sondeig": null,
+ "materials": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.05.09_8fc7585f.jpg",
+ "_lector": {
+  "data": "2026-09-07 18:41",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 31.2,
+  "exclude_slug": "linyola",
+  "raons": {
+   "dpsh": "màquina DPSH sencera al solar (P1.jpg), és la foto F-1 de l'annex de l'Eva (primera de les dues subtitulades 'Vista general de la parcel·la, i vista de l'emplaçament de la maquinària... DPSH P-1 i P-2'); totes tres fotos de màquina (P1,P2,P3) són equivalents en netedat, així que es tria la primera de l'annex",
+   "materials": "tub i mostra embolicada, únic detall de materials recuperats de l'assaig SPT (F-4 de l'annex, aparellat amb P3)",
+   "site": "cap foto és una vista panoràmica del solar sense màquina: F-1 i F-2 (P1, P2) mostren totes dues la màquina DPSH en primer o segon terme, no són vistes 'netes' del solar"
+  },
+  "confianca": {
+   "dpsh": 0.85,
+   "sondeig": 1.0,
+   "materials": 0.9,
+   "site_1": 0.7,
+   "site_2": 0.7
+  },
+  "cap_font": [
+   "sondeig",
+   "site_1",
+   "site_2"
+  ],
+  "notes": "El projecte no té sondeig a rotació. Candidats 1 i 2 són fulls de camp escrits a mà (PENETROS Dinàmic) i l'etiqueta de la bossa de mostra: no van a l'informe. Els tres candidats de màquina (P1, P2, P3) corresponen als punts P-1, P-2 i P-3 respectivament; l'Eva en posa una a l'informe sense regla fixa, aquí es tria la primera de l'annex (F-1 = P1.jpg).",
+  "warnings": []
+ }
+}

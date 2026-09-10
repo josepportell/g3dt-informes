@@ -1,0 +1,197 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_plànol de situació.pdf",
+ "source_md5": "7d495516ac2896e3f236b08e7879a41d",
+ "skill_version": "1.3-preext",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Annex 'Plànol de situació' de l'informe de l'Eva (G3): mapa de situació (Castellar del Vallès), mapa topogràfic de zona i ortofoto de la parcel·la amb els 4 DPSH (P-1..P-4) i el sondeig S-1 posicionats, més el caixetí amb títol del projecte, data i expedient.",
+ "issuer": "G3 Desenvolupament Territorial (Eva) — FreeHand → Acrobat Distiller 15 (PScript5.dll), creat 2025-11-03 17:37",
+ "date": "Octubre 2025 (caixetí 'Data:'); PDF creationDate 2025-11-03",
+ "pages_or_sheets": "1 pàgina A3 apaïsada (1191x842 pt)",
+ "context": {
+  "who_made_it": "L'Eva (G3), com a annex de l'informe geotècnic 3001621, després del treball de camp (l'Eva dibuixa els annexos abans d'obrir el wizard).",
+  "for_whom": "Per al client de l'informe (lector de l'informe); no hi consta ni promotor ni arquitecte.",
+  "why": "Situar geogràficament la zona d'estudi i la posició dels assaigs (4 DPSH + 1 sondeig) sobre l'ortofoto de la parcel·la.",
+  "expected_fields": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests",
+   "nombre de sondeigs (S-1)",
+   "distàncies entre punts d'assaig"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date (només mes al caixetí)",
+   "cota_referencia",
+   "num_floors",
+   "superficie_parcela",
+   "referencia_catastral",
+   "num_soil_levels",
+   "lab_*",
+   "cte_*",
+   "utm_x/utm_y"
+  ],
+  "relation_to_others": "Versió PDF de ANNEXES/3001621_plànol de situació.FH11 (font FreeHand, exclosa). Còpia idèntica a PDF-V0/ANNEXES/ (mateix md5 7d495516, exclosa com a sortida). El títol del caixetí és la redacció de l'Eva per a la portada/informe: derivat de l'encàrrec (pressupost/comanda), no font independent per a adreça i tipus d'edifici. Els 4 punts DPSH s'han de creuar amb ANNEXES/3001621_DPSH.xls (que mana per als executats) i S-1 amb PDF/ANNEXES/3001621_sondeig.pdf i la comanda de laboratori.",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "caixetí inferior dret, casella 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.85,
+   "note": "Coincideix amb el nom de la carpeta i el nom del fitxer. Els caixetins dels annexos de l'Eva poden tenir typos (regla Tulipa): confirmar amb comanda N19 / annex DPSH."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells nº 18A-18B-20",
+   "location": "caixetí, línia 2 del títol del projecte; etiqueta de carrer 'Arbrells' a l'ortofoto (vora sud de la parcel·la)",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS  (BARCELONA).",
+   "confidence": 0.8,
+   "note": "És la redacció de l'Eva per a l'informe (candidat 1 segons regla d'annexos). Tres números de policia (18A-18B-20) = 3 parcel·les/habitatges (coherent amb 'PRESSUPOST 3 HAB'). El carrer 'Arbrells' també és visible com a etiqueta del carrer a l'ortofoto: corrobora el nom del carrer, no els números."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "caixetí (títol) + mapa de situació (etiqueta 'Castellar del Vallès') + mapa de zona ('el Balcó de Sant Llorenç', 'Turó de les Ieies')",
+   "quote": "CASTELLAR DEL VALLÈS  (BARCELONA)",
+   "confidence": 0.9,
+   "note": "Forma oficial llarga amb accent. Província Barcelona. El mapa de situació mostra la zona d'estudi al terme de Castellar del Vallès (entre Matadepera i Sant Llorenç Savall)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar aïllat",
+   "location": "caixetí, línia 1 del títol del projecte",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.75,
+   "note": "Redacció de l'Eva (singular 'una habitatge', sic). Contrast: el pressupost s'anomena '3 HAB' i l'adreça porta 3 números → l'encàrrec pot ser de 3 habitatges; el títol de l'annex pot ser per unitat. Candidat, no segur; una instrucció posterior del client (correu 'Re_ ESTUDI GEOTÈCNIC VERSIÓ…') mana sobre aquesta redacció si en discrepa."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "ortofoto: símbols blaus P-1, P-2, P-3, P-4 (llegenda 'Assaig de penetració dinàmica DPSH')",
+   "quote": "P-1 / P-2 / P-3 / P-4 — Llegenda: Assaig de penetració dinàmica DPSH",
+   "confidence": 0.8,
+   "note": "Punts dibuixats = executats segons l'Eva. L'Excel DPSH (fulls amb dades) mana; aquest annex corrobora. Distàncies acotades: P-1 a 4 m del límit SW i 9 m del carrer; P-1→P-2 10 m; P-2→S-1 10 m; S-1→P-4 9 m; P-4→P-3 9 m; P-3 a 4 m del límit NE; línia S-1/P-4 a 10 m i 22 m del carrer (aprox.)."
+  },
+  {
+   "concept_id": "num_sondeig_tests",
+   "value": "1",
+   "location": "ortofoto: símbol vermell 'S-1' (llegenda 'Sondeig a rotació amb bateria contínua') entre P-2 i P-4",
+   "quote": "S-1 — Llegenda: Sondeig a rotació amb bateria continua",
+   "confidence": 0.8,
+   "note": "No és un dels 22 camps plans; serveix per creuar `sondeig_tests` (annex sondeig, comanda) i `lab_location` (la mostra SPT surt de S-1 si l'annex de sondeig ho confirma)."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Octubre 2025",
+   "location": "caixetí, casella 'Data:'",
+   "quote": "Data: Octubre 2025",
+   "confidence": 0.3,
+   "note": "Només mes/any (data de l'annex/informe, no del camp). Coherent amb fotos 'Imagen de WhatsApp 2025-10-24' i 'WhatsApp Image 2025-10-20'. No és font per al dia: fitxa F38 / annex DPSH DATA: / albarà TPS manen."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "ortofoto, símbol blau P-1 (extrem SW)",
+    "quote": "P-1",
+    "extra": {
+     "posicio": "extrem SW de la parcel·la, a 4 m del límit SW i 9 m del carrer Arbrells",
+     "nota": "només identitat del punt; valors a l'Excel/annex DPSH"
+    }
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "ortofoto, símbol blau P-2",
+    "quote": "P-2",
+    "extra": {
+     "posicio": "a 10 m de P-1 cap al NE",
+     "nota": "només identitat del punt"
+    }
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "ortofoto, símbol blau P-3 (extrem NE)",
+    "quote": "P-3",
+    "extra": {
+     "posicio": "extrem NE, a 4 m del límit NE",
+     "nota": "només identitat del punt"
+    }
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": null,
+    "rebuig": null,
+    "nivell_freatic": null,
+    "location": "ortofoto, símbol blau P-4",
+    "quote": "P-4",
+    "extra": {
+     "posicio": "entre S-1 (9 m) i P-3 (9 m)",
+     "nota": "només identitat del punt"
+    }
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota": null,
+    "profunditat_assolida": null,
+    "spt_ma": null,
+    "nivell_freatic": null,
+    "location": "ortofoto, símbol vermell S-1 (centre de la parcel·la)",
+    "quote": "S-1",
+    "extra": {
+     "posicio": "entre P-2 (10 m) i P-4 (9 m), a uns 10 m del carrer",
+     "nota": "només identitat del sondeig; cota/profunditat a l'annex de sondeig"
+    }
+   }
+  ],
+  "spt_ma_tests": [],
+  "soil_levels": [],
+  "__nota": "Aquest annex només dona la IDENTITAT i la posició relativa dels punts (4 DPSH + 1 sondeig); cap valor de cota, fondària, rebuig ni NF."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "architect_company",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Pre-extracció: meta.text_ok[1]=false (Distiller/PScript5, fonts sense ToUnicode → page-1.txt és brossa, no s'ha usat). Lectura visual de page-1.png (150 dpi, sencera, suficient) + clip del caixetí a 300 dpi (render_clip.py --clip 0.10,0.90,1.0,0.99) per confirmar el text literal del títol, 'Data: Octubre 2025' i 'Exp: 3001621'. Les meitats (left/right) no han calgut. Cap codi executat sobre el PDF més enllà de render_clip. A l'ortofoto hi ha un rètol cadastral/parcel·lari '32980' (aprox.) a la finca veïna NW — no és de la parcel·la d'estudi i no s'ha emès. Inventari: sense duplicats declarats; la còpia a PDF-V0/ té el mateix md5 (exclosa per regla)."
+}

@@ -1,0 +1,24 @@
+{
+  "source_path": "Re_ ESTUDI GEOTÈCNIC VERSIÓ CASTELLAR DEL VALLES.msg",
+  "document_type": "correu",
+  "what_it_is": "Resposta del client (Roc Clusa, 18/11/2025) amb la correcció del TÍTOL de l'estudi i la petició d'adjuntar la prova de laboratori",
+  "issuer": "Roc Clusa <rocflats@hotmail.com> → Dolors Maqueda <dolors@g3dt.com>",
+  "date": "2025-11-18 18:49",
+  "pages_or_sheets": "cos (cadena RE:; només el text sobre el primer 'From:' és nou) + 3 imatges de signatura",
+  "context": {
+    "who_made_it": "Roc Clusa, contacte del client (mateix email rocflats@hotmail.com que consta a l'acceptació)",
+    "for_whom": "G3 (Dolors)",
+    "why": "Retorn del client sobre la versió preliminar: reclama l'assaig de laboratori (el GTL s'expedeix el 19/11, l'endemà) i dicta el títol correcte de l'estudi",
+    "expected_fields": ["building_type i street_address (títol dictat pel client)", "municipality"],
+    "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "utm", "lab (només l'esmenta)", "superficie_parcela"],
+    "relation_to_others": "Resol el conflicte de redacció del títol: els annexos de l'Eva (03/11) deien 'UNA HABITATGE UNIFAMILIAR AÏLLAT' (singular); el client dicta 'GRUP D'HABITATGES UNIFAMILIARS', coherent amb el '3 HAB UNIF' del pressupost/comanda. És el missatge MÉS RECENT sobre la redacció → mana per a building_type. Identifica el cognom del contacte: Roc Clusa.",
+    "authority_for": ["building_type (redacció final dictada pel client)", "street_address (forma '18A, 18B i 20')"]
+  },
+  "tier_a": [
+    {"concept_id": "building_type", "value": "grup d'habitatges unifamiliars", "location": "cos nou (llista de la correcció del títol)", "quote": "El títol hauria de ser: \"Estudi geològic / geotècnic per la CONSTRUCCIÓ D'UN GRUP D'HABITATGES UNIFAMILIARS AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS\"", "confidence": 0.8, "note": "Dictat pel client el 18/11: posterior als annexos (03/11) → mana sobre la redacció singular dels annexos."},
+    {"concept_id": "street_address", "value": "carrer Arbrells 18A, 18B i 20", "location": "cos nou (títol dictat)", "quote": "AL CARRER ARBRELLS 18A, 18B i 20 a CASTELLAR DEL VALLÈS", "confidence": 0.75, "note": "Coincideix amb el MODF (18A-18B-20)."},
+    {"concept_id": "municipality", "value": "Castellar del Vallès", "location": "cos nou (títol dictat)", "quote": "a CASTELLAR DEL VALLÈS", "confidence": 0.7, "note": ""}
+  ],
+  "not_present": ["expedient", "client_name (Roc Clusa és el contacte, no necessàriament el promotor — l'acceptació diu WOOD COMFORT)", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte"],
+  "reading_notes": "extract_msg; aplicada la regla RE: (només el text nou per sobre del primer 'From:'). El tram citat (enviament d'una versió prèvia de l'estudi el 03/11) NO s'ha usat com a font (mode primera obertura). Adjunts: 3 imatges de signatura (≤25 KB), ignorades."
+}

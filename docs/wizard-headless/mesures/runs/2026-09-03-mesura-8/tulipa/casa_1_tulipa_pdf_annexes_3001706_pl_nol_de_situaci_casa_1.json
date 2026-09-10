@@ -1,0 +1,132 @@
+{
+ "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_plànol de situació_CASA 1.pdf",
+ "source_md5": "5cf3676b9639506f7b727e7a72a23978",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació de CASA 1: mapa de context regional + ortofoto + planta de conjunt de la parcel·la amb els perímetres de CASA 1 (vermell) i CASA 2 (groc) i els punts d'assaig",
+ "issuer": "G3 (annex propi, plantilla FreeHand, sense signatura externa)",
+ "date": "Maig 2026",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "G3 (Eva), plantilla pròpia de plànol de situació dibuixada en FreeHand (mateixa família que el tall i el sondeig)",
+  "for_whom": "El propi informe de CASA 1, com a figura 'Plànol de situació'",
+  "why": "Situar geogràficament l'obra (mapa regional + ortofoto) i mostrar la ubicació dels punts d'assaig DPSH i sondeig dins la parcel·la de CASA 1, diferenciant-la de la parcel·la de CASA 2",
+  "expected_fields": [
+   "municipality",
+   "street_address",
+   "building_type",
+   "expedient",
+   "num_dpsh_tests (recompte visual)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date (dia exacte)",
+   "superficie_parcela (numèric)",
+   "num_floors",
+   "utm_x_utm_y",
+   "cota_referencia",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "cte_edificacio",
+   "cte_sol"
+  ],
+  "relation_to_others": "Bessó de 'CASA 2_ CARRER TOSCA/PDF/3001706_plànol de situació_CASA 2.pdf': mateixa plantilla i mateix mapa de conjunt, però amb la parcel·la de CASA 2 ressaltada en groc en comptes de vermell i l'expedient amb sufix _CASA 2. No és un duplicat (expedient i parcel·la ressaltada difereixen).",
+  "authority_for": [
+   "expedient",
+   "street_address",
+   "municipality",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706_CASA 1",
+   "location": "caixetí, cel·la Exp",
+   "quote": "Exp: 3001706_CASA 1",
+   "confidence": 0.85,
+   "note": "Expedient base 3001706 amb sufix _CASA 1 (aquest document és el de CASA 1); el bessó de CASA 2 porta 'Exp: 3001706_CASA 2'."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Tulipà, 3",
+   "location": "peu de plànol, bloc TÍTOL DEL PROJECTE",
+   "quote": "habitatge unifamiliar al Carrer Tulipà nº3 de Cerdanyola del Vallès",
+   "confidence": 0.75,
+   "note": "El mapa etiqueta el mateix carrer com 'Carrer de la Tulipa' (variant ortogràfica: sense accent i sense terminació -à); veure extra_concepts street_address_struct."
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Tulipà",
+    "nom_via_alternatives": [
+     "Tulipa"
+    ],
+    "portals": [
+     "3"
+    ],
+    "municipi": "Cerdanyola del Vallès",
+    "municipi_alternatives": []
+   },
+   "location": "peu de plànol (títol) + mapa principal (etiqueta de carrer)",
+   "quote": "Carrer Tulipà nº3 / etiqueta al mapa: 'Carrer de la Tulipa'",
+   "confidence": 0.75,
+   "note": "El portal '3' només surt al text del títol, no al mapa."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Cerdanyola del Vallès",
+   "location": "peu de plànol (TÍTOL) + mapa de context regional",
+   "quote": "de Cerdanyola del Vallès",
+   "confidence": 0.85,
+   "note": "Confirmat també pel mapa de context (etiqueta 'Cerdanyola del Vallès' i localització respecte Sant Cugat del Vallès / Badia del Vallès)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar",
+   "location": "peu de plànol, bloc TÍTOL DEL PROJECTE",
+   "quote": "Estudi Geològic / Geotècnic per a la construcció d'un habitatge unifamiliar al Carrer Tulipà nº3 de Cerdanyola del Vallès",
+   "confidence": 0.7,
+   "note": "Redacció pròpia d'aquest annex per a CASA 1."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 2,
+   "location": "plànol principal, dins el perímetre vermell de CASA 1",
+   "quote": "punts P-1.1 i P-1.2 (creu blava, llegenda 'Assaig de penetració dinàmica DPSH') dins el perímetre de CASA 1",
+   "confidence": 0.5,
+   "note": "Recompte visual de punts dibuixats; aquest tipus de document no és a la llista de prioritat del Pas 3 (Excel DPSH executat mana). El mateix perímetre conté també el punt S-1 (sondeig a rotació), sense concept_id escalar propi — vegeu reading_notes."
+  },
+  {
+   "concept_id": "field_date",
+   "value": "Maig 2026",
+   "location": "caixetí, cel·la Data",
+   "quote": "Data: Maig 2026",
+   "confidence": 0.25,
+   "note": "Data d'elaboració del plànol (mes, sense dia concret), no necessàriament el dia de camp; útil només per acotar el mes. No és a la llista de prioritat del Pas 3 per a aquest tipus de document."
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text del PDF és brossa (FreeHand -> Acrobat Distiller, halves_pages=[1], text_ok=false): llegit visualment amb page-1.png (150 dpi) i les meitats left/right (220 dpi) per confirmar rètols petits (carrer, expedient, data). El punt S-1 (sondeig a rotació) apareix dins el perímetre de CASA 1, entre P-1.2 i el límit sud de la parcel·la; no hi ha concept_id escalar per al nombre de sondeigs al nivell A, però és evidència estructural que S-1 pertany a CASA 1 (útil si CASA 2 no té sondeig propi). Cap taula de coordenades ni dades de laboratori en aquest document."
+}

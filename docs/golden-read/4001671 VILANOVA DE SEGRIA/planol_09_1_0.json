@@ -1,0 +1,28 @@
+{
+ "source_path": "26.0050/1.0.pdf",
+ "document_type": "planol",
+ "what_it_is": "Plànol d'EMPLAÇAMENT (full 1.0, escala 1/200, 24.01.2026) de l'AVANTPROJECTE d'un habitatge unifamiliar aïllat de ROCAR arquitectura i enginyeria: parcel·la amb cotes de contorn 21,62 / 18,80 / 22,86 / 17,85 m, casa d'una planta amb piscina.",
+ "issuer": "ROCAR arquitectura i enginyeria — jordi carner, arquitecte tècnic / enginyer d'edificació (AutoCAD 2025, imprès 27/01/2026)",
+ "date": "2026-01-24 (caixetí 'Data'); PDF creationDate 27/01/2026 11:00 (imprès el dia de l'encàrrec)",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "el despatx de l'arquitecte (ROCAR), full 1.0 de l'avantprojecte (codi intern E2557)",
+  "for_whom": "per al promotor i per a G3 (enviat com a adjunt del correu d'encàrrec el 27/01/2026)",
+  "why": "situar l'obra: és el plànol que G3 fa servir per localitzar la parcel·la i planificar els punts d'assaig",
+  "expected_fields": ["client_name (caixetí Promotor — autoritat A)", "architect_name (caixetí — autoritat A)", "street_address", "municipality", "building_type", "superficie_parcela (cotes de contorn)"],
+  "not_expected": ["field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "lab", "utm", "referencia_catastral"],
+  "relation_to_others": "adjunt del correu PRESSUPOST LLEIDA.msg (md5 idèntic) → el fitxer solt i l'adjunt són UNA sola font. El bloc ARQUITECTE del correu transcriu aquest caixetí. És AVANTPROJECTE (no projecte bàsic): sense taula de planejament ni superfícies.",
+  "authority_for": ["client_name (Promotor)", "architect_name", "building_type", "street_address", "municipality", "num_floors (visual, feble)"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "Grupo CUENCA GUERRERO", "location": "caixetí, casella Promotor (y=777-788 x=464)", "quote": "Promotor ⏎ ... ⏎ Grupo CUENCA GUERRERO", "confidence": 0.9, "note": "AUTORITAT A (etiqueta 'Promotor' al caixetí del plànol). Coincideix amb el formulari p.5 signat (Grupo Cuenca Guerrero SL, B26604942) → client_name queda doblement confirmat."},
+  {"concept_id": "architect_name", "value": "Jordi Carner (arquitecte tècnic / enginyer d'edificació, ROCAR arquitectura i enginyeria)", "location": "caixetí, banda dreta (y=768 x=1028)", "quote": "jordi carner ⏎ arquitecte tècnic ⏎ rocar ... arquitectura  i  enginyeria ⏎ www.rocarassociats.com ⏎ enginyer d'edificació", "confidence": 0.85, "note": "autoritat A (caixetí del plànol). Titulació: arquitecte tècnic / enginyer d'edificació (no arquitecte superior). Confirma el correu d'encàrrec — però correu i plànol NO són independents (el correu transcriu el plànol); tot i així el caixetí és font primària."},
+  {"concept_id": "street_address", "value": "C. Santa Gemma, 4, Urb. La Serra", "location": "caixetí, casella Emplaçament", "quote": "Emplaçament ⏎ C. Santa Gemma, 4 Urb. La Serra ⏎ Vilanova del Segrià", "confidence": 0.9, "note": "coincideix amb pressupost i comanda"},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "caixetí, casella Emplaçament", "quote": "Vilanova del Segrià", "confidence": 0.85, "note": "grafia ROCAR 'del Segrià'; forma oficial 'Vilanova de Segrià' (comanda i Cadastre usen 'de')"},
+  {"concept_id": "building_type", "value": "habitatge unifamiliar aïllat", "location": "caixetí, títol", "quote": "AVANTPROJECTE ⏎ D'UN HABITATGE UNIFAMILIAR AÏLLAT", "confidence": 0.9, "note": "autoritat A; amb piscina al plànol (rectangle blau); fase: avantprojecte"},
+  {"concept_id": "superficie_parcela", "value": "no consta com a xifra; contorn acotat 21,62 / 18,80 / 22,86 / 17,85 m (≈ 405-410 m², CÀLCUL NOSTRE aproximat, no llegit)", "location": "cotes de contorn de la parcel·la al dibuix", "quote": "21.62 | 18.80 | 22.86 | 17.85", "confidence": 0.3, "note": "cap taula de planejament (és avantprojecte). L'àrea aproximada surt de multiplicar mitjanes de costats: només orientativa, MAI valor d'informe. Front de carrer = costat 17,85 (oest, amb el vial)."},
+  {"concept_id": "num_floors", "value": "PB (visual: volum d'una planta)", "location": "dibuix (planta de coberta ombrejada) + correu 'pb 100m2'", "quote": "[dibuix: casa d'una planta amb piscina]", "confidence": 0.4, "note": "el full 1.0 no escriu el nombre de plantes; la lectura visual + el correu ('pb 100m2') apunten a PB"}
+ ],
+ "not_present": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x_utm_y", "referencia_catastral", "lab", "cte", "superficie_parcela (xifra)"],
+ "reading_notes": "Text vectorial net (AutoCAD pdfplot): caixetí llegit del text; dibuix verificat renderitzant a 100 dpi + clip 150 dpi. Parcel·la trapezoïdal entre dos vials de la urbanització (el carrer al costat oest de 17,85 m); casa amb paviment/pèrgola ratllats, piscina (blau) a l'est, petita construcció auxiliar a la cantonada nord-est. Cotes parcials costat carrer: 0,55 / 2,80 / 5,20 / 1,60 / 7,70 (= 17,85). Codi de full E2557 (intern ROCAR, NO expedient G3). Nota de copyright: 'qui n'és l'autor ROCAR arquitectura i enginyeria'."
+}

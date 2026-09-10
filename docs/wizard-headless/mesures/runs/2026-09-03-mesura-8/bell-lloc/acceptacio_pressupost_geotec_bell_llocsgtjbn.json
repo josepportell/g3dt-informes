@@ -1,0 +1,147 @@
+{
+ "source_path": "ACCEPTACIO/PRESSUPOST GEOTEC.BELL-LLOCsgtJBN.pdf",
+ "source_md5": "01c37195fedf9eb468ac6da90ec1eda0",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic de G3 (plantilla PRESSUPOST GEOTEC), còpia ACCEPTADA amb signatura digital de l'arquitecte, creat 2025-09-03 i signat 2025-09-30.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2025-09-03 (pressupost); 2025-09-30 16:40:38 (signatura)",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (emissor del pressupost geotècnic)",
+  "for_whom": "Arquitectura Bosch Novell — bloc CLIENT: del caixetí p.1, el sol·licitant del pressupost",
+  "why": "Formalitzar l'encàrrec de l'estudi geotècnic (2 DPSH + 1 sondeig a rotació) per a l'obra del c/Mestre Ramon Ortiz 15, Bell-lloc, i fer-lo acceptar amb firma digital abans d'iniciar els treballs de camp",
+  "expected_fields": [
+   "street_address",
+   "municipality",
+   "architect_company",
+   "cte_edificacio",
+   "cte_sol",
+   "num_dpsh_tests (previst, no executat)"
+  ],
+  "not_expected": [
+   "field_date",
+   "num_soil_levels",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cota_referencia",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "Còpia ACCEPTADA/signada (carpeta ACCEPTACIO, sufix 'sgtJBN' = signat Jordi Bosch Novell) del mateix pressupost sense signar a 25.0647/PRESSUPOST GEOTEC.BELL-LLOC.pdf (md5 diferent — mateix contingut + firma digital afegida el 2025-09-30). Aquesta còpia és l'autoritat per a l'acceptació; el contingut d'identitat (OBRA/CLIENT/CTE) és el mateix a totes dues.",
+  "authority_for": [
+   "street_address",
+   "municipality",
+   "architect_name",
+   "architect_company",
+   "cte_edificacio",
+   "cte_sol"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "C/Mestre Ramon Ortiz 15",
+   "location": "p.1 bloc OBRA:",
+   "quote": "C/MESTRE RAMON ORTIZ 15",
+   "confidence": 0.75,
+   "note": "bloc OBRA del caixetí (adreça de l'obra); única font d'aquest document"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "BELL-LLOC",
+   "location": "p.1 bloc OBRA:",
+   "quote": "BELL-LLOC",
+   "confidence": 0.7,
+   "note": "forma curta G3; forma oficial llarga probable 'Bell-lloc d'Urgell' (a confirmar amb Cadastre/GTL/plànol)"
+  },
+  {
+   "concept_id": "street_address_struct",
+   "value": {
+    "tipus_via": "carrer",
+    "nom_via": "Mestre Ramon Ortiz",
+    "nom_via_alternatives": [],
+    "portals": [
+     "15"
+    ],
+    "municipi": "Bell-lloc d'Urgell",
+    "municipi_alternatives": [
+     "BELL-LLOC"
+    ]
+   },
+   "location": "p.1 bloc OBRA:",
+   "quote": "C/MESTRE RAMON ORTIZ 15 BELL-LLOC",
+   "confidence": 0.7,
+   "note": "municipi oficial inferit de la forma curta G3; a confirmar amb altres documents"
+  },
+  {
+   "concept_id": "architect_company",
+   "value": "Arquitectura Bosch Novell",
+   "location": "p.1 bloc CLIENT:",
+   "quote": "ARQUITECTURA BOSCH NOVELL",
+   "confidence": 0.6,
+   "note": "bloc CLIENT: del pressupost = sol·licitant (despatx), no és client_name de l'informe"
+  },
+  {
+   "concept_id": "architect_name",
+   "value": "Jordi Bosch Novell",
+   "location": "p.5 signatura digital de l'acceptació",
+   "quote": "Firmado digitalmente por JORDI BOSCH NOVELL / num:37655-8",
+   "confidence": 0.8,
+   "note": "col·legiat 37655-8; signa a la casella etiquetada 'El client' de l'acceptació, però el caixetí p.1 l'identifica com a sol·licitant/despatx (ARQUITECTURA BOSCH NOVELL) — persona, tractar com arquitecte, no com a client"
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C1",
+   "location": "p.2",
+   "quote": "Tipus d'edifici: C1",
+   "confidence": 0.8,
+   "note": "única font d'aquest document"
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2",
+   "quote": "Tipus de Terreny : T1",
+   "confidence": 0.8,
+   "note": "única font d'aquest document"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "p.2 i p.4 taula VALORACIÓ",
+   "quote": "2 assaigs de penetració dinàmica DPSH / UNITATS D'ASSAIG DE PENETRACIO DINAMICA DPSH ... 2,00",
+   "confidence": 0.4,
+   "note": "quantitat PREVISTA/contractada, no executada; l'Excel DPSH (ANNEXES/4001612_DPSH.xls) mana per al recompte real"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": null,
+   "location": "p.1 bloc CLIENT: i p.5 formulari + signatura",
+   "quote": "CLIENT: ARQUITECTURA BOSCH NOVELL (p.1); 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME: NOM I COGNOMS:' en blanc (p.5); signatura 'El client' = JORDI BOSCH NOVELL (p.5)",
+   "confidence": 0.0,
+   "note": "descartat com a client_name: el bloc CLIENT: del pressupost és el sol·licitant/arquitecte, no el propietari; el formulari d'identitat per a factura/informe (NOM I COGNOMS, ADREÇA, CP I POBLACIÓ, NIF, TELF.) està completament en blanc; qui signa com 'El client' és de fet l'arquitecte"
+  }
+ ],
+ "not_present": [
+  "expedient (només hi consta el codi comercial 25·0647, no és l'expedient de carpeta)",
+  "client_name (formulari p.5 en blanc)",
+  "field_date (només data de pressupost 03/09/25 i de signatura 30/09/25, no de camp)",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x_utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location"
+ ],
+ "reading_notes": "Producer 'Acrobat Distiller 15.0 (Windows)' marcat suspecte per al text (text_suspect_reason); verificat visualment p.1 (el text pla barrejava els blocs CLIENT: i OBRA: en un sol flux — resolt renderitzant page-1.png) i p.5 (el formulari 'DADES QUE HAN DE CONSTAR EN LA FACTURA I EN L'INFORME' surt buit també a la imatge, no és error d'extracció). Pàgines 2, 3, 4, 6 i 7 (pla de treball, contingut de l'informe, taula de valoració, condicions específiques) llegides només del .txt, sense necessitat d'imatge."
+}

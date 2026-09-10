@@ -1,0 +1,220 @@
+{
+  "source_path": "PDF/ANNEXES/3001621_sondeig.pdf",
+  "source_md5": "2295eafdfbaf24a22d916a124ea308d0",
+  "skill_version": "1.3",
+  "schema_version": 1,
+  "document_type": "annex_sondeig",
+  "what_it_is": "Annex de camp del sondeig a rotació amb bateria contínua S-1 (plantilla G3), amb columna litològica, mostra SPT-1 i 2 fotografies de camp; 2 pàgines.",
+  "issuer": "G3 (Eva Vázquez Marcet, geòloga col. 4302) omple la plantilla; treball de camp executat per TPS (sondista Sr. Daniel Fernández)",
+  "date": "24/10/25 (Data d'inici = Data de fi)",
+  "pages_or_sheets": "2 pàgines: p.1 capçalera+taula sondeig S-1 fins -1,20 m; p.2 fotografies 1-2 (mateixa capçalera repetida)",
+  "context": {
+    "who_made_it": "G3 (Eva Vázquez Marcet) omple la plantilla 'Sondeig a rotació amb bateria contínua' a partir del treball de camp de TPS (empresa sondista, Sr. Daniel Fernández) al sondeig S-1.",
+    "for_whom": "Ús intern de G3 per redactar l'informe geotècnic (font de nivells, litologia i mostra SPT). El 'Client' anotat és el sol·licitant/promotor de l'obra, no un destinatari extern d'aquest full.",
+    "why": "Registrar visualment, tram a tram, els materials trobats en el sondeig (litologia, fondàries de transició, columna litològica, nivell freàtic) i les mostres/assaigs in-situ (SPT) per fonamentar els nivells geotècnics de l'informe.",
+    "expected_fields": [
+      "cota_referencia (Cota Z)",
+      "utm_x",
+      "utm_y",
+      "num_soil_levels (Unitat litològica)",
+      "lab_sample_id / lab_depth / lab_location (bloc Mostres i assaigs in-situ)",
+      "field_date (Data d'inici/fi del sondeig, candidat 2)",
+      "street_address / municipality / building_type (bloc Obra)",
+      "client_name (candidat, camp CLIENT = sol·licitant)"
+    ],
+    "not_expected": [
+      "expedient (no hi ha camp numèric d'expedient a la plantilla)",
+      "architect_name",
+      "num_floors",
+      "superficie_parcela",
+      "referencia_catastral",
+      "cte_edificacio",
+      "cte_sol",
+      "num_dpsh_tests"
+    ],
+    "relation_to_others": "Mateix md5 (2295eafdfbaf24a22d916a124ea308d0) que PDF-V0/ANNEXES/3001621_sondeig.pdf (carpeta exclosa per l'inventari, route=skip); origen FreeHand ANNEXES/3001621_sondeig.FH11 (route=skip, no llegible: text brossa). Aquest PDF/ANNEXES/3001621_sondeig.pdf és la còpia única i vàlida per a la lectura d'aquest sondeig (route=claude a l'inventari).",
+    "authority_for": [
+      "cota_referencia",
+      "utm_x",
+      "utm_y",
+      "num_soil_levels",
+      "lab_sample_id",
+      "lab_depth",
+      "lab_location",
+      "lab_testing_company",
+      "street_address",
+      "municipality",
+      "building_type",
+      "field_date"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "cota_referencia",
+      "value": "570.90 msnm",
+      "location": "p.1 capçalera, camp 'Cota (Z):'",
+      "quote": "Cota (Z): 570.90 msnm (segons el plànol ICGC)",
+      "confidence": 0.9,
+      "note": "criteri de l'Eva (z: de l'annex de sondeig), autoritat A per a cota_referencia (regla Pas 3)"
+    },
+    {
+      "concept_id": "utm_x",
+      "value": "423182.0",
+      "location": "p.1 capçalera, camp 'UTM:' (E(x))",
+      "quote": "423182.0 E(x)",
+      "confidence": 0.75,
+      "note": "prioritat inferior a COORDENADES.txt si existeix (no llegit en aquesta crida --only)"
+    },
+    {
+      "concept_id": "utm_y",
+      "value": "4609623.0",
+      "location": "p.1 capçalera, camp 'UTM:' (N(y))",
+      "quote": "4609623.0 N(y)",
+      "confidence": 0.75,
+      "note": "prioritat inferior a COORDENADES.txt si existeix (no llegit en aquesta crida --only)"
+    },
+    {
+      "concept_id": "num_soil_levels",
+      "value": "1",
+      "location": "p.1 columna 'Unitat litològica'",
+      "quote": "NIVELL 1",
+      "confidence": 0.75,
+      "note": "sondeig arriba a rebuig a -1,20 m; només 1 unitat litològica etiquetada (Substrat rocós, 0,50-1,20). El tram superior 'Terreny Vegetal' (0,00-0,50) NO porta etiqueta de nivell (criteri Eva: sòl vegetal exclòs del recompte). Confirmar amb tall.pdf per al nombre total de nivells del projecte (regla: el TALL mana pel nombre)."
+    },
+    {
+      "concept_id": "lab_sample_id",
+      "value": "SPT-1",
+      "location": "p.1 bloc 'Mostres i assaigs in-situ', columna 'Tipus de mostra'",
+      "quote": "SPT-1",
+      "confidence": 0.9,
+      "note": "etiqueta de l'annex de l'Eva; mana sobre la de la comanda ('MA (S1)') per a l'etiqueta de l'informe (regla Pas 3 lab_sample_id)"
+    },
+    {
+      "concept_id": "lab_depth",
+      "value": "-1.00 a -1.20",
+      "location": "p.1 bloc 'Mostres i assaigs in-situ', columna 'Prof. de extracció (m)'",
+      "quote": "-1,00 a -1,20",
+      "confidence": 0.85,
+      "note": "coincideix amb comanda laboratori (INICIAL 1.0 / FINAL 1.2, Hoja1!J35/L35); annex sondeig té prioritat sobre comanda per a lab_depth"
+    },
+    {
+      "concept_id": "lab_location",
+      "value": "S-1",
+      "location": "p.1 capçalera, camp 'Sondeig nº:'",
+      "quote": "S-1",
+      "confidence": 0.85,
+      "note": "coincideix amb el parèntesi de la comanda 'MA (S1)'"
+    },
+    {
+      "concept_id": "lab_testing_company",
+      "value": "TPS",
+      "location": "p.1 capçalera, camp 'Empresa:'",
+      "quote": "TPS",
+      "confidence": 0.7,
+      "note": "empresa que executa el sondeig (mateixa identitat que l'emissor del GTL, TPS B64803075); Sondista: Sr. Daniel Fernández"
+    },
+    {
+      "concept_id": "street_address",
+      "value": "CARRER ARBRELLS Nº 18A-18B-20",
+      "location": "p.1 capçalera, camp 'Obra:'",
+      "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLATAL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+      "confidence": 0.8,
+      "note": "'AÏLLATAL' imprès sense espai ('AÏLLAT' + 'AL' units); no és font independent de la resta de pressupostos/fitxa (mateix encàrrec)"
+    },
+    {
+      "concept_id": "municipality",
+      "value": "CASTELLAR DEL VALLÈS",
+      "location": "p.1 capçalera, camp 'Obra:'",
+      "quote": "CASTELLAR DEL VALLÈS (BARCELONA)",
+      "confidence": 0.85,
+      "note": "forma oficial llarga amb accent; no independent (mateix encàrrec)"
+    },
+    {
+      "concept_id": "building_type",
+      "value": "HABITATGE UNIFAMILIAR AÏLLAT",
+      "location": "p.1 capçalera, camp 'Obra:'",
+      "quote": "CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLATAL CARRER ARBRELLS",
+      "confidence": 0.6,
+      "note": "'AÏLLATAL' = 'AÏLLAT' + 'AL' sense espai; no independent (mateix encàrrec)"
+    },
+    {
+      "concept_id": "field_date",
+      "value": "2025-10-24",
+      "location": "p.1 capçalera, camps 'Data d'inici:' / 'Data de fi:'",
+      "quote": "24/10/25",
+      "confidence": 0.6,
+      "note": "dia del SONDEIG, no necessàriament el primer dia de camp (autoritat real: fitxa!F38). Coincideix amb fitxa F38 i comanda DATA DE PRESA (2025-10-24) en aquest projecte."
+    },
+    {
+      "concept_id": "client_name",
+      "value": "WOOD COMFORT PROM.",
+      "location": "p.1 capçalera, camp 'Client:'",
+      "quote": "WOOD COMFORT PROM.",
+      "confidence": 0.3,
+      "note": "camp CLIENT del sol·licitant (regla G3: mai autoritat directa); text truncat pel quadre (probable 'WOOD COMFORT PROMOCIONS SLU'); no és font independent (mateix encàrrec que pressupostos)"
+    }
+  ],
+  "tables": {
+    "sondeig_tests": [
+      {
+        "sondeig": "S-1",
+        "cota": "570.90 msnm (absoluta, segons plànol ICGC)",
+        "profunditat_assolida": "-1.20 m (rebuig)",
+        "spt_ma": {
+          "n_spt": 1,
+          "n_tp": 0,
+          "n_ma": 0
+        },
+        "nivell_freatic": "no detectat (columna N.F. buida en aquest tram)",
+        "location": "p.1 capçalera + columna 'Profunditat (m)'",
+        "quote": "Cota (Z): 570.90 msnm (segons el plànol ICGC); Registre SPT-1 a -1,00/-1,20",
+        "note": "⚠ ATENCIÓ CONSOLIDADOR (regla Pas 3b, 'ERR de Castellar'): 570.90 és la cota ABSOLUTA (z de l'annex) = cota_referencia. Si el sistema de cotes del projecte és relatiu (comprovar annex DPSH 'respecte el carrer', no llegit en aquesta crida), la cel·la 'cota' d'aquesta taula ha de ser la RELATIVA del sistema, candidats [relativa-del-sistema | 570.90 absoluta] — MAI segur amb l'absoluta encara que aquest document la confirmi sol."
+      }
+    ],
+    "spt_ma_tests": [
+      {
+        "id": "SPT-1",
+        "punt": "S-1",
+        "profunditat": "-1.00 a -1.20",
+        "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells",
+        "n30": {
+          "estat": "segur",
+          "value": "R",
+          "registre": {
+            "estat": "no_trobat",
+            "value": null,
+            "note": "sense valors numèrics de colpeig per tram de 15 cm; el registre marca directament 'R' (rebuig)"
+          },
+          "font": "PDF/ANNEXES/3001621_sondeig.pdf p.1, columna 'Registre'",
+          "quote": "R",
+          "note": "R al primer tram = rebuig; excepció documentada (Castellar/Linyola) on n30='R' pot ser segur, a diferència de la resta de casos on n30 mai és segur"
+        },
+        "location": "p.1 bloc 'Mostres i assaigs in-situ'",
+        "quote": "SPT-1 / -1,00 a -1,20 / R"
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "Nivell 1",
+        "litologia": "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells",
+        "de": "0.50",
+        "a": "1.20",
+        "mostra_del_nivell": true,
+        "location": "p.1 columna 'Unitat litològica' + 'Descripció dels materials'",
+        "quote": "NIVELL 1 | 0.50-1.20 - Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+        "note": "litologia SEMPRE candidats per a la cadena literal (regla Pas 3b), mai segur. Sondeig no continua més enllà d'1,20 m (rebuig SPT). Tram superior 0,00-0,50 ('Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels') NO porta etiqueta de nivell — exclòs del recompte per criteri Eva; s'anota aquí com a context, no com a fila de nivell."
+      }
+    ]
+  },
+  "not_present": [
+    "expedient (no hi ha camp exprés; només derivable del nom de fitxer '3001621_sondeig.pdf', coincident amb el nom de la carpeta del projecte, confiança feble)",
+    "architect_name (cap camp 'Arquitecte' en aquesta plantilla)",
+    "num_floors",
+    "superficie_parcela",
+    "referencia_catastral",
+    "num_dpsh_tests (aquest document és del sondeig, no del DPSH)",
+    "cte_edificacio",
+    "cte_sol"
+  ],
+  "reading_notes": "Text del PDF és brossa (fonts FreeHand sense ToUnicode, verificat amb page.get_text() -> bytes de control): lectura íntegrament visual, render a 150dpi (pàgina completa) + clips a 300-600dpi (capçalera Client/Obra, bloc UTM/Cota/Tècnic, taula Mostres i assaigs in-situ, columna Unitat litològica) per confirmar cada valor lletra a lletra. 2 pàgines: p.2 només repeteix la mateixa capçalera + 2 fotografies (emplaçament màquina, caixa de testimoni 0,00-1,20 m), sense dades noves de nivell A."
+}

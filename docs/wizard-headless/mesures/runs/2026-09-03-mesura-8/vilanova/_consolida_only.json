@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "building_type": {
+      "estat": "candidats",
+      "value": "Habitatge unifamiliar aïllat",
+      "candidates": [
+        {
+          "value": "Habitatge unifamiliar aïllat",
+          "font": "26.0050/1.0.pdf p.1 caixetí, bloc de títol (cantonada inferior esquerra)",
+          "quote": "AVANTPROJECTE D'UN HABITATGE UNIFAMILIAR AÏLLAT"
+        },
+        {
+          "value": "Vivienda unifamiliar",
+          "font": "PDF/ANEJOS/4001671_plano de situación.pdf caixetí inferior / pl situació.pdf peu del plànol / PDF/ANEJOS/4001671_corte de correlación.pdf caixetí — mateixa frase de plantilla de TPS repetida idènticament als 3-4 annexos (no fonts independents entre elles)",
+          "quote": "ESTUDIO GEOLÓGICO/ GEOTÉCNICO PARA LA CONSTRUCCIÓN DE UNA VIVIENDA UNIFAMILIAR"
+        },
+        {
+          "value": "CONSTR HAB UNIF",
+          "font": "comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N18 (G18 OBRA)",
+          "quote": "CONSTR HAB UNIF"
+        }
+      ],
+      "rule": "Pas 3 building_type: títol del projecte/plànol mana. El caixetí de l'avantprojecte de l'arquitecte (26.0050/1.0.pdf) és la font més autoritativa per a la tipologia real de l'edifici, per davant de la frase de plantilla que TPS repeteix idèntica als seus propis annexos geotècnics (corte de correlación / plano de situación / pl situació / tall — un sol origen redaccional, no fonts independents) i per davant de la comanda de laboratori.",
+      "note": "Corroborat pels 2 correus d'encàrrec (26.0050/PRESSUPOST LLEIDA.msg i RE_ PRESSUPOST LLEIDA.msg) que citen literalment la mateixa frase del caixetí de l'arquitecte ('D'UN HABITATGE UNIFAMILIAR AÏLLAT'). Comparació amb la redacció final de l'informe serà CLOSE per als dos primers candidats (aïllat / unifamiliar); mai segur perquè hi ha contradicció real entre la font de l'arquitecte i la de TPS."
+    },
+    "street_address": {
+      "estat": "candidats",
+      "value": "C. Santa Gemma, 4 Urb. La Serra",
+      "candidates": [
+        {
+          "value": "C. Santa Gemma, 4 Urb. La Serra",
+          "font": "26.0050/1.0.pdf p.1 caixetí, cel·la 'Emplaçament', línia 1",
+          "quote": "Emplaçament: C. Santa Gemma, 4 Urb. La Serra"
+        },
+        {
+          "value": "C/ STA. GEMMA 4, URB.LA SERRA",
+          "font": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf p.1 bloc OBRA (= ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf p.1 bloc OBRA; corroborat per comanda laboratori_4001671_VILANOVA DE SEGRIÀ.xls Hoja1!N20 bloc OBRA: 'C/ STA GEMMA')",
+          "quote": "OBRA:\nESTUDI GEOTECNIC\nC/ STA. GEMMA 4, URB.LA SERRA\nVILANOVA DE SEGRIA"
+        },
+        {
+          "value": "CALLE SANTA GEMMA Nº4",
+          "font": "PDF/ANEJOS/4001671_DPSH.pdf capçalera p.1/2/3, bloc OBRA",
+          "quote": "OBRA: CALLE SANTA GEMMA Nº4"
+        }
+      ],
+      "rule": "Pas 3 street_address: només de blocs etiquetats OBRA/ADREÇA OBRA/Emplaçament. El caixetí 'Emplaçament' de l'avantprojecte de l'arquitecte i 3 documents propis de G3 (pressupost, acceptació signada, comanda de laboratori) coincideixen que l'adreça inclou 'Urb. La Serra'; només l'encapçalament de l'annex DPSH (mateix camp OBRA repetit a les 3 pàgines del mateix document — no 3 fonts independents) l'omet, probablement per truncament del camp de la plantilla del DPSH.",
+      "note": "'Urb. La Serra' no competeix amb 'Calle Santa Gemma Nº4': és la mateixa via amb l'afegit del nom de la urbanització, no dues adreces vertaderes de cantonada. Candidat manuscrit feble 'El Secà - Carrer Santa Gemma' (PENETROS.pdf, confiança 0,40, lectura dificultosa) exclòs dels 3 principals."
+    }
+  },
+  "notes": [
+    "_decisions_run1_incomplet_11docs.json era d'un run anterior amb només 11 dels 14 documents (mancava 4001671_plano de situación.pdf, pl situació.pdf i 26.0050/RE_ PRESSUPOST LLEIDA.msg). Es va re-executar consolidate_python() amb el corpus complet dels 14 documents abans de decidir aquestes 2 cel·les, per confirmar que building_type i street_address segueixen sent els únics 2 conflictes reals (coincideix amb el --only-fields rebut)."
+  ]
+}

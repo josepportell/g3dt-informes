@@ -1,0 +1,27 @@
+{
+  "source_path": "CASA 1- TULIPA/PDF/ANNEXES/3001706_DPSH_CASA 1.pdf",
+  "document_type": "annex_dpsh",
+  "what_it_is": "Annex DPSH de l'informe de la CASA 1 (gràfics P-1.1 i P-1.2, generat des de l'Excel).",
+  "issuer": "G3 (Eva)",
+  "date": "DATA: 07/05/2026 (dia dels assaigs); modDate 2026-06-04",
+  "pages_or_sheets": "2 pàgines (P-1.1, P-1.2)",
+  "context": {
+    "who_made_it": "Eva, imprimint l'Excel DPSH de la casa 1",
+    "for_whom": "l'informe de la casa 1",
+    "why": "annex gràfic dels penetròmetres",
+    "expected_fields": ["cota_referencia (capçalera Cota inici)", "field_date (DATA)", "street_address/municipality (OBRA/POBLACIÓ)", "expedient (NÚMERO D'INFORME)"],
+    "not_expected": ["client", "arquitecte", "plantes", "superfície"],
+    "relation_to_others": "derivat de 3001706_DPSH_CASA 1.xls; la cota 198 DISCREPA de l'annex sondeig (+199.0) → creuar, mai segur amb una sola còpia",
+    "authority_for": ["cota_referencia (casa 1, candidat 1 per regla)", "field_date", "expedient (variant _CASA 1)"]
+  },
+  "tier_a": [
+    {"concept_id": "cota_referencia", "value": "198 msnm (casa 1)", "location": "capçalera p.1 i p.2", "quote": "Cota inici: 198 msnm segons el plànol topogràfic ICGC", "confidence": 0.6, "note": "annex DPSH = candidat 1 per regla, però discrepa de l'annex sondeig (+199.0) → candidats"},
+    {"concept_id": "field_date", "value": "07/05/2026", "location": "peu p.1 i p.2", "quote": "DATA: 07/05/2026", "confidence": 0.85, "note": "dia dels DPSH = primer dia de camp; coincideix amb comanda DATA DE PRESA i fotos WhatsApp"},
+    {"concept_id": "street_address", "value": "C/ Tulipa, 3 (casa 1)", "location": "capçalera OBRA", "quote": "OBRA: C/ TULIPA 3", "confidence": 0.8, "note": ""},
+    {"concept_id": "municipality", "value": "Cerdanyola del Vallès", "location": "capçalera POBLACIÓ", "quote": "POBLACIÓ: CERDANYOLA DEL VALLÈS", "confidence": 0.8, "note": ""},
+    {"concept_id": "expedient", "value": "3001706 (informe casa 1: 3001706_CASA 1)", "location": "peu", "quote": "NÚMERO D´INFORME: 3001706_CASA 1", "confidence": 0.85, "note": "confirma el sufix per-casa dels informes"},
+    {"concept_id": "num_dpsh_tests", "value": "2 (casa 1)", "location": "2 pàgines P-1.1/P-1.2", "quote": "ASSAIG DE PENETRACIÓ DINÀMICA: P-1.1 / P-1.2", "confidence": 0.7, "note": "coherent amb l'Excel (que mana)"}
+  ],
+  "not_present": ["client_name", "architect_name", "num_floors", "superficie_parcela", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_*", "cte_*", "N.F. (capçalera present però cap valor marcat)"],
+  "reading_notes": "Text net (PDF des d'Excel via Distiller). Capçaleres i peus llegits per grep de línies clau."
+}

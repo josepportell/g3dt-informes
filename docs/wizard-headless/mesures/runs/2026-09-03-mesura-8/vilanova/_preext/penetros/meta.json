@@ -1,0 +1,52 @@
+{
+ "source_path": "PENETROS.pdf",
+ "source_md5": "55c3e985b1e9f697790a6282ca0139b2",
+ "kind": "pdf",
+ "generated": "2026-09-04T16:36:33",
+ "elapsed_s": 2.851,
+ "dir": "penetros",
+ "files": [
+  "penetros/page-1.txt",
+  "penetros/page-1.png",
+  "penetros/page-1-top.png",
+  "penetros/page-1-bottom.png",
+  "penetros/page-2.txt",
+  "penetros/page-2.png",
+  "penetros/page-2-top.png",
+  "penetros/page-2-bottom.png",
+  "penetros/page-3.txt",
+  "penetros/page-3.png",
+  "penetros/page-3-top.png",
+  "penetros/page-3-bottom.png"
+ ],
+ "pages": 3,
+ "page_sizes_pt": [
+  [
+   594.0,
+   841.0
+  ],
+  [
+   594.0,
+   841.0
+  ],
+  [
+   594.0,
+   841.0
+  ]
+ ],
+ "producer": "PDFsharp 1.50.4589 (www.pdfsharp.com)",
+ "creator": "NAPS2",
+ "creationDate": "D:20260220091531+01'00'",
+ "modDate": "D:20260220091531+01'00'",
+ "text_ok": {
+  "1": false,
+  "2": false,
+  "3": false
+ },
+ "pages_truncated": false,
+ "halves_pages": [
+  1,
+  2,
+  3
+ ]
+}

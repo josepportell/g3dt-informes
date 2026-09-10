@@ -37,6 +37,14 @@ IMAGE_WIDTH_SIDE_BY_SIDE = 70   # Each image in 2-column layout (mm)
 IMAGE_HEIGHT_SIDE_BY_SIDE = 52  # 4:3 landscape aspect ratio (70 * 3/4 ≈ 52mm)
 IMAGE_WIDTH_MAIN_PLAN = 150     # Big architect plan crop (full-width)
 
+#: Figures «automàtiques» que l'Eva pot substituir pujant-hi una imatge (2026-09-10): clau del context → amplada.
+#: S'apliquen DESPRÉS del camí determinista de cadascuna (el geològic s'assigna sempre; el tall i la cullera també).
+_USER_AUTO_FIGURE_KEYS = {
+    'fig_geological_image': IMAGE_WIDTH_GEOLOGICAL,
+    'fig_correlation_image': IMAGE_WIDTH_LOCATION,
+    'fig_spt_cullera_image': IMAGE_WIDTH_SPT_CULLERA,
+}
+
 PLACEHOLDER_TEXT = "[Imatge pendent]"
 
 # Raster image extensions python-docx can embed. Used to filter role-based and
@@ -75,10 +83,14 @@ ROLE_TO_PHOTO_CATEGORY = {
 # SmartScan role → figure context variable mapping
 # These roles provide images for specific figure slots in the report.
 ROLE_TO_FIGURE_VAR = {
-    'figure_situation_map': 'fig_cadastre_image',
+    'figure_situation_map': 'fig_situacio_image_1',   # peça 7a: abans `fig_cadastre_image` (ara àlies)
     'figure_geological_map': 'fig_geological_image',
     'figure_test_points': 'fig_test_points_image',
-    'figure_correlation': 'fig_correlation_image',
+    # `figure_correlation` NO hi és des del 2026-09-08: aquest rol dona el PNG compost que hi hagi a `ALTRES`, i
+    # passava davant del `tall.pdf`. L'Eva retalla la secció del `tall.pdf` als 7 signats (peça 3), i a Rubí el PNG
+    # (`F5 TALL.png`) és un DIBUIX DIFERENT del signat: dos nivells amb llegenda i escala, 204-212, contra el nivell
+    # únic amb la cota de fonamentació vermella, 208-213, del que ella va signar. Ara el rol es prova al final del
+    # bloc de correlació, quan no hi ha cap `tall.pdf` a retallar.
 }
 
 
@@ -304,7 +316,9 @@ class ImageManager:
         except Exception:
             return None
 
-        if data.get('source') != 'user':
+        # Peça 2 (2026-09-07): `lector` = tria del lector de fotos de Claude Code (`automation/imatges/lector_fotos.py`);
+        # el wizard la sobreescriu amb `user` quan l'Eva tria. Eva > lector > cau IA antiga > patrons.
+        if data.get('source') not in ('user', 'lector'):
             return None
 
         result: dict[str, list[Path]] = {
@@ -329,7 +343,7 @@ class ImageManager:
 
         if any(result.values()):
             logger.info(
-                "User photo selection loaded: %s",
+                "Photo selection (%s) loaded: %s", data.get('source'),
                 {k: [p.name for p in v] for k, v in result.items() if v},
             )
             return result
@@ -550,6 +564,7 @@ class ImageManager:
             "max_tokens": 256,
             "response_format": {"type": "json_object"},
         }
+        payload.update(config.groq_payload_extras(config.VISION_MODEL_GROQ))
 
         try:
             with httpx.Client(timeout=30.0) as client:
@@ -658,7 +673,7 @@ class ImageManager:
             return None
         try:
             import json
-            return json.loads(mapping_path.read_text()).get('roles', {})
+            return json.loads(mapping_path.read_text(encoding="utf-8")).get('roles', {})
         except Exception as e:
             logger.warning(f"Could not read file_mapping.json: {e}")
             return None
@@ -674,7 +689,7 @@ class ImageManager:
             return None
         try:
             import json
-            return json.loads(mapping_path.read_text()).get('role_files')
+            return json.loads(mapping_path.read_text(encoding="utf-8")).get('role_files')
         except Exception as e:
             logger.warning(f"Could not read role_files from file_mapping.json: {e}")
             return None
@@ -745,23 +760,68 @@ class ImageManager:
                     return matches[0]
         return None
 
-    def _render_situation_plan_left(self, pdf_path: Path, output_path: Path, dpi: int = 200) -> Path | None:
-        """Render left ~38% of situation plan page (cadastral maps area)."""
-        try:
-            import fitz
-            doc = fitz.open(str(pdf_path))
-            page = doc[0]
-            r = page.rect
-            # Situation plans have cadastral maps on the left ~38% of the page
-            left_clip = fitz.Rect(r.x0, r.y0, r.x0 + r.width * 0.38, r.y1)
-            pix = page.get_pixmap(dpi=dpi, clip=left_clip)
-            pix.save(str(output_path))
-            doc.close()
-            logger.info(f"Rendered situation plan left crop: {pdf_path.name} -> {output_path.name}")
-            return output_path
-        except Exception as e:
-            logger.warning(f"Failed to render situation plan crop {pdf_path.name}: {e}")
+    def _find_composed_geological_map(self) -> Path | None:
+        """Mapa geològic que l'Eva ja ha compost, si el té al projecte (peça 6).
+
+        Als 7 signats la figura del mapa geològic és sempre un retall de l'ICGC 1:50.000, però a Castellar, Rubí i
+        Vilanova l'Eva hi afegeix la llegenda de les unitats i el desa com a PNG al costat dels annexos
+        (`m12 mgeol.png`, `F4 MGEOL.png`): allà la seva imatge i la nostra no s'assemblen, són **la mateixa**
+        (phash 0). Als altres quatre no hi ha cap fitxer d'aquests i es fa servir la recepta ICGC de sempre.
+
+        La regla és el NOM: un fitxer d'imatge que porti «geol». Als 7 projectes dona exactament un candidat als tres
+        que en tenen i cap als altres quatre. El rol `figure_geological_map` de SmartScan **no** serveix aquí: encerta
+        a Rubí i Vilanova però a Castellar apunta a `M1.png` i a Linyola a una imatge extreta d'un correu, i cap dels
+        dos és el mapa geològic (2 de 4 errònies contra 3 de 3 bones pel nom).
+        """
+        exts = {'.png', '.jpg', '.jpeg'}
+        # `validation/` fora (2026-09-10): hi viuen les pujades de l'Eva i l'evidència HITL; una imatge que es digués
+        # «…geol…» hi passaria a ser el mapa de l'informe sense que ningú l'hagués triat
+        hits = [p for p in self.project_path.rglob('*')
+                if p.is_file() and p.suffix.lower() in exts and 'geol' in p.name.lower()
+                and 'validation' not in p.relative_to(self.project_path).parts]
+        if not hits:
             return None
+        # les figures compostes viuen a la carpeta «altres» del costat dels annexos; empat → ordre alfabètic estable
+        hits.sort(key=lambda p: (not any(part.lower() in ('altres', 'otros', 'others') for part in p.parts), str(p)))
+        logger.info(f"Mapa geològic compost de l'Eva: {hits[0].name}")
+        return hits[0]
+
+    def _is_wide_image(self, path: Path, min_ratio: float = 1.5) -> bool:
+        """La imatge és apaïsada com una figura de situació (dos mapes de costat). Peça 5."""
+        try:
+            from PIL import Image
+            with Image.open(path) as im:
+                return im.height > 0 and im.width / im.height >= min_ratio
+        except Exception as exc:
+            logger.warning(f"No s'ha pogut mesurar {path.name}: {exc}")
+            return False
+
+    def _situation_plan_candidates(self, roles: dict | None) -> list[Path]:
+        """Fulls «plànol de situació» candidats, en ordre de preferència per al retall del dibuix amb punts (peça 4).
+
+        L'ordre NO és el de `_find_situation_plan` (que serveix la ranura de cadastre i es queda com està fins a la
+        peça 5): allà l'arrel va abans que la carpeta d'annexos, i aquí ha d'anar al revés. El `pl situ.pdf` de
+        l'arrel és l'export «imprimible» del FreeHand, amb el raster tallat en centenars de tires horitzontals; el de
+        `PDF/ANNEXES/` porta cada imatge sencera. Amb el de l'arrel no hi ha cap nucli i `crop_plan` retorna `None`,
+        de manera que l'ordre només estalvia feina — però és l'ordre correcte i deixa-ho dit.
+        """
+        out: list[Path] = []
+
+        def add(p: Path):
+            if p.exists() and p.is_file() and p not in out:
+                out.append(p)
+
+        if roles and 'situation_plan' in roles:
+            add(self.project_path / roles['situation_plan']['path'])
+        # carpetes d'annexos: `PDF/ANNEXES` abans que `PDF V0` / `PDF_V0` (sorted: l'espai i el guió van després)
+        for pattern in ('PDF*/ANNEXES/*situaci*.pdf', 'PDF*/ANEJOS/*situac*.pdf',
+                        'ANNEXES/*situaci*.pdf', 'ANEJOS/*situac*.pdf', 'ANEXOS/*situac*.pdf'):
+            for m in sorted(self.project_path.glob(pattern)):
+                add(m)
+        for pattern in ('pl*situ*.pdf', '*plànol*situació*.pdf', '*planol*situacio*.pdf', '*plano*situacion*.pdf'):
+            for m in sorted(self.project_path.glob(pattern)):
+                add(m)
+        return out
 
     def _find_architect_plan_with_points(self) -> tuple[Path | None, dict | None]:
         """
@@ -1036,149 +1096,149 @@ class ImageManager:
         roles = self._load_file_mapping()
         has_plan_crops = False
 
-        # 3a. Cadastre + aerea from architect_plan_with_points clip_regions (if defined)
+        # Peça 7a (2026-09-08, D11 del pas 2): la ranura única de figura de l'1.1 es parteix en tres blocs amb peu
+        # propi i nombre variable:
+        #   `fig_situacio_image_1` (+ `_2`: Bell-lloc)   → 1.1, «Situació de la zona d'estudi.» (taula d'1 o 2 cel·les)
+        #   `fig_projecte_image_1/2` + `_caption_1/2`    → 1.1, figures «Font: Projecte» (0-2; les omple el lector, 7b)
+        #   `fig_assaigs_image`                          → 2.2, «Situació de l'estructura projectada i els assaigs
+        #                                                  realitzats.» (5 dels 6 signats que en tenen la posen al 2.2)
+        # La numeració la posa el generador per presència (`figure_numbers_from_context`). Els noms antics
+        # (`fig_cadastre_image`, `fig_main_plan_image`, `fig_location_image`, `fig_building_image`) queden com a àlies.
+        # Fora d'aquí (D4 del pas 2): l'`A.01.pdf` sencer amb caixetí, el retall `main_plan` del rol i el render de la
+        # pàgina — cap dels 7 signats els porta; sense candidat clar no s'imprimeix cap figura (el bloc de la plantilla
+        # és condicional), mai una pàgina sencera «per omplir».
+
+        # 3a. Situació des dels `clip_regions` de «architect_plan_with_points» (si el rol els duu)
         points_pdf, points_clips = self._find_architect_plan_with_points()
-        if points_pdf and points_clips:
-            for region_name, var_name, width in [
-                ('cadastre', 'fig_cadastre_image', IMAGE_WIDTH_SIDE_BY_SIDE),
-                ('aerea', 'fig_aerea_image', IMAGE_WIDTH_SIDE_BY_SIDE),
-            ]:
-                if region_name in points_clips:
-                    clip_rect = points_clips[region_name]
-                    if not (isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4):
-                        logger.warning(f"Invalid clip_rect for {region_name}: {clip_rect}")
-                        continue
-                    cached = self._cache_name(region_name, points_pdf)
-                    if not cached.exists():
-                        self._render_pdf_region(points_pdf, cached, tuple(clip_rect))
-                    if cached.exists():
-                        img = self._safe_inline_image(str(cached), width=Mm(width))
-                        if img:
-                            context[var_name] = img
-                            has_plan_crops = True
-
-        # 3a-fallback. Cadastre from situation_plan: crop left ~38% (cadastral maps)
-        if 'fig_cadastre_image' not in context:
-            sit_plan_pdf = self._find_situation_plan(roles)
-            if sit_plan_pdf:
-                cached = self._cache_name("cadastre_sitplan", sit_plan_pdf)
-                if not cached.exists():
-                    self._render_situation_plan_left(sit_plan_pdf, cached)
-                if cached.exists():
-                    img = self._safe_inline_image(
-                        str(cached), width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
-                    )
-                    if img:
-                        context['fig_cadastre_image'] = img
-                        has_plan_crops = True
-
-        context.setdefault('fig_cadastre_image', PLACEHOLDER_TEXT)
-        context.setdefault('fig_aerea_image', PLACEHOLDER_TEXT)
-
-        # 3b. Main plan from architect_plan (WITHOUT dots — punt de partida)
-        base_plan_pdf = None
-        base_clip_regions = None
-        if roles and 'architect_plan' in roles:
-            role = roles['architect_plan']
-            candidate = self.project_path / role['path']
-            if candidate.exists():
-                base_plan_pdf = candidate
-                base_clip_regions = role.get('clip_regions')
-
-        if base_plan_pdf and base_clip_regions and 'main_plan' in base_clip_regions:
-            clip_rect = base_clip_regions['main_plan']
+        if points_pdf and points_clips and 'cadastre' in points_clips:
+            clip_rect = points_clips['cadastre']
             if isinstance(clip_rect, (list, tuple)) and len(clip_rect) == 4:
-                cached = self._cache_name("main_plan", base_plan_pdf)
+                cached = self._cache_name('cadastre', points_pdf)
                 if not cached.exists():
-                    self._render_pdf_region(base_plan_pdf, cached, tuple(clip_rect))
+                    self._render_pdf_region(points_pdf, cached, tuple(clip_rect))
                 if cached.exists():
-                    img = self._safe_inline_image(
-                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
-                    )
+                    img = self._safe_inline_image(str(cached), width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE))
                     if img:
-                        context['fig_main_plan_image'] = img
-                        has_plan_crops = True
-        elif base_plan_pdf:
-            # Priority 2: vision-detected floor_plan_bbox from planol_extracted.json
-            bbox_clip = self._get_planol_bbox_clip(base_plan_pdf)
-            if bbox_clip:
-                cached = self._cache_name("main_plan_crop", base_plan_pdf)
-                # Invalidate if planol_extracted.json is newer than cached image
-                planol_json = self.project_path / 'validation' / 'planol_extracted.json'
-                if cached.exists() and planol_json.exists() and planol_json.stat().st_mtime > cached.stat().st_mtime:
-                    cached.unlink()
-                    logger.info("Invalidated stale main_plan crop cache")
-                if not cached.exists():
-                    self._render_pdf_region(base_plan_pdf, cached, bbox_clip)
-                if cached.exists():
-                    img = self._safe_inline_image(
-                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
-                    )
-                    if img:
-                        context['fig_main_plan_image'] = img
+                        context['fig_situacio_image_1'] = img
                         has_plan_crops = True
             else:
-                # Priority 3: full page render (no bbox available)
-                cached = self._cache_name("planol", base_plan_pdf)
-                if not cached.exists():
-                    self._render_pdf_to_image(base_plan_pdf, cached)
-                if cached.exists():
-                    img = self._safe_inline_image(
-                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
-                    )
-                    if img:
-                        context['fig_main_plan_image'] = img
-        else:
-            # Fallback: no base plan, try "amb punts" or glob
-            fallback_pdf = points_pdf or self._find_project_pdf(['A.01.pdf', 'A.*.pdf'])
-            if fallback_pdf:
-                cached = self._cache_name("planol", fallback_pdf)
-                if not cached.exists():
-                    self._render_pdf_to_image(fallback_pdf, cached)
-                if cached.exists():
-                    img = self._safe_inline_image(
-                        str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN)
-                    )
-                    if img:
-                        context['fig_main_plan_image'] = img
-        context.setdefault('fig_main_plan_image', PLACEHOLDER_TEXT)
+                logger.warning(f"Invalid clip_rect for cadastre: {clip_rect}")
+
+        # 3a-bis. Peça 5 (2026-09-08): la figura de situació són els DOS MAPES del full de l'Eva, de costat.
+        #
+        # Substitueix el retall del 38 % esquerre del full (`_render_situation_plan_left`, ara fora), que no
+        # coincidia amb cap dels 7 signats (7 X). Primer, si SmartScan ha trobat el PNG que ella mateixa ha compost
+        # (`figure_situation_map`), es fa servir sencer — però només si és ample (relació ≥ 1,5): una figura de
+        # situació són dos mapes de costat, i el guard evita la família d'errors d'aquests rols, que sovint apunten a
+        # una imatge que no toca (DECISION-LOG 2026-09-08 (2) i (3)). Aquí el rol encerta 2 de 2 i dona la imatge
+        # idèntica (phash 0) a Rubí i Vilanova. Si no hi és, es componen els dos mapes del full.
+        if 'fig_situacio_image_1' not in context and roles and 'figure_situation_map' in roles:
+            cand = self.project_path / roles['figure_situation_map']['path']
+            if cand.exists() and self._is_wide_image(cand):
+                img = self._safe_inline_image(str(cand), width=Mm(IMAGE_WIDTH_LOCATION))
+                if img:
+                    context['fig_situacio_image_1'] = img
+                    has_plan_crops = True
+                    logger.info(f"Figura de situació composta per l'Eva: {cand.name}")
+
+        if 'fig_situacio_image_1' not in context:
+            from .imatges.retall import compose_situation
+            for sit_pdf in self._situation_plan_candidates(roles):
+                cached = self._cache_name("situacio", sit_pdf, ext="png")
+                if not cached.exists() and compose_situation(sit_pdf, cached) is None:
+                    continue                   # full sense dos mapes: candidat següent
+                img = self._safe_inline_image(str(cached), width=Mm(IMAGE_WIDTH_LOCATION))
+                if img:
+                    context['fig_situacio_image_1'] = img
+                    has_plan_crops = True
+                    break
+
+        context.setdefault('fig_situacio_image_1', PLACEHOLDER_TEXT)   # 7/7 signats la porten: si falta, és un pendent
+        context.setdefault('fig_situacio_image_2', '')                 # dos retalls del projecte (Bell-lloc): lector, 7b
+
+        # 3b-0. Peça 4 (2026-09-08): el dibuix AMB PUNTS del full de situació de l'Eva, retallat → figura d'assaigs.
+        #
+        # És la figura del capítol 2.2 («…i els assaigs realitzats»): 6 dels 7 signats en porten una, i l'única font
+        # que du els punts d'assaig és el full que l'Eva dibuixa al FreeHand abans d'obrir el wizard (D3 del pas 2:
+        # els punts no els dibuixem mai nosaltres). Prefix propi (`plan_crop`) perquè no xoqui amb el
+        # `cadastre_sitplan` del mateix PDF. Límit conegut (7a): si el full NO té punts (Bell-lloc: l'Eva el fa servir
+        # com a figura del projecte, no d'assaigs), cap senyal determinista ho distingeix — ni el text (les etiquetes
+        # «P-n» del FreeHand no són text) ni els farcits vectorials petits (Bell-lloc en té 3, de llegenda). Ho
+        # classifica el lector de figures (7b).
+        for sit_pdf in self._situation_plan_candidates(roles):
+            cached = self._cache_name("plan_crop", sit_pdf)
+            if not cached.exists():
+                from .imatges.retall import crop_plan
+                if crop_plan(sit_pdf, cached) is None:
+                    continue                       # full sense dibuix gran (export imprimible): candidat següent
+            img = self._safe_inline_image(str(cached), width=Mm(IMAGE_WIDTH_MAIN_PLAN))
+            if img:
+                context['fig_assaigs_image'] = img
+                has_plan_crops = True
+                break
+        context.setdefault('fig_assaigs_image', '')
+
+        # Figures del projecte (0-2): les omple el lector de figures (7b); avui cap
+        for i in (1, 2):
+            context.setdefault(f'fig_projecte_image_{i}', '')
+            context.setdefault(f'fig_projecte_caption_{i}', '')
+
+        # Peça 7b (2026-09-09): la SELECCIÓ del lector de figures (o de l'Eva) mana sobre el camí determinista.
+        # `validation/figure_selection.json` (`source` user > lector): la figura d'assaigs (retall triat), les figures
+        # del projecte (0-2, amb peu) i, només al cas de Bell-lloc, les dues imatges de situació. Els retalls es
+        # renderitzen a la cau d'imatges (`figsel_*`, per md5 i rectangle) i entren aquí com a InlineImage.
+        applied_selection: dict = {}
+        try:
+            from .imatges.lector_figures import apply_selection
+            applied_selection = apply_selection(self.project_path, self._cache_dir)
+            # situació doble (les dues alhora): 70 mm de costat; una de sola (pujada de l'Eva, 2026-09-10): com la
+            # composició determinista, tota l'amplada
+            sit_double = bool(applied_selection.get('fig_situacio_image_1')) and bool(applied_selection.get('fig_situacio_image_2'))
+            for key, val in applied_selection.items():
+                if key in _USER_AUTO_FIGURE_KEYS:
+                    continue                          # geològic, tall i cullera: s'apliquen després del camí determinista
+                if '_caption_' in key or val in (None, ''):
+                    context[key] = val or ''          # la selecció també buida: «cap figura d'assaigs» mana
+                    continue
+                width = IMAGE_WIDTH_SIDE_BY_SIDE if (key.startswith('fig_situacio_image_') and sit_double) else IMAGE_WIDTH_MAIN_PLAN
+                img = self._safe_inline_image(str(val), width=Mm(width))
+                if img:
+                    context[key] = img
+                    has_plan_crops = True
+        except Exception as exc:
+            logger.warning(f"figure_selection: {exc}")
 
         context['has_plan_crops'] = has_plan_crops
 
-        # Backward-compat aliases
-        context['fig_location_image'] = context.get('fig_cadastre_image', PLACEHOLDER_TEXT)
-        context['fig_building_image'] = context.get('fig_main_plan_image', PLACEHOLDER_TEXT)
+        # Àlies dels noms antics (plantilla anterior a la peça 7a, tests, calaix del wizard)
+        context['fig_cadastre_image'] = context['fig_situacio_image_1']
+        context['fig_location_image'] = context['fig_situacio_image_1']
+        context['fig_main_plan_image'] = next(
+            (v for v in (context['fig_assaigs_image'], context['fig_projecte_image_1']) if v not in (None, '')),
+            PLACEHOLDER_TEXT)
+        context['fig_building_image'] = context['fig_main_plan_image']
 
-        # ICGC images: geological map + orthophoto with parcel outline as aerea fallback
-        icgc_images = self._download_icgc_images()
-        if 'geological_map' in icgc_images:
+        # Mapa geològic (peça 6, 2026-09-08, D8 del pas 2): primer el que l'Eva ja ha compost al projecte, i només
+        # si no n'hi ha cap, la recepta ICGC (`get_geological_map_with_terrain`, la que ella va aprovar: base
+        # topogràfica + `unitats-geologiques-50000` al 0,65, buffer 700 m, punt vermell). Els seus paràmetres NO es
+        # toquen: mesurat als tres signats que la fan servir (Linyola, Bell-lloc, Alcoletge), cap buffer de 150 a
+        # 1.000 m els acosta al que ella va enganxar (NCC 0,31-0,52 a tot arreu) — la diferència no és el zoom.
+        geo_composed = self._find_composed_geological_map()
+        if geo_composed:
             context['fig_geological_image'] = self._safe_inline_image(
-                str(icgc_images['geological_map']), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
+                str(geo_composed), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
             ) or PLACEHOLDER_TEXT
         else:
-            context['fig_geological_image'] = PLACEHOLDER_TEXT
+            icgc_images = self._download_icgc_images()
+            if 'geological_map' in icgc_images:
+                context['fig_geological_image'] = self._safe_inline_image(
+                    str(icgc_images['geological_map']), width=Mm(IMAGE_WIDTH_GEOLOGICAL)
+                ) or PLACEHOLDER_TEXT
+            else:
+                context['fig_geological_image'] = PLACEHOLDER_TEXT
 
-        # Fallback: if fig_aerea_image is still a placeholder, use parcel orthophoto
-        if context.get('fig_aerea_image') == PLACEHOLDER_TEXT:
-            if 'orthophoto_parcel' in icgc_images:
-                img = self._safe_inline_image(
-                    str(icgc_images['orthophoto_parcel']),
-                    width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
-                )
-                if img:
-                    context['fig_aerea_image'] = img
-                    context['fig_location_image'] = context['fig_aerea_image']
-                    source = "Google satellite" if "google_sat" in str(icgc_images['orthophoto_parcel']) else "ICGC orthophoto"
-                    logger.info(f"Using {source} with parcel outline as fig_aerea_image")
-            elif 'orthophoto_parcel_plain' in icgc_images:
-                img = self._safe_inline_image(
-                    str(icgc_images['orthophoto_parcel_plain']),
-                    width=Mm(IMAGE_WIDTH_SIDE_BY_SIDE)
-                )
-                if img:
-                    context['fig_aerea_image'] = img
-                    context['fig_location_image'] = context['fig_aerea_image']
-                    logger.info("Using plain ICGC orthophoto as fig_aerea_image (parcel outline unavailable)")
+        # Peça 1 (2026-09-07, D2): l'ortofoto amb la parcel·la ja no va a cap forat («aèria» fora); les capes ICGC
+        # per UTM es reprenen a la peça 5 (situació B: topogràfic + ortofoto amb rectangle taronja).
 
         # ── SmartScan figure roles (Phase 6) ──
         # If SmartScan classified images as figure roles, use them directly.
@@ -1204,10 +1264,25 @@ class ImageManager:
                     tall_pdf = candidate
             if tall_pdf is None:
                 tall_pdf = self._find_project_pdf(['tall.pdf', 'tall*.pdf'])
+            if tall_pdf is None and roles and 'figure_correlation' in roles:
+                # últim recurs: el PNG compost de l'Eva, quan no hi ha cap `tall.pdf` per retallar
+                fig_path = self.project_path / roles['figure_correlation']['path']
+                if fig_path.exists():
+                    img = self._safe_inline_image(str(fig_path), width=Mm(IMAGE_WIDTH_LOCATION))
+                    if img:
+                        context['fig_correlation_image'] = img
+                        logger.info(f"Tall de correlació des del rol figure_correlation: {fig_path.name}")
             if tall_pdf:
-                cached = self._cache_name("tall", tall_pdf)
+                # Peça 3 (2026-09-07): l'Eva retalla la secció del tall (sense caixetí, llegenda ni logo): 7/7 signats.
+                # Prefix propi (`tall_crop`) perquè no xoqui amb la pàgina sencera que hi hagi a la cau; `2` des del
+                # 2026-09-09 (tinta dels traços i «blanc» = 5 mm): els retalls antics de la cau no valen.
+                cached = self._cache_name("tall_crop2", tall_pdf)
                 if not cached.exists():
-                    self._render_pdf_to_image(tall_pdf, cached)
+                    from .imatges.retall import crop_drawing
+                    if crop_drawing(tall_pdf, cached) is None:      # sense dibuix detectat: pàgina sencera, com abans
+                        cached = self._cache_name("tall", tall_pdf)
+                        if not cached.exists():
+                            self._render_pdf_to_image(tall_pdf, cached)
                 if cached.exists():
                     img = self._safe_inline_image(
                         str(cached), width=Mm(IMAGE_WIDTH_LOCATION)
@@ -1215,6 +1290,17 @@ class ImageManager:
                     if img:
                         context['fig_correlation_image'] = img
         context.setdefault('fig_correlation_image', PLACEHOLDER_TEXT)
+
+        # Pujades de l'Eva per a les figures automàtiques (2026-09-10): la seva imatge mana sobre el mapa compost o
+        # la recepta ICGC, el retall del tall i el gràfic de la cullera. Surten de la mateixa `figure_selection.json`
+        # (`source: user`, claus `geologic`/`tall`/`cullera`), ja renderitzades a la cau per `apply_selection`.
+        for key, width in _USER_AUTO_FIGURE_KEYS.items():
+            val = applied_selection.get(key)
+            if val:
+                img = self._safe_inline_image(str(val), width=Mm(width))
+                if img:
+                    context[key] = img
+                    logger.info(f"Figura pujada per l'Eva: {key} ← {Path(str(val)).name}")
 
         # Log summary
         num_images = sum(1 for v in context.values() if not isinstance(v, str))

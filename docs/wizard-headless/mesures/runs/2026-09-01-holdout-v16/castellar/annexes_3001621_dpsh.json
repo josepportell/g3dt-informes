@@ -1,0 +1,109 @@
+{
+ "source_path": "ANNEXES/3001621_DPSH.xls",
+ "source_md5": "0389af31b3b165e13338709a568cf130",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Full de càlcul Excel amb la transcripció dels 4 assaigs DPSH de camp (P-1 a P-4): colpeig N20 per fondària cada 20 cm, colpeig NB derivat, marca de nivells per color, i peu amb la fondària de rebuig de cada punt.",
+ "issuer": "G3 / Eva (transcripció manual dels valors de camp del full manuscrit PENETROS)",
+ "date": null,
+ "pages_or_sheets": "4 fulls: P-1, P-2, P-3, P-4 (80 files x 7 columnes cadascun)",
+ "context": {
+  "who_made_it": "Eva (G3) transcriu a mà els valors de camp del DPSH des del full manuscrit PENETROS a aquest Excel",
+  "for_whom": "ús intern G3, font de dades per a la taula de penetròmetres dinàmics de l'informe",
+  "why": "registrar el colpeig N20 mesurat cada 20 cm de fondària per cada punt DPSH, calcular el colpeig NB corresponent, i deixar constància de la fondària de rebuig",
+  "expected_fields": [
+   "colpeig N20 per fondària",
+   "fondària de rebuig per punt",
+   "marca de nivell freàtic (N.F.)",
+   "marca de nivells geològics per color a la columna Nivells"
+  ],
+  "not_expected": [
+   "expedient",
+   "nom del client",
+   "adreça de l'obra",
+   "municipi",
+   "data de camp",
+   "cota d'inici"
+  ],
+  "relation_to_others": "transcripció del full de camp manuscrit PENETROS.pdf (no inclòs en aquesta lectura --only); existeix una versió PDF pròpia d'aquest mateix Excel a PDF/ANNEXES/3001621_DPSH.pdf amb capçalera de projecte (Cota inici, OBRA, POBLACIÓ, DATA) que aquest .xls no porta enlloc",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "fulls P-1, P-2, P-3, P-4 (cadascun amb colpeig executat a la columna C i peu 'Rebuig a' a B80)",
+   "quote": "P-1!B80 'Rebuig  a -1,08 m'; P-2!B80 'Rebuig  a -0,48 m'; P-3!B80 'Rebuig  a -0,76 m'; P-4!B80 'Rebuig  a -1,55 m'",
+   "confidence": 0.9,
+   "note": "4 fulls amb valors reals de colpeig (no buits) i peu de rebuig propi; aquest document no permet confirmar si coincideixen amb els DPSH PREVISTOS (pressupost/fitxa), no llegits en aquesta crida --only"
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,08 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full P-1, B80 (rebuig); columna F (N.F.) buida de text i sense color de cel·la a tot el full",
+    "quote": "Rebuig  a -1,08 m"
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full P-2, B80 (rebuig); columna F (N.F.) buida de text i sense color de cel·la a tot el full",
+    "quote": "Rebuig  a -0,48 m"
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-0,76 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full P-3, B80 (rebuig); columna F (N.F.) buida de text i sense color de cel·la a tot el full",
+    "quote": "Rebuig  a -0,76 m"
+   },
+   {
+    "punt": "P-4",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,55 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "Full P-4, B80 (rebuig); columna F (N.F.) buida de text i sense color de cel·la a tot el full",
+    "quote": "Rebuig  a -1,55 m"
+   }
+  ],
+  "__nota": "cota_inici no consta en aquest Excel (ni text ni cap capçalera de projecte); consultar PDF/ANNEXES/3001621_DPSH.pdf. nivell_freatic comprovat amb text I color (colors.txt, formatting_info) a les 4 fulles: cap marca."
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Lectura via pre-extracció (sheet-i.cells.txt + sheet-i.colors.txt), sense obrir l'Excel amb xlrd. Cap metadada de projecte al full (files 1-14 buides a totes les 4 fulles): confirma la regla del skill que aquest Excel només porta la taula DPSH. Peu 'Rebuig a' sempre a B80 a les 4 fulles (no calia cercar B79-B82). Columna N.F. (F) sense text ni color en cap full → 'No detectat' amb comprovació explícita de colors. Columna 'Nivells' (G) SÍ porta color: P-1 groc (#FFFFC0) files 17-20 / vermell (#FF8080) files 21-23 (transició ~-0,6/-0,8 m); P-4 groc files 17-21 / vermell files 22-25 (transició ~-0,8/-1,0 m); P-2 i P-3 vermell (#FF8080) a tot el tram executat, sense groc. El patró NO és consistent entre punts (P-2/P-3 no mostren mai groc) i aquest document tot sol no permet saber si el color marca nivell geològic, humitat o una altra cosa — NO s'ha usat com a candidat de num_soil_levels (l'autoritat és l'annex de sondeig / llegenda del tall, no llegits en aquesta crida --only); es deixa només com a nota per si la lectura consolidada dels annexos el vol creuar. Columna D (Colpeig NB) és D=C/0,83 (factor a D15), derivada, no és un senyal independent."
+}

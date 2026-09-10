@@ -1,0 +1,50 @@
+{
+  "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+  "document_type": "correu",
+  "what_it_is": "Correu intern d'Eva a administració reenviant l'encàrrec del client (WhatsApp de ROC).",
+  "issuer": "Eva Vázquez (G3) — text del client ROC (GRUP ALMA) reenviat",
+  "date": "2025-06-25",
+  "pages_or_sheets": "cos + adjunt PLAN_COST (duplicat del fitxer solt, mateix nom)",
+  "context": {
+    "who_made_it": "Eva reenvia el WhatsApp del client per fer el pressupost",
+    "for_whom": "Dolors (admin G3)",
+    "why": "encarregar el pressupost del geotècnic",
+    "expected_fields": [
+      "superficie_construida",
+      "num_floors",
+      "building_type",
+      "adreça"
+    ],
+    "not_expected": [
+      "cotes",
+      "NF",
+      "nivells"
+    ],
+    "relation_to_others": "origen de l'encàrrec; el pressupost original (25/06/25, GRUP ALMA) en deriva; l'adjunt PLAN_COST és el mateix fitxer que 25.0493/PLAN_COST (dedup)",
+    "authority_for": [
+      "superficie_construida",
+      "num_floors (fora d'abast aquí)"
+    ]
+  },
+  "tier_a": [],
+  "tables": {
+    "superficie_construida": {
+      "estat": "candidats",
+      "candidats": [
+        {
+          "valor": "120 m² construïts (per habitatge; PB+1, sense soterrani, entramat lleuger de fusta)",
+          "font": "cos del correu (WhatsApp del client)",
+          "quote": "PB + 1 - Sense soterrani - 120 m2 construits - Estructura d'entremat lleuger de fusta."
+        }
+      ],
+      "note": "la descripció cobreix 1 dels 3 habitatges de l'encàrrec final ('compraré les 2 parcel·les del costat... 3 estudis') → mai segur (regla '1 de N unitats')"
+    },
+    "__nota": "única font de superfície construïda de la carpeta"
+  },
+  "not_present": [
+    "cotes",
+    "NF",
+    "dades de camp"
+  ],
+  "reading_notes": "extract_msg; imatges de signatura ignorades; text nou = tot el cos (no és cadena RE)."
+}

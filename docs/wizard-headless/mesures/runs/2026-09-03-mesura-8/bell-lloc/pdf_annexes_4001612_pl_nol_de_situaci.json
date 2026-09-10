@@ -1,0 +1,104 @@
+{
+ "source_path": "PDF/ANNEXES/4001612_plànol de situació.pdf",
+ "source_md5": "516920bbddc7ec9565c9705dd00302f5",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "annex_planol_situacio",
+ "what_it_is": "Plànol de situació de l'annex de l'Eva: emplaçament al municipi + parcel·la cadastral (inset) + planta amb dimensions de l'edificació projectada i ubicació dels punts d'assaig (P-1, P-2 DPSH; S-1 sondeig a rotació).",
+ "issuer": "G3 (Eva) — dibuix FreeHand, exportat a PDF via Acrobat Distiller 15.0 / PScript5.dll",
+ "date": "Octubre 2025 (caixetí, només mes); metadada PDF creationDate/modDate = 2025-10-27",
+ "pages_or_sheets": "1 pàgina",
+ "context": {
+  "who_made_it": "Eva (G3), com a annex propi de l'informe, dibuixat a FreeHand i exportat a PDF amb un driver PostScript + Distiller (no és una còpia neta 'Print To PDF')",
+  "for_whom": "El propi informe geotècnic, com a annex il·lustratiu 'Plànol de situació'",
+  "why": "Situar el projecte dins el municipi i la parcel·la cadastral, i documentar sobre la planta projectada la posició dels punts d'assaig (P-1, P-2 DPSH; S-1 sondeig) respecte els dos carrers de cantonada",
+  "expected_fields": [
+   "street_address (redacció de cantonada)",
+   "municipality",
+   "building_type (títol del projecte)",
+   "num_dpsh_tests (recompte visual de punts)",
+   "expedient (caixetí, pot portar typo)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date fiable (és la data del plànol, no de camp)",
+   "cota_referencia",
+   "num_soil_levels",
+   "superficie_parcela",
+   "num_floors",
+   "utm_x_utm_y",
+   "referencia_catastral (completa)",
+   "lab_*",
+   "cte_*"
+  ],
+  "relation_to_others": "Export Distiller/PScript5.dll del dibuix FreeHand original 'ANNEXES/4001612_plànol de situació.FH11' (text brossa, exclòs de la lectura). Duplicat exacte (mateix md5 516920bb...) a 'PDF V0/ANNEXES/4001612_plànol de situació.pdf' (carpeta exclosa, versió antiga). Existeix també una còpia 'Microsoft: Print To PDF' del mateix disseny amb un altre md5 ('pl. situaci.pdf', ja llegida en aquesta mateixa tanda com a pl_situaci.json): mateixos valors de street_address, municipality, building_type, expedient (typo 4001621) i num_dpsh_tests — corrobora la lectura però NO compta com a font independent addicional (és el mateix annex exportat dues vegades).",
+  "authority_for": [
+   "street_address",
+   "municipality"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "street_address",
+   "value": "Situat entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz, Bell-lloc",
+   "location": "caixetí, bloc TÍTOL DEL PROJECTE",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER LA CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT SITUAT ENTRE EL CARRER ANTONI BELLET I CARRER MESTRE RAMON ORTIZ DE BELL-LLOC",
+   "confidence": 0.6,
+   "note": "Adreça de cantonada (dues vies reals, no competeixen — regla de cantonada). Els mateixos noms surten rotulats directament sobre la planta ('CARRER MESTRE RAMON ORTIZ' vertical a la dreta, 'CARRER ANTONI BELLET' horitzontal a baix). Sense número de portal enlloc del document."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Bell-lloc d'Urgell",
+   "location": "mapa d'emplaçament municipal (requadre superior esquerre)",
+   "quote": "Bell-lloc d'Urgell",
+   "confidence": 0.75,
+   "note": "Forma oficial llarga al mapa base d'emplaçament. El caixetí i el títol usen la forma curta ('BELL-LLOC' / 'DE BELL-LLOC'), mateix document."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "caixetí, bloc TÍTOL DEL PROJECTE",
+   "quote": "CONSTRUCCIÓ D'UN HABITATGE UNIFAMILIAR AÏLLAT",
+   "confidence": 0.55,
+   "note": "Redacció pròpia de l'annex; coincideix amb la redacció habitual de l'informe ('un habitatge unifamiliar') — comparació CLOSE, no cita literal d'una plantilla G3."
+  },
+  {
+   "concept_id": "expedient",
+   "value": "4001621",
+   "location": "caixetí, cel·la 'Exp:'",
+   "quote": "Exp: 4001621",
+   "confidence": 0.15,
+   "note": "TYPO conegut d'aquest annex (transposició de xifres) — contradiu el nom de la carpeta del projecte i l'expedient de comanda/GTL/Excel/altres annexos (4001612, p.ex. confirmat a l'annex de tall 'pdf_annexes_4001612_tall_de_correlaci.json'). No usar com a candidat principal, es dona només per registre."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "2",
+   "location": "planta, marcadors verds P-1 i P-2 + llegenda 'Assaig de penetració dinàmica DPSH'",
+   "quote": "Assaig de penetració dinàmica DPSH (llegenda); marcadors 'P-1' i 'P-2' sobre la planta",
+   "confidence": 0.45,
+   "note": "Recompte visual dels punts dibuixats a la planta; no és font d'autoritat A per aquest camp (mana l'Excel DPSH amb fulls executats), es dona com a corroboració."
+  }
+ ],
+ "tables": {
+  "__nota": "Aquest document no aporta files de dpsh_tests/sondeig_tests/spt_ma_tests/soil_levels: només marca la ubicació en planta dels punts P-1, P-2 (DPSH) i S-1 (sondeig), sense cotes, profunditats ni litologies."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels (només marca la ubicació del punt S-1, sense litologies ni nivells)",
+  "utm_x_utm_y",
+  "referencia_catastral (el mapa cadastral inset mostra les parcel·les '72' i '73' envoltades en vermell, dins 'Polígon industrial Senpa', però no imprimeix cap codi de referència cadastral complet ni portal)",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Text natiu del PDF és brossa (meta.text_ok=false; producer 'Acrobat Distiller 15.0 (Windows)', creator 'PScript5.dll' — FreeHand exportat, no 'Print To PDF'). Lectura íntegrament visual: page-1.png (150dpi, sencera, ja perfectament llegible) i les meitats page-1-left.png / page-1-right.png (220dpi) per confirmar amb precisió el caixetí i el mapa cadastral. No ha calgut render_clip.py: a 220dpi tot el text (caixetí, rètols de carrer, llegenda, número d'expedient) es llegeix sense ambigüitat. Mapa cadastral inset (base externa, no és una consulta oficial del Cadastre): parcel·la envoltada en vermell amb els números '72' i '73' junts (dues parcel·les), coherent amb les 2 consultes cadastrals PDF de la carpeta (25.0647/4613172...pdf, 25.0647/4613173...pdf, route=python, no llegides aquí) — per això NO s'emet com a candidat de referencia_catastral (no hi ha codi complet imprès). Els marcadors P-1, P-2 (verd) i S-1 (vermell) sobre la implantació de l'edifici no porten cap xifra de cota ni profunditat: no alimenten `tables`. La data del caixetí ('Octubre 2025') no s'ha emès com a candidat de field_date perquè només té precisió de mes i aquest tipus de document no és font prioritzada per aquest camp (fitxa F38 / annex DPSH DATA: / albarà TPS / noms de fotos WhatsApp)."
+}

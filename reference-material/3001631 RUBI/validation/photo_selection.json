@@ -1,0 +1,30 @@
+{
+ "source": "lector",
+ "site_1": "ANNEXES/Altres/F3 VG.png",
+ "site_2": null,
+ "dpsh": "FOTOGRAFIES/P1.jpg",
+ "sondeig": null,
+ "materials": "FOTOGRAFIES/SPT1.jpg",
+ "_lector": {
+  "data": "2026-09-09 13:42",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 36.6,
+  "exclude_slug": "rubi",
+  "raons": {
+   "site_1": "F3 VG.png és una vista general del solar sense màquina (carrer, tanca, casa veïna, cel), rol photo_site_overview; l'Eva hi posa aquest tipus de captura quan no té foto de camp equivalent",
+   "dpsh": "màquina DPSH sencera i neta al solar; és la primera de l'annex (F-1, «vista general de la màquina en l'assaig P-1»); les 3 fotos de màquina (#3, #4, #5) són equivalents, així que es tria la primera",
+   "materials": "SPT1.jpg és la cullera/testimoni recuperat en l'assaig SPT, exactament el peu de l'annex F-4 («detall dels materials recuperats en l'assaig SPT»)"
+  },
+  "confianca": {
+   "site_1": 0.6,
+   "dpsh": 0.85,
+   "materials": 0.95
+  },
+  "cap_font": [
+   "sondeig"
+  ],
+  "notes": "el projecte no té sondeig a rotació, per això 'sondeig' queda null; els candidats #1 i #2 (WhatsApp) són un full de camp en maleta i un testimoni/tub solts, no encaixen a cap forat i es descarten; #7,#8,#10,#11,#12-16 són mapes/plànol/tall/ortofotos, no fotos de camp",
+  "warnings": []
+ }
+}

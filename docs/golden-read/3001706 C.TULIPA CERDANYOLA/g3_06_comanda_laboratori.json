@@ -1,0 +1,128 @@
+{
+ "source_path": "comanda laboratori_3001706_CERDANYOLA.xls",
+ "document_type": "comanda_lab_g3",
+ "what_it_is": "Petició d'assaigs de laboratori: obra 'CONSTR DOS NOUS HAB AÏLLATS', expedient 3001706, C TULIPA, Cerdanyola del Vallès, presa 07/05/2026, sol·licitud 01/06/2026; 2 mostres SPT1 (1,0-1,6) i SPT2 (3,0-3,6) del S1, Límits d'Atterberg + sulfats.",
+ "issuer": "G3 (EVA VÁZQUEZ)",
+ "date": "2026-06-01",
+ "pages_or_sheets": 1,
+ "context": {
+  "who_made_it": "G3 (Eva)",
+  "for_whom": "el laboratori (TPS)",
+  "why": "demanar assaigs sobre mostres del sondeig",
+  "expected_fields": [
+   "expedient",
+   "tipus obra",
+   "adreça/municipi obra",
+   "data de presa",
+   "mostres i cotes"
+  ],
+  "not_expected": [
+   "client de l'informe (el sol·licitant és G3)",
+   "plantes"
+  ],
+  "relation_to_others": "precedeix el GTL (absent aquí); 'DATA DE PRESA' = dia del sondeig",
+  "authority_for": [
+   "expedient",
+   "municipality",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001706",
+   "location": "Hoja1!N19",
+   "quote": "NÚM. D'EXPEDIENT | 3001706.0",
+   "confidence": 1.0,
+   "note": ""
+  },
+  {
+   "concept_id": "building_type",
+   "value": "dos nous habitatges aïllats",
+   "location": "Hoja1!N18",
+   "quote": "CONSTR DOS NOUS HAB AÏLLATS",
+   "confidence": 0.8,
+   "note": "confirma 2 cases; 'aïllats' → habitatge unifamiliar aïllat"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C TULIPA",
+   "location": "Hoja1!N20",
+   "quote": "C TULIPA",
+   "confidence": 0.7,
+   "note": "sense número; només la casa 1"
+  },
+  {
+   "concept_id": "municipality",
+   "value": "CERDANYOLA DEL VALLÈS",
+   "location": "Hoja1!N21",
+   "quote": "CERDANYOLA DEL VALLÈS",
+   "confidence": 0.95,
+   "note": "amb accent"
+  },
+  {
+   "concept_id": "field_date",
+   "value": "2026-05-07",
+   "location": "Hoja1!N23 'DATA DE PRESA'",
+   "quote": "datetime(2026,5,7)",
+   "confidence": 0.7,
+   "note": "data de la mostra = dia del sondeig; aquí coincideix amb els DPSH (tot el mateix dia, segons correu Tosca 'demà' = 07/05)"
+  },
+  {
+   "concept_id": "lab_sample_id",
+   "value": "SPT 1 (S1) i SPT2 (S1)",
+   "location": "Hoja1!C35, C36",
+   "quote": "SPT 1  (S1) | SPT2 (S1)",
+   "confidence": 0.95,
+   "note": "DUES mostres"
+  },
+  {
+   "concept_id": "lab_depth",
+   "value": "1,0-1,6 m i 3,0-3,6 m",
+   "location": "J35/L35, J36/L36",
+   "quote": "1.0 1.6 | 3.0 3.6",
+   "confidence": 0.95,
+   "note": "l'annex sondeig diu SPT-2 3,00-3,54 (rebuig)"
+  },
+  {
+   "concept_id": "lab_location",
+   "value": "S1",
+   "location": "C35/C36",
+   "quote": "(S1)",
+   "confidence": 0.95,
+   "note": ""
+  },
+  {
+   "concept_id": "lab_tests",
+   "value": "Límits d'Atterberg (O) + Agressivitat sòls 'NOMÉS SULFATS' (AA/AD)",
+   "location": "fila 35-36",
+   "quote": "O35='X' AA35='X' AD35='NOMÉS SULFATS'",
+   "confidence": 0.9,
+   "note": "nivell B"
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "G3 DESENVOLUPAMENT TERRITORIAL, SL / B25364589",
+   "location": "N11-N14",
+   "quote": "G3 DESENVOLUPAMENT TERRITORIAL, SL | B25364589",
+   "confidence": 1.0,
+   "note": "sol·licitant = G3"
+  }
+ ],
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "num_floors",
+  "superficie_parcela",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm",
+  "referencia_catastral",
+  "lab_testing_company",
+  "cte_*"
+ ],
+ "reading_notes": "Sense GTL a la carpeta (sol·licitud 01/06, informe encara no arribat quan es va copiar): la comanda és l'única font de lab. Regla confirmada (Eva): 'normalment ho fem abans de tenir les actes'."
+}

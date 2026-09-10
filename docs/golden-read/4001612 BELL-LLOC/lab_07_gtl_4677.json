@@ -1,0 +1,21 @@
+{
+  "source_path": "4677-GTL-25 Bell-Lloc d'Urgell.pdf",
+  "document_type": "informe_laboratori",
+  "what_it_is": "Informe de resultats d'assaigs de laboratori del lab TPS (núm. 4677-GTL-25, expedit 26/11/2025): 1 mostra SPT1 S1 (1,0-1,6 m), grava amb matriu sorrenca, contingut en sulfats 89,8 mg/kg; signat digitalment per dos geòlegs del lab.",
+  "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL (B64803075), Golmés",
+  "date": "2025-11-26",
+  "pages_or_sheets": 5,
+  "tier_a": [
+    {"concept_id": "lab_testing_company", "value": "TPS, PROSPECCIÓ DEL SUBSÒL, SL", "location": "banda de peu de totes les pàgines (y≈298) + signatures p.5", "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL    B64803075    Ins. Reg. Merc. de Barcelona Volum 40308…", "confidence": 1.0, "note": "el laboratori és l'EMISSOR (banda amb registre mercantil), no el 'CLIENT' del lab (que és G3)"},
+    {"concept_id": "lab_sample_id", "value": "SPT1 S1 (ref. lab GTL-8205-25)", "location": "p.2 y≈303 'Mostra:' i p.4 'Referència del client'", "quote": "SPT1 S1 | GTL-8205-25", "confidence": 1.0, "note": "dues referències: la del client (SPT1 S1, la que usa Eva) i la del lab (GTL-8205-25). A l'informe va la del client."},
+    {"concept_id": "lab_depth", "value": "1,0 - 1,6 m", "location": "p.2 y≈302 'Cota d'extracció (m)' i p.4 y≈237", "quote": "1,0 - 1,6", "confidence": 1.0, "note": "coincideix amb la comanda J35/L35"},
+    {"concept_id": "lab_location", "value": "S1", "location": "p.2 'Mostra: SPT1 S1'", "quote": "SPT1 S1", "confidence": 0.95, "note": ""},
+    {"concept_id": "expedient", "value": "4001612", "location": "p.2 y≈340 'Obra / Projecte'", "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet. 4001612", "confidence": 0.9, "note": "el lab copia l'expedient de G3 al camp Obra/Projecte; l'identificador propi del lab (4677-GTL-25, GTL-8205-25) NO és l'expedient"},
+    {"concept_id": "municipality", "value": "Bell-Lloc d'Urgell", "location": "p.1/p.5 'Situació:' i p.2 'Obra / Projecte'", "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.", "confidence": 0.9, "note": "forma llarga amb 'd'Urgell' (majúscula a 'Lloc' diferent de la de l'Eva)"},
+    {"concept_id": "street_address", "value": "Carrer Antoni Bellet", "location": "p.1 'Situació:'", "quote": "Bell-Lloc d'Urgell. Carrer Antoni Bellet.", "confidence": 0.7, "note": "segona aparició del carrer 'Antoni B*llet' (comanda: BALLET; lab: BELLET). Deriva de la comanda, no és independent; però la grafia 'Bellet' és la del lab (possiblement corregida)."},
+    {"concept_id": "field_date", "value": "2025-10-06", "location": "p.2 y≈420 'Data extracció'", "quote": "Data extracció: 06/10/2025", "confidence": 0.5, "note": "data d'extracció de la mostra = dia del sondeig; derivada de la comanda (DATA DE PRESA). No independent i no és necessàriament el primer dia de camp."},
+    {"concept_id": "NOT_client_name", "value": "G3 Desenvolupament Territorial, SL (B25364589)", "location": "p.1 'DADES DEL CLIENT'", "quote": "Nom: G3 Desenvolupament Territorial, SL | NIF: B25364589", "confidence": 1.0, "note": "REGLA: al GTL el 'client' és G3. Mai candidat a client_name de l'informe."}
+  ],
+  "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "num_dpsh_tests", "utm_x/utm_y", "referencia_catastral", "cte_edificacio", "cte_sol"],
+  "reading_notes": "PDF vectorial generat per Excel (PDFMaker). L'etiqueta 'DADES DEL CLIENT' a p.1 és la trampa: és el client DEL LABORATORI (G3). Identificació: text 'INFORME DE RESULTATS D'ASSAIGS DE LABORATORI' + banda TPS. El GTL arriba ~7 setmanes després del camp (26/11 vs 01/10): en un projecte nou pot NO existir quan Eva obre el wizard; la comanda sí. Resultat sulfats 89,8 mg/kg (nivell B)."
+}

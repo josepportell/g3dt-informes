@@ -1,0 +1,31 @@
+{
+  "source_path": "4672-GTL-25 Linyola.pdf (+ PDF/ANNEXES/lab-sig.pdf = mateix informe, còpia signada per a l'annex — duplicat, no font independent)",
+  "document_type": "informe_laboratori",
+  "what_it_is": "Informe de resultats d'assaigs de laboratori (GTL) de la mostra SPT del projecte: límits d'Atterberg, sulfats, Lambe",
+  "issuer": "TPS, PROSPECCIÓ DEL SUBSÒL, SL — B64803075 — Polígon Golparc, Golmés (laboratorio@tps-perforaciones.com)",
+  "date": "expedició 30/10/2025; extracció 01/10/2025; recepció 10/10/2025; signat digitalment 30/10/2025 (Pere Cervós, Pere Farrés)",
+  "pages_or_sheets": "7 pàgines",
+  "context": {
+    "who_made_it": "el laboratori TPS",
+    "for_whom": "G3 (el seu client — bloc DADES DEL CLIENT = G3, irrellevant per al projecte)",
+    "why": "reportar els assaigs demanats a la comanda de laboratori",
+    "expected_fields": ["lab_testing_company (emissor, banda amb registre mercantil)", "lab_sample_id", "lab_depth (Cota d'extracció)", "expedient (Obra/Projecte)", "field_date candidat (data extracció)"],
+    "not_expected": ["client_name (el 'client' del GTL és G3)", "architect", "plantes", "superfícies", "cota_referencia"],
+    "relation_to_others": "Respon la comanda laboratori_4001607 (mostra 'SPT 1 (P3)' = GTL 'SPT1 P3'; cotes idèntiques 1,0-1,15). El GTL mana per a la PROFUNDITAT; l'annex DPSH ('SPT-1') mana per a l'ETIQUETA. Descripció 'Lutita gresosa' lliga amb el Nivell 2 del tall (lutites). PDF/ANNEXES/lab-sig.pdf té el mateix title i contingut (còpia per a l'annex).",
+    "authority_for": ["lab_testing_company", "lab_depth", "lab_sample_id (candidat 2)", "expedient (suport)"]
+  },
+  "tier_a": [
+    {"concept_id": "lab_testing_company", "value": "TPS, Prospecció del Subsòl, SL (B64803075)", "location": "banda de capçalera de totes les pàgines", "quote": "TPS, PROSPECCIÓ DEL SUBSÒL, SL  B64803075  Ins. Reg. Merc. de Barcelona Volum 40308, Foli 33, Full B 363136", "confidence": 0.95, "note": "emissor del GTL = laboratori; mai el 'client' del GTL"},
+    {"concept_id": "lab_sample_id", "value": "SPT1 P3 (ref. lab GTL-8200-25)", "location": "p.2 'Mostra:'", "quote": "Mostra: SPT1 P3 · Referència/es del laboratori: GTL-8200-25", "confidence": 0.65, "note": "l'etiqueta de l'informe la mana l'annex de l'Eva ('SPT-1'); GTL és candidat 2"},
+    {"concept_id": "lab_depth", "value": "1,0 - 1,15 m", "location": "p.2 'Cota d'extracció (m)'", "quote": "Cota d'extracció (m): 1,0 - 1,15", "confidence": 0.9, "note": "GTL > Excel/annex > comanda per a la profunditat; coincideix amb la comanda"},
+    {"concept_id": "lab_location", "value": "P3", "location": "p.2 'Mostra: SPT1 P3'", "quote": "SPT1 P3", "confidence": 0.8, "note": "coincideix amb comanda i annex DPSH"},
+    {"concept_id": "expedient", "value": "4001607", "location": "p.2 'Obra / Projecte'", "quote": "Obra / Projecte: Linyola. Carrer Clot de la Llacuna. 4001607", "confidence": 0.8, "note": "4a font concordant (comanda, annex DPSH, caixetins, GTL)"},
+    {"concept_id": "municipality", "value": "Linyola", "location": "p.1 'Situació:'", "quote": "Situació: Linyola. Carrer Clot de la Llacuna.", "confidence": 0.7, "note": ""},
+    {"concept_id": "street_address", "value": "Carrer Clot de la Llacuna", "location": "p.1 'Situació:'", "quote": "Linyola. Carrer Clot de la Llacuna.", "confidence": 0.6, "note": "sense número"},
+    {"concept_id": "field_date", "value": "2025-10-01", "location": "p.2 'Data extracció'", "quote": "Data extracció: 01/10/2025", "confidence": 0.55, "note": "dia de la mostra (candidat 2, regla 'sondeig'); aquí coincideix amb el primer dia de camp"},
+    {"concept_id": "NOT_client_name", "value": "G3 Desenvolupament Territorial, SL (B25364589)", "location": "p.1/p.7 'DADES DEL CLIENT'", "quote": "DADES DEL CLIENT: G3 Desenvolupament Territorial, SL … B25364589", "confidence": 0.0, "note": "client del laboratori, no del projecte; G3 mai és client"},
+    {"concept_id": "NOT_expedient", "value": "4672-GTL-25 / GTL-8200-25", "location": "capçaleres", "quote": "Núm. Informe: 4672-GTL-25 · Referència/es del laboratori: GTL-8200-25", "confidence": 0.0, "note": "números del laboratori, NO expedient G3"}
+  ],
+  "not_present": ["client_name", "architect_name", "building_type", "num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "cte", "utm_x_utm_y", "referencia_catastral", "num_dpsh_tests"],
+  "reading_notes": "Text net (PDFMaker Excel). Material: Roca, 'Lutita gresosa', obertura manual 10/10/2025. Resultats (fora nivell A): LL 41,7 / LP 22,0 / IP 19,7; sulfats SO4 0,0 mg/kg; Lambe 0,01 MPa 'marginal'. Signatures digitals /Sig de Pere Cervós Flinch i Pere Farrés i Bori (TPS) 30/10/2025."
+}

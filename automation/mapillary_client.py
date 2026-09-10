@@ -188,6 +188,7 @@ def _call_groq_vision(
         "max_tokens": 4096,
         "response_format": {"type": "json_object"},
     }
+    payload.update(config.groq_payload_extras(config.VISION_MODEL_GROQ))
 
     for attempt in range(1, max_retries + 1):
         t0 = time.monotonic()
@@ -222,7 +223,9 @@ def _call_groq_vision(
                     attempt,
                     max_retries,
                 )
-                if attempt < max_retries:
+                # 4xx is deterministic (json_validate_failed, too many images):
+                # retry 5xx only (F4e, 2026-08-22).
+                if resp.status_code >= 500 and attempt < max_retries:
                     time.sleep(2)
                     continue
                 return None
@@ -536,7 +539,7 @@ def _load_cache(cache_dir: Path) -> dict[str, MapillaryAnalysis] | None:
         return None
 
     try:
-        data = json.loads(analysis_path.read_text())
+        data = json.loads(analysis_path.read_text(encoding="utf-8"))
         results: dict[str, MapillaryAnalysis] = {}
         for direction, entry in data.items():
             results[direction] = MapillaryAnalysis(
@@ -571,7 +574,7 @@ def _save_cache(cache_dir: Path, results: dict[str, MapillaryAnalysis]) -> None:
             "confidence": analysis.confidence,
             "images_used": analysis.images_used,
         }
-    (cache_dir / "analysis.json").write_text(json.dumps(data, indent=2))
+    (cache_dir / "analysis.json").write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------

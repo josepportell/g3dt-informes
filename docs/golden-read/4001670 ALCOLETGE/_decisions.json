@@ -1,0 +1,458 @@
+{
+ "project": "4001670 ALCOLETGE",
+ "read_on": "2026-08-23",
+ "reader": "2 subagents amb el skill v0.3; decisions i comparació: Claude Code en sessió",
+ "sources_read": 20,
+ "bias_disclosure": "De l'anàlisi del 23-08 sabia: fitxa de camp buida; 'arquitecte = client' al truth-map d'Alcoletge; l'AI Pipeline hi va fallar (client='G3', expedient=ID lab). Els subagents no ho sabien.",
+ "decisions": {
+  "expedient": {
+   "status": "segur",
+   "value": "4001670",
+   "rule": "carpeta = comanda N19 = annex DPSH 'NÚMERO D´INFORME' = caixetins (Exp)",
+   "candidates": [
+    {
+     "value": "4001670",
+     "source": "comanda Hoja1!N19",
+     "quote": "NÚM. D'EXPEDIENT | 4001670"
+    },
+    {
+     "value": "4001670",
+     "source": "annex DPSH",
+     "quote": "NÚMERO D´INFORME: 4001670"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "annex_12",
+    "annex_13",
+    "annex_18"
+   ]
+  },
+  "client_name": {
+   "status": "segur",
+   "value": "Albert Sans Bonvehí",
+   "rule": "formulari p.5 de l'acceptació (a màquina, NIF 47690689M) + caixetí A.01 'Promotor ALBERT SANS BONVEHI' (2 fonts A independents) + pressupost CLIENT + correu del tècnic ('CLIENT ALBERT SANS BONVEHI DNI 47690689-M')",
+   "candidates": [
+    {
+     "value": "ALBERT SANS BONVEHÍ (47690689M)",
+     "source": "ACCEPTACIO p.5",
+     "quote": "ALBERT SANS BONVEHÍ | 47690689M | C/DELS GIRA-SOLS 7 (CASA)"
+    },
+    {
+     "value": "ALBERT SANS BONVEHI",
+     "source": "A.01.pdf caixetí 'Promotor'",
+     "quote": "Promotor: ALBERT SANS BONVEHI"
+    }
+   ],
+   "sources_checked": [
+    "acceptacio_14",
+    "planol_17",
+    "g3_01",
+    "correu_07",
+    "acceptacio_02"
+   ]
+  },
+  "street_address": {
+   "status": "segur",
+   "value": "Carrer Girasols, 7 (Urb. El Roser)",
+   "rule": "pressupost OBRA + correu + caixetí A.01 + annex DPSH + tall (≥ 3 independents); comanda amb l'adreça BUIDA. Grafies: Girasols / Gira-sols / dels Girasols → la impresa majoritària.",
+   "candidates": [
+    {
+     "value": "C/GIRASOLS 7, URB.EL ROSER",
+     "source": "PRESSUPOST p.1 bloc OBRA",
+     "quote": "C/GIRASOLS 7, URB.EL ROSER / ALCOLETGE"
+    },
+    {
+     "value": "CARRER GIRASOLS Nº7",
+     "source": "annex DPSH",
+     "quote": "OBRA: CARRER GIRASOLS Nº7"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "correu_07",
+    "planol_17",
+    "annex_12",
+    "annex_13",
+    "acceptacio_14",
+    "g3_05 (N20 buida)"
+   ]
+  },
+  "municipality": {
+   "status": "segur",
+   "value": "Alcoletge",
+   "rule": "pressupost + comanda N21 + annexos + correu (assumpte)",
+   "candidates": [
+    {
+     "value": "ALCOLETGE",
+     "source": "comanda Hoja1!N21",
+     "quote": "POBLACIÓ | ALCOLETGE"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "g3_01",
+    "annex_12",
+    "annex_13",
+    "correu_07"
+   ]
+  },
+  "architect_name": {
+   "status": "candidats",
+   "value": "David Graus Robinat (arquitecte tècnic)",
+   "rule": "cap arquitecte declarat per a l'obra 2026 (casella buida a l'acceptació); David Graus Robinat (arquitecte TÈCNIC col·legiat 699, Mollerussa) signa el projecte de 2022 i és qui ENVIA la petició de pressupost del 2026 → candidat 1; pràctica Eva (client al camp arquitecte) → candidat 2.",
+   "candidates": [
+    {
+     "value": "David Graus Robinat, arquitecte tècnic col. 699",
+     "source": "A.01.pdf caixetí + emissor del correu 21/01",
+     "quote": "DAVID GRAUS ROBINAT, arquitecte TÈCNIC col·legiat nº 699"
+    },
+    {
+     "value": "Albert Sans Bonvehí (pràctica Eva: client al camp arquitecte)",
+     "source": "regla del skill (Rubí)",
+     "quote": "—"
+    }
+   ],
+   "sources_checked": [
+    "planol_17",
+    "correu_07",
+    "acceptacio_14",
+    "g3_01"
+   ]
+  },
+  "building_type": {
+   "status": "segur",
+   "value": "ampliació d'un edifici (habitatge unifamiliar)",
+   "rule": "tall/caixetins de l'Eva ('AMPLIACIÓ D'UN EDIFICI…') + PLAN_COST 'EG AMPL' + correu ('ampliació d'uns 100 m a la part posterior'). La comanda diu 'CONSTR HAB UNIF' (genèric) i el caixetí de 2022 'TANCAMENT DE PORXO' (obra anterior): descartats per data/genèric.",
+   "candidates": [
+    {
+     "value": "AMPLIACIÓ D'UN EDIFICI",
+     "source": "tall.pdf caixetí",
+     "quote": "…PER A L'AMPLIACIÓ D'UN EDIFICI SITUAT AL CARRER GIRASOLS Nº7…"
+    },
+    {
+     "value": "ampliació d'uns 100 m a la part posterior",
+     "source": "correu David Graus 21/01",
+     "quote": "ampliació d'uns 100 m a la part posterior de l'edificació existent"
+    },
+    {
+     "value": "CONSTR HAB UNIF",
+     "source": "comanda N18",
+     "quote": "CONSTR HAB UNIF"
+    }
+   ],
+   "sources_checked": [
+    "annex_13",
+    "g3_04",
+    "correu_07",
+    "g3_05",
+    "planol_17"
+   ]
+  },
+  "num_floors": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "cap document declara plantes de l'ampliació (croquis 2026 sense cotes; caixetí 2022 és d'una altra obra). Proposta: preguntar o derivar del projecte quan arribi.",
+   "candidates": [],
+   "sources_checked": [
+    "correu_07",
+    "planol_17",
+    "foto_16",
+    "g3_01"
+   ]
+  },
+  "superficie_parcela": {
+   "status": "no_trobat",
+   "value": null,
+   "rule": "no consta ('uns 100 m' és l'AMPLIACIÓ); ref. cadastral disponible → proposta: Cadastre per referència 8841701CG0184S0001HH",
+   "candidates": [],
+   "sources_checked": [
+    "correu_07",
+    "planol_17",
+    "foto_16"
+   ],
+   "fora_carpeta": {
+    "value": "1167",
+    "font": "Cadastre (Callejero DNPLOC + WFS INSPIRE), portal 7 = 8841701CG0184S (1167 m²)",
+    "note": "no és lectura de la carpeta; mesurat 2026-09-04 (mesura dels 8); signat: 1167 «segons cadastre»"
+   }
+  },
+  "field_date": {
+   "status": "segur",
+   "value": "2026-02-16",
+   "rule": "albarà TPS 16/02/2026 + annex DPSH 'DATA 16/02/2026' + comanda DATA DE PRESA + etiqueta de la mostra ('16-2')",
+   "candidates": [
+    {
+     "value": "16/02/2026",
+     "source": "annex DPSH",
+     "quote": "DATA: 16/02/2026"
+    },
+    {
+     "value": "2026-02-16",
+     "source": "comanda N23",
+     "quote": "DATA DE PRESA | 2026-02-16"
+    },
+    {
+     "value": "16-2",
+     "source": "etiqueta bossa SPT (foto)",
+     "quote": "Mostra P3, 16-2, 0'8–1'4"
+    }
+   ],
+   "sources_checked": [
+    "camp_15",
+    "annex_12",
+    "g3_05",
+    "foto_16",
+    "g3_03 (buida)"
+   ]
+  },
+  "cota_referencia": {
+   "status": "segur",
+   "value": "+188,20",
+   "rule": "annex DPSH '+188,20 msnm segons ICGC' + tall (boca ≈ 188,1-188,2, gràfic). La z GPS de COORDENADES.txt (198,9) discrepa 10,7 m → descartada (anomalia GPS; regla: l'Eva usa ICGC).",
+   "candidates": [
+    {
+     "value": "+188,20 msnm (ICGC)",
+     "source": "annex DPSH",
+     "quote": "Cota inici: +188,20 msnm segons ICGC"
+    },
+    {
+     "value": "198,9 (z GPS P-1, ANÒMALA +10,7 m)",
+     "source": "ANNEXES/COORDENADES.txt",
+     "quote": "308781,86 / 4613950,63 / 198,9"
+    }
+   ],
+   "sources_checked": [
+    "annex_12",
+    "annex_19",
+    "coord_11",
+    "camp_15"
+   ]
+  },
+  "num_soil_levels": {
+   "status": "segur",
+   "value": "2",
+   "rule": "llegenda del tall (única font de nivells: no hi ha sondeig): '1 rebliment antròpic, 2 lutites substrat'. 1 font A (criteri de l'Eva) sense contradicció.",
+   "candidates": [
+    {
+     "value": "2",
+     "source": "tall.pdf llegenda",
+     "quote": "1 rebliment antròpic | 2 lutites substrat"
+    }
+   ],
+   "sources_checked": [
+    "annex_13",
+    "annex_19",
+    "camp_15 (trams)"
+   ]
+  },
+  "num_dpsh_tests": {
+   "status": "segur",
+   "value": "3",
+   "rule": "Excel DPSH (3 fulls) + albarà TPS (3) + pressupost/PLAN_COST (3 previstos)",
+   "candidates": [
+    {
+     "value": "3",
+     "source": "ANNEXES/4001670_DPSH.xls",
+     "quote": "fulls P-1, P-3, P-2"
+    },
+    {
+     "value": "3",
+     "source": "albarà TPS",
+     "quote": "Nº de penetròmetres realitzats: 3"
+    }
+   ],
+   "sources_checked": [
+    "g3_06",
+    "camp_15",
+    "g3_01",
+    "g3_04",
+    "annex_12"
+   ]
+  },
+  "utm_x_utm_y": {
+   "status": "segur",
+   "value": "X 308781,86 ; Y 4613950,63 (P-1)",
+   "rule": "COORDENADES.txt (només P-1; x/y coherents amb l'enllaç Maps 41.654531/0.70348 del correu); la z NO (vegeu cota). Regla Castellar: l'informe usa P-1.",
+   "candidates": [
+    {
+     "value": "308781,86 / 4613950,63",
+     "source": "ANNEXES/COORDENADES.txt",
+     "quote": "P-1: X 308781,86 / Y 4613950,63 / Z 198,9"
+    }
+   ],
+   "sources_checked": [
+    "coord_11",
+    "correu_07"
+   ]
+  },
+  "referencia_catastral": {
+   "status": "segur",
+   "value": "8841701CG0184S0001HH",
+   "rule": "correu del tècnic (única font, autoritat A del proveïdor, sense contradicció). El mapa cadastral de planol-1 mostra l'illa (lectura del subagent '08417'; probable 88417) — corroboració feble.",
+   "candidates": [
+    {
+     "value": "8841701CG0184S0001HH",
+     "source": "correu David Graus 21/01",
+     "quote": "ref. cadastral 8841701CG0184S0001HH"
+    }
+   ],
+   "sources_checked": [
+    "correu_07",
+    "planol_17"
+   ]
+  },
+  "lab": {
+   "status": "candidats",
+   "value": {
+    "lab_testing_company": "TPS PROSPECCIÓ DEL SUBSÒL SL (cap GTL a la carpeta)",
+    "lab_sample_id": "SPT-1 (P3)",
+    "lab_depth": "0,8 - 1,4 m",
+    "lab_location": "P-3"
+   },
+   "rule": "sense GTL: comanda (SPT-1 (P3) 0,8-1,4) + Excel DPSH (5/9/11/33) + full TPS + etiqueta. El nom del laboratori no consta en cap document → candidat per coneixement previ. Etiqueta 'SPT-1' consistent (aquí sí que és un SPT al penetròmetre).",
+   "candidates": [
+    {
+     "value": "SPT-1 (P3) 0,8-1,4",
+     "source": "comanda fila 35",
+     "quote": "SPT-1 (P3) | 0.8 | 1.4"
+    },
+    {
+     "value": "TPS (coneixement previ, cap document)",
+     "source": "memòria gtl_lab_identity",
+     "quote": "—"
+    }
+   ],
+   "sources_checked": [
+    "g3_05",
+    "g3_06",
+    "camp_15",
+    "foto_16"
+   ]
+  },
+  "cte": {
+   "status": "segur",
+   "value": {
+    "cte_edificacio": "C-0",
+    "cte_sol": "T-1"
+   },
+   "rule": "pressupost p.2 'C0 / T1'; coherent amb ampliació de ~100 m² (< 300 total de l'obra nova)",
+   "candidates": [
+    {
+     "value": "C0 / T1",
+     "source": "PRESSUPOST p.2 (i acceptació)",
+     "quote": "Tipus d’edifici: C0 | Tipus de Terreny : T1"
+    }
+   ],
+   "sources_checked": [
+    "g3_01",
+    "acceptacio_14",
+    "correu_07"
+   ]
+  }
+ },
+ "summary": {
+  "segur": 12,
+  "candidats": 2,
+  "no_trobat": 2,
+  "notes": "candidats: architect (tècnic 2022/emissor vs pràctica Eva), lab (nom del laboratori absent). NT: num_floors, superficie_parcela."
+ },
+ "comparison_with_eva": {
+  "reference": "reference-material/4001670 ALCOLETGE/validation/eva_reference_values.json (de 4001670_informe.doc, signat)",
+  "opened_after_decisions": true,
+  "per_field": {
+   "expedient": {
+    "eva": "4001670",
+    "mine": "4001670",
+    "result": "OK"
+   },
+   "client_name": {
+    "eva": "SR. ALBERT SANS BONVEHI",
+    "mine": "Albert Sans Bonvehí",
+    "result": "OK"
+   },
+   "street_address": {
+    "eva": "Carrer Girasols Nº7 (títol de l'informe)",
+    "mine": "Carrer Girasols, 7 (Urb. El Roser)",
+    "result": "OK"
+   },
+   "municipality": {
+    "eva": "Alcoletge (referència sorollosa: frase sencera)",
+    "mine": "Alcoletge",
+    "result": "OK"
+   },
+   "architect_name": {
+    "eva": "ALBERT SANS BONVEHI (= client)",
+    "mine": "candidats [David Graus (tècnic) | client]",
+    "result": "CAND",
+    "note": "correcte = candidat 2. Matís de la regla: encara que hi hagi un arquitecte TÈCNIC (aparellador), l'Eva posa el client → client com a candidat 1 quan qui firma no és arquitecte superior; l'arquitecte pròpiament dit (Linyola: Bunyesc) sí que hi va."
+   },
+   "building_type": {
+    "eva": "l'ampliació d'un edifici en planta baixa",
+    "mine": "ampliació d'un edifici (habitatge unifamiliar)",
+    "result": "OK (CLOSE)"
+   },
+   "num_floors": {
+    "eva": "Pb",
+    "mine": "no_trobat",
+    "result": "NT*",
+    "note": "'Pb' no és a cap document; l'Eva ho deriva ('ampliació en planta baixa' a la part posterior). Regla: ampliació posterior d'un habitatge → candidat 'Pb'."
+   },
+   "superficie_parcela": {
+    "eva": "1167",
+    "mine": "no_trobat",
+    "result": "NT",
+    "note": "no és a cap document; Cadastre per la ref. 8841701CG0184S0001HH ho hauria donat → la proposta del skill és el camí"
+   },
+   "field_date": {
+    "eva": "16 de febrer de 2026",
+    "mine": "2026-02-16",
+    "result": "OK"
+   },
+   "cota_referencia": {
+    "eva": "+188.20",
+    "mine": "+188,20 (segur; GPS 198,9 descartat)",
+    "result": "OK",
+    "note": "la z GPS anòmala (+10,7 m) hauria estat un ERR de prod"
+   },
+   "num_soil_levels": {
+    "eva": "dos nivells",
+    "mine": "2",
+    "result": "OK"
+   },
+   "num_dpsh_tests": {
+    "eva": "3",
+    "mine": "3",
+    "result": "OK"
+   },
+   "utm_ref_catastral": {
+    "eva": "(no impreses a la referència)",
+    "mine": "segur (P-1; ref 8841701…)",
+    "result": "N/A"
+   },
+   "lab": {
+    "eva": "TPS / SPT-1 / -0.80 a -1.40 / P-3",
+    "mine": "candidats (mateixos valors; TPS per coneixement previ)",
+    "result": "CAND",
+    "note": "tot correcte a la llista; sense GTL el nom del lab no es pot llegir"
+   },
+   "cte": {
+    "eva": "C-0 / T-1",
+    "mine": "C-0 / T-1",
+    "result": "OK"
+   }
+  },
+  "totals": {
+   "OK": 10,
+   "CAND": 2,
+   "NT": 3,
+   "NA": 1,
+   "ERR": 0
+  },
+  "rules_learned": [
+   "architect_name: client candidat 1 si l'únic tècnic és aparellador/arquitecte tècnic; arquitecte superior (col·legiat COAC) sí que va al camp",
+   "ampliació posterior d'habitatge → num_floors candidat 'Pb'",
+   "z GPS pot ser anòmala (+10,7 m): validar z GPS contra ICGC abans d'usar-la; l'Eva sempre ICGC"
+  ]
+ }
+}

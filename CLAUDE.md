@@ -14,6 +14,10 @@ Projecte: Automatització de la generació d'informes geotècnics
 
 **Si l'estat detectat sembla incoherent** (per exemple, dins de `g3dt-prod/` però la branca no és `production/g3dt-eva-v1`, o canvis pendents inesperats), atura't i pregunta al Josep abans de continuar.
 
+**Excepció (2026-08-22):** durant l'auditoria de producció treballem **in-place** a `g3dt-prod/` sobre la branca `review/prod-audit-2026-08` (sense worktree nou, per decisió del Josep). Trobar `review/*` dins de `g3dt-prod/` és l'estat esperat; `production/g3dt-eva-v1` no rep commits fins que el Josep decideixi fusionar.
+
+**Excepció (2026-08-23):** la línia de treball "nivell A" (alternativa D de `docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md`) viu a la branca **`experiment/nivell-a-2026-08`**, creada des de `review/prod-audit-2026-08` (`b091f5e`), també in-place a `g3dt-prod/`. Trobar-la aquí és l'estat esperat. **Mai proposar pull/merge a l'Eva** (memòria `feedback_no_pull_eva_success_criterion`).
+
 ## Resum
 
 G3DT genera informes geotècnics per a projectes de construcció. Cada informe inclou:
@@ -24,7 +28,9 @@ G3DT genera informes geotècnics per a projectes de construcció. Cada informe i
 
 ## Model d'Operació
 
-**Claude Code és el runtime de producció**, no una eina de desenvolupament. S'instal·la a l'ordinador d'Eva i s'executa en segon pla. Eva interactua amb el sistema a través del wizard web (localhost).
+**Estat real (verificat 2026-08-23 amb els logs de l'Eva i `docs/INSTALL-EVA-v1.md`):** a l'ordinador de l'Eva (`C:\g3dt-ia\app`, Python 3.12 Windows natiu, instal·lat 2026-05-04) **NO hi ha Claude Code**. La visió va per API (Anthropic/OpenAI/Groq SDK). Els `.bat` de `scripts/` (WSL + `claude`, març 2026) són el disseny anterior; el `G3DT-Wizard.bat` instal·lat és una versió Windows-nativa que només arrenca `python -m web`. La via subprocess `claude -p` existeix al codi (`web/vision_fast.py`, `wizard_service.start_vision_cli`) darrere de `G3DT_PROD_USE_CLAUDECODE_VISION=false`, mai executada a casa de l'Eva.
+
+**Decisió 2026-08-23 (Josep, "via A"):** Claude Code tornarà a ser el lector de producció — instal·lat a l'ordinador de l'Eva (CLI Windows natiu, amb `ANTHROPIC_API_KEY` o subscripció) i cridat headless pel wizard amb un skill G3DT que llegeix cada document del projecte i escriu candidats del nivell A amb font i cita. Python conserva lectors deterministes de plantilles G3, Cadastre/ICGC, càlculs i informe. Vegeu `docs/ANALISI-NIVELL-A-LECTURA-HUMANA-2026-08-23.md` §10 i `docs/_FOR-NEW-YOU-20260823-1745.md`. El paràgraf següent descriu el flux *objectiu*, no l'actual.
 
 ```
 Eva obre localhost:8765 al navegador
@@ -44,7 +50,7 @@ Eva revisa i ajusta els camps que cregui convenient (~30s)
 Eva prem "Generar Informe" → .docx descarregable
 ```
 
-**Clau:** La visió de Claude (lectura de PDFs de camp i plànols) s'integra directament al pipeline perquè Claude Code és present al runtime. No cal invocar skills manualment — tot és automàtic quan Eva selecciona un projecte.
+**Clau (objectiu via A):** la lectura de documents la farà Claude Code headless (`claude -p`, cf. `web/vision_fast.py`) amb un skill, invocat automàticament pel wizard quan l'Eva selecciona un projecte. Avui (prod `1f1d7fd`) aquesta lectura la fan crides API per tipus de document (`web/vision_groq.py`).
 
 ## Skills Disponibles
 
@@ -144,7 +150,9 @@ clients/g3dt/
 │   ├── fileminer/            # Fase 0.3: extracció senyals text
 │   ├── dpsh_extractor.py     # Extracció de dades DPSH d'Excel
 │   ├── format_learner.py     # Detecció + aprenentatge de formats nous
-│   ├── geocode_coordinates.py # Geocodificació adreça → UTM (Nominatim+Cadastre)
+│   ├── geocode_coordinates.py # Geocodificació adreça → UTM (Nominatim+Cadastre) — VIA B, no tocar
+│   ├── municipis.py          # Padró de municipis de Catalunya (offline, sense xarxa)
+│   ├── data/municipis_padro_cadastre.json  # 947 municipis: grafia INE + Cadastre + codis
 │   ├── vision_normalizer.py  # Normalització claus vision (planol + sondeig)
 │   ├── report_data.py        # Model de dades unificat
 │   ├── schemas/              # Carregadors Python per schemas YAML
@@ -162,7 +170,7 @@ clients/g3dt/
 ├── templates/
 │   ├── g3dt-jinja-template.docx  # Plantilla Word principal
 │   └── validation/
-│       └── review.html       # UI web: 4 pestanyes (DPSH, Sondeig, Plànol, Wizard)
+│       └── review.html       # UI web: 5 pestanyes (DPSH, Sondeig, Plànol, Imatges, Wizard)
 ├── docs/                     # Documentació tècnica
 │   ├── ARQUITECTURA-CONCEPT-FORMAT-SCHEMAS.md  # Disseny concepte/format
 │   └── REFERENCE-EXTRACTOR.md                  # Enginyeria inversa informes Eva
@@ -218,6 +226,22 @@ Extreu ~30-37 variables amb posició exacta dels informes reals d'Eva (`.doc`/`.
 
 `docs/METODOLOGIA-EVA.md` (2026-04-17) — síntesi dels 7 informes signats amb cites textuals: Crespo Villalaz (c/φ), Rodríguez Ortiz "Curso aplicado de cimentaciones" Cap. 2 (bicapa, Fig. 2.9), Schmertmann 1970 (E/assentaments, 2B/4B), Terzaghi-Peck (Qa granular). PDF d'Ortiz Cap. 2 arxivat a `docs/research/books/`. **Abans de modificar qualsevol càlcul geotècnic, consulta aquest document.**
 
+**Regla d'or (2026-09-02): els geotècnics divergeixen de les fórmules amb criteris pactats — modela CRITERIS,
+no fórmules.** Arrodoniment professional (Qa a 0,5; E a 10/50; φ enter), topalls Qa per règim (3,0 sòl / 3,5
+granular dens / 3,0 roca mixta), ajust litològic (carbonatació→E↑), l'estrat que mana és **on recolza la
+fonamentació** (la frase del Qa del signat el DECLARA: encastament 20-40 cm — repàs R 2026-09-03),
+assentament = verificació de servei (±50 %).
+La cadena Qa que ho implementa està validada **6/7 MATCH exacte**. Família de documents (tots a `docs/`):
+
+| Document | Què hi ha |
+|---|---|
+| `CRITERIS-CALCUL-EVA.md` | cadena Qa reverse-engineered 6/7 exacte; topalls; arrodoniment confirmat amb 4 fonts externes; taula 9 nivells signats |
+| `RECERCA-PRACTICA-GEOTECNICA-ESPANYA.md` | pràctica espanyola; cap correlació sola reprodueix l'E d'Eva; taules Crespo (apèndix) |
+| `ANALISI-SETTLEMENT-BACK-ENGINEERING.md` §5 | procés de decisió del geotècnic; per què E=650 a Bell-lloc (carbonatades) |
+| `CALCUL-E-MODUL-DEFORMACIO.md`, `CALCUL-K30-BALAST.md` | racional E v1 + proposta v2; K30=E/75 (E/60 roca) validat 2/2 |
+| `RECERCA-CRITERIS-DESCRITS-ALS-INFORMES-2026-09-03.md` | tasca R: els criteris que Eva DESCRIU als informes (7/7, cites amb pàgina); resol P1, tanca P3 en negatiu, capgira Anciles |
+| `ANALISI-CALCUL-N20-E-2026-09-02.md` | estat actual N20+E vs signats; forats coneguts (columna N, ferm, E per règims); pla: `PLA-CRITERIS-CALCUL-AL-CODI-2026-09-03.md` |
+
 ## Documents de Camp
 
 ### PENETROS.pdf (DPSH)
@@ -255,6 +279,7 @@ Plànol de l'arquitecte amb dades del projecte:
 | DPSH | PENETROS.pdf vs Excel | Revisar discrepàncies N20 |
 | Sondeig | SONDEIG.pdf | Revisar capes sòl (baixa confiança) |
 | Plànol | A.01.pdf | Revisar dades extretes del plànol |
+| Imatges | Fotos del projecte + calaix de figures | Tria d'imatges de l'informe (2026-09-09/10): per ranura, «Alternatives (n)» obre la finestreta amb l'actual, les alternatives dels lectors, «Puja una imatge» (qualsevol ranura, també geològic/tall/cullera), el peu de les figures del projecte i la tornada a l'automàtic. La mateixa finestreta s'obre des de la secció «Imatges de l'informe» del Wizard. Res abans de llançar el pipeline. |
 | Wizard | Tots els prefills | Revisar/ajustar tots els camps + generar |
 
 ## Web Wizard (FastAPI)
@@ -270,7 +295,7 @@ Interfície principal d'Eva. Claude Code serveix el wizard en segon pla.
 **Arquitectura:**
 - `web/api.py` — Endpoints REST (`/api/projects`, `/api/prefills/{p}`, `/api/wizard/{p}`, `/api/generate/{p}`, `/api/report/{p}`, `/api/user-data/{p}`, `/api/geolocalitzar/{p}`)
 - `web/wizard_service.py` — Capa de servei: auto_extract + wizard prefills + geocodificació + cache
-- `templates/validation/review.html` — UI amb 4 pestanyes
+- `templates/validation/review.html` — UI amb 5 pestanyes (DPSH, Sondeig, Plànol, Imatges, Wizard)
 
 **Flux al seleccionar projecte:**
 1. Eva selecciona projecte → crida `/api/prefills/{p}`
@@ -300,6 +325,39 @@ Quan un projecte no té COORDENADES.txt (GPS de camp), el sistema deriva coorden
 - Cache: 90 dies a `~/.g3dt/cache/geocode/`
 
 **Fonts d'adreça** (prioritat): `street_address` > `site_address` > `adjacent_south`
+
+## Interpretació d'adreces i municipi (via A)
+
+Camí **independent** del de dalt: `geocode_coordinates.py` és **via B de producció** (es pot llegir, mai
+modificar mentre l'Eva hi treballi). La via A resol l'adreça llegida cap a parcel·les cadastrals.
+
+```
+skill de lectura  →  street_address (text) + street_address_struct (objecte, a extra_concepts)
+        ↓
+portals_from_address()      regex determinista → (nom de via, [(núm, lletra)])
+        ↓
+municipis.lookup()          padró local, 947 municipis, SENSE xarxa; bucle en línia si no hi és
+        ↓
+resolve_via()               tria sobre la llista REAL de carrers del municipi, sense llindar de mida
+        ↓
+resolve_portal() (pnp, plp) EXACTES  →  WFS: àrea + polígon  →  contigüitat  →  senyals
+```
+
+**Les tres regles que no es toquen:**
+
+1. **Alternatives sí a l'eix via/municipi, mai a l'eix portal.** Les variants de via i municipi són
+   ortogràfiques (`11`↔`ONZE`, `GIRASSOLS`↔`GIRASOLS`, ca/es); 18A i 18B són **edificis diferents**.
+2. **Cap nom acceptat surt del model.** Sempre de la llista real del municipi o del padró.
+3. **Empat = blanc.** Val més cap parcel·la que la d'un altre carrer (ERR = 0 mana sobre la cobertura).
+
+| Fitxer | Què |
+|---|---|
+| `automation/municipis.py` | padró (exacte / forma curta / preposicions), un sol guanyador |
+| `automation/data/municipis_padro_cadastre.json` | 947 municipis: grafia INE + grafia i codis del Cadastre |
+| `automation/lectura/address_struct.py` | valida `street_address_struct`; vocabulari d'adreces (`FLOOR_ORDINAL_RE`) |
+| `automation/lectura/cadastre_reader.py` | `portals_from_address`, `resolve_via`, `resolve_portal`, senyals |
+
+**Doc complet:** `docs/DISSENY-ADRECES-I-MUNICIPI-2026-09-01.md` (8 decisions, mesures, i el que queda obert).
 
 ## Comandaments Útils
 

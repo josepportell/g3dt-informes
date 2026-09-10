@@ -1,0 +1,126 @@
+{
+ "source_path": "ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf",
+ "source_md5": "e64d879a463376dfca7744570a0a430d",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost geotècnic G3 (26·0050) per a l'Estudi Geotècnic de Vilanova de Segrià, amb la pàgina 5 d'acceptació omplerta i signada pel client i per G3",
+ "issuer": "G3 Desenvolupament Territorial, S.L.",
+ "date": "27/01/26 (data del pressupost, p.1 i p.5); sense data explícita a la firma",
+ "pages_or_sheets": "7 pàgines",
+ "context": {
+  "who_made_it": "G3 Desenvolupament Territorial, S.L. (el geotècnic) — pressupost/oferta per a l'Estudi Geotècnic",
+  "for_whom": "el sol·licitant/client — Grupo Cuenca Guerrero SL (Antonio Cuenca Lara com a contacte), que l'ha d'acceptar i indicar les dades de facturació",
+  "why": "perquè el client aprovi l'abast i el preu de l'estudi geotècnic i, en acceptar-lo (signatura p.5), confirmi les dades que han de constar a la factura i a l'informe, abans de començar els treballs de camp",
+  "expected_fields": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "cte_edificacio",
+   "cte_sol",
+   "num_dpsh_tests"
+  ],
+  "not_expected": [
+   "field_date",
+   "cota_referencia",
+   "num_soil_levels",
+   "lab_sample_id",
+   "utm_x_utm_y",
+   "referencia_catastral",
+   "architect_name"
+  ],
+  "relation_to_others": "versió SIGNADA/ACCEPTADA de '26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf' (mateix codi comercial 26·0050, mateixa data 27/01/26; no oberta en aquesta lectura --only). Afegeix la pàgina 5 amb el formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' omplert a mà i signat pel client i per G3 — aquesta pàgina és font d'autoritat per a client_name.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "cte_edificacio",
+   "cte_sol",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "Grupo Cuenca Guerrero SL",
+   "location": "p.5 formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME' → NOMBRE Y APELLIDO",
+   "quote": "NOMBRE Y APELLIDO: Grupo Cuenca Guerrero SL",
+   "confidence": 0.9,
+   "note": "coincideix amb el bloc CLIENTE: de p.1 (mateix document, no independent); NIF B26604942 confirma que és la societat, no el contacte Antonio Cuenca Lara"
+  },
+  {
+   "concept_id": "client_name",
+   "value": "Grupo Cuenca Guerrero SL.",
+   "location": "p.1 bloc CLIENTE",
+   "quote": "CLIENTE: GRUPO CUENCA GUERRERO SL.",
+   "confidence": 0.8,
+   "note": "corrobora p.5 dins del mateix document; no és font independent"
+  },
+  {
+   "concept_id": "street_address",
+   "value": "C/ Sta. Gemma 4, Urb. La Serra",
+   "location": "p.1 bloc OBRA",
+   "quote": "OBRA: ESTUDI GEOTECNIC / C/ STA. GEMMA 4, URB.LA SERRA / VILANOVA DE SEGRIA",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Vilanova de Segria",
+   "location": "p.1 bloc OBRA (3a línia); coincideix amb p.1 bloc CLIENTE i amb p.5 CP Y POBLACIÓN",
+   "quote": "VILANOVA DE SEGRIA",
+   "confidence": 0.9,
+   "note": "grafia del document sense accent; forma oficial 'Vilanova de Segrià' (a validar contra el padró de municipis al consolidador)"
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "p.2 'PLAN DE TRABAJO' i p.4 taula VALORACIÓN línia 001.001",
+   "quote": "3 ensayos de penetración dinámica DPSH (p.2) / UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH 3,00 (p.4)",
+   "confidence": 0.6,
+   "note": "previstos al pressupost, no executats; confirmar amb ANEXOS/4001671_DPSH.xls si discrepen"
+  },
+  {
+   "concept_id": "cte_edificacio",
+   "value": "C0",
+   "location": "p.2 bloc 'Clasificación CTE'",
+   "quote": "Tipo de Edificio. C0",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "cte_sol",
+   "value": "T1",
+   "location": "p.2 bloc 'Clasificación CTE'",
+   "quote": "Tipo de terreno: T1",
+   "confidence": 0.85,
+   "note": null
+  },
+  {
+   "concept_id": "NOT_client_name",
+   "value": "Antonio Cuenca Lara",
+   "location": "p.5 bloc 'PERSONAS Y/O EMPRESAS QUE PUEDEN RECIBIR INFORMACIÓN'",
+   "quote": "PERSONAS Y/O EMPRESAS QUE PUEDEN RECIBIR INFORMACIÓN: ANTONIO CUENCA LARA",
+   "confidence": 0.0,
+   "note": "administrador/contacte de Grupo Cuenca Guerrero SL i destinatari addicional d'informació — no és el client_name; l'entitat que signa i consta amb NIF és Grupo Cuenca Guerrero SL (B26604942)"
+  }
+ ],
+ "not_present": [
+  "expedient (només hi surt el codi comercial 26·0050, no el número d'expedient — regla explícita: no és l'expedient)",
+  "architect_name (no consta despatx ni tècnic redactor al document)",
+  "building_type (no hi ha descripció del tipus d'edifici, només 'ESTUDI GEOTECNIC' com a nom de l'encàrrec)",
+  "num_floors",
+  "superficie_parcela",
+  "field_date (només data del pressupost/acceptació, no de camp)",
+  "cota_referencia",
+  "num_soil_levels",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location"
+ ],
+ "reading_notes": "Text net (Acrobat Distiller 15.0, text_ok=true a les 7 pàgines). Bloc CLIENTE apareix per sobre del bloc OBRA a p.1 (ordre visual ja correcte, no calia reordenar per (y,x)). El layout de p.5 (formulari 'DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME') es va verificar amb la imatge renderitzada perquè el text pla treu els valors omplerts al final del flux (línies 57-64), separats de les etiquetes; confirmat visualment: Nombre=Grupo Cuenca Guerrero SL, Dirección=Calle Merce Rodoreda 9, CP y Población=25133-Vilanova de Segria, NIF=B26604942, Telf=625298919, email=hola@cuencaguerrero.es, contacte=Antonio Cuenca Lara. Pàgines 3, 6 i 7 són condicions generals/índex sense dades de nivell A."
+}

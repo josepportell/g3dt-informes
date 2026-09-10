@@ -295,8 +295,12 @@ def _detect_language(text: str) -> str:
     return 'es' if es_count > ca_count else 'ca'
 
 
-def _read_pdf_text(pdf_path: Path) -> str:
-    """Read all text from a PDF via PyMuPDF. Returns '' on failure."""
+def _read_pdf_text(pdf_path: Path, sort: bool = False) -> str:
+    """Read all text from a PDF via PyMuPDF. Returns '' on failure.
+
+    `sort=True` demana l'ordre de lectura (blocs per posició): al GTL de Linyola el bloc «ASSAIGS REALITZATS:» surt
+    ABANS de dues de les seves quatre línies en l'ordre intern del PDF i `_extract_tests_text` només en veia dues
+    (2026-09-07, peça 3)."""
     try:
         import fitz  # PyMuPDF
     except ImportError:
@@ -306,7 +310,7 @@ def _read_pdf_text(pdf_path: Path) -> str:
         doc = fitz.open(str(pdf_path))
         text = ''
         for page in doc:
-            text += page.get_text() + '\n'
+            text += (page.get_text(sort=True) if sort else page.get_text()) + '\n'
         doc.close()
         return text
     except Exception as e:
@@ -319,6 +323,7 @@ def _build_lab_results(
     gtl_text: str,
     lab_path: str = '',
     gtl_path: str = '',
+    gtl_text_sorted: str = '',
 ) -> LabResults:
     """
     Pure extraction logic over already-read PDF text (no file IO).
@@ -376,7 +381,7 @@ def _build_lab_results(
         results.lab_sample_id = meta_info['sample_id']
     if meta_info.get('depth'):
         results.lab_depth = f"{meta_info['depth']} m"
-    results.lab_tests_text = _extract_tests_text(metadata_text, lang)
+    results.lab_tests_text = _extract_tests_text(gtl_text_sorted or metadata_text, lang)
 
     # Lab company: resolve from the footer (GTL preferred), canonicalized via
     # the registry; fall back to the known constant when no footer parses.
@@ -427,10 +432,15 @@ def extract_lab_results(project_path: str | Path) -> LabResults:
 
     lab_text = _read_pdf_text(lab_path) if lab_path else ''
     gtl_text = _read_pdf_text(gtl_path) if gtl_path else ''
+    try:
+        gtl_text_sorted = _read_pdf_text(gtl_path, sort=True) if gtl_path else ''
+    except TypeError:   # lector substituït (tests) sense `sort`
+        gtl_text_sorted = ''
 
     return _build_lab_results(
         lab_text=lab_text,
         gtl_text=gtl_text,
         lab_path=str(lab_path) if lab_path else '',
         gtl_path=str(gtl_path) if gtl_path else '',
+        gtl_text_sorted=gtl_text_sorted,
     )

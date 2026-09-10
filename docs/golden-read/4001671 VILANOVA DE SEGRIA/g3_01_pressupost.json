@@ -1,0 +1,29 @@
+{
+ "source_path": "26.0050/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA.pdf",
+ "document_type": "pressupost_g3",
+ "what_it_is": "Pressupost 26·0050 de G3 (27/01/2026, 7 p., EN CASTELLÀ excepte condicions p.6-7 en català) per a un estudi geotècnic a Vilanova de Segrià: 3 DPSH + 1 SPT amb recuperació de mostra + laboratori; 840 € (IVA no inclòs). Formulari p.5 buit, sense signatura.",
+ "issuer": "G3 DESENVOLUPAMENT TERRITORIAL, S.L.",
+ "date": "2026-01-27",
+ "pages_or_sheets": 7,
+ "context": {
+  "who_made_it": "G3 (ERP m4PRO; PDF creator 'G3 DESENVOLUPAMENT TERRITORIAL, S.L.', title 'm4PRO ERP · Informes del Proyecto', author 'USER2', creationDate 27/01/2026 15:35, modDate 15:58)",
+  "for_whom": "el sol·licitant del geotècnic: GRUPO CUENCA GUERRERO SL. (empresa de Vilanova de Segrià)",
+  "why": "oferir i acotar la campanya (3 DPSH, 1 SPT amb mostra, laboratori) i el preu abans d'acceptar l'encàrrec. Redactat en castellà → l'informe d'aquest projecte serà en castellà.",
+  "expected_fields": ["client_name (com a sol·licitant)", "street_address (bloc OBRA)", "municipality", "cte_edificacio / cte_sol", "num_dpsh_tests (previst)"],
+  "not_expected": ["expedient", "field_date", "cota_referencia", "num_soil_levels", "lab_sample", "num_floors", "superficie_parcela", "architect_name"],
+  "relation_to_others": "document d'encàrrec; la fitxa de camp (C6), el PLAN_COST i la comanda deriven del mateix encàrrec. Versió signada a ACEPTACION CASTELLANO/PRESUPUESTO GEOTEC.VILANOVA DE SEGRIA Signed.pdf. Mateix codi 26·0050 que la carpeta 26.0050/ i que els .msg PRESSUPOST LLEIDA. DTE.txt ('DTO AQUEST INFORME ... 1016,40€' = 840 × 1,21 IVA) confirma la facturació d'aquest pressupost.",
+  "authority_for": ["municipality", "street_address (bloc OBRA)", "cte_edificacio", "cte_sol"]
+ },
+ "tier_a": [
+  {"concept_id": "client_name", "value": "GRUPO CUENCA GUERRERO SL.", "location": "p.1 bloc CLIENTE (y=230)", "quote": "CLIENTE: / GRUPO CUENCA GUERRERO SL. / C/MERCE RODOREDA 9 / 25133    VILANOVA DE SEGRIA / Tel: 625298919", "confidence": 0.6, "note": "sol·licitant del pressupost, no necessàriament el promotor. És una SL del mateix municipi (no conté ARQUITECT). Cap document de text de la carpeta porta l'etiqueta 'Promotor'. Candidat, no segur. L'adreça C/Merce Rodoreda 9 és la del CLIENT, NO la de l'obra."},
+  {"concept_id": "street_address", "value": "C/ Sta. Gemma 4, Urb. La Serra", "location": "p.1 bloc OBRA (y=421)", "quote": "OBRA: / ESTUDI GEOTECNIC ⏎ C/ STA. GEMMA 4, URB.LA SERRA ⏎ VILANOVA DE SEGRIA", "confidence": 0.9, "note": "bloc OBRA = adreça de l'obra. Inclou la urbanització 'La Serra'."},
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "p.1 bloc OBRA línia 3 (y=421)", "quote": "VILANOVA DE SEGRIA", "confidence": 0.9, "note": "forma G3 sense accent; forma oficial 'Vilanova de Segrià'. Coincideix amb la població del sol·licitant (25133 VILANOVA DE SEGRIA), cosa que no és prova per si sola."},
+  {"concept_id": "cte_edificacio", "value": "C0", "location": "p.2 (y=228)", "quote": "Tipo de Edificio. C0", "confidence": 1.0, "note": "C0 = < 300 m² i < 4 plantes (definició Eva)"},
+  {"concept_id": "cte_sol", "value": "T1", "location": "p.2 (y=243)", "quote": "Tipo de terreno: T1", "confidence": 1.0, "note": ""},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "p.2 campanya (y=632) + p.4 valoració 001.001", "quote": "3 ensayos de penetración dinámica DPSH | UNIDADES DE ENSAYO DE PENETRACION DINAMICA DPSH 3,00", "confidence": 0.7, "note": "previstos, no executats; mana l'Excel DPSH"},
+  {"concept_id": "lab_location", "value": "1 assaig SPT amb recuperació de mostra (sense sondeig a rotació pressupostat)", "location": "p.2 (y=647) + p.4 001.002/001.003", "quote": "Ensayo SPT, con recuperación de muestra | ENSAYO SPT 1,00 | ML.PREVIOS AL ENSAYO SPT 1,00", "confidence": 0.7, "note": "previst; cap línia de sondeig a rotació: la mostra de laboratori vindrà d'un SPT"},
+  {"concept_id": "expedient_comercial", "value": "26·0050", "location": "p.1 peu (y=756), p.4 (y=134), p.5 (y=96)", "quote": "26·0050 ⏎ P#", "confidence": 1.0, "note": "codi comercial, NO expedient (l'expedient és 4001671, carpeta/comanda/annexos)"}
+ ],
+ "not_present": ["expedient", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "lab_sample_id", "lab_depth"],
+ "reading_notes": "Identificat per metadata (creator G3, title m4PRO). Blocs de p.1 ordenats per (y,x). Document en castellà (cos p.1-5) amb condicions específiques p.6-7 en català — confirma informe en castellà. Formulari p.5 ('DATOS QUE HAN DE CONSTAR EN LA FACTURA Y EN EL INFORME') completament buit; 0 widgets, cap /Sig: NO és la versió acceptada. Cap arquitecte esmentat enlloc. DTE.txt de la carpeta arrel: 'EN DATA 23/02 DTO AQUEST INFORME PER UN IMPORT DE 1016,40€ - VCT: 30/03/26' (840 € + 21% IVA = 1.016,40 €)."
+}

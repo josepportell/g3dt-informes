@@ -1,0 +1,44 @@
+{
+ "source_path": "FOTOS DE CAMP + PLANOL PUNTS/spt alcoletge.png",
+ "document_type": "foto",
+ "what_it_is": "Foto de camp de la mostra SPT (testimoni dins mitges canyes) amb l'etiqueta de la bossa emplenada a mà",
+ "issuer": "TPS/G3 a camp",
+ "date": "etiqueta 'Data: 16-2'",
+ "pages_or_sheets": "1 imatge 1600x739",
+ "context": {
+  "who_made_it": "operari a camp fotografia la mostra etiquetada",
+  "for_whom": "traçabilitat de la mostra cap al laboratori",
+  "why": "deixar constància del punt, interval i colpeig de la mostra",
+  "expected_fields": [
+   "punt",
+   "profunditat",
+   "golpeig"
+  ],
+  "not_expected": [
+   "municipi com a font (foto)",
+   "client (etiqueta = G3-Eva, cap rol)"
+  ],
+  "relation_to_others": "mateixa mostra que el full SPT de PENETROS.pdf p.3 i la fila 35 de la comanda",
+  "authority_for": [
+   "corroboració de spt_ma_tests (registre, interval, punt)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "spt_ma_tests": [
+   {
+    "id": "(etiqueta sense id; punt P3)",
+    "punt": "P3",
+    "profunditat": "de 0'8 a 1'4",
+    "registre": "5 | 9 | 11 | 33",
+    "location": "etiqueta de la bossa, camps Punt / Profunditat de-a / Golpeig",
+    "quote": "Obra: ALCOLETGE | Punt: P3 | Profunditat de: 0'8 a: 1'4 | Data: 16-2 | Golpeig: 5 | 9 | 11 | 33"
+   }
+  ]
+ },
+ "not_present": [
+  "litologia",
+  "n30 calculat"
+ ],
+ "reading_notes": "Lectura visual directa de la foto. El testimoni recuperat es veu argilós marró clar (coherent amb 'lutita marró' del full SPT), però la litologia no es llegeix d'una foto: només corroboració."
+}

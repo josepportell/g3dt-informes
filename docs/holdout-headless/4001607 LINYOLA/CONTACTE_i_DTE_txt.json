@@ -1,0 +1,22 @@
+{
+  "source_path": "CONTACTE.txt + DTE.txt",
+  "document_type": "altre",
+  "what_it_is": "Dues notes de text de l'Eva: contactes del projecte i nota de facturació (DTE)",
+  "issuer": "G3-Eva (notes internes)",
+  "date": "DTE menciona 07/10 (2025) i venciment 10/11/25",
+  "pages_or_sheets": "2 fitxers txt (79 B + 76 B)",
+  "context": {
+    "who_made_it": "Eva (G3), notes ràpides internes",
+    "for_whom": "ella mateixa",
+    "why": "tenir a mà el contacte de camp i l'estat de facturació",
+    "expected_fields": ["contacte (fora nivell A)", "possible pista de client_name"],
+    "not_expected": ["adreça d'obra", "dades tècniques"],
+    "relation_to_others": "El cognom 'BUNYESC' lliga amb el CLIENT del pressupost (Laia = persona de contacte del despatx). 'Sílvia' lliga amb els noms de fitxer de l'arquitecte ('..._Silvia_Jaume...') → la propietat sembla ser Sílvia (i Jaume).",
+    "authority_for": []
+  },
+  "tier_a": [
+    {"concept_id": "client_name", "value": "Sílvia Eroles Balagueró", "location": "CONTACTE.txt línia 1", "quote": "Sílvia Eroles Balagueró telf: 618 10 86 12", "confidence": 0.35, "note": "candidat feble: contacte de camp, no etiquetat com a promotor; coincideix amb 'Silvia' dels noms de fitxer del projecte de l'arquitecte (Silvia_Jaume)"}
+  ],
+  "not_present": ["tots els altres camps del nivell A"],
+  "reading_notes": "DTE.txt = 'EN DATA 07/10 DTO AQUEST INFORME PER UN IMPORT DE 1016,40€ - VCT: 10/11/25' (facturació; 840€+IVA=1016,40 → quadra amb el pressupost). Cap valor del nivell A a DTE. 'Laia: 628 577 224.BUNYESC' = contacte del despatx BUNYESC."
+}

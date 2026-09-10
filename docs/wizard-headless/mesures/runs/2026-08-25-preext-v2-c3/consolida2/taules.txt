@@ -1,0 +1,10 @@
+-- dpsh_tests: or 4 files / prod 4 files · alineades per clau
+-- sondeig_tests: or 1 files / prod 1 files · alineades per clau
+ALERTA   sondeig_tests[0].spt_ma estat or=candidats prod=None (or value='1/0')
+ERR      sondeig_tests[0].nivell_freatic segur discrepant: or='No detectat' prod='No indicat'
+-- spt_ma_tests: or 1 files / prod 1 files
+ABSENT   spt_ma_tests[0].id (or=candidats)
+ABSENT   spt_ma_tests[0].punt (or=segur)
+CAUTELA  spt_ma_tests[0].n30 or segur, prod candidats (bo dins): 'R (rebuig)'
+-- soil_levels: or 2 files / prod 2 files · alineades per clau
+TOTALS: {'OK': 24, 'ALERTA': 1, 'ERR': 1, 'ABSENT': 2, 'CAUTELA': 1}

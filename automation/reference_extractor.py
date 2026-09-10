@@ -71,6 +71,7 @@ SKIP_PREFIXES = (
 # only flag a ROW as header when MULTIPLE cells match these phrases.
 _HEADER_ROW_PHRASES = frozenset({
     "nº assaig", "n° assaig", "n. assaig", "nº  assaig",
+    "nº ensayo", "n° ensayo", "n.º ensayo", "punto", "prof. extracción (m)", "prof. extraccion (m)", "litología",   # ES (bloc 3)
     "punt",
     "prof. extracció (m)", "prof. extraccio (m)",
     "prof. extracció", "prof. extraccio",
@@ -92,6 +93,7 @@ _HEADER_CELL_PHRASES = frozenset({
     "prof. extracció (m)", "prof. extraccio (m)",
     "prof. extracció", "prof. extraccio",
     "litologia",
+    "nº ensayo", "n° ensayo", "n.º ensayo", "prof. extracción (m)", "litología",   # ES (bloc 3)
 })
 
 # Backwards-compat alias retained for any external imports/tests.
@@ -164,6 +166,13 @@ LOOP_TABLES = {
         "cols": ["test_id", "cota", "depth", "spt_ma", "water"],
         "header_rows": 2,
     },
+    # Bloc 3 (2026-09-07): la taula SPT/MA és un bucle des de la Fase 8b (2026-08-26); sense aquesta entrada les cel·les
+    # `{{ test.* }}` es saltaven (punt al nom) i `spt_*` queien a None a la re-extracció.
+    6: {
+        "name": "spt_ma_tests",
+        "cols": ["test_id", "location", "depth_range", "n30", "lithology"],
+        "header_rows": 2,
+    },
     8: {
         "name": "soil_level_rows",
         "cols": ["name", "material"],
@@ -218,16 +227,214 @@ class ExtractionResult:
 # ---------------------------------------------------------------------------
 
 def _should_skip_variable(var_name: str) -> bool:
-    """Return True if the variable should be skipped (images, numbering)."""
+    """Return True if the variable should be skipped (images, loop vars).
+
+    Bloc 4 (2026-09-07): la NUMERACIÓ (`fig_*_num`, `photo_*_num`, `table_*_num`, `section_*_num`; 22 forats de la
+    plantilla) ja NO es salta: és l'únic grup de la plantilla que mai s'havia comptat contra els 7 signats. El valor
+    es redueix al primer token numèric del peu o de la capçalera (`_numbering_token`). Les imatges (`*_image`) i les
+    variables de bucle (amb punt) segueixen fora.
+    """
+    if "." in var_name:
+        return True
+    if var_name.endswith("_num"):
+        return False
     for prefix in SKIP_PREFIXES:
         if var_name.startswith(prefix):
             return True
     for suffix in SKIP_SUFFIXES:
         if var_name.endswith(suffix):
             return True
-    if "." in var_name:
-        return True
     return False
+
+
+#: Peu o capçalera del signat → el seu NÚMERO: «Fotografia 3. Vista…» → «3», «Figura 1 i Figura 2…» → «1» (el 2n forat
+#: va pel multi-forat), «3.5. EXCAVABILITAT» → «3.5», «4.4. EMPENTES DE TERRES\t45» (entrada de l'índex) → «4.4».
+#: La paraula del peu és opcional i insensible a majúscules i accents (ES «Fotografía», «Tabla»).
+_NUM_TOKEN_RE = re.compile(
+    r"^\W*(?:(?:figura|fotografia|fotografía|foto|taula|tabla|fig)\.?\s*)?(\d+(?:\.\d+)*)(?![\d,])", re.IGNORECASE)
+
+
+def _numbering_token(value: str | None) -> str | None:
+    """Primer token numèric d'un valor de numeració («3», «2.4.2»); None si el text no comença per un número."""
+    if not value:
+        return None
+    m = _NUM_TOKEN_RE.match(str(value))
+    return m.group(1) if m else None
+
+
+def _is_numbering(var_name: str) -> bool:
+    """`fig_*_num`, `photo_*_num`, `table_*_num`, `section_*_num`: van per `extract_numbering_variables`."""
+    return var_name.endswith("_num") and "." not in var_name
+
+
+#: Peu del signat o de la plantilla: paraula (CA/ES), número, opcional «i/y Figura N» (peu de dues figures), resta.
+_CAPTION_RE = re.compile(
+    r"^\s*(figura|fotografia|fotografía|foto|taula|tabla)\.?\s*(\d+)?"
+    r"(?:\s*(?:i|y)\s*(?:figura|fotografia|fotografía)\s*(\d+)?)?\s*[.:\-–]?\s*(.*)$", re.IGNORECASE | re.DOTALL)
+_CAPTION_KIND = {"figura": "figura", "fotografia": "fotografia", "fotografía": "fotografia", "foto": "fotografia",
+                 "taula": "taula", "tabla": "taula"}
+#: Capçalera numerada del signat («3.5. EXCAVABILITAT», «2.4.2 Sondeig…», entrada de l'índex «4.4. EMPENTES DE TERRES\t45»).
+_HEADING_NUM_RE = re.compile(r"^\s*(\d+(?:\.\d+)+)\.?\s+(\S.*?)\s*(?:\t.*)?$")
+_STOP_TOKENS = frozenset({"de", "del", "dels", "la", "el", "els", "les", "en", "un", "una", "amb", "per", "que", "als",
+                          "al", "los", "las", "con", "para", "i", "y", "a", "es", "se", "the", "of"})
+#: Llindars (mesurats sobre els 7 signats, 2026-09-07): peus bons ≥ 0,52 de ratio i ≥ 0,67 de contenció; el peu de la
+#: màquina del sondeig contra el de la DPSH (fals) dona 0,59-0,62 de ratio però 0,50 de contenció. Capçaleres bones
+#: ≥ 0,74 (ES «EMPUJE DE TIERRAS»), falses ≤ 0,65 («RECONEIXEMENT DEL TERRENY» per «EMPENTES DE TERRES»).
+NUM_CAPTION_RATIO = 0.5
+NUM_CAPTION_CONTAINMENT = 0.6
+NUM_HEADING_RATIO = 0.70
+NUM_TIE_EPS = 0.01
+
+
+def _content_tokens(text: str) -> set[str]:
+    """Paraules de contingut (≥ 3 lletres, sense accents ni mots buits) per a la contenció entre peus."""
+    import unicodedata
+    t = "".join(c for c in unicodedata.normalize("NFD", text.lower()) if unicodedata.category(c) != "Mn")
+    return {w for w in re.findall(r"[a-z0-9][a-z0-9:.']*[a-z0-9]|[a-z0-9]", t)
+            if len(w) >= 3 and w not in _STOP_TOKENS}
+
+
+def _containment(a: str, b: str) -> float:
+    ta, tb = _content_tokens(a), _content_tokens(b)
+    if not ta or not tb:
+        return 0.0
+    return len(ta & tb) / min(len(ta), len(tb))
+
+
+def _numbering_slot(tp: TemplateParagraph) -> tuple[str, str, list[str]] | None:
+    """(tipus, text fix sense número, forats `_num`) d'un paràgraf de la plantilla amb numeració; None si no en té.
+
+    Tipus: «figura» / «fotografia» / «taula» (peu) o «heading» («{{ section_x_num }}. EXCAVABILITAT»)."""
+    nums = [v for v in tp.variables if _is_numbering(v)]
+    if not nums:
+        return None
+    skeleton = JINJA_ANY_RE.sub('', tp.text).strip()
+    m = _CAPTION_RE.match(skeleton)
+    if m and m.group(1):
+        return _CAPTION_KIND[m.group(1).lower()], re.sub(r"\s+", " ", m.group(4)).strip(), nums
+    if skeleton.startswith("."):
+        return "heading", skeleton.lstrip(". ").strip(), nums
+    return None
+
+
+def _numbering_candidates(ref_body: list[str]) -> list[tuple[int, str, list[str], str]]:
+    """(índex, tipus, números, text fix) de cada paràgraf del signat que és un peu o una capçalera numerada."""
+    out = []
+    for ri, rt in enumerate(ref_body):
+        t = (rt or "").strip()
+        if not t:
+            continue
+        m = _CAPTION_RE.match(t)
+        if m and m.group(2):
+            nums = [m.group(2)] + ([m.group(3)] if m.group(3) else [])
+            out.append((ri, _CAPTION_KIND[m.group(1).lower()], nums, re.sub(r"\s+", " ", m.group(4)).strip()))
+            continue
+        m = _HEADING_NUM_RE.match(t)
+        if m and len(t.split()) <= 9:
+            out.append((ri, "heading", [m.group(1)], m.group(2).strip()))
+    return out
+
+
+def extract_numbering_variables(
+    tmpl_paras: list[TemplateParagraph],
+    ref_paras: list[str],
+    tmpl_body_count: int,
+    ref_body_count: int,
+) -> tuple[dict[str, ExtractedVariable], list[str]]:
+    """Bloc 4 (2026-09-07): la NUMERACIÓ del signat (peus «Fotografia 3. …», «Taula 6. …», «Figura 1 i Figura 2. …»,
+    capçaleres «3.5. EXCAVABILITAT»), que l'extractor saltava des del principi.
+
+    Regles (les del bloc 3 per a les taules, aplicades als peus): (1) només s'aparellen paràgrafs del MATEIX tipus
+    (Figura ↔ Figura, Fotografia ↔ Fotografia, Taula ↔ Taula, capçalera ↔ capçalera) i es puntua el text SENSE el
+    número; (2) peus: ratio ≥ 0,5 I contenció de paraules de contingut ≥ 0,6 (el ratio sol confon la foto de la
+    màquina del sondeig amb la de la DPSH); capçaleres: ratio ≥ 0,70 («RECONEIXEMENT DEL TERRENY» ↔ «EMPENTES DE
+    TERRES» dona 0,65 i és fals); (3) assignació GLOBAL un-a-un per puntuació descendent (cada peu del signat serveix
+    un sol forat); (4) empat = blanc (les tres fotos de materials de Vilanova); (5) sense àncora ni prefix: un forat de
+    numeració sense peu al signat queda en blanc (secció o foto que el signat no té), mai «el paràgraf que segueix».
+    El peu de dues figures («Figura X i Figura Y») només s'omple si el signat també en porta dues.
+    """
+    variables: dict[str, ExtractedVariable] = {}
+    warnings: list[str] = []
+    ref_body = ref_paras[:ref_body_count]
+    cands = _numbering_candidates(ref_body)
+
+    slots: list[tuple[TemplateParagraph, str, str, list[str]]] = []
+    seen: set[str] = set()
+    for tp in tmpl_paras:
+        if tp.idx >= tmpl_body_count:
+            break
+        slot = _numbering_slot(tp)
+        if slot is None:
+            continue
+        kind, text, nums = slot
+        # L'índex (p035) i la capçalera (p471) porten el mateix forat: només la primera. Els PEUS sí que poden
+        # repetir un forat (peça 7a, 2026-09-08): la figura de situació té dos peus —«Figura N. Situació de la zona
+        # d'estudi.» i «Figura N i Figura N+1. Detall de la ubicació…» (Bell-lloc)— amb el mateix `fig_situacio_num`;
+        # cada peu s'aparella pel seu text i, si tots dos trobessin peu al signat, mana el de més puntuació.
+        if kind == "heading" and any(v in seen for v in nums):
+            continue
+        seen.update(nums)
+        slots.append((tp, kind, text, nums))
+
+    # puntuació de cada (forat, candidat) del mateix tipus; empat al capdavant = forat en blanc
+    pairs: list[tuple[float, int, int]] = []
+    for si, (tp, kind, text, nums) in enumerate(slots):
+        scored = []
+        for ci, (ri, ckind, cnums, ctext) in enumerate(cands):
+            if ckind != kind:
+                continue
+            if kind == "heading":
+                ratio = text_similarity(text, ctext)
+                if ratio < NUM_HEADING_RATIO:
+                    continue
+            else:
+                ratio = text_similarity(text, ctext)
+                if ratio < NUM_CAPTION_RATIO or _containment(text, ctext) < NUM_CAPTION_CONTAINMENT:
+                    continue
+            scored.append((ratio, ci))
+        scored.sort(reverse=True)
+        # Empat = blanc, però només si els empatats porten números DIFERENTS: l'entrada de l'índex («2.4.2. Ensayo
+        # tipo S.P.T.») i la capçalera diuen el mateix número i no són cap ambigüitat.
+        tied = [ci for r, ci in scored if scored and scored[0][0] - r < NUM_TIE_EPS]
+        if len({tuple(cands[ci][2]) for ci in tied}) > 1:
+            warnings.append(f"p{tp.idx:03d}: numeració '{','.join(nums)}' en empat ({scored[0][0]:.2f}): "
+                            f"'{cands[tied[0]][3][:40]}' / '{cands[tied[1]][3][:40]}' → en blanc")
+            continue
+        pairs.extend((ratio, si, ci) for ratio, ci in scored)
+
+    pairs.sort(key=lambda x: (-x[0], x[1], x[2]))
+    used_slots: set[int] = set()
+    used_cands: set[int] = set()
+    for ratio, si, ci in pairs:
+        if si in used_slots or ci in used_cands:
+            continue
+        tp, kind, text, nums = slots[si]
+        ri, ckind, cnums, ctext = cands[ci]
+        if len(nums) > len(cnums):
+            warnings.append(f"p{tp.idx:03d}: el peu de la plantilla té {len(nums)} números i el del signat "
+                            f"{len(cnums)} ('{ref_body[ri][:50]}') → en blanc")
+            used_slots.add(si)
+            continue
+        used_slots.add(si)
+        used_cands.add(ci)
+        for var_name, value in zip(nums, cnums):
+            if var_name in variables:            # dos peus amb el mateix forat: el primer (més puntuació) mana
+                warnings.append(f"p{tp.idx:03d}: '{var_name}' ja assignat per un altre peu; s'ignora "
+                                f"'{ref_body[ri][:40]}'")
+                continue
+            variables[var_name] = ExtractedVariable(
+                value=value,
+                position=f"p{tp.idx:03d}",
+                position_description=f"Body paragraph {tp.idx}",
+                confidence=round(ratio, 3),
+                extraction_method="numbering",
+                template_text=tp.text[:200],
+                reference_text=ref_body[ri][:200],
+            )
+    for si, (tp, kind, text, nums) in enumerate(slots):
+        if si not in used_slots:
+            warnings.append(f"p{tp.idx:03d}: numeració '{','.join(nums)}' sense {kind} al signat ('{text[:40]}')")
+    return variables, warnings
 
 
 def _table_fingerprint(table) -> str:
@@ -264,6 +471,16 @@ def _get_table_cell_text(table, row_idx: int, col_idx: int) -> str | None:
         return None
 
 
+#: Forats que l'Eva pot ometre del tot: si el prefix fix no hi és, val més cap valor que un paràgraf equivocat.
+_ABSENT_IF_PREFIX_MISSING = frozenset({"location_sentence"})
+
+
+def _ap_lower(text: str) -> str:
+    """Minúscules amb apòstrofs i cometes tipogràfiques normalitzades, mateixa longitud que l'original."""
+    return (text.replace('\u2019', "'").replace('\u2018', "'")
+                .replace('\u201c', '"').replace('\u201d', '"').lower())
+
+
 def _extract_single_var(template_text: str, var_name: str,
                         ref_text: str) -> tuple[str | None, float]:
     """Extract a single variable value from a reference paragraph.
@@ -285,24 +502,28 @@ def _extract_single_var(template_text: str, var_name: str,
 
     value = ref_text
     if prefix_tmpl:
-        idx = ref_text.find(prefix_tmpl)
+        # Apòstrofs tipogràfics (’ al signat, ' a la plantilla): comparació 1:1 en minúscules, tall sobre l'original
+        idx = _ap_lower(ref_text).find(_ap_lower(prefix_tmpl))
         if idx >= 0:
             value = value[idx + len(prefix_tmpl):]
         else:
-            idx_lower = ref_text.lower().find(prefix_tmpl.lower())
-            if idx_lower >= 0:
-                value = value[idx_lower + len(prefix_tmpl):]
-            else:
-                return value.strip() or None, 0.3
+            # Prefix absent: la veritat és el paràgraf sencer amb confiança 0,3 (capçalera diferent, variant de
+            # l'Eva, castellà…). Excepció: les variables on l'Eva OMET la frase sencera (`location_sentence`, 6/7
+            # signats): sense prefix ni sufix no trivial, absent, no un paràgraf equivocat («…presentarà les
+            # següents característiques:»).
+            if var_name in _ABSENT_IF_PREFIX_MISSING and not (
+                len(suffix_tmpl) > 2 and _ap_lower(suffix_tmpl) in _ap_lower(ref_text)
+            ):
+                return None, 0.0
+            return value.strip() or None, 0.3
 
     if suffix_tmpl:
-        idx = value.rfind(suffix_tmpl)
+        # Sufix curt («.»): la PRIMERA ocurrència després del prefix (abans, l'última: en un paràgraf de cinc frases
+        # el forat s'enduia les quatre frases següents). Sufix llarg: l'última, com sempre.
+        hay, needle = _ap_lower(value), _ap_lower(suffix_tmpl)
+        idx = hay.find(needle) if len(suffix_tmpl) <= 2 else hay.rfind(needle)
         if idx >= 0:
             value = value[:idx]
-        else:
-            idx_lower = value.lower().rfind(suffix_tmpl.lower())
-            if idx_lower >= 0:
-                value = value[:idx_lower]
 
     value = value.strip()
     if not value:
@@ -460,43 +681,125 @@ def convert_doc_to_docx(doc_path: Path) -> Path:
     return converted
 
 
+def _table_label_fingerprint(table) -> str:
+    """Primera cel·la (l'ETIQUETA) de les tres primeres files amb contingut, sense Jinja (bloc 3, 2026-09-07).
+
+    La fila sencera barreja etiqueta i VALOR: a Anciles «n.º de plantas previstas | 5 viviendas con pb + 1pp + bc …»
+    s'assemblava menys a «nº de plantes per habitatge | » que la taula CTE («tipo de edificación considerada: | c-1»),
+    i `superficie_parcela` valia «T-1» i `plantes` «C-1». Les etiquetes soles («n.º de plantas previstas | superficie
+    de la parcela (m2) | superficie construida total (m2)») s'assemblen a les de la plantilla en qualsevol idioma.
+    """
+    labels = []
+    for row in table.rows:
+        if not row.cells:
+            continue
+        text = JINJA_ANY_RE.sub('', row.cells[0].text).strip()
+        if text:
+            labels.append(normalize_text(text))
+        if len(labels) == 3:
+            break
+    return " | ".join(labels)
+
+
 def match_tables(template_doc, ref_doc) -> dict[int, int]:
     """Match template tables to reference tables by header fingerprint similarity.
 
-    Returns {template_table_idx: reference_table_idx}.
+    Puntuació = màxim entre la primera fila sencera (com sempre) i les etiquetes de la primera columna
+    (`_table_label_fingerprint`, bloc 3). Returns {template_table_idx: reference_table_idx}.
     """
-    tmpl_fps = []
-    for t in template_doc.tables:
-        tmpl_fps.append(_table_fingerprint(t))
-
-    ref_fps = []
-    for t in ref_doc.tables:
-        ref_fps.append(_table_fingerprint(t))
-
-    mapping: dict[int, int] = {}
-    used_ref: set[int] = set()
-
-    for ti, tfp in enumerate(tmpl_fps):
+    tmpl_fps = [(_table_fingerprint(t), _table_label_fingerprint(t)) for t in template_doc.tables]
+    ref_fps = [(_table_fingerprint(t), _table_label_fingerprint(t)) for t in ref_doc.tables]
+    # Assignació GLOBAL per puntuació descendent (bloc 3, 2026-09-07), no cobdiciosa en ordre de plantilla: abans t5
+    # (sondeig) s'enduia la taula SPT dels projectes sense sondeig (Rubí, Linyola, Alcoletge: 0,33) i t6 quedava sense o
+    # agafava la de signatures; a Vilanova t5 prenia la geotècnica. Llindar 0,4 (era 0,3): els aparellaments bons
+    # puntuen ≥ 0,66; els dolents ≤ 0,38.
+    pairs = []
+    for ti, (tfp, tlab) in enumerate(tmpl_fps):
         if not tfp:
             continue
-        best_score = 0.0
-        best_ri = -1
-        for ri, rfp in enumerate(ref_fps):
-            if ri in used_ref or not rfp:
+        for ri, (rfp, rlab) in enumerate(ref_fps):
+            if not rfp:
                 continue
             score = text_similarity(tfp, rfp)
-            if score > best_score:
-                best_score = score
-                best_ri = ri
-        if best_ri >= 0 and best_score >= 0.3:
-            mapping[ti] = best_ri
-            used_ref.add(best_ri)
-            logger.debug(
-                "Table match: tmpl t%d → ref t%d (score=%.2f)",
-                ti, best_ri, best_score,
-            )
-
+            if tlab and rlab:
+                score = max(score, text_similarity(tlab, rlab))
+            pairs.append((score, ti, ri))
+    mapping: dict[int, int] = {}
+    used_ref: set[int] = set()
+    for score, ti, ri in sorted(pairs, key=lambda p: (-p[0], p[1], p[2])):
+        if score < 0.4:
+            break
+        if ti in mapping or ri in used_ref:
+            continue
+        mapping[ti] = ri
+        used_ref.add(ri)
+        logger.debug("Table match: tmpl t%d → ref t%d (score=%.2f)", ti, ri, score)
     return mapping
+
+
+def _single_var_prefix(template_text: str, active_vars: list[str]) -> str:
+    """Text fix (≥ 3 paraules) davant de l'únic forat del paràgraf; '' si no n'hi ha."""
+    if len(active_vars) != 1:
+        return ""
+    pattern = re.compile(
+        r'\{\{[-\s]*' + re.escape(active_vars[0]) + r'\s*(?:\|[^}]*)?\s*\}\}'
+    )
+    parts = pattern.split(template_text, maxsplit=1)
+    if len(parts) != 2:
+        return ""
+    prefix = JINJA_ANY_RE.sub('', parts[0]).strip()
+    return prefix if len(prefix.split()) >= 3 else ""
+
+
+def _anchor_paragraph(tp: TemplateParagraph, tmpl_paras: list[TemplateParagraph], ref_body: list[str],
+                      tmpl_body_count: int) -> int | None:
+    """Índex a `ref_body` del paràgraf que segueix l'àncora (el paràgraf fix anterior de la plantilla, ≥ 3 paraules,
+    trobat al signat amb similitud ≥ 0,6 i, en empat, el més proper en posició relativa). None si no hi ha àncora."""
+    anchor_text = ""
+    for prev in reversed(tmpl_paras[:tp.idx]):
+        if prev.idx >= tmpl_body_count:
+            continue
+        if not prev.text.strip():
+            continue                       # blancs entremig: d'acord
+        txt = JINJA_ANY_RE.sub('', prev.text).strip()
+        # Bloc 3 (2026-09-07): l'àncora pot ser un paràgraf AMB forat si el seu esquelet té ≥ 3 paraules («Qa=
+        # {{ qa_value }} Kg/cm2 amb un factor de seguretat inclòs de F=3» precedeix «{{ settlement_sentence }}»,
+        # que queia a None). L'esquelet es localitza al signat per similitud com un paràgraf fix.
+        if prev.is_static and len(txt.split()) >= 3:
+            anchor_text = txt
+        elif len(txt.split()) >= 6 and not _looks_like_heading(txt):
+            anchor_text = txt              # («{{ section_empentes_num }}. EMPENTES DE TERRES» NO és àncora)
+        break                              # el primer paràgraf no buit ha de ser l'àncora; si no, no n'hi ha
+    if not anchor_text:
+        return None
+    pos_t = tp.idx / max(1, tmpl_body_count)
+    scored = [(text_similarity(anchor_text, rt), -abs(ri / max(1, len(ref_body)) - pos_t), ri)
+              for ri, rt in enumerate(ref_body) if rt]
+    if not scored:
+        return None
+    score, _, ri = max(scored)
+    if score < 0.6:
+        return None
+    for nxt in range(ri + 1, min(ri + 6, len(ref_body))):
+        txt = (ref_body[nxt] or "").strip()
+        if not txt:
+            continue
+        # el següent paràgraf ha de ser una FRASE, no una capçalera («2.1. DESCRIPCIÓ…», «4.1. GEOLOGIA»)
+        return None if _looks_like_heading(txt) else nxt
+    return None
+
+
+_HEADING_RE = re.compile(r"^\d+(\.\d+)*\.?\s+\S")
+
+
+def _looks_like_heading(text: str) -> bool:
+    t = text.strip()
+    if len(t.split()) < 4:
+        return True
+    if _HEADING_RE.match(t) and len(t.split()) <= 8:
+        return True
+    letters = [c for c in t if c.isalpha()]
+    return bool(letters) and sum(c.isupper() for c in letters) / len(letters) > 0.8
 
 
 def extract_body_variables(
@@ -521,30 +824,62 @@ def extract_body_variables(
         if tp.is_static or not tp.variables:
             continue
 
-        active_vars = [v for v in tp.variables if not _should_skip_variable(v)]
+        active_vars = [v for v in tp.variables if not _should_skip_variable(v) and not _is_numbering(v)]
         if not active_vars:
             continue
 
         skeleton = JINJA_ANY_RE.sub('', tp.text).strip()
-        if not skeleton:
-            for v in active_vars:
-                if v not in variables:
-                    warnings.append(
-                        f"p{tp.idx:03d}: Variable '{v}' has no static context for matching"
-                    )
-            continue
-
+        pos_t = tp.idx / max(1, tmpl_body_count)
+        by_anchor = False
         best_score = 0.0
         best_ref_idx = -1
         best_ref_text = ""
-        for ri, rt in enumerate(ref_body):
-            if not rt:
-                continue
-            score = text_similarity(skeleton, rt)
-            if score > best_score:
-                best_score = score
-                best_ref_idx = ri
-                best_ref_text = rt
+        if skeleton:
+            # Prefix primer (2026-09-06, `docs/ANALISI-NARRATIVA-2026-09-06.md` §2.2): si el paràgraf de la plantilla té
+            # un sol forat amb text fix al davant, el paràgraf del signat que CONTÉ aquest prefix mana sobre la similitud
+            # de l'esquelet; si n'hi ha més d'un (la frase de l'estructura surt a 3.5 i a 4.3), el més proper en POSICIÓ
+            # relativa dins del document. Abans, «L'edificació que es preveu construir es situarà {{ location_sentence }}.»
+            # s'alineava amb «…presentarà les següents característiques:» (7/7 projectes) amb confiança 0,2.
+            candidates = list(range(len(ref_body)))
+            prefix_tmpl = _single_var_prefix(tp.text, active_vars)
+            by_prefix = False
+            if prefix_tmpl:
+                with_prefix = [ri for ri, rt in enumerate(ref_body)
+                               if rt and normalize_text(prefix_tmpl) in normalize_text(rt)]
+                if not with_prefix and len(prefix_tmpl.split()) > 5:
+                    head = " ".join(prefix_tmpl.split()[:5])     # «Segons el projecte executiu es preveu» (d'estructures)
+                    with_prefix = [ri for ri, rt in enumerate(ref_body)
+                                   if rt and normalize_text(head) in normalize_text(rt)]
+                if with_prefix:
+                    by_prefix = True
+                    # primer els paràgrafs que COMENCEN pel prefix (o pel seu cap), després el més proper en posició
+                    _needle = normalize_text(prefix_tmpl if any(
+                        normalize_text(prefix_tmpl) in normalize_text(ref_body[ri]) for ri in with_prefix)
+                        else " ".join(prefix_tmpl.split()[:5]))
+                    candidates = [min(with_prefix, key=lambda ri: (
+                        0 if normalize_text(ref_body[ri]).startswith(_needle) else 1,
+                        abs(ri / max(1, len(ref_body)) - pos_t)))]
+            for ri in candidates:
+                rt = ref_body[ri]
+                if not rt:
+                    continue
+                score = text_similarity(skeleton, rt)
+                if score > best_score:
+                    best_score = score
+                    best_ref_idx = ri
+                    best_ref_text = rt
+            if by_prefix and best_ref_idx >= 0:
+                # el prefix hi és: el paràgraf pot ser molt més llarg que l'esquelet (bloc de la descripció del solar)
+                best_score = max(best_score, 0.5)
+
+        if best_score < 0.5 and len(active_vars) == 1:
+            # Sense esquelet («{{ site_condition }}», «{{ radon_sentence }}», «{{ settlement_sentence }}») o sense cap
+            # paràgraf prou semblant: ÀNCORA = el paràgraf fix anterior de la plantilla, localitzat al signat; la
+            # veritat és el paràgraf no buit que el segueix (2026-09-06).
+            anchored = _anchor_paragraph(tp, tmpl_paras, ref_body, tmpl_body_count)
+            if anchored is not None:
+                best_ref_idx, best_ref_text, best_score = anchored, ref_body[anchored], max(best_score, 0.5)
+                by_anchor = True
 
         if best_score < 0.5:
             for v in active_vars:
@@ -566,7 +901,7 @@ def extract_body_variables(
                     position=elem_id,
                     position_description=f"Body paragraph {tp.idx}",
                     confidence=confidence * best_score,
-                    extraction_method="paragraph_single",
+                    extraction_method="paragraph_anchor" if by_anchor else "paragraph_single",
                     template_text=tp.text[:200],
                     reference_text=best_ref_text[:200],
                 )
@@ -697,13 +1032,16 @@ def _detect_header_rows(ref_table, col_names: list[str]) -> int:
             cells.append(text)
         if not any(cells):
             continue
+        # Notacions de les taules de l'Eva que SÓN dades (bloc 3, 2026-09-07): «15-R», «38º», «>350», «--». Abans, la fila
+        # «2do nivel | 15-R | -- | 2.00 | 0.00 | 38º | >350» d'Anciles comptava 2/7 numèrics (< 30 %) i l'escaneig
+        # s'aturava: capçalera = 2 files i la taula geotècnica es quedava amb una sola fila (la del 1er nivell fora).
         numeric_count = sum(
             1 for c in cells
-            if c and re.match(r'^[+-]?\d[\d.,/\-\s]*$', c)
+            if c and (re.match(r'^[<>]?[+-]?\d[\d.,/\-\s]*(?:-?R|º|°)?$', c) or c in ("--", "-", "R"))
         )
         id_like = sum(
             1 for c in cells
-            if c and re.match(r'^[A-Z]+-?\d+$|^P-\d+$|^S-\d+$|^SPT', c)
+            if c and re.match(r'^(?:P|S|SPT|MA|TP|MI)-?\d+$', c)   # «N30» de la capçalera NO és un id (bloc 3)
         )
         has_parenthetical = sum(
             1 for c in cells
@@ -864,6 +1202,11 @@ def extract_reference_values(
     result.variables.update(body_vars)
     result.warnings.extend(body_warns)
 
+    # 5b. Numeració (bloc 4): peus i capçaleres, per tipus i un-a-un
+    num_vars, num_warns = extract_numbering_variables(tmpl_paras, ref_paras, tmpl_body_count, ref_body_count)
+    result.variables.update(num_vars)
+    result.warnings.extend(num_warns)
+
     # 6. Extract table cell variables
     table_vars, table_warns = extract_table_variables(
         tmpl_doc, ref_doc, table_map,
@@ -909,7 +1252,7 @@ def extract_reference_values(
     # 8.5. Flatten nested loop-table rows to top-level concept_ids
     # (e.g. geotech_rows[0].E -> geomech_E). Positional extraction wins;
     # this only fills gaps. Must run BEFORE statistics so by_method counts.
-    _flatten_loop_table_concepts(result)
+    _flatten_loop_table_concepts(result, ref_paras)
 
     # Re-tally statistics so flatten contributions are reflected.
     extracted_count = len(result.variables)
@@ -958,7 +1301,7 @@ def _clean_phi_value(val: Any) -> Any:
     return cleaned if cleaned else val
 
 
-def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
+def _flatten_loop_table_concepts(result: ExtractionResult, ref_paras: list[str] | None = None) -> None:
     """Derive flat concept_ids from the bearing row of nested loop tables.
 
     Adds (when not already present):
@@ -978,7 +1321,22 @@ def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
     #    is the LAST row. For single-layer profiles row[-1] == row[0].
     geotech_ev = variables.get("geotech_rows")
     if geotech_ev is not None and isinstance(geotech_ev.value, list) and geotech_ev.value:
-        bearing_idx = len(geotech_ev.value) - 1
+        n_rows = len(geotech_ev.value)
+        # Bloc 3 (2026-09-07): la fila portant és la que el signat DECLARA a la frase de la tensió («…recolzada sobre
+        # els materials del segon nivell sanejat, es podrà adoptar una tensió de treball de:»); abans, l'última fila
+        # (Vilanova recolza al 2n de 2: bé; però la regla no ho SABIA) o la primera (veritats d'abril: Alcoletge X).
+        rule_idx = bearing_row_from_text(ref_paras or [], n_rows)
+        bearing_idx = rule_idx if rule_idx is not None else n_rows - 1
+        if rule_idx is not None and "bearing_layer_idx" not in variables:
+            variables["bearing_layer_idx"] = ExtractedVariable(
+                value=rule_idx,
+                position=f"{geotech_ev.position}.row{rule_idx}",
+                position_description="Nivell portant declarat a la frase de la tensió admissible/de treball del signat",
+                confidence=0.9,
+                extraction_method="bearing_rule",
+                template_text="",
+                reference_text=_bearing_sentence(ref_paras or [])[:200],
+            )
         bearing_row = geotech_ev.value[bearing_idx]
         if isinstance(bearing_row, dict) and not _is_table_header_row(bearing_row):
             for flat_concept, src_col in _GEOTECH_FLATTEN:
@@ -1034,6 +1392,62 @@ def _flatten_loop_table_concepts(result: ExtractionResult) -> None:
                     template_text="",
                     reference_text=str(cota),
                 )
+
+    # 3. Bloc 3 (2026-09-07): `spt_ma_tests[0]` → `spt_test_id`, `spt_location`, `spt_depth_range`, `spt_n30`,
+    #    `spt_lithology` (la fila que el generador imprimeix com a escalars; abans eren cel·les soles de la plantilla).
+    spt_ev = variables.get("spt_ma_tests")
+    if spt_ev is not None and isinstance(spt_ev.value, list) and spt_ev.value:
+        first_spt = spt_ev.value[0]
+        if isinstance(first_spt, dict) and not _is_table_header_row(first_spt):
+            for col in ("test_id", "location", "depth_range", "n30", "lithology"):
+                key = f"spt_{col}"
+                raw = first_spt.get(col)
+                if key in variables or not isinstance(raw, str) or not raw.strip() or _is_strict_header_cell(raw):
+                    continue
+                variables[key] = ExtractedVariable(
+                    value=raw.strip(),
+                    position=f"{spt_ev.position}.row0.{col}",
+                    position_description="Flattened from first SPT/MA row",
+                    confidence=0.9,
+                    extraction_method="table_flatten",
+                    template_text="",
+                    reference_text=raw,
+                )
+
+
+_TENSION_RE = re.compile(r"tensi[oó]n?\s+(?:de\s+treball|admissible|de\s+trabajo|admisible)\s+de\s*:", re.I)
+_ORDINAL_LEVEL_RE = re.compile(
+    r"\b(primer|1er|1r|segon|2on|2n|segundo|2do|2º|tercer|3er|3r|tercero|quart|4t|cuarto|4to)\s+nivell?\b", re.I)
+_ORDINALS = {"primer": 1, "1er": 1, "1r": 1, "segon": 2, "2on": 2, "2n": 2, "segundo": 2, "2do": 2, "2º": 2,
+             "tercer": 3, "3er": 3, "3r": 3, "tercero": 3, "quart": 4, "4t": 4, "cuarto": 4, "4to": 4}
+
+
+def _bearing_sentence(ref_paras: list[str]) -> str:
+    """El paràgraf del signat que acaba amb «…tensió de treball/admissible de:» (7/7 signats en porten un)."""
+    for p in ref_paras:
+        if p and _TENSION_RE.search(p):
+            return p
+    return ""
+
+
+def bearing_row_from_text(ref_paras: list[str], n_rows: int) -> int | None:
+    """Índex (0-based) de la fila de la taula geotècnica on recolza la fonamentació segons el signat, o None.
+
+    Regla (bloc 3, 2026-09-07; verificada als 7 signats): a la frase de la tensió, l'ÚLTIM ordinal de nivell mana
+    («un cop superats els materials del primer nivell … recolzada sobre els materials del segon nivell sanejat» → 2);
+    sense ordinal, «substrat/sustrato» = l'última fila (Castellar: «encastada … en els materials de substrat»).
+    Fora de rang (ordinal > files) → None (mai s'inventa una fila).
+    """
+    sent = _bearing_sentence(ref_paras)
+    if not sent or n_rows <= 0:
+        return None
+    ords = [_ORDINALS[m.group(1).lower()] for m in _ORDINAL_LEVEL_RE.finditer(sent)]
+    if ords:
+        idx = ords[-1] - 1
+        return idx if 0 <= idx < n_rows else None
+    if re.search(r"substrat|sustrato", sent, re.I):
+        return n_rows - 1
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -1108,9 +1522,10 @@ def _guard_architect_client_conflation(result: ExtractionResult) -> None:
 # prior entry uses one of these and the current run no longer emits the key,
 # the prior entry is dropped (we deliberately stopped emitting it).
 _OWN_EXTRACTION_METHODS = frozenset({
-    "paragraph_single", "paragraph_multi",
+    "paragraph_single",
+    "paragraph_anchor", "paragraph_multi",
     "table_cell", "table_cell_multi",
-    "loop_table", "table_flatten",
+    "loop_table", "table_flatten", "bearing_rule",
 })
 
 # Methods produced by external tools we don't control (e.g. a one-off LLM pass
@@ -1131,7 +1546,9 @@ def _merge_with_prior(new_result: ExtractionResult, prior_path: Path) -> None:
     external `intelligent_analysis` pass and must round-trip across runs.
 
     Rules:
-    - If the new run emitted the same key, NEW WINS (fresher positional data).
+    - If the new run emitted the same key, NEW WINS (fresher positional data) — except when the new entry comes
+      from the anchor fallback (`paragraph_anchor`, 2026-09-06) and the prior is external: the anchor is a weaker
+      signal than an `intelligent_analysis` value, so the prior wins.
     - If the new run did NOT emit the key AND prior method is external,
       preserve verbatim.
     - If the new run did NOT emit the key AND prior method is one of OUR own
@@ -1161,7 +1578,11 @@ def _merge_with_prior(new_result: ExtractionResult, prior_path: Path) -> None:
     preserved_keys: list[str] = []
     for k, entry in prior_vars.items():
         if k in new_result.variables:
-            continue
+            new_method = new_result.variables[k].extraction_method
+            prior_method = entry.get("extraction_method") if isinstance(entry, dict) else None
+            if new_method != "paragraph_anchor" or prior_method not in _EXTERNAL_EXTRACTION_METHODS:
+                continue
+            # àncora contra extern: l'extern mana (cau al bloc de preservació de sota)
         if not isinstance(entry, dict):
             continue
         method = entry.get("extraction_method", "")

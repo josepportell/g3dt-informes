@@ -1,0 +1,127 @@
+{
+ "source_path": "25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg",
+ "source_md5": "3ecd5e682c690373fd56fd0fde96bab2",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "correu",
+ "what_it_is": "Correu intern de G3 (Eva Vázquez a Dolors Maqueda) que transcriu un encàrrec de pressupost rebut per WhatsApp d'un contacte extern (ROC), en representació del client GRUP ALMA, per a un estudi geotècnic a Castellar del Vallès, amb la intenció d'ampliar-lo a 3 estudis si compra les 2 parcel·les veïnes.",
+ "issuer": "Eva Vázquez Marcet (G3, Responsable Dept Geologia)",
+ "date": "2025-06-25 11:14:44+02:00",
+ "pages_or_sheets": "correu únic, sense fils previs; 1 adjunt (PLAN_COST, ja solt a la carpeta)",
+ "context": {
+  "who_made_it": "Eva Vázquez Marcet (G3) reenvia/transcriu per correu intern un encàrrec rebut per WhatsApp d'un contacte anomenat ROC (tel. 615 55 74 50), que actua en representació de GRUP ALMA.",
+  "for_whom": "Dolors Maqueda (G3), per preparar el pressupost de l'estudi geotècnic.",
+  "why": "Comunicar l'encàrrec inicial del client (sol·licitant GRUP ALMA / contacte ROC) perquè G3 pressuposti l'estudi geotècnic a Carrer Arbrells 18A, Castellar del Vallès, i valorar el preu de fer-ne 3 a la vegada si el client compra les 2 parcel·les del costat.",
+  "expected_fields": [
+   "client_name (sol·licitant)",
+   "street_address",
+   "municipality",
+   "num_floors",
+   "superficie_construida",
+   "building_type (estructura)"
+  ],
+  "not_expected": [
+   "expedient",
+   "referencia_catastral",
+   "cota_referencia",
+   "field_date",
+   "num_dpsh_tests",
+   "num_soil_levels",
+   "lab_*",
+   "cte_*",
+   "utm_x",
+   "utm_y",
+   "architect_name"
+  ],
+  "relation_to_others": "Precedeix el pressupost G3 (PRESSUPOST GEOTEC.CASTELLAR DEL VALLES.pdf) i la seva versió MODF; el client 'GRUP ALMA' d'aquest correu és el sol·licitant inicial — segons el pla del skill, la versió MODF del pressupost canvia el nom del client a 'WOOD COMFORT' (a confirmar amb ACCEPTACIO/DADES CLIENT.txt). L'únic adjunt (PLAN_COST_CATELLAR DEL VALLÈS.xlsx) té el mateix md5 que el fitxer ja solt a la carpeta (25.0493/PLAN_COST_CATELLAR DEL VALLÈS.xlsx): no s'ha rellegit.",
+  "authority_for": [
+   "client_name",
+   "street_address",
+   "municipality",
+   "num_floors",
+   "superficie_construida",
+   "building_type"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "client_name",
+   "value": "GRUP ALMA",
+   "location": "body.txt, capçalera abans del WhatsApp reenviat",
+   "quote": "CLIENT: GRUP ALMA",
+   "confidence": 0.4,
+   "note": "Sol·licitant segons el correu d'encàrrec (WhatsApp reenviat), no promotor confirmat. Candidat feble: el pressupost MODF d'aquest mateix expedient canvia el client a un altre nom (WOOD COMFORT) — a verificar amb ACCEPTACIO."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells 18A",
+   "location": "body.txt, paràgraf del WhatsApp reenviat",
+   "quote": "La direcció és :\n\nCarrer Arbrells 18A",
+   "confidence": 0.8,
+   "note": "Adreça de l'obra donada explícitament pel sol·licitant. Font única en aquest document."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès",
+   "location": "body.txt, paràgraf del WhatsApp reenviat",
+   "quote": "haig de fer un geotecnic  a Castellar del Vallès.",
+   "confidence": 0.85,
+   "note": "Forma oficial completa, coincident amb el nom de la carpeta del projecte."
+  },
+  {
+   "concept_id": "num_floors",
+   "value": "PB + 1",
+   "location": "body.txt, llista de característiques de l'obra al WhatsApp reenviat",
+   "quote": "PB + 1\n\n- Sense soterrani\n\n- 120 m2 construits",
+   "confidence": 0.65,
+   "note": "Descripció de la casa de Carrer Arbrells 18A (la d'aquest projecte, sense subcarpetes CASA1/CASA2 com a Tulipa). El mateix correu demana preu per 2 estudis addicionals a parcel·les veïnes encara sense descriure — no afecten aquest valor."
+  },
+  {
+   "concept_id": "superficie_construida",
+   "value": "120 m2",
+   "location": "body.txt, llista de característiques de l'obra al WhatsApp reenviat",
+   "quote": "120 m2 construits",
+   "confidence": 0.65,
+   "note": "Superfície construïda de la casa de Carrer Arbrells 18A (component únic conegut en aquest document; sense TOTAL de conjunt perquè les 2 parcel·les veïnes encara no estan descrites)."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "habitatge unifamiliar, estructura d'entramat lleuger de fusta",
+   "location": "body.txt, llista de característiques de l'obra al WhatsApp reenviat + assumpte del correu",
+   "quote": "Estructura d'entremat lleuger de fusta.",
+   "confidence": 0.5,
+   "note": "Tipus d'edifici no s'anomena literalment 'habitatge unifamiliar'; es dedueix de PB+1, superfície 120 m2 i l'assumpte del correu ('PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS' → habitatges). El detall d'estructura (fusta) és informatiu, no és el concepte building_type estàndard."
+  }
+ ],
+ "tables": {
+  "superficie_construida": {
+   "components": [
+    "120 m2 (Carrer Arbrells 18A)"
+   ],
+   "total": null,
+   "etiqueta_font": "segons informació aportada pel client (WhatsApp reenviat per correu intern)",
+   "location": "body.txt, llista de característiques de l'obra al WhatsApp reenviat",
+   "quote": "120 m2 construits",
+   "__nota": "Un sol component conegut; les 2 parcel·les veïnes esmentades no porten superfície en aquest document."
+  }
+ },
+ "not_present": [
+  "expedient",
+  "architect_name",
+  "architect_company",
+  "field_date",
+  "cota_referencia",
+  "num_soil_levels",
+  "num_dpsh_tests",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit des de la pre-extracció (body.txt del .msg); cap fitxer executat directament. Únic adjunt (PLAN_COST) amb md5 idèntic al fitxer ja solt a la carpeta (already_in_folder): no rellegit. Correu intern G3→G3 que transcriu literalment un encàrrec extern rebut per WhatsApp (contacte ROC, en representació de GRUP ALMA); s'ha aplicat el Pas 0 per distingir el sol·licitant (GRUP ALMA) del possible promotor final, que aquest document no permet confirmar."
+}

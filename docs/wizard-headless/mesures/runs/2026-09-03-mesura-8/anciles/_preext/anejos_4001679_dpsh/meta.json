@@ -1,0 +1,73 @@
+{
+ "source_path": "ANEJOS/4001679_DPSH.xls",
+ "source_md5": "8bb47684eaee80b0ec1976c4e054b6f6",
+ "kind": "excel",
+ "generated": "2026-09-04T19:09:33",
+ "elapsed_s": 0.034,
+ "dir": "anejos_4001679_dpsh",
+ "files": [
+  "anejos_4001679_dpsh/sheet-0.csv",
+  "anejos_4001679_dpsh/sheet-0.cells.txt",
+  "anejos_4001679_dpsh/sheet-0.colors.txt",
+  "anejos_4001679_dpsh/sheet-1.csv",
+  "anejos_4001679_dpsh/sheet-1.cells.txt",
+  "anejos_4001679_dpsh/sheet-1.colors.txt",
+  "anejos_4001679_dpsh/sheet-2.csv",
+  "anejos_4001679_dpsh/sheet-2.cells.txt",
+  "anejos_4001679_dpsh/sheet-2.colors.txt",
+  "anejos_4001679_dpsh/sheet-3.csv",
+  "anejos_4001679_dpsh/sheet-3.cells.txt",
+  "anejos_4001679_dpsh/sheet-3.colors.txt",
+  "anejos_4001679_dpsh/sheet-4.csv",
+  "anejos_4001679_dpsh/sheet-4.cells.txt",
+  "anejos_4001679_dpsh/sheet-4.colors.txt",
+  "anejos_4001679_dpsh/sheet-5.csv",
+  "anejos_4001679_dpsh/sheet-5.cells.txt",
+  "anejos_4001679_dpsh/sheet-5.colors.txt"
+ ],
+ "sheets": [
+  {
+   "index": 0,
+   "name": "P-1",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 107
+  },
+  {
+   "index": 1,
+   "name": "P-2",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 112
+  },
+  {
+   "index": 2,
+   "name": "P-3",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 108
+  },
+  {
+   "index": 3,
+   "name": "P-4",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 119
+  },
+  {
+   "index": 4,
+   "name": "P-5",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 94
+  },
+  {
+   "index": 5,
+   "name": "P-6",
+   "rows": 80,
+   "cols": 7,
+   "colored_cells": 118
+  }
+ ],
+ "colors": true
+}

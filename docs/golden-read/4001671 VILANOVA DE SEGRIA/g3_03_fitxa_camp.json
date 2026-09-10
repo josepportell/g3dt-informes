@@ -1,0 +1,27 @@
+{
+ "source_path": "26.0050/DADES PER ANAR A CAMP_v1.xlsx",
+ "document_type": "fitxa_camp_g3",
+ "what_it_is": "Fitxa interna G3 'DADES PER ANAR A CAMP' del projecte, MAJORITÀRIAMENT BUIDA: sense client (C6), sense adreça (C7), sense contacte (C8) ni data de camp (F38). Només porta previsió de treball, empresa de camp i tres 'SI' logístics.",
+ "issuer": "G3 (Eva o administració)",
+ "date": "sense data (F38 buit)",
+ "pages_or_sheets": "2 fulls: 'fitxa' (B2:L47, 0 imatges incrustades), 'dades de referencia' (llistes desplegables de plantilla)",
+ "context": {
+  "who_made_it": "G3, per preparar la sortida de camp (què s'ha quedat amb el client, accessos, subcontractació)",
+  "for_whom": "ús intern G3 / TPS",
+  "why": "checklist logístic previ al camp; en aquest projecte s'ha omplert mínimament",
+  "expected_fields": ["client_name (C6, sol·licitant)", "street_address+municipality (C7 ADREÇA OBRA)", "contacte (C8/F8)", "previsió (C13)", "field_date (F38)"],
+  "not_expected": ["num_floors", "superficie_parcela", "cota_referencia", "num_soil_levels", "expedient", "architect_name"],
+  "relation_to_others": "deriva de l'encàrrec del pressupost 26·0050; el full 'dades de referencia' és plantilla (opcions desplegables: TPS ERUGA/TPS CAMIÓ, CESAR/EVA R/LOLI, etc.) i mai és senyal. La data de camp haurà de sortir d'una altra font (annex DPSH, PENETROS manuscrit, fotos).",
+  "authority_for": []
+ },
+ "tier_a": [
+  {"concept_id": "field_date", "value": null, "location": "fitxa!F38 (etiqueta E38 'dies de camp')", "quote": "[F38 buit]", "confidence": 0.0, "note": "Situació estructural 'fitxa sense data': buscar a annex DPSH / albarà TPS / noms de fotos."},
+  {"concept_id": "client_name", "value": null, "location": "fitxa!C6 (etiqueta B6 'CLIENT ')", "quote": "[C6 buit]", "confidence": 0.0, "note": "no omplert"},
+  {"concept_id": "street_address", "value": null, "location": "fitxa!C7 (etiqueta B7 'ADREÇA OBRA')", "quote": "[C7 buit]", "confidence": 0.0, "note": "no omplert"},
+  {"concept_id": "num_dpsh_tests", "value": "previsió: PENETROS I MOSTRA (sense nombre)", "location": "fitxa!C13 (etiqueta B13 'PREVISIÓ DE TREBALL DE CAMP')", "quote": "PENETROS I MOSTRA", "confidence": 0.3, "note": "coherent amb el pressupost (3 DPSH + 1 SPT amb mostra); cap xifra aquí"},
+  {"concept_id": "edificacio_existent", "value": "SI", "location": "fitxa!C16 (etiqueta B16 'EDIFICACIÓ EXISTENT ? ')", "quote": "SI", "confidence": 0.9, "note": "Rellevant per a la descripció del solar de l'informe: hi ha edificació existent a la parcel·la (coherent amb les fotos INTERIOR / DES DE DARRERA / DES DEL CARRER). També C22 'VENTILACIÓ (SORTIDA FUMS)? = SI' i C27 'PUNTS MARCATS A CAMP? = SI' → probablement es treballa dins/tocant l'edificació."},
+  {"concept_id": "field_company", "value": "TPS ERUGA", "location": "fitxa!C38 (etiqueta B37/B38 'MAQUINES DE SONDEIGS / EMPRESA QUE FA LA FEINA')", "quote": "TPS ERUGA", "confidence": 0.9, "note": "TPS amb màquina eruga (accés difícil / interior); TPS és el subcontractista de camp, NO el lab_testing_company per si sol (tot i que el GTL sol ser de TPS B64803075)"}
+ ],
+ "not_present": ["client_name", "street_address", "municipality", "expedient", "architect_name", "building_type", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_sample_id", "lab_depth", "cte"],
+ "reading_notes": "Reconeguda per fitxa!B2 == 'DADES PER ANAR A CAMP'. Cap imatge incrustada (a diferència d'altres projectes). C12 = 'ENS HO INDICARÀ EL CLIENT' (plànols: el client els indicarà — coherent amb el fet que no hi ha projecte d'arquitecte a la carpeta). El full 'dades de referencia' és íntegrament plantilla: cap valor és del projecte."
+}

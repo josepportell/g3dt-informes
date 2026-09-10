@@ -1,0 +1,134 @@
+{
+ "source_path": "PDF_V0/ANEJOS/4001679_sondeos.pdf",
+ "document_type": "annex_sondeig",
+ "what_it_is": "Annex 'Sondeo a rotación con batería continua' en castellà: log de S-1 (p.1) + fotos S-1 (p.2) + log de S-2 (p.3) + fotos S-2 (p.4)",
+ "issuer": "G3 (Eva; Técnico: Ariadna Salla M. Geológa); FreeHand → Distiller",
+ "date": "Fecha inicio/final: 19/02/2026 (tots dos sondeigs)",
+ "pages_or_sheets": "4 pàgines",
+ "context": {
+  "who_made_it": "Eva/G3 dibuixa el log a FreeHand a partir del full de camp TPS i el testimoni",
+  "for_whom": "annex de l'informe; font principal de nivells i litologies",
+  "why": "documentar columna litològica, mostres i assaigs in situ de cada sondeig",
+  "expected_fields": [
+   "sondeig_tests (cota z, profunditat, NF)",
+   "spt_ma_tests (id, prof, Registre)",
+   "soil_levels (Unidad litológica + Descripción de los materiales)"
+  ],
+  "not_expected": [
+   "promotor",
+   "superfícies",
+   "dades DPSH"
+  ],
+  "relation_to_others": "els .FH11 d'ANEJOS/ són el mateix dibuix (origen FreeHand); el full de camp manuscrit TPS (PENETROS + SONDEIGS.pdf p.5-6) n'és la font de camp; el tall en sintetitza els nivells",
+  "authority_for": [
+   "sondeig_tests",
+   "spt_ma_tests",
+   "soil_levels.litologia (candidat 1 per regla v0.8)",
+   "cota_referencia (z)",
+   "num_soil_levels (segon, rere el tall)"
+  ]
+ },
+ "tier_a": [],
+ "tables": {
+  "sondeig_tests": [
+   {
+    "sondeig": "S-1",
+    "cota_inici": "+1106,65 msnm",
+    "profunditat_assolida": "-2,40 m",
+    "spt_ma": "1/0",
+    "nivell_freatic": "No detectat",
+    "location": "p.1 capçalera (Z) + p.2 Fotografía 2 (fons); columna 'Nivel freático (N.F.)' sense cap marca",
+    "quote": "Cota inicio según plano topográfico proporcionado: Z: +1106.65 msnm | Fotografía 2. Caja porta-testigos con el material recuperado en el sondeo S-1 entre las cotas de 0.00 a -2.40 metros de profundidad.",
+    "rule": "cota = z de la capçalera de l'annex de sondeig; profunditat = fons del log (columna dibuixada fins ~2,4) confirmat pel peu de foto i pel full de camp TPS (trams fins 2,40)."
+   },
+   {
+    "sondeig": "S-2",
+    "cota_inici": "+1106,42 msnm",
+    "profunditat_assolida": "-3,00 m",
+    "spt_ma": "1/1",
+    "nivell_freatic": "No detectat",
+    "location": "p.3 capçalera (Z); log fins -3,0; columna N.F. sense marca",
+    "quote": "Cota inicio según plano topográfico proporcionado: Z: +1106.42 msnm",
+    "rule": "com S-1; profunditat = fons del log (-3,0), confirmat pel full de camp TPS (trams fins 3,00) i per MA-1 a -2,80/-3,00."
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT-1",
+    "punt": "S-1",
+    "profunditat": "-1,00 a -1,60 m",
+    "registre": "2/3/3/3",
+    "n30_candidats": [
+     {
+      "valor": 6,
+      "derivacio": "suma dels dos trams centrals 3+3"
+     }
+    ],
+    "litologia_nivell": "Nivell 1 (arcillas limosas y arenosas)",
+    "location": "p.1 bloc Muestras y ensayos in situ (Tipo SPT-1, Prof. -1.00 a -1.60, Registro 2 3 3 3)",
+    "quote": "SPT-1 | -1.00 a -1.60 | 2 3 3 3",
+    "rule": "Registre = cops per tram de 15 cm; proposa la suma dels trams centrals com a candidat, no triïs un valor sol. Corroborat pel tall ('N=6' a S-1) i pel full de camp TPS (Colpeig 2 3 3 3)."
+   },
+   {
+    "id": "SPT-1",
+    "punt": "S-2",
+    "profunditat": "-1,00 a -1,60 m",
+    "registre": "2/3/3/3",
+    "n30_candidats": [
+     {
+      "valor": 6,
+      "derivacio": "suma dels dos trams centrals 3+3"
+     }
+    ],
+    "litologia_nivell": "Nivell 1 (arcillas limosas y arenosas)",
+    "location": "p.3 bloc Muestras y ensayos in situ",
+    "quote": "SPT-1 | -1.00 a -1.60 | 2 3 3 3",
+    "rule": "com S-1; corroborat pel tall ('N=6' a S-2) i pel full de camp TPS."
+   },
+   {
+    "id": "MA-1",
+    "punt": "S-2",
+    "profunditat": "-2,80 a -3,00 m",
+    "registre": null,
+    "n30_candidats": [],
+    "litologia_nivell": "Nivell 2 (bolos y gravas de granito en matriz arenosa y arcillosa)",
+    "location": "p.3 bloc Muestras y ensayos in situ (Tipo MA-1, Prof. -2.80 a -3.00)",
+    "quote": "MA-1 | -2.80 -3.00",
+    "rule": "etiqueta de mostra: annex de l'Eva mana ('MA-1'); la comanda diu 'MA (S-2)' (compatible, variant sense ordinal); sense GTL a la carpeta per contrastar."
+   }
+  ],
+  "soil_levels": [
+   {
+    "nom": "NIVEL 1",
+    "litologia_candidats": [
+     "Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito."
+    ],
+    "de": "0,00 m",
+    "a": "~-2,55/-2,60 m (S-2; a S-1 el log acaba a -2,40 encara dins del nivell 1 fi — vegeu nota)",
+    "mostra_del_nivell": false,
+    "location": "columna 'Unidad litológica' (etiqueta NIVEL 1 a p.1 i p.3) + 'Descripción de los materiales' a 0,0",
+    "quote": "NIVEL 1 | Arcillas limosas y arenosas con puntualmente gravitas y bolos de granito.",
+    "rule": "litologia: 'Descripción de los materiales' de l'annex de sondeig passa PRIMER (v0.8); l'Eva re-redacta a l'informe → la cadena literal és sempre candidats."
+   },
+   {
+    "nom": "(sense etiqueta NIVEL 2 al log)",
+    "litologia_candidats": [
+     "Bolos y gravas de granito en matriz arenosa y arcillosa."
+    ],
+    "de": "~-2,55/-2,60 m",
+    "a": "-3,00 m (fons de S-2)",
+    "mostra_del_nivell": true,
+    "location": "p.3: banda de textura de graves de ~-2,55/-2,60 a -3,0 amb segona descripció; la columna 'Unidad litológica' només porta l'etiqueta NIVEL 1",
+    "quote": "Bolos y gra vas de granito en matriz arenosa y arcillosa.",
+    "rule": "el log només etiqueta NIVEL 1 però dibuixa i descriu un segon material — cas Anciles conegut a v0.8: 'tall 2, log 1 → informe 2'; el TALL mana per al NOMBRE de nivells. Transició llegida gràficament (~2,55-2,60) i corroborada pel full de camp TPS (Granito 2,60-2,80, Gravas 2,80-3,00) i pel tram 'Limos con grava/Granito' de S-1 (2,20-2,40)."
+   }
+  ],
+  "__nota": "Capçalera també porta: Cliente 'SRA. ALBA MARIA BARRAU CASTÁN', Máquina ML-76A, Empresa TPS S.L., Sondista Sr. Daniel Fernández — escalars fora d'abast aquí. El text del PDF és brossa (FreeHand sense ToUnicode): lectura 100% visual."
+ },
+ "not_present": [
+  "nivell freàtic (cap marca a cap log)",
+  "R.Q.D./Testimoni recuperat amb valors (columnes buides)",
+  "resultats de laboratori (columnes buides)"
+ ],
+ "reading_notes": "render 150 dpi pàgines senceres + clips 300 dpi (bloc muestras i columna litològica de p.1 i p.3); text vectorial brossa ignorat; 'gra vas' = salt de línia del rètol, llegir 'gravas'."
+}

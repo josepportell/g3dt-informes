@@ -49,7 +49,7 @@ def fix_image_width():
     image_manager_path = Path(__file__).parent / 'image_manager.py'
     print(f"\nOpening image_manager.py: {image_manager_path}")
 
-    content = image_manager_path.read_text()
+    content = image_manager_path.read_text(encoding="utf-8")
 
     # Find and replace the constant
     old_line = 'IMAGE_WIDTH_SPT_CULLERA = 100  # SPT spoon diagram (smaller, technical)'
@@ -57,7 +57,7 @@ def fix_image_width():
 
     if old_line in content:
         content = content.replace(old_line, new_line)
-        image_manager_path.write_text(content)
+        image_manager_path.write_text(content, encoding="utf-8")
         print(f"✓ Changed IMAGE_WIDTH_SPT_CULLERA: 100 → 150")
         return True
     else:

@@ -1,0 +1,22 @@
+{
+  "source_path": "FOTOGRAFIES/** (14 fotos) + 25.0493/WhatsApp Image 2025-10-20*.jpeg (2) + ANNEXES/ALTRES/M1-M11,m12 mgeol.png (12 figures) + ANNEXES/EF7DB361.tmp",
+  "document_type": "foto",
+  "what_it_is": "Fotos de camp i de la parcel·la (noms amb data WhatsApp) + figures de mapa del cos de l'informe (esborranys PNG) + un fitxer temporal illegible",
+  "issuer": "G3/TPS (fotos de camp); client via WhatsApp (fotos 20/10); Eva (figures PNG)",
+  "date": "fotos client: 2025-10-20; fotos de camp: 2025-10-24",
+  "pages_or_sheets": "14 jpg + 2 jpeg + 12 png + 1 tmp",
+  "context": {
+    "who_made_it": "Fotos 20/10: el contacte del client (fitxa B43: 'enviarà fotografies de la parcel·la, neta i amb rampa'); fotos 24/10: equip de camp; PNG: Eva (figures per al cos de l'informe: mapa comarcal M1, topogràfic, ortofoto, mapa geològic m12)",
+    "for_whom": "G3 / informe",
+    "why": "Preparació d'accés (20/10), documentació de camp (24/10), figures del cos de l'informe",
+    "expected_fields": ["field_date (només pel NOM de fitxer WhatsApp; EXIF no hi és)"],
+    "not_expected": ["tota la resta del nivell A (un valor trobat en una foto té confiança baixa per construcció)"],
+    "relation_to_others": "Els noms 'Imagen de WhatsApp 2025-10-24 a las 09.37/10.02/11.10' corroboren la data de camp 24/10 (fitxa F38, albarans, comanda). Les fotos S1/ són de la caixa de mostres (les mateixes de l'annex sondeig p.2). Els PNG M1-M12 són figures/esborranys: prioritat PDF/ANNEXES > tall.pdf > ALTRES png; cap discrepància detectada que els faci rellevants. EF7DB361.tmp: temporal FreeHand, no llegible (anotat, ignorat).",
+    "authority_for": ["field_date (corroboració pel nom de fitxer)"]
+  },
+  "tier_a": [
+    {"concept_id": "field_date", "value": "2025-10-24", "location": "noms de fitxer FOTOGRAFIES/ i FOTOGRAFIES/S1/", "quote": "Imagen de WhatsApp 2025-10-24 a las 09.37.01 / 10.02.53 / 11.10.01-11.10.37", "confidence": 0.4, "note": "Corroboració; hores 09:37-11:10 coherents amb 'quedat 8:30 a obra' de la fitxa."}
+  ],
+  "not_present": ["tots els altres camps del nivell A"],
+  "reading_notes": "Fotos no obertes una a una (classe 8: només data pel nom + corroborar). M1.png obert per classificar la sèrie: mapa comarcal idèntic al del plànol de situació → figures del cos, cap senyal nou. Les 2 WhatsApp de 20/10 (25.0493/) són les fotos de parcel·la neta esmentades a la fitxa B43-B44."
+}

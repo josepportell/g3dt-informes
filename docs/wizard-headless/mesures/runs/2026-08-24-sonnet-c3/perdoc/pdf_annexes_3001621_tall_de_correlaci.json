@@ -1,0 +1,146 @@
+{
+ "source_path": "PDF/ANNEXES/3001621_tall de correlació.pdf",
+ "source_md5": "e77496626419bcc0e372d33f59609cd5",
+ "skill_version": "1.3",
+ "schema_version": 1,
+ "document_type": "annex_tall",
+ "what_it_is": "Tall de correlació geològica (plantilla G3, 1 pàgina A3 apaïsat): perfil altimètric (msnm) que enllaça els 4 punts DPSH (P-1 a P-4) i el sondeig S-1 en una única secció, amb llegenda de litologia (terreny vegetal + Nivell 1: substrat rocós), cota de fonamentació recomanada, i un plànol de situació encartat (ortofoto + parcel·la + línia de tall).",
+ "issuer": "G3 (autor de les metadades del PDF: 'Loli'), a partir del dibuix FreeHand original",
+ "date": "Octubre 2025 (imprès al peu, casella 'Data:'); metadades PDF (creationDate/modDate): 03/11/2025 17:39",
+ "pages_or_sheets": "1 pàgina (A3 apaïsat, 1191x842 pt)",
+ "context": {
+  "who_made_it": "G3 (tècnic Eva/despatx), com a figura de síntesi del projecte, a partir dels resultats dels 4 DPSH i el sondeig S-1 ja executats",
+  "for_whom": "Annex gràfic de l'informe geotècnic, per il·lustrar la correlació de nivells entre punts d'assaig",
+  "why": "Mostrar gràficament com es correlacionen els nivells del sòl entre els 4 DPSH i el sondeig al llarg d'una línia de tall, i marcar la cota de fonamentació recomanada",
+  "expected_fields": [
+   "expedient",
+   "building_type (títol del projecte)",
+   "street_address (títol del projecte)",
+   "municipality (títol del projecte)",
+   "num_soil_levels (llegenda)",
+   "soil_levels litologia (llegenda)",
+   "num_dpsh_tests (recompte visual P-1..P-4)"
+  ],
+  "not_expected": [
+   "client_name",
+   "architect_name",
+   "field_date exacte",
+   "lab_testing_company",
+   "lab_sample_id",
+   "lab_depth",
+   "lab_location",
+   "cte_edificacio",
+   "cte_sol",
+   "referencia_catastral",
+   "utm_x_utm_y",
+   "cota_referencia (numèrica en text)",
+   "superficie_parcela"
+  ],
+  "relation_to_others": "Exportació PDF (Acrobat Distiller 15.0, PScript5.dll) del natiu FreeHand ANNEXES/3001621_tall de correlació.FH11 (md5 diferent 1a991dcd..., marcat 'no_llegible' a l'inventari) — aquest PDF n'és la font llegible. Duplicat EXACTE (mateix md5 e7749662...) a PDF-V0/ANNEXES/3001621_tall de correlació.pdf, exclòs per carpeta: no compta com a font independent. Existeix també 'tall.pdf' a l'arrel del projecte amb md5 DIFERENT (a4512806...) — probablement una altra exportació/mida del mateix dibuix ('Print To PDF') — NO llegit en aquesta crida (--only limita a un sol document). Complementa PDF/ANNEXES/3001621_sondeig.pdf i PDF/ANNEXES/3001621_DPSH.pdf (ja llegits per separat): aquest tall és una síntesi visual, no la font primària de cap dada numèrica exacta.",
+  "authority_for": [
+   "expedient",
+   "building_type",
+   "street_address",
+   "municipality",
+   "num_soil_levels",
+   "soil_levels",
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "expedient",
+   "value": "3001621",
+   "location": "peu de pàgina, requadre de dades, casella 'Exp:'",
+   "quote": "Exp: 3001621",
+   "confidence": 0.9,
+   "note": "Coincideix amb el nom de la carpeta del projecte."
+  },
+  {
+   "concept_id": "building_type",
+   "value": "Habitatge unifamiliar aïllat",
+   "location": "peu de pàgina, casella 'TÍTOL DEL PROJECTE'",
+   "quote": "ESTUDI GEOLÒGIC I GEOTÈCNIC PER A LA CONSTRUCCIÓ D'UNA HABITATGE UNIFAMILIAR AÏLLAT AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA).",
+   "confidence": 0.7,
+   "note": "Redacció del títol del projecte (mateix bloc de text que street_address/municipality — no són fonts independents entre elles). Formulació singular ('D'UNA HABITATGE') tot i que l'adreça porta 3 números (18A-18B-20): possible informe únic per a 3 unitats contigües — veure nota a street_address."
+  },
+  {
+   "concept_id": "street_address",
+   "value": "Carrer Arbrells, Nº 18A-18B-20",
+   "location": "peu de pàgina, casella 'TÍTOL DEL PROJECTE'",
+   "quote": "AL CARRER ARBRELLS Nº 18A-18B-20, CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.7,
+   "note": "Adreça amb 3 números consecutius (18A-18B-20): a l'inventari hi ha '25.0493/PRESSUPOST 3 HAB CASTELLAR DEL VALLÈS.msg', que suggeriria un encàrrec de 3 habitatges. Aquest tall, però, mostra UNA sola secció amb els 4 DPSH i 1 sondeig compartits (sense subdivisió per casa). No verificat en aquesta crida (--only, un sol document); recomanable revisar a la consolidació si l'expedient és un únic informe per a les 3 adreces o si caldria tractar-lo com a situació 'un expedient, N informes'."
+  },
+  {
+   "concept_id": "municipality",
+   "value": "Castellar del Vallès (Barcelona)",
+   "location": "peu de pàgina, casella 'TÍTOL DEL PROJECTE'",
+   "quote": "CASTELLAR DEL VALLÈS (BARCELONA)",
+   "confidence": 0.75,
+   "note": "Mateix bloc de text que street_address/building_type — no és font independent d'aquestes."
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": "1",
+   "location": "requadre LLEGENDA",
+   "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+   "confidence": 0.55,
+   "note": "Font secundària (Pas 3b: 'annex de sondeig primer, llegenda del tall segon'). Només 'Nivell 1' porta numeració; la capa superior ('Terreny Vegetal...') apareix a la llegenda com a entrada pròpia SENSE prefix 'Nivell', per tant no sembla comptar en el recompte. Candidat, no segur."
+  },
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": "4",
+   "location": "secció transversal (eix del tall) i plànol de situació encartat",
+   "quote": "P-1 / P-2 / P-4 / P-3 (etiquetes blaves sobre la secció i el plànol encartat)",
+   "confidence": 0.55,
+   "note": "Recompte visual dels punts DPSH representats; font secundària respecte l'Excel DPSH (ja llegit per separat), que mana per al recompte d'executats."
+  }
+ ],
+ "tables": {
+  "soil_levels": [
+   {
+    "nom": "Capa superior (Terreny Vegetal, sense numerar com a Nivell en aquesta llegenda)",
+    "litologia_candidats": [
+     "Llims argilosos de color marró fosc amb graves i algunes arrels."
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "requadre LLEGENDA",
+    "quote": "Terreny Vegetal. Llims argilosos de color marró fosc amb graves i algunes arrels.",
+    "note": "Entrada de llegenda pròpia, sense prefix 'Nivell'; probablement no compta per a num_soil_levels segons el conveni d'aquest document. Fondàries de transició no consten com a text (només gràfic, eix 569-572 msnm, variable per punt): 'de'/'a' es deixen sense valor per no introduir falsa precisió."
+   },
+   {
+    "nom": "Nivell 1",
+    "litologia_candidats": [
+     "Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells."
+    ],
+    "de": null,
+    "a": null,
+    "mostra_del_nivell": false,
+    "location": "requadre LLEGENDA",
+    "quote": "Nivell 1: Substrat rocós. Bretxes amb intercalacions de lutites i gresos vermells.",
+    "note": "Litologia mai segur per a la cadena literal (regla Pas 5). Fondàries de transició no consten com a text en aquest document (només gràfic, variable per punt P-1..P-4/S-1); l'annex de sondeig (ja llegit per separat) és la font primària per a 'de'/'a' exactes i per confirmar si la mostra hi cau."
+   }
+  ],
+  "__nota": "Document gràfic de síntesi: no aporta files de dpsh_tests ni sondeig_tests amb prou precisió textual (cota_inici/profunditat_assolida/rebuig no estan impresos com a text, només com a anotacions gràfiques Nb=16/18/19/10/33 i 'Nb=R'/'N=R' a la secció, que són dades derivades — Tier B, cf. Pas 3b — no fondàries en text). Tots 4 punts DPSH mostren 'Nb=R' (rebuig) al perfil, cosa que corrobora però no substitueix el camp 'rebuig' de l'Excel DPSH. superficie_construida no hi apareix."
+ },
+ "not_present": [
+  "client_name",
+  "architect_name",
+  "field_date",
+  "cota_referencia (numèrica en text)",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol",
+  "referencia_catastral",
+  "utm_x_utm_y",
+  "superficie_parcela",
+  "num_floors"
+ ],
+ "reading_notes": "Text natiu del PDF és brossa (fonts FreeHand sense ToUnicode; page.get_text() només retorna caràcters de control). Llegit visualment: render de la pàgina sencera a 150 dpi (PyMuPDF/fitz) + retall del plànol de situació encartat a ~400 dpi equivalent per confirmar les etiquetes P-1..P-4/S-1 i les distàncies entre punts. El plànol encartat mostra el polígon cadastral (taronja), la línia de tall (verda) i les distàncies entre punts (4m/~10m/9m/10m/22m), sense aportar dades noves de nivell A. Metadades PDF: creator 'PScript5.dll Version 5.2.2', producer 'Acrobat Distiller 15.0 (Windows)', author 'Loli', title '3001621_tall de correlació.FH11'."
+}

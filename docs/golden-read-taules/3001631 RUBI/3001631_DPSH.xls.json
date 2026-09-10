@@ -1,0 +1,96 @@
+{
+  "source_path": "ANNEXES/3001631_DPSH.xls",
+  "document_type": "dpsh_excel",
+  "what_it_is": "Transcripció digital d'Eva dels 3 assaigs DPSH de camp (fulls P-1, P-2, P-3)",
+  "issuer": "G3 (Eva) — transcripció del full de camp TPS",
+  "date": "camp 14/11/2025 (segons annex DPSH i manuscrit; l'Excel no porta data)",
+  "pages_or_sheets": "3 fulls: P-1, P-2, P-3",
+  "context": {
+    "who_made_it": "Eva (G3) transcriu el full de camp manuscrit de TPS",
+    "for_whom": "per generar l'annex DPSH i les taules de l'informe",
+    "why": "versió revisada i calculada (Colpeig NB = DPSH×0,83) dels valors de camp",
+    "expected_fields": [
+      "num_dpsh_tests",
+      "dpsh_tests (rebuig B80, N.F., colpeig)",
+      "spt registre (columna MOSTRA)",
+      "marques Nivell N"
+    ],
+    "not_expected": [
+      "metadades de projecte",
+      "cotes msnm",
+      "client",
+      "adreça"
+    ],
+    "relation_to_others": "versió revisada del full de camp de '3001631 - PENETROS.pdf' (p.2-3); l'Excel mana per als valors; origen de PDF/ANNEXES/3001631_DPSH.pdf",
+    "authority_for": [
+      "num_dpsh_tests",
+      "dpsh_tests.profunditat_assolida",
+      "dpsh_tests.rebuig",
+      "dpsh_tests.nivell_freatic",
+      "spt_ma_tests.registre"
+    ]
+  },
+  "tier_a": [
+    {
+      "concept_id": "num_dpsh_tests",
+      "value": "3",
+      "location": "fulls P-1, P-2, P-3 amb dades a la columna C",
+      "quote": "sheets: P-1, P-2, P-3",
+      "confidence": 0.95,
+      "note": "executats; coincideix amb albarà TPS (3) i pressupost (3 previstos)"
+    }
+  ],
+  "tables": {
+    "dpsh_tests": [
+      {
+        "punt": "P-1",
+        "profunditat_assolida": "-4,55 m",
+        "rebuig": "Si",
+        "nivell_freatic": "no detectat (columna N.F. buida)",
+        "location": "P-1!B80; columna F (N.F.) buida files 17-77",
+        "quote": "Rebuig  a -4,55  m"
+      },
+      {
+        "punt": "P-2",
+        "profunditat_assolida": "-3,58 m",
+        "rebuig": "Si",
+        "nivell_freatic": "no detectat (columna N.F. buida)",
+        "location": "P-2!B80",
+        "quote": "Rebuig  a - 3,58  m"
+      },
+      {
+        "punt": "P-3",
+        "profunditat_assolida": "-3,13 m",
+        "rebuig": "Si",
+        "nivell_freatic": "no detectat (columna N.F. buida)",
+        "location": "P-3!B80",
+        "quote": "Rebuig  a - 3,13  m"
+      }
+    ],
+    "spt_ma_tests": [
+      {
+        "id": "SPT-1",
+        "punt": "P-3",
+        "profunditat": "0,6 a 1,2 m",
+        "registre": "16/20/20/24",
+        "location": "P-3! columna E (MOSTRA), files 22-24",
+        "quote": "SPT-1 / 0,6 a 1,2 / 16/20/20/24"
+      }
+    ],
+    "soil_levels": [
+      {
+        "nom": "Nivell 1",
+        "nota": "única marca 'Nivell 1' a la cel·la C79 dels 3 fulls (columna al costat del peu); cap transició marcada → l'Excel suggereix 1 sol nivell, sense fondàries",
+        "location": "P-1/P-2/P-3!C79",
+        "quote": "Nivell 1"
+      }
+    ],
+    "__nota": "última lectura amb cops: P-1 -4,6 (100), P-2 -3,6 (100), P-3 -3,2 (100) — interval de 20 cm, NO fondària assolida; mana B80"
+  },
+  "not_present": [
+    "cota_inici (msnm)",
+    "field_date",
+    "expedient"
+  ],
+  "reading_notes": "xlrd; capçalera fila 16; factor NB 0,83 a D15; peus B80 amb espais dobles"
+}

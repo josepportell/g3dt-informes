@@ -1,0 +1,783 @@
+{
+ "generated": "2026-09-01T13:25:15",
+ "project": "4001607 LINYOLA",
+ "files": [
+  {
+   "path": ".~lock.4001607_informe.docx#",
+   "size": 105,
+   "md5": "845dd585cef5421e23b6c2d4e56aa1eb",
+   "mtime": "2026-06-22T17:16:59",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "25.0616/25·0616.pdf",
+   "size": 452189,
+   "md5": "7c8537b4b31a3e7f2153cfaacc8d111f",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616/page-3.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_25_0616/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0616/2_02B_DG_Silvia_Jaume.pdf",
+   "size": 6801549,
+   "md5": "7df29e1f0995ea8b5153503f6a6e54c7",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-7.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-8.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-8.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-9.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-9.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-10.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-10.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-11.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/page-11.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_2_02b_dg_silvia_jaume/meta.json",
+    "pages": 11,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0616/DADES PER ANAR A CAMP_v1.xlsx",
+   "size": 164511,
+   "md5": "da5381871410522833073c6b551dee9f",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "python",
+   "doc_type_hint": "fitxa_camp_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0616/PLAN_COST_LINYOLA.xlsx",
+   "size": 112076,
+   "md5": "bdeacfeec9ed6eecfde166d32616f50f",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "python",
+   "doc_type_hint": "plan_cost_g3",
+   "priority": 0
+  },
+  {
+   "path": "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+   "size": 149307,
+   "md5": "296c5aa75d57fe64ec2f5cbfb96fe57f",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_punts_de_sondeig_silvia_jaume",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_punts_de_sondeig_silvia_jaume/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_punts_de_sondeig_silvia_jaume/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_punts_de_sondeig_silvia_jaume/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0616/RE_ pressupost geotècnic.msg",
+   "size": 349696,
+   "md5": "33b397d25d403c8ca0371888183a7246",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_re_pressupost_geot_cnic",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_re_pressupost_geot_cnic/body.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_re_pressupost_geot_cnic/attachments/image011.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_re_pressupost_geot_cnic/attachments/image011.png.preext/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_re_pressupost_geot_cnic/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0616/RV_ pressupost geotècnic.msg",
+   "size": 7211520,
+   "md5": "c7aab4db68fe4c3da4679d5ec7579d4b",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_rv_pressupost_geot_cnic",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_rv_pressupost_geot_cnic/body.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_rv_pressupost_geot_cnic/attachments/image.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_rv_pressupost_geot_cnic/attachments/image.png.preext/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_rv_pressupost_geot_cnic/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "25.0616/pressupost geotècnic.msg",
+   "size": 7154176,
+   "md5": "e73ae749ecc3f1e63347d1e7b84b67cf",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_pressupost_geot_cnic",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_pressupost_geot_cnic/body.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_pressupost_geot_cnic/attachments/image.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_pressupost_geot_cnic/attachments/image.png.preext/image.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/25_0616_pressupost_geot_cnic/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "4001607_PORTADA_25.doc",
+   "size": 196608,
+   "md5": "e81c5349b850be6812b7f4b85401115f",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:PORTADA",
+   "priority": 0
+  },
+  {
+   "path": "4001607_informe.doc",
+   "size": 4209152,
+   "md5": "4f7bfdb867f6ad23a1dc1e1351e6240f",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4001607_informe.docx",
+   "size": 3947217,
+   "md5": "1df6d151da8cc0c49eb82e504a24ff40",
+   "mtime": "2026-03-04T20:50:53",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "4672-GTL-25 Linyola.pdf",
+   "size": 439452,
+   "md5": "62053f5f67782b4e7e6448cf34175b19",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "claude",
+   "doc_type_hint": "informe_laboratori",
+   "priority": 5,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/4672_gtl_25_linyola/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/G3DT_Silvia_Jaume signat.pdf",
+   "size": 504479,
+   "md5": "8aacb8da57ba22ba62076aa415ef99a6",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat/page-3.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_g3dt_silvia_jaume_signat/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ACCEPTACIO/RV_ Realització geotècnic.msg",
+   "size": 620032,
+   "md5": "83e3b211af14c59d056a0a7a0cad160a",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "claude",
+   "doc_type_hint": "acceptacio",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_rv_realitzaci_geot_cnic",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_rv_realitzaci_geot_cnic/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/acceptacio_rv_realitzaci_geot_cnic/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/4001607_DPSH.xls",
+   "size": 121344,
+   "md5": "2e751d7f7b9d453898d93408984dafb2",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "dpsh_excel",
+   "priority": 3,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh",
+    "kind": "excel",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-0.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-0.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-0.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-1.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-1.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-1.colors.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-2.csv",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-2.cells.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/sheet-2.colors.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/annexes_4001607_dpsh/meta.json",
+    "pages": null,
+    "sheets": [
+     {
+      "index": 0,
+      "name": "P-1",
+      "rows": 80,
+      "cols": 10,
+      "colored_cells": 104
+     },
+     {
+      "index": 1,
+      "name": "P-2",
+      "rows": 80,
+      "cols": 10,
+      "colored_cells": 100
+     },
+     {
+      "index": 2,
+      "name": "P-3",
+      "rows": 80,
+      "cols": 10,
+      "colored_cells": 101
+     }
+    ],
+    "error": null
+   }
+  },
+  {
+   "path": "ANNEXES/4001607_fotografies.FH11",
+   "size": 2478753,
+   "md5": "23693cfa33c6f7e87dbc57a4a052c65a",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001607_plànol de situació.FH11",
+   "size": 2756164,
+   "md5": "b69b3d210776b0d6622ca3ad6f929006",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/4001607_tall de correlació.FH11",
+   "size": 179085,
+   "md5": "9d005a66c5854b3eed7bd33ce900315c",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "annex_freehand_no_llegible",
+   "priority": 0
+  },
+  {
+   "path": "ANNEXES/ALTRES/COORDENADES.txt",
+   "size": 130,
+   "md5": "b299d7820807fb1cd09f965c18fee972",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "python",
+   "doc_type_hint": "coordenades_gps",
+   "priority": 0
+  },
+  {
+   "path": "CONTACTE.txt",
+   "size": 79,
+   "md5": "320f095e8cf7d3f12eb6a405caf9a967",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "DTE.txt",
+   "size": 76,
+   "md5": "6bb287ee0cac3e070b79c9dad9aa13df",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "no_classificat",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 11.11.17_3f18c893.jpg",
+   "size": 240822,
+   "md5": "7b276b042de828bd94ebe4847008b3c9",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.04.53_99ada7ae.jpg",
+   "size": 190272,
+   "md5": "5e8503fa6c6913132e2637882a50b4ca",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.05.09_8fc7585f.jpg",
+   "size": 656564,
+   "md5": "69534ea0b53275c8945039f533e84dfc",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P1.jpg",
+   "size": 575556,
+   "md5": "e5960126003de2be9ea09a36fb0e9299",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P2.jpg",
+   "size": 582691,
+   "md5": "9eec7a389d34bc4abc3c35242c6ddc7c",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/P3.jpg",
+   "size": 629272,
+   "md5": "d9c5315bd7294d70117b4b6291efae65",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "foto",
+   "priority": 0
+  },
+  {
+   "path": "FOTOGRAFIES/Thumbs.db",
+   "size": 93696,
+   "md5": "1f35c54757d49ec5b2955682fac1b10c",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "PDF/4001607_informe.pdf",
+   "size": 1995262,
+   "md5": "9a5562aef732fbdb01031167df9569fc",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:informe",
+   "priority": 0
+  },
+  {
+   "path": "PDF/ANNEXES/4001607_DPSH.pdf",
+   "size": 297597,
+   "md5": "4f78d04a5c690f4fdb3c9296e52d8eef",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "annex_dpsh",
+   "priority": 2,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh/page-3.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_dpsh/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001607_fotografies.pdf",
+   "size": 359678,
+   "md5": "b46fe0d4f4f0977e19e5707d10dd37c5",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/page-2-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_fotografies/meta.json",
+    "pages": 2,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001607_plànol de situació.pdf",
+   "size": 131650,
+   "md5": "a08feb2ffa73cefe2933a2fd9ce8ab55",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "annex_planol_situacio",
+   "priority": 9,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_pl_nol_de_situaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_pl_nol_de_situaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_pl_nol_de_situaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_pl_nol_de_situaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_pl_nol_de_situaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_pl_nol_de_situaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/4001607_tall de correlació.pdf",
+   "size": 49274,
+   "md5": "9e23b4e41034c5993ac390a4079c37a7",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_tall_de_correlaci",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_tall_de_correlaci/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_tall_de_correlaci/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_tall_de_correlaci/page-1-left.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_tall_de_correlaci/page-1-right.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_4001607_tall_de_correlaci/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/ANNEXES/lab-sig.pdf",
+   "size": 211658,
+   "md5": "2a8fe0c0ff1efbec2205dc40f3cbe815",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-4.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-4.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-5.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-5.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-6.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-6.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-7.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/page-7.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pdf_annexes_lab_sig/meta.json",
+    "pages": 7,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "PDF/LLETRA/4001607_PORTADA_25.pdf",
+   "size": 59932,
+   "md5": "df865660433120d08040e9ddeb688b34",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PDF/LLETRA/4001607_informe.pdf",
+   "size": 991710,
+   "md5": "7395037f8ddba05c3ecfba579c600fc0",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_carpeta",
+   "priority": 0
+  },
+  {
+   "path": "PENETROS.pdf",
+   "size": 349589,
+   "md5": "2bc914934f482f98dffa7725545b8be2",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "camp_penetros",
+   "priority": 7,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-1-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-2.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-2.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-2-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-2-bottom.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-3.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-3.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-3-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/page-3-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/penetros/meta.json",
+    "pages": 3,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "Punts de Sondeig_Silvia_Jaume (1).pdf",
+   "size": 149307,
+   "md5": "296c5aa75d57fe64ec2f5cbfb96fe57f",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "Punts de Sondeig_Silvia_Jaume (1)_REDIBUIX.pdf",
+   "size": 337779,
+   "md5": "aea7363d09156b57bfb49a4cc1d5c739",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1_redibuix",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1_redibuix/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1_redibuix/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/punts_de_sondeig_silvia_jaume_1_redibuix/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "RV_ Realització geotècnic.msg",
+   "size": 288768,
+   "md5": "5c43c5b52be9af08377bacd459b1fb4a",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "claude",
+   "doc_type_hint": "correu",
+   "priority": 8,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/rv_realitzaci_geot_cnic",
+    "kind": "msg",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/rv_realitzaci_geot_cnic/body.txt"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/rv_realitzaci_geot_cnic/meta.json",
+    "pages": null,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "Thumbs.db",
+   "size": 32768,
+   "md5": "3db373893b01ab462c2b752424a448a5",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "skip",
+   "doc_type_hint": "exclos_nom:Thumbs.db",
+   "priority": 0
+  },
+  {
+   "path": "comanda laboratori_4001607_LINYOLA.xls",
+   "size": 470528,
+   "md5": "56f5a48043cd8259c1255ca43e15e5a6",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "python",
+   "doc_type_hint": "comanda_lab_g3",
+   "priority": 0
+  },
+  {
+   "path": "pl situ.pdf",
+   "size": 3878350,
+   "md5": "91e4092804530aad87b79a99c14d4432",
+   "mtime": "2026-03-04T20:50:51",
+   "route": "claude",
+   "doc_type_hint": "altre",
+   "priority": 6,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pl_situ",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pl_situ/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pl_situ/page-1.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pl_situ/page-1-top.png",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pl_situ/page-1-bottom.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/pl_situ/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  },
+  {
+   "path": "tall.pdf",
+   "size": 603903,
+   "md5": "d64143c8f9ad8606583d17ce048a3ba8",
+   "mtime": "2026-03-04T20:50:52",
+   "route": "claude",
+   "doc_type_hint": "annex_tall",
+   "priority": 4,
+   "preext": {
+    "dir": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/tall",
+    "kind": "pdf",
+    "files": [
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/tall/page-1.txt",
+     "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/tall/page-1.png"
+    ],
+    "meta": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext/tall/meta.json",
+    "pages": 1,
+    "sheets": null,
+    "error": null
+   }
+  }
+ ],
+ "duplicates": [
+  [
+   "25.0616/Punts de Sondeig_Silvia_Jaume.pdf",
+   "Punts de Sondeig_Silvia_Jaume (1).pdf"
+  ]
+ ],
+ "preext": {
+  "root": "/home/josep/projects/claudecode-job/clients/g3dt-prod/docs/wizard-headless/mesures/runs/2026-09-01-holdout-v16/linyola/_preext",
+  "n_docs": 21,
+  "n_errors": 0,
+  "elapsed_s": 12.875
+ }
+}

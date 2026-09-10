@@ -1,0 +1,164 @@
+{
+ "source_path": "ANEXOS/4001671_DPSH.xls",
+ "source_md5": "3c4c238463813d38ce0533740a807467",
+ "skill_version": "1.6",
+ "schema_version": 1,
+ "document_type": "dpsh_excel",
+ "what_it_is": "Full de càlcul de plantilla G3 amb els resultats dels 3 assaigs de penetració dinàmica DPSH del projecte (fulls P-1, P-2, P-3): golpeig N20 mesura a mesura, marca de nivells per color i llindar de rebuig.",
+ "issuer": "No consta dins del document (full de dades sense capçalera d'emissor; plantilla de camp habitualment transcrita per TPS/Eva des dels fulls manuscrits PENETROS.pdf)",
+ "date": null,
+ "pages_or_sheets": "3 fulls: P-1, P-2, P-3",
+ "context": {
+  "who_made_it": "Transcripció digital dels valors de camp dels DPSH (plantilla G3 'Excel DPSH'); no porta signatura ni capçalera d'emissor",
+  "for_whom": "G3/Eva, com a base numèrica per omplir la taula de penetròmetres dinàmics de l'informe",
+  "why": "registrar el golpeig N20 cada 20 cm de cada punt DPSH, la marca de nivells travessats i la fondària de rebuig, per transcriure'ls a la taula de l'informe",
+  "expected_fields": [
+   "num_dpsh_tests",
+   "dpsh_tests[].profunditat_assolida",
+   "dpsh_tests[].rebuig",
+   "dpsh_tests[].nivell_freatic",
+   "senyal indirecte de nombre de nivells (columna Niveles per color)"
+  ],
+  "not_expected": [
+   "expedient",
+   "client_name",
+   "street_address",
+   "municipality",
+   "architect_name",
+   "field_date",
+   "cota_inici (viu al PDF/ANEJOS/4001671_DPSH.pdf, no en aquest Excel)"
+  ],
+  "relation_to_others": "versió digital dels fulls de camp manuscrits (PENETROS.pdf); té un bessó PDF/ANEJOS/4001671_DPSH.pdf (mateixes dades, però amb capçalera 'Cota inici: ...' que aquest Excel no porta) — no llegit en aquesta crida --only",
+  "authority_for": [
+   "num_dpsh_tests"
+  ]
+ },
+ "tier_a": [
+  {
+   "concept_id": "num_dpsh_tests",
+   "value": 3,
+   "location": "noms dels 3 fulls del llibre",
+   "quote": "fulls 'P-1', 'P-2', 'P-3', cadascun amb dades executades a la columna 'Golpeo DPSH' (C17:C36 segons full)",
+   "confidence": 0.9,
+   "note": "3 fulls amb golpeig executat; Excel DPSH és la font de màxima prioritat per aquest concepte (Pas 3); sense contradicció interna"
+  },
+  {
+   "concept_id": "num_soil_levels",
+   "value": 2,
+   "location": "llegenda de colors, fila 79 de cada full (C79/F79) + columna G 'Niveles'",
+   "quote": "C79: \"Nivel 1\"; F79: \"Nivel 2\" (rosa #FF8080 = Nivel 1, groc #FFFF99 = Nivel 2, consistent als 3 fulls)",
+   "confidence": 0.3,
+   "note": "Senyal INDIRECTE i feble: els 3 punts DPSH marquen per color 2 nivells a la columna 'Niveles', de forma consistent (P-1 transició ~-1,0/-1,2 m; P-2 ~-1,6/-1,8 m; P-3 ~-2,2/-2,4 m). Aquest projecte no té annex de sondeig al FileScanner (només 'corte de correlación' FH11/PDF); la font primària per a num_soil_levels és el tall (annex_tall / PDF/ANEJOS/4001671_corte de correlación.pdf), no llegit en aquesta crida. No pujar a segur amb només aquest senyal."
+  }
+ ],
+ "tables": {
+  "dpsh_tests": [
+   {
+    "punt": "P-1",
+    "cota_inici": null,
+    "profunditat_assolida": "-1,48 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-1, peu B80 (cota_inici: no present, comprovat text i colors de la columna F, buida)",
+    "quote": "B80: \"Rechazo a la penetración: -1,48 m\""
+   },
+   {
+    "punt": "P-2",
+    "cota_inici": null,
+    "profunditat_assolida": "-2,18 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-2, peu B80 (columna F buida, sense marca de color)",
+    "quote": "B80: \"Rechazo a la penetración: -2,18 m\""
+   },
+   {
+    "punt": "P-3",
+    "cota_inici": null,
+    "profunditat_assolida": "-3,78 m",
+    "rebuig": "Si",
+    "nivell_freatic": "No detectat",
+    "location": "full P-3, peu B80 (columna F buida, sense marca de color)",
+    "quote": "B80: \"Rechazo a la penetración: -3,78 m\""
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "id": "SPT1",
+    "punt": "P-1",
+    "profunditat": "0,80-1,40m",
+    "litologia": null,
+    "n30": {
+     "registre": [
+      13,
+      10,
+      14,
+      24
+     ],
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": 24,
+       "note": "suma dels 2 trams centrals (10+14), criteri d'Eva habitual"
+      },
+      {
+       "value": 61,
+       "note": "suma dels 4 trams"
+      }
+     ]
+    },
+    "location": "full P-1, E21:E23",
+    "quote": "E21: \"SPT1\"; E22: \"0,80-1,40m\"; E23: \"13/10/14/24\""
+   },
+   {
+    "id": "SPT-1",
+    "punt": "P-3",
+    "profunditat": "0.80-1,40m",
+    "litologia": null,
+    "n30": {
+     "registre": [
+      3,
+      4,
+      6,
+      5
+     ],
+     "estat": "candidats",
+     "candidates": [
+      {
+       "value": 10,
+       "note": "suma dels 2 trams centrals (4+6), criteri d'Eva habitual"
+      },
+      {
+       "value": 18,
+       "note": "suma dels 4 trams"
+      }
+     ]
+    },
+    "location": "full P-3, E21:E23",
+    "quote": "E21: \"SPT-1\"; E22: \"0.80-1,40m\"; E23: \"3/4/6/5\""
+   }
+  ]
+ },
+ "not_present": [
+  "expedient",
+  "client_name",
+  "street_address",
+  "municipality",
+  "architect_name",
+  "architect_company",
+  "building_type",
+  "num_floors",
+  "superficie_parcela",
+  "field_date",
+  "cota_referencia",
+  "utm_x",
+  "utm_y",
+  "referencia_catastral",
+  "lab_testing_company",
+  "lab_sample_id",
+  "lab_depth",
+  "lab_location",
+  "cte_edificacio",
+  "cte_sol"
+ ],
+ "reading_notes": "Llegit sheet-0/1/2.cells.txt (valors) i sheet-0/1/2.colors.txt (colors de fons) de la pre-extracció; cap fitxer del document original obert (fitz/xlrd no executats). Comprovats colors de la columna F (N.F.) als 3 fulls: cap cel·la amb bg de color -> 'No detectat' als 3 punts (regla v1.5, vocabulari canònic). Llegenda de nivells (files 79-80) idèntica als 3 fulls: rosa #FF8080='Nivel 1', groc #FFFF99='Nivel 2'; usada només com a senyal feble de num_soil_levels perquè aquest Excel no és la font primària (Pas 3). Nota de grafia: etiqueta de mostra SPT difereix entre fulls ('SPT1' a P-1 vs 'SPT-1' a P-3) i el separador decimal de la fondària també ('0,80-1,40m' vs '0.80-1,40m'); transcrit literal. D15=0,83 i columna 'Golpeo NB' són un factor de correcció energètica, no dades de nivell A; ignorats. cota_inici de cada punt no és en aquest Excel: viu a la capçalera de PDF/ANEJOS/4001671_DPSH.pdf, fora d'abast d'aquesta crida --only."
+}

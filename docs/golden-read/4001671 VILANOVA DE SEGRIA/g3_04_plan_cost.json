@@ -1,0 +1,26 @@
+{
+ "source_path": "26.0050/PLAN_COST_VILANOVA DE SEGRIÀ.xlsx",
+ "document_type": "plan_cost_g3",
+ "what_it_is": "Full intern de planificació de costos del projecte (oferta 840 €, cost 690,90 €, marge 17,75%): 3 DPSH + 1 SPT + laboratori (obertura de mostra + sulfats), subcontractació TPS 348,9 € + laboratori 35 €.",
+ "issuer": "G3 (tècnic responsable: Eva Vázquez Marcet)",
+ "date": "sense data pròpia (deriva del pressupost 26·0050 de 27/01/2026)",
+ "pages_or_sheets": "7 fulls; només 'Plan Cost' i 'OFERTA' porten dades del projecte",
+ "context": {
+  "who_made_it": "G3 (Eva), per controlar el marge del projecte",
+  "for_whom": "ús intern G3",
+  "why": "quantificar cost/hores; les quantitats de l'OFERTA són l'última paraula de G3 sobre la campanya prevista",
+  "expected_fields": ["descripció/municipi (E9)", "tècnic (E21)", "num_dpsh_tests previstos (OFERTA!B21)", "SPT (OFERTA!B23)", "assaigs de laboratori previstos"],
+  "not_expected": ["street_address", "client_name", "expedient", "field_date", "cota_referencia", "num_soil_levels", "architect_name", "num_floors"],
+  "relation_to_others": "deriva del pressupost 26·0050 (OFFER AMOUNT M21=840 = subtotal del pressupost). 'LLEIDA' (J8), 'TPS' (OFERTA!G3) i tots els preus unitaris són plantilla, mai senyal. PLAN_COST no s'actualitza després del camp: font de PREVISTOS, no d'executats.",
+  "authority_for": ["building_type (feble, via E9)", "municipality (corroboració)"]
+ },
+ "tier_a": [
+  {"concept_id": "municipality", "value": "Vilanova de Segrià", "location": "'Plan Cost'!E9 (etiqueta B9 'DESCRIPCIÓ TITÒL')", "quote": "EG VILANOVA SEGRIÀ", "confidence": 0.7, "note": "'EG' = estudi geotècnic. ATENCIÓ: a diferència d'altres projectes NO diu 'HAB UNIF' → aquest títol NO aporta building_type. Grafia 'VILANOVA SEGRIÀ' (sense 'DE')."},
+  {"concept_id": "building_type", "value": null, "location": "'Plan Cost'!E9", "quote": "EG VILANOVA SEGRIÀ", "confidence": 0.0, "note": "el títol no porta tipologia (cap 'HAB UNIF'); building_type haurà de sortir d'una altra font (correu, comanda, plànol)"},
+  {"concept_id": "num_dpsh_tests", "value": "3", "location": "OFERTA!B21 ('unitat d'assaig de penetració dinàmica DPSH')", "quote": "B21=3 (D21=360)", "confidence": 0.7, "note": "previstos; coincideix amb el pressupost; mana l'Excel DPSH per als executats"},
+  {"concept_id": "lab_location", "value": "1 SPT (amb 1 ml previ); laboratori: 1 obertura de mostra + 1 contingut en sulfats", "location": "OFERTA!B23 (spt), B22 (ml previ), B26 (obertura de mostra), B35 (contingut en sulfats)", "quote": "spt B23=1 | ml previ B22=1 | Obertura de mostra B26=1 | contingut en sulfats B35=1", "confidence": 0.7, "note": "cap ml de sondeig a rotació (bloc SONDEIGS a 0) → la mostra vindrà de l'SPT; assaigs de lab previstos: obertura + sulfats"},
+  {"concept_id": "tecnic_responsable", "value": "Eva Vázquez Marcet", "location": "'Plan Cost'!E21", "quote": "Tecnic responsable: Eva Vázquez Marcet", "confidence": 0.95, "note": "autora de l'informe; no és cap camp del nivell A però confirma qui signa"}
+ ],
+ "not_present": ["expedient (I7 'NUM INF' buit)", "client_name", "street_address", "architect_name", "num_floors", "superficie_parcela", "field_date", "cota_referencia", "num_soil_levels", "utm_x_utm_y", "referencia_catastral", "lab_testing_company", "lab_sample_id", "lab_depth", "cte"],
+ "reading_notes": "Reconegut per 'Plan Cost'!B2 == 'PLAN COST  |  G3 DT'. I7 (NUM INF) buit: l'expedient 4001671 encara no hi era. J8='LLEIDA' és el centre/plantilla, no el municipi de l'obra. Subcontractació: sondejos (TPS) 348,9 €, laboratori 35 € (= el preu del sulfats): coherent amb 1 mostra SPT + assaig de sulfats. 5 hores de gabinet, 0 jornades de camp pròpies (tot subcontractat a TPS)."
+}
