@@ -170,3 +170,44 @@ El worktree es diu `g3dt-prod` però hi ha experiment; l'Eva segueix producció,
 253 commits, dos fitxers en conflicte, una dependència que cal declarar, i zero hores d'execució en Windows natiu.
 Un pull li portaria 2 commits i cap millora visible; un merge sense prova en Windows li podria portar una arrencada que no
 funciona i un abandó. Els tres passos existeixen per això.
+
+## 10. CORRECCIÓ DEL JOSEP (2026-09-10, 20:30) — el llançament INCLOU Claude Code: l'Eva ha d'obtenir la mateixa qualitat que nosaltres
+
+> «Tot el que hem fet parteix de la base que instal·larem Claude Code a l'ordinador de l'Eva, i se subscriurà a un pla
+> que li doni accés a models suficientment bons. I si cal fer que corri a Linux (Ubuntu) a través de WSL, ho farem.
+> No ho hem desenvolupat perquè jo obtingui bons resultats i ella no.»
+
+Això **anul·la** l'«abast honest» del §2 i la pregunta 2 del §8: la mesura (M341 75 % / 69 % / 82 %) és amb Claude Code
+llegint, i el que l'Eva ha de rebre és aquest procés. El que cal, verificat al codi el mateix vespre:
+
+1. **Entorn: WSL2 + Ubuntu, no Windows natiu.** `automation/lectura/runner.py` fa `os.killpg`, `signal.SIGKILL` i
+   `start_new_session=True` (POSIX: en Windows natiu la lectura no arrenca sense adaptar-la); `claude` i `soffice` en
+   Linux són els binaris amb què s'ha mesurat tot. Al maig es va triar natiu per simplicitat («Windows natiu primer;
+   Pla B: WSL», `PLA-DEPLOYMENT-EVA-2026-05-04.md` §1 i §10), no per cap impossibilitat, i el Pla B ja té els
+   `scripts/*.bat` que assumeixen WSL. Cal: `wsl --install` (admin + reinici), unitat de xarxa muntada dins WSL
+   (`/mnt/<lletra>` o `drvfs` per a l'UNC de `192.168.1.x`), navegador de Windows a `localhost:8765` (WSL2 ho reenvia).
+2. **Claude Code + pla.** CLI a WSL amb el compte de l'Eva. Dimensionar el pla amb dades, no a ull:
+   `docs/wizard-headless/mesures/ledger.py` (registre de consum per model) → tokens per projecte i per etapa. La lectura
+   va amb `G3DT_LECTURA_EFFORT=xhigh` per defecte i topalls de 600/900 s per document; els lectors de fotos i figures
+   són 2 crides més per projecte. Pro té finestres de 5 h amb límit: un projecte sencer pot exhaurir-lo → probablement
+   Max. **El model NO es fixa amb `--model` ni al runner ni als lectors** (grep 2026-09-10): cal veure com es tria avui i
+   fixar model i esforç a la config perquè no depenguin del defecte del compte. Gestió del límit d'ús (HTTP 400 «usage
+   limits», memòria `reference_anthropic_usage_cap_error_shape`): el job s'ha d'aturar i dir-ho, no fallar en silenci.
+3. **Que el pipeline sigui el mesurat.** (a) `G3DT_USE_LECTURA_HEADLESS=true` (botons Preparar / Enllestir / Des de
+   zero; els tres executen `run_lectura_job`). (b) **Els lectors de fotos i de figures NO són al job**: es passen a mà
+   (`lector_fotos.run`, `lector_figures.run`); cal integrar-los (una passada de cadascun per projecte, després de la
+   lectura, abans dels prefills) — és feina de codi, amb test. (c) LibreOffice a WSL (`apt`) per als FH11 i els `.doc`.
+   (d) Inventari de les claus API que encara calen a les fases clàssiques (visió per API, Groq, OpenAI classify): els
+   logs d'avui no ho registren; derivar-lo d'una execució completa amb `G3DT_LOG_PATH`. Decidir: mantenir claus (cost
+   petit per projecte) o passar la visió a Claude Code (`G3DT_PROD_USE_CLAUDECODE_VISION`) per a zero cost API.
+4. **Prova de reproductibilitat en net (la porta GO/NO-GO real).** Tot s'ha mesurat al compte del Josep, amb el seu
+   `~/.claude` (memòria automàtica del projecte, CLAUDE.md global). Els skills de lectura no usen cap MCP i no hi ha
+   `.mcp.json` (verificat): bé. Però cal executar lectura + lectors + informe des d'un **perfil net** (HOME nou, sense
+   memòria ni configuració del Josep, amb el model i l'esforç del pla de l'Eva) sobre 2-3 projectes del corpus i
+   comparar amb la referència (M341, `compare_consolida`). Si coincideix, el resultat és del sistema, no de l'entorn.
+5. **Els tres passos** es mantenen, amb el pas 2 fet a WSL amb perfil net, i el pas 3 amb: WSL, Claude Code, login,
+   pla contractat, LibreOffice, `.env` amb els flags de lectura, i un projecte real d'ella de cap a cap («Preparar per
+   demà» inclòs, cronometrat). El temps per projecte amb `xhigh` s'ha de mesurar i explicar-li (el botó ja diu «per demà»).
+
+Preguntes obertes que substitueixen les del §8: pla (Pro vs Max) segons el ledger; com es fixa el model avui; ordre
+d'integració dels lectors al job; claus API sí/no; data.
