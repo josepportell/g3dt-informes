@@ -6315,3 +6315,76 @@ Camp de peu/font per a la figura pujada (#10); unificar les dues vies d'escriptu
 preguntes 30-38 a l'Eva amb el Josep; passada dels lectors amb `alternatives` quan toqui.
 
 *Fi entrada 2026-09-10. Pujada d'imatges des de la finestreta: qualsevol ranura, una tria més.*
+
+## 2026-09-10 (2) — Pujada d'imatges, els tres pendents: el peu de la figura l'escriu l'Eva (#10), «Guardar» de la pestanya conserva la tria del lector (#11), i una pujada que no és a cap ranura s'esborra (#12)
+
+### Context
+
+El Josep ha provat la pujada en viu («la millora és gran») i ha demanat fer els tres pendents que l'entrada
+2026-09-10 deixava a PENDENTS §3 #10-#12. Els tres són petits i toquen el mateix fitxer (`web/api.py`) i la finestreta.
+
+### Decisions arquitectòniques clau
+
+1. **#10 — Un sol camp, el peu sencer (inclou la font), i el mateix camp per a dos usos.** A la finestreta de
+   `fig_projecte_1/2` hi ha «Peu de la figura (inclou la font)», prefixat amb el peu actual o, si la ranura és buida,
+   amb «Detall del projecte. Font: G3DT.» (constant `UPLOAD_PROJECT_CAPTION`, la mateixa que el servidor). (a) En pujar,
+   el valor viatja com a `caption` del multipart (`/upload` l'accepta com a `Form` opcional; buit → el defecte). (b) «Desa el
+   peu» envia a `/choose` la MATEIXA entrada actual amb el peu nou: `_apply_alternative_choice` la troba (`same`) i
+   **l'edita al lloc** (abans una entrada ja present no canviava de peu). Per què un sol camp i no «font» a part: el peu
+   del signat és una frase lliure («Secció. Font: Projecte.», «Planta de l'habitatge projectat. Font: Projecte.»);
+   partir-lo en dos camps inventaria una estructura que els signats no tenen. Els peus de les altres ranures són fixos
+   a la plantilla: no s'hi toca res. El defecte per a una entrada del LECTOR sense peu continua sent «Font: Projecte.»;
+   només les pujades (`kind: upload`) cauen a «Font: G3DT.».
+2. **#11 — `select_photos` escriu com `/choose`.** Carrega el fitxer, guarda `_lector_selection` la primera vegada que
+   passa de `lector` a `user`, posa les 5 ranures de la petició i conserva la resta (`alternatives`, `_lector`,
+   `materials_per_punt`). Abans reescrivia el fitxer amb `source` i 5 claus: la tria del lector deixava de tornar com a
+   alternativa i la font per ranura de la finestreta perdia la informació. Alternativa descartada: fer que la pestanya
+   cridés `/choose` 5 vegades (la regla «una foto, un forat» de `/choose` interferiria amb un intercanvi entre ranures).
+   «Restablir selecció IA» (#8) continua esborrant el fitxer sencer: no és d'aquesta entrada.
+3. **#12 — «Una pujada que no és a cap ranura no existeix».** `_sweep_unreferenced_uploads` recorre les dues seleccions
+   (qualsevol cadena, a qualsevol nivell, que comenci per `validation/uploads/imatges/`) i esborra els fitxers de la
+   carpeta que no hi surten, la seva entrada de `pujades.json` i els renders `figsel_*_<stem>_*` de la cau. Es crida
+   després de CADA escriptura (`/choose`, `/upload`, «Guardar», «Restablir»). Per què esborrar i no amagar: la carpeta
+   no creix, la pestanya no ensenya candidates fantasma, i el cost per a l'Eva és tornar a pujar (un clic) un fitxer
+   que continua al seu ordinador. Per què «qualsevol cadena» i no les claus conegudes: si demà una ranura nova referencia
+   una pujada, no s'esborrarà per oblit. Les fotos de l'Eva (`FOTOGRAFIES/`, `ALTRES/`) no es toquen mai: només la
+   carpeta de pujades.
+
+### Implementació
+
+`web/api.py`: `_referenced_upload_rels`, `_sweep_unreferenced_uploads`; `_apply_alternative_choice` (peu per `kind`, edició
+al lloc, crida a la neteja a les dues branques); `select_photos` (conserva i instantània); `reset_photos` (neteja);
+`upload_slot_image` (`caption: Form(None)`). `review.html`: camp `#altCaption` + «Desa el peu» (`saveCaption`), la
+pujada hi afegeix `caption`; `UPLOAD_PROJECT_CAPTION`. Noms comprovats lliures.
+
+### Validació empírica
+
+- En viu (còpia de Bell-lloc): pujada a `fig_projecte_2` amb «Façana des del carrer. Font: Google Street View.» → desat
+  tal qual; «Desa el peu» → «Façana principal. Font: G3DT.» a la mateixa posició, `n = 2`; «Guardar» de la pestanya amb
+  les 5 ranures actuals → `source user`, `_lector_selection` present, `alternatives` (4 ranures) i `raons` conservades,
+  font per ranura «lector» a les no tocades; en tornar `fig_projecte_2` a l'estat anterior la pujada nova s'ha
+  esborrat i **les dues del Josep (referenciades) s'han conservat** — la neteja respecta les referències.
+- **Incident:** la meva restauració de l'estat de proves feia `rm -rf validation/uploads` i va esborrar les dues pujades
+  que el Josep havia fet mentrestant (`fig_assaigs`, `fig_projecte_1`). JSON deixats coherents (assaigs → cap, projecte →
+  la del lector) i el Josep informat. Memòria `feedback_no_rm_test_state_you_did_not_create`. No és un defecte del codi.
+- M341: no es repeteix (cap canvi al generador ni a `apply_selection`; el peu és una dada de la selecció).
+
+### Tests
+
+3 nous a `test_alternatives_api.py`: peu a la pujada, buit → defecte, edició al lloc (posició, cap duplicat, l'altra
+intacta, `apply_selection` ho llegeix), defecte antic per a una entrada del lector; «Guardar» conserva
+`_lector_selection`/`alternatives`/`_lector`, font per ranura, la instantània no es reescriu, 403/404; neteja: la no
+referenciada fora (fitxer, índex, `figsel_*`), la referenciada es queda, moure-la de ranura la salva, «Guardar» sense
+ella la treu, l'índex buit desapareix, les fotos de l'Eva no es toquen. Suite: vegeu la sessió del 10.
+
+### Limitacions conegudes
+
+- El camp de peu només existeix a les figures del projecte (les úniques amb peu variable a la plantilla).
+- Si l'Eva vol recuperar una pujada que ja ha substituït, la torna a pujar: no hi ha paperera.
+- #8 («Restablir selecció IA» esborra `photo_selection.json` sencer) i #9 (`select_photos_ai`) continuen oberts.
+
+### GO/NO-GO
+
+- ✅ 3 tests nous verds; ✅ provat en viu; ⏳ suite sencera (sessió); ⏳ que l'Eva escrigui un peu en un projecte seu.
+
+*Fi entrada 2026-09-10 (2). Peu de la figura, «Guardar» coherent i neteja de pujades.*
