@@ -14,7 +14,7 @@ instal·lació presencial). Aquest document és el full de ruta viu; l'evidènci
 | 1c. Suite a release (venv del lock) | **11 vermells / 2579 verds / 4 omesos (209 s)** — exactament els 11 esperats-amb-dades, cap de nou | DECISION-LOG 2026-09-10 (3) |
 | 1d. Codi que el §10 demanava | **FET** (experiment `caf2b1e`, `f985936`, `6fbdc85`; fusionat a release `d042362`) | lectors d'imatges dins el job; aturada per límit d'ús; pins `pymupdf`; `requirements-lock.txt` |
 | 2. Prova en perfil net (Castellar) | **GO**: 13/13 docs, 0 errors, 29,5 min; escalars 14 OK / 5 CAUTELA / 2 FORA / **0 ERR / 0 ALERTA** (ref. 16/3/2); taules 26 OK / 1 ALERTA (excés de confiança sobre `SPT-1`, correcte) / 2 BUIT (ref. 28/1); 271 k tokens de sortida, 252 turns, 12,48 $ equiv. | `runs/2026-09-10-perfil-net-castellar/` (meta, telemetria, decisions, escalars/taules vs or, vs-referencia) + fila al LEDGER |
-| 2b. Prova a WSL al PC del Josep amb els flags de l'Eva | pendent de la decisió §3.1 | — |
+| 2b. Prova a WSL com ho tindrà l'Eva (Bell-lloc, clon net, lock, **cap clau API**) | **GO**: Preparar 45,7 min (18 docs), Enllestir l'endemà 2 s, Generar 4 s; lectura 16 OK / 5 CAUTELA / 0 ERR vs or; M341 sense claus **idèntica** a la referència (84 % / 84 % / 75 %); pujada, peu, tornada i escombrada OK; docx 0 restes Jinja; 0 crides API, 0 tracebacks | `runs/2026-09-10-wsl-sense-claus-bell-lloc/` + fila al LEDGER |
 | 3. Presencial | pendent de data | §6 |
 | push `release/2026-09` a origin | **FET** (`e047ce6`, després de la suite del lock); experiment també (`483cd48`) | `origin/release/2026-09` |
 
@@ -141,8 +141,10 @@ cau pel seu propi guard (cap error, només salts registrats al log):
 | visió via B (`vision_groq`, Fase 1) | OpenAI/Anthropic/Groq | planol/sondeig/dpsh `*_extracted.json` | la lectura (`skip_vision=True`); el generador hi cau només si falta `user_data`/`lectura_tables` |
 
 Sense `claude` al PATH (fallback de servei), la via B sencera correria **sense visió ni síntesi**: prefills pobres però cap
-crida de pagament. Amb Claude Code instal·lat, aquest camí és l'excepció. Mesura: el pas 2 a WSL corre amb aquest `.env` sense
-claus (§4.2) i es compara amb la referència de Bell-lloc (M341 `-nit`: 60·6·13·1 → 84 %, taules 84 %).
+crida de pagament. Amb Claude Code instal·lat, aquest camí és l'excepció. **Mesurat (§4.2): a Bell-lloc, sense cap clau, M341
+és idèntica a la referència** (84 % / 84 % / 75 %) i la lectura dona 0 errors amb confiança. El `.env` de l'Eva anirà sense claus;
+les fases que en depenien queden apagades pel seu propi guard. Pendent (feina d'una altra sessió): repetir-ho a un projecte en
+castellà (Vilanova o Anciles) per veure si `_synthesize_with_llm` hi aportava alguna cosa que la lectura no cobreix.
 
 ### 3.4 Data de la visita i punt de retorn — §6 i §7.
 
@@ -161,7 +163,20 @@ confiança; el resultat és del sistema, no de l'entorn del Josep.** Lectors d'i
 **idèntiques** a les del 2026-09-09 (fotos 5/5 ranures, figura d'assaigs mateix retall, projecte i situació iguals).
 Queden 1-2 projectes més (Bell-lloc, Alcoletge) si el Josep vol gastar-hi ~12-17 $ equiv. cadascun del seu pla.
 
-### 4.2 A WSL, com ho tindrà l'Eva (pendent §3.1)
+### 4.2 A WSL, com ho tindrà l'Eva — FET (2026-09-10, 22:12-23:07)
+
+**Resultat (run `2026-09-10-wsl-sense-claus-bell-lloc`):** clon net de `release/2026-09` des d'origin, venv amb el lock, `.env`
+sense cap clau API (decisió 3) + bloc de lectura, xarxa simulada niada, HOME net, navegador. Navegador de xarxa (3 nivells)
+→ **«Preparar per demà»: 45,7 min** (18 documents a c2, mediana 203 s; lectors 56 + 56 s) → taula «Preparat» → **«Enllestir»
+l'endemà: 2 s** (documents en cau per md5, lectors saltats per empremta) → formulari (42 camps, capa «Observacions de camp»
+amb Ometre) → pestanya Imatges (alternatives del lector a 6 ranures; pujada d'un JPG amb EXIF amb peu → «tria de l'Eva»;
+tornada a l'alternativa → pujada i renders escombrats) → **«Generar informe»: 4 s**, docx 5,1 MB copiat a la xarxa, 0 restes
+de Jinja, Figures 1-6 (la 2 és la pujada amb el peu) i Fotografies 1-5. Lectura vs or: 16 OK / 5 CAUTELA / 0 ERR / 0 ALERTA
+(referència 17 / 4); taules idèntiques. **M341 sobre el workspace sense claus, amb la lectura de referència: idèntica a
+`-nit`** (escalars 84 %, taules 84 %, imatges 75 %) → la decisió 3 no costa res a Bell-lloc. Logs: 0 tracebacks, 0 crides a
+cap API de pagament. Defectes menors anotats al `meta.json` (comptador 19/18, «Visió IA (0/4)», `G3DT_REPORTS_DIR` buit).
+
+Procediment que s'ha seguit (és el del pas 3, §5, en local):
 Clon net de `release/2026-09` a una ruta Linux nova (no un worktree); `python3 -m venv .venv && pip install -e . -c
 requirements-lock.txt`; `.env` **calcat al de l'Eva** (tres claus, `G3DT_*` de producció a `false`) **+** el bloc de lectura
 (`G3DT_USE_LECTURA_HEADLESS=true`, `MODEL`, `EFFORT`, `AUTH=login`, `IMATGES=true`), `G3DT_NETWORK_PROJECTS` a

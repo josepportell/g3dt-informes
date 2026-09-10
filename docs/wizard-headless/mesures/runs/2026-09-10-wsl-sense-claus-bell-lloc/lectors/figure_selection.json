@@ -1,0 +1,97 @@
+{
+ "source": "user",
+ "assaigs": {
+  "idx": 1,
+  "kind": "annex_crop",
+  "rel": "plan_crop_4001612_plànol de situació_516920bbdd.jpg",
+  "page": null,
+  "src": "/home/josep/g3dt-release-wsl-test/cache/images/plan_crop_4001612_plànol de situació_516920bbdd.jpg",
+  "crop": null
+ },
+ "projecte": [
+  {
+   "idx": 4,
+   "kind": "project_page",
+   "rel": "25.0647/A.01.pdf",
+   "page": 1,
+   "src": "/home/josep/g3dt-release-wsl-test/workspace/4001612 BELL-LLOC/validation/_lector_figures/pages/src_A.01_ef0272ce32_p1.png",
+   "crop": [
+    0.13,
+    0.04,
+    0.57,
+    0.66
+   ],
+   "caption": "Planta de coberta de l'habitatge projectat dins la parcel·la. Font: Projecte."
+  }
+ ],
+ "situacio": null,
+ "alternatives": {
+  "assaigs": [
+   {
+    "idx": 5,
+    "kind": "project_page",
+    "rel": "A.01 amb punts.pdf",
+    "page": 1,
+    "src": "/home/josep/g3dt-release-wsl-test/workspace/4001612 BELL-LLOC/validation/_lector_figures/pages/src_A.01 amb punts_fde90fcbe9_p1.png",
+    "crop": [
+     0.13,
+     0.04,
+     0.57,
+     0.66
+    ],
+    "rao": "candidat 5 (A.01 amb punts.pdf, pàgina 1): la planta de l'arquitecte amb dos punts marcats en vermell, sense etiquetes P-1/P-2/S-1"
+   }
+  ],
+  "projecte": [
+   {
+    "idx": 4,
+    "kind": "project_page",
+    "rel": "25.0647/A.01.pdf",
+    "page": 1,
+    "src": "/home/josep/g3dt-release-wsl-test/workspace/4001612 BELL-LLOC/validation/_lector_figures/pages/src_A.01_ef0272ce32_p1.png",
+    "crop": [
+     0.13,
+     0.04,
+     0.57,
+     0.66
+    ],
+    "rao": "candidat 4 (A.01.pdf, pàgina 1): la mateixa planta de coberta, neta, per si l'Eva vol l'emplaçament sense punts d'assaig",
+    "caption": "Planta de coberta de l'habitatge projectat dins la parcel·la. Font: Projecte."
+   }
+  ]
+ },
+ "_lector": {
+  "data": "2026-09-10 22:58",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 56.5,
+  "exclude_slug": null,
+  "lang": "ca",
+  "raons": {
+   "assaigs": "candidat 1 (plan_crop_4001612_plànol de situació_516920bbdd.jpg, annex_crop): el retall del full de l'Eva porta P-1, P-2 i S-1 marcats sobre la planta de coberta amb totes les cotes, sencer com sempre en aquest cas determinista",
+   "projecte": "cap candidat aporta el que l'assaigs ja no mostri: els candidats 2 i 3 són certificats de consulta cadastral (no dibuixos del projecte), i els candidats 4/5 són el mateix full A.01 amb la planta de coberta ja visible al candidat 1 (sense secció ni topogràfic ni diverses tipologies)"
+  },
+  "confianca": {
+   "assaigs": 0.95,
+   "projecte": null
+  },
+  "cap_font": [
+   "projecte"
+  ],
+  "notes": "Full A.01 (candidats 4 i 5) és un únic full amb planta de coberta + catastre + aèria + justificació de planejament + caixetí, sense secció vertical; els candidats 2 i 3 són certificats descriptius i gràfics del Cadastre (documentació administrativa), no dibuixos de l'arquitecte, i queden exclosos de totes les ranures.",
+  "warnings": [],
+  "fingerprint": "d7db835814d749713cde20dda99495e54ef97f88"
+ },
+ "_lector_selection": {
+  "assaigs": {
+   "idx": 1,
+   "kind": "annex_crop",
+   "rel": "plan_crop_4001612_plànol de situació_516920bbdd.jpg",
+   "page": null,
+   "src": "/home/josep/g3dt-release-wsl-test/cache/images/plan_crop_4001612_plànol de situació_516920bbdd.jpg",
+   "crop": null
+  },
+  "projecte": [],
+  "situacio": null
+ }
+}

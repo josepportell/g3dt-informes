@@ -6473,3 +6473,51 @@ Resultat de la prova en perfil net (comparar amb `_reconsolida-2026-09-06-pend` 
 del Josep; pas 2 en WSL amb `.env` de l'Eva; full de ruta presencial (`PLA-RELEASE-2026-09.md` §5).
 
 *Fi entrada 2026-09-10 (3). Branca de release, lectors i límit d'ús al job, versions fixades.*
+
+## 2026-09-10 (4) — Decisions del Josep per al llançament (WSL2, Max 5x, cap clau API, 18-09-2026) i pas 2 fet a WSL amb el clon net: el flux sencer de l'Eva funciona sense cap clau i amb la qualitat mesurada
+
+### Context
+Resposta del Josep a `PLA-RELEASE-2026-09.md` §3 (nit del 10): (1) WSL2 + Ubuntu; (2) pla Max 5x (100 €/mes) pel nombre
+d'interaccions; (3) «les claus API les hauríem d'absorbir amb Claude Code per què l'Eva no pagui a dos llocs»; (4) cita
+dilluns 14-09 per al divendres 18-09-2026 (la fixa l'Eva). Pas 2 del pla (§4.2) executat tot seguit.
+
+### Decisions arquitectòniques clau
+1. **`.env` de l'Eva sense cap clau API.** Cada fase amb clau cau pel seu guard (FileMiner Groq, sondes de ConceptScout,
+   `deep_folder_classify` OpenAI, SmartScan nivell 3, ortofoto, `_synthesize_with_llm`, visió via B); amb la lectura activa,
+   `skip_vision` ja evitava la visió. Mesurat a Bell-lloc: M341 idèntica a la referència amb la lectura de referència
+   (84/84/75 %), lectura 0 ERR. Alternativa rebutjada: mantenir les claus «per si de cas» (dos pagaments, i el cost petit no
+   compra qualitat mesurable). Pendent: un projecte en castellà.
+2. **La prova del pas 2 és el procediment del pas 3 en local**: clon net d'origin, venv amb el lock, `.env` real, HOME net,
+   xarxa niada, wizard pel navegador. No s'ha provat res «amb flags de desenvolupament».
+
+### Implementació
+Cap codi nou. Docs: PLA-RELEASE §0/§3/§3.3.1/§4.2, STATUS, sessió, memòria. Run `runs/2026-09-10-wsl-sense-claus-bell-lloc/`
+(telemetria, decisions, `_job.json`, lectors, `g3dt.log`, `.env` de prova, M341 amb les dues lectures, escalars/taules vs or) i
+fila al LEDGER.
+
+### Validació empírica
+- «Preparar per demà» 45,7 min (18 documents a c2, mediana 203 s; lectors 56 + 56 s; 354 turns, 383 k tokens de sortida,
+  15,98 $ equiv.); «Enllestir» l'endemà 2 s; «Generar» 4 s; docx 5,1 MB, 0 restes de Jinja, Figures 1-6 / Fotografies 1-5.
+- Lectura vs or: 16 OK / 5 CAUTELA / 1 NOU, 0 ERR / 0 ALERTA (referència 17/4/1); taules 17/3/1 idèntiques.
+- M341 workspace sense claus: lectura de referència → idèntic a `-nit`; lectura d'avui → 62·4·13·1 (84 %), taules 82 %,
+  imatges idèntiques.
+- Pestanya Imatges: alternatives a 6 ranures; pujada (ID, EXIF normalitzat, peu) → docx Figura 2; tornada → escombrada.
+- Log: 0 `Traceback`, 0 crides a api.groq/openai/anthropic, 0 avisos soffice/pandoc.
+
+### Limitacions conegudes
+- Un sol projecte (català) sense claus; el castellà queda per mesurar. El compte és el del Josep: els límits de Max 5x es
+  veuran el primer dia al compte de l'Eva.
+- Defectes menors vistos: comptador 19/18 a la taula (el duplicat saltat emet `lectura_doc`); «Visió IA (0/4)» al formulari
+  amb la lectura activa; `G3DT_REPORTS_DIR` sense ús; la capa «Observacions de camp» a cada obertura. Cap bloqueja.
+- La pujada s'ha fet per l'API del mateix servidor (el navegador del MCP no accepta fitxers fora del projecte); la UI l'ha
+  mostrada i el docx l'ha portat; el botó «Puja una imatge» el va provar el Josep el 10 al matí.
+
+### GO/NO-GO
+- ✅ Pas 2 sencer a WSL sense claus (GO). ✅ Decisions 1-4 registrades.
+- ⏳ Pas 3: cita amb l'Eva (dilluns 14-09), pla Max 5x contractat abans, `production/g3dt-eva-v1` s'avança el dia de la visita.
+
+### Següents passos
+Full de ruta del pas 3 (`PLA-RELEASE-2026-09.md` §5) amb el `.env` sense claus; un projecte en castellà sense claus (M341);
+els 4 defectes menors en una sessió curta.
+
+*Fi entrada 2026-09-10 (4). Decisions del Josep i pas 2 a WSL sense claus: GO.*

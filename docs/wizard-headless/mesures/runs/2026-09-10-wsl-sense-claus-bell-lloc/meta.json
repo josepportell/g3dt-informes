@@ -1,0 +1,29 @@
+{
+  "label": "2026-09-10-wsl-sense-claus-bell-lloc",
+  "date": "2026-09-10",
+  "project": "4001612 BELL-LLOC",
+  "model": "sonnet (claude-sonnet-5)",
+  "concurrency": 2,
+  "claude_version": "2.1.267",
+  "skill_version": "g3dt-llegir-projecte (release/2026-09 @ 95e669b, clon net d'origin)",
+  "commit_base": "95e669b (release/2026-09)",
+  "conditions": "PAS 2 DEL LLANCAMENT (PLA-RELEASE §4.2) COM HO TINDRA L'EVA: clon net de release/2026-09 des d'origin a ~/g3dt-release-wsl-test/app, venv nou amb pip install -e . -c requirements-lock.txt, .env calcat al de l'Eva SENSE CAP CLAU API (decisio 3 del Josep) + bloc de lectura (HEADLESS=true, sonnet, xhigh, login, c2, IMATGES=true), G3DT_USE_GROQ=0, ORTHO=0, xarxa simulada niada (/mnt/c/claude/g3dt/xarxa-simulada), HOME net amb nomes .credentials.json, wizard al port 8766 (uvicorn), navegador (Playwright): navegador de xarxa 3 nivells -> Preparar «per dema» -> Enllestir -> Imatges (alternatives, pujada amb peu, tornada) -> Generar informe -> copy-back a la xarxa. 0 crides HTTP a api.groq/openai/anthropic al log.",
+  "changes_since_previous": "cap canvi de codi respecte la prova en perfil net de Castellar; canvia el projecte (Bell-lloc), el flux (wizard sencer, no driver) i les claus (cap)",
+  "contaminated_docs": [],
+  "contamination_note": null,
+  "wall_real_s": 2740,
+  "effort": "xhigh (fixat per --effort)",
+  "quality_judgement": {
+    "erroni_amb_confianca_fons": 0,
+    "notes": [
+      "TEMPS: «Preparar» 22:13:04 -> 22:58:44 = 45,7 min de paret (delta-sync 117 fitxers, via B sense claus, 18 documents a c2: mediana 203 s, max 543 s, suma 72,4 min; consolidacio Python; lectors 56 s + 56 s; merge). «Enllestir» l'endema (mateix contingut): 2 s (18/18 documents en cau per md5, prefills en cau, lectors saltats per empremta). «Generar informe»: 4 s (docx 5,1 MB, copiat a la xarxa).",
+      "LECTURA vs or (fase0-acceptacio, Bell-lloc): escalars 16 OK / 5 CAUTELA / 1 NOU, 0 ERR, 0 ALERTA (referencia _reconsolida-2026-09-06-pend: 17 / 4 / 1); taules 17 OK / 3 CAUTELA / 1 BUIT (referencia identica). 354 turns, 382.912 tokens de sortida, 15,98 $ equiv.",
+      "M341 (viaA, workspace sense claus): amb la lectura de referencia = IDENTIC a -nit (60·6·13·1 -> 84 %; taules 42·4·9 -> 84 %; imatges 5·1·2·2 -> 75 %): TREURE LES CLAUS API NO MOU CAP CEL·LA a Bell-lloc. Amb la lectura d'aquesta nit: 62·4·13·1 -> 84 %; taules 42·3·10 -> 82 %; imatges identiques (soroll entre runs de lectura). Carpetes m341/.",
+      "LECTORS (dins el job, estat «imatges» 4/5 visible a la taula): fotos 5/5 ranures, figures assaigs + 0 projecte; source lector; empremta desada. La pestanya Imatges mostra «Alternatives (1)» a 6 ranures i «Canviar la imatge» a les 3 automatiques.",
+      "PUJADA (API del mateix servidor + UI): JPG amb EXIF -> validation/uploads/imatges/20260910-230130-442b16.jpg (ID), pujades.json amb l'original, 1920x1080; la pestanya diu «tria de l'Eva · pujada per l'Eva» amb el peu; el docx la porta com a Figura 2 amb el peu escrit; tornar a l'alternativa del lector (chooseAlternative) escombra la pujada i els renders, conserva _lector_selection.",
+      "DOCX: 453 paragrafs, 14 taules, 13 media, 0 restes de Jinja, Figures 1-6 i Fotografies 1-5 numerades per presencia. Logs: 0 Traceback, 0 avisos soffice/pandoc (soffice instal·lat a WSL), avisos nomes de Cadastre progressiu (municipi 'Bell-Lloc' no trobat / coord MISMATCH: comportament conegut de la via B).",
+      "DEFECTES MENORS VISTOS (no bloquen): la taula de jobs compta 19/18 documents (el duplicat saltat emet lectura_doc i suma); la capçalera «Visio IA (0/4)» del formulari queda a 0 amb la lectura activa (text de la via B); G3DT_REPORTS_DIR queda buit (l'informe va al workspace i a la xarxa); la capa «Observacions de camp» surt a cada obertura del formulari (Ometre funciona).",
+      "VEREDICTE: GO del pas 2 — el flux sencer de l'Eva funciona a WSL amb el clon net, el lock i CAP clau API; la qualitat es la mesurada."
+    ]
+  }
+}
