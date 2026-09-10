@@ -1,0 +1,182 @@
+{
+ "rows": [
+  {
+   "n": 1,
+   "slot_eva": "fig_situacio",
+   "caption": "Figura 1. Situación de la parcela en estudio. Fuente: ICGC, modificado.",
+   "file_eva": "01_fig_situacio_figura-1-situacion-de-la-parcela-en-estu.png",
+   "ours_slot": "fig_situacio_image_1",
+   "file_ours": "F1 SIT.png",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 2,
+   "slot_eva": "fig_projecte",
+   "caption": "Figura 2. Situación del emplazamiento de la vivienda proyectada. Fuente: Proyecto.",
+   "file_eva": "02_fig_projecte_figura-2-situacion-del-emplazamiento-de.png",
+   "ours_slot": null,
+   "file_ours": null,
+   "status": "NO_DATA",
+   "phash_d": null,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": null
+  },
+  {
+   "n": 3,
+   "slot_eva": "foto_vista",
+   "caption": "Fotografía 1. Detalle de la parcela de estudio.",
+   "file_eva": "03_foto_vista_fotografia-1-detalle-de-la-parcela-de-es.jpeg",
+   "ours_slot": "photo_site_image_1",
+   "file_ours": "DES DE DARRERA.jpeg",
+   "status": "MISMATCH",
+   "phash_d": 30,
+   "ncc": 0.307,
+   "psr": 3.0,
+   "ncc_raw": 0.613,
+   "scale": 0.192,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 4,
+   "slot_eva": "fig_assaigs",
+   "caption": "Figura 3. Situación de los ensayos realizados.",
+   "file_eva": "04_fig_assaigs_figura-3-situacion-de-los-ensayos-realiz.png",
+   "ours_slot": "fig_assaigs_image",
+   "file_ours": "figsel_assaigs_plan_crop_4001671_plano de sit_p0_a55d36e17d_sencer.jpg",
+   "status": "MISMATCH",
+   "phash_d": 18,
+   "ncc": 0.683,
+   "psr": 9.9,
+   "ncc_raw": 0.683,
+   "scale": 0.675,
+   "dir": "veritat dins nostra"
+  },
+  {
+   "n": 5,
+   "slot_eva": "foto_dpsh",
+   "caption": "Fotografía 1. Detalle del emplazamiento de la máquina realizando uno de los ensayos de pen",
+   "file_eva": "05_foto_dpsh_fotografia-1-detalle-del-emplazamiento-d.jpeg",
+   "ours_slot": "photo_dpsh_image",
+   "file_ours": "P1.jpeg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 7,
+   "slot_eva": "fig_geologic",
+   "caption": "Figura 5. Mapa geológico a escala 1:50.000 de la zona de estudio. (ICGC, 2026).",
+   "file_eva": "07_fig_geologic_figura-5-mapa-geologico-a-escala-1-50-00.png",
+   "ours_slot": "fig_geological_image",
+   "file_ours": "F4 MGEOL.png",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 8,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografía 2. Detalle de los materiales recuperados del ensayo SPT-1 en el P-3.",
+   "file_eva": "08_foto_materials_fotografia-2-detalle-de-los-materiales-r.jpeg",
+   "ours_slot": null,
+   "file_ours": null,
+   "status": "NO_DATA",
+   "phash_d": null,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": null
+  },
+  {
+   "n": 10,
+   "slot_eva": "foto_materials",
+   "caption": "Fotografía 3. Detalle de los materiales recuperados del ensayo SPT-1, en el P-1.",
+   "file_eva": "10_foto_materials_fotografia-3-detalle-de-los-materiales-r.jpeg",
+   "ours_slot": "photo_materials_image",
+   "file_ours": "SPT 1 P-1.jpeg",
+   "status": "MATCH",
+   "phash_d": 0,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  },
+  {
+   "n": 11,
+   "slot_eva": "fig_tall",
+   "caption": "Figura 6. Corte de correlación de los materiales descritos en el estudio geotécnico.",
+   "file_eva": "11_fig_tall_figura-6-corte-de-correlacion-de-los-mat.png",
+   "ours_slot": "fig_correlation_image",
+   "file_ours": "tall_crop2_tall_6827ce7c40.jpg",
+   "status": "MATCH",
+   "phash_d": 4,
+   "ncc": null,
+   "psr": null,
+   "scale": null,
+   "dir": "sencera"
+  }
+ ],
+ "sobrants": [
+  {
+   "ours_slot": "photo_site_image_2",
+   "file_ours": "INTERIOR.jpeg"
+  }
+ ],
+ "sobrants_n": 1,
+ "totals": {
+  "MATCH": 5,
+  "NO_DATA": 2,
+  "MISMATCH": 2,
+  "CLOSE": 0
+ },
+ "by_slot": {
+  "fig_situacio": {
+   "MATCH": 1
+  },
+  "fig_projecte": {
+   "NO_DATA": 1
+  },
+  "foto_vista": {
+   "MISMATCH": 1
+  },
+  "fig_assaigs": {
+   "MISMATCH": 1
+  },
+  "foto_dpsh": {
+   "MATCH": 1
+  },
+  "fig_geologic": {
+   "MATCH": 1
+  },
+  "foto_materials": {
+   "NO_DATA": 1,
+   "MATCH": 1
+  },
+  "fig_tall": {
+   "MATCH": 1
+  }
+ },
+ "ours_paths": {
+  "fig_situacio_image_1": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/ANEXOS/OTROS/F1 SIT.png",
+  "fig_assaigs_image": "/home/josep/g3dt-release-cache-d/images/figsel_assaigs_plan_crop_4001671_plano de sit_p0_a55d36e17d_sencer.jpg",
+  "fig_geological_image": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/ANEXOS/OTROS/F4 MGEOL.png",
+  "fig_correlation_image": "/home/josep/g3dt-release-cache-d/images/tall_crop2_tall_6827ce7c40.jpg",
+  "photo_dpsh_image": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/FOTOGRAFIES/P1.jpeg",
+  "photo_materials_image": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/FOTOGRAFIES/SPT 1 P-1.jpeg",
+  "photo_site_image_1": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/FOTOGRAFIES/DES DE DARRERA.jpeg",
+  "photo_site_image_2": "/home/josep/g3dt-e2e/projectes/4001671 VILANOVA DE SEGRIA/FOTOGRAFIES/INTERIOR.jpeg"
+ }
+}
