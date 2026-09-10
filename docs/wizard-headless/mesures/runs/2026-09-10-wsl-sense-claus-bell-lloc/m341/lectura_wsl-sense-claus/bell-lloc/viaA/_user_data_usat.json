@@ -1,0 +1,94 @@
+{
+ "client_name": "RAMON MITJANA SL",
+ "street_address": "Entre el carrer Antoni Bellet i el carrer Mestre Ramon Ortiz",
+ "site_municipality": "Bell-lloc d'Urgell",
+ "architect_name": "Jordi Bosch Novell",
+ "architect_company": "ARQUITECTURA BOSCH NOVELL",
+ "building_type": "HABITATGE UNIFAMILIAR AÏLLAT",
+ "num_floors": "PB+PP",
+ "superficie_parcela_m2": 995.0,
+ "cota_referencia": "+199,50 msnm segons el plànol topogràfic ICGC (-0,15 carrer)",
+ "num_soil_levels": 2,
+ "utm_x": 314418.9,
+ "utm_y": 4611117.6,
+ "lab_testing_company": "TPS, Prospecció del Subsòl, SL",
+ "lab_sample_id": "SPT1 S1",
+ "lab_depth": "1,0 - 1,6",
+ "lab_location": "S-1",
+ "cte_edificacio": "C1",
+ "cte_sol": "T1",
+ "cadastral_refs": "4613173CG1141S0001ZU",
+ "field_work_dates": [
+  "2025-10-01",
+  "2025-10-06"
+ ],
+ "field_work_dates_text": "1 i 6 d'octubre de 2025",
+ "lectura_tables": {
+  "dpsh_tests": [
+   {
+    "test_id": "P-1",
+    "cota": "+199.50",
+    "depth": "-1.35",
+    "refusal": "Si",
+    "water": "No detectat"
+   },
+   {
+    "test_id": "P-2",
+    "cota": "+199.50",
+    "depth": "-2.45",
+    "refusal": "Si",
+    "water": "No detectat"
+   }
+  ],
+  "sondeig_tests": [
+   {
+    "test_id": "S-1",
+    "cota": "+199.50",
+    "depth": "-1.80",
+    "spt_ma": "1/0",
+    "water": "No detectat"
+   }
+  ],
+  "spt_ma_tests": [
+   {
+    "test_id": "SPT-1",
+    "location": "S-1",
+    "depth_range": "-1.00 a -1.60",
+    "n30": "62",
+    "lithology": "Graves amb sorres (1er nivell, per posició gràfica; sense interval de fondària imprès en aquest document)"
+   }
+  ],
+  "soil_levels": [
+   {
+    "name": "Sòls vegetals (cobertura, sense número)",
+    "litologia": "Sòls vegetals",
+    "de": "0,00",
+    "a": null
+   },
+   {
+    "name": "NIVELL 1",
+    "litologia": "Graves amb sorres",
+    "de": "0,00",
+    "a": "fins al fons d'investigació (rebuig DPSH: -1,35/-2,45 m per punt; sondeig S-1: -1,80 m)"
+   }
+  ],
+  "superficie_construida": "366",
+  "lab": {
+   "sample_id": "SPT1 S1",
+   "location": "S-1",
+   "depth": "1,0 - 1,6"
+  }
+ },
+ "soil_types": [
+  "granular",
+  "grava"
+ ],
+ "foundation_depth_m": 0.3,
+ "expedient": "4001612",
+ "_metadata": {
+  "origen": "mesura_341 viaA: lectura + Df del signat",
+  "Df_assumida": 0.3,
+  "data_signatura_assumida": "2025-10-27"
+ },
+ "data_signatura": "2025-10-27"
+}

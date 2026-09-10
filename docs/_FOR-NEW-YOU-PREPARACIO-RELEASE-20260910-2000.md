@@ -220,3 +220,8 @@ Correccions al §10 fetes amb el codi a la mà: el runner **sí** fixa `--model`
 és Windows-capable són els skills (ordres POSIX dins Claude Code) — la recomanació WSL es manté per això. Suite a release amb
 el venv del lock i prova en perfil net: en curs (resultats a STATUS / DECISION-LOG 2026-09-10 (3) / sessió). `release/2026-09` (`e047ce6`) i experiment (`483cd48`) pujats a origin després de la suite del lock; cap canvi a
 `production/g3dt-eva-v1`. Les preguntes que queden són les del §3 del pla (entorn, pla, claus, data).
+
+**Nit (23:10):** el Josep ha decidit (WSL2 + Ubuntu; Max 5x; cap clau API; divendres 18-09-2026) i el **pas 2 està fet a WSL
+com ho tindrà l'Eva** (clon net, lock, `.env` sense claus, Bell-lloc pel navegador: GO; DECISION-LOG 2026-09-10 (4), run
+`2026-09-10-wsl-sense-claus-bell-lloc`). Queda el pas 3 presencial (`PLA-RELEASE-2026-09.md` §5) i, com a feina a part, un
+projecte en castellà sense claus i els 4 defectes menors del `meta.json` del run.

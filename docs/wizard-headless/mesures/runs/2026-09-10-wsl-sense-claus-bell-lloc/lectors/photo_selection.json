@@ -1,0 +1,59 @@
+{
+ "source": "lector",
+ "site_1": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.41_ccbf024a.jpg",
+ "site_2": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.55.21_2f75bf2a.jpg",
+ "dpsh": "FOTOGRAFIES/DPSH/P1.jpg",
+ "sondeig": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+ "materials": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg",
+ "materials_per_punt": [
+  {
+   "punt": "S-1",
+   "rel": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.53.10_6b9bc5f4.jpg"
+  }
+ ],
+ "alternatives": {
+  "site_1": [
+   {
+    "rel": "FOTOGRAFIES/Imagen de WhatsApp 2025-10-01 a las 12.54.57_83d08c82.jpg",
+    "rao": "una altra vista general del solar sense màquina, no és a l'annex"
+   }
+  ],
+  "dpsh": [
+   {
+    "rel": "FOTOGRAFIES/DPSH/P2.jpg",
+    "rao": "P2, la mateixa màquina al segon punt, F-2 de l'annex"
+   }
+  ],
+  "materials": [
+   {
+    "rel": "FOTOGRAFIES/SONDEIG/Imagen de WhatsApp 2025-10-06 a las 12.03.36_f091c815.jpg",
+    "rao": "detall del mateix testimoni S-1, primer pla del tub amb l'etiqueta"
+   }
+  ]
+ },
+ "_lector": {
+  "data": "2026-09-10 22:57",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 56.2,
+  "exclude_slug": null,
+  "raons": {
+   "site_1": "F-3 de l'annex, peu «Fotografies 3 y 4: vista general de la parcel·la en estudi»",
+   "site_2": "F-4 de l'annex, mateix peu que F-3, l'Eva en posa dues en aquest projecte",
+   "dpsh": "F-1 de l'annex («vista de l'emplaçament de la maquinària... P-1 i P-2»), primera i és la màquina sencera i neta",
+   "sondeig": "màquina compacta sobre erugues dins la carpeta SONDEIG/, no coincideix amb cap P-n; les altres fotos d'aquesta carpeta són detalls de la caixa de testimonis, no la màquina",
+   "materials": "caixa de testimonis S-1 amb els nuclis ben ordenats i el cartell llegible (Sondeig, Profunditat 0.00-1.80, Mtx Caixa 1)"
+  },
+  "confianca": {
+   "site_1": 0.9,
+   "site_2": 0.85,
+   "dpsh": 0.9,
+   "sondeig": 0.8,
+   "materials": 0.85
+  },
+  "cap_font": [],
+  "notes": "idx1 és el full de camp escrit a mà (PENETROS), no és cap foto i no s'ha considerat per a cap forat. La identificació del sondeig es basa en la ubicació de carpeta (SONDEIG/) i que no és cap punt DPSH, no s'ha pogut confirmar amb certesa la caixa blava de mocadors a la resolució de la graella.",
+  "warnings": [],
+  "fingerprint": "d7db835814d749713cde20dda99495e54ef97f88"
+ }
+}
