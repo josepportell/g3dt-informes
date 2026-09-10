@@ -65,6 +65,10 @@ QUEUED = "queued"
 SYNCING = "syncing"
 READING = "reading"
 CONSOLIDATING = "consolidating"
+#: Lectors d'imatges (fotos i figures) amb Claude Code, una crida cadascun
+#: (2026-09-10, §10.3b del handoff de preparació del llançament): entre la
+#: consolidació i el merge. Els selecciona `web/lectura_service._run_image_lectors`.
+IMATGES = "imatges"
 MERGING = "merging"
 READY = "ready"
 INTERRUPTED = "interrupted"
@@ -74,14 +78,16 @@ CANCELLED = "cancelled"
 #: Estats terminals: cap més event canvia el job (§3.4).
 TERMINAL = frozenset({READY, INTERRUPTED, ERROR, CANCELLED})
 
-#: Pas visible a la taula (disseny §3.3): 4 passos totals.
+#: Pas visible a la taula (disseny §3.3, 4 passos; 5 des del 2026-09-10 amb
+#: el pas de les imatges).
 STATE_STEP: dict[str, int] = {
     SYNCING: 1,
     READING: 2,
     CONSOLIDATING: 3,
-    MERGING: 4,
+    IMATGES: 4,
+    MERGING: 5,
 }
-_TOTAL_STEPS = 4
+_TOTAL_STEPS = 5
 
 JOB_FILENAME = "_job.json"
 SCHEMA_VERSION = 1
@@ -95,6 +101,10 @@ _DEFAULT_MEDIAN_DOC_S = 270.0
 _DEFAULT_MEDIAN_CONSOLIDA_S = 600.0
 _MIN_DOC_SAMPLES = 5
 _MIN_CONSOLIDA_SAMPLES = 2
+#: Un lector d'imatges (sonnet@medium) va trigar 37-80 s als 7 signats
+#: (runs `2026-09-09-lector-*`); no hi ha telemetria pròpia: constant.
+_DEFAULT_LECTOR_S = 90.0
+_N_LECTORS = 2
 
 
 def _now_iso() -> str:
@@ -140,6 +150,7 @@ class Job:
     docs_done: int = 0
     docs_cached: int = 0
     docs_errors: int = 0
+    lectors_done: int = 0
     docs_current: list[str] = field(default_factory=list)
     started_at: str = ""
     updated_at: str = ""
@@ -217,7 +228,9 @@ class Job:
         with self.lock:
             self.history.append((event_type, detail))
             state_changed = self._apply_event(event_type, detail)
-            need_write = state_changed or event_type in ("lectura_doc", "lectura_doc_error")
+            need_write = state_changed or event_type in (
+                "lectura_doc", "lectura_doc_error", "lector_imatges_inici", "lector_imatges_fi",
+            )
             if need_write:
                 self.updated_at = _now_iso()
             payload = self.snapshot() if need_write else None
@@ -275,6 +288,17 @@ class Job:
         elif event_type == "lectura_fi":
             self._degraded = bool(detail.get("degraded", False))
             self._set_state(MERGING)
+        elif event_type == "lector_imatges_inici":
+            # `n` = quin lector comença (1 o 2): l'estimació en depèn.
+            with contextlib.suppress(TypeError, ValueError):
+                self.lectors_done = max(0, int(detail.get("n") or 1) - 1)
+            self._set_state(IMATGES)
+            self._recompute_estimate()
+        elif event_type == "lector_imatges_fi":
+            self.lectors_done += 1
+            self._recompute_estimate()
+        elif event_type == "merge_inici":
+            self._set_state(MERGING)
         elif event_type == "prefills":
             fallback = (self.result or {}).get("fallback")
             self.result = {"ok": True, "degraded": self._degraded, "fallback": fallback}
@@ -331,13 +355,17 @@ def estimate_remaining(job: Job, telemetry_paths: list[Path], concurrency: int) 
 
     if job.state == CONSOLIDATING:
         remaining = int(round(median_consolida))
+    elif job.state == IMATGES:
+        pending = max(0, _N_LECTORS - int(getattr(job, "lectors_done", 0) or 0))
+        remaining = int(round(pending * _DEFAULT_LECTOR_S + 60))
     elif job.state == MERGING:
         remaining = 60
     else:
         pending = max(0, job.docs_total - job.docs_done)
         blocks = math.ceil(pending / max(1, concurrency)) if pending else 0
         extra_consolida = median_consolida if job.state == READING else 0.0
-        remaining = int(round(blocks * median_doc + extra_consolida + 60))
+        extra_lectors = _N_LECTORS * _DEFAULT_LECTOR_S if job.state == READING else 0.0
+        remaining = int(round(blocks * median_doc + extra_consolida + extra_lectors + 60))
 
     return {"remaining": remaining, "basis": basis}
 

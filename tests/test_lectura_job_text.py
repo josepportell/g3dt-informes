@@ -115,7 +115,8 @@ def test_cancelled_row_is_owned_by_eva():
     ("queued", 0, "En cua"),
     ("syncing", 1, "Copiant fitxers de la xarxa"),
     ("consolidating", 3, "Consolidant el que ha llegit"),
-    ("merging", 4, "Preparant el formulari"),
+    ("imatges", 4, "Triant les imatges de l'informe"),
+    ("merging", 5, "Preparant el formulari"),
 ])
 def test_every_live_state_has_its_own_sentence(state, step, titol):
     row = JT.row(_job(state, step=step), now=NOW)

@@ -50,6 +50,8 @@ IDÈNTICA a la d'abans de la Fase 10 (mateixos noms, mateix ordre).
 
 from __future__ import annotations
 
+import hashlib
+import importlib
 import json
 import logging
 import os
@@ -292,6 +294,114 @@ def _lectura_payload(result: LecturaResult) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
+# ---------------------------------------------------------------------------
+# Lectors d'imatges (2026-09-10, handoff de preparació del llançament §10.3b):
+# fotos i figures amb Claude Code, UNA crida cadascun, després de la lectura i
+# abans del merge. Fins avui es passaven a mà (`llegir_*_corpus.py`); l'Eva ha
+# de rebre el mateix procés que s'ha mesurat (M341 imatges 69 %).
+# ---------------------------------------------------------------------------
+
+#: (nom, mòdul, topall en segons) — els topalls són els de les passades mesurades.
+_IMAGE_LECTORS: tuple[tuple[str, str, int], ...] = (
+    ("fotos", "automation.imatges.lector_fotos", 420),
+    ("figures", "automation.imatges.lector_figures", 600),
+)
+#: Esforç amb què es van mesurar els dos lectors (runs `2026-09-09-lector-*`).
+_LECTOR_EFFORT = "medium"
+#: Carpetes del projecte que no formen part de l'empremta (feina nostra, no de l'Eva).
+_FINGERPRINT_SKIP_DIRS = frozenset({"validation", ".venv", "__pycache__"})
+
+
+def _lectors_enabled() -> bool:
+    """`G3DT_LECTURA_IMATGES` (defecte: sí). Només té sentit amb la lectura headless activa."""
+    raw = (os.getenv("G3DT_LECTURA_IMATGES", "") or "").strip().lower()
+    return raw not in ("0", "false", "no", "off")
+
+
+def _project_fingerprint(project_path: Path) -> str:
+    """Empremta barata del contingut del projecte (camí relatiu + mida de cada fitxer,
+    sense `validation/`): si no canvia, la tria del lector d'ahir continua valent i
+    no es repeteix la crida (Preparar avui, Enllestir demà = una sola passada)."""
+    h = hashlib.sha1()
+    root = Path(project_path)
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = sorted(d for d in dirnames if d not in _FINGERPRINT_SKIP_DIRS)
+        rel_dir = Path(dirpath).relative_to(root)
+        for name in sorted(filenames):
+            try:
+                size = (Path(dirpath) / name).stat().st_size
+            except OSError:
+                size = -1
+            h.update(f"{(rel_dir / name).as_posix()}\t{size}\n".encode("utf-8", "surrogateescape"))
+    return h.hexdigest()
+
+
+def _lector_skip_reason(module, project_path: Path, fingerprint: str) -> str | None:
+    """`user` si l'Eva ja ha triat (mana sempre; el lector no la trepitja), `cache` si el
+    lector ja ha passat sobre aquest mateix contingut, `None` si cal cridar-lo."""
+    sel_path = Path(project_path) / "validation" / getattr(module, "SELECTION")
+    if not sel_path.exists():
+        return None
+    try:
+        data = json.loads(sel_path.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return None
+    if not isinstance(data, dict):
+        return None
+    if data.get("source") == "user":
+        return "user"
+    if data.get("source") == "lector":
+        meta = data.get("_lector") or {}
+        if isinstance(meta, dict) and meta.get("fingerprint") == fingerprint:
+            return "cache"
+    return None
+
+
+def _run_image_lectors(
+    project_path: Path,
+    emit: Callable[[str, dict], None],
+    should_cancel: Callable[[], bool],
+) -> bool:
+    """Passa els dos lectors. Retorna False si s'ha aturat (l'`emit("cancelled")`
+    el fa qui crida). Mai llança: un lector que falla és `status: error` i el
+    generador cau a la tria determinista (Eva > lector > cau IA > patrons)."""
+    fingerprint = _project_fingerprint(project_path)
+    total = len(_IMAGE_LECTORS)
+    for n, (name, mod_name, timeout) in enumerate(_IMAGE_LECTORS, start=1):
+        if should_cancel():
+            return False
+        emit("lector_imatges_inici", {"lector": name, "n": n, "of": total})
+        t0 = time.monotonic()
+        detail: dict[str, Any] = {"lector": name, "n": n, "of": total}
+        try:
+            module = importlib.import_module(mod_name)
+            reason = _lector_skip_reason(module, project_path, fingerprint)
+            if reason is not None:
+                detail.update({"status": "skipped", "reason": reason})
+            else:
+                summary = module.run(
+                    project_path, effort=_LECTOR_EFFORT, timeout=timeout,
+                    should_cancel=should_cancel, extra_meta={"fingerprint": fingerprint},
+                )
+                if summary.get("cancelled"):
+                    return False
+                if summary.get("skipped"):
+                    detail.update({"status": "skipped", "reason": summary["skipped"]})
+                elif summary.get("error") or not summary.get("path"):
+                    detail.update({"status": "error", "error": summary.get("error") or "sense selecció"})
+                else:
+                    detail["status"] = "ok"
+                detail["n_candidats"] = summary.get("n_candidats")
+        except Exception as exc:  # noqa: BLE001
+            logger.exception("Lector d'imatges %s ha fallat a %s", name, project_path.name)
+            detail.update({"status": "error", "error": str(exc)})
+        detail["elapsed_s"] = round(time.monotonic() - t0, 1)
+        emit("lector_imatges_fi", detail)
+        if should_cancel():
+            return False
+    return True
+
+
 def run_lectura_job(
     project_name: str,
     project_path: Path,
@@ -442,6 +552,15 @@ def run_lectura_job(
     lectura_result = lectura_result_holder[0] if lectura_result_holder else None
     has_lectura = bool(lectura_result and lectura_result.decisions is not None)
 
+    # Lectors d'imatges: només si `claude` hi és (mateix criteri que la lectura;
+    # sense `claude` no hi ha lector i el generador tria sol) i el flag ho permet.
+    claude_bin = os.getenv("G3DT_CLAUDE_PATH", "claude") or "claude"
+    if _lectors_enabled() and shutil.which(claude_bin) is not None:
+        if not _run_image_lectors(project_path, emit, should_cancel):
+            emit("cancelled", {"phase": "imatges"})
+            return
+
+    emit("merge_inici", {})
     try:
         # Fase 6: `skip_vision` NOMÉS quan la lectura ha produït decisions
         # (disseny §9 Fase 6) — si ha caigut a fallback, `_merge_prefills`

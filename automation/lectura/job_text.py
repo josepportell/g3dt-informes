@@ -19,6 +19,7 @@ from typing import Any
 from automation.lectura.jobs import (
     CANCELLED,
     CONSOLIDATING,
+    IMATGES,
     ERROR,
     INTERRUPTED,
     MERGING,
@@ -147,6 +148,10 @@ def row(job: dict[str, Any], *, now: datetime | None = None) -> dict[str, Any]:
         detail = f"{estimate} restants" if estimate else None
     elif state == CONSOLIDATING:
         title = "Consolidant el que ha llegit"
+        detail = f"{estimate} restants" if estimate else None
+        counter = None
+    elif state == IMATGES:
+        title = "Triant les imatges de l'informe"
         detail = f"{estimate} restants" if estimate else None
         counter = None
     elif state == MERGING:
