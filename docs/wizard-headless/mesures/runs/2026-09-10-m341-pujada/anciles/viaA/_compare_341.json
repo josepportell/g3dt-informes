@@ -1,0 +1,498 @@
+[
+ {
+  "var": "access_street",
+  "grup": "narr",
+  "eva": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.",
+  "gen": "calle situada al norte",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "adjacent_east_fmt",
+  "grup": "narr",
+  "eva": "Por la parte noreste con un campo de conreo herbáceo.",
+  "gen": "Y finalmente, por la parte este, con Carretera.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_intro",
+  "grup": "narr",
+  "eva": "La parcela objeto de estudio se sitúa en el norte del municipio de Anciles, tiene una morfología rectangular y limita:",
+  "gen": "La parcela objeto de estudio se sitúa en el municipio de ANCILES, tiene una morfología casi rectangular y limita:",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "adjacent_north_fmt",
+  "grup": "narr",
+  "eva": "Por la parte noroeste con un jardín.",
+  "gen": "Por la parte norte, con la Calle General Ferraz.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_south_fmt",
+  "grup": "narr",
+  "eva": "Por la parte suroeste con un edificio de hasta 4 plantas sobre rasante.",
+  "gen": "Por la parte sur y oeste, con parcelas sin edificaciones.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_west_fmt",
+  "grup": "narr",
+  "eva": "Y finalmente por el sureste, con una zona yerma con vegetación.",
+  "gen": "Por la parte sur y oeste, con parcelas sin edificaciones.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_name_upper",
+  "grup": "A",
+  "eva": "ALBA MARIA BARRAU CASTÁN",
+  "gen": "ALBA BARRAU, NºCOL. 6.408 / MIRIAM CASTEL, NºCOL. 6.703",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 1,
+  "gen": 1,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
+  "var": "building_structure_desc",
+  "grup": "narr",
+  "eva": "un semisótano en dos de las siete viviendas previstas",
+  "gen": "con nivel de sótano, y por tanto se prevé una excavación general hasta la cota de cimentación del sótano, además del saneamiento y la nivelación.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "building_type_lower",
+  "grup": "A",
+  "eva": "7 viviendas unifamiliares adosadas",
+  "gen": "una vivienda adosada (7 unitats)",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client",
+  "grup": "A",
+  "eva": "SRA. ALBA MARIA BARRAU CASTÁN",
+  "gen": "SRA. MARIA ALBA BARRAU CASTÁN",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_aggressivity_statement",
+  "grup": "narr",
+  "eva": "A partir de los ensayos realizados se determina que los materiales del 2do nivel descrito se presentan, a priori xxxxxxx al hormigón.",
+  "gen": "No se han realizado ensayos de laboratorio para determinar la agresividad de los materiales del subsuelo al hormigón.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_levels_detected",
+  "grup": "narr",
+  "eva": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+  "gen": "A partir de los ensayos realizados se puede describir en el solar en estudio dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_water_statement",
+  "grup": "narr",
+  "eva": "Con fecha de la realización de los trabajos de campo, y hasta la cota ensayada, no se detectó presencia de nivel freático en ninguno de los ensayos realizados.",
+  "gen": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "cota_referencia",
+  "grup": "A",
+  "eva": "+1106.40",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-1",
+  "gen": "C-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "El día 19 de febrero de 2026, se visitó la obra para:",
+  "gen": "19 de febrer de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "La campaña de campo, que se ha realizado el día 19 de febrero de 2026, ha consistido en la realización de:",
+  "gen": "19 de febrer de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_signatura_text",
+  "grup": "resta",
+  "eva": "Els Omells de Na Gaia, 16 de marzo de 2026",
+  "gen": "16 de març de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "empentes_paragraph",
+  "grup": "narr",
+  "eva": "Para el dimensionado de los muros del sótano y para el cálculo del empuje de tierras habrá que tener en cuenta los parámetros geomecánicos de los materiales del primer nivel que se considera el más desfavorable.\nHabrá que tener en cuenta que en el trasdós del muro se tendrá que instalar un correcto drenaje para evitar que se acumule el agua y se produzca una sobrecarga en su trasdós.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "expedient",
+  "grup": "A",
+  "eva": "Expediente Núm.: 4001679_v0",
+  "gen": "4001679",
+  "status": "CLOSE",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 4,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "geo_p",
+  "grup": "resta",
+  "eva": "Desde finales del Oligoceno hasta la actualidad la depresión del Ebro ha dejado de actuar como una cuenca sedimentaria y ha pasado a ser una cubeta donde el agente predominante principal ha sido la erosión. Localmente, en algunos puntos de la cuenca, hay depósitos del Terciario superior y principalmente del Cuaternario. Estos corresponden a los materiales no consolidados que aparecen entre las rocas sedimentarias y la superficie, formados por arenas, limos y arcillas, donde abundan los caliches.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "geomech_E",
+  "grup": "calc",
+  "eva": ">350",
+  "gen": 450,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_cohesion",
+  "grup": "calc",
+  "eva": "0.00",
+  "gen": 0.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_gamma",
+  "grup": "calc",
+  "eva": "2.00",
+  "gen": 2.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_phi",
+  "grup": "calc",
+  "eva": "38",
+  "gen": 38,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "lab_depth",
+  "grup": "A",
+  "eva": "Profundidad: -2.80 a -3.00 m",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_field_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_field_description",
+  "grup": "resta",
+  "eva": "laboratorio de ensayos para el control de calidad de la edificación",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_location",
+  "grup": "A",
+  "eva": "Punto:  S-2",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_sample_id",
+  "grup": "A",
+  "eva": "Muestra: MA-1",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "lab_testing_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_testing_description",
+  "grup": "resta",
+  "eva": "laboratorio de ensayos para el control de calidad de la edificación",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_tests_text",
+  "grup": "narr",
+  "eva": "Determinación del contenido en ión sulfato en suelos UNE 83963 / 08",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "materials_intro",
+  "grup": "narr",
+  "eva": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+  "gen": "A partir de todos los ensayos realizados en el solar, se puede describir dos niveles de materiales des del punto de vista geológico/geotécnico en el subsuelo del solar: (ver anexo “Registro ensayos mecánicos”)",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "municipality_de",
+  "grup": "A",
+  "eva": "En la zona en estudio, en la población de Anciles (Benasque), se establece una aceleración sísmica básica de:",
+  "gen": "d'ANCILES",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "num_dpsh_tests",
+  "grup": "A",
+  "eva": "2 ensayos SPT con recuperación de muestra (ver registro de los ensayos mecánicos).",
+  "gen": 6,
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "plantes",
+  "grup": "A",
+  "eva": "5 viviendas con Pb + 1Pp + Bc\n2 viviendas con Ss + Pb + 1Pp + Bc",
+  "gen": "2Ps+Pb+1Pp",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "qa_value",
+  "grup": "calc",
+  "eva": "2.0 Kg/cm2 con un factor de seguridad incluido de F=3",
+  "gen": "3.50",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "radon_sentence",
+  "grup": "narr",
+  "eva": "La parcela concreta de estudio se localiza en el término municipal de Anciles (Benasque) y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+  "gen": "La parcela concreta de estudio se localiza en el término municipal de ANCILES y, según la tabla existente en el apéndice B del RD 732/2019, pertenece a ZONA 2.",
+  "status": "CLOSE",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "radon_zone",
+  "grup": "calc",
+  "eva": "2",
+  "gen": "2",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "section_empentes_num",
+  "grup": "fix",
+  "eva": "4.4",
+  "gen": "",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.7",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.4",
+  "gen": "2.4.4",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.6",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sondeig_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "seismic_ab_text",
+  "grup": "calc",
+  "eva": "AB = 0.05 g (siento g el valor de la gravedad)",
+  "gen": "0,04",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "settlement_sentence",
+  "grup": "calc",
+  "eva": "Los asientos máximos previstos para la carga recomendada anteriormente serán inferiores a 1.5 cm.",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 2.60 cm, immediats en el temps donat el comportament granular dels materials.",
+  "status": "MISMATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_condition",
+  "grup": "narr",
+  "eva": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+  "gen": "En la zona de estudio no se han detectado marcas de inicios de procesos de erosión relacionados con la escorrentía hídrica superficial.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_description",
+  "grup": "narr",
+  "eva": "El día de los trabajos de campo se realiza la entrada a la zona de estudio a través del camino de accesos situado en el norte.\nEl interior de la parcela se localiza bastante explanada, sin pavimentaciones, y con vegetación de pequeña envergadura y algún árbol puntual.\nEn solares próximos existen construcciones de características similares a la obra proyectada que el día de los trabajos de campo no presentaban patologías aparentes a sus paredes exteriores visibles.\nDada la geomorfología de la zona y su urbanización no se pueden observar en la zona ningún tipo de afloramiento de los materiales que serán atravesados por los ensayos previstos.",
+  "gen": "La parcela se localiza sin construcciones ni pavimentaciones.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-1.00 a -1.60",
+  "gen": "-1.00 a -1.60",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Arcilla arenosa con gravitas",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "S-1",
+  "gen": "S-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "6",
+  "gen": "6",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_level_name",
+  "grup": "calc",
+  "eva": "2do nivel",
+  "gen": "1er nivell",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "1273.79",
+  "gen": "186,18",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_parcela",
+  "grup": "A",
+  "eva": "1655.01",
+  "gen": "1.655,01",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "table_dpsh_range",
+  "grup": "calc",
+  "eva": "Tabla 3, 4 y 5. Resumen de los ensayos in situ realizados.",
+  "gen": "3, 4 i 5",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ }
+]

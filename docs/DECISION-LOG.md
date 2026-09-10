@@ -6191,3 +6191,127 @@ Sense Python. Verificació: amb Bell-lloc en local (el Josep) després de `Ctrl+
 - ⏳ Que el Josep ho vegi amb un projecte on la visió trigui més que els prefills. ✅ Commitejat amb l'acció 4 (`06d7541`).
 
 *Fi entrada 2026-09-09 (5). Stepper: «Llest» només quan la visió ha acabat.*
+
+## 2026-09-10 — IMATGES: l'Eva pot PUJAR una imatge des de la finestreta d'alternatives per a qualsevol ranura de l'informe (fotos, assaigs, projecte, situació, i les tres figures automàtiques: geològic, tall i cullera)
+
+### Context
+
+Petició del Josep (2026-09-10, matí): la finestreta de l'acció 4 (DECISION-LOG 2026-09-09 (4)) ha millorat molt la
+revisió de les imatges; si el pipeline no ha trobat la imatge que l'Eva vol —sigui a la carpeta o no—, la finestreta és
+el lloc per deixar-la-hi pujar, i la pujada ha d'entrar a la ranura amb la mateixa lògica que una alternativa. Pla
+escrit, revisat contra el codi i aprovat: `docs/imatges/PLA-PUJADA-IMATGES-WIZARD-2026-09-10.md` (el §0 hi recull les
+cinc esmenes al pla del matí). GO del Josep amb quatre decisions: (1) les tres figures automàtiques entren al mateix
+lliurament (no v2); (2) peu de la figura del projecte pujada «Font: G3DT» de moment, i un pendent per al camp on l'Eva
+escrigui la font; (3) les pujades es reanomenen amb un ID alfanumèric; (4) normalització sí, `fig_situacio` sí.
+
+### Decisions arquitectòniques clau
+
+1. **Una pujada és una tria més: reutilitzar tota la maquinària de `/choose`.** `render_entry`, `apply_selection`,
+   `_load_user_photo_selection`, les miniatures i el calaix ja tractaven qualsevol imatge del projecte; només calia
+   fer arribar el fitxer al projecte. El cos de `choose_alternative` passa a `_apply_alternative_choice(project_path,
+   req)` i el fan servir `/choose` i el nou `/upload`. **Cap canvi a la plantilla `.docx` ni als lectors.**
+2. **Endpoint propi `POST /api/alternatives/{p}/upload` (multipart `file` + `slot`), NO `upload-evidence` + `choose`
+   des del client.** Per què: `upload-evidence` accepta `.pdf/.xls/.msg` (la comprovació «és una imatge» hauria quedat
+   a l'altra banda), desa a la carpeta de l'evidència HITL (llistar-la com a fotos hi hauria posat fulls de laboratori)
+   i el JS hauria de conèixer l'esquema intern (`kind`). Una sola petició; la resposta és la de `/choose` més `rel`.
+3. **Validació pel contingut i normalització en pujar** (`_store_uploaded_image`): PIL `verify` (l'extensió és només
+   l'allowlist d'entrada; `DecompressionBombError` → 400), `exif_transpose`, RGB, costat llarg ≤ 2.400 px (150 mm a
+   > 400 dpi), JPEG q=90; **PNG es queda PNG** (captures de visor amb text i transparència). Per què: `InlineImage`
+   incrusta els bytes tal qual (`image_manager.py:_safe_inline_image`) i `get_thumbnail` no aplica l'EXIF: un JPEG de
+   mòbil de 10 MB entrava sencer al `.docx` i una foto vertical sortia girada. Trade-off: el fitxer desat no és
+   byte a byte l'original de l'Eva (és el nostre espai, `validation/`, no la seva carpeta).
+4. **El nom del fitxer és un ID: `YYYYMMDD-HHMMSS-<6 hex>.ext`** (decisió del Josep). Només dígits, guions i `a-f`:
+   cap regla pel nom («geol» de `_find_composed_geological_map`, `tall|situ|plànol` de `_project_cache_keys`, els
+   patrons de SmartScan) pot agafar-la. El nom original, la ranura i el moment van a `validation/uploads/imatges/pujades.json`
+   (la pestanya ensenya el nom original). Carpeta pròpia, separada de l'evidència HITL.
+5. **L'`entry` d'una pujada porta `rel` i no `src`.** `_entry_ok` rebutja un `src` inexistent i un camí absolut no
+   sobreviu la còpia `~/g3dt-prod-workspace` ↔ Windows; `render_entry` ja cau a `project / rel`. Cost: `nohash` al nom
+   de la cau (`_out_name`), acceptable perquè el nom del fitxer ja és únic.
+6. **`fig_situacio` accepta una sola imatge sencera.** El precedent que feia por (regla dels insets retirada el
+   2026-09-09) era la *proposta del lector* aplicant-se sola; la *tria de l'Eva* (`source: user`) ja manava. `choose`
+   guarda l'entrada sense `crops`; `apply_selection` la renderitza a `fig_situacio_image_1` amb `_image_2 = ""`;
+   `image_manager` la posa a 150 mm (70 mm de costat només si hi ha les dues). La plantilla ja tenia el cas d'una imatge.
+7. **Geològic, tall i cullera: tria de l'Eva aplicada DESPRÉS del camí determinista.** Claus `geologic`/`tall`/`cullera`
+   a `figure_selection.json`; `apply_selection` les renderitza només amb `source: user`; a `build_context` el primer
+   bloc les salta i un bloc nou al final (després de `fig_correlation_image`) les posa amb l'amplada de cadascuna
+   (`_USER_AUTO_FIGURE_KEYS`). Per què al final: el geològic s'assigna sense condició (compost → ICGC → placeholder) i
+   així el codi determinista (recepta ICGC aprovada per l'Eva, retall del tall) no es toca. Alternativa descartada:
+   guardar l'override a `user_data.json` (una altra via d'escriptura, fora de la selecció de figures que ja té font per ranura).
+8. **Peu de la figura del projecte pujada: «Detall del projecte. Font: G3DT.»** (Josep). El defecte del lector
+   («Font: Projecte.») afirmaria una font que no sabem. Els peus de les altres ranures són fixos a la plantilla; el del
+   geològic diu «(Font: ICGC, modificat)», que és el que són els mapes que l'Eva compon (retall ICGC + llegenda).
+   El camp perquè l'Eva escrigui el peu/la font: PENDENTS §3 #10.
+9. **Dos forats tancats de passada.** `_entry_ok` exigeix sufix d'imatge per a tot `kind != "project_page"` (una
+   `entry` cap a un PDF passava i la miniatura sortia buida en silenci). `_find_composed_geological_map` exclou
+   `validation/` (una evidència HITL «…geol….jpg» hauria passat a ser el mapa de l'informe; 0 fitxers així al corpus,
+   mesura-neutral).
+10. **`/api/photos` llista les pujades (`kind: upload`).** Sense això la pestanya «Imatges» pintava la ranura buida
+    (`renderPhotoSlots` resol l'actual buscant-la a la llista) mentre el Wizard la mostrava plena.
+
+**Finestreta (regles del Josep del 09 respectades):** el botó «📁 Puja una imatge» és dins la finestreta que l'Eva ha
+obert amb un clic, sempre visible (també amb 0 alternatives: és el cas d'ús); per a les tres figures automàtiques el
+botó de la ranura diu «Canviar la imatge», l'«Actual» ensenya el que hi posarà el generador (vista prèvia del calaix)
+i l'única tornada és «Tornar a l'automàtic»; l'estat de la pujada surt a la mateixa fila; en acabar, el mateix
+«després de desar» que una alternativa (`afterChoiceSaved`, compartit): missatge, font per ranura «Tria de l'Eva ·
+pujada per l'Eva», pestanya i secció del Wizard refrescades, finestreta oberta a la ranura. Res abans de llançar el
+pipeline; cap panell que aparegui sol.
+
+### Implementació
+
+- `web/api.py` (+186/−20): `_AUTO_FIGURE_SLOTS`, constants de pujada, `_uploads_dir`, `_list_uploaded_images`,
+  `_store_uploaded_image`, `_is_upload_rel`; `_entry_ok` (extensió); `list_photos` (pujades); `list_alternatives`
+  (`kind` a les fotos, tres ranures automàtiques amb `auto`/`is_default`/`default_label`); `_apply_alternative_choice`
+  (branques situació sense `crops` i automàtiques); `choose_alternative` prim; `upload_slot_image`.
+- `automation/imatges/lector_figures.py` (+15): `apply_selection` situació d'una imatge i claus automàtiques.
+- `automation/image_manager.py` (+36): `_USER_AUTO_FIGURE_KEYS`; `applied_selection` compartit; amplada de situació;
+  bloc final d'override; `_find_composed_geological_map` sense `validation/`.
+- `templates/validation/review.html` (+117/−45): `afterChoiceSaved`, `isUploaded`, `autoFigurePreview`,
+  `altUploadButton`, `pickUploadForSlot`, `uploadImageForSlot`; `renderWizardImages` carrega el calaix per a la vista
+  prèvia; etiquetes «pujada per l'Eva» a la pestanya i al Wizard; «Canviar la imatge» / «Tornar a l'automàtic».
+- Noms nous comprovats lliures abans d'afegir-los (`grep "function <nom>("`: 0).
+
+### Validació empírica
+
+- **En viu, còpia de Bell-lloc a `~/g3dt-prod-workspace`** (servidor sense `G3DT_PROJECTS_DIR`): foto de 3.200 × 2.400
+  amb EXIF 6 → desada 1.800 × 2.400 vertical, sense EXIF, 52 KB, nom `20260910-162600-1734c8.jpg` (l'original es deia
+  «prova_materials geol.jpg»); PNG RGBA 1.200 × 900 es queda PNG. `materials` i `fig_geological` a «user», la resta
+  intacta; miniatures 200; `/api/photos` llista les dues amb el nom original; calaix «Tria de l'Eva».
+- **Informe generat** (`/api/generate`, 9,7 s): les dues imatges són al `.docx` **byte a byte** (`image9.jpg` = render
+  del geològic 1.200 × 900; `image12.jpg` = la foto 1.800 × 2.400).
+- **Finestreta amb el selector de fitxers real** (Playwright): botó → pujada → insígnia «Tria de l'Eva», «Actual ·
+  pujada per l'Eva», avís «Imatge pujada i posada a la ranura», fila del Wizard «tria de l'Eva · pujada per l'Eva»,
+  «Tornar a l'automàtic» torna la ranura a `is_default` i el botó a «Canviar la imatge».
+- **M341 `2026-09-10-m341-pujada` vs `2026-09-09-m341-nit`: idèntic** (0 línies mogudes als 7 projectes, agregat i
+  imatges iguals; Cadastre viu; cap avís DNS). L'estat de proves de Bell-lloc s'ha restaurat (JSON + `uploads/` fora).
+
+### Tests
+
+8 nous: `test_alternatives_api.py` (+6: foto a la ranura i a la pestanya; figura projecte/assaigs amb peu G3DT i
+`placed`; situació d'una imatge i tornada; geològic/tall/cullera i tornada, i el «geol» que no arriba al disc;
+normalització EXIF/mida/format; rebuigs 400/413/415 sense rastre al disc + `_entry_ok` cap a PDF), `test_peca6` (+1:
+`validation/` no compta), `test_peca7b` (+1: `build_context` amb les quatre pujades, amplades, i sense pujades el camí
+de sempre). Suite: **31 vermells amb els mateixos NOMS que `suite-vermells-esperats.txt` / 2542 verds (+8) / 5 omesos
+(298 s)**.
+
+### Limitacions conegudes
+
+- Sense camp de peu/font a la pujada (PENDENTS §3 #10). Sense HEIC (com la resta del pipeline).
+- Una passada nova del lector (`write_selection`) reescriu `figure_selection.json` amb `source: lector` i les claus
+  fixes: les pujades de l'Eva a qualsevol ranura desapareixerien de la selecció (els fitxers no). Pre-existent per a
+  qualsevol tria de l'Eva; els lectors només es passen a mà.
+- «Guardar» de la pestanya «Imatges» (`select_photos`) continua esborrant `_lector_selection` i `alternatives` (#11).
+- Les pujades substituïdes es queden a `validation/uploads/imatges/` i a la pestanya com a candidates (#12).
+- Una pujada només és candidata per a altres ranures de FOTO (via la pestanya); per a figures, es torna a pujar.
+
+### GO/NO-GO
+
+- ✅ 8 tests nous verds; suite amb els mateixos vermells. ✅ M341 idèntic. ✅ `.docx` amb les imatges pujades.
+- ✅ Finestreta provada amb el selector de fitxers real. ⏳ Que l'Eva ho faci servir en un projecte seu.
+- Commits: backend `4e45857`; frontend, mesura i docs: vegeu la sessió del 10.
+
+### Següents passos
+
+Camp de peu/font per a la figura pujada (#10); unificar les dues vies d'escriptura de `photo_selection.json` (#11);
+preguntes 30-38 a l'Eva amb el Josep; passada dels lectors amb `alternatives` quan toqui.
+
+*Fi entrada 2026-09-10. Pujada d'imatges des de la finestreta: qualsevol ranura, una tria més.*

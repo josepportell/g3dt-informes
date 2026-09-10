@@ -1,0 +1,640 @@
+[
+ {
+  "var": "access_street",
+  "grup": "narr",
+  "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.",
+  "gen": "Carrer Mestre Ramon Ortiz",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "adjacent_east_fmt",
+  "grup": "narr",
+  "eva": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+  "gen": "Per la part est amb el Carrer Mestre Ramon Ortiz.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_intro",
+  "grup": "narr",
+  "eva": "La parcel·la objecte d’estudi es situa al oest del municipi de Bell-Lloc d’Urgell, pren una morfologia rectangular i limita:",
+  "gen": "La parcel·la objecte d'estudi es situa al oest del municipi de Bell-lloc d'Urgell, pren una morfologia rectangular i limita:",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "adjacent_north_fmt",
+  "grup": "narr",
+  "eva": "Per la part nord amb una parcel·la buida.",
+  "gen": "Per la part nord i sud amb parcel·les buides.",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_south_fmt",
+  "grup": "narr",
+  "eva": "Per la part sud amb el Carrer Antoni Bellet.",
+  "gen": "Per la part nord i sud amb parcel·les buides.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "adjacent_west_fmt",
+  "grup": "narr",
+  "eva": "I finalment, per la part oest, amb una parcel·la amb una construcció aïllada de fins a dos plantes sobre rasant.",
+  "gen": "I finalment, per la part oest, amb una parcel·la amb construcció.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_company",
+  "grup": "A",
+  "eva": "ARQUITECTURA BOSCH NOVELL",
+  "gen": "Arquitectura Bosch Novell",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "architect_name_upper",
+  "grup": "A",
+  "eva": "JORDI BOSCH NOVELL",
+  "gen": "JORDI BOSCH NOVELL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "bearing_layer_idx",
+  "grup": "calc",
+  "eva": 0,
+  "gen": 0,
+  "status": "MATCH",
+  "method": "bearing_rule"
+ },
+ {
+  "var": "building_structure_desc",
+  "grup": "narr",
+  "eva": "en planta baixa, i per tant, no es preveu cap excavació important, únicament l’excavació pel sanejament, anivellació, i per a la implantació dels elements de fonamentació.",
+  "gen": "sense nivell de soterrani, i per tant, únicament es preveu el sanejament, anivellació, i l'excavació fins a la cota de fonamentació.",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "building_type_lower",
+  "grup": "A",
+  "eva": "un habitatge unifamiliar",
+  "gen": "un habitatge unifamiliar aïllat",
+  "status": "CLOSE",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "client",
+  "grup": "A",
+  "eva": "RAMON MITJANA S.L",
+  "gen": "RAMON MITJANA S.L.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_aggressivity_statement",
+  "grup": "narr",
+  "eva": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, es presenten xxxx al formigó.",
+  "gen": "A partir dels resultats dels assaigs de laboratori realitzats, els materials del subsòl on es preveu armar la fonamentació, a priori, es presenten NO AGRESSIUS al formigó.",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_levels_detected",
+  "grup": "narr",
+  "eva": "Es detecta un sòl nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "gen": "Es detecta un sol nivell de materials des del punt de vista geològic/geotècnic en el subsòl del solar en estudi.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "conclusions_water_statement",
+  "grup": "narr",
+  "eva": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "gen": "En data de la realització dels treballs de camp, i fins la cota estudiada, no es va detectar presència de nivell freàtic en cap dels punts estudiats.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "cota_referencia",
+  "grup": "A",
+  "eva": "+199.50",
+  "gen": "+199.50",
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "cte_edificacio",
+  "grup": "calc",
+  "eva": "C-1",
+  "gen": "C-0",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "cte_sol",
+  "grup": "calc",
+  "eva": "T-1",
+  "gen": "T-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "data_camp_inici_text",
+  "grup": "A",
+  "eva": "1 d’octubre de 2025",
+  "gen": "1 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_camp_text",
+  "grup": "A",
+  "eva": "1 i 6 d’octubre de 2025",
+  "gen": "1 i 6 d'octubre de 2025",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "data_signatura_text",
+  "grup": "resta",
+  "eva": "27 d’octubre de 2025",
+  "gen": "10 de setembre de 2026",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "expedient",
+  "grup": "A",
+  "eva": "4001612",
+  "gen": "4001612",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "fig_correlation_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 5,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_geological_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 4,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_situacio_2_num",
+  "grup": "fix",
+  "eva": "2",
+  "gen": "",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_situacio_num",
+  "grup": "fix",
+  "eva": "1",
+  "gen": 1,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "fig_spt_cullera_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 3,
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "geo_p",
+  "grup": "resta",
+  "eva": "Des de finals de L’Oligocè fins a l’actualitat la depressió de l’Ebre ha deixat d’actuar com a conca sedimentària i ha esdevingut una cubeta on l’agent predominant principal ha estat l’erosió. Localment, en alguns punts de la conca, hi ha dipòsits del Terciari superior i principalment del Quaternari. Aquests corresponen als materials subconsolidats que apareixen entre les roques sedimentàries i la superfície, formats per sorres, llims i argiles, on abunden les crostes carbonatades.",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "geomech_E",
+  "grup": "calc",
+  "eva": "650",
+  "gen": 450,
+  "status": "MISMATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_cohesion",
+  "grup": "calc",
+  "eva": "0.0",
+  "gen": 0.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_gamma",
+  "grup": "calc",
+  "eva": "2.0",
+  "gen": 2.0,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "geomech_phi",
+  "grup": "calc",
+  "eva": "38",
+  "gen": 38,
+  "status": "MATCH",
+  "method": "table_flatten"
+ },
+ {
+  "var": "lab_depth",
+  "grup": "A",
+  "eva": "Profunditat:  -1.0  a -1.60 m",
+  "gen": "-1.0 a -1.6",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_field_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_field_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_location",
+  "grup": "A",
+  "eva": "Punt: S-1",
+  "gen": "S-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_sample_id",
+  "grup": "A",
+  "eva": "Mostra : SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "lab_testing_company",
+  "grup": "A",
+  "eva": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "gen": "TPS PROSPECCIÓ DEL SUBSÒL SL",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_testing_description",
+  "grup": "resta",
+  "eva": "laboratori d’assaigs per al control de qualitat de l’edificació",
+  "gen": "laboratori d'assaigs per al control de qualitat de l'edificació",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "lab_tests_text",
+  "grup": "narr",
+  "eva": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+  "gen": "1 assaig de contingut en sulfats UNE 83963 : 2008",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "location_sentence",
+  "grup": "A",
+  "eva": "entre el Carrer Antoni Bellet i el Carrer Mestre Ramon Ortiz de Bell-Lloc d’Urgell",
+  "gen": "al Carrer Mestre Ramon Ortiz de Bell-lloc d'Urgell",
+  "status": "MISMATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "materials_intro",
+  "grup": "narr",
+  "eva": "A partir dels assaigs in situ realitzats, s’ha establert un sòl nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "gen": "A partir dels assaigs in situ realitzats, s'ha establert un sol nivell de materials des del punt de vista geològic - geotècnic: (veure annex “Registre assaigs mecànics”):",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "municipality_de",
+  "grup": "A",
+  "eva": "de Bell-lloc d’Urgell",
+  "gen": "de Bell-lloc d'Urgell",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "num_dpsh_tests",
+  "grup": "A",
+  "eva": "2",
+  "gen": 2,
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "photo_dpsh_num",
+  "grup": "fix",
+  "eva": "3",
+  "gen": 3,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_materials_num",
+  "grup": "fix",
+  "eva": "5",
+  "gen": 5,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "photo_site_text",
+  "grup": "narr",
+  "eva": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d’estudi.",
+  "gen": "Fotografia 1 i Fotografia 2. Vistes generals de la zona d'estudi.",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "photo_sondeig_num",
+  "grup": "fix",
+  "eva": "4",
+  "gen": 4,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "plantes",
+  "grup": "A",
+  "eva": "Pb+1Pp",
+  "gen": null,
+  "status": "NO_DATA"
+ },
+ {
+  "var": "qa_value",
+  "grup": "calc",
+  "eva": "3.0",
+  "gen": "3.00",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "radon_sentence",
+  "grup": "narr",
+  "eva": "La parcel·la concreta d’estudi es localitza al terme municipal de BELL-LLOC D’URGELL i, segons la taula existent a l’apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "gen": "La parcel·la concreta d'estudi es localitza al terme municipal de BELL-LLOC D'URGELL i, segons la taula existent a l'apèndix B del RD 732/2019, pertany a la ZONA 1.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "radon_zone",
+  "grup": "calc",
+  "eva": "1",
+  "gen": "1",
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "section_excavabilitat_num",
+  "grup": "fix",
+  "eva": "3.5",
+  "gen": "3.5",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_rado_num",
+  "grup": "fix",
+  "eva": "3.7",
+  "gen": "3.7",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_resum_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.4",
+  "status": "MISMATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sismica_num",
+  "grup": "fix",
+  "eva": "3.6",
+  "gen": "3.6",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_sondeig_num",
+  "grup": "fix",
+  "eva": "2.4.2",
+  "gen": "2.4.2",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "section_spt_num",
+  "grup": "fix",
+  "eva": "2.4.3",
+  "gen": "2.4.3",
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "seismic_ab_text",
+  "grup": "calc",
+  "eva": "0,04",
+  "gen": "0,04",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "settlement_sentence",
+  "grup": "calc",
+  "eva": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran inferiors a 1.20 cm, immediats en el temps donat el comportament granular dels materials.",
+  "gen": "Els assentaments màxims previstos per la càrrega recomanada anteriorment seran iguals o inferiors a 1.00 cm, immediats en el temps donat el comportament granular dels materials.",
+  "status": "MISMATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_condition",
+  "grup": "narr",
+  "eva": "Degut a que es tracta d’un solar antropitzat, no s’han detectat marques i/o indicis de processos d’erosió relacionats amb l’escolament hídric superficial, ni es preveu que apareguin.",
+  "gen": "Degut a que es tracta d'un solar antropitzat, no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin.",
+  "status": "MATCH",
+  "method": "paragraph_anchor"
+ },
+ {
+  "var": "site_description",
+  "grup": "narr",
+  "eva": "El dia dels treballs de camp es realitza l’entrada a la zona d’estudi a través de la del Carrer existent al sud.\nLa parcel·la, que es troba delimitada tanques de parcel·les veïnes, està anivellada a la rasant del carrer, només uns 15 cm per sota, sense pavimentar, i amb vegetació de petita alçada.\nEn solars propers existeixen construccions de característiques similars a la obra projectada que el dia dels treballs de camp no presentaven patologies aparents a les seves parets exteriors visibles.\nDestacar que no es poden veure aflorar els materials que conformen el subsòl del solar ni en la parcel·la ni en zones properes.",
+  "gen": "parcel·la de forma quadrada amb superfície de 607 m2. El terreny es presenta antropitzat",
+  "status": "MISMATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "spt_depth_range",
+  "grup": "A",
+  "eva": "-1.00 a 1.60",
+  "gen": "-1.00 a -1.60",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_lithology",
+  "grup": "A",
+  "eva": "Graves en matriu sorrenca",
+  "gen": "Grava amb matriu sorrenca",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_location",
+  "grup": "A",
+  "eva": "S-1",
+  "gen": "S-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_n30",
+  "grup": "A",
+  "eva": "54",
+  "gen": "62",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "spt_test_id",
+  "grup": "A",
+  "eva": "SPT-1",
+  "gen": "SPT-1",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_classification",
+  "grup": "calc",
+  "eva": "No Agressius",
+  "gen": "No Agressius",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_level_name",
+  "grup": "calc",
+  "eva": "1er nivell",
+  "gen": "1er nivell",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "sulfate_value",
+  "grup": "calc",
+  "eva": "89.8",
+  "gen": "89.8",
+  "status": "MATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_construida",
+  "grup": "A",
+  "eva": "280+86",
+  "gen": "297",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "superficie_parcela",
+  "grup": "A",
+  "eva": "995",
+  "gen": "607",
+  "status": "MISMATCH",
+  "method": "table_cell"
+ },
+ {
+  "var": "table_dpsh_range",
+  "grup": "calc",
+  "eva": "3, 4 i 5",
+  "gen": "3, 4 i 5",
+  "status": "MATCH",
+  "method": "paragraph_single"
+ },
+ {
+  "var": "table_lab_num",
+  "grup": "fix",
+  "eva": "6",
+  "gen": 6,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_lab_values_num",
+  "grup": "fix",
+  "eva": "8",
+  "gen": 8,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_permeability_num",
+  "grup": "fix",
+  "eva": "7",
+  "gen": 7,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_seismic_num",
+  "grup": "fix",
+  "eva": "9",
+  "gen": 9,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "table_soil_chars_num",
+  "grup": "fix",
+  "eva": "10",
+  "gen": 10,
+  "status": "MATCH",
+  "method": "numbering"
+ },
+ {
+  "var": "utm_x",
+  "grup": "A",
+  "eva": "314419",
+  "gen": 314418.9,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ },
+ {
+  "var": "utm_y",
+  "grup": "A",
+  "eva": "4611118",
+  "gen": 4611117.6,
+  "status": "MATCH",
+  "method": "intelligent_analysis"
+ }
+]

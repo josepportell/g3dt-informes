@@ -1,0 +1,15 @@
+# Imatges «mateixa font que l'Eva» — vilanova/viaA
+
+| # | ranura Eva | peu | nostre forat | estat | phash | ncc | psr | escala | direcció |
+|--:|---|---|---|---|--:|--:|--:|--:|---|
+| 1 | `fig_situacio` | Figura 1. Situación de la parcela en estudio. Fuente: ICGC,  | `fig_situacio_image_1` | **MATCH** | 0 | — | — | — | sencera |
+| 2 | `fig_projecte` | Figura 2. Situación del emplazamiento de la vivienda proyect | — | **NO_DATA** | — | — | — | — | — |
+| 3 | `foto_vista` | Fotografía 1. Detalle de la parcela de estudio. | `photo_site_image_1` | **MISMATCH** | 30 | 0.307 | 3.0 | 0.192 | veritat dins nostra |
+| 4 | `fig_assaigs` | Figura 3. Situación de los ensayos realizados. | `fig_assaigs_image` | **MISMATCH** | 18 | 0.683 | 9.9 | 0.675 | veritat dins nostra |
+| 5 | `foto_dpsh` | Fotografía 1. Detalle del emplazamiento de la máquina realiz | `photo_dpsh_image` | **MATCH** | 0 | — | — | — | sencera |
+| 7 | `fig_geologic` | Figura 5. Mapa geológico a escala 1:50.000 de la zona de est | `fig_geological_image` | **MATCH** | 0 | — | — | — | sencera |
+| 8 | `foto_materials` | Fotografía 2. Detalle de los materiales recuperados del ensa | — | **NO_DATA** | — | — | — | — | — |
+| 10 | `foto_materials` | Fotografía 3. Detalle de los materiales recuperados del ensa | `photo_materials_image` | **MATCH** | 0 | — | — | — | sencera |
+| 11 | `fig_tall` | Figura 6. Corte de correlación de los materiales descritos e | `fig_correlation_image` | **MATCH** | 4 | — | — | — | sencera |
+
+Totals: 5 M · 0 C · 2 X · 2 ND → 71 %; sobrants (nostres sense figura de l'Eva): 1 `photo_site_image_2`
