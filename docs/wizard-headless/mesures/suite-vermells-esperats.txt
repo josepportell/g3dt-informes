@@ -1,5 +1,9 @@
 # Tests vermells ESPERATS a la suite completa (sense dades locals de projecte / xarxa). Actualitzat 2026-09-05 (nit): 31 vermells / 2064 verds / 5 omesos.
 # Us: comparar NOMS, no recomptes (memoria feedback_compare_test_names_not_counts): grep '^FAILED' <sortida> | sed 's/ - .*//' | sort | diff - <(grep -v '^#' docs/wizard-headless/mesures/suite-vermells-esperats.txt)
+# 2026-09-10 (release): AMB els fitxers crus dels 7 projectes a reference-material/ (ignorats per git) els 17 de test_smartscan i els 3
+# TestIntegrationAnciles de test_fileminer PASSEN (fixtures absents, no defectes): queden 11 vermells esperats (7 ranking_api, 2 trace,
+# bearing_stratum drift, groq_miner cache). Amb pymupdf 1.28 (venv nou sense requirements-lock.txt) apareixen 3 vermells MES
+# (test_lectura_preext render_clip x2, test_ai_pipeline_conversion): instal·lar sempre amb -c requirements-lock.txt.
 FAILED tests/test_ai_pipeline_ranking_api.py::test_api_preserves_systemic_failure_shape
 FAILED tests/test_ai_pipeline_ranking_api.py::test_api_returns_schema_fields_needed_by_ui
 FAILED tests/test_ai_pipeline_ranking_api.py::test_ranking_group_filter_parses_comma_separated
