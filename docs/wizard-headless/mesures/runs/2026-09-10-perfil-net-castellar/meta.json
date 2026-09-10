@@ -1,0 +1,27 @@
+{
+  "label": "2026-09-10-perfil-net-castellar",
+  "date": "2026-09-10",
+  "project": "3001621 CASTELLAR DEL VALLES",
+  "model": "sonnet (claude-sonnet-5)",
+  "concurrency": 2,
+  "claude_version": "2.1.267",
+  "skill_version": "g3dt-llegir-projecte (release/2026-09 = experiment 483cd48; preext v2, consolidacio Python)",
+  "commit_base": "f985936 (experiment; codi identic a release/2026-09 d042362)",
+  "conditions": "PROVA DE REPRODUCTIBILITAT EN PERFIL NET (handoff PREPARACIO-RELEASE §10.4): HOME nou amb NOMES .claude/.credentials.json (sense ~/.claude.json, sense CLAUDE.md global, sense memoria ni settings del Josep; cap MCP); copia de Castellar SENSE validation/ (cap cache per md5); G3DT_LECTURA_MODEL=sonnet, EFFORT=xhigh (fixats pel runner), CONCURRENCY=2, AUTH=login, G3DT_CACHE_DIR propi; run 20:50 -> 21:20 (lectura), lectors fotos+figures @medium despres. Compte i pla del Josep (els limits no son els de l'Eva).",
+  "changes_since_previous": "cap canvi de skill ni de runner respecte la referencia _reconsolida-2026-09-06-pend; el que canvia es l'ENTORN (perfil net) — es el que es mesura",
+  "contaminated_docs": [],
+  "contamination_note": null,
+  "wall_real_s": 1771,
+  "effort": "xhigh (fixat per --effort)",
+  "quality_judgement": {
+    "erroni_amb_confianca_fons": 0,
+    "notes": [
+      "ESCALARS vs or: 14 OK / 5 CAUTELA / 2 FORA / 1 NOU, 0 ERR, 0 ALERTA (referencia _reconsolida-2026-09-06-pend: 16 / 3 / 2 / 1). Les 2 CAUTELA de mes: lab_location i lab_sample_id baixen de segur a candidats amb el bo dins (perdua de confianca, no d'exactitud; mateixa banda que preext-v2-c3 i sonnet-c3); building_type candidats (CLOSE).",
+      "TAULES vs or: 26 OK / 1 ALERTA / 2 BUIT (referencia 28 OK / 1 CAUTELA). ALERTA = spt_ma_tests[0].id puja a segur 'SPT-1' amb l'or en candidats: exces de confianca sobre un valor CORRECTE. BUIT x2 = soil_levels[1].a i spt_ma_tests[0].n30 no_trobat (forats honestos, no valors erronis). Un tercer soil_level ('Roca fracturada', candidats) que la referencia no te: candidat, no segur.",
+      "vs REFERENCIA cel·la a cel·la (vs-referencia.txt): 59 cel·les, 34 iguals (estat+valor), 25 diferents — la majoria FORMAT (-4 vs -4,0; 0.50 vs 0,50; 'S1' vs 'S-1'; sense/amb 'm' o NIF) o estat segur<->candidats amb el mateix valor; cap valor segur diferent de fons.",
+      "TEMPS/COST: 13/13 docs OK (0 timeouts, 0 errors), mediana/doc 204 s (77-585), suma docs 51,8 min, paret 29,5 min (c2; preext-v2-c3 era 26,2 a c3), turns 252 (mediana 19/doc), tokens sortida 271.711, cache read 19,9 M, cost equiv. 12,48 $ — dins la banda de les files sonnet@xhigh del ledger (212-306 k, 15-21 turns, 13-17 $).",
+      "LECTORS D'IMATGES (perfil net, sonnet@medium): fotos 78 s / 21 candidats, figures 56 s / 15 candidats, 0 warnings. Tries IDENTIQUES a la referencia del 2026-09-09 (g3dt-prod/reference-material/CASTELLAR/validation): dpsh, sondeig i materials mateixos fitxers, site_1/site_2 cap (com la referencia), assaigs mateix retall (plan_crop del planol de situacio, idx 1), projecte [] i situacio None. Artefactes a lectors/.",
+      "VEREDICTE: el resultat es del SISTEMA, no de l'entorn del Josep (0 erroni-amb-confianca; diferencies dins el soroll conegut entre runs, memoria project_judge_noise_band). GO del §10.4 per a Castellar; queden 1-2 projectes mes segons el Josep (cost ~12-17 $ equiv. cadascun al seu compte)."
+    ]
+  }
+}

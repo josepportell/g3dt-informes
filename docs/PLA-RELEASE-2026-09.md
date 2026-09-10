@@ -13,10 +13,10 @@ instal·lació presencial). Aquest document és el full de ruta viu; l'evidènci
 | 1b. M341 des del worktree release, venv net, cau pròpia | **IDÈNTIC** a `2026-09-09-m341-nit` | `runs/2026-09-10-m341-release/_AGREGAT-341.md` (escalars 315·44·120·31 → 75 %, taules 82 %, imatges 31·3·15·7 → 69 %, fix 81 M · 21 X) |
 | 1c. Suite a release (venv del lock) | **11 vermells / 2579 verds / 4 omesos (209 s)** — exactament els 11 esperats-amb-dades, cap de nou | DECISION-LOG 2026-09-10 (3) |
 | 1d. Codi que el §10 demanava | **FET** (experiment `caf2b1e`, `f985936`, `6fbdc85`; fusionat a release `d042362`) | lectors d'imatges dins el job; aturada per límit d'ús; pins `pymupdf`; `requirements-lock.txt` |
-| 2. Prova en perfil net | **en curs** sobre Castellar (HOME nou amb només `.credentials.json`, sonnet@xhigh, 2 en paral·lel, lectors @medium) | `scratchpad/clean-run/run.log`; resultat al DECISION-LOG quan acabi |
+| 2. Prova en perfil net (Castellar) | **GO**: 13/13 docs, 0 errors, 29,5 min; escalars 14 OK / 5 CAUTELA / 2 FORA / **0 ERR / 0 ALERTA** (ref. 16/3/2); taules 26 OK / 1 ALERTA (excés de confiança sobre `SPT-1`, correcte) / 2 BUIT (ref. 28/1); 271 k tokens de sortida, 252 turns, 12,48 $ equiv. | `runs/2026-09-10-perfil-net-castellar/` (meta, telemetria, decisions, escalars/taules vs or, vs-referencia) + fila al LEDGER |
 | 2b. Prova a WSL al PC del Josep amb els flags de l'Eva | pendent de la decisió §3.1 | — |
 | 3. Presencial | pendent de data | §6 |
-| push `release/2026-09` a origin | després de la suite (§2.4) | `git push -u origin release/2026-09` |
+| push `release/2026-09` a origin | **FET** (`e047ce6`, després de la suite del lock); experiment també (`483cd48`) | `origin/release/2026-09` |
 
 `production/g3dt-eva-v1` **no s'ha tocat** (`123b4f2`, el que té l'Eva és `1f1d7fd` + potser cap dels 2). S'avança només el dia de
 la visita: `git merge --ff-only release/2026-09` + push, just abans del pull presencial.
@@ -104,7 +104,8 @@ LibreOffice per a Windows — una remesura sencera. No és impossible; és una a
 | opus 4.8 @ high (pla econòmic) | 186 k | 11 | 24 min | 26 $ |
 
 Més els dos lectors (@medium, ~1-2 min, pocs tokens) i la consolidació Python (0). Un projecte són **13-15 crides `claude -p`
-d'una quinzena de turns** i 200-300 k tokens de sortida. **No sé les quotes exactes de cada pla** (canvien); el que se sap:
+d'una quinzena de turns** i 200-300 k tokens de sortida. Mesura d'avui en perfil net (Castellar, sonnet@xhigh, c2): 13 crides,
+252 turns, 271 k tokens de sortida, 19,9 M de cache read, 12,48 $ equivalents, 29,5 min. **No sé les quotes exactes de cada pla** (canvien); el que se sap:
 Pro té finestres de 5 h que un projecte sencer pot exhaurir (per això el §2.2 existeix); Max 5x/20x hi caben. Amb ≤ 1 projecte al
 dia (disseny §0), la hipòtesi de treball és **Max 5x**, i la prova real és el primer projecte de l'Eva al seu compte el dia de la
 visita, cronometrat i amb el ledger. Decisió del Josep (memòria `project_eva_subscription_model_tier`: Fable si el pla ho permet,
@@ -125,10 +126,15 @@ sondes a Claude Code és feina d'una altra sessió. Risc conegut: Groq 503 «ove
 ### 4.1 En curs ara (WSL del Josep, sense la seva memòria ni configuració)
 `HOME=<net>` amb només `.claude/.credentials.json`; còpia de Castellar sense `validation/`; `G3DT_LECTURA_MODEL=sonnet`,
 `EFFORT=xhigh`, `CONCURRENCY=2`, `AUTH=login`, `G3DT_CACHE_DIR` propi; `run_lectura` + `lector_fotos.run` + `lector_figures.run`
-(driver al scratchpad, `clean-run/driver.py`). Comparació en acabar: `compare_consolida.py escalars|taules` contra l'or, i
-`_decisions.json` contra `~/g3dt-e2e/projectes/…/validation/lectura/_reconsolida-2026-09-06-pend/_decisions.json`; les tries
-dels lectors contra `photo_selection.json`/`figure_selection.json` del corpus. Criteri: 0 erroni-amb-confiança i mateixes
-cel·les segures que la referència → el resultat és del sistema, no de l'entorn.
+(driver al scratchpad, `clean-run/driver.py`). **Resultat (run `2026-09-10-perfil-net-castellar`, fila al LEDGER):** 13/13
+documents (0 timeouts, 0 errors), paret 29,5 min a c2 (mediana 204 s/doc, 77-585), 252 turns, 271 k tokens de sortida, 12,48 $
+equivalents. Contra l'or: escalars 14 OK / 5 CAUTELA / 2 FORA / 1 NOU, **0 ERR, 0 ALERTA** (referència
+`_reconsolida-2026-09-06-pend`: 16 / 3 / 2 / 1); taules 26 OK / 1 ALERTA / 2 BUIT (referència 28 / 1): l'ALERTA és `SPT-1`
+pujat a segur amb l'or en candidats (valor correcte), els BUIT són forats honestos. Cel·la a cel·la amb la referència: 34/59
+iguals, la resta format (`-4` vs `-4,0`, `S1` vs `S-1`) o segur↔candidats amb el mateix valor. **Criteri complert: 0 erroni-amb-
+confiança; el resultat és del sistema, no de l'entorn del Josep.** Lectors d'imatges (sonnet@medium, 78 s + 56 s): tries
+**idèntiques** a les del 2026-09-09 (fotos 5/5 ranures, figura d'assaigs mateix retall, projecte i situació iguals).
+Queden 1-2 projectes més (Bell-lloc, Alcoletge) si el Josep vol gastar-hi ~12-17 $ equiv. cadascun del seu pla.
 
 ### 4.2 A WSL, com ho tindrà l'Eva (pendent §3.1)
 Clon net de `release/2026-09` a una ruta Linux nova (no un worktree); `python3 -m venv .venv && pip install -e . -c

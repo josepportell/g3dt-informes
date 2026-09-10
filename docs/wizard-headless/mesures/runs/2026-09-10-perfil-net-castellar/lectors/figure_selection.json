@@ -1,0 +1,56 @@
+{
+ "source": "lector",
+ "assaigs": {
+  "idx": 1,
+  "kind": "annex_crop",
+  "rel": "plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+  "page": null,
+  "src": "/tmp/claude-1000/-home-josep-projects-claudecode-job-clients-g3dt-prod/8573772c-d423-40b2-92c4-fd58ab3a0991/scratchpad/clean-run/cache/images/plan_crop_3001621_plànol de situació_7d495516ac.jpg",
+  "crop": null
+ },
+ "projecte": [],
+ "situacio": null,
+ "alternatives": {
+  "assaigs": [
+   {
+    "idx": 14,
+    "kind": "eva_png",
+    "rel": "ANNEXES/ALTRES/m8.png",
+    "page": null,
+    "src": "/tmp/claude-1000/-home-josep-projects-claudecode-job-clients-g3dt-prod/8573772c-d423-40b2-92c4-fd58ab3a0991/scratchpad/clean-run/projectes/3001621 CASTELLAR DEL VALLES/ANNEXES/ALTRES/m8.png",
+    "crop": null,
+    "rao": "candidat 14 (m8.png): la mateixa zona d'estudi amb P-1..P-4 i S-1, versió composta per l'Eva pràcticament idèntica al candidat 1"
+   },
+   {
+    "idx": 11,
+    "kind": "eva_png",
+    "rel": "ANNEXES/ALTRES/m5.png",
+    "page": null,
+    "src": "/tmp/claude-1000/-home-josep-projects-claudecode-job-clients-g3dt-prod/8573772c-d423-40b2-92c4-fd58ab3a0991/scratchpad/clean-run/projectes/3001621 CASTELLAR DEL VALLES/ANNEXES/ALTRES/m5.png",
+    "crop": null,
+    "rao": "candidat 11 (m5.png): l'esquema a mà de l'Eva amb els mateixos punts i distàncies, més cru que el retall del plànol de situació"
+   }
+  ]
+ },
+ "_lector": {
+  "data": "2026-09-10 21:28",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 56.4,
+  "exclude_slug": null,
+  "lang": "ca",
+  "raons": {
+   "assaigs": "candidat 1 (plan_crop_3001621_plànol de situació_7d495516ac.jpg, annex_crop): el retall del full de l'Eva porta P-1, P-2, P-3, P-4 i S-1 sobre l'ortofoto de la parcel·la, amb llegenda i zona d'estudi",
+   "projecte": "no hi ha cap dibuix del projecte de l'arquitecte a la carpeta (només fotos WhatsApp del terreny/casa, candidats 2 i 3, que no són dibuixos de projecte)"
+  },
+  "confianca": {
+   "assaigs": 0.95,
+   "projecte": null
+  },
+  "cap_font": [
+   "projecte"
+  ],
+  "notes": "candidats 2 i 3 són fotos del terreny/habitatge (WhatsApp), no dibuixos del projecte de l'arquitecte, així que no serveixen per a la ranura 'projecte'. Els candidats 4-10, 12, 13, 15 són figures d'Eva per a altres seccions (mapa geològic, tall de correlació, situació general): no els he fet servir aquí.",
+  "warnings": []
+ }
+}

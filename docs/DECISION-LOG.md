@@ -6437,8 +6437,13 @@ release), `.gitignore` (`*.egg-info/`). Commits experiment `caf2b1e`, `6fbdc85`,
   `pymupdf` 1.28 (passen amb 1.27.1 sobre el mateix codi). Els 17 de `test_smartscan` + 3 `test_fileminer` Anciles passen amb
   els fitxers crus presents: fixtures, no defectes. Suite amb el venv del lock (recreat de zero): **11 vermells / 2579 verds /
   4 omesos (209 s)** — exactament els 11 esperats-amb-dades, cap de nou.
-- Prova en perfil net (§10.4) sobre Castellar (HOME amb només `.credentials.json`, sonnet@xhigh, c2 + lectors): en curs; a
-  ~5 min, 2/13 documents llegits (sondeig 267 s, pressupost 292 s), 0 errors.
+- Prova en perfil net (§10.4) sobre Castellar (HOME amb només `.credentials.json`, sonnet@xhigh, c2 + lectors @medium; run
+  `2026-09-10-perfil-net-castellar`, fila al LEDGER): 13/13 documents, 0 errors, paret 29,5 min, 252 turns, 271 k tokens de
+  sortida, 12,48 $ equiv. Contra l'or: escalars 14 OK / 5 CAUTELA / 2 FORA / 1 NOU, **0 ERR / 0 ALERTA** (referència 16/3/2/1);
+  taules 26 OK / 1 ALERTA (`SPT-1` segur amb l'or en candidats: valor correcte) / 2 BUIT (forats honestos; referència 28/1).
+  Cel·la a cel·la amb la referència: 34/59 iguals, la resta format o segur↔candidats amb el mateix valor. Lectors d'imatges
+  (78 s + 56 s): tries idèntiques a les del 09-09 (fotos 5/5, assaigs mateix retall). **0 erroni-amb-confiança: el resultat
+  és del sistema, no de l'entorn del Josep.**
 - `claude -p` amb HOME net i només les credencials: sessió OK.
 
 ### Tests
@@ -6460,7 +6465,7 @@ perdudes a partir de la primera que falla (abans: 2 intents × cada document pen
 ### GO/NO-GO
 - ✅ Pas 1: branca, merge, M341 idèntic, codi del §10, lock.
 - ✅ Suite amb el venv del lock: els 11 esperats-amb-dades, cap de nou.
-- ⏳ Prova en perfil net (Castellar) — la porta real del §10.4.
+- ✅ Prova en perfil net (Castellar): 0 erroni-amb-confiança, dins la banda del ledger. ⏳ 1-2 projectes més (decisió del Josep: cost del seu pla).
 - ⏳ Decisions del Josep §3 del pla; pas 2 en WSL; data.
 
 ### Següents passos

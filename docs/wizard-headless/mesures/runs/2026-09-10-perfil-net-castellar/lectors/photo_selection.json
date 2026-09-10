@@ -1,0 +1,55 @@
+{
+ "source": "lector",
+ "site_1": null,
+ "site_2": null,
+ "dpsh": "FOTOGRAFIES/DPSH/maquina_dpsh.jpg",
+ "sondeig": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.37_0d0237fe.jpg",
+ "materials": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.01_287d2efa.jpg",
+ "alternatives": {
+  "dpsh": [
+   {
+    "rel": "FOTOGRAFIES/P2.jpg",
+    "rao": "P-2, F-2 de l'annex, mateixa màquina"
+   },
+   {
+    "rel": "FOTOGRAFIES/DPSH/maquina_dpsh_2.jpg",
+    "rao": "P-3, F-3 de l'annex"
+   },
+   {
+    "rel": "FOTOGRAFIES/DPSH/maquina_dpsh_3.jpg",
+    "rao": "P-4, F-4 de l'annex"
+   }
+  ],
+  "materials": [
+   {
+    "rel": "FOTOGRAFIES/S1/Imagen de WhatsApp 2025-10-24 a las 11.10.14_4f05eb48.jpg",
+    "rao": "la mateixa caixa de testimonis amb una bosseta de mostra al costat"
+   }
+  ]
+ },
+ "_lector": {
+  "data": "2026-09-10 21:27",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 78.1,
+  "exclude_slug": null,
+  "raons": {
+   "dpsh": "màquina DPSH sencera al solar, és F-1 de l'annex de fotografies (\"P-1\"); les altres 3 (candidats 6, 2, 3) són equivalents (F-2/F-3/F-4, P-2/P-3/P-4) i no hi ha regla fixa de l'Eva més enllà d'agafar la primera",
+   "sondeig": "l'esquema de situació (m5.png) mostra un punt S-1 a més dels P-1..P-4; el candidat 9 és l'únic de màquina no aparellat amb l'annex DPSH i porta el rol photo_sondeig_equipment — és la 5a foto de màquina per al 5è punt",
+   "materials": "caixa de testimonis (blava) amb els nuclis recuperats, ben visible; es descarta el candidat 8 (mateixa caixa amb una bossa de mostra al costat) seguint el precedent de l'Eva de triar la caixa sense la bossa"
+  },
+  "confianca": {
+   "dpsh": 0.55,
+   "sondeig": 0.7,
+   "materials": 0.75,
+   "site_1": 0.0,
+   "site_2": 0.0
+  },
+  "cap_font": [
+   "site_1",
+   "site_2"
+  ],
+  "notes": "Candidats 4 i 5 són fulls de camp (PENETROS) escanejats, no van a l'informe. Els 12 PNG de l'Eva (10-21) són mapes, ortofotos amb llegenda/escala, tall geològic i l'esquema de punts a mà: cap és una vista fotogràfica del solar (totes porten llegenda, escala o són croquis), per això site_1/site_2 queden buits.",
+  "warnings": []
+ }
+}
