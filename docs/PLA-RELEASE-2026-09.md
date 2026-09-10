@@ -86,9 +86,8 @@ venv mesurat). `.env.example` documenta per primer cop el bloc de la lectura hea
 **DECIDIT pel Josep (2026-09-10, nit):** (1) **WSL2 + Ubuntu**. (2) **Pla Max 5x** (100 €/mes; font que cita:
 `https://saascrmreview.com/claude-review/`) pel nombre d'interaccions mesurat. (3) **Les claus API s'absorbeixen amb Claude
 Code**: l'Eva no ha de pagar a dos llocs quan Claude Code pot fer la feina — cal mesurar què es perd amb les claus fora i
-portar a Claude Code el que calgui (§3.3, feina en curs). (4) **Data:** dilluns 14-09 demana cita a l'Eva per fer el llançament
-el divendres següent; el missatge deia «18-10-2026», però el divendres següent al 14-09 és el **18-09-2026** — la data la fixa
-l'Eva quan respongui. Les subseccions següents queden com a registre del raonament.
+portar a Claude Code el que calgui (§3.3, feina en curs). (4) **Data objectiu: divendres 18-09-2026** (confirmat pel Josep); dilluns 14-09 demana cita a l'Eva, i la data final la
+fixa ella quan respongui. Les subseccions següents queden com a registre del raonament.
 
 ### 3.1 Entorn a l'ordinador de l'Eva: WSL2 + Ubuntu (recomanat) o Windows natiu
 **Recomanació: WSL2 + Ubuntu**, tot dins WSL (wizard, Python, `claude`, `soffice`), navegador de Windows a `localhost:8765`.
