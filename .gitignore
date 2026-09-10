@@ -83,3 +83,6 @@ docs/wizard-headless/mesures/runs/**/*.png
 reference-material/*/validation/_lector_fotos/
 # peça 7b (2026-09-09): carpeta de treball del lector de figures (renders amb quadrícula, exemplars, prompt, log)
 reference-material/*/validation/_lector_figures/
+
+# pip install -e . (setuptools) deixa aixo a l arrel; mai a git
+*.egg-info/
