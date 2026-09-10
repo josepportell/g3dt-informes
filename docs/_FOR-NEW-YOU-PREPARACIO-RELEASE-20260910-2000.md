@@ -218,5 +218,5 @@ Fet: pas 1 sencer (branca `release/2026-09` al worktree `clients/g3dt-release/`,
 que el §10 demanava (lectors al job, aturada per límit d'ús, pins + `requirements-lock.txt`), i la prova del §10.4 llançada.
 Correccions al §10 fetes amb el codi a la mà: el runner **sí** fixa `--model` i `--effort` (i ja té branca Windows); el que no
 és Windows-capable són els skills (ordres POSIX dins Claude Code) — la recomanació WSL es manté per això. Suite a release amb
-el venv del lock i prova en perfil net: en curs (resultats a STATUS / DECISION-LOG 2026-09-10 (3) / sessió). Cap push, cap
-canvi a `production/g3dt-eva-v1`. Les preguntes que queden són les del §3 del pla (entorn, pla, claus, data).
+el venv del lock i prova en perfil net: en curs (resultats a STATUS / DECISION-LOG 2026-09-10 (3) / sessió). `release/2026-09` (`e047ce6`) i experiment (`483cd48`) pujats a origin després de la suite del lock; cap canvi a
+`production/g3dt-eva-v1`. Les preguntes que queden són les del §3 del pla (entorn, pla, claus, data).

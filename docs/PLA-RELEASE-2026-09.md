@@ -16,7 +16,7 @@ instal·lació presencial). Aquest document és el full de ruta viu; l'evidènci
 | 2. Prova en perfil net | **en curs** sobre Castellar (HOME nou amb només `.credentials.json`, sonnet@xhigh, 2 en paral·lel, lectors @medium) | `scratchpad/clean-run/run.log`; resultat al DECISION-LOG quan acabi |
 | 2b. Prova a WSL al PC del Josep amb els flags de l'Eva | pendent de la decisió §3.1 | — |
 | 3. Presencial | pendent de data | §6 |
-| push `release/2026-09` a origin | després de la suite (§2.4) | `git push -u origin release/2026-09` |
+| push `release/2026-09` a origin | **FET** (`e047ce6`, després de la suite del lock); experiment també (`483cd48`) | `origin/release/2026-09` |
 
 `production/g3dt-eva-v1` **no s'ha tocat** (`123b4f2`, el que té l'Eva és `1f1d7fd` + potser cap dels 2). S'avança només el dia de
 la visita: `git merge --ff-only release/2026-09` + push, just abans del pull presencial.
