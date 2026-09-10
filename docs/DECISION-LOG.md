@@ -6388,3 +6388,83 @@ ella la treu, l'índex buit desapareix, les fotos de l'Eva no es toquen. Suite: 
 - ✅ 3 tests nous verds; ✅ provat en viu; ⏳ suite sencera (sessió); ⏳ que l'Eva escrigui un peu en un projecte seu.
 
 *Fi entrada 2026-09-10 (2). Peu de la figura, «Guardar» coherent i neteja de pujades.*
+
+## 2026-09-10 (3) — Preparació del llançament a l'ordinador de l'Eva: branca `release/2026-09` (merge net, M341 idèntic), els lectors d'imatges i l'aturada per límit d'ús entren al job, i les versions es fixen perquè un venv nou no canviï el que s'ha mesurat
+
+### Context
+Handoff `docs/_FOR-NEW-YOU-PREPARACIO-RELEASE-20260910-2000.md` (§10: el llançament inclou Claude Code, l'Eva ha d'obtenir la
+mateixa qualitat que nosaltres). Experiment tenia 255 commits per davant de `production/g3dt-eva-v1` (`123b4f2`; l'Eva té
+`1f1d7fd`). Pla vigent: `docs/PLA-RELEASE-2026-09.md`.
+
+### Decisions arquitectòniques clau
+1. **Branca de release en un worktree nou (`clients/g3dt-release/`), no in-place.** Merge `--no-ff` d'experiment sobre
+   producció: els 2 conflictes previstos (plantilla `.docx`, `image_manager.py`) resolts amb la versió d'experiment; verificat
+   que l'índex només difereix d'experiment en `tests/test_image_cache_name.py` (que passa). `production/g3dt-eva-v1` no
+   s'avança fins a la visita (`--ff-only`). Alternativa rebutjada: pull directe (2 commits, cap millora, zero hores en
+   l'entorn de l'Eva).
+2. **Els lectors d'imatges van dins el job, una crida cadascun, després de la consolidació i abans del merge.** Sense això
+   l'Eva no rebria el procés mesurat (M341 imatges 69 % és amb els lectors). Eva mana (`source: user` → salta); empremta del
+   projecte per no repetir la crida entre «Preparar» i «Enllestir»; un lector que falla no atura res. Alternativa rebutjada:
+   executar-los dins la lectura per document (una crida per document, no per projecte; el lector necessita el full de contacte
+   de TOT el projecte). Estat nou `imatges` (5 passos) en lloc d'amagar-los dins «consolidant» (l'Eva veuria un temps que no
+   quadra).
+3. **Límit d'ús / sessió = causa sistèmica, no fallback.** El runner deixa d'enviar documents al primer «usage limit» (cap
+   reintent), no consolida, i el servei acaba el job en `error` amb el motiu i com reprendre (la cau per md5 conserva els
+   documents llegits). Alternativa rebutjada: caure a via B en silenci (l'Eva rebria prefills pitjors sense saber per què; és
+   exactament el «falla en silenci» que el §10.2 prohibeix).
+4. **Fixar versions.** `pymupdf<1.28` i `pymupdf4llm<1.0` al `pyproject` (1.28 escriu l'avís de deprecació de `fitz` a stdout i
+   trenca `render_clip.py`; `pymupdf4llm` 1.28 retorna buit) i `requirements-lock.txt` amb les versions EXACTES del venv
+   mesurat: la instal·lació és `pip install -e . -c requirements-lock.txt`. Alternativa rebutjada: `==` a totes les
+   dependències del `pyproject` (rígid per al desenvolupament; el lock separa «el que es mesura» de «el que s'accepta»).
+5. **Recomanació d'entorn: WSL2 + Ubuntu** (és l'entorn mesurat; els skills executen ordres POSIX des de Claude Code). Decisió
+   del Josep pendent; el runner sí que té branca Windows, però els skills no s'han provat mai en PowerShell.
+
+### Implementació
+`web/lectura_service.py` (+150: `_project_fingerprint`, `_lector_skip_reason`, `_run_image_lectors`, `systemic_holder`,
+`error_event usage_limit`), `automation/lectura/jobs.py` (estat `IMATGES`, 5 passos, estimació, codi d'error),
+`automation/lectura/job_text.py` (2 frases), `automation/lectura/runner.py` (`systemic_reason`, `result_head`, `_stop`,
+`LecturaResult.systemic`, `skipped_systemic`), `automation/imatges/lector_{fotos,figures}.py` (`should_cancel`, `extra_meta`,
+`cancelled`), `.env.example` (bloc de lectura headless), `pyproject.toml`, `requirements-lock.txt`, `CLAUDE.md` (excepció
+release), `.gitignore` (`*.egg-info/`). Commits experiment `caf2b1e`, `6fbdc85`, `f985936`; release `590ab0f` … `d042362`.
+
+### Validació empírica
+- M341 des del worktree release (venv net, cau pròpia): **idèntic** a `2026-09-09-m341-nit` (escalars 315·44·120·31 → 75 %,
+  taules 82 %, imatges 31·3·15·7 → 69 %, fix 81 M · 21 X) — `runs/2026-09-10-m341-release/`. Condició descoberta: M341
+  mesura Castellar/Rubí/Bell-lloc/Linyola des de `reference-material/<P>` (Fase 0 feta a `g3dt-prod`, ignorat per git) i els
+  altres tres des de `~/g3dt-e2e`; sense la mateixa barreja mouen cel·les d'imatges i 1 de narrativa (4 passades, dues amb el
+  venv de prod: l'entorn de Python no hi influeix).
+- Suite a release, venv net SENSE lock: 14 vermells / 2564 verds / 4 omesos (342 s) = 11 esperats-amb-dades + 3 de
+  `pymupdf` 1.28 (passen amb 1.27.1 sobre el mateix codi). Els 17 de `test_smartscan` + 3 `test_fileminer` Anciles passen amb
+  els fitxers crus presents: fixtures, no defectes. Suite amb el venv del lock (recreat de zero): **11 vermells / 2579 verds /
+  4 omesos (209 s)** — exactament els 11 esperats-amb-dades, cap de nou.
+- Prova en perfil net (§10.4) sobre Castellar (HOME amb només `.credentials.json`, sonnet@xhigh, c2 + lectors): en curs; a
+  ~5 min, 2/13 documents llegits (sondeig 267 s, pressupost 292 s), 0 errors.
+- `claude -p` amb HOME net i només les credencials: sessió OK.
+
+### Tests
+Nous: 6 (lectors al job) + 2 (jobs) + 1 (text) + 2 (runner: límit d'ús, `systemic_reason`) + 1 (servei: límit d'ús) + 1 (jobs:
+codi) + 1 (text: fila del límit) = 14. Mòduls afectats en verd amb el venv de prod: `test_lectura_service`, `_jobs`, `_job_text`,
+`_runner` (45), `test_peca2_lector_fotos`, `test_peca7b_lector_figures`, `test_refresh_prefills_wiring` (144 + 45).
+
+### Latència / cost
+Lectors: +1-3 min per projecte (37-80 s per crida mesurats) només la primera vegada per contingut. Aturada per límit: 0 crides
+perdudes a partir de la primera que falla (abans: 2 intents × cada document pendent).
+
+### Limitacions conegudes
+- La consolidació LLM (`G3DT_LECTURA_CONSOLIDA=llm`, no és el defecte) i els lectors no propaguen el límit d'ús com a sistèmic
+  (els lectors surten `status: error` i el job continua; és el comportament volgut per a ells).
+- `import fitz` (deprecat a 1.28) queda per migrar; el pin ho ajorna.
+- El pas 2 en WSL amb els flags de l'Eva i el pas 3 depenen de les decisions del Josep (entorn, pla, claus, data).
+- `pillow` és a `dependencies` només a release (experiment no el porta; el proper merge no hi topa).
+
+### GO/NO-GO
+- ✅ Pas 1: branca, merge, M341 idèntic, codi del §10, lock.
+- ✅ Suite amb el venv del lock: els 11 esperats-amb-dades, cap de nou.
+- ⏳ Prova en perfil net (Castellar) — la porta real del §10.4.
+- ⏳ Decisions del Josep §3 del pla; pas 2 en WSL; data.
+
+### Següents passos
+Resultat de la prova en perfil net (comparar amb `_reconsolida-2026-09-06-pend` i l'or); push de `release/2026-09`; decisions
+del Josep; pas 2 en WSL amb `.env` de l'Eva; full de ruta presencial (`PLA-RELEASE-2026-09.md` §5).
+
+*Fi entrada 2026-09-10 (3). Branca de release, lectors i límit d'ús al job, versions fixades.*
