@@ -175,8 +175,15 @@ def row(job: dict[str, Any], *, now: datetime | None = None) -> dict[str, Any]:
         counter = None
         estimate = None
     elif state == ERROR:
-        title = "No s'ha pogut preparar"
-        detail = "avisat Eficients"
+        err = job.get("error") if isinstance(job.get("error"), dict) else {}
+        if err.get("code") == "usage_limit":
+            # No és una avaria nostra: el compte de Claude ha dit prou per avui (o fins que es
+            # renovi la finestra). Els documents ja llegits queden a la cau; «Preparar» reprèn.
+            title = "Aturat: el compte de Claude ha arribat al límit d'ús"
+            detail = "els documents ja llegits es conserven — prem Preparar quan el pla torni a estar disponible"
+        else:
+            title = "No s'ha pogut preparar"
+            detail = "avisat Eficients"
         counter = None
         estimate = None
     elif state == CANCELLED:

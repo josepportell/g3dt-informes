@@ -441,6 +441,7 @@ def run_lectura_job(
     auto_result_holder: list = []
     auto_error_holder: list = []
     lectura_result_holder: list[LecturaResult] = []
+    systemic_holder: list[str] = []
 
     templates_state = {"emitted": False}
 
@@ -498,6 +499,11 @@ def run_lectura_job(
                 should_cancel=should_cancel,
             )
             lectura_result_holder.append(result)
+            if getattr(result, "systemic", None):
+                # §10.2 (2026-09-10): límit d'ús / sessió — NO és fallback (via B en silenci
+                # amb forats), és aturar-se i dir-ho; el job acaba en `error` amb el motiu.
+                systemic_holder.append(str(result.systemic))
+                return
             if result.decisions is not None:
                 event_queue.put(("decisions", _lectura_payload(result)))
         except Exception as exc:
@@ -532,6 +538,18 @@ def run_lectura_job(
 
     if cancelled_flag:
         emit("cancelled", {"phase": "lectura"})
+        return
+
+    if systemic_holder:
+        emit("error_event", {
+            "code": "usage_limit",
+            "reason": systemic_holder[0],
+            "message": (
+                "La lectura s'ha aturat: el compte de Claude no pot atendre més crides ara mateix "
+                f"({systemic_holder[0]}). Els documents ja llegits es conserven; quan el pla torni a estar "
+                "disponible, prem «Preparar» i només es llegiran els que falten."
+            ),
+        })
         return
 
     if auto_error_holder:

@@ -484,3 +484,12 @@ def test_write_is_atomic_leaves_no_tmp_files(tmp_path):
     job_dir = job.job_path.parent
     assert list(job_dir.glob("*.tmp")) == []
     assert job.job_path.exists()
+
+
+def test_error_event_keeps_its_code_for_the_usage_limit(tmp_path):
+    job = _fresh_job(tmp_path)
+    job.write()
+    job.emit("error_event", {"code": "usage_limit", "reason": "resets at 3pm", "message": "La lectura s'ha aturat"})
+    on_disk = _read_job(job.job_path)
+    assert on_disk["state"] == jobs.ERROR
+    assert on_disk["error"] == {"code": "usage_limit", "detail": "La lectura s'ha aturat"}

@@ -1308,3 +1308,30 @@ def test_image_lectors_stop_when_eva_cancels_between_them(fake_project, monkeypa
     assert names[-1] == "cancelled" and emitted[-1][1] == {"phase": "imatges"}
     assert "prefills" not in names and "merge_inici" not in names
     assert [c[0] for c in calls] == ["fotos"]
+
+
+def test_usage_limit_ends_the_job_in_error_not_in_silent_fallback(fake_project, monkeypatch):
+    """§10.2 (2026-09-10): la lectura aturada pel límit d'ús NO cau a via B en silenci —
+    `error_event` amb codi propi i motiu, cap prefills, cap lector d'imatges."""
+    project_name, _ = fake_project
+    vision_calls: list = []
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: vision_calls.append(1))
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+    calls = _install_fake_lectors(monkeypatch)
+
+    def _limited(project_path, *, out_dir=None, on_event=None, should_cancel=None, force=False):
+        return LecturaResult(decisions=None, per_doc=[{"doc": "a.pdf", "status": "failed", "systemic": "usage limit"}],
+                             degraded=True, mode="document", telemetry_path=None, docs_failed=["a.pdf"],
+                             systemic="You've hit your usage limit. Your limit resets at 3pm")
+    monkeypatch.setattr(lectura_service, "run_lectura", _limited)
+
+    events = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))
+    names = [n for n, _ in events]
+    assert names[-1] == "error_event"
+    err = events[-1][1]
+    assert err["code"] == "usage_limit" and "resets at 3pm" in err["reason"]
+    assert "Preparar" in err["message"] and "es conserven" in err["message"]
+    assert "prefills" not in names and "lectura_fallback" not in names
+    assert "lector_imatges_inici" not in names and calls == []
+    assert vision_calls == []

@@ -103,6 +103,10 @@ class LecturaResult:
     #: D4 (2026-09-05, Vilanova): documents que han acabat SENSE JSON valid despres dels reintents. Abans `degraded`
     #: nomes reflectia la consolidacio LLM i un run amb 11/14 documents tancava «OK» amb forats invisibles.
     docs_failed: list[str] = field(default_factory=list)
+    #: 2026-09-10 (preparació del llançament §10.2): la lectura s'ha ATURAT per una causa sistèmica
+    #: (límit d'ús del pla de Claude, sessió caducada, sense crèdit) — cap document més s'ha enviat i
+    #: no hi ha consolidació. El servei ho converteix en `error_event`, no en fallback silenciós.
+    systemic: str | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -317,6 +321,7 @@ def _parse_cli_output(stdout_path: Path, log_path: Path) -> dict[str, Any]:
                 "cost_usd": d.get("total_cost_usd"),
                 "is_error": bool(d.get("is_error", False)),
                 "subtype": d.get("subtype"),
+                "result_head": str(d.get("result") or "")[:400],
                 "usage": {
                     k: usage.get(k)
                     for k in (
@@ -334,6 +339,45 @@ def _parse_cli_output(stdout_path: Path, log_path: Path) -> dict[str, Any]:
     finally:
         with contextlib.suppress(OSError):
             stdout_path.unlink()
+
+
+#: Missatges del CLI (o de l'API a través seu) que volen dir «cap crida més servirà fins que
+#: canviï alguna cosa del compte»: límit d'ús del pla (finestra de 5 h / setmanal), sessió no
+#: iniciada o caducada, clau sense crèdit (memòria `reference_anthropic_usage_cap_error_shape`:
+#: l'API ho dona com a HTTP 400 «usage limits», no com a 429). Reintentar el document o passar al
+#: següent només crema temps i deixa forats: s'atura tot i es diu.
+_SYSTEMIC_RE = re.compile(
+    r"usage limit|hit your (usage )?limit|limit reached|regain access|resets? (at|in) |out of (extra )?usage"
+    r"|rate limit exceeded|credit balance|insufficient credit|billing"
+    r"|not logged in|please (run )?/?login|log in to continue|invalid api key|authentication_error|unauthorized",
+    re.IGNORECASE,
+)
+
+
+def systemic_reason(call: dict[str, Any], log_path: Path | None = None) -> str | None:
+    """Retorna una frase curta si la crida ha fallat per una causa sistèmica, `None` si no.
+
+    Mira el text final del CLI (`result_head`, `--output-format json`) i, si cal, la cua d'stderr
+    (`log_path`). Només quan la crida NO ha anat bé (rc != 0 o `is_error`): un document llegit
+    correctament que esmenta «limit» al seu contingut no compta."""
+    rc = call.get("rc")
+    cli = call.get("cli") or {}
+    if call.get("timeout") or call.get("cancelled"):
+        return None
+    if rc in (0, None) and not cli.get("is_error"):
+        return None
+    texts = [str(cli.get("result_head") or ""), str(call.get("error") or "")]
+    if log_path is not None:
+        try:
+            texts.append(Path(log_path).read_text(encoding="utf-8", errors="replace")[-2000:])
+        except OSError:
+            pass
+    for text in texts:
+        m = _SYSTEMIC_RE.search(text)
+        if m:
+            line = next((ln.strip() for ln in text.splitlines() if m.group(0).lower() in ln.lower()), m.group(0))
+            return line[:200]
+    return None
 
 
 def _run_claude(
@@ -562,9 +606,13 @@ def _process_one_doc(
             return {"doc": rel_path, "status": "cached", "attempts": 0, "elapsed_s": 0.0}
 
     last_elapsed = 0.0
+    stop: threading.Event | None = cfg.get("_stop")
     for attempt in range(1, _MAX_ATTEMPTS + 1):
         if _cancelled(should_cancel):
             return {"doc": rel_path, "status": "cancelled", "attempts": attempt - 1, "elapsed_s": last_elapsed}
+        if stop is not None and stop.is_set():
+            # Un altre document ja ha topat amb el límit: aquest no s'envia (cap spawn més).
+            return {"doc": rel_path, "status": "skipped_systemic", "attempts": attempt - 1, "elapsed_s": last_elapsed}
 
         existing_before = {p.name for p in out_dir.glob("*.json")}
         call_start_wall = time.time()
@@ -615,9 +663,16 @@ def _process_one_doc(
             _emit(on_event, "lectura_doc", {"doc": rel_path, "cached": False, "attempt": attempt})
             return {"doc": rel_path, "status": "ok", "attempts": attempt, "elapsed_s": last_elapsed}
 
+        reason = systemic_reason(call, log_path)
         _emit(on_event, "lectura_doc_error", {
             "doc": rel_path, "attempt": attempt, "rc": call["rc"], "timeout": call["timeout"],
+            **({"systemic": reason} if reason else {}),
         })
+        if reason:
+            if stop is not None and not stop.is_set():
+                cfg["_stop_reason"] = reason
+                stop.set()
+            return {"doc": rel_path, "status": "failed", "attempts": attempt, "elapsed_s": last_elapsed, "systemic": reason}
 
     return {"doc": rel_path, "status": "failed", "attempts": _MAX_ATTEMPTS, "elapsed_s": last_elapsed}
 
@@ -1130,6 +1185,8 @@ def run_lectura(
     telemetry_path = out_dir / "_telemetry.jsonl"
 
     cfg = _load_config()
+    cfg["_stop"] = threading.Event()   # límit d'ús / sessió: cap spawn més (vegeu `systemic_reason`)
+    cfg["_stop_reason"] = None
     mode = cfg["mode"]
     claude_version = _capture_claude_version(cfg["claude_path"])
 
@@ -1203,6 +1260,15 @@ def run_lectura(
     if was_cancelled:
         _emit(on_event, "cancelled", {"phase": "documents"})
         return LecturaResult(decisions=None, per_doc=per_doc, degraded=False, mode=mode, telemetry_path=telemetry_path)
+
+    if cfg["_stop"].is_set():
+        reason = cfg.get("_stop_reason") or "límit d'ús"
+        n_skipped = sum(1 for d in per_doc if d.get("status") == "skipped_systemic")
+        docs_failed = sorted(d["doc"] for d in per_doc if d.get("status") in ("failed", "skipped_systemic"))
+        _emit(on_event, "lectura_systemic", {"reason": reason, "n_skipped": n_skipped, "n_docs": len(per_doc)})
+        _emit(on_event, "lectura_fi", _aggregate(per_doc, True) | {"docs_failed": docs_failed, "systemic": reason})
+        return LecturaResult(decisions=None, per_doc=per_doc, degraded=True, mode=mode, telemetry_path=telemetry_path,
+                             docs_failed=docs_failed, systemic=reason)
 
     decisions, degraded = _consolidate(
         project_path=project_path, out_dir=out_dir, cfg=cfg, force=force,

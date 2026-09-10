@@ -310,7 +310,7 @@ class Job:
             self.finished_at = _now_iso()
             self._set_state(CANCELLED)
         elif event_type == "error_event":
-            self.error = {"code": "exception", "detail": detail.get("message")}
+            self.error = {"code": detail.get("code") or "exception", "detail": detail.get("message")}
             self.finished_at = _now_iso()
             self._set_state(ERROR)
 
