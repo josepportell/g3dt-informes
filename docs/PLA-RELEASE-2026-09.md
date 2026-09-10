@@ -11,7 +11,7 @@ instal·lació presencial). Aquest document és el full de ruta viu; l'evidènci
 |---|---|---|
 | 1. Branca `release/2026-09` (worktree `clients/g3dt-release/`) | **FET** | merge `590ab0f` (2 conflictes, resolts amb experiment; índex = experiment + `tests/test_image_cache_name.py`), `pillow` declarat `ad18837`, CLAUDE.md `a1bf349`, `.gitignore` egg-info `50129fa`, M341 `fd118ac`, segon merge `d042362` (codi del §10) |
 | 1b. M341 des del worktree release, venv net, cau pròpia | **IDÈNTIC** a `2026-09-09-m341-nit` | `runs/2026-09-10-m341-release/_AGREGAT-341.md` (escalars 315·44·120·31 → 75 %, taules 82 %, imatges 31·3·15·7 → 69 %, fix 81 M · 21 X) |
-| 1c. Suite a release (venv del lock) | en curs (vegeu §2.4) | `suite-release-2.txt` al scratchpad de la sessió; resultat definitiu al DECISION-LOG 2026-09-10 (3) |
+| 1c. Suite a release (venv del lock) | **11 vermells / 2579 verds / 4 omesos (209 s)** — exactament els 11 esperats-amb-dades, cap de nou | DECISION-LOG 2026-09-10 (3) |
 | 1d. Codi que el §10 demanava | **FET** (experiment `caf2b1e`, `f985936`, `6fbdc85`; fusionat a release `d042362`) | lectors d'imatges dins el job; aturada per límit d'ús; pins `pymupdf`; `requirements-lock.txt` |
 | 2. Prova en perfil net | **en curs** sobre Castellar (HOME nou amb només `.credentials.json`, sonnet@xhigh, 2 en paral·lel, lectors @medium) | `scratchpad/clean-run/run.log`; resultat al DECISION-LOG quan acabi |
 | 2b. Prova a WSL al PC del Josep amb els flags de l'Eva | pendent de la decisió §3.1 | — |
@@ -78,7 +78,7 @@ venv mesurat). `.env.example` documenta per primer cop el bloc de la lectura hea
 
 ### 2.4 Suite i mesura
 - Suite a release, venv net sense lock: 14 vermells / 2564 verds = 11 esperats-amb-dades + 3 de `pymupdf` 1.28.
-- Suite a release, venv del lock: en curs en escriure això; el DECISION-LOG 2026-09-10 (3) porta el resultat. Esperat: els 11.
+- Suite a release, venv del lock (recreat de zero amb `-c requirements-lock.txt`): **11 vermells / 2579 verds / 4 omesos (209 s)**, els 11 esperats-amb-dades i cap més: el lock reprodueix l'entorn mesurat.
 - M341 des de release: idèntic a la referència (§0).
 
 ## 3. Decisions que són del Josep (no s'ha assumit res)

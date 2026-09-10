@@ -6435,7 +6435,8 @@ release), `.gitignore` (`*.egg-info/`). Commits experiment `caf2b1e`, `6fbdc85`,
   venv de prod: l'entorn de Python no hi influeix).
 - Suite a release, venv net SENSE lock: 14 vermells / 2564 verds / 4 omesos (342 s) = 11 esperats-amb-dades + 3 de
   `pymupdf` 1.28 (passen amb 1.27.1 sobre el mateix codi). Els 17 de `test_smartscan` + 3 `test_fileminer` Anciles passen amb
-  els fitxers crus presents: fixtures, no defectes. Suite amb el venv del lock: en curs (resultat a STATUS/sessió).
+  els fitxers crus presents: fixtures, no defectes. Suite amb el venv del lock (recreat de zero): **11 vermells / 2579 verds /
+  4 omesos (209 s)** — exactament els 11 esperats-amb-dades, cap de nou.
 - Prova en perfil net (§10.4) sobre Castellar (HOME amb només `.credentials.json`, sonnet@xhigh, c2 + lectors): en curs; a
   ~5 min, 2/13 documents llegits (sondeig 267 s, pressupost 292 s), 0 errors.
 - `claude -p` amb HOME net i només les credencials: sessió OK.
@@ -6458,7 +6459,7 @@ perdudes a partir de la primera que falla (abans: 2 intents × cada document pen
 
 ### GO/NO-GO
 - ✅ Pas 1: branca, merge, M341 idèntic, codi del §10, lock.
-- ⏳ Suite amb el venv del lock (esperat: els 11 esperats-amb-dades).
+- ✅ Suite amb el venv del lock: els 11 esperats-amb-dades, cap de nou.
 - ⏳ Prova en perfil net (Castellar) — la porta real del §10.4.
 - ⏳ Decisions del Josep §3 del pla; pas 2 en WSL; data.
 
