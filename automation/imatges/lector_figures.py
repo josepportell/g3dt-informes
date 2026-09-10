@@ -532,6 +532,21 @@ def apply_selection(project: Path, cache_dir: Path | None = None) -> dict:
                 paths.append(p)
         if len(paths) == 2:
             out["fig_situacio_image_1"], out["fig_situacio_image_2"] = paths
+    elif isinstance(s, dict) and s.get("rel"):
+        # una sola imatge sencera (pujada de l'Eva, 2026-09-10): la plantilla ja té el cas d'una imatge de situació
+        p = _out_name(cache, "situacio1", s, s.get("crop"))
+        if p.exists() or render_entry(project, s, p):
+            out["fig_situacio_image_1"], out["fig_situacio_image_2"] = p, ""
+    # Les tres figures automàtiques (geològic, tall, cullera), només si l'Eva hi ha pujat una imatge (2026-09-10):
+    # el generador les aplica després del seu camí determinista
+    if sel.get("source") == "user":
+        for key, ctx_key in (("geologic", "fig_geological_image"), ("tall", "fig_correlation_image"),
+                             ("cullera", "fig_spt_cullera_image")):
+            e = sel.get(key)
+            if isinstance(e, dict) and e.get("rel"):
+                p = _out_name(cache, key, e, e.get("crop"))
+                if p.exists() or render_entry(project, e, p):
+                    out[ctx_key] = p
     return out
 
 

@@ -195,3 +195,31 @@ def test_alternatives_de_figures_es_validen_i_s_escriuen(tmp_path):
     d = json.loads(LG.write_selection(p, clean, {"model": "test"}).read_text(encoding="utf-8"))
     assert list(d)[:5] == ["source", "assaigs", "projecte", "situacio", "alternatives"] and d["alternatives"]["assaigs"][1]["rao"] == "el full de l'Eva"
     assert LG.apply_selection(p, tmp_path / "cache") is not None       # les alternatives no canvien el que s'aplica
+
+
+def test_image_manager_les_pujades_de_l_eva_manen_sobre_les_figures_automatiques(tmp_path, monkeypatch):
+    """2026-09-10: geològic, tall i cullera (i la situació d'una sola imatge) pujats des de la finestreta entren al
+    context després del camí determinista de cadascuna, amb l'amplada de la figura que substitueixen."""
+    from docx.shared import Mm
+    from automation import image_manager as IM
+    p = tmp_path / "4009999 PROVA"; up = p / "validation" / "uploads" / "imatges"; up.mkdir(parents=True)
+    for n in ("20260910-100000-aa0001.png", "20260910-100001-aa0002.png", "20260910-100002-aa0003.png", "20260910-100003-aa0004.png"):
+        Image.new("RGB", (80, 60), (200, 180, 120)).save(up / n)
+    mgr = IM.ImageManager(p, report_data=SimpleNamespace(has_sondeig=False), tpl=None)
+    mgr._cache_dir = tmp_path / "cache"; mgr._cache_dir.mkdir()
+    monkeypatch.setattr(mgr, "_download_icgc_images", lambda: {})
+    monkeypatch.setattr(mgr, "_safe_inline_image", lambda path, **k: f"IMG:{Path(path).name}:{k.get('width')}")
+    e = lambda n: {"kind": "upload", "rel": f"validation/uploads/imatges/{n}"}
+    (p / "validation" / "figure_selection.json").write_text(json.dumps({
+        "source": "user", "assaigs": None, "projecte": [], "situacio": e("20260910-100003-aa0004.png"),
+        "geologic": e("20260910-100000-aa0001.png"), "tall": e("20260910-100001-aa0002.png"), "cullera": e("20260910-100002-aa0003.png")}), encoding="utf-8")
+    ctx = mgr.build_context()
+    assert ctx["fig_geological_image"] == f"IMG:{Path(LG._out_name(mgr._cache_dir, 'geologic', e('20260910-100000-aa0001.png'), None)).name}:{Mm(IM.IMAGE_WIDTH_GEOLOGICAL)}"
+    assert ctx["fig_correlation_image"].startswith("IMG:figsel_tall_") and ctx["fig_correlation_image"].endswith(f":{Mm(IM.IMAGE_WIDTH_LOCATION)}")
+    assert ctx["fig_spt_cullera_image"].startswith("IMG:figsel_cullera_") and ctx["fig_spt_cullera_image"].endswith(f":{Mm(IM.IMAGE_WIDTH_SPT_CULLERA)}")
+    assert ctx["fig_situacio_image_1"].startswith("IMG:figsel_situacio1_") and ctx["fig_situacio_image_1"].endswith(f":{Mm(IM.IMAGE_WIDTH_MAIN_PLAN)}")
+    assert ctx["fig_situacio_image_2"] == "" and ctx["fig_assaigs_image"] == ""
+    # sense pujades: el camí determinista de sempre (la cullera de la plantilla)
+    (p / "validation" / "figure_selection.json").write_text(json.dumps({"source": "user", "assaigs": None, "projecte": [], "situacio": None}), encoding="utf-8")
+    ctx = mgr.build_context()
+    assert ctx["fig_spt_cullera_image"].startswith("IMG:cullera_spt") and ctx["fig_geological_image"] == IM.PLACEHOLDER_TEXT

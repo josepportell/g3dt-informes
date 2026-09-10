@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
@@ -1047,7 +1047,10 @@ _ROLE_TO_FIGURE_SLOT: dict[str, tuple[str, str]] = {
 #: ranures que MANEN des de `figure_selection.json` (lector o Eva): la selecció també buida (cap figura = cap figura)
 _SELECTION_SLOTS = {"fig_assaigs_image": "fig_assaigs", "fig_projecte_image_1": "fig_projecte_1",
                     "fig_projecte_image_2": "fig_projecte_2", "fig_situacio_image_1": "fig_situacio",
-                    "fig_situacio_image_2": "fig_situacio_2"}
+                    "fig_situacio_image_2": "fig_situacio_2",
+                    # pujada (2026-09-10): les tres figures automàtiques, quan l'Eva hi ha posat una imatge seva
+                    "fig_geological_image": "fig_geological", "fig_correlation_image": "fig_correlation",
+                    "fig_spt_cullera_image": "fig_spt_cullera"}
 
 
 _CACHE_SOURCE_PDF_RE = __import__("re").compile(r"tall|corte|situ|pl[aà]nol|plano|A\.01", __import__("re").I)
@@ -1293,6 +1296,16 @@ def list_photos(project_name: str):
             "kind": "eva_png",
             "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
         })
+    # Pujades de l'Eva des de la finestreta d'alternatives (2026-09-10): carpeta pròpia, nom = ID; el nom original
+    # es guarda a l'índex. Sense això la pestanya pintava la ranura buida quan l'actual era una pujada.
+    for f, original in _list_uploaded_images(project_path):
+        rel = f.relative_to(project_path).as_posix()
+        photos.append({
+            "filename": original or f.name,
+            "relative_path": rel,
+            "kind": "upload",
+            "thumbnail_url": f"/api/thumbnail/{quote(project_name, safe='')}?file={quote(rel, safe='/')}",
+        })
 
     # Load current selection
     sel_path = project_path / 'validation' / 'photo_selection.json'
@@ -1328,8 +1341,87 @@ _PHOTO_SLOTS = ("site_1", "site_2", "dpsh", "sondeig", "materials")
 _PHOTO_SLOT_LABELS = {"site_1": "Foto vista general 1", "site_2": "Foto vista general 2", "dpsh": "Foto penetròmetre DPSH",
                       "sondeig": "Foto sondeig", "materials": "Foto materials"}
 _FIGURE_SLOT_LABELS = {"fig_situacio": "Figura de situació (1.1)", "fig_projecte_1": "Figura del projecte 1 (1.1)",
-                       "fig_projecte_2": "Figura del projecte 2 (1.1)", "fig_assaigs": "Figura d'assaigs (2.2)"}
+                       "fig_projecte_2": "Figura del projecte 2 (1.1)", "fig_assaigs": "Figura d'assaigs (2.2)",
+                       # pujada (2026-09-10): les tres figures automàtiques també admeten una imatge de l'Eva
+                       "fig_geological": "Mapa geològic (3.1)", "fig_correlation": "Tall de correlació (4.1)",
+                       "fig_spt_cullera": "Cullera normalitzada SPT"}
+#: ranura del wizard → (clau a `figure_selection.json`, què hi posa el generador si l'Eva no hi puja res)
+_AUTO_FIGURE_SLOTS = {
+    "fig_geological": ("geologic", "el mapa que l'Eva ha compost al projecte (si n'hi ha) o la recepta ICGC"),
+    "fig_correlation": ("tall", "el retall automàtic del tall de correlació"),
+    "fig_spt_cullera": ("cullera", "el gràfic de la cullera normalitzada de la plantilla"),
+}
 _ENTRY_KEYS = ("idx", "kind", "rel", "page", "src", "crop", "caption", "rao", "crops")
+
+# --- Pujada d'imatges des de la finestreta (2026-09-10) ---
+_UPLOAD_IMG_SUBDIR = ("validation", "uploads", "imatges")     # carpeta pròpia: NO la de l'evidència HITL
+_UPLOAD_IMG_INDEX = "pujades.json"                            # nom original, ranura i moment de cada pujada
+_UPLOAD_IMG_MAX_BYTES = 25 * 1024 * 1024
+_UPLOAD_IMG_MAX_SIDE = 2400        # 150 mm a > 400 dpi; una foto de mòbil de 10 MB entraria sencera al .docx
+_UPLOAD_PROJECT_CAPTION = "Detall del projecte. Font: G3DT."   # decisió del Josep 2026-09-10; camp de peu: pendent
+
+
+def _uploads_dir(project_path: Path) -> Path:
+    return project_path.joinpath(*_UPLOAD_IMG_SUBDIR)
+
+
+def _list_uploaded_images(project_path: Path) -> list[tuple[Path, str]]:
+    """Les imatges pujades per l'Eva, amb el nom original (de l'índex) — ordenades pel nom, que comença per la data."""
+    d = _uploads_dir(project_path)
+    if not d.is_dir():
+        return []
+    idx = _read_json_file(d / _UPLOAD_IMG_INDEX) or {}
+    out = []
+    for f in sorted(d.iterdir()):
+        if f.is_file() and f.suffix.lower() in _IMAGE_EXTENSIONS:
+            meta = idx.get(f.name) if isinstance(idx.get(f.name), dict) else {}
+            out.append((f, str(meta.get("original") or "")))
+    return out
+
+
+def _store_uploaded_image(project_path: Path, data: bytes, raw_name: str, slot: str) -> str:
+    """Valida que és una imatge (PIL, no l'extensió), la normalitza (EXIF, RGB, costat llarg ≤ 2.400 px; PNG es queda
+    PNG, la resta JPEG q=90) i la desa amb un nom que és només un ID (data + hex): cap paraula que una regla pel nom
+    («geol», «tall», «situ»…) pugui agafar. El nom original va a l'índex. Retorna el camí relatiu (posix)."""
+    import datetime
+    import io
+    import json as _json
+    import secrets
+    from PIL import Image, ImageOps
+    try:
+        Image.open(io.BytesIO(data)).verify()
+        im = Image.open(io.BytesIO(data)); im.load()
+    except Image.DecompressionBombError:
+        raise HTTPException(status_code=400, detail="La imatge té massa píxels")
+    except Exception:
+        raise HTTPException(status_code=400, detail="El fitxer no és una imatge llegible")
+    keep_png = (im.format or "").upper() == "PNG"
+    im = ImageOps.exif_transpose(im) or im
+    if keep_png:
+        if im.mode not in ("RGB", "RGBA"):
+            im = im.convert("RGBA" if (im.mode in ("P", "LA", "PA") or "transparency" in im.info) else "RGB")
+    else:
+        im = im.convert("RGB")
+    if max(im.size) > _UPLOAD_IMG_MAX_SIDE:
+        im.thumbnail((_UPLOAD_IMG_MAX_SIDE, _UPLOAD_IMG_MAX_SIDE), Image.Resampling.LANCZOS)
+    d = _uploads_dir(project_path); d.mkdir(parents=True, exist_ok=True)
+    when = datetime.datetime.now()
+    name = f"{when:%Y%m%d-%H%M%S}-{secrets.token_hex(3)}{'.png' if keep_png else '.jpg'}"
+    out = d / name
+    if keep_png:
+        im.save(out, format="PNG", optimize=True)
+    else:
+        im.save(out, format="JPEG", quality=90, optimize=True)
+    idx_path = d / _UPLOAD_IMG_INDEX
+    idx = _read_json_file(idx_path) or {}
+    idx[name] = {"original": Path(raw_name or "imatge").name[:120], "slot": slot, "when": when.isoformat(timespec="seconds"),
+                 "size": list(im.size)}
+    idx_path.write_text(_json.dumps(idx, ensure_ascii=False, indent=1), encoding="utf-8")
+    return out.relative_to(project_path).as_posix()
+
+
+def _is_upload_rel(rel: str | None) -> bool:
+    return isinstance(rel, str) and rel.replace("\\", "/").startswith("/".join(_UPLOAD_IMG_SUBDIR) + "/")
 
 
 def _read_json_file(path: Path) -> dict | None:
@@ -1350,13 +1442,17 @@ def _entry_ok(project_path: Path, e) -> dict | None:
     root = str(project_path.resolve()); cache = str(_FIGURE_CACHE_DIR.resolve())
     src = e.get("src")
     if src:
-        sp = Path(str(src)).resolve()
-        if not (str(sp).startswith(root) or str(sp).startswith(cache)) or not sp.is_file():
+        target = Path(str(src)).resolve()
+        if not (str(target).startswith(root) or str(target).startswith(cache)) or not target.is_file():
             return None
     else:
-        rp = (project_path / str(e["rel"])).resolve()
-        if not str(rp).startswith(root) or not rp.is_file():
+        target = (project_path / str(e["rel"])).resolve()
+        if not str(target).startswith(root) or not target.is_file():
             return None
+    # Tot el que no és una pàgina de PDF s'obre amb PIL (`render_entry`): si no és una imatge, abans passava i la
+    # miniatura sortia buida en silenci (2026-09-10)
+    if e.get("kind") != "project_page" and target.suffix.lower() not in _IMAGE_EXTENSIONS:
+        return None
     return out
 
 
@@ -1385,7 +1481,8 @@ def list_alternatives(project_name: str):
     palts = psel.get('alternatives') if isinstance(psel.get('alternatives'), dict) else {}
 
     def photo_item(rel: str, rao: str = "") -> dict:
-        return {"rel": rel, "rao": rao or "", "thumbnail_url": f"/api/thumbnail/{enc}?file={quote(rel, safe='/')}"}
+        return {"rel": rel, "rao": rao or "", "thumbnail_url": f"/api/thumbnail/{enc}?file={quote(rel, safe='/')}",
+                "kind": "upload" if _is_upload_rel(rel) else "foto"}
 
     plector = psel.get("_lector_selection") if isinstance(psel.get("_lector_selection"), dict) else None
     for slot in _PHOTO_SLOTS:
@@ -1474,6 +1571,13 @@ def list_alternatives(project_name: str):
                                      [sit] if (sit and fsrc != "user") else [],
                                      {"default_label": "Els dos mapes del full de situació (automàtic)",
                                       "is_default": not (fsrc == "user" and sit)})
+    # Les tres figures automàtiques (2026-09-10): sense lector ni alternatives; «actual» només si l'Eva hi ha pujat
+    # una imatge (`source: user`); si no, el generador hi posa el camí determinista (`default_label`)
+    for wslot, (key, auto_label) in _AUTO_FIGURE_SLOTS.items():
+        cur = fig_item(fsel.get(key), key) if (fsrc == "user" and isinstance(fsel.get(key), dict)) else None   # mateixa cau que `apply_selection`
+        slots[wslot] = {"type": "figure", "label": _FIGURE_SLOT_LABELS[wslot], "source": "user" if cur else None,
+                        "current": cur, "alternatives": [], "rao": None, "cap_font": False, "confianca": None,
+                        "is_default": cur is None, "default_label": auto_label, "auto": True}
     return {"slots": slots, "photo_source": psel.get("source"), "figure_source": fsrc}
 
 
@@ -1483,15 +1587,11 @@ class AlternativeChoice(BaseModel):
     entry: dict | None = None       # figures: entrada del lector (idx, kind, rel, page, src, crop[, caption, crops]); None = cap / automàtic
 
 
-@router.post("/alternatives/{project_name:path}/choose")
-def choose_alternative(project_name: str, req: AlternativeChoice):
+def _apply_alternative_choice(project_path: Path, req: AlternativeChoice) -> dict:
     """Desa la tria de l'Eva per a UNA ranura amb `source: user` (mana al generador) i conserva la resta de la selecció
-    del lector (alternatives, raons, i una còpia de la seva tria a `_lector_selection`)."""
+    del lector (alternatives, raons, i una còpia de la seva tria a `_lector_selection`). La fan servir `/choose` i
+    `/upload` (2026-09-10): una pujada és una tria més."""
     import json as _json
-    try:
-        project_path = wizard_service._resolve_project(project_name)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
     vdir = project_path / 'validation'; vdir.mkdir(exist_ok=True)
     root = str(project_path.resolve())
 
@@ -1556,14 +1656,66 @@ def choose_alternative(project_name: str, req: AlternativeChoice):
             elif len(proj) >= k:
                 del proj[k - 1]
         elif req.slot == "fig_situacio":
-            sel["situacio"] = ({kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crops")}
-                               if e and isinstance(e.get("crops"), list) and len(e["crops"]) == 2 else None)
+            if e and isinstance(e.get("crops"), list) and len(e["crops"]) == 2:
+                sel["situacio"] = {kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crops")}
+            elif e:
+                # pujada (2026-09-10): una sola imatge sencera, sense partir (la plantilla ja té el cas d'una imatge)
+                sel["situacio"] = {kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crop")}
+            else:
+                sel["situacio"] = None
+        elif req.slot in _AUTO_FIGURE_SLOTS:
+            # geològic, tall, cullera (2026-09-10): la imatge de l'Eva mana sobre el camí determinista; `null` = automàtic
+            sel[_AUTO_FIGURE_SLOTS[req.slot][0]] = ({kk: e.get(kk) for kk in ("idx", "kind", "rel", "page", "src", "crop")}
+                                                    if e else None)
         sel["projecte"] = proj[:2]
         payload = {"source": "user", **{k: v for k, v in sel.items() if k != "source"}}
         path.write_text(_json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
         return {"status": "saved", "slot": req.slot, "placed": placed or req.slot}
 
     raise HTTPException(status_code=400, detail=f"Ranura desconeguda: {req.slot}")
+
+
+@router.post("/alternatives/{project_name:path}/choose")
+def choose_alternative(project_name: str, req: AlternativeChoice):
+    """La tria de l'Eva per a una ranura (vegeu `_apply_alternative_choice`)."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    return _apply_alternative_choice(project_path, req)
+
+
+@router.post("/alternatives/{project_name:path}/upload")
+async def upload_slot_image(project_name: str, file: UploadFile = File(...), slot: str = Form(...)):
+    """Pujada d'una imatge de l'Eva per a una ranura de l'informe (2026-09-10): si el pipeline no ha trobat la que vol,
+    sigui a la carpeta o no, la puja des de la finestreta i entra a la ranura amb la mateixa lògica que una
+    alternativa (`source: user`). Es desa normalitzada a `validation/uploads/imatges/` amb un nom que és un ID."""
+    try:
+        project_path = wizard_service._resolve_project(project_name)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    if slot not in _PHOTO_SLOTS and slot not in _FIGURE_SLOT_LABELS:
+        raise HTTPException(status_code=400, detail=f"Ranura desconeguda: {slot}")
+    raw_name = file.filename or "imatge"
+    if Path(raw_name).suffix.lower() not in _IMAGE_EXTENSIONS:
+        raise HTTPException(status_code=415, detail=f"Extensió no permesa: {Path(raw_name).suffix or '(cap)'}. "
+                                                    f"Acceptades: {sorted(_IMAGE_EXTENSIONS)}")
+    data = await file.read(_UPLOAD_IMG_MAX_BYTES + 1)
+    if len(data) > _UPLOAD_IMG_MAX_BYTES:
+        raise HTTPException(status_code=413, detail=f"Fitxer massa gran ({len(data) / 1024 / 1024:.1f} MB). "
+                                                    f"Màxim: {_UPLOAD_IMG_MAX_BYTES // (1024 * 1024)} MB.")
+    rel = _store_uploaded_image(project_path, data, raw_name, slot)
+    if slot in _PHOTO_SLOTS:
+        req = AlternativeChoice(slot=slot, rel=rel)
+    else:
+        entry: dict = {"kind": "upload", "rel": rel}          # sense `src`: el camí absolut no sobreviu la còpia
+        if slot.startswith("fig_projecte_"):
+            entry["caption"] = _UPLOAD_PROJECT_CAPTION
+        req = AlternativeChoice(slot=slot, entry=entry)
+    out = _apply_alternative_choice(project_path, req)
+    out["rel"] = rel
+    logger.info("pujada d'imatge: %s → %s (%s)", project_name, slot, rel)
+    return out
 
 
 @router.post("/photos/{project_name:path}/select")

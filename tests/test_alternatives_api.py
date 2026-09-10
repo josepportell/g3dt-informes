@@ -2,6 +2,7 @@
 amb miniatura i raó, fotos i figures), `POST …/choose` (desa la tria de l'Eva amb `source: user`, conserva la resta),
 i el calaix de figures (`/api/photos`) que llegeix `figure_selection.json`."""
 import json
+from pathlib import Path
 
 import fitz
 from fastapi.testclient import TestClient
@@ -182,3 +183,148 @@ def test_calaix_nomes_mostra_imatges_de_la_cau_d_aquest_projecte(tmp_path, monke
     assert f["fig_correlation"]["filename"] == f"tall_crop2_tall_{h}.jpg"
     assert f["fig_geological"]["filename"] == "geological_composite_300000_4600000.png"
     assert "fig_assaigs" not in f                                   # el retall d'un altre projecte no surt
+
+
+# --- Pujada d'una imatge des de la finestreta (2026-09-10): `POST /api/alternatives/{p}/upload` ---
+
+_UP = "/api/alternatives/4009999%20PROVA/upload"
+_CH = "/api/alternatives/4009999%20PROVA/choose"
+_AL = "/api/alternatives/4009999%20PROVA"
+
+
+def _img_bytes(size=(64, 48), color=(120, 90, 60), fmt="JPEG", exif_orientation=None, mode="RGB"):
+    import io
+    im = Image.new(mode, size, color if mode == "RGB" else color + (255,))
+    buf = io.BytesIO()
+    if exif_orientation:
+        exif = Image.Exif(); exif[0x0112] = exif_orientation
+        im.save(buf, format=fmt, exif=exif.tobytes())
+    else:
+        im.save(buf, format=fmt)
+    return buf.getvalue()
+
+
+def _fsel(p):
+    return json.loads((p / "validation" / "figure_selection.json").read_text(encoding="utf-8"))
+
+
+def test_upload_foto_entra_a_la_ranura_i_a_la_pestanya(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    r = c.post(_UP, data={"slot": "site_1"}, files={"file": ("Vista carrer.jpg", _img_bytes(), "image/jpeg")})
+    assert r.status_code == 200, r.text
+    d = r.json(); rel = d["rel"]
+    assert d["status"] == "saved" and d["slot"] == "site_1" and rel.startswith("validation/uploads/imatges/") and rel.endswith(".jpg")
+    assert not any(ch.isalpha() and ch not in "abcdef" for ch in Path(rel).stem)      # nom = ID (data + hex): cap paraula
+    sel = json.loads((p / "validation" / "photo_selection.json").read_text(encoding="utf-8"))
+    assert sel["source"] == "user" and sel["site_1"] == rel and sel["dpsh"] == "FOTOGRAFIES/P1.jpg"
+    assert sel["_lector_selection"]["dpsh"] == "FOTOGRAFIES/P1.jpg" and sel["alternatives"]["dpsh"]         # la resta es conserva
+    assert c.get(f"/api/thumbnail/4009999%20PROVA?file={rel}").status_code == 200
+    photos = c.get("/api/photos/4009999%20PROVA").json()["photos"]
+    up = [x for x in photos if x["kind"] == "upload"]
+    assert len(up) == 1 and up[0]["relative_path"] == rel and up[0]["filename"] == "Vista carrer.jpg"   # la pestanya la veu
+    s = c.get(_AL).json()["slots"]["site_1"]
+    assert s["source"] == "user" and s["current"]["rel"] == rel and s["current"]["kind"] == "upload"
+    from automation.image_manager import ImageManager
+    im = ImageManager.__new__(ImageManager); im.project_path = p
+    assert [x.name for x in im._load_user_photo_selection()["site"]] == [Path(rel).name]      # el generador la llegeix
+    assert c.post(_CH, json={"slot": "dpsh", "rel": rel}).json()["cleared"] == ["site_1"]       # una foto, un forat
+
+
+def test_upload_figura_projecte_i_assaigs(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    r = c.post(_UP, data={"slot": "fig_projecte_1"}, files={"file": ("planta.png", _img_bytes(fmt="PNG"), "image/png")})
+    assert r.status_code == 200, r.text
+    rel1 = r.json()["rel"]; assert rel1.endswith(".png") and r.json()["placed"] == "fig_projecte_1"
+    d = _fsel(p); e = d["projecte"][0]
+    assert d["source"] == "user" and len(d["projecte"]) == 1
+    assert e["kind"] == "upload" and e["rel"] == rel1 and e.get("src") is None and e["caption"] == "Detall del projecte. Font: G3DT."
+    assert d["assaigs"]["page"] == 1 and d["_lector_selection"]["projecte"][0]["caption"].startswith("Secció")   # la resta es conserva
+    s = c.get(_AL).json()["slots"]
+    assert s["fig_projecte_1"]["source"] == "user" and s["fig_projecte_1"]["current"]["thumbnail_url"]
+    assert s["fig_projecte_1"]["current"]["entry"]["kind"] == "upload" and s["fig_projecte_2"]["current"] is None
+    from automation.imatges.lector_figures import apply_selection
+    out = apply_selection(p, cache)
+    assert Path(out["fig_projecte_image_1"]).is_file() and out["fig_projecte_caption_1"] == "Detall del projecte. Font: G3DT."
+    r = c.post(_UP, data={"slot": "fig_assaigs"}, files={"file": ("assaigs.jpg", _img_bytes(), "image/jpeg")})
+    assert r.status_code == 200, r.text
+    out = apply_selection(p, cache); assert Path(out["fig_assaigs_image"]).is_file()
+    f = c.get("/api/photos/4009999%20PROVA").json()["figures"]
+    assert f["fig_assaigs"]["source"] == "Tria de l'Eva" and f["fig_projecte_1"]["filename"].startswith("figsel_projecte1")
+    # una segona pujada a la 2, amb la 1 plena: queda a la 2
+    r = c.post(_UP, data={"slot": "fig_projecte_2"}, files={"file": ("seccio.jpg", _img_bytes(), "image/jpeg")})
+    assert r.json()["placed"] == "fig_projecte_2" and len(_fsel(p)["projecte"]) == 2
+
+
+def test_upload_situacio_una_sola_imatge_sencera(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    from automation.imatges.lector_figures import apply_selection
+    r = c.post(_UP, data={"slot": "fig_situacio"}, files={"file": ("situacio.png", _img_bytes(fmt="PNG"), "image/png")})
+    assert r.status_code == 200, r.text
+    d = _fsel(p)
+    assert d["situacio"]["kind"] == "upload" and "crops" not in d["situacio"] and d["situacio"]["crop"] is None
+    s = c.get(_AL).json()["slots"]["fig_situacio"]
+    assert s["is_default"] is False and s["source"] == "user" and s["current"]["thumbnail_url"] and "thumbnail_url_2" not in s["current"]
+    out = apply_selection(p, cache)
+    assert Path(out["fig_situacio_image_1"]).is_file() and out["fig_situacio_image_2"] == ""
+    # tornar a la composició automàtica del full
+    c.post(_CH, json={"slot": "fig_situacio", "entry": None})
+    assert _fsel(p)["situacio"] is None and "fig_situacio_image_1" not in apply_selection(p, cache)
+    assert c.get(_AL).json()["slots"]["fig_situacio"]["is_default"] is True
+
+
+def test_upload_figures_automatiques_geologic_tall_cullera(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    from automation.imatges.lector_figures import apply_selection
+    from automation.image_manager import ImageManager
+    s0 = c.get(_AL).json()["slots"]
+    for k in ("fig_geological", "fig_correlation", "fig_spt_cullera"):
+        assert s0[k]["auto"] is True and s0[k]["is_default"] is True and s0[k]["current"] is None and s0[k]["default_label"]
+    r = c.post(_UP, data={"slot": "fig_geological"}, files={"file": ("mapa geol.png", _img_bytes(fmt="PNG"), "image/png")})
+    assert r.status_code == 200, r.text
+    d = _fsel(p)
+    assert d["geologic"]["kind"] == "upload" and d["assaigs"]["page"] == 1 and len(d["projecte"]) == 1     # la resta intacta
+    s = c.get(_AL).json()["slots"]["fig_geological"]
+    assert s["source"] == "user" and s["is_default"] is False and s["current"]["thumbnail_url"]
+    out = apply_selection(p, cache)
+    assert Path(out["fig_geological_image"]).is_file() and "fig_correlation_image" not in out
+    f = c.get("/api/photos/4009999%20PROVA").json()["figures"]
+    assert f["fig_geological"]["source"] == "Tria de l'Eva" and f["fig_geological"]["filename"].startswith("figsel_geologic")
+    im = ImageManager.__new__(ImageManager); im.project_path = p
+    assert im._find_composed_geological_map() is None            # el «geol» del nom original no arriba al disc
+    assert c.post(_UP, data={"slot": "fig_correlation"}, files={"file": ("tall.jpg", _img_bytes(), "image/jpeg")}).status_code == 200
+    assert c.post(_UP, data={"slot": "fig_spt_cullera"}, files={"file": ("cullera.jpg", _img_bytes(), "image/jpeg")}).status_code == 200
+    out = apply_selection(p, cache)
+    assert all(Path(out[k]).is_file() for k in ("fig_geological_image", "fig_correlation_image", "fig_spt_cullera_image"))
+    # tornar a l'automàtic
+    c.post(_CH, json={"slot": "fig_geological", "entry": None})
+    assert _fsel(p)["geologic"] is None and "fig_geological_image" not in apply_selection(p, cache)
+    assert c.get(_AL).json()["slots"]["fig_geological"]["is_default"] is True
+
+
+def test_upload_normalitza_exif_mida_i_format(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    big = _img_bytes(size=(3000, 2000), exif_orientation=6)     # orientació 6 = girada 90°: vertical un cop transposada
+    r = c.post(_UP, data={"slot": "materials"}, files={"file": ("IMG_0001.jpg", big, "image/jpeg")})
+    assert r.status_code == 200, r.text
+    rel = r.json()["rel"]; im = Image.open(p / rel)
+    assert im.format == "JPEG" and max(im.size) <= 2400 and im.height > im.width and not im.getexif().get(0x0112)
+    idx = json.loads((p / "validation" / "uploads" / "imatges" / "pujades.json").read_text(encoding="utf-8"))
+    assert idx[Path(rel).name]["original"] == "IMG_0001.jpg" and idx[Path(rel).name]["slot"] == "materials"
+    r = c.post(_UP, data={"slot": "site_2"}, files={"file": ("captura.png", _img_bytes(fmt="PNG", mode="RGBA"), "image/png")})
+    im2 = Image.open(p / r.json()["rel"])
+    assert im2.format == "PNG" and im2.mode == "RGBA"             # una captura amb transparència es queda PNG
+    assert len([x for x in c.get("/api/photos/4009999%20PROVA").json()["photos"] if x["kind"] == "upload"]) == 2
+
+
+def test_upload_rebutja_el_que_no_es_una_imatge(tmp_path, monkeypatch):
+    p, cache = _project(tmp_path, monkeypatch); c = TestClient(app)
+    assert c.post(_UP, data={"slot": "site_1"}, files={"file": ("x.jpg", b"no soc una imatge", "image/jpeg")}).status_code == 400
+    assert c.post(_UP, data={"slot": "site_1"}, files={"file": ("doc.pdf", b"%PDF-1.4", "application/pdf")}).status_code == 415
+    assert c.post(_UP, data={"slot": "fig_x"}, files={"file": ("a.jpg", _img_bytes(), "image/jpeg")}).status_code == 400
+    monkeypatch.setattr(API, "_UPLOAD_IMG_MAX_BYTES", 100)
+    assert c.post(_UP, data={"slot": "site_1"}, files={"file": ("a.jpg", _img_bytes(), "image/jpeg")}).status_code == 413
+    assert not (p / "validation" / "uploads").exists()             # cap rebuig deixa res al disc
+    assert json.loads((p / "validation" / "photo_selection.json").read_text(encoding="utf-8"))["source"] == "lector"
+    # `_entry_ok`: una entrada que no és pàgina de PDF ha d'apuntar a una imatge (abans: 200 i miniatura buida)
+    assert c.post(_CH, json={"slot": "fig_assaigs", "entry": {"kind": "img", "rel": "25.9999/PROJECTE.pdf"}}).status_code == 400
+    assert c.post(_CH, json={"slot": "fig_assaigs", "entry": {"kind": "img", "rel": "FOTOGRAFIES/P1.jpg"}}).status_code == 200

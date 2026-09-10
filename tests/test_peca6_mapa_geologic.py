@@ -55,3 +55,13 @@ def test_la_carpeta_altres_mana_sobre_la_resta(tmp_path):
     _png(tmp_path / "correu" / "mapa geologic.png")
     _png(tmp_path / "ANNEXES" / "Altres" / "F4 MGEOL.png")
     assert _manager(tmp_path)._find_composed_geological_map().parent.name == "Altres"
+
+
+def test_les_pujades_i_l_evidencia_de_validation_no_compten(tmp_path):
+    """2026-09-10: `validation/` és nostre (pujades de l'Eva, evidència HITL); un fitxer «…geol…» que hi visqui no és
+    el mapa de l'informe. La pujada ja es desa amb un nom que és un ID, però l'evidència HITL conserva el nom."""
+    _png(tmp_path / "validation" / "uploads" / "imatges" / "mapa geol.png")
+    _png(tmp_path / "validation" / "uploads" / "20260910-101010_a1b2c3_informe_geol.jpg")
+    assert _manager(tmp_path)._find_composed_geological_map() is None
+    _png(tmp_path / "ANNEXES" / "ALTRES" / "m12 mgeol.png")
+    assert _manager(tmp_path)._find_composed_geological_map().name == "m12 mgeol.png"

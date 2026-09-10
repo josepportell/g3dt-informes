@@ -37,6 +37,14 @@ IMAGE_WIDTH_SIDE_BY_SIDE = 70   # Each image in 2-column layout (mm)
 IMAGE_HEIGHT_SIDE_BY_SIDE = 52  # 4:3 landscape aspect ratio (70 * 3/4 ≈ 52mm)
 IMAGE_WIDTH_MAIN_PLAN = 150     # Big architect plan crop (full-width)
 
+#: Figures «automàtiques» que l'Eva pot substituir pujant-hi una imatge (2026-09-10): clau del context → amplada.
+#: S'apliquen DESPRÉS del camí determinista de cadascuna (el geològic s'assigna sempre; el tall i la cullera també).
+_USER_AUTO_FIGURE_KEYS = {
+    'fig_geological_image': IMAGE_WIDTH_GEOLOGICAL,
+    'fig_correlation_image': IMAGE_WIDTH_LOCATION,
+    'fig_spt_cullera_image': IMAGE_WIDTH_SPT_CULLERA,
+}
+
 PLACEHOLDER_TEXT = "[Imatge pendent]"
 
 # Raster image extensions python-docx can embed. Used to filter role-based and
@@ -766,8 +774,11 @@ class ImageManager:
         dos és el mapa geològic (2 de 4 errònies contra 3 de 3 bones pel nom).
         """
         exts = {'.png', '.jpg', '.jpeg'}
+        # `validation/` fora (2026-09-10): hi viuen les pujades de l'Eva i l'evidència HITL; una imatge que es digués
+        # «…geol…» hi passaria a ser el mapa de l'informe sense que ningú l'hagués triat
         hits = [p for p in self.project_path.rglob('*')
-                if p.is_file() and p.suffix.lower() in exts and 'geol' in p.name.lower()]
+                if p.is_file() and p.suffix.lower() in exts and 'geol' in p.name.lower()
+                and 'validation' not in p.relative_to(self.project_path).parts]
         if not hits:
             return None
         # les figures compostes viuen a la carpeta «altres» del costat dels annexos; empat → ordre alfabètic estable
@@ -1176,14 +1187,20 @@ class ImageManager:
         # `validation/figure_selection.json` (`source` user > lector): la figura d'assaigs (retall triat), les figures
         # del projecte (0-2, amb peu) i, només al cas de Bell-lloc, les dues imatges de situació. Els retalls es
         # renderitzen a la cau d'imatges (`figsel_*`, per md5 i rectangle) i entren aquí com a InlineImage.
+        applied_selection: dict = {}
         try:
             from .imatges.lector_figures import apply_selection
-            for key, val in apply_selection(self.project_path, self._cache_dir).items():
+            applied_selection = apply_selection(self.project_path, self._cache_dir)
+            # situació doble (les dues alhora): 70 mm de costat; una de sola (pujada de l'Eva, 2026-09-10): com la
+            # composició determinista, tota l'amplada
+            sit_double = bool(applied_selection.get('fig_situacio_image_1')) and bool(applied_selection.get('fig_situacio_image_2'))
+            for key, val in applied_selection.items():
+                if key in _USER_AUTO_FIGURE_KEYS:
+                    continue                          # geològic, tall i cullera: s'apliquen després del camí determinista
                 if '_caption_' in key or val in (None, ''):
                     context[key] = val or ''          # la selecció també buida: «cap figura d'assaigs» mana
                     continue
-                # situació doble (les dues alhora): 70 mm de costat; assaigs i projecte: tota l'amplada
-                width = IMAGE_WIDTH_SIDE_BY_SIDE if key.startswith('fig_situacio_image_') else IMAGE_WIDTH_MAIN_PLAN
+                width = IMAGE_WIDTH_SIDE_BY_SIDE if (key.startswith('fig_situacio_image_') and sit_double) else IMAGE_WIDTH_MAIN_PLAN
                 img = self._safe_inline_image(str(val), width=Mm(width))
                 if img:
                     context[key] = img
@@ -1273,6 +1290,17 @@ class ImageManager:
                     if img:
                         context['fig_correlation_image'] = img
         context.setdefault('fig_correlation_image', PLACEHOLDER_TEXT)
+
+        # Pujades de l'Eva per a les figures automàtiques (2026-09-10): la seva imatge mana sobre el mapa compost o
+        # la recepta ICGC, el retall del tall i el gràfic de la cullera. Surten de la mateixa `figure_selection.json`
+        # (`source: user`, claus `geologic`/`tall`/`cullera`), ja renderitzades a la cau per `apply_selection`.
+        for key, width in _USER_AUTO_FIGURE_KEYS.items():
+            val = applied_selection.get(key)
+            if val:
+                img = self._safe_inline_image(str(val), width=Mm(width))
+                if img:
+                    context[key] = img
+                    logger.info(f"Figura pujada per l'Eva: {key} ← {Path(str(val)).name}")
 
         # Log summary
         num_images = sum(1 for v in context.values() if not isinstance(v, str))
