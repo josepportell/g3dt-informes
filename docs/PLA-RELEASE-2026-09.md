@@ -125,6 +125,25 @@ FileMiner Groq (`G3DT_USE_GROQ=1` + `GROQ_API_KEY`), sonda visual de ConceptScou
 inclou. **Recomanació: mantenir les tres claus que ja té** (cost petit per projecte) per no canviar el procés mesurat; passar les
 sondes a Claude Code és feina d'una altra sessió. Risc conegut: Groq 503 «over capacity» (diagnòstic 23-08).
 
+#### 3.3.1 Inventari del que queda SENSE claus (decisió 3, verificat al codi 2026-09-10 nit)
+
+Amb `.env` sense `ANTHROPIC_API_KEY`/`OPENAI_API_KEY`/`GROQ_API_KEY` i `G3DT_USE_GROQ=0`, `G3DT_ORTHO_ENRICHMENT=0`, cada peça
+cau pel seu propi guard (cap error, només salts registrats al log):
+
+| peça | clau | què aporta avui | qui ho cobreix sense clau |
+|---|---|---|---|
+| FileMiner Groq (`mine_project_groq`, Fase 0.4) | Groq | senyals de text on els regex en troben < 3 | la lectura de nivell A (llegeix cada document sencer) |
+| ConceptScout sonda visual (Fase 0.45) | Anthropic | classifica imatges/PDF escanejats → `concept_map.json` (font del fallback de visió via B i de la capa 0 de `deep_folder_classify`) | amb lectura activa la visió via B no corre (`skip_vision`); el mapa deixa d'existir |
+| `deep_folder_classify` (Fase 0.46) | OpenAI | rols per a fitxers de carpetes profundes (`ALTRES/`, `FOTOGRAFIES/S1/`, adjunts de correu) | el lector de fotos i el de figures inventarien les carpetes pel seu compte (no depenen dels rols); la lectura llegeix els adjunts |
+| SmartScan nivell 3 (`tier3_vision`) | Groq → Anthropic | classificació visual d'imatges → rols de figura | memòria `reference_smartscan_figure_roles_unreliable`: ja no manen; els lectors trien |
+| ortofoto (`ortho_vision`) | Groq | descripció visual del solar / adjacents | narrativa per criteri del generador + lectura; a mesurar |
+| `_synthesize_with_llm` (dins `_merge_prefills`) | Anthropic | identitat (building_type, arquitecte, client, location_sentence), narrativa (site_description, site_condition, is_anthropized, building_structure_desc), refinament d'`adjacent_*_fmt` | identitat: la superposició de la lectura mana; narrativa i adjacents: generador per criteri (peça 3) — **és el punt a mesurar** |
+| visió via B (`vision_groq`, Fase 1) | OpenAI/Anthropic/Groq | planol/sondeig/dpsh `*_extracted.json` | la lectura (`skip_vision=True`); el generador hi cau només si falta `user_data`/`lectura_tables` |
+
+Sense `claude` al PATH (fallback de servei), la via B sencera correria **sense visió ni síntesi**: prefills pobres però cap
+crida de pagament. Amb Claude Code instal·lat, aquest camí és l'excepció. Mesura: el pas 2 a WSL corre amb aquest `.env` sense
+claus (§4.2) i es compara amb la referència de Bell-lloc (M341 `-nit`: 60·6·13·1 → 84 %, taules 84 %).
+
 ### 3.4 Data de la visita i punt de retorn — §6 i §7.
 
 ## 4. Pas 2 — prova en perfil net (§10.4)
