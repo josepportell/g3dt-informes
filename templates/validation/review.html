@@ -2492,7 +2492,11 @@
         }
 
         /* Bloc D (2026-09-15): llegenda de les etiquetes de font, reutilitza els
-           mateixos colors de .source-badge (una sola font de veritat de colors). */
+           mateixos colors de .source-badge (una sola font de veritat de colors).
+           ATENCIO: la mostra `.source-badge.revisar` d'aquest bloc s'exclou
+           explicitament a `_wizardBarPendingBadges()` (JS) perque no compti com
+           a camp pendent -- si s'afegeix cap altre badge real aqui, cal
+           mantenir aquesta exclusio. */
         .source-legend {
             display: flex;
             flex-wrap: wrap;
@@ -7569,12 +7573,33 @@
 
         // N = camps amb badge "revisar" (Bloc B/D) o amb estat `candidats`/`no_trobat`
         // (taules DPSH/Sondeig, Bloc lectura headless).
-        function _wizardBarPendingCount() {
+        //
+        // Fix (esmena de revisio): #sourceLegend conte una mostra
+        // `.source-badge.revisar` nomes per ensenyar el color -- s'exclou perque
+        // no es un camp pendent. A mes, un mateix camp pot tenir alhora el badge
+        // `revisar` i un `.estat-badge` (candidats/no_trobat) al mateix
+        // contenidor -- es dedupliquen per `.wizard-field` per comptar CAMPS,
+        // no badges. Font unica: aquesta funcio; `scrollToFirstPendingField`
+        // en depen per no recaure en el mateix bug.
+        function _wizardBarPendingBadges() {
             const form = document.getElementById('wizardForm');
-            if (!form) return 0;
-            return form.querySelectorAll(
+            if (!form) return [];
+            const badges = Array.from(form.querySelectorAll(
                 '.source-badge.revisar, .estat-badge.candidats, .estat-badge.no_trobat'
-            ).length;
+            )).filter((b) => !b.closest('.source-legend'));
+            const seen = new Set();
+            const result = [];
+            badges.forEach((b) => {
+                const fieldEl = b.closest('.wizard-field') || b;
+                if (seen.has(fieldEl)) return;
+                seen.add(fieldEl);
+                result.push(b);
+            });
+            return result;
+        }
+
+        function _wizardBarPendingCount() {
+            return _wizardBarPendingBadges().length;
         }
 
         function refreshWizardBarCounter() {
@@ -7620,9 +7645,7 @@
         }
 
         function scrollToFirstPendingField() {
-            const form = document.getElementById('wizardForm');
-            if (!form) return;
-            const target = form.querySelector('.source-badge.revisar, .estat-badge.candidats, .estat-badge.no_trobat');
+            const target = _wizardBarPendingBadges()[0];
             if (!target) return;
             const field = target.closest('.wizard-field') || target.closest('.wizard-group') || target;
             field.scrollIntoView({ behavior: 'smooth', block: 'center' });
