@@ -241,6 +241,64 @@ def has_current_pdf_dir(project_path: Path) -> bool:
     return False
 
 
+def count_claude_documents(project_path: Path) -> dict:
+    """Compta, per NOM (Bloc E, disseny `PLA-UX-WIZARD-2026-09.md`), quants
+    fitxers rebrien `route == "claude"` — el que calen perquè el wizard mostri
+    la durada ABANS del clic a «Començar».
+
+    Deliberadament més prim que `build_inventory`: cap md5, cap lectura de
+    contingut — només `rglob` + `_classify` pel nom, com fa `has_current_pdf_dir`.
+    Es crida sobre una carpeta de xarxa a cada canvi de selecció al navegador
+    (debounce 300 ms): calcular un md5 per fitxer aquí seria fer via SMB la
+    mateixa feina cara que `build_inventory` ja fa quan el job arrenca de
+    veritat.
+
+    Tolerant a errors de xarxa: si `rglob`/`stat` fallen a mig recorregut (unitat
+    SMB intermitent, com documenta `sync_workspace.sync_delta`), es retorna el
+    que s'ha pogut comptar fins llavors amb `"partial": True` — una xifra
+    incompleta és millor que cap durada.
+    """
+    project_path = Path(project_path)
+    n_docs = 0
+    n_files = 0
+    partial = False
+
+    try:
+        v0_fallback = not has_current_pdf_dir(project_path)
+    except OSError:
+        v0_fallback = False
+        partial = True
+
+    try:
+        it = project_path.rglob("*")
+        while True:
+            try:
+                p = next(it)
+            except StopIteration:
+                break
+            except OSError:
+                partial = True
+                break
+            try:
+                if not p.is_file():
+                    continue
+            except OSError:
+                partial = True
+                continue
+            n_files += 1
+            rel = PurePosixPath(p.relative_to(project_path).as_posix())
+            route, _hint = _classify(rel, v0_fallback=v0_fallback)
+            if route == "claude":
+                n_docs += 1
+    except OSError:
+        partial = True
+
+    result = {"n_docs": n_docs, "n_files": n_files}
+    if partial:
+        result["partial"] = True
+    return result
+
+
 def build_inventory(project_path: Path) -> dict:
     """Escaneja `project_path` i retorna l'estructura d'inventari (disseny §3.2).
 

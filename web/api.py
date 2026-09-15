@@ -627,6 +627,25 @@ def list_lectura_jobs(refresh: bool = False):
     return {"jobs": lectura_service.list_jobs(refresh=refresh)}
 
 
+@router.get("/jobs/estimate/{project_name:path}")
+def estimate_lectura_job(project_name: str):
+    """Bloc E (disseny `PLA-UX-WIZARD-2026-09.md`) — durada estimada per a
+    `project_name` ABANS que Eva premi «Començar»/«Continuar».
+
+    `project_name` arriba tal com el té la UI en aquell instant (path de
+    xarxa seleccionat al navegador, encara no sincronitzat, o leaf del
+    desplegable clàssic): mai copia ni escaneja amb md5 — mira
+    `lectura_service.estimate_for_project`.
+
+    Gated per `G3DT_USE_LECTURA_HEADLESS`, mateix criteri que `/api/jobs`.
+    """
+    _require_lectura_enabled()
+
+    from . import lectura_service
+
+    return lectura_service.estimate_for_project(project_name)
+
+
 @router.post("/jobs/{project_name:path}")
 def start_lectura_job(project_name: str, button: str = "desde_zero"):
     """Arrenca (o s'enganxa a) un job de lectura headless per a un projecte

@@ -2333,6 +2333,16 @@
         .jobs-btn-quiet { margin-left: auto; color: #7f8c8d; }
         .jobs-btn.primary:hover:not(:disabled) { background: #229954; }
         .jobs-btn small { display: block; font-size: 0.78em; opacity: .8; font-weight: 400; }
+        /* Bloc E (2026-09): "Fer un informe des de zero" ja no es un boto igual
+           als altres -- es la sortida minoritaria, en forma d'enllac petit sota
+           el boto principal (flex-basis 100% el força a la seva propia linia). */
+        .jobs-link-zero {
+            flex-basis: 100%; background: none; border: none; padding: 2px 0 0;
+            margin: 0; color: #7f8c8d; font-size: 0.82em; text-decoration: underline;
+            text-align: left; cursor: pointer;
+        }
+        .jobs-link-zero:hover:not(:disabled) { color: #2c3e50; }
+        .jobs-link-zero:disabled { opacity: .5; cursor: default; text-decoration: none; }
         .jobs-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
         .jobs-table th {
             text-align: left; padding: 6px 8px; border-bottom: 1px solid #e1e6ea;
@@ -2602,22 +2612,21 @@
             <div id="nbError" style="display:none;"></div>
         </div>
 
-        <!-- Tres botons + taula d'estat dels jobs (Fase 14a, disseny §5).
-             Ocult fins que `GET /api/jobs` respon 200. -->
+        <!-- Un sol boto "Comencar"/"Continuar" + taula d'estat dels jobs
+             (Bloc E, `docs/PLA-UX-WIZARD-2026-09.md`). Ocult fins que
+             `GET /api/jobs` respon 200. -->
         <div id="jobsPanel">
             <div class="jobs-actions" id="jobsActions">
-                <button type="button" class="jobs-btn primary" id="jobsBtnPreparar" onclick="jobsRun('preparar')">
-                    Preparar informe «per demà»<small>Prem, tanca la pestanya i torna quan t'avisin</small>
-                </button>
-                <button type="button" class="jobs-btn" id="jobsBtnEnllestir" onclick="jobsRun('enllestir')">
-                    Enllestir informe preparat<small>Comprova què ha canviat i obre el formulari</small>
-                </button>
-                <button type="button" class="jobs-btn" id="jobsBtnZero" onclick="jobsRun('desde_zero')">
-                    Fer un informe des de zero<small>Tot seguit, amb la pestanya oberta</small>
+                <button type="button" class="jobs-btn primary" id="jobsBtnComencar" onclick="jobsComencarClick()">
+                    <span id="jobsBtnComencarLabel">Començar</span>
+                    <small id="jobsBtnComencarDuration">Tria la carpeta del projecte</small>
                 </button>
                 <button type="button" class="jobs-btn jobs-btn-quiet" id="jobsBtnActualitzar"
                         onclick="jobsRefresh(true)" title="Torna a mirar la xarxa ara mateix">
                     ↻ Actualitzar<small>Mira la xarxa ara; no copia res</small>
+                </button>
+                <button type="button" class="jobs-link-zero" id="jobsLinkZero" onclick="jobsRun('desde_zero')">
+                    Fer un informe des de zero
                 </button>
             </div>
             <table class="jobs-table" id="jobsTable">
@@ -4852,6 +4861,9 @@
             } else {
                 startBtn.title = "Inicia el pipeline amb aquesta carpeta com a projecte.";
             }
+
+            // Bloc E: cada canvi de carpeta recalcula la durada de "Comencar".
+            if (typeof _jobsScheduleEstimate === 'function') _jobsScheduleEstimate();
         }
 
         function nbEscapeHtml(s) {
@@ -5197,6 +5209,9 @@
 
         async function onProjectChange(projectName) {
             selectedProject = projectName;
+            // Bloc E: desplegable classic (sense navegador de xarxa) -- recalcula
+            // la durada de "Comencar" per al nou projecte.
+            if (typeof _jobsScheduleEstimate === 'function') _jobsScheduleEstimate();
             // Triar el projecte és llançar-ne el pipeline (les dues vies acaben a loadProjectData): a partir d'aquí la
             // pestanya d'imatges i la zona d'alternatives poden mostrar-se; abans, res «de memòria» (Josep, 2026-09-09).
             imagesReadyFor = projectName; altData = null; altSlotShown = null; hideAltZone();
@@ -11233,6 +11248,11 @@
         let _jobsTimer = null;
         let _jobsEnabled = false;
         let _jobsBusy = false;
+        // Bloc E: quin boto ("preparar" o "enllestir") dispara el clic a
+        // "Comencar"/"Continuar" -- el decideix la darrera estimacio rebuda.
+        let _jobsComencarAction = 'preparar';
+        let _jobsEstimateTimer = null;
+        let _jobsEstimateSeq = 0;         // descarta respostes d'una carpeta ja abandonada
 
         function _jobsEl(id) { return document.getElementById(id); }
 
@@ -11259,6 +11279,7 @@
             _jobsSyncButtons(typeof nbState === 'string' ? nbState : 'IDLE');
             _jobsWrapSetState();
             _jobsRender(data.jobs || []);
+            _jobsScheduleEstimate();
         }
 
         // Embolcall de `nbSetState` en lloc d'editar-la: aixi el bloc segueix
@@ -11281,10 +11302,93 @@
 
         function _jobsSetBusy(busy) {
             _jobsBusy = busy;
-            ['jobsBtnPreparar', 'jobsBtnEnllestir', 'jobsBtnZero', 'jobsBtnActualitzar'].forEach((id) => {
+            ['jobsBtnComencar', 'jobsLinkZero', 'jobsBtnActualitzar'].forEach((id) => {
                 const b = _jobsEl(id);
                 if (b) b.disabled = busy;
             });
+        }
+
+        // -- Bloc E: durada abans del clic --------------------------------------
+        //
+        // Un sol boto ("Comencar"/"Continuar") amb la durada calculada ABANS que
+        // Eva el premi (Josep, 2026-09-14: "l'expectativa de durada es forma
+        // abans de premer" -- per aixo l'etiqueta no canvia desprès del clic).
+        // Es recalcula a cada canvi de carpeta al navegador de xarxa (`nbRender`)
+        // o de projecte al desplegable classic (`onProjectChange`), amb un
+        // debounce de 300 ms perquè navegar de pressa no dispari una crida per
+        // carpeta de pas. `GET /api/jobs/estimate/{p}` mai copia ni escaneja amb
+        // md5 (`web/lectura_service.estimate_for_project`).
+        function _jobsScheduleEstimate() {
+            if (!_jobsEnabled) return;
+            if (_jobsEstimateTimer) { clearTimeout(_jobsEstimateTimer); _jobsEstimateTimer = null; }
+            _jobsEstimateTimer = setTimeout(_jobsUpdateComencarButton, 300);
+        }
+
+        function _jobsCurrentPath() {
+            const browser = _jobsEl('networkBrowser');
+            const usesNetwork = browser && browser.style.display !== 'none';
+            if (usesNetwork) return (_jobsEl('nbSelectedPath') || {}).value || '';
+            return selectedProject || '';
+        }
+
+        async function _jobsUpdateComencarButton() {
+            const btn = _jobsEl('jobsBtnComencar');
+            const label = _jobsEl('jobsBtnComencarLabel');
+            const duration = _jobsEl('jobsBtnComencarDuration');
+            if (!btn || !label || !duration) return;
+
+            const path = _jobsCurrentPath();
+            if (!path) {
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = 'Tria la carpeta del projecte';
+                btn.disabled = true;
+                return;
+            }
+
+            const seq = ++_jobsEstimateSeq;
+            duration.textContent = 'calculant la durada…';
+
+            let data = null;
+            try {
+                const r = await fetch(`/api/jobs/estimate/${encodeURIComponent(path)}`);
+                if (seq !== _jobsEstimateSeq) return;     // Eva ja ha canviat de carpeta
+                if (r.ok) data = await r.json();
+            } catch (err) {
+                if (seq !== _jobsEstimateSeq) return;
+            }
+
+            if (!data) {
+                // L'endpoint ha fallat: no bloquegem Eva per una xifra que no
+                // hem pogut calcular (§4 del bloc E — "sense xifres").
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = 'pots tancar la pestanya i tornar';
+                btn.disabled = false;
+                return;
+            }
+
+            if (data.ready) {
+                _jobsComencarAction = 'enllestir';
+                label.textContent = 'Continuar';
+                duration.textContent = data.text || '';
+                btn.disabled = false;
+            } else if (!data.n_docs) {
+                // Arrel, contenidor, o carpeta sense cap document per llegir.
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = 'Tria la carpeta del projecte';
+                btn.disabled = true;
+            } else {
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = data.text || '';
+                btn.disabled = false;
+            }
+        }
+
+        function jobsComencarClick() {
+            jobsRun(_jobsComencarAction);
         }
 
         // -- Avisos del delta-sync (`POST /api/jobs` -> `warnings`) -------------
