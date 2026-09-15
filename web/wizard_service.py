@@ -3107,6 +3107,12 @@ def save_wizard(
     for k, v in cached.items():
         if isinstance(v, dict) and 'source' in v and not k.startswith('_'):
             current_sources[k] = v['source']
+    # Bloc G (2026-09, `docs/PLA-UX-WIZARD-2026-09.md`): quins camps eren JA
+    # 'user' abans d'aquest desat -- per no comptar-los com a "canviats ARA"
+    # a cada desat automàtic posterior del mateix valor.
+    _already_user = {k for k, v in current_sources.items() if v == 'user'}
+    changed_now: list[str] = []
+
     def _prefill_val(key):
         pf = cached.get(key)
         return pf['value'] if isinstance(pf, dict) and 'value' in pf else None
@@ -3122,15 +3128,29 @@ def save_wizard(
     for field, new_val in wizard_fields.items():
         if _is_changed(field, new_val):
             current_sources[field] = 'user'
+            if field not in _already_user:
+                changed_now.append(field)
     # Detect expert override changes
     if expert_overrides:
         for field, new_val in expert_overrides.items():
             if field == 'geomech_params' and isinstance(new_val, dict):
                 for param, val in new_val.items():
-                    if _is_changed(f'geomech_{param}', val):
-                        current_sources[f'geomech_{param}'] = 'user'
+                    key = f'geomech_{param}'
+                    if _is_changed(key, val):
+                        current_sources[key] = 'user'
+                        if key not in _already_user:
+                            changed_now.append(key)
             elif _is_changed(field, new_val):
                 current_sources[field] = 'user'
+                if field not in _already_user:
+                    changed_now.append(field)
+
+    # Bloc G: una línia per desat amb NOMS de camp, mai valors (res de dades
+    # personals al log) -- amb 3-4 projectes via A sabrem què no toca mai Eva.
+    logger.info(
+        "wizard desat %s: %d camps canviats per l'Eva: %s",
+        project_name, len(changed_now), ", ".join(sorted(changed_now)) or "cap",
+    )
 
     # -- Fase 8b: taules llegides (+ tries d'Eva) -> user_data --------------
     # Es congelen aqui, no al generador: el que Eva ha vist i validat al
