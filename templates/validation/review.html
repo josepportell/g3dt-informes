@@ -11386,6 +11386,15 @@
                 label.textContent = 'Continuar';
                 duration.textContent = data.text || '';
                 btn.disabled = false;
+            } else if (data.partial) {
+                // Tall de xarxa al principi del recorregut (`count_claude_documents`,
+                // `automation/lectura/inventory.py`): `n_docs` pot ser 0 amb tota la
+                // carpeta encara per veure. No ho confonguem amb "cap document" -- el
+                // boto es queda actiu, l'accio `preparar` fara l'inventari complet.
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = data.text || '';
+                btn.disabled = false;
             } else if (!data.n_docs) {
                 // Arrel, contenidor, o carpeta sense cap document per llegir.
                 _jobsComencarAction = 'preparar';
