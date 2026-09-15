@@ -1039,6 +1039,9 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
+            /* Bloc C (2026-09-15): marge per la barra fixa (#wizardBar) perque no tapi
+               els ultims camps ni la seccio "Imatges de l'informe". */
+            padding-bottom: 96px;
         }
         .wizard-group {
             border: 1px solid #e0e0e0;
@@ -2366,6 +2369,125 @@
             font-size: 13px;
             color: #333;
         }
+
+        /* Bloc C (2026-09-15): barra fixa inferior del Wizard. Reutilitza la paleta
+           existent de .wizard-result (success/error) i .wizard-unsaved (pendent). */
+        .wizard-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 40;
+            background: #ffffff;
+            border-top: 1px solid #dee2e6;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .wizard-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .wizard-bar-status {
+            font-size: 13px;
+            color: #6b7280;
+            min-width: 170px;
+        }
+        .wizard-bar-status.pending { color: #e67e22; }
+        .wizard-bar-status.saved { color: #155724; }
+        .wizard-bar-counter {
+            background: none;
+            border: 1px solid #cfd6dd;
+            border-radius: 999px;
+            padding: 5px 14px;
+            font-size: 13px;
+            color: #2c3e50;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .wizard-bar-counter:hover:not(:disabled) { background: #f8f9fa; }
+        .wizard-bar-counter:disabled {
+            color: #155724;
+            border-color: #c3e6cb;
+            background: #d4edda;
+            cursor: default;
+        }
+        .wizard-bar-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: auto;
+        }
+        .wizard-bar-actions .btn {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+        .wizard-bar-result {
+            flex-basis: 100%;
+            font-size: 13px;
+            border-radius: 6px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .wizard-bar-result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wizard-bar-result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .wizard-bar-result.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+        .wizard-bar-result a { color: inherit; font-weight: 600; }
+        .wizard-bar-result-body { flex: 1; }
+        .wizard-bar-result-body ul { margin: 6px 0 0 18px; }
+        .wizard-bar-warnings { margin-top: 6px; }
+        .wizard-bar-warnings summary { cursor: pointer; font-weight: 600; }
+        .wizard-bar-warnings ul { margin: 6px 0 0 18px; }
+        .wizard-bar-result-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+            color: inherit;
+            padding: 2px 4px;
+            flex-shrink: 0;
+        }
+        .wizard-bar-result-close:hover { opacity: 0.7; }
+        .wizard-bar button:focus-visible,
+        .wizard-bar-counter:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+        /* Realç transitori en fer scroll cap al primer camp pendent */
+        .wizard-bar-highlight {
+            animation: wizardBarPulse 1.6s ease;
+            border-radius: 4px;
+        }
+        @keyframes wizardBarPulse {
+            0% { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35); }
+            100% { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .wizard-bar-highlight { animation: none; }
+        }
+        @media (max-width: 768px) {
+            .wizard-bar-inner { padding: 10px 16px; }
+            .wizard-bar-actions { margin-left: 0; }
+        }
     </style>
 </head>
 <body>
@@ -2992,14 +3114,13 @@
                         <div id="wizardImages" class="wizard-images" style="display:none;"></div>
 
                         <!-- Actions -->
+                        <!-- Bloc C (2026-09-15): "Guardar Dades" fora (l'autosave ja hi era) i "Generar
+                             Informe" es mou a la barra fixa (#wizardBar, fora de .container). -->
                         <div class="wizard-actions">
-                            <button class="btn btn-primary" id="btnSaveWizard" onclick="saveWizard()">Guardar Dades</button>
-                            <button class="btn btn-success" id="btnGenerateReport" onclick="generateReport()">Generar Informe</button>
                             <button class="btn btn-audit" id="btnAuditVisual" onclick="auditVisual()">Audit Visual</button>
                         </div>
 
                         <!-- Result area -->
-                        <div class="wizard-result" id="wizardResult" style="display:none;"></div>
                         <div class="wizard-result" id="auditResult" style="display:none;"></div>
                     </div>
                 </div>
@@ -3334,6 +3455,19 @@
         </div>
     </div>
 
+    <!-- Bloc C (2026-09-15): barra fixa del Wizard -- Generar Informe, estat de desat
+         automatic i avisos persistents. Viu fora de `.container` (com `#altZone`) perque
+         cap ombra ni overflow la talli; nomes es mostra amb un projecte carregat i la
+         pestanya Wizard activa (`updateWizardBarVisibility()`). -->
+    <div id="wizardBar" class="wizard-bar" style="display:none;">
+        <div class="wizard-bar-inner">
+            <div class="wizard-bar-status" id="wizardBarSaveStatus" aria-live="polite"></div>
+            <button type="button" class="wizard-bar-counter" id="wizardBarCounter" onclick="scrollToFirstPendingField()"></button>
+            <div class="wizard-bar-actions" id="wizardBarActions"></div>
+            <div class="wizard-bar-result" id="wizardBarResult" style="display:none;" aria-live="polite"></div>
+        </div>
+    </div>
+
     <script>
         // Dev mode: append ?dev=1 to URL to show Dev/Pipeline tabs and vision buttons
         const urlParams = new URLSearchParams(window.location.search);
@@ -3480,6 +3614,14 @@
         ]);
 
         function showMessage(text, type) {
+            // Bloc C (2026-09-15): amb la barra del Wizard activa, els avisos hi van
+            // (persistents si son error; temporals per success/info, com abans).
+            // Fora d'aquest context (altres pestanyes) es queda el `#message` de dalt.
+            const bar = document.getElementById('wizardBar');
+            if (bar && bar.style.display !== 'none') {
+                _wizardBarShowResult(escapeHtml(text), type, { persistent: type === 'error' });
+                return;
+            }
             messageDiv.textContent = text;
             messageDiv.className = `message message-${type}`;
             messageDiv.style.display = 'block';
@@ -3531,6 +3673,8 @@
                 if (!aiAnalysisLoaded) loadAiAnalysis(false);
                 if (!aiRankingLoaded) loadAiRanking(false);
             }
+            // Bloc C (2026-09-15): la barra fixa nomes te sentit a la pestanya Wizard.
+            if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
         }
 
         function detectAvailableTabs() {
@@ -4982,9 +5126,11 @@
             // Reset wizard form
             document.getElementById('wizardLoading').style.display = 'none';
             document.getElementById('wizardForm').style.display = 'none';
-            const resultDiv = document.getElementById('wizardResult');
-            resultDiv.style.display = 'none';
-            resultDiv.className = 'wizard-result';
+            // Bloc C (2026-09-15): #wizardResult ha desaparegut -- reinicia la barra fixa.
+            _wizardBarSetStatus('', '');
+            _wizardBarShowResult('', null);
+            _wizardBarSoftGateShown = false;
+            if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
 
             if (!selectedProject) {
                 hideStepper();
@@ -5725,6 +5871,11 @@
             document.getElementById('wizardLoading').style.display = 'none';
             document.getElementById('wizardForm').style.display = 'block';
             document.getElementById('wizardUnsaved').style.display = 'none';
+            // Bloc C (2026-09-15): projecte nou -> barra en blanc (res desat encara).
+            _wizardBarSetStatus('', '');
+            _wizardBarShowResult('', null);
+            _wizardBarSoftGateShown = false;
+            _wizardBarWatch();
             switchTab('wizard');
         }
 
@@ -5993,6 +6144,10 @@
                 wizardDataLoaded = true;
                 wizardDirty = false;
                 document.getElementById('wizardUnsaved').style.display = 'none';
+                // Bloc C (2026-09-15): dades noves -> barra en blanc.
+                _wizardBarSetStatus('', '');
+                _wizardBarSoftGateShown = false;
+                _wizardBarWatch();
             } catch (err) {
                 showMessage('Error carregant dades wizard: ' + err.message, 'error');
             } finally {
@@ -7271,10 +7426,136 @@
             document.body.appendChild(overlay);
         }
 
+        // ============================================================
+        // Bloc C (2026-09-15): barra fixa del Wizard
+        // ============================================================
+        let _wizardBarSoftGateShown = false;   // l'Eva ja ha vist "Revisar primer / Generar igualment"
+        let _wizardBarResultTimer = null;
+        let _wizardBarObserver = null;
+
+        function _wizardBarTimeNow() {
+            return new Date().toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function _wizardBarSetStatus(text, cls) {
+            const el = document.getElementById('wizardBarSaveStatus');
+            if (!el) return;
+            el.textContent = text;
+            el.className = 'wizard-bar-status' + (cls ? ' ' + cls : '');
+        }
+
+        // N = camps amb badge "revisar" (Bloc B/D) o amb estat `candidats`/`no_trobat`
+        // (taules DPSH/Sondeig, Bloc lectura headless).
+        function _wizardBarPendingCount() {
+            const form = document.getElementById('wizardForm');
+            if (!form) return 0;
+            return form.querySelectorAll(
+                '.source-badge.revisar, .estat-badge.candidats, .estat-badge.no_trobat'
+            ).length;
+        }
+
+        function refreshWizardBarCounter() {
+            const count = _wizardBarPendingCount();
+            if (count === 0) _wizardBarSoftGateShown = false;
+            const el = document.getElementById('wizardBarCounter');
+            if (el) {
+                el.textContent = count > 0 ? `Queden ${count} camps a revisar` : 'Tots els camps revisats';
+                el.disabled = count === 0;
+            }
+            updateWizardBarActions(count);
+        }
+
+        function updateWizardBarActions(count) {
+            if (count === undefined) count = _wizardBarPendingCount();
+            const container = document.getElementById('wizardBarActions');
+            if (!container) return;
+            if (count > 0 && _wizardBarSoftGateShown) {
+                container.innerHTML =
+                    '<button type="button" class="btn btn-secondary" onclick="scrollToFirstPendingField()">Revisar primer</button>' +
+                    `<button type="button" class="btn btn-success" onclick="onWizardBarGenerateClick(true)">Generar igualment (${count} a revisar)</button>`;
+            } else {
+                container.innerHTML =
+                    '<button type="button" class="btn btn-success" onclick="onWizardBarGenerateClick()">Generar informe</button>';
+            }
+        }
+
+        function onWizardBarGenerateClick(forced) {
+            const count = _wizardBarPendingCount();
+            if (count > 0 && !forced) {
+                // Porta suau (Josep, 2026-09-14): mai bloquejar -- nomes oferir el pas
+                // de revisar abans, sense `confirm()` ni cap modal.
+                _wizardBarSoftGateShown = true;
+                updateWizardBarActions(count);
+                return;
+            }
+            generateReport();
+        }
+
+        function scrollToFirstPendingField() {
+            const form = document.getElementById('wizardForm');
+            if (!form) return;
+            const target = form.querySelector('.source-badge.revisar, .estat-badge.candidats, .estat-badge.no_trobat');
+            if (!target) return;
+            const field = target.closest('.wizard-field') || target.closest('.wizard-group') || target;
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            field.classList.add('wizard-bar-highlight');
+            setTimeout(() => field.classList.remove('wizard-bar-highlight'), 1600);
+        }
+
+        function _wizardBarWarningsDetails(warnings) {
+            if (!warnings || !warnings.length) return '';
+            const items = warnings.map(w => `<li>${escapeHtml(w)}</li>`).join('');
+            return `<details class="wizard-bar-warnings"><summary>avisos (${warnings.length})</summary><ul>${items}</ul></details>`;
+        }
+
+        function _wizardBarDismissResult() {
+            _wizardBarShowResult('', null);
+        }
+
+        function _wizardBarShowResult(html, type, opts) {
+            opts = opts || {};
+            const el = document.getElementById('wizardBarResult');
+            if (!el) return;
+            if (_wizardBarResultTimer) { clearTimeout(_wizardBarResultTimer); _wizardBarResultTimer = null; }
+            if (!html) {
+                el.style.display = 'none';
+                el.innerHTML = '';
+                el.className = 'wizard-bar-result';
+                return;
+            }
+            el.innerHTML =
+                `<div class="wizard-bar-result-body">${html}</div>` +
+                '<button type="button" class="wizard-bar-result-close" onclick="_wizardBarDismissResult()" ' +
+                'aria-label="Tanca l\'avís" title="Tanca">✕</button>';
+            el.className = 'wizard-bar-result' + (type ? ' ' + type : '');
+            el.style.display = 'flex';
+            if (!opts.persistent) {
+                _wizardBarResultTimer = setTimeout(() => { _wizardBarDismissResult(); }, 5000);
+            }
+        }
+
+        function updateWizardBarVisibility() {
+            const bar = document.getElementById('wizardBar');
+            if (!bar) return;
+            const visible = !!selectedProject && currentTab === 'wizard';
+            bar.style.display = visible ? 'block' : 'none';
+            if (visible) refreshWizardBarCounter();
+        }
+
+        // Qualsevol canvi de classe (badges) dins el formulari recalcula el comptador,
+        // sense haver de tocar cada funcio que pinta una taula o un badge.
+        function _wizardBarWatch() {
+            const form = document.getElementById('wizardForm');
+            if (!form || _wizardBarObserver) return;
+            _wizardBarObserver = new MutationObserver(() => refreshWizardBarCounter());
+            _wizardBarObserver.observe(form, { attributes: true, attributeFilter: ['class'], subtree: true, childList: true });
+        }
+
         let _autoSaveTimer = null;
         function markWizardDirty(fieldOrEvent) {
             wizardDirty = true;
             document.getElementById('wizardUnsaved').style.display = 'inline';
+            _wizardBarSetStatus('Canvis pendents…', 'pending');
             // Update source badge to green for the changed field
             let field = null;
             if (typeof fieldOrEvent === 'string') {
@@ -7431,9 +7712,9 @@
         async function saveWizard() {
             if (!selectedProject) return;
 
-            const btn = document.getElementById('btnSaveWizard');
-            btn.disabled = true;
-            btn.textContent = 'Guardant...';
+            // Bloc C (2026-09-15): sense boto -- l'autosave ho fa sola; l'estat es
+            // comunica nomes a la barra fixa.
+            _wizardBarSetStatus('Guardant…', 'pending');
 
             try {
                 const body = {
@@ -7459,16 +7740,14 @@
 
                 wizardDirty = false;
                 document.getElementById('wizardUnsaved').style.display = 'none';
-                showMessage('Dades guardades correctament', 'success');
+                _wizardBarSetStatus('Desat automàticament · ' + _wizardBarTimeNow(), 'saved');
                 // Format learning toast
                 if (wizardPrefills._format_learning && wizardPrefills._format_learning.value && wizardPrefills._format_learning.value.active) {
                     showFormatToast('Format desat. Proper cop s\'extrauran automaticament.');
                 }
             } catch (err) {
+                _wizardBarSetStatus('No s\'ha pogut desar', 'pending');
                 showMessage('Error guardant: ' + err.message, 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Guardar Dades';
             }
         }
 
@@ -7478,11 +7757,9 @@
             // Always save first
             await saveWizard();
 
-            const btn = document.getElementById('btnGenerateReport');
-            const resultDiv = document.getElementById('wizardResult');
-            btn.disabled = true;
-            btn.textContent = 'Generant informe...';
-            resultDiv.style.display = 'none';
+            const btn = document.querySelector('#wizardBarActions .btn-success');
+            if (btn) { btn.disabled = true; btn.textContent = 'Generant informe…'; }
+            _wizardBarShowResult('', null);
 
             try {
                 const res = await fetch(`/api/generate/${encodeURIComponent(selectedProject)}`, {
@@ -7493,39 +7770,24 @@
 
                 if (data.success) {
                     const downloadUrl = `/api/report/${encodeURIComponent(selectedProject)}`;
-                    let html = `<strong>Informe generat correctament!</strong><br>
-                        <a href="${downloadUrl}" target="_blank">Descarregar ${escapeHtml(data.output_name)}</a>`;
-                    if (data.warnings && data.warnings.length > 0) {
-                        html += '<br><br><strong>Avisos:</strong><ul>';
-                        data.warnings.forEach(w => { html += `<li>${escapeHtml(w)}</li>`; });
-                        html += '</ul>';
-                    }
-                    resultDiv.innerHTML = html;
-                    resultDiv.className = 'wizard-result success';
-                    resultDiv.style.display = 'block';
-                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    let html = `<strong>Informe generat correctament.</strong> ` +
+                        `<a href="${downloadUrl}" target="_blank">Obrir ${escapeHtml(data.output_name)}</a>`;
+                    html += _wizardBarWarningsDetails(data.warnings);
+                    _wizardBarShowResult(html, 'success', { persistent: true });
                 } else {
-                    let html = '<strong>Error generant informe:</strong><ul>';
-                    (data.errors || []).forEach(e => { html += `<li>${escapeHtml(e)}</li>`; });
-                    html += '</ul>';
-                    if (data.warnings && data.warnings.length > 0) {
-                        html += '<strong>Avisos:</strong><ul>';
-                        data.warnings.forEach(w => { html += `<li>${escapeHtml(w)}</li>`; });
-                        html += '</ul>';
+                    let html = '<strong>No s\'ha pogut generar l\'informe.</strong>';
+                    if (data.errors && data.errors.length > 0) {
+                        html += `<ul>${data.errors.map(e => `<li>${escapeHtml(e)}</li>`).join('')}</ul>`;
                     }
-                    resultDiv.innerHTML = html;
-                    resultDiv.className = 'wizard-result error';
-                    resultDiv.style.display = 'block';
-                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    html += _wizardBarWarningsDetails(data.warnings);
+                    _wizardBarShowResult(html, 'error', { persistent: true });
                 }
             } catch (err) {
-                resultDiv.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message)}`;
-                resultDiv.className = 'wizard-result error';
-                resultDiv.style.display = 'block';
-                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                _wizardBarShowResult(`<strong>No s'ha pogut generar l'informe:</strong> ${escapeHtml(err.message)}`, 'error', { persistent: true });
             } finally {
-                btn.disabled = false;
-                btn.textContent = 'Generar Informe';
+                // Torna al boto senzill; si encara queden camps, la propera vegada
+                // tornara a demanar confirmacio (porta suau, no memoria persistent).
+                updateWizardBarActions();
             }
         }
 
