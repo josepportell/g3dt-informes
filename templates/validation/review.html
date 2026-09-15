@@ -1360,9 +1360,13 @@
             color: #92400e;
         }
         /* Format Learning */
+        /* Bloc B (2026-09-15): el banner informa, no alarma — mateix to neutre que
+           .wizard-instructions (l. 2029). El camp buit concret que cal revisar es
+           segueix marcant en taronja (.format-learning-field / .source-badge.revisar):
+           aixo es un senyal util, no una alarma general. */
         .format-learning-banner {
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-            border: 1px solid #f59e0b;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
             border-radius: 8px;
             padding: 16px 20px;
             margin-bottom: 20px;
@@ -1372,12 +1376,12 @@
             display: block;
         }
         .format-learning-banner h3 {
-            color: #92400e;
+            color: #2c3e50;
             font-size: 15px;
             margin-bottom: 8px;
         }
         .format-learning-banner p {
-            color: #78350f;
+            color: #495057;
             font-size: 13px;
             margin: 0;
         }
@@ -1391,18 +1395,18 @@
             border-radius: 4px;
             font-size: 12px;
             cursor: pointer;
-            border: 1px solid #d97706;
+            border: 1px solid #cfd6dd;
             background: white;
-            color: #92400e;
+            color: #2c3e50;
         }
         .format-learning-banner .btn-fl:hover {
-            background: #fef3c7;
+            background: #eef1f4;
         }
         .format-learning-field {
             border: 2px solid #f59e0b !important;
             background-color: #fffbeb !important;
         }
-        .source-badge.format-learning {
+        .source-badge.revisar {
             background: #fef3c7;
             color: #92400e;
         }
@@ -6887,34 +6891,36 @@
 
             // Build description from primary detection
             const det = detections[0];
-            const coverage = Math.round((det.extraction_coverage || 0) * 100);
             const extracted = (det.extracted_fields || []).length;
             const total = (det.expected_fields || []).length;
             const missingFields = det.missing_fields || [];
 
-            document.getElementById('flTitle').textContent =
-                `Format nou detectat: ${det.file_path || 'document'}`;
+            // Bloc B (2026-09-15): to informatiu, no d'alarma -- explica que ha passat
+            // i que no es cap problema («les altres surten d'altres fonts»).
+            document.getElementById('flTitle').textContent = 'Format nou detectat';
             document.getElementById('flDescription').textContent =
-                `S'han extret ${extracted} de ${total} camps esperats (${coverage}%). ` +
-                `Revisa els camps marcats en taronja.`;
+                `Del fitxer ${det.file_path || 'document'} només n'he pogut llegir ${extracted} de ${total} dades. ` +
+                `Les altres surten d'altres fonts o les pots omplir tu.`;
 
-            // Highlight missing fields with amber border
+            // Bloc B (2026-09-15): només es marca en taronja el camp REALMENT buit.
+            // Un camp que ja te valor (vingui d'on vingui) no necessita revisio.
             missingFields.forEach(fieldName => {
                 const candidates = [
                     `wiz-${fieldName}`,
                     `wiz-${fieldName.replace(/_/g, '-')}`,
                 ];
+                let el = null;
                 for (const id of candidates) {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.classList.add('format-learning-field');
-                        break;
-                    }
+                    const cand = document.getElementById(id);
+                    if (cand) { el = cand; break; }
                 }
+                if (!el || el.value) return;   // ja te valor: no es toca
+
+                el.classList.add('format-learning-field');
                 const badge = document.getElementById(`src-${fieldName}`);
                 if (badge) {
                     badge.textContent = 'revisar';
-                    badge.className = 'source-badge format-learning';
+                    badge.className = 'source-badge revisar';
                 }
             });
         }
