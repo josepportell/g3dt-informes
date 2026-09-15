@@ -1040,7 +1040,9 @@
             flex-direction: column;
             gap: 24px;
             /* Bloc C (2026-09-15): marge per la barra fixa (#wizardBar) perque no tapi
-               els ultims camps ni la seccio "Imatges de l'informe". */
+               els ultims camps ni la seccio "Imatges de l'informe". Valor de partida;
+               W3 (esmena de revisio) l'ajusta a l'alcada real via ResizeObserver
+               (_wizardBarSyncPadding()), que creix a dues linies amb resultat/avisos. */
             padding-bottom: 96px;
         }
         .wizard-group {
@@ -2394,7 +2396,9 @@
             color: #6b7280;
             min-width: 170px;
         }
-        .wizard-bar-status.pending { color: #e67e22; }
+        /* W4 (esmena de revisio): #e67e22 sobre fons blanc donava 2,85:1; #95521a
+           conserva el to ambre pero passa de 6:1. */
+        .wizard-bar-status.pending { color: #95521a; }
         .wizard-bar-status.saved { color: #155724; }
         .wizard-bar-counter {
             background: none;
@@ -5180,7 +5184,12 @@
         }
 
         function skipPreQuestions() { closePreQuestions(); }
-        function closePreQuestions() { document.getElementById('evaPreQuestions').style.display = 'none'; }
+        function closePreQuestions() {
+            document.getElementById('evaPreQuestions').style.display = 'none';
+            // M1 (esmena de revisio): el pipeline pot haver acabat mentre el modal
+            // era obert -- ara que es tanca, la barra ja pot sortir.
+            if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
+        }
 
         async function onProjectChange(projectName) {
             selectedProject = projectName;
@@ -6240,6 +6249,10 @@
                 _wizardBarSetStatus('', '');
                 _wizardBarSoftGateShown = false;
                 _wizardBarWatch();
+                // M1 (esmena de revisio): aquest cami (tab clicat abans que la resta
+                // del pipeline marqui `wizardDataLoaded`) tambe deixa el formulari
+                // poblat -- cal tornar a avaluar si la barra ja pot sortir.
+                if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
             } catch (err) {
                 showMessage('Error carregant dades wizard: ' + err.message, 'error');
             } finally {
@@ -6263,26 +6276,36 @@
             return { value: null, source: null };
         }
 
-        // Bloc D (2026-09-15): mapa determinista cadena tecnica -> etiqueta que l'Eva
-        // entén. La cadena original SENCERA es queda sempre al `title` (tooltip).
-        // Ordre important: "informe" (el seu propi informe anterior, per exemple via
-        // groq_llm:.../4001612_informe_v0.pdf) abans que "plànol"; "plànol" exclou
-        // "vision_probe:" (classificacio generica de ConceptScout, no lligada nomes
-        // al plànol) i les cadenes amb "ICGC" (p. ex. "ICGC ortho+visió", que ha de
-        // sortir com ICGC / Cadastre, no com plànol nomes perque diu "visió").
+        // Bloc D (2026-09-15) + esmenes de revisio (W1/W2): mapa determinista cadena
+        // tecnica -> etiqueta que l'Eva enten. La cadena original SENCERA es queda
+        // sempre al `title` (tooltip).
+        // Ordre important: "informe"/"plantilla"/"Eva template" (el seu propi informe
+        // anterior) abans que "plànol"; "plànol" NOMES amb `planol`/`plànol`/`A.01`/
+        // `architect_plan` literals (mai per "visió" sola: "vision (fotos camp)" o
+        // "vision_probe:..." no son el plànol) i mai si hi ha "ICGC" (p. ex. "ICGC
+        // ortho+visió" ha de sortir com ICGC / Cadastre). "assaigs de camp" nomes amb
+        // els tokens propis de l'assaig (DPSH/sondeig/SPT/penetro/N20/GTL/Lab PDF/
+        // laboratori) i mai si la cadena es una comanda de laboratori (document
+        // administratiu, no un resultat d'assaig).
         function _wizardSourceLabel(source) {
             const s = String(source);
             const sl = s.toLowerCase();
             if (s === 'user' || s === 'user_data.json anterior') return { label: 'tu', cls: 'user' };
             if (sl.includes('default') || sl.includes('estandard')) return { label: 'per defecte', cls: 'default' };
             if (s === 'revisar') return { label: 'revisar', cls: 'revisar' };
-            if (sl.includes('informe')) return { label: "el teu informe anterior", cls: 'auto' };
-            if (!sl.startsWith('vision_probe:') && !sl.includes('icgc') && /(planol|plànol|a\.01|visi[oó])/.test(sl)) {
+            if (sl.includes('informe') || sl.includes('plantilla') || sl.includes('eva template')) {
+                return { label: "el teu informe anterior", cls: 'auto' };
+            }
+            if (!sl.includes('icgc') && /(planol|plànol|a\.01|architect_plan)/.test(sl)) {
                 return { label: 'plànol', cls: 'auto' };
             }
             if (/(icgc|cadastre|geocode|nominatim|ortho)/.test(sl)) return { label: 'ICGC / Cadastre', cls: 'auto' };
-            if (/(dpsh|lab|sondeig|xls|penetro|spt)/.test(sl)) return { label: 'assaigs de camp', cls: 'auto' };
-            if (/(terzaghi|schmertmann|winkler|computed|\bnb\b|cte|ncse)/.test(sl)) return { label: 'calculat', cls: 'auto' };
+            if (/(dpsh|sondeig|spt|penetro|n20|gtl|lab pdf|laboratori)/.test(sl) && !sl.includes('comanda')) {
+                return { label: 'assaigs de camp', cls: 'auto' };
+            }
+            if (/(terzaghi|schmertmann|winkler|computed|\bnb\b|cte|ncse|signat|granular|cohesiu|crespo|arrodonit)/.test(sl)) {
+                return { label: 'calculat', cls: 'auto' };
+            }
             return { label: 'llegit als documents', cls: 'auto' };
         }
 
@@ -7531,6 +7554,7 @@
         let _wizardBarSoftGateShown = false;   // l'Eva ja ha vist "Revisar primer / Generar igualment"
         let _wizardBarResultTimer = null;
         let _wizardBarObserver = null;
+        let _wizardBarResizeObserver = null;
 
         function _wizardBarTimeNow() {
             return new Date().toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
@@ -7558,7 +7582,12 @@
             if (count === 0) _wizardBarSoftGateShown = false;
             const el = document.getElementById('wizardBarCounter');
             if (el) {
-                el.textContent = count > 0 ? `Queden ${count} camps a revisar` : 'Tots els camps revisats';
+                // M2 (esmena de revisio): concordanca singular/plural.
+                let counterText;
+                if (count === 0) counterText = 'Tots els camps revisats';
+                else if (count === 1) counterText = 'Queda 1 camp a revisar';
+                else counterText = `Queden ${count} camps a revisar`;
+                el.textContent = counterText;
                 el.disabled = count === 0;
             }
             updateWizardBarActions(count);
@@ -7604,7 +7633,8 @@
         function _wizardBarWarningsDetails(warnings) {
             if (!warnings || !warnings.length) return '';
             const items = warnings.map(w => `<li>${escapeHtml(w)}</li>`).join('');
-            return `<details class="wizard-bar-warnings"><summary>avisos (${warnings.length})</summary><ul>${items}</ul></details>`;
+            // S1 (esmena de revisio): obert per defecte -- l'Eva els ha de veure.
+            return `<details class="wizard-bar-warnings" open><summary>avisos (${warnings.length})</summary><ul>${items}</ul></details>`;
         }
 
         function _wizardBarDismissResult() {
@@ -7636,7 +7666,14 @@
         function updateWizardBarVisibility() {
             const bar = document.getElementById('wizardBar');
             if (!bar) return;
-            const visible = !!selectedProject && currentTab === 'wizard';
+            // M1 (esmena de revisio): abans nomes mirava `selectedProject` + pestanya,
+            // per que es veia amb el pipeline encara corrent (formulari buit) i amb la
+            // capa "Observacions de camp" oberta. Ara cal que el formulari ja estigui
+            // poblat (`wizardDataLoaded`, que nomes es cert un cop arribat a "Llest")
+            // i que el modal de preguntes no estigui obert.
+            const modal = document.getElementById('evaPreQuestions');
+            const modalOpen = !!modal && modal.style.display !== 'none';
+            const visible = !!selectedProject && currentTab === 'wizard' && wizardDataLoaded && !modalOpen;
             bar.style.display = visible ? 'block' : 'none';
             if (visible) refreshWizardBarCounter();
         }
@@ -7648,6 +7685,25 @@
             if (!form || _wizardBarObserver) return;
             _wizardBarObserver = new MutationObserver(() => refreshWizardBarCounter());
             _wizardBarObserver.observe(form, { attributes: true, attributeFilter: ['class'], subtree: true, childList: true });
+            _wizardBarWatchResize();
+        }
+
+        // W3 (esmena de revisio): `padding-bottom` fix (96px) no seguia l'alcada real
+        // de la barra (creix a dues linies amb resultat + avisos). El CSS es queda
+        // nomes com a valor de partida; a partir d'aqui el marge el calcula sempre
+        // la mida real de `#wizardBar`.
+        function _wizardBarSyncPadding() {
+            const bar = document.getElementById('wizardBar');
+            const form = document.getElementById('wizardForm');
+            if (!bar || !form) return;
+            form.style.paddingBottom = (bar.offsetHeight + 24) + 'px';
+        }
+
+        function _wizardBarWatchResize() {
+            const bar = document.getElementById('wizardBar');
+            if (!bar || _wizardBarResizeObserver || typeof ResizeObserver === 'undefined') return;
+            _wizardBarResizeObserver = new ResizeObserver(() => _wizardBarSyncPadding());
+            _wizardBarResizeObserver.observe(bar);
         }
 
         let _autoSaveTimer = null;
@@ -7809,7 +7865,7 @@
         }
 
         async function saveWizard() {
-            if (!selectedProject) return;
+            if (!selectedProject) return true;
 
             // Bloc C (2026-09-15): sense boto -- l'autosave ho fa sola; l'estat es
             // comunica nomes a la barra fixa.
@@ -7844,17 +7900,29 @@
                 if (wizardPrefills._format_learning && wizardPrefills._format_learning.value && wizardPrefills._format_learning.value.active) {
                     showFormatToast('Format desat. Proper cop s\'extrauran automaticament.');
                 }
+                return true;
             } catch (err) {
                 _wizardBarSetStatus('No s\'ha pogut desar', 'pending');
                 showMessage('Error guardant: ' + err.message, 'error');
+                return err.message || 'error desconegut';
             }
         }
 
         async function generateReport() {
             if (!selectedProject) return;
 
-            // Always save first
-            await saveWizard();
+            // Always save first. C1 (esmena de revisio): si el desat falla no es pot
+            // generar sobre dades no desades -- l'error es queda persistent a la
+            // barra i el boto torna a l'estat normal (sense "Generant informe...").
+            const saveResult = await saveWizard();
+            if (saveResult !== true) {
+                _wizardBarShowResult(
+                    `<strong>No s'han pogut desar els canvis:</strong> ${escapeHtml(String(saveResult))}`,
+                    'error', { persistent: true }
+                );
+                updateWizardBarActions();
+                return;
+            }
 
             const btn = document.querySelector('#wizardBarActions .btn-success');
             if (btn) { btn.disabled = true; btn.textContent = 'Generant informe…'; }
@@ -7884,8 +7952,9 @@
             } catch (err) {
                 _wizardBarShowResult(`<strong>No s'ha pogut generar l'informe:</strong> ${escapeHtml(err.message)}`, 'error', { persistent: true });
             } finally {
-                // Torna al boto senzill; si encara queden camps, la propera vegada
-                // tornara a demanar confirmacio (porta suau, no memoria persistent).
+                // M3 (esmena de revisio): un cop generat (exit o error) la porta suau
+                // ja ha complert la seva funcio -- torna al boto unic "Generar informe".
+                _wizardBarSoftGateShown = false;
                 updateWizardBarActions();
             }
         }
