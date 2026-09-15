@@ -2344,6 +2344,24 @@
         }
         .jobs-row-btn:hover { border-color: #7f8c8d; }
         .jobs-error-detail { color: #c0392b; font-size: 0.9em; margin-top: 4px; white-space: pre-wrap; }
+
+        /* Bloc A (2026-09-15): amaga els elements de desenvolupador que l'Eva no ha
+           de veure — selector de model Groq del navegador de xarxa i les subetiquetes
+           internes de l'stepper (noms de mòduls: "FileMiner regex", "Groq: +9
+           prefills"...). La subetiqueta de Visió es queda: és l'únic senyal visible
+           que la lectura de documents esta corrent. */
+        #groqModelSelectNB {
+            display: none;
+        }
+        #step-files-scan,
+        #step-files-mine,
+        #step-files-extract {
+            display: none;
+        }
+        #step-files-vision {
+            font-size: 13px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -2771,7 +2789,7 @@
                              currentTab==='dpsh'/'sondeig' de mes avall son restes de codi mort). Es
                              col·loquen aqui, dins el Wizard, com a grup propi. Vegeu FASE7-UI-NOTES.md. -->
                         <div class="wizard-group" id="lectura-tables-group">
-                            <div class="wizard-group-header">Lectura headless — assaigs de camp (DPSH / Sondeig)</div>
+                            <div class="wizard-group-header">Assaigs de camp (DPSH / Sondeig)</div>
                             <div class="wizard-group-body single-col">
                                 <div id="lectura-dpsh-tables"></div>
                                 <div id="lectura-sondeig-tables"></div>
@@ -5173,6 +5191,14 @@
             const container = document.getElementById('wizardInstructions');
             if (!container || !selectedProject) { container && (container.style.display = 'none'); return; }
 
+            // Bloc A (2026-09-15): amb la lectura headless activa (panell de jobs
+            // visible) aquest panell no aporta res -- la lectura ja la fa Claude i el
+            // "Visio IA (0/4)" que hi sortiria seria fals. Via clàssica: sense canvis.
+            if (typeof _jobsEnabled !== 'undefined' && _jobsEnabled) {
+                container.style.display = 'none';
+                return;
+            }
+
             // Stop any existing polling
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
 
@@ -6249,15 +6275,16 @@
                 });
             });
 
-            // -- ConceptScout Coverage --
+            // -- ConceptScout Coverage -- (Bloc A, 2026-09-15): era un comptador intern
+            // de desenvolupador sense valor per a l'Eva. Es manté el càlcul per si cal
+            // reactivar-lo, pero mai es mostra (`banner.style.display` es queda al
+            // 'none' definit a l'HTML).
             const cmData = wizardPrefills._concept_map;
             if (cmData && cmData.value) {
                 const numFound = Object.keys(cmData.value).length;
-                const banner = document.getElementById('conceptCoverageBanner');
                 const value = document.getElementById('conceptCoverageValue');
-                if (banner && value) {
+                if (value) {
                     value.textContent = `${numFound} conceptes detectats en fitxers del projecte`;
-                    banner.style.display = 'flex';
                 }
             }
 
