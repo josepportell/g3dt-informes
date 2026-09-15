@@ -6283,8 +6283,10 @@
         // Bloc D (2026-09-15) + esmenes de revisio (W1/W2): mapa determinista cadena
         // tecnica -> etiqueta que l'Eva enten. La cadena original SENCERA es queda
         // sempre al `title` (tooltip).
-        // Ordre important: "informe"/"plantilla"/"Eva template" (el seu propi informe
-        // anterior) abans que "plànol"; "plànol" NOMES amb `planol`/`plànol`/`A.01`/
+        // Ordre important: "informe"/"Eva template" (el seu propi informe
+        // anterior) abans que "plànol"; "plantilla" SOLA no compta com informe
+        // anterior ("plantilla generada" es una frase per patró, no un informe
+        // d'Eva -> cau a "calculat"). "plànol" NOMES amb `planol`/`plànol`/`A.01`/
         // `architect_plan` literals (mai per "visió" sola: "vision (fotos camp)" o
         // "vision_probe:..." no son el plànol) i mai si hi ha "ICGC" (p. ex. "ICGC
         // ortho+visió" ha de sortir com ICGC / Cadastre). "assaigs de camp" nomes amb
@@ -6297,7 +6299,7 @@
             if (s === 'user' || s === 'user_data.json anterior') return { label: 'tu', cls: 'user' };
             if (sl.includes('default') || sl.includes('estandard')) return { label: 'per defecte', cls: 'default' };
             if (s === 'revisar') return { label: 'revisar', cls: 'revisar' };
-            if (sl.includes('informe') || sl.includes('plantilla') || sl.includes('eva template')) {
+            if (sl.includes('informe') || sl.includes('eva template')) {
                 return { label: "el teu informe anterior", cls: 'auto' };
             }
             if (!sl.includes('icgc') && /(planol|plànol|a\.01|architect_plan)/.test(sl)) {
@@ -6307,7 +6309,7 @@
             if (/(dpsh|sondeig|spt|penetro|n20|gtl|lab pdf|laboratori)/.test(sl) && !sl.includes('comanda')) {
                 return { label: 'assaigs de camp', cls: 'auto' };
             }
-            if (/(terzaghi|schmertmann|winkler|computed|\bnb\b|cte|ncse|signat|granular|cohesiu|crespo|arrodonit)/.test(sl)) {
+            if (/(terzaghi|schmertmann|winkler|computed|\bnb\b|cte|ncse|signat|granular|cohesiu|crespo|arrodonit|plantilla generada)/.test(sl)) {
                 return { label: 'calculat', cls: 'auto' };
             }
             return { label: 'llegit als documents', cls: 'auto' };
@@ -7943,6 +7945,7 @@
                     `<strong>No s'han pogut desar els canvis:</strong> ${escapeHtml(String(saveResult))}`,
                     'error', { persistent: true }
                 );
+                _wizardBarSoftGateShown = false;
                 updateWizardBarActions();
                 return;
             }

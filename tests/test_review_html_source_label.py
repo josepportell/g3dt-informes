@@ -61,7 +61,7 @@ _CASES = [
     ("fileminer:comanda laboratori_3001722_VACARISSES.xls", "llegit als documents"),
     ("docs intel (PRESSUPOST OBRA block)", "llegit als documents"),
     ("Eva template: 'Vacarisses' (tier 1)", "el teu informe anterior"),
-    ("plantilla", "el teu informe anterior"),
+    ("plantilla generada", "calculat"),
     ("computed (slope 3%)", "calculat"),
     ("contingut:ANNEXES/ALTRES/COORDENADES.txt", "llegit als documents"),
     ("lectura", "llegit als documents"),
