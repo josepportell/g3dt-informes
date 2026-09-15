@@ -821,6 +821,7 @@ def estimate_for_project(project_name: str) -> dict[str, Any]:
                 "estimate_s": estimate_s,
                 "text": _estimate_text(n_docs, estimate_s, ready=True),
                 "ready": True,
+                "partial": bool(delta.get("partial")),
             }
 
     try:
@@ -831,7 +832,7 @@ def estimate_for_project(project_name: str) -> dict[str, Any]:
     except (ValueError, OSError):
         # Arrel de la xarxa, carpeta contenidor, o path que ha desaparegut
         # entre dues tecles: cap xifra, el botó es queda desactivat (§5 UI).
-        return {"n_docs": 0, "estimate_s": None, "text": "", "ready": False}
+        return {"n_docs": 0, "estimate_s": None, "text": "", "ready": False, "partial": False}
 
     counts = count_claude_documents(project_path)
     n_docs = counts["n_docs"]
@@ -841,6 +842,7 @@ def estimate_for_project(project_name: str) -> dict[str, Any]:
         "estimate_s": estimate_s,
         "text": _estimate_text(n_docs, estimate_s, ready=False, partial=bool(counts.get("partial"))),
         "ready": False,
+        "partial": bool(counts.get("partial")),
     }
 
 

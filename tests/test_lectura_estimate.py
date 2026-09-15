@@ -103,7 +103,20 @@ def test_local_project_counts_documents_without_a_job(local_project):
 
 def test_a_project_that_does_not_exist_returns_no_figures(local_project):
     result = lectura_service.estimate_for_project("no existeix enlloc")
-    assert result == {"n_docs": 0, "estimate_s": None, "text": "", "ready": False}
+    assert result == {"n_docs": 0, "estimate_s": None, "text": "", "ready": False, "partial": False}
+
+
+def test_local_project_partial_count_is_surfaced(local_project, monkeypatch):
+    project_name, _ = local_project
+    monkeypatch.setattr(
+        "automation.lectura.inventory.count_claude_documents",
+        lambda p: {"n_docs": 0, "n_files": 0, "partial": True},
+    )
+
+    result = lectura_service.estimate_for_project(project_name)
+
+    assert result["partial"] is True
+    assert "recompte parcial" in result["text"]
 
 
 def test_endpoint_is_gated_like_the_rest_of_the_pipeline(local_project, monkeypatch):
