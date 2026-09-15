@@ -292,6 +292,15 @@ def _write_marker(workspace_path: Path, rel_path: str) -> None:
         raise
 
 
+def resolve_workspace_leaf(rel_path: str) -> str:
+    """Embolcall públic de `_resolve_workspace_leaf` (vegeu allà el detall).
+
+    Pensat per a mòduls externs (p. ex. `web/lectura_service.py`) que
+    necessiten el nom local del workspace sense importar el símbol privat.
+    """
+    return _resolve_workspace_leaf(rel_path)
+
+
 def _resolve_workspace_leaf(rel_path: str) -> str:
     """Determina el nom local del workspace per a un projecte de la xarxa.
 

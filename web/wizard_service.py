@@ -3091,6 +3091,28 @@ def _build_lectura_block(
     }
 
 
+def _persisted_user_fields(project_path: Path) -> set[str]:
+    """Camps marcats `'user'` a `_sources` de `user_data.json`, ARA MATEIX.
+
+    Font persistent (no la `_prefill_cache` volàtil): sobreviu entre desats
+    automàtics consecutius del mateix projecte. Fitxer absent o JSON invàlid
+    -> conjunt buit (mai bloqueja el desat).
+    """
+    ud_path = project_path / 'user_data.json'
+    if not ud_path.exists():
+        return set()
+    try:
+        data = json.loads(ud_path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        return set()
+    if not isinstance(data, dict):
+        return set()
+    sources = data.get('_sources')
+    if not isinstance(sources, dict):
+        return set()
+    return {k for k, v in sources.items() if v == 'user'}
+
+
 def save_wizard(
     project_name: str,
     wizard_fields: dict[str, Any],
@@ -3110,7 +3132,13 @@ def save_wizard(
     # Bloc G (2026-09, `docs/PLA-UX-WIZARD-2026-09.md`): quins camps eren JA
     # 'user' abans d'aquest desat -- per no comptar-los com a "canviats ARA"
     # a cada desat automàtic posterior del mateix valor.
-    _already_user = {k for k, v in current_sources.items() if v == 'user'}
+    #
+    # Es llegeix de `user_data.json` (`_sources`), NO de `_prefill_cache`: la
+    # cache es buida al final de cada desat (`_prefill_cache.pop` mes avall) i
+    # res la reomple entre autosaves consecutius, de manera que un segon desat
+    # la trobava sempre buida i tornava a comptar com a "canviat ara" tot el
+    # que ja era de l'Eva des del desat anterior.
+    _already_user = _persisted_user_fields(project_path)
     changed_now: list[str] = []
 
     def _prefill_val(key):

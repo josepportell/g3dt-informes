@@ -257,6 +257,13 @@ def count_claude_documents(project_path: Path) -> dict:
     SMB intermitent, com documenta `sync_workspace.sync_delta`), es retorna el
     que s'ha pogut comptar fins llavors amb `"partial": True` — una xifra
     incompleta és millor que cap durada.
+
+    ATENCIO: `"partial": True` no vol dir "quasi tot comptat, en falta un
+    tros" — si l'error de xarxa arriba de seguida (p. ex. al primer `next(it)`
+    o fins i tot a `has_current_pdf_dir`), `n_docs`/`n_files` poden ser 0 o
+    gairebé 0 amb tota la carpeta encara per veure. Qui consumeix aquest
+    resultat (`_estimate_text` a `web/lectura_service.py`) no pot presentar
+    `n_docs` com una xifra fiable quan `partial` és `True`.
     """
     project_path = Path(project_path)
     n_docs = 0

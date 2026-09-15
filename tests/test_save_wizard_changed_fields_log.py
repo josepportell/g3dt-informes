@@ -54,26 +54,45 @@ def test_a_save_with_two_changed_fields_logs_them_by_name(project: Path, caplog:
     assert "X. Mateu" not in line
 
 
-def test_a_second_save_of_the_same_values_logs_zero_changes(project: Path, caplog: pytest.LogCaptureFixture):
-    from web import wizard_service
+def test_a_three_consecutive_autosaves_never_repeat_an_already_user_field(
+    project: Path, caplog: pytest.LogCaptureFixture
+):
+    """Bug real reproduit pel reviewer (2026-09-15): `_prefill_cache` es buida
+    a cada desat (`_prefill_cache.pop`) i res la reomple entre autosaves --
+    calcular `_already_user` des d'ella feia que el 2n i 3r desat tornessin a
+    llistar `client_name` com si l'Eva l'hagués tocat ARA, quan ja era seu des
+    del 1r desat. Cap dels tres desats toca `_prefill_cache` manualment: aixo
+    simularia una recarrega de pagina que a la practica no passa entre
+    autosaves.
+    """
     from web.wizard_service import save_wizard
 
     caplog.set_level(logging.INFO, logger="web.wizard_service")
 
+    # Desat 1: Eva escriu client_name -> 1 camp canviat.
     save_wizard("3001621 CASTELLAR", {"client_name": "Fontanet SL"})
+    line1 = _log_line(caplog)
+    assert "1 camps canviats per l'Eva: client_name" in line1
     caplog.clear()
 
-    # Simula que la UI ha tornat a demanar els prefills entremig (com faria
-    # una recàrrega real) i ara el badge d'aquest camp ja diu 'user' amb el
-    # mateix valor que s'acaba de desar: el segon desat no canvia res.
-    wizard_service._prefill_cache["3001621 CASTELLAR"] = {
-        "client_name": {"value": "Fontanet SL", "source": "user"},
-    }
+    # Desat 2: Eva escriu architect_name, client_name es manté igual -> NOMÉS
+    # architect_name (client_name ja era seu, no s'ha de tornar a comptar).
+    save_wizard(
+        "3001621 CASTELLAR",
+        {"client_name": "Fontanet SL", "architect_name": "X. Mateu"},
+    )
+    line2 = _log_line(caplog)
+    assert "1 camps canviats per l'Eva: architect_name" in line2
+    assert "client_name" not in line2
+    caplog.clear()
 
-    save_wizard("3001621 CASTELLAR", {"client_name": "Fontanet SL"})
-
-    line = _log_line(caplog)
-    assert "0 camps canviats per l'Eva: cap" in line
+    # Desat 3: res canvia -> 0 camps.
+    save_wizard(
+        "3001621 CASTELLAR",
+        {"client_name": "Fontanet SL", "architect_name": "X. Mateu"},
+    )
+    line3 = _log_line(caplog)
+    assert "0 camps canviats per l'Eva: cap" in line3
 
 
 def test_an_empty_save_logs_zero_and_no_field_names(project: Path, caplog: pytest.LogCaptureFixture):

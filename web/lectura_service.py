@@ -768,9 +768,14 @@ def _estimate_text(n_docs: int, estimate_s: int | None, *, ready: bool, partial:
 
     if duration is None:
         return "pots tancar la pestanya i tornar"
+    if partial:
+        # `count_claude_documents` pot haver tallat de seguida (docstring a
+        # `automation/lectura/inventory.py`): `n_docs`/`duration` poden ser
+        # gairebé 0 amb la carpeta quasi sencera per veure. No presentem cap
+        # xifra ferma -- diem-ho tal qual.
+        return "no he pogut mirar tota la carpeta (recompte parcial) · pots tancar la pestanya i tornar"
     noun = "document" if n_docs == 1 else "documents"
-    partial_note = " (recompte parcial: la xarxa ha tallat)" if partial else ""
-    return f"{n_docs} {noun}{partial_note} · {duration} · pots tancar la pestanya i tornar"
+    return f"{n_docs} {noun} · {duration} · pots tancar la pestanya i tornar"
 
 
 def estimate_for_project(project_name: str) -> dict[str, Any]:
@@ -799,7 +804,7 @@ def estimate_for_project(project_name: str) -> dict[str, Any]:
     leaf = project_name
     if network_on:
         try:
-            leaf = sync_workspace._resolve_workspace_leaf(project_name)
+            leaf = sync_workspace.resolve_workspace_leaf(project_name)
         except ValueError:
             leaf = project_name
 

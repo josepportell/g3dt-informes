@@ -11253,6 +11253,7 @@
         let _jobsComencarAction = 'preparar';
         let _jobsEstimateTimer = null;
         let _jobsEstimateSeq = 0;         // descarta respostes d'una carpeta ja abandonada
+        let _jobsEstimateAbort = null;    // cancel·la el fetch anterior, no nomes el seu resultat
 
         function _jobsEl(id) { return document.getElementById(id); }
 
@@ -11321,6 +11322,10 @@
         function _jobsScheduleEstimate() {
             if (!_jobsEnabled) return;
             if (_jobsEstimateTimer) { clearTimeout(_jobsEstimateTimer); _jobsEstimateTimer = null; }
+            // No nomes descartem la resposta anterior (`_jobsEstimateSeq`):
+            // tallem tambe la petició de xarxa en marxa, perquè no quedi
+            // penjada calculant una durada que ja no interessa.
+            if (_jobsEstimateAbort) { _jobsEstimateAbort.abort(); _jobsEstimateAbort = null; }
             _jobsEstimateTimer = setTimeout(_jobsUpdateComencarButton, 300);
         }
 
@@ -11348,13 +11353,21 @@
 
             const seq = ++_jobsEstimateSeq;
             duration.textContent = 'calculant la durada…';
+            // Mentre calculem, el boto no pot quedar actiu amb l'accio de la
+            // carpeta ANTERIOR (Josep, revisio blocs E/G): es reactiva nomes
+            // quan arriba la resposta vigent (comprovacions `seq` mes avall).
+            btn.disabled = true;
+
+            const controller = new AbortController();
+            _jobsEstimateAbort = controller;
 
             let data = null;
             try {
-                const r = await fetch(`/api/jobs/estimate/${encodeURIComponent(path)}`);
+                const r = await fetch(`/api/jobs/estimate/${encodeURIComponent(path)}`, { signal: controller.signal });
                 if (seq !== _jobsEstimateSeq) return;     // Eva ja ha canviat de carpeta
                 if (r.ok) data = await r.json();
             } catch (err) {
+                if (err && err.name === 'AbortError') return;   // ja n'hi ha un altre en marxa
                 if (seq !== _jobsEstimateSeq) return;
             }
 
