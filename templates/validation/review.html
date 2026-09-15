@@ -1358,10 +1358,8 @@
             background: #f3f4f6;
             color: #6b7280;
         }
-        .source-badge.groq {
-            background: #fef3c7;
-            color: #92400e;
-        }
+        /* Bloc D (2026-09-15): "revisar" comparteix la classe amb .format-learning-field
+           mes avall -- no calen mes colors, .auto/.user/.default/.revisar ho cobreixen tot. */
         /* Format Learning */
         /* Bloc B (2026-09-15): el banner informa, no alarma — mateix to neutre que
            .wizard-instructions (l. 2029). El camp buit concret que cal revisar es
@@ -2488,6 +2486,26 @@
             .wizard-bar-inner { padding: 10px 16px; }
             .wizard-bar-actions { margin-left: 0; }
         }
+
+        /* Bloc D (2026-09-15): llegenda de les etiquetes de font, reutilitza els
+           mateixos colors de .source-badge (una sola font de veritat de colors). */
+        .source-legend {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        .source-legend .source-legend-label {
+            font-weight: 600;
+            color: #495057;
+            margin-right: 2px;
+        }
+        .source-legend .source-badge {
+            margin-left: 0;
+        }
     </style>
 </head>
 <body>
@@ -2758,6 +2776,19 @@
                                 <div id="ms-banner-subtitle"></div>
                             </div>
                             <button class="ms-resolve-btn" type="button" onclick="openMissingSourcesDrawer()">Resoldre ▾</button>
+                        </div>
+                        <!-- Bloc D (2026-09-15): llegenda de les etiquetes de font -->
+                        <div class="source-legend" id="sourceLegend">
+                            <span class="source-legend-label">Etiquetes:</span>
+                            <span class="source-badge user">tu</span>
+                            <span class="source-badge auto">plànol</span>
+                            <span class="source-badge auto">assaigs de camp</span>
+                            <span class="source-badge auto">llegit als documents</span>
+                            <span class="source-badge auto">ICGC / Cadastre</span>
+                            <span class="source-badge auto">el teu informe anterior</span>
+                            <span class="source-badge auto">calculat</span>
+                            <span class="source-badge default">per defecte</span>
+                            <span class="source-badge revisar">revisar</span>
                         </div>
                         <!-- Group 1: Dades del Projecte -->
                         <div class="wizard-group">
@@ -6171,6 +6202,29 @@
             return { value: null, source: null };
         }
 
+        // Bloc D (2026-09-15): mapa determinista cadena tecnica -> etiqueta que l'Eva
+        // entén. La cadena original SENCERA es queda sempre al `title` (tooltip).
+        // Ordre important: "informe" (el seu propi informe anterior, per exemple via
+        // groq_llm:.../4001612_informe_v0.pdf) abans que "plànol"; "plànol" exclou
+        // "vision_probe:" (classificacio generica de ConceptScout, no lligada nomes
+        // al plànol) i les cadenes amb "ICGC" (p. ex. "ICGC ortho+visió", que ha de
+        // sortir com ICGC / Cadastre, no com plànol nomes perque diu "visió").
+        function _wizardSourceLabel(source) {
+            const s = String(source);
+            const sl = s.toLowerCase();
+            if (s === 'user' || s === 'user_data.json anterior') return { label: 'tu', cls: 'user' };
+            if (sl.includes('default') || sl.includes('estandard')) return { label: 'per defecte', cls: 'default' };
+            if (s === 'revisar') return { label: 'revisar', cls: 'revisar' };
+            if (sl.includes('informe')) return { label: "el teu informe anterior", cls: 'auto' };
+            if (!sl.startsWith('vision_probe:') && !sl.includes('icgc') && /(planol|plànol|a\.01|visi[oó])/.test(sl)) {
+                return { label: 'plànol', cls: 'auto' };
+            }
+            if (/(icgc|cadastre|geocode|nominatim|ortho)/.test(sl)) return { label: 'ICGC / Cadastre', cls: 'auto' };
+            if (/(dpsh|lab|sondeig|xls|penetro|spt)/.test(sl)) return { label: 'assaigs de camp', cls: 'auto' };
+            if (/(terzaghi|schmertmann|winkler|computed|\bnb\b|cte|ncse)/.test(sl)) return { label: 'calculat', cls: 'auto' };
+            return { label: 'llegit als documents', cls: 'auto' };
+        }
+
         function setSourceBadge(field, source) {
             const badge = document.getElementById(`src-${field}`);
             if (!badge) return;
@@ -6180,26 +6234,10 @@
                 badge.title = '';
                 return;
             }
-            let label = source;
-            let cls = 'auto';
-            if (source === 'user' || source === 'user_data.json anterior') {
-                label = 'user_data';
-                cls = 'user';
-            } else if (source.includes('default') || source.includes('estandard')) {
-                label = 'defecte';
-                cls = 'default';
-            } else if (source.includes('plantilla')) {
-                label = 'plantilla';
-                cls = 'auto';
-            } else if (source.startsWith('groq_llm:')) {
-                label = 'groq:' + source.split('/').pop();
-                cls = 'groq';
-            } else if (label.length > 20) {
-                label = label.substring(0, 18) + '...';
-            }
+            const { label, cls } = _wizardSourceLabel(source);
             badge.textContent = label;
             badge.className = `source-badge ${cls}`;
-            badge.title = label !== source ? source : '';
+            badge.title = source;
 
             // Show +N alternatives badge if available
             const alts = (wizardPrefills._alternatives && wizardPrefills._alternatives.value)
