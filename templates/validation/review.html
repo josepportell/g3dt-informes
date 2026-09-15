@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G3DT - Revisio de Dades de Camp</title>
+    <title>G3DT · Informe geotècnic</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <style>
         * {
@@ -2506,6 +2506,35 @@
         .source-legend .source-badge {
             margin-left: 0;
         }
+
+        /* Bloc F (2026-09-15): stepper acabat en una linia */
+        .pipeline-summary {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #495057;
+        }
+        .pipeline-stepper.collapsed .pipeline-summary {
+            display: flex;
+        }
+        .pipeline-stepper.collapsed .pipeline-steps {
+            display: none;
+        }
+        .pipeline-summary-toggle {
+            background: none;
+            border: none;
+            color: #4a90d9;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 2px 4px;
+        }
+        .pipeline-summary-toggle:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
@@ -2522,7 +2551,7 @@
     </div>
     <div class="container">
         <header>
-            <h1>G3DT - Revisio de Dades de Camp</h1>
+            <h1>G3DT · Informe geotècnic</h1>
         </header>
 
         <!-- Project Selector (for Wizard tab) -->
@@ -2594,6 +2623,11 @@
         <div id="message" class="message"></div>
 
         <div id="pipelineStepper" class="pipeline-stepper">
+            <!-- Bloc F (2026-09-15): un cop arriba a "Llest" es plega en una linia -->
+            <div class="pipeline-summary" id="pipelineSummary">
+                <span id="pipelineSummaryText"></span>
+                <button type="button" class="pipeline-summary-toggle" onclick="expandStepperDetails()">Detalls</button>
+            </div>
             <div class="pipeline-steps">
                 <div class="pipeline-step" id="step-scan">
                     <div class="step-circle">
@@ -2696,7 +2730,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             <h2>Selecciona un projecte</h2>
-            <p>Tria un projecte del desplegable per carregar les dades automaticament</p>
+            <p>Navega fins a la carpeta del projecte i prem Començar.</p>
         </div>
 
         <div id="dataContent" style="display:none;">
@@ -3557,7 +3591,9 @@
 
         function showStepper() {
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
-            document.getElementById('pipelineStepper').style.display = 'block';
+            const stepperEl = document.getElementById('pipelineStepper');
+            stepperEl.style.display = 'block';
+            stepperEl.classList.remove('collapsed');   // Bloc F: projecte nou -> detall visible
             emptyState.style.display = 'none';
             // Reset all steps and file lists
             PIPELINE_STEPS.forEach(s => {
@@ -3596,6 +3632,8 @@
             if (visionRunning) {
                 document.getElementById('conn-4').className = 'step-connector';   // Visió → Llest, encara no
                 document.getElementById('conn-3').className = 'step-connector done';
+            } else {
+                collapseStepperToSummary();   // Bloc F: tot acabat -> una linia
             }
         }
 
@@ -3603,6 +3641,29 @@
             setStepState('vision', 'done');
             document.getElementById('conn-4').className = 'step-connector done';
             setStepState('ready', 'done');
+            collapseStepperToSummary();   // Bloc F: la visio ha acabat de debò -> una linia
+        }
+
+        // Bloc F (2026-09-15): l'stepper detallat nomes interessa mentre corre.
+        function _pipelineSummaryText() {
+            const now = _wizardBarTimeNow();
+            if (typeof _lecturaDocsTotal !== 'undefined' && _lecturaDocsTotal > 0) {
+                return `Llegits ${_lecturaDocsTotal} documents · avui ${now}`;
+            }
+            return `Projecte carregat · avui ${now}`;
+        }
+
+        function collapseStepperToSummary() {
+            const stepper = document.getElementById('pipelineStepper');
+            const text = document.getElementById('pipelineSummaryText');
+            if (!stepper || !text) return;
+            text.textContent = _pipelineSummaryText();
+            stepper.classList.add('collapsed');
+        }
+
+        function expandStepperDetails() {
+            const stepper = document.getElementById('pipelineStepper');
+            if (stepper) stepper.classList.remove('collapsed');
         }
 
         function hideStepper() {
