@@ -6521,3 +6521,73 @@ Full de ruta del pas 3 (`PLA-RELEASE-2026-09.md` §5) amb el `.env` sense claus;
 els 4 defectes menors en una sessió curta.
 
 *Fi entrada 2026-09-10 (4). Decisions del Josep i pas 2 a WSL sense claus: GO.*
+
+## 2026-09-16 — Pas 2 repetit a WSL amb la UX A-G fusionada a release: Alcoletge de cap a cap en 30,9 min; dues troballes que condicionen el 18-09 (sessió caducada = «Preparat»; log del bloc G fals)
+
+### Context
+Handoff `docs/_FOR-NEW-YOU-20260916-WSL-PROJECTE-SENCER.md`: els 13 commits d'UX (blocs A-G, `5c63287..3c9328c`) eren
+només a `experiment/nivell-a-2026-08` i mai s'havien vist amb un job real de Claude Code. Avui: docs d'ahir committats
+(`cf2b25f`), merge a release, clon WSL com el tindrà l'Eva i un projecte sencer. El Josep tria **Alcoletge** (mai llegit al
+clon → temps real, no cau).
+
+### Decisions arquitectòniques clau
+1. **Merge `--no-ff` d'experiment a `release/2026-09` al worktree `g3dt-release`** (`6134d2a`), mai in-place a `g3dt-prod`.
+   **Why:** release tenia 6 commits propis (pillow, egg-info, CLAUDE.md, M341 release); un ff era impossible i un merge
+   conserva la història dels dos costats. Cap conflicte. Suite curta (HTML + E/G + `test_image_cache_name`) 167 passats.
+2. **Credencial del HOME net renovada copiant-la del HOME principal i verificada amb un `claude -p` mínim abans del run.**
+   **Why:** l'intent 1 ha fallat sencer per «OAuth session expired and could not be refreshed» (la còpia del 10-09 s'havia
+   invalidat en renovar el HOME principal). Alternativa rebutjada: `claude login` interactiu al HOME net (bloqueja el Josep;
+   el mateix procediment del 10-09 és copiar). No aplica a l'Eva (un sol HOME). Memòria
+   `reference_oauth_credentials_copied_between_homes`.
+3. **Workspace d'Alcoletge del clon esborrat abans del segon intent** (creat per aquesta sessió a les 11:25, mtime comprovat).
+   **Why:** tornar a «Començar» net com la primera obertura de l'Eva; regla `feedback_no_rm_test_state_you_did_not_create`.
+4. **Cap correcció de codi avui sense decisió del Josep.** Les dues troballes es documenten amb proposta; el codi no es toca.
+
+### Validació empírica (run `docs/wizard-headless/mesures/runs/2026-09-16-wsl-alcoletge-ux/`, fila al LEDGER)
+| què | mesura |
+|---|---|
+| Intent 1 (auth caducada) | 11:24:59 → 11:26:32; 13 docs × 2 intents = 26 errors de ~3 s; job READY `{ok:true, degraded:true}`; fila «✓ Preparat (avui 11:26) · Enllestir» |
+| Intent 2: «Començar» → READY | 11:29:48 → 12:00:40 = **1852 s (30,9 min)**; botó deia «15 documents · uns 40 min» (2 duplicats sense md5); fila al minut 1 «≈ 15 min», al minut 5 «≈ 32 min» |
+| Documents | 13/13, 0 errors; mediana ~224 s, màx 535 s (PENETROS); 264.559 tokens de sortida, 261 turns, 11,7 $ equiv.; 0 crides API |
+| Enllestir / Generar | 3 s / 3,5 s; docx 4,5 MB, 4043 paraules, 8 imatges, 0 restes Jinja, copiat a la xarxa |
+| Lectura vs or (escalars) | 16 OK / 4 CAUTELA / 1 FORA / 1 NOU, **0 ERR / 0 ALERTA** (mesura-8 del 03-09: 15 / 5 / 1 / 1) |
+| Lectura vs or (taules) | 18 OK / 4 CAUTELA / **3 ALERTA** (`dpsh_tests[i].nivell_freatic` puja a segur «-1,00»; l'or té candidats; el 03-09 eren 3 BUIT) |
+| UX A-G al navegador | un sol «Començar» (`#nbStartBtn` display:none); botó desactivat mentre calcula; recàrrega en lectura → «Llegint documents · 2/13 ≈ 15 min restants» + «Veure progrés»; carpeta amb job ready → «Continuar · res no ha canviat · uns 1 min»; barra només amb formulari carregat; «Queden 20 camps a revisar» = 8 escalars + 12 cel·les de taula, dedup, llegenda exclosa; 0 cadenes de desenvolupador; «Visió IA» absent del DOM; finestreta d'alternatives completa; porta suau inline «Generar igualment (19 a revisar)»; resultat i avís d'assentament a la barra |
+
+### Limitacions conegudes / troballes
+1. **Fallada d'autenticació no és sistèmica** (`automation/lectura/runner.py::_SYSTEMIC_RE`: té «not logged in»,
+   «authentication_error», «unauthorized», però no «Failed to authenticate» ni «OAuth session expired»). El runner
+   reintenta, passa al següent, consolida buit, els lectors d'imatges fallen igual, i `lectura_fi` porta `degraded=True`
+   que `job_text.row()` no mira → «Preparat». **Proposta:** ampliar el regex («failed to authenticate», «oauth session»,
+   «session expired», «could not be refreshed»), codi `auth` separat de `usage_limit` a `web/lectura_service.py`, fila
+   «Aturat: cal tornar a iniciar sessió a Claude» + detall «obre una terminal i escriu `claude login`; els documents ja
+   llegits es conserven» a `job_text.py`; tests a `test_lectura_runner`, `test_lectura_service`, `test_lectura_job_text`.
+2. **Log del bloc G («camps canviats per l'Eva») fals.** Primer desat amb 2 camps tocats (`num_floors`,
+   `building_height_m`): «5 camps canviats» (+`geomech_cohesion`, `geomech_gamma`, `soil_types`). Segon desat (el de
+   «Generar igualment», cap canvi entremig): «28 camps canviats» (`Es_settlement`, `adjacent_*`, `adjacent_*_fmt`,
+   `architect_*`, `cota_referencia`, `data_signatura`, `geomech_*`, `icgc_unit_*`, `site_*`, `street_address`, `utm_y`…).
+   `user_data.json` acaba amb **33 `_sources: user`**: no és només un log lleig, muda la precedència Eva > lector per a
+   camps que l'Eva no ha tocat. Hipòtesi: `save_wizard` compara el valor del formulari amb un prefill RECALCULAT
+   (`_persisted_user_fields` buida la `_prefill_cache` al final del primer desat) i els derivats i formatats no coincideixen
+   cadena a cadena. **Proposta:** comparar contra l'instantània de prefills amb què s'ha carregat el formulari (o un hash
+   per camp desat amb el prefill), normalitzar nombres/dates, i excloure els camps derivats (`Es_settlement`, `*_fmt`,
+   `geomech_*` quan són calculats). Fins que sigui fiable, valorar deixar el log però NO escriure `_sources: user` a partir
+   d'aquesta comparació.
+3. Menors (cap bloqueja): `docs.done` 15/13 al pas d'imatges (els lectors d'imatges emeten `lectura_doc`); «Figura -
+   Projecte 2» buida però amb la raó de la figura 1; el comptador de la barra no baixa en escriure fins al desat; «No UTM
+   coordinates available, skipping ICGC image download» en generar tot i que Cadastre havia trobat la referència a UTM a
+   les 11:25 (`user_data` només porta `utm_y` com a user: lligat a la troballa 2); «Observacions de camp» a cada obertura.
+4. Telemetria de l'intent 1 no conservada (workspace esborrat abans de la còpia); el resum és a
+   `intent-1-auth-caducada.txt`.
+
+### GO/NO-GO
+- ✅ Merge a release i clon WSL a `6134d2a` sense claus: flux sencer de l'Eva, temps i qualitat com el 10-09.
+- ✅ UX A-G vista amb un job real: tot el que el handoff demanava veure.
+- ⏳ **GO condicionat** a la decisió del Josep sobre les troballes 1 i 2 abans del 18-09.
+
+### Següents passos
+Decisió del Josep; si GO a les correccions: implementer→reviewer→tester a experiment, suite sencera (noms), merge a
+release, tercer pas 2 curt (Bell-lloc en cau: 2 s) per veure la fila d'error simulant una credencial buida. Després:
+`docs/GUIA-EVA-WIZARD.md` desfasada (substituir pel doc HTML) i el pas 3 presencial.
+
+*Fi entrada 2026-09-16. Pas 2 repetit amb la UX A-G: Alcoletge 30,9 min, GO condicionat a auth-sistèmica i log G fiable.*
