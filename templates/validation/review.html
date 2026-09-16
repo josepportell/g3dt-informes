@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G3DT - Revisio de Dades de Camp</title>
+    <title>G3DT · Informe geotècnic</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <style>
         * {
@@ -1039,6 +1039,11 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
+            /* Bloc C (2026-09-15): marge per la barra fixa (#wizardBar) perque no tapi
+               els ultims camps ni la seccio "Imatges de l'informe". Valor de partida;
+               W3 (esmena de revisio) l'ajusta a l'alcada real via ResizeObserver
+               (_wizardBarSyncPadding()), que creix a dues linies amb resultat/avisos. */
+            padding-bottom: 96px;
         }
         .wizard-group {
             border: 1px solid #e0e0e0;
@@ -1355,14 +1360,16 @@
             background: #f3f4f6;
             color: #6b7280;
         }
-        .source-badge.groq {
-            background: #fef3c7;
-            color: #92400e;
-        }
+        /* Bloc D (2026-09-15): "revisar" comparteix la classe amb .format-learning-field
+           mes avall -- no calen mes colors, .auto/.user/.default/.revisar ho cobreixen tot. */
         /* Format Learning */
+        /* Bloc B (2026-09-15): el banner informa, no alarma — mateix to neutre que
+           .wizard-instructions (l. 2029). El camp buit concret que cal revisar es
+           segueix marcant en taronja (.format-learning-field / .source-badge.revisar):
+           aixo es un senyal util, no una alarma general. */
         .format-learning-banner {
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-            border: 1px solid #f59e0b;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
             border-radius: 8px;
             padding: 16px 20px;
             margin-bottom: 20px;
@@ -1372,12 +1379,12 @@
             display: block;
         }
         .format-learning-banner h3 {
-            color: #92400e;
+            color: #2c3e50;
             font-size: 15px;
             margin-bottom: 8px;
         }
         .format-learning-banner p {
-            color: #78350f;
+            color: #495057;
             font-size: 13px;
             margin: 0;
         }
@@ -1391,18 +1398,18 @@
             border-radius: 4px;
             font-size: 12px;
             cursor: pointer;
-            border: 1px solid #d97706;
+            border: 1px solid #cfd6dd;
             background: white;
-            color: #92400e;
+            color: #2c3e50;
         }
         .format-learning-banner .btn-fl:hover {
-            background: #fef3c7;
+            background: #eef1f4;
         }
         .format-learning-field {
             border: 2px solid #f59e0b !important;
             background-color: #fffbeb !important;
         }
-        .source-badge.format-learning {
+        .source-badge.revisar {
             background: #fef3c7;
             color: #92400e;
         }
@@ -2326,6 +2333,16 @@
         .jobs-btn-quiet { margin-left: auto; color: #7f8c8d; }
         .jobs-btn.primary:hover:not(:disabled) { background: #229954; }
         .jobs-btn small { display: block; font-size: 0.78em; opacity: .8; font-weight: 400; }
+        /* Bloc E (2026-09): "Fer un informe des de zero" ja no es un boto igual
+           als altres -- es la sortida minoritaria, en forma d'enllac petit sota
+           el boto principal (flex-basis 100% el força a la seva propia linia). */
+        .jobs-link-zero {
+            flex-basis: 100%; background: none; border: none; padding: 2px 0 0;
+            margin: 0; color: #7f8c8d; font-size: 0.82em; text-decoration: underline;
+            text-align: left; cursor: pointer;
+        }
+        .jobs-link-zero:hover:not(:disabled) { color: #2c3e50; }
+        .jobs-link-zero:disabled { opacity: .5; cursor: default; text-decoration: none; }
         .jobs-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
         .jobs-table th {
             text-align: left; padding: 6px 8px; border-bottom: 1px solid #e1e6ea;
@@ -2344,6 +2361,198 @@
         }
         .jobs-row-btn:hover { border-color: #7f8c8d; }
         .jobs-error-detail { color: #c0392b; font-size: 0.9em; margin-top: 4px; white-space: pre-wrap; }
+
+        /* Bloc A (2026-09-15): amaga els elements de desenvolupador que l'Eva no ha
+           de veure — selector de model Groq del navegador de xarxa i les subetiquetes
+           internes de l'stepper (noms de mòduls: "FileMiner regex", "Groq: +9
+           prefills"...). La subetiqueta de Visió es queda: és l'únic senyal visible
+           que la lectura de documents esta corrent. */
+        #groqModelSelectNB {
+            display: none;
+        }
+        #step-files-scan,
+        #step-files-mine,
+        #step-files-extract {
+            display: none;
+        }
+        #step-files-vision {
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* Bloc C (2026-09-15): barra fixa inferior del Wizard. Reutilitza la paleta
+           existent de .wizard-result (success/error) i .wizard-unsaved (pendent). */
+        .wizard-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 40;
+            background: #ffffff;
+            border-top: 1px solid #dee2e6;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .wizard-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .wizard-bar-status {
+            font-size: 13px;
+            color: #6b7280;
+            min-width: 170px;
+        }
+        /* W4 (esmena de revisio): #e67e22 sobre fons blanc donava 2,85:1; #95521a
+           conserva el to ambre pero passa de 6:1. */
+        .wizard-bar-status.pending { color: #95521a; }
+        .wizard-bar-status.saved { color: #155724; }
+        .wizard-bar-counter {
+            background: none;
+            border: 1px solid #cfd6dd;
+            border-radius: 999px;
+            padding: 5px 14px;
+            font-size: 13px;
+            color: #2c3e50;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .wizard-bar-counter:hover:not(:disabled) { background: #f8f9fa; }
+        .wizard-bar-counter:disabled {
+            color: #155724;
+            border-color: #c3e6cb;
+            background: #d4edda;
+            cursor: default;
+        }
+        .wizard-bar-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: auto;
+        }
+        .wizard-bar-actions .btn {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+        .wizard-bar-result {
+            flex-basis: 100%;
+            font-size: 13px;
+            border-radius: 6px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .wizard-bar-result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wizard-bar-result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .wizard-bar-result.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+        .wizard-bar-result a { color: inherit; font-weight: 600; }
+        .wizard-bar-result-body { flex: 1; }
+        .wizard-bar-result-body ul { margin: 6px 0 0 18px; }
+        .wizard-bar-warnings { margin-top: 6px; }
+        .wizard-bar-warnings summary { cursor: pointer; font-weight: 600; }
+        .wizard-bar-warnings ul { margin: 6px 0 0 18px; }
+        .wizard-bar-result-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+            color: inherit;
+            padding: 2px 4px;
+            flex-shrink: 0;
+        }
+        .wizard-bar-result-close:hover { opacity: 0.7; }
+        .wizard-bar button:focus-visible,
+        .wizard-bar-counter:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+        /* Realç transitori en fer scroll cap al primer camp pendent */
+        .wizard-bar-highlight {
+            animation: wizardBarPulse 1.6s ease;
+            border-radius: 4px;
+        }
+        @keyframes wizardBarPulse {
+            0% { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35); }
+            100% { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .wizard-bar-highlight { animation: none; }
+        }
+        @media (max-width: 768px) {
+            .wizard-bar-inner { padding: 10px 16px; }
+            .wizard-bar-actions { margin-left: 0; }
+        }
+
+        /* Bloc D (2026-09-15): llegenda de les etiquetes de font, reutilitza els
+           mateixos colors de .source-badge (una sola font de veritat de colors).
+           ATENCIO: la mostra `.source-badge.revisar` d'aquest bloc s'exclou
+           explicitament a `_wizardBarPendingBadges()` (JS) perque no compti com
+           a camp pendent -- si s'afegeix cap altre badge real aqui, cal
+           mantenir aquesta exclusio. */
+        .source-legend {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        .source-legend .source-legend-label {
+            font-weight: 600;
+            color: #495057;
+            margin-right: 2px;
+        }
+        .source-legend .source-badge {
+            margin-left: 0;
+        }
+
+        /* Bloc F (2026-09-15): stepper acabat en una linia */
+        .pipeline-summary {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #495057;
+        }
+        .pipeline-stepper.collapsed .pipeline-summary {
+            display: flex;
+        }
+        .pipeline-stepper.collapsed .pipeline-steps {
+            display: none;
+        }
+        .pipeline-summary-toggle {
+            background: none;
+            border: none;
+            color: #4a90d9;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 2px 4px;
+        }
+        .pipeline-summary-toggle:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
@@ -2360,7 +2569,7 @@
     </div>
     <div class="container">
         <header>
-            <h1>G3DT - Revisio de Dades de Camp</h1>
+            <h1>G3DT · Informe geotècnic</h1>
         </header>
 
         <!-- Project Selector (for Wizard tab) -->
@@ -2403,22 +2612,21 @@
             <div id="nbError" style="display:none;"></div>
         </div>
 
-        <!-- Tres botons + taula d'estat dels jobs (Fase 14a, disseny §5).
-             Ocult fins que `GET /api/jobs` respon 200. -->
+        <!-- Un sol boto "Comencar"/"Continuar" + taula d'estat dels jobs
+             (Bloc E, `docs/PLA-UX-WIZARD-2026-09.md`). Ocult fins que
+             `GET /api/jobs` respon 200. -->
         <div id="jobsPanel">
             <div class="jobs-actions" id="jobsActions">
-                <button type="button" class="jobs-btn primary" id="jobsBtnPreparar" onclick="jobsRun('preparar')">
-                    Preparar informe «per demà»<small>Prem, tanca la pestanya i torna quan t'avisin</small>
-                </button>
-                <button type="button" class="jobs-btn" id="jobsBtnEnllestir" onclick="jobsRun('enllestir')">
-                    Enllestir informe preparat<small>Comprova què ha canviat i obre el formulari</small>
-                </button>
-                <button type="button" class="jobs-btn" id="jobsBtnZero" onclick="jobsRun('desde_zero')">
-                    Fer un informe des de zero<small>Tot seguit, amb la pestanya oberta</small>
+                <button type="button" class="jobs-btn primary" id="jobsBtnComencar" onclick="jobsComencarClick()">
+                    <span id="jobsBtnComencarLabel">Començar</span>
+                    <small id="jobsBtnComencarDuration">Tria la carpeta del projecte</small>
                 </button>
                 <button type="button" class="jobs-btn jobs-btn-quiet" id="jobsBtnActualitzar"
                         onclick="jobsRefresh(true)" title="Torna a mirar la xarxa ara mateix">
                     ↻ Actualitzar<small>Mira la xarxa ara; no copia res</small>
+                </button>
+                <button type="button" class="jobs-link-zero" id="jobsLinkZero" onclick="jobsRun('desde_zero')">
+                    Fer un informe des de zero
                 </button>
             </div>
             <table class="jobs-table" id="jobsTable">
@@ -2432,6 +2640,11 @@
         <div id="message" class="message"></div>
 
         <div id="pipelineStepper" class="pipeline-stepper">
+            <!-- Bloc F (2026-09-15): un cop arriba a "Llest" es plega en una linia -->
+            <div class="pipeline-summary" id="pipelineSummary">
+                <span id="pipelineSummaryText"></span>
+                <button type="button" class="pipeline-summary-toggle" onclick="expandStepperDetails()">Detalls</button>
+            </div>
             <div class="pipeline-steps">
                 <div class="pipeline-step" id="step-scan">
                     <div class="step-circle">
@@ -2534,7 +2747,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             <h2>Selecciona un projecte</h2>
-            <p>Tria un projecte del desplegable per carregar les dades automaticament</p>
+            <p>Navega fins a la carpeta del projecte i prem Començar.</p>
         </div>
 
         <div id="dataContent" style="display:none;">
@@ -2614,6 +2827,19 @@
                                 <div id="ms-banner-subtitle"></div>
                             </div>
                             <button class="ms-resolve-btn" type="button" onclick="openMissingSourcesDrawer()">Resoldre ▾</button>
+                        </div>
+                        <!-- Bloc D (2026-09-15): llegenda de les etiquetes de font -->
+                        <div class="source-legend" id="sourceLegend">
+                            <span class="source-legend-label">Etiquetes:</span>
+                            <span class="source-badge user">tu</span>
+                            <span class="source-badge auto">plànol</span>
+                            <span class="source-badge auto">assaigs de camp</span>
+                            <span class="source-badge auto">llegit als documents</span>
+                            <span class="source-badge auto">ICGC / Cadastre</span>
+                            <span class="source-badge auto">el teu informe anterior</span>
+                            <span class="source-badge auto">calculat</span>
+                            <span class="source-badge default">per defecte</span>
+                            <span class="source-badge revisar">revisar</span>
                         </div>
                         <!-- Group 1: Dades del Projecte -->
                         <div class="wizard-group">
@@ -2771,7 +2997,7 @@
                              currentTab==='dpsh'/'sondeig' de mes avall son restes de codi mort). Es
                              col·loquen aqui, dins el Wizard, com a grup propi. Vegeu FASE7-UI-NOTES.md. -->
                         <div class="wizard-group" id="lectura-tables-group">
-                            <div class="wizard-group-header">Lectura headless — assaigs de camp (DPSH / Sondeig)</div>
+                            <div class="wizard-group-header">Assaigs de camp (DPSH / Sondeig)</div>
                             <div class="wizard-group-body single-col">
                                 <div id="lectura-dpsh-tables"></div>
                                 <div id="lectura-sondeig-tables"></div>
@@ -2970,14 +3196,13 @@
                         <div id="wizardImages" class="wizard-images" style="display:none;"></div>
 
                         <!-- Actions -->
+                        <!-- Bloc C (2026-09-15): "Guardar Dades" fora (l'autosave ja hi era) i "Generar
+                             Informe" es mou a la barra fixa (#wizardBar, fora de .container). -->
                         <div class="wizard-actions">
-                            <button class="btn btn-primary" id="btnSaveWizard" onclick="saveWizard()">Guardar Dades</button>
-                            <button class="btn btn-success" id="btnGenerateReport" onclick="generateReport()">Generar Informe</button>
                             <button class="btn btn-audit" id="btnAuditVisual" onclick="auditVisual()">Audit Visual</button>
                         </div>
 
                         <!-- Result area -->
-                        <div class="wizard-result" id="wizardResult" style="display:none;"></div>
                         <div class="wizard-result" id="auditResult" style="display:none;"></div>
                     </div>
                 </div>
@@ -3312,6 +3537,19 @@
         </div>
     </div>
 
+    <!-- Bloc C (2026-09-15): barra fixa del Wizard -- Generar Informe, estat de desat
+         automatic i avisos persistents. Viu fora de `.container` (com `#altZone`) perque
+         cap ombra ni overflow la talli; nomes es mostra amb un projecte carregat i la
+         pestanya Wizard activa (`updateWizardBarVisibility()`). -->
+    <div id="wizardBar" class="wizard-bar" style="display:none;">
+        <div class="wizard-bar-inner">
+            <div class="wizard-bar-status" id="wizardBarSaveStatus" aria-live="polite"></div>
+            <button type="button" class="wizard-bar-counter" id="wizardBarCounter" onclick="scrollToFirstPendingField()"></button>
+            <div class="wizard-bar-actions" id="wizardBarActions"></div>
+            <div class="wizard-bar-result" id="wizardBarResult" style="display:none;" aria-live="polite"></div>
+        </div>
+    </div>
+
     <script>
         // Dev mode: append ?dev=1 to URL to show Dev/Pipeline tabs and vision buttons
         const urlParams = new URLSearchParams(window.location.search);
@@ -3370,7 +3608,9 @@
 
         function showStepper() {
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
-            document.getElementById('pipelineStepper').style.display = 'block';
+            const stepperEl = document.getElementById('pipelineStepper');
+            stepperEl.style.display = 'block';
+            stepperEl.classList.remove('collapsed');   // Bloc F: projecte nou -> detall visible
             emptyState.style.display = 'none';
             // Reset all steps and file lists
             PIPELINE_STEPS.forEach(s => {
@@ -3409,6 +3649,8 @@
             if (visionRunning) {
                 document.getElementById('conn-4').className = 'step-connector';   // Visió → Llest, encara no
                 document.getElementById('conn-3').className = 'step-connector done';
+            } else {
+                collapseStepperToSummary();   // Bloc F: tot acabat -> una linia
             }
         }
 
@@ -3416,6 +3658,29 @@
             setStepState('vision', 'done');
             document.getElementById('conn-4').className = 'step-connector done';
             setStepState('ready', 'done');
+            collapseStepperToSummary();   // Bloc F: la visio ha acabat de debò -> una linia
+        }
+
+        // Bloc F (2026-09-15): l'stepper detallat nomes interessa mentre corre.
+        function _pipelineSummaryText() {
+            const now = _wizardBarTimeNow();
+            if (typeof _lecturaDocsTotal !== 'undefined' && _lecturaDocsTotal > 0) {
+                return `Llegits ${_lecturaDocsTotal} documents · avui ${now}`;
+            }
+            return `Projecte carregat · avui ${now}`;
+        }
+
+        function collapseStepperToSummary() {
+            const stepper = document.getElementById('pipelineStepper');
+            const text = document.getElementById('pipelineSummaryText');
+            if (!stepper || !text) return;
+            text.textContent = _pipelineSummaryText();
+            stepper.classList.add('collapsed');
+        }
+
+        function expandStepperDetails() {
+            const stepper = document.getElementById('pipelineStepper');
+            if (stepper) stepper.classList.remove('collapsed');
         }
 
         function hideStepper() {
@@ -3458,6 +3723,14 @@
         ]);
 
         function showMessage(text, type) {
+            // Bloc C (2026-09-15): amb la barra del Wizard activa, els avisos hi van
+            // (persistents si son error; temporals per success/info, com abans).
+            // Fora d'aquest context (altres pestanyes) es queda el `#message` de dalt.
+            const bar = document.getElementById('wizardBar');
+            if (bar && bar.style.display !== 'none') {
+                _wizardBarShowResult(escapeHtml(text), type, { persistent: type === 'error' });
+                return;
+            }
             messageDiv.textContent = text;
             messageDiv.className = `message message-${type}`;
             messageDiv.style.display = 'block';
@@ -3509,6 +3782,8 @@
                 if (!aiAnalysisLoaded) loadAiAnalysis(false);
                 if (!aiRankingLoaded) loadAiRanking(false);
             }
+            // Bloc C (2026-09-15): la barra fixa nomes te sentit a la pestanya Wizard.
+            if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
         }
 
         function detectAvailableTabs() {
@@ -4586,6 +4861,9 @@
             } else {
                 startBtn.title = "Inicia el pipeline amb aquesta carpeta com a projecte.";
             }
+
+            // Bloc E: cada canvi de carpeta recalcula la durada de "Comencar".
+            if (typeof _jobsScheduleEstimate === 'function') _jobsScheduleEstimate();
         }
 
         function nbEscapeHtml(s) {
@@ -4922,10 +5200,18 @@
         }
 
         function skipPreQuestions() { closePreQuestions(); }
-        function closePreQuestions() { document.getElementById('evaPreQuestions').style.display = 'none'; }
+        function closePreQuestions() {
+            document.getElementById('evaPreQuestions').style.display = 'none';
+            // M1 (esmena de revisio): el pipeline pot haver acabat mentre el modal
+            // era obert -- ara que es tanca, la barra ja pot sortir.
+            if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
+        }
 
         async function onProjectChange(projectName) {
             selectedProject = projectName;
+            // Bloc E: desplegable classic (sense navegador de xarxa) -- recalcula
+            // la durada de "Comencar" per al nou projecte.
+            if (typeof _jobsScheduleEstimate === 'function') _jobsScheduleEstimate();
             // Triar el projecte és llançar-ne el pipeline (les dues vies acaben a loadProjectData): a partir d'aquí la
             // pestanya d'imatges i la zona d'alternatives poden mostrar-se; abans, res «de memòria» (Josep, 2026-09-09).
             imagesReadyFor = projectName; altData = null; altSlotShown = null; hideAltZone();
@@ -4960,9 +5246,11 @@
             // Reset wizard form
             document.getElementById('wizardLoading').style.display = 'none';
             document.getElementById('wizardForm').style.display = 'none';
-            const resultDiv = document.getElementById('wizardResult');
-            resultDiv.style.display = 'none';
-            resultDiv.className = 'wizard-result';
+            // Bloc C (2026-09-15): #wizardResult ha desaparegut -- reinicia la barra fixa.
+            _wizardBarSetStatus('', '');
+            _wizardBarShowResult('', null);
+            _wizardBarSoftGateShown = false;
+            if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
 
             if (!selectedProject) {
                 hideStepper();
@@ -5172,6 +5460,14 @@
         function renderInstructions(prefills) {
             const container = document.getElementById('wizardInstructions');
             if (!container || !selectedProject) { container && (container.style.display = 'none'); return; }
+
+            // Bloc A (2026-09-15): amb la lectura headless activa (panell de jobs
+            // visible) aquest panell no aporta res -- la lectura ja la fa Claude i el
+            // "Visio IA (0/4)" que hi sortiria seria fals. Via clàssica: sense canvis.
+            if (typeof _jobsEnabled !== 'undefined' && _jobsEnabled) {
+                container.style.display = 'none';
+                return;
+            }
 
             // Stop any existing polling
             if (visionPollTimer) { clearInterval(visionPollTimer); visionPollTimer = null; }
@@ -5695,6 +5991,11 @@
             document.getElementById('wizardLoading').style.display = 'none';
             document.getElementById('wizardForm').style.display = 'block';
             document.getElementById('wizardUnsaved').style.display = 'none';
+            // Bloc C (2026-09-15): projecte nou -> barra en blanc (res desat encara).
+            _wizardBarSetStatus('', '');
+            _wizardBarShowResult('', null);
+            _wizardBarSoftGateShown = false;
+            _wizardBarWatch();
             switchTab('wizard');
         }
 
@@ -5963,6 +6264,14 @@
                 wizardDataLoaded = true;
                 wizardDirty = false;
                 document.getElementById('wizardUnsaved').style.display = 'none';
+                // Bloc C (2026-09-15): dades noves -> barra en blanc.
+                _wizardBarSetStatus('', '');
+                _wizardBarSoftGateShown = false;
+                _wizardBarWatch();
+                // M1 (esmena de revisio): aquest cami (tab clicat abans que la resta
+                // del pipeline marqui `wizardDataLoaded`) tambe deixa el formulari
+                // poblat -- cal tornar a avaluar si la barra ja pot sortir.
+                if (typeof updateWizardBarVisibility === 'function') updateWizardBarVisibility();
             } catch (err) {
                 showMessage('Error carregant dades wizard: ' + err.message, 'error');
             } finally {
@@ -5986,6 +6295,41 @@
             return { value: null, source: null };
         }
 
+        // Bloc D (2026-09-15) + esmenes de revisio (W1/W2): mapa determinista cadena
+        // tecnica -> etiqueta que l'Eva enten. La cadena original SENCERA es queda
+        // sempre al `title` (tooltip).
+        // Ordre important: "informe"/"Eva template" (el seu propi informe
+        // anterior) abans que "plànol"; "plantilla" SOLA no compta com informe
+        // anterior ("plantilla generada" es una frase per patró, no un informe
+        // d'Eva -> cau a "calculat"). "plànol" NOMES amb `planol`/`plànol`/`A.01`/
+        // `architect_plan` literals (mai per "visió" sola: "vision (fotos camp)" o
+        // "vision_probe:..." no son el plànol) i mai si hi ha "ICGC" (p. ex. "ICGC
+        // ortho+visió" ha de sortir com ICGC / Cadastre). "assaigs de camp" nomes amb
+        // els tokens propis de l'assaig (DPSH/sondeig/SPT/penetro/N20/GTL/Lab PDF/
+        // laboratori) i mai si la cadena es una comanda de laboratori (document
+        // administratiu, no un resultat d'assaig).
+        function _wizardSourceLabel(source) {
+            const s = String(source);
+            const sl = s.toLowerCase();
+            if (s === 'user' || s === 'user_data.json anterior') return { label: 'tu', cls: 'user' };
+            if (sl.includes('default') || sl.includes('estandard')) return { label: 'per defecte', cls: 'default' };
+            if (s === 'revisar') return { label: 'revisar', cls: 'revisar' };
+            if (sl.includes('informe') || sl.includes('eva template')) {
+                return { label: "el teu informe anterior", cls: 'auto' };
+            }
+            if (!sl.includes('icgc') && /(planol|plànol|a\.01|architect_plan)/.test(sl)) {
+                return { label: 'plànol', cls: 'auto' };
+            }
+            if (/(icgc|cadastre|geocode|nominatim|ortho)/.test(sl)) return { label: 'ICGC / Cadastre', cls: 'auto' };
+            if (/(dpsh|sondeig|spt|penetro|n20|gtl|lab pdf|laboratori)/.test(sl) && !sl.includes('comanda')) {
+                return { label: 'assaigs de camp', cls: 'auto' };
+            }
+            if (/(terzaghi|schmertmann|winkler|computed|\bnb\b|cte|ncse|signat|granular|cohesiu|crespo|arrodonit|plantilla generada)/.test(sl)) {
+                return { label: 'calculat', cls: 'auto' };
+            }
+            return { label: 'llegit als documents', cls: 'auto' };
+        }
+
         function setSourceBadge(field, source) {
             const badge = document.getElementById(`src-${field}`);
             if (!badge) return;
@@ -5995,26 +6339,10 @@
                 badge.title = '';
                 return;
             }
-            let label = source;
-            let cls = 'auto';
-            if (source === 'user' || source === 'user_data.json anterior') {
-                label = 'user_data';
-                cls = 'user';
-            } else if (source.includes('default') || source.includes('estandard')) {
-                label = 'defecte';
-                cls = 'default';
-            } else if (source.includes('plantilla')) {
-                label = 'plantilla';
-                cls = 'auto';
-            } else if (source.startsWith('groq_llm:')) {
-                label = 'groq:' + source.split('/').pop();
-                cls = 'groq';
-            } else if (label.length > 20) {
-                label = label.substring(0, 18) + '...';
-            }
+            const { label, cls } = _wizardSourceLabel(source);
             badge.textContent = label;
             badge.className = `source-badge ${cls}`;
-            badge.title = label !== source ? source : '';
+            badge.title = source;
 
             // Show +N alternatives badge if available
             const alts = (wizardPrefills._alternatives && wizardPrefills._alternatives.value)
@@ -6249,15 +6577,16 @@
                 });
             });
 
-            // -- ConceptScout Coverage --
+            // -- ConceptScout Coverage -- (Bloc A, 2026-09-15): era un comptador intern
+            // de desenvolupador sense valor per a l'Eva. Es manté el càlcul per si cal
+            // reactivar-lo, pero mai es mostra (`banner.style.display` es queda al
+            // 'none' definit a l'HTML).
             const cmData = wizardPrefills._concept_map;
             if (cmData && cmData.value) {
                 const numFound = Object.keys(cmData.value).length;
-                const banner = document.getElementById('conceptCoverageBanner');
                 const value = document.getElementById('conceptCoverageValue');
-                if (banner && value) {
+                if (value) {
                     value.textContent = `${numFound} conceptes detectats en fitxers del projecte`;
-                    banner.style.display = 'flex';
                 }
             }
 
@@ -6860,34 +7189,36 @@
 
             // Build description from primary detection
             const det = detections[0];
-            const coverage = Math.round((det.extraction_coverage || 0) * 100);
             const extracted = (det.extracted_fields || []).length;
             const total = (det.expected_fields || []).length;
             const missingFields = det.missing_fields || [];
 
-            document.getElementById('flTitle').textContent =
-                `Format nou detectat: ${det.file_path || 'document'}`;
+            // Bloc B (2026-09-15): to informatiu, no d'alarma -- explica que ha passat
+            // i que no es cap problema («les altres surten d'altres fonts»).
+            document.getElementById('flTitle').textContent = 'Format nou detectat';
             document.getElementById('flDescription').textContent =
-                `S'han extret ${extracted} de ${total} camps esperats (${coverage}%). ` +
-                `Revisa els camps marcats en taronja.`;
+                `Del fitxer ${det.file_path || 'document'} només n'he pogut llegir ${extracted} de ${total} dades. ` +
+                `Les altres surten d'altres fonts o les pots omplir tu.`;
 
-            // Highlight missing fields with amber border
+            // Bloc B (2026-09-15): només es marca en taronja el camp REALMENT buit.
+            // Un camp que ja te valor (vingui d'on vingui) no necessita revisio.
             missingFields.forEach(fieldName => {
                 const candidates = [
                     `wiz-${fieldName}`,
                     `wiz-${fieldName.replace(/_/g, '-')}`,
                 ];
+                let el = null;
                 for (const id of candidates) {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.classList.add('format-learning-field');
-                        break;
-                    }
+                    const cand = document.getElementById(id);
+                    if (cand) { el = cand; break; }
                 }
+                if (!el || el.value) return;   // ja te valor: no es toca
+
+                el.classList.add('format-learning-field');
                 const badge = document.getElementById(`src-${fieldName}`);
                 if (badge) {
                     badge.textContent = 'revisar';
-                    badge.className = 'source-badge format-learning';
+                    badge.className = 'source-badge revisar';
                 }
             });
         }
@@ -7238,10 +7569,188 @@
             document.body.appendChild(overlay);
         }
 
+        // ============================================================
+        // Bloc C (2026-09-15): barra fixa del Wizard
+        // ============================================================
+        let _wizardBarSoftGateShown = false;   // l'Eva ja ha vist "Revisar primer / Generar igualment"
+        let _wizardBarResultTimer = null;
+        let _wizardBarObserver = null;
+        let _wizardBarResizeObserver = null;
+
+        function _wizardBarTimeNow() {
+            return new Date().toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function _wizardBarSetStatus(text, cls) {
+            const el = document.getElementById('wizardBarSaveStatus');
+            if (!el) return;
+            el.textContent = text;
+            el.className = 'wizard-bar-status' + (cls ? ' ' + cls : '');
+        }
+
+        // N = camps amb badge "revisar" (Bloc B/D) o amb estat `candidats`/`no_trobat`
+        // (taules DPSH/Sondeig, Bloc lectura headless).
+        //
+        // Fix (esmena de revisio): #sourceLegend conte una mostra
+        // `.source-badge.revisar` nomes per ensenyar el color -- s'exclou perque
+        // no es un camp pendent. A mes, un mateix camp pot tenir alhora el badge
+        // `revisar` i un `.estat-badge` (candidats/no_trobat) al mateix
+        // contenidor -- es dedupliquen per `.wizard-field` per comptar CAMPS,
+        // no badges. Font unica: aquesta funcio; `scrollToFirstPendingField`
+        // en depen per no recaure en el mateix bug.
+        function _wizardBarPendingBadges() {
+            const form = document.getElementById('wizardForm');
+            if (!form) return [];
+            const badges = Array.from(form.querySelectorAll(
+                '.source-badge.revisar, .estat-badge.candidats, .estat-badge.no_trobat'
+            )).filter((b) => !b.closest('.source-legend'));
+            const seen = new Set();
+            const result = [];
+            badges.forEach((b) => {
+                const fieldEl = b.closest('.wizard-field') || b;
+                if (seen.has(fieldEl)) return;
+                seen.add(fieldEl);
+                result.push(b);
+            });
+            return result;
+        }
+
+        function _wizardBarPendingCount() {
+            return _wizardBarPendingBadges().length;
+        }
+
+        function refreshWizardBarCounter() {
+            const count = _wizardBarPendingCount();
+            if (count === 0) _wizardBarSoftGateShown = false;
+            const el = document.getElementById('wizardBarCounter');
+            if (el) {
+                // M2 (esmena de revisio): concordanca singular/plural.
+                let counterText;
+                if (count === 0) counterText = 'Tots els camps revisats';
+                else if (count === 1) counterText = 'Queda 1 camp a revisar';
+                else counterText = `Queden ${count} camps a revisar`;
+                el.textContent = counterText;
+                el.disabled = count === 0;
+            }
+            updateWizardBarActions(count);
+        }
+
+        function updateWizardBarActions(count) {
+            if (count === undefined) count = _wizardBarPendingCount();
+            const container = document.getElementById('wizardBarActions');
+            if (!container) return;
+            if (count > 0 && _wizardBarSoftGateShown) {
+                container.innerHTML =
+                    '<button type="button" class="btn btn-secondary" onclick="scrollToFirstPendingField()">Revisar primer</button>' +
+                    `<button type="button" class="btn btn-success" onclick="onWizardBarGenerateClick(true)">Generar igualment (${count} a revisar)</button>`;
+            } else {
+                container.innerHTML =
+                    '<button type="button" class="btn btn-success" onclick="onWizardBarGenerateClick()">Generar informe</button>';
+            }
+        }
+
+        function onWizardBarGenerateClick(forced) {
+            const count = _wizardBarPendingCount();
+            if (count > 0 && !forced) {
+                // Porta suau (Josep, 2026-09-14): mai bloquejar -- nomes oferir el pas
+                // de revisar abans, sense `confirm()` ni cap modal.
+                _wizardBarSoftGateShown = true;
+                updateWizardBarActions(count);
+                return;
+            }
+            generateReport();
+        }
+
+        function scrollToFirstPendingField() {
+            const target = _wizardBarPendingBadges()[0];
+            if (!target) return;
+            const field = target.closest('.wizard-field') || target.closest('.wizard-group') || target;
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            field.classList.add('wizard-bar-highlight');
+            setTimeout(() => field.classList.remove('wizard-bar-highlight'), 1600);
+        }
+
+        function _wizardBarWarningsDetails(warnings) {
+            if (!warnings || !warnings.length) return '';
+            const items = warnings.map(w => `<li>${escapeHtml(w)}</li>`).join('');
+            // S1 (esmena de revisio): obert per defecte -- l'Eva els ha de veure.
+            return `<details class="wizard-bar-warnings" open><summary>avisos (${warnings.length})</summary><ul>${items}</ul></details>`;
+        }
+
+        function _wizardBarDismissResult() {
+            _wizardBarShowResult('', null);
+        }
+
+        function _wizardBarShowResult(html, type, opts) {
+            opts = opts || {};
+            const el = document.getElementById('wizardBarResult');
+            if (!el) return;
+            if (_wizardBarResultTimer) { clearTimeout(_wizardBarResultTimer); _wizardBarResultTimer = null; }
+            if (!html) {
+                el.style.display = 'none';
+                el.innerHTML = '';
+                el.className = 'wizard-bar-result';
+                return;
+            }
+            el.innerHTML =
+                `<div class="wizard-bar-result-body">${html}</div>` +
+                '<button type="button" class="wizard-bar-result-close" onclick="_wizardBarDismissResult()" ' +
+                'aria-label="Tanca l\'avís" title="Tanca">✕</button>';
+            el.className = 'wizard-bar-result' + (type ? ' ' + type : '');
+            el.style.display = 'flex';
+            if (!opts.persistent) {
+                _wizardBarResultTimer = setTimeout(() => { _wizardBarDismissResult(); }, 5000);
+            }
+        }
+
+        function updateWizardBarVisibility() {
+            const bar = document.getElementById('wizardBar');
+            if (!bar) return;
+            // M1 (esmena de revisio): abans nomes mirava `selectedProject` + pestanya,
+            // per que es veia amb el pipeline encara corrent (formulari buit) i amb la
+            // capa "Observacions de camp" oberta. Ara cal que el formulari ja estigui
+            // poblat (`wizardDataLoaded`, que nomes es cert un cop arribat a "Llest")
+            // i que el modal de preguntes no estigui obert.
+            const modal = document.getElementById('evaPreQuestions');
+            const modalOpen = !!modal && modal.style.display !== 'none';
+            const visible = !!selectedProject && currentTab === 'wizard' && wizardDataLoaded && !modalOpen;
+            bar.style.display = visible ? 'block' : 'none';
+            if (visible) refreshWizardBarCounter();
+        }
+
+        // Qualsevol canvi de classe (badges) dins el formulari recalcula el comptador,
+        // sense haver de tocar cada funcio que pinta una taula o un badge.
+        function _wizardBarWatch() {
+            const form = document.getElementById('wizardForm');
+            if (!form || _wizardBarObserver) return;
+            _wizardBarObserver = new MutationObserver(() => refreshWizardBarCounter());
+            _wizardBarObserver.observe(form, { attributes: true, attributeFilter: ['class'], subtree: true, childList: true });
+            _wizardBarWatchResize();
+        }
+
+        // W3 (esmena de revisio): `padding-bottom` fix (96px) no seguia l'alcada real
+        // de la barra (creix a dues linies amb resultat + avisos). El CSS es queda
+        // nomes com a valor de partida; a partir d'aqui el marge el calcula sempre
+        // la mida real de `#wizardBar`.
+        function _wizardBarSyncPadding() {
+            const bar = document.getElementById('wizardBar');
+            const form = document.getElementById('wizardForm');
+            if (!bar || !form) return;
+            form.style.paddingBottom = (bar.offsetHeight + 24) + 'px';
+        }
+
+        function _wizardBarWatchResize() {
+            const bar = document.getElementById('wizardBar');
+            if (!bar || _wizardBarResizeObserver || typeof ResizeObserver === 'undefined') return;
+            _wizardBarResizeObserver = new ResizeObserver(() => _wizardBarSyncPadding());
+            _wizardBarResizeObserver.observe(bar);
+        }
+
         let _autoSaveTimer = null;
         function markWizardDirty(fieldOrEvent) {
             wizardDirty = true;
             document.getElementById('wizardUnsaved').style.display = 'inline';
+            _wizardBarSetStatus('Canvis pendents…', 'pending');
             // Update source badge to green for the changed field
             let field = null;
             if (typeof fieldOrEvent === 'string') {
@@ -7396,11 +7905,11 @@
         }
 
         async function saveWizard() {
-            if (!selectedProject) return;
+            if (!selectedProject) return true;
 
-            const btn = document.getElementById('btnSaveWizard');
-            btn.disabled = true;
-            btn.textContent = 'Guardant...';
+            // Bloc C (2026-09-15): sense boto -- l'autosave ho fa sola; l'estat es
+            // comunica nomes a la barra fixa.
+            _wizardBarSetStatus('Guardant…', 'pending');
 
             try {
                 const body = {
@@ -7426,30 +7935,39 @@
 
                 wizardDirty = false;
                 document.getElementById('wizardUnsaved').style.display = 'none';
-                showMessage('Dades guardades correctament', 'success');
+                _wizardBarSetStatus('Desat automàticament · ' + _wizardBarTimeNow(), 'saved');
                 // Format learning toast
                 if (wizardPrefills._format_learning && wizardPrefills._format_learning.value && wizardPrefills._format_learning.value.active) {
                     showFormatToast('Format desat. Proper cop s\'extrauran automaticament.');
                 }
+                return true;
             } catch (err) {
+                _wizardBarSetStatus('No s\'ha pogut desar', 'pending');
                 showMessage('Error guardant: ' + err.message, 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Guardar Dades';
+                return err.message || 'error desconegut';
             }
         }
 
         async function generateReport() {
             if (!selectedProject) return;
 
-            // Always save first
-            await saveWizard();
+            // Always save first. C1 (esmena de revisio): si el desat falla no es pot
+            // generar sobre dades no desades -- l'error es queda persistent a la
+            // barra i el boto torna a l'estat normal (sense "Generant informe...").
+            const saveResult = await saveWizard();
+            if (saveResult !== true) {
+                _wizardBarShowResult(
+                    `<strong>No s'han pogut desar els canvis:</strong> ${escapeHtml(String(saveResult))}`,
+                    'error', { persistent: true }
+                );
+                _wizardBarSoftGateShown = false;
+                updateWizardBarActions();
+                return;
+            }
 
-            const btn = document.getElementById('btnGenerateReport');
-            const resultDiv = document.getElementById('wizardResult');
-            btn.disabled = true;
-            btn.textContent = 'Generant informe...';
-            resultDiv.style.display = 'none';
+            const btn = document.querySelector('#wizardBarActions .btn-success');
+            if (btn) { btn.disabled = true; btn.textContent = 'Generant informe…'; }
+            _wizardBarShowResult('', null);
 
             try {
                 const res = await fetch(`/api/generate/${encodeURIComponent(selectedProject)}`, {
@@ -7460,39 +7978,25 @@
 
                 if (data.success) {
                     const downloadUrl = `/api/report/${encodeURIComponent(selectedProject)}`;
-                    let html = `<strong>Informe generat correctament!</strong><br>
-                        <a href="${downloadUrl}" target="_blank">Descarregar ${escapeHtml(data.output_name)}</a>`;
-                    if (data.warnings && data.warnings.length > 0) {
-                        html += '<br><br><strong>Avisos:</strong><ul>';
-                        data.warnings.forEach(w => { html += `<li>${escapeHtml(w)}</li>`; });
-                        html += '</ul>';
-                    }
-                    resultDiv.innerHTML = html;
-                    resultDiv.className = 'wizard-result success';
-                    resultDiv.style.display = 'block';
-                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    let html = `<strong>Informe generat correctament.</strong> ` +
+                        `<a href="${downloadUrl}" target="_blank">Obrir ${escapeHtml(data.output_name)}</a>`;
+                    html += _wizardBarWarningsDetails(data.warnings);
+                    _wizardBarShowResult(html, 'success', { persistent: true });
                 } else {
-                    let html = '<strong>Error generant informe:</strong><ul>';
-                    (data.errors || []).forEach(e => { html += `<li>${escapeHtml(e)}</li>`; });
-                    html += '</ul>';
-                    if (data.warnings && data.warnings.length > 0) {
-                        html += '<strong>Avisos:</strong><ul>';
-                        data.warnings.forEach(w => { html += `<li>${escapeHtml(w)}</li>`; });
-                        html += '</ul>';
+                    let html = '<strong>No s\'ha pogut generar l\'informe.</strong>';
+                    if (data.errors && data.errors.length > 0) {
+                        html += `<ul>${data.errors.map(e => `<li>${escapeHtml(e)}</li>`).join('')}</ul>`;
                     }
-                    resultDiv.innerHTML = html;
-                    resultDiv.className = 'wizard-result error';
-                    resultDiv.style.display = 'block';
-                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    html += _wizardBarWarningsDetails(data.warnings);
+                    _wizardBarShowResult(html, 'error', { persistent: true });
                 }
             } catch (err) {
-                resultDiv.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message)}`;
-                resultDiv.className = 'wizard-result error';
-                resultDiv.style.display = 'block';
-                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                _wizardBarShowResult(`<strong>No s'ha pogut generar l'informe:</strong> ${escapeHtml(err.message)}`, 'error', { persistent: true });
             } finally {
-                btn.disabled = false;
-                btn.textContent = 'Generar Informe';
+                // M3 (esmena de revisio): un cop generat (exit o error) la porta suau
+                // ja ha complert la seva funcio -- torna al boto unic "Generar informe".
+                _wizardBarSoftGateShown = false;
+                updateWizardBarActions();
             }
         }
 
@@ -10744,6 +11248,12 @@
         let _jobsTimer = null;
         let _jobsEnabled = false;
         let _jobsBusy = false;
+        // Bloc E: quin boto ("preparar" o "enllestir") dispara el clic a
+        // "Comencar"/"Continuar" -- el decideix la darrera estimacio rebuda.
+        let _jobsComencarAction = 'preparar';
+        let _jobsEstimateTimer = null;
+        let _jobsEstimateSeq = 0;         // descarta respostes d'una carpeta ja abandonada
+        let _jobsEstimateAbort = null;    // cancel·la el fetch anterior, no nomes el seu resultat
 
         function _jobsEl(id) { return document.getElementById(id); }
 
@@ -10770,6 +11280,7 @@
             _jobsSyncButtons(typeof nbState === 'string' ? nbState : 'IDLE');
             _jobsWrapSetState();
             _jobsRender(data.jobs || []);
+            _jobsScheduleEstimate();
         }
 
         // Embolcall de `nbSetState` en lloc d'editar-la: aixi el bloc segueix
@@ -10792,10 +11303,114 @@
 
         function _jobsSetBusy(busy) {
             _jobsBusy = busy;
-            ['jobsBtnPreparar', 'jobsBtnEnllestir', 'jobsBtnZero', 'jobsBtnActualitzar'].forEach((id) => {
+            ['jobsBtnComencar', 'jobsLinkZero', 'jobsBtnActualitzar'].forEach((id) => {
                 const b = _jobsEl(id);
                 if (b) b.disabled = busy;
             });
+        }
+
+        // -- Bloc E: durada abans del clic --------------------------------------
+        //
+        // Un sol boto ("Comencar"/"Continuar") amb la durada calculada ABANS que
+        // Eva el premi (Josep, 2026-09-14: "l'expectativa de durada es forma
+        // abans de premer" -- per aixo l'etiqueta no canvia desprès del clic).
+        // Es recalcula a cada canvi de carpeta al navegador de xarxa (`nbRender`)
+        // o de projecte al desplegable classic (`onProjectChange`), amb un
+        // debounce de 300 ms perquè navegar de pressa no dispari una crida per
+        // carpeta de pas. `GET /api/jobs/estimate/{p}` mai copia ni escaneja amb
+        // md5 (`web/lectura_service.estimate_for_project`).
+        function _jobsScheduleEstimate() {
+            if (!_jobsEnabled) return;
+            if (_jobsEstimateTimer) { clearTimeout(_jobsEstimateTimer); _jobsEstimateTimer = null; }
+            // No nomes descartem la resposta anterior (`_jobsEstimateSeq`):
+            // tallem tambe la petició de xarxa en marxa, perquè no quedi
+            // penjada calculant una durada que ja no interessa.
+            if (_jobsEstimateAbort) { _jobsEstimateAbort.abort(); _jobsEstimateAbort = null; }
+            _jobsEstimateTimer = setTimeout(_jobsUpdateComencarButton, 300);
+        }
+
+        function _jobsCurrentPath() {
+            const browser = _jobsEl('networkBrowser');
+            const usesNetwork = browser && browser.style.display !== 'none';
+            if (usesNetwork) return (_jobsEl('nbSelectedPath') || {}).value || '';
+            return selectedProject || '';
+        }
+
+        async function _jobsUpdateComencarButton() {
+            const btn = _jobsEl('jobsBtnComencar');
+            const label = _jobsEl('jobsBtnComencarLabel');
+            const duration = _jobsEl('jobsBtnComencarDuration');
+            if (!btn || !label || !duration) return;
+
+            const path = _jobsCurrentPath();
+            if (!path) {
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = 'Tria la carpeta del projecte';
+                btn.disabled = true;
+                return;
+            }
+
+            const seq = ++_jobsEstimateSeq;
+            duration.textContent = 'calculant la durada…';
+            // Mentre calculem, el boto no pot quedar actiu amb l'accio de la
+            // carpeta ANTERIOR (Josep, revisio blocs E/G): es reactiva nomes
+            // quan arriba la resposta vigent (comprovacions `seq` mes avall).
+            btn.disabled = true;
+
+            const controller = new AbortController();
+            _jobsEstimateAbort = controller;
+
+            let data = null;
+            try {
+                const r = await fetch(`/api/jobs/estimate/${encodeURIComponent(path)}`, { signal: controller.signal });
+                if (seq !== _jobsEstimateSeq) return;     // Eva ja ha canviat de carpeta
+                if (r.ok) data = await r.json();
+            } catch (err) {
+                if (err && err.name === 'AbortError') return;   // ja n'hi ha un altre en marxa
+                if (seq !== _jobsEstimateSeq) return;
+            }
+
+            if (!data) {
+                // L'endpoint ha fallat: no bloquegem Eva per una xifra que no
+                // hem pogut calcular (§4 del bloc E — "sense xifres").
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = 'pots tancar la pestanya i tornar';
+                btn.disabled = false;
+                return;
+            }
+
+            if (data.ready) {
+                _jobsComencarAction = 'enllestir';
+                label.textContent = 'Continuar';
+                duration.textContent = data.text || '';
+                btn.disabled = false;
+            } else if (data.partial) {
+                // Tall de xarxa al principi del recorregut (`count_claude_documents`,
+                // `automation/lectura/inventory.py`): `n_docs` pot ser 0 amb tota la
+                // carpeta encara per veure. No ho confonguem amb "cap document" -- el
+                // boto es queda actiu, l'accio `preparar` fara l'inventari complet.
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = data.text || '';
+                btn.disabled = false;
+            } else if (!data.n_docs) {
+                // Arrel, contenidor, o carpeta sense cap document per llegir.
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = 'Tria la carpeta del projecte';
+                btn.disabled = true;
+            } else {
+                _jobsComencarAction = 'preparar';
+                label.textContent = 'Començar';
+                duration.textContent = data.text || '';
+                btn.disabled = false;
+            }
+        }
+
+        function jobsComencarClick() {
+            jobsRun(_jobsComencarAction);
         }
 
         // -- Avisos del delta-sync (`POST /api/jobs` -> `warnings`) -------------

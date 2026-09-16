@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Com funciona el teu assistent d'informes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#f5f6f4; --paper:#ffffff; --ink:#1e2a24; --muted:#5c6862; --rule:#d6dbd6;
+  --blue:#2b5aa3; --blue-soft:#dde7f6;
+  --orange:#c9691a; --orange-soft:#fbe7d4;
+  --green:#3d7a4a; --green-soft:#dcebdf;
+  --gray-seg:#c3cac5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161a18; --paper:#1e2421; --ink:#e8ece9; --muted:#9aa59f; --rule:#343d38;
+    --blue:#7ea4e0; --blue-soft:#243654;
+    --orange:#f0944a; --orange-soft:#4a2f18;
+    --green:#7fbf8c; --green-soft:#22382a;
+    --gray-seg:#3f4944;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161a18; --paper:#1e2421; --ink:#e8ece9; --muted:#9aa59f; --rule:#343d38;
+  --blue:#7ea4e0; --blue-soft:#243654;
+  --orange:#f0944a; --orange-soft:#4a2f18;
+  --green:#7fbf8c; --green-soft:#22382a;
+  --gray-seg:#3f4944;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Source Sans 3","Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.5;margin:0;padding-inline:20px;padding-block:32px 64px;font-variant-numeric:tabular-nums}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:.005em}
+h1{font-size:50px}
+h2{font-size:31px}
+h3{font-size:19px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+p{margin:0;max-width:64ch}
+.eyebrow{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px;padding-bottom:22px;border-bottom:3px solid var(--ink)}
+header p{font-size:19px;max-width:60ch}
+section{display:flex;flex-direction:column;gap:16px}
+.lead{font-size:19px}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+figure svg{max-width:100%;height:auto;display:block;color:var(--ink);font-family:"Source Sans 3","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+figcaption{font-size:14px;color:var(--muted);max-width:70ch}
+.term{font-weight:600;color:var(--blue)}
+.you{font-weight:600;color:var(--orange)}
+b{font-weight:600}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.tile .n{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:36px;font-weight:700;line-height:1}
+.tile .l{font-size:14px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+td:first-child{white-space:nowrap;font-weight:600}
+.tbl{overflow-x:auto}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.role{padding:12px 14px;border-top:3px solid var(--rule);background:var(--paper);font-size:15px}
+.role.you{border-top-color:var(--orange)}
+.role.sys{border-top-color:var(--blue)}
+.role b{display:block;font-size:17px;margin-bottom:4px}
+.role ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.never{background:var(--paper);border:1px solid var(--rule);border-left:5px solid var(--green);padding:14px 18px;font-size:16px}
+.never ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.note{font-size:15px;color:var(--muted);border-left:3px solid var(--rule);padding-left:12px}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 18px;margin:0;padding:0;list-style:none;font-size:15px}
+.legend li{display:flex;gap:8px;align-items:baseline}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;flex:none;position:relative;top:1px}
+.legend b{display:block}
+.legend span{color:var(--muted)}
+dl.gloss{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-size:16px}
+dl.gloss dt{font-weight:600;color:var(--blue);white-space:nowrap}
+dl.gloss dd{margin:0;max-width:60ch}
+@media (max-width:560px){
+  h1{font-size:38px} h2{font-size:26px} body{font-size:16px}
+  dl.gloss{grid-template-columns:1fr;gap:2px 0}
+  dl.gloss dd{margin-bottom:8px}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">G3DT · Com funciona el teu assistent d'informes · Eva · setembre de 2026</div>
+  <h1>Llegeix la carpeta del projecte com ho faries tu, omple l'informe i et diu d'on ha tret cada dada</h1>
+  <p>Cinc minuts per entendre què passa entre que prems un botó i tens l'informe a punt de revisar. Les paraules en <span class="term">blau</span> són les que veuràs a la pantalla; el que va en <span class="you">taronja</span> és el que depèn de tu.</p>
+</header>
+
+<section>
+  <h2>1 · L'única entrada és la carpeta de sempre</h2>
+  <p class="lead">No has de preparar res diferent. La carpeta del projecte a la xarxa, tal com la deixes avui (annexos, fotos, PDF del client, Excel del DPSH, correus), és tot el que l'assistent necessita.</p>
+  <figure>
+    <svg viewBox="0 0 900 250" role="img" aria-label="La carpeta del projecte a la xarxa es copia a l'ordinador de l'Eva com a còpia de treball; l'assistent la llegeix i només torna a la xarxa un fitxer: l'informe generat.">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+        <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--orange)"/></marker>
+      </defs>
+      <g font-size="12.5" fill="currentColor">
+        <rect x="0" y="20" width="270" height="200" rx="3" fill="var(--paper)" stroke="currentColor" stroke-width="1.2"/>
+        <text x="16" y="44" font-weight="600">Xarxa · 4001612 BELL-LLOC</text>
+        <text x="16" y="62" fill="var(--muted)">la carpeta del projecte, com sempre</text>
+        <g fill="currentColor">
+          <text x="30" y="90">25.0647</text>
+          <text x="30" y="110">ACCEPTACIO</text>
+          <text x="30" y="130">ANNEXES</text>
+          <text x="30" y="150">FOTOGRAFIES</text>
+          <text x="30" y="170">PDF · PDF V0</text>
+        </g>
+        <text x="30" y="198" fill="var(--muted)">18 documents llegibles · 117 fitxers</text>
+
+        <line x1="270" y1="80" x2="374" y2="80" stroke="currentColor" stroke-width="1.2" marker-end="url(#arr)"/>
+        <text x="322" y="70" text-anchor="middle" fill="var(--muted)">copia de treball</text>
+        <text x="322" y="98" text-anchor="middle" fill="var(--muted)">només lectura</text>
+
+        <rect x="378" y="20" width="270" height="200" rx="3" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.6"/>
+        <text x="394" y="44" font-weight="600">El teu ordinador · assistent</text>
+        <text x="394" y="62" fill="var(--muted)">llegeix, calcula, munta</text>
+        <text x="394" y="96">còpia dels fitxers</text>
+        <text x="394" y="116">lectura de cada document</text>
+        <text x="394" y="136">càlculs amb els teus criteris</text>
+        <text x="394" y="156">formulari que revises</text>
+        <text x="394" y="176">informe .docx</text>
+
+        <line x1="378" y1="160" x2="274" y2="160" stroke="var(--orange)" stroke-width="2.2" marker-end="url(#arrO)"/>
+        <text x="322" y="150" text-anchor="middle" fill="var(--orange)" font-weight="600">torna un sol fitxer</text>
+        <text x="322" y="178" text-anchor="middle" fill="var(--muted)">4001612_generated.docx</text>
+
+        <rect x="672" y="20" width="228" height="200" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="686" y="44" font-weight="600">El que NO passa</text>
+        <text x="686" y="72" fill="var(--muted)">cap fitxer teu es modifica</text>
+        <text x="686" y="92" fill="var(--muted)">ni es mou de lloc</text>
+        <text x="686" y="120" fill="var(--muted)">res no s'envia enlloc</text>
+        <text x="686" y="140" fill="var(--muted)">fora del teu ordinador i</text>
+        <text x="686" y="160" fill="var(--muted)">del compte de Claude</text>
+        <text x="686" y="188" fill="var(--muted)">si un dia falla, tens</text>
+        <text x="686" y="208" fill="var(--muted)">la carpeta intacta</text>
+      </g>
+    </svg>
+    <figcaption>Exemple real: Bell-lloc, preparat el 10 de setembre. L'assistent treballa sobre una còpia; a la carpeta de la xarxa només hi apareix l'informe generat, al costat de la resta.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>2 · Què passa quan prems «Preparar informe per demà»</h2>
+  <p class="lead">Tres lectors treballen alhora sobre la còpia. El que triga és el <span class="term">lector de documents</span>: obre cada PDF, Excel i correu i el llegeix sencer, com ho faria una persona, apuntant per a cada dada <b>en quin document i en quina frase</b> l'ha trobada.</p>
+  <figure>
+    <svg viewBox="0 0 900 360" role="img" aria-label="Seqüència de la preparació: copiar fitxers, llegir documents amb tres lectors en paral·lel (Python, Claude Code, imatges), consolidar, triar les imatges, preparar el formulari, preparat. A Bell-lloc: 45,7 minuts en total.">
+      <g font-size="12.5" fill="currentColor">
+        <!-- fila d'etapes -->
+        <rect x="0" y="30" width="140" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="70" y="54" text-anchor="middle" font-weight="600">Copiant fitxers</text>
+        <text x="70" y="72" text-anchor="middle" fill="var(--muted)">de la xarxa · segons</text>
+        <line x1="140" y1="60" x2="174" y2="60" stroke="currentColor" stroke-width="1.2" marker-end="url(#arr)"/>
+
+        <rect x="178" y="30" width="180" height="60" rx="3" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.6"/>
+        <text x="268" y="54" text-anchor="middle" font-weight="600">Llegint documents</text>
+        <text x="268" y="72" text-anchor="middle" fill="var(--muted)">18 documents · ~40 min</text>
+        <line x1="358" y1="60" x2="392" y2="60" stroke="currentColor" stroke-width="1.2" marker-end="url(#arr)"/>
+
+        <rect x="396" y="30" width="140" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="466" y="54" text-anchor="middle" font-weight="600">Consolidant</text>
+        <text x="466" y="72" text-anchor="middle" fill="var(--muted)">un valor per camp</text>
+        <line x1="536" y1="60" x2="570" y2="60" stroke="currentColor" stroke-width="1.2" marker-end="url(#arr)"/>
+
+        <rect x="574" y="30" width="140" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="644" y="54" text-anchor="middle" font-weight="600">Triant les imatges</text>
+        <text x="644" y="72" text-anchor="middle" fill="var(--muted)">fotos i figures · ~2 min</text>
+        <line x1="714" y1="60" x2="748" y2="60" stroke="currentColor" stroke-width="1.2" marker-end="url(#arr)"/>
+
+        <rect x="752" y="30" width="148" height="60" rx="3" fill="var(--green-soft)" stroke="var(--green)" stroke-width="1.6"/>
+        <text x="826" y="54" text-anchor="middle" font-weight="600">Preparat</text>
+        <text x="826" y="72" text-anchor="middle" fill="var(--muted)">formulari a punt</text>
+
+        <!-- claudàtor de temps -->
+        <line x1="0" y1="112" x2="900" y2="112" stroke="var(--orange)" stroke-width="3"/>
+        <line x1="0" y1="102" x2="0" y2="122" stroke="var(--orange)" stroke-width="3"/>
+        <line x1="899" y1="102" x2="899" y2="122" stroke="var(--orange)" stroke-width="3"/>
+        <text x="450" y="140" text-anchor="middle" font-weight="600" fill="var(--orange)">45,7 minuts a Bell-lloc · prems, tanques la pestanya i tornes quan vulguis</text>
+
+        <!-- els tres lectors, penjats de "Llegint documents" -->
+        <line x1="268" y1="90" x2="268" y2="100" stroke="var(--blue)" stroke-width="1.2"/>
+        <text x="20" y="188" font-weight="600" fill="var(--blue)">Dins de «Llegint documents», tres lectors alhora</text>
+
+        <rect x="20" y="200" width="270" height="130" rx="3" fill="var(--paper)" stroke="currentColor" stroke-width="1.2"/>
+        <text x="36" y="224" font-weight="600">Lectors de format fix</text>
+        <text x="36" y="242" fill="var(--muted)">programes petits · segons</text>
+        <text x="36" y="268">Excel del DPSH (N20, refús)</text>
+        <text x="36" y="288">laboratori (sulfats)</text>
+        <text x="36" y="308">Cadastre, ICGC (geologia, cota)</text>
+
+        <rect x="315" y="200" width="270" height="130" rx="3" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.6"/>
+        <text x="331" y="224" font-weight="600">Lector de documents (Claude)</text>
+        <text x="331" y="242" fill="var(--muted)">un document rere l'altre · minuts</text>
+        <text x="331" y="268">plànol, sondeig, penetros, correus,</text>
+        <text x="331" y="288">informes anteriors, acceptació…</text>
+        <text x="331" y="308" font-weight="600">cada dada amb document i cita</text>
+
+        <rect x="610" y="200" width="270" height="130" rx="3" fill="var(--paper)" stroke="currentColor" stroke-width="1.2"/>
+        <text x="626" y="224" font-weight="600">Lectors d'imatges (Claude)</text>
+        <text x="626" y="242" fill="var(--muted)">un cop per projecte · ~1 min cadascun</text>
+        <text x="626" y="268">mira totes les fotos i tria les</text>
+        <text x="626" y="288">de l'informe; retalla el tall i</text>
+        <text x="626" y="308">les figures dels teus annexos</text>
+      </g>
+    </svg>
+    <figcaption>Temps reals de Bell-lloc (10 de setembre de 2026): 18 documents, mediana de 3,4 minuts per document. El temps depèn del nombre de documents del projecte, no de la seva mida.</figcaption>
+  </figure>
+  <div class="tiles">
+    <div class="tile"><span class="n">45,7 min</span><span class="l">«Preparar» · Bell-lloc, 18 documents</span></div>
+    <div class="tile"><span class="n">2 s</span><span class="l">«Enllestir» l'endemà, si res ha canviat</span></div>
+    <div class="tile"><span class="n">4 s</span><span class="l">«Generar informe» · docx de 5,1 MB</span></div>
+    <div class="tile"><span class="n">0</span><span class="l">dades inventades: el que no troba, queda en blanc</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>3 · Tres botons, tres situacions</h2>
+  <p class="lead">La pantalla d'inici mostra la teva carpeta de projectes i una taula amb l'estat de cada informe. Els botons són els mateixos per a tots els projectes.</p>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>Botó</th><th>Quan el prems</th><th>Què fa</th></tr></thead>
+    <tbody>
+      <tr><td><span class="term">Preparar informe «per demà»</span></td><td>Tens la carpeta plena i no tens pressa.</td><td>Copia, llegeix tot i deixa el formulari a punt. Pots tancar la pestanya; la taula dirà «Preparat» quan acabi.</td></tr>
+      <tr><td><span class="term">Enllestir informe preparat</span></td><td>Tornes a un projecte preparat.</td><td>Mira què ha canviat a la carpeta des de l'última vegada, rellegeix només això i obre el formulari. Si res ha canviat, 2 segons.</td></tr>
+      <tr><td><span class="term">Fer un informe des de zero</span></td><td>Vols veure-ho passar ara mateix.</td><td>El mateix que «Preparar», amb la pestanya oberta i el progrés a la vista.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Mentre treballa, la taula diu en quin punt és: <span class="term">Copiant fitxers de la xarxa</span> → <span class="term">Llegint documents</span> (amb el comptador i els minuts restants) → <span class="term">Consolidant el que ha llegit</span> → <span class="term">Triant les imatges de l'informe</span> → <span class="term">Preparant el formulari</span> → <span class="term">Preparat</span>. Si el compte de Claude arriba al límit d'ús, s'atura i t'ho diu amb aquestes paraules a la mateixa taula; quan el límit es renova, el tornes a llançar i el que ja havia llegit no es rellegeix.</p>
+</section>
+
+<section>
+  <h2>4 · Cada dada diu d'on ve; el que no troba, queda en blanc</h2>
+  <p class="lead">El formulari té 42 camps. Cada un porta una etiqueta amb la <span class="term">font</span>. La regla que mana per sobre de totes: <b>mai s'inventa res</b>. Val més un camp buit que un número plausible i fals.</p>
+  <figure>
+    <svg viewBox="0 0 900 210" role="img" aria-label="Tres estats d'un camp del formulari: segur, amb una sola font i cita; candidats, amb més d'un valor trobat i l'Eva tria; no trobat, en blanc.">
+      <g font-size="12.5" fill="currentColor">
+        <rect x="0" y="20" width="285" height="150" rx="3" fill="var(--paper)" stroke="var(--green)" stroke-width="1.8"/>
+        <rect x="16" y="34" width="60" height="18" rx="9" fill="var(--green-soft)"/>
+        <text x="46" y="47" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green)">segur</text>
+        <text x="16" y="78" fill="var(--muted)">Arquitecte</text>
+        <text x="16" y="100" font-weight="600" font-size="15">JORDI BOSCH NOVELL</text>
+        <text x="16" y="126" fill="var(--muted)">font: plànol A.01.pdf, caixetí</text>
+        <text x="16" y="150">una sola font, ho pots comprovar</text>
+
+        <rect x="307" y="20" width="285" height="150" rx="3" fill="var(--paper)" stroke="var(--orange)" stroke-width="1.8"/>
+        <rect x="323" y="34" width="78" height="18" rx="9" fill="var(--orange-soft)"/>
+        <text x="362" y="47" text-anchor="middle" font-size="11" font-weight="600" fill="var(--orange)">candidats</text>
+        <text x="323" y="78" fill="var(--muted)">un camp amb dos valors trobats</text>
+        <text x="323" y="100" font-weight="600" font-size="15">valor A · valor B</text>
+        <text x="323" y="126" fill="var(--muted)">cada un amb el seu document</text>
+        <text x="323" y="150" fill="var(--orange)" font-weight="600">tries tu; el sistema no decideix</text>
+
+        <rect x="614" y="20" width="285" height="150" rx="3" fill="none" stroke="var(--gray-seg)" stroke-width="1.8" stroke-dasharray="5 4"/>
+        <rect x="630" y="34" width="78" height="18" rx="9" fill="var(--gray-seg)"/>
+        <text x="669" y="47" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">no trobat</text>
+        <text x="630" y="78" fill="var(--muted)">cap document en parla</text>
+        <text x="630" y="100" font-weight="600" font-size="15" fill="var(--muted)">— en blanc —</text>
+        <text x="630" y="126" fill="var(--muted)">l'omples tu o el deixes buit</text>
+        <text x="630" y="150">mai un valor inventat</text>
+      </g>
+    </svg>
+    <figcaption>El primer exemple és real, de Bell-lloc. Al formulari, els colors de les etiquetes són: blau = trobat automàticament, verd = el que has escrit tu, gris = valor per defecte, taronja = «revisar».</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>5 · Els càlculs segueixen els teus criteris, no fórmules genèriques</h2>
+  <p class="lead">Terzaghi, Schmertmann i Rodríguez Ortiz es programen igual a tot arreu. El que fa que un informe sigui <b>teu</b> són els criteris: quin estrat mana (el que recolza la fonamentació), com arrodoneixes, quins topalls poses. Això s'ha extret dels teus set informes signats i és el que el sistema aplica.</p>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>A Bell-lloc</th><th>Valor al formulari</th><th>D'on surt</th></tr></thead>
+    <tbody>
+      <tr><td>Qa (càrrega admissible)</td><td>1,49 kp/cm²</td><td>Terzaghi sobre l'estrat on recolza la sabata, amb els teus paràmetres (γ, c, φ) i topalls</td></tr>
+      <tr><td>K30 (balast)</td><td>1,3 kp/cm³</td><td>a partir d'E, amb la relació que fas servir als signats</td></tr>
+      <tr><td>Assentament</td><td>1,01 cm</td><td>Schmertmann; és la comprovació de servei, no el que mana</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Comprovació feta: la cadena de Qa reprodueix exactament el valor de 6 dels 7 informes signats. En el setè hi ha una diferència que encara estem mirant. Si un dia canvies un criteri, es canvia en un sol lloc i s'aplica a tots els projectes següents.</p>
+</section>
+
+<section>
+  <h2>6 · Les imatges surten dels teus annexos i de les teves fotos</h2>
+  <p class="lead">L'informe té <span class="term">ranures</span> d'imatge amb nom (situació, projecte, assaigs, vista general, penetròmetre, sondeig, materials, cullera SPT, mapa geològic, tall). Cada ranura s'omple per una de tres vies, i la teva sempre mana.</p>
+  <figure>
+    <svg viewBox="0 0 900 230" role="img" aria-label="Una ranura d'imatge de l'informe rep candidats de tres vies: automàtica des dels annexos, el lector d'imatges que ha mirat totes les fotos, i l'Eva amb Alternatives o Puja una imatge. La tria de l'Eva té prioritat sobre les altres dues.">
+      <g font-size="12.5" fill="currentColor">
+        <rect x="0" y="20" width="240" height="56" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="120" y="43" text-anchor="middle" font-weight="600">Automàtic</text>
+        <text x="120" y="61" text-anchor="middle" fill="var(--muted)">retall dels teus annexos (tall, assaigs)</text>
+
+        <rect x="0" y="92" width="240" height="56" rx="3" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.6"/>
+        <text x="120" y="115" text-anchor="middle" font-weight="600">Lector d'imatges</text>
+        <text x="120" y="133" text-anchor="middle" fill="var(--muted)">ha mirat totes les fotos i en proposa</text>
+
+        <rect x="0" y="164" width="240" height="56" rx="3" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="1.8"/>
+        <text x="120" y="187" text-anchor="middle" font-weight="600">Tu</text>
+        <text x="120" y="205" text-anchor="middle" fill="var(--muted)">«Alternatives (n)» · «Puja una imatge»</text>
+
+        <line x1="240" y1="48" x2="400" y2="112" stroke="currentColor" stroke-width="1.2" marker-end="url(#arr)"/>
+        <line x1="240" y1="120" x2="400" y2="120" stroke="var(--blue)" stroke-width="1.4" marker-end="url(#arr)"/>
+        <line x1="240" y1="192" x2="400" y2="128" stroke="var(--orange)" stroke-width="2.4" marker-end="url(#arrO)"/>
+
+        <rect x="404" y="70" width="220" height="100" rx="3" fill="var(--paper)" stroke="currentColor" stroke-width="1.4"/>
+        <text x="514" y="98" text-anchor="middle" font-weight="600">Ranura «Foto sondeig»</text>
+        <text x="514" y="118" text-anchor="middle" fill="var(--muted)">una imatge, un peu</text>
+        <text x="514" y="146" text-anchor="middle" fill="var(--orange)" font-weight="600">la teva tria mana sempre</text>
+
+        <line x1="624" y1="120" x2="690" y2="120" stroke="currentColor" stroke-width="1.2" marker-end="url(#arr)"/>
+        <rect x="694" y="70" width="206" height="100" rx="3" fill="var(--green-soft)" stroke="var(--green)" stroke-width="1.6"/>
+        <text x="797" y="98" text-anchor="middle" font-weight="600">Informe .docx</text>
+        <text x="797" y="118" text-anchor="middle" fill="var(--muted)">«Fotografia 4» numerada sola</text>
+        <text x="797" y="146" text-anchor="middle" fill="var(--muted)">«Tornar a l'automàtic» ho desfà</text>
+      </g>
+    </svg>
+    <figcaption>A la pestanya «Imatges» veus, per a cada ranura, la imatge actual i qui l'ha triada. Una imatge pujada es desa dins la còpia del projecte; l'original del teu ordinador no es toca. Els números de figures i fotografies es recalculen segons el que hi ha.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>7 · Qui fa què</h2>
+  <div class="roles">
+    <div class="role you"><b>Tu</b>
+      <ul><li>El treball de camp i la carpeta, com sempre</li><li>Revisar el formulari: els «revisar» i els «candidats»</li><li>Triar imatges si la proposta no t'agrada</li><li>Signar l'informe: és teu</li></ul></div>
+    <div class="role sys"><b>L'assistent</b>
+      <ul><li>Copiar, llegir i consolidar els documents</li><li>Calcular amb els teus criteris</li><li>Muntar el .docx amb text, taules i imatges</li><li>Dir-te d'on ve cada cosa i què no ha trobat</li></ul></div>
+    <div class="role"><b>Josep</b>
+      <ul><li>Instal·lar-ho i mantenir-ho al dia</li><li>Recollir els casos on s'equivoca i corregir-los a l'arrel</li><li>Afegir criteris nous quan els canviïs</li></ul></div>
+  </div>
+  <div class="never"><b>El que no fa mai</b>
+    <ul>
+      <li>Inventar una dada, un valor o una frase que no surti dels teus documents o dels teus criteris.</li>
+      <li>Modificar, moure o esborrar res de la carpeta de la xarxa; només hi deixa l'informe.</li>
+      <li>Enviar els teus fitxers a cap altre lloc que el teu ordinador i el compte de Claude que has contractat.</li>
+      <li>Decidir per tu quan hi ha dubte: t'ho ensenya i t'ho pregunta.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Les paraules que veuràs</h2>
+  <dl class="gloss">
+    <dt>Preparar</dt><dd>Llegir tot el projecte i deixar el formulari a punt. És el botó llarg (minuts); es pot tancar la pestanya.</dd>
+    <dt>Enllestir</dt><dd>Obrir un projecte ja preparat rellegint només el que ha canviat a la carpeta.</dd>
+    <dt>Lector</dt><dd>Claude Code, que llegeix els documents i mira les fotos. Va amb el compte de Claude del despatx; si arriba al límit d'ús, s'atura i t'ho diu.</dd>
+    <dt>Font</dt><dd>El document (i la frase) d'on surt una dada. Cada camp del formulari en porta una.</dd>
+    <dt>Segur · candidats · no trobat</dt><dd>Els tres estats d'una dada: una font clara; més d'un valor i tries tu; res, en blanc.</dd>
+    <dt>Ranura</dt><dd>Un lloc de l'informe on va una imatge amb nom propi (foto del sondeig, tall geotècnic…).</dd>
+    <dt>Alternatives</dt><dd>Les altres imatges que el lector ha trobat per a una ranura; s'obren amb el botó del mateix nom.</dd>
+    <dt>Formulari</dt><dd>La pantalla amb els 42 camps que revises abans de «Generar informe».</dd>
+  </dl>
+</section>
+
+</div>
+</body>
+</html>

@@ -743,6 +743,109 @@ def _network_delta(project_name: str) -> dict[str, Any] | None:
     return payload
 
 
+def _estimate_text(n_docs: int, estimate_s: int | None, *, ready: bool, partial: bool = False) -> str:
+    """Redacta el subtítol del botó «Començar»/«Continuar» (Bloc E, disseny
+    `PLA-UX-WIZARD-2026-09.md`): mateixes regles d'arrodoniment que
+    `job_text._round_estimate` (Fase 14a) — segons mai, minut exacte fins a
+    10 min, múltiples de 5 a partir d'allà — amb «uns» en lloc de «≈» perquè
+    aquí no hi ha cap xifra que baixi mentre es mira (és una estimació
+    d'entrada, no un comptador en marxa)."""
+    from automation.lectura import job_text
+
+    rounded = job_text._round_estimate(estimate_s)
+    if rounded is None:
+        duration = None
+    elif rounded == "< 1 min":
+        duration = "menys d'1 min"
+    else:
+        duration = rounded.replace("≈ ", "uns ")
+
+    if ready:
+        head = "res no ha canviat" if n_docs <= 0 else (
+            f"{n_docs} document nou o canviat" if n_docs == 1 else f"{n_docs} documents nous o canviats"
+        )
+        return f"{head} · {duration}" if duration else head
+
+    if duration is None:
+        return "pots tancar la pestanya i tornar"
+    if partial:
+        # `count_claude_documents` pot haver tallat de seguida (docstring a
+        # `automation/lectura/inventory.py`): `n_docs`/`duration` poden ser
+        # gairebé 0 amb la carpeta quasi sencera per veure. No presentem cap
+        # xifra ferma -- diem-ho tal qual.
+        return "no he pogut mirar tota la carpeta (recompte parcial) · pots tancar la pestanya i tornar"
+    noun = "document" if n_docs == 1 else "documents"
+    return f"{n_docs} {noun} · {duration} · pots tancar la pestanya i tornar"
+
+
+def estimate_for_project(project_name: str) -> dict[str, Any]:
+    """Bloc E — durada estimada ABANS que Eva premi «Començar»/«Continuar»
+    (disseny `PLA-UX-WIZARD-2026-09.md` bloc E), sense copiar ni escanejar amb
+    md5 res.
+
+    `project_name` arriba tal com el té la UI en aquell instant, NO resolt via
+    `/api/network/select` (que sí que copia el projecte sencer — inacceptable
+    en una crida que dispara cada canvi de carpeta al navegador, amb
+    debounce de 300 ms): en mode xarxa és el path relatiu seleccionat al
+    navegador (`nbSelectedPath`, pot ser anidat i encara no ser al workspace);
+    en mode dev/classic, el leaf local de sempre (`selectedProject`).
+
+    Si ja hi ha un job `ready` per aquest projecte, es reutilitza el
+    `network_delta` que `list_jobs()` ja calcula i cacheja (1 min) — mai es
+    torna a recórrer la carpeta sencera per a un projecte que ja s'ha llegit.
+    """
+    from automation import sync_workspace
+    from automation.lectura.inventory import count_claude_documents
+
+    network_on = sync_workspace.is_network_workflow_enabled()
+    telemetry_paths = sorted(_jobs_root().glob("*/validation/lectura/_telemetry.jsonl"))
+    concurrency = _env_int("G3DT_LECTURA_CONCURRENCY", 2)
+
+    leaf = project_name
+    if network_on:
+        try:
+            leaf = sync_workspace.resolve_workspace_leaf(project_name)
+        except ValueError:
+            leaf = project_name
+
+        for job in list_jobs():
+            if job.get("project") != leaf or job.get("state") != jobs_module.READY:
+                continue
+            delta = job.get("network_delta")
+            if not isinstance(delta, dict):
+                break
+            n_docs = int(delta.get("new") or 0) + int(delta.get("changed") or 0)
+            estimate_s = delta.get("estimate_s")
+            return {
+                "n_docs": n_docs,
+                "estimate_s": estimate_s,
+                "text": _estimate_text(n_docs, estimate_s, ready=True),
+                "ready": True,
+                "partial": bool(delta.get("partial")),
+            }
+
+    try:
+        project_path = (
+            sync_workspace.resolve_network_path(project_name) if network_on
+            else _resolve_project(project_name)
+        )
+    except (ValueError, OSError):
+        # Arrel de la xarxa, carpeta contenidor, o path que ha desaparegut
+        # entre dues tecles: cap xifra, el botó es queda desactivat (§5 UI).
+        return {"n_docs": 0, "estimate_s": None, "text": "", "ready": False, "partial": False}
+
+    counts = count_claude_documents(project_path)
+    n_docs = counts["n_docs"]
+    estimate_s = jobs_module.estimate_for_documents(n_docs, telemetry_paths, concurrency)
+    return {
+        "n_docs": n_docs,
+        "estimate_s": estimate_s,
+        "text": _estimate_text(n_docs, estimate_s, ready=False, partial=bool(counts.get("partial"))),
+        "ready": False,
+        "partial": bool(counts.get("partial")),
+    }
+
+
 def list_jobs(*, refresh: bool = False) -> list[dict[str, Any]]:
     """Taula d'estat dels jobs (disseny §5.2): vius primer, després
     `updated_at` desc, últims 30 dies.

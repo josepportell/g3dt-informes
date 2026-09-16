@@ -274,3 +274,55 @@ def test_real_projects_have_current_pdf_dir_so_v0_rule_is_inert(project):
     assert has_current_pdf_dir(project)
     assert not any("version" in e for e in build_inventory(project)["files"])
 
+
+# ---------------------------------------------------------------------------
+# Bloc E (2026-09, `PLA-UX-WIZARD-2026-09.md`): `count_claude_documents` —
+# la mateixa classificació per nom que `build_inventory`, però sense md5 ni
+# obrir cap fitxer (crida sobre carpetes de xarxa a cada canvi de selecció).
+# ---------------------------------------------------------------------------
+
+def test_count_claude_documents_matches_build_inventory_on_real_projects():
+    """Mateix criteri d'enrutament, mesurat de dues maneres diferents."""
+    from automation.lectura.inventory import count_claude_documents
+
+    for project in (BELL_LLOC, RUBI):
+        inv = build_inventory(project)
+        expected_docs = sum(1 for f in inv["files"] if f["route"] == "claude")
+        counts = count_claude_documents(project)
+        assert counts["n_docs"] == expected_docs
+        assert counts["n_files"] == len(inv["files"])
+        assert "partial" not in counts
+
+
+def test_count_claude_documents_on_a_mixed_folder(tmp_path):
+    """Carpeta temporal amb PDF/xls/msg/imatges i subcarpetes: només compta
+    el que `route == "claude"`."""
+    from automation.lectura.inventory import count_claude_documents
+
+    proj = tmp_path / "4001699 MOLLERUSSA"
+    for rel in (
+        "PDF/ANNEXES/4001699_sondeig.pdf",     # claude (annex_sondeig)
+        "PDF/ANNEXES/4001699_DPSH.pdf",        # claude (annex_dpsh)
+        "ANNEXES/4001699_DPSH.xls",            # claude (dpsh_excel)
+        "A.01 plànol.pdf",                     # claude (planol)
+        "correu client.msg",                   # claude (correu)
+        "FOTOGRAFIES/obra1.jpg",               # skip (foto)
+        "PRESSUPOST GEOTECNIC.pdf",            # python
+        "validation/lectura/_inventory.json",  # skip (exclos_carpeta)
+    ):
+        _touch(proj, rel)
+    counts = count_claude_documents(proj)
+    assert counts["n_docs"] == 5
+    assert counts["n_files"] == 8
+    assert "partial" not in counts
+
+
+def test_count_claude_documents_is_tolerant_of_a_folder_that_stops_existing(tmp_path):
+    """Xarxa intermitent (o carpeta arrel): mai propaga l'excepció."""
+    from automation.lectura.inventory import count_claude_documents
+
+    missing = tmp_path / "no existeix"
+    counts = count_claude_documents(missing)
+    assert counts["n_docs"] == 0
+    assert counts["n_files"] == 0
+
