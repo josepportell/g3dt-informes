@@ -52,3 +52,25 @@ l'annex PDF ja n'hi ha prou per disseny. No bloqueja res.
 ## T3 — «Observacions de camp» a cada obertura (ja conegut)
 
 Confirmat també a Rubí. Ja és a la llista de defectes menors del pla «després del 18-09».
+
+---
+
+## Verificació de la correcció T1 a l'aplicació real (17-09, 16:41)
+
+Clon actualitzat a `37c8c93` (release/2026-09 amb la correcció), servidor rearrencat amb el HOME net,
+credencial refrescada i verificada amb un `claude -p` real.
+
+Projecte de prova **nou** creat per a això (`9999998 PROVA-RELLOTGE`, còpia d'1 document, mai llegit
+→ sense cau). Botó: «1 document · uns 15 min».
+
+**Amb 0 documents llegits, la fila diu ara:**
+```
+detall  = '≈ 20 min restants'
+basis   = 'median_doc_s=221 from 44 telemetry rows'
+remaining = 1061
+```
+Estable durant tota la finestra observada (16:41:51 → 16:42:20). **Abans deia «< 1 min restants»
+durant 3 min 43 s.** El número surt de la telemetria real de la màquina (44 mostres), com estava
+dissenyat: es calibra amb l'experiència de l'ordinador, no amb la d'aquest job.
+
+Captura: `rellotge-corregit-2026-09-17.png`.

@@ -90,6 +90,97 @@ _CTE_SUBKEYS: tuple[str, ...] = ("cte_edificacio", "cte_sol")
 #: `utm_x_utm_y.value` per obtenir `utm_x`/`utm_y`.
 _UTM_RE = re.compile(r"X\s*([\-\d.,]+)\s*;\s*Y\s*([\-\d.,]+)", re.IGNORECASE)
 
+#: Cap coordenada UTM real (ETRS89 fus 31, X ~3·10^5, Y ~4,6·10^6) és mai
+#: per sota d'aquest llindar. Es fa servir a `normalize_utm_xy_decimal` per
+#: desempatar el cas ambigu "un sol punt, sense coma" (regla 4, vegeu
+#: docstring). NOMÉS és vàlid per a X/Y — vegeu l'avís al docstring.
+_UTM_XY_MIN_PLAUSIBLE = 10_000
+
+
+def normalize_utm_xy_decimal(raw: str) -> str:
+    """Normalitza un número de coordenada UTM **X o Y** llegit en dialecte
+    mixt (coma o punt com a separador decimal, punt com a separador de
+    milers) al format canònic amb PUNT com a separador decimal i sense
+    separador de milers.
+
+    ⚠️ NOMÉS per a X/Y d'UTM (magnituds ~3·10^5 / ~4,6·10^6). NO reutilitzar
+    per a la Z (cota, ~10^2-10^3: "198.9" → "1989" seria un desastre) ni per
+    a cap altre decimal petit del projecte ("0.5" → "05" perdria el
+    decimal). La regla 4 (desempat per magnitud) depèn explícitament del
+    rang d'X/Y; per a qualsevol altra magnitud donaria un resultat fals.
+
+    Origen: `docs/troballes/TROBALLA-UTM-COMA-DECIMAL-2026-09-17.md`. Una
+    coma decimal ("308781,86") sobreviu com a cadena fins a
+    `templates/validation/review.html`, on es pinta a un
+    `<input type="number">`: el navegador la descarta EN SILENCI
+    (`.value` queda `""`), i l'Eva veu la X buida sense cap avís.
+
+    Regla de conversió (Josep, 2026-09-17):
+
+    1. Coma I punt presents: el símbol MÉS A LA DRETA (més a prop del
+       final) és el decimal; l'altre —i totes les seves repeticions— és
+       separador de milers i es descarta. Cobreix tant "308.781,86"
+       (punt=milers, coma=decimal) com el cas invers, si mai apareix.
+       ⚠️ Aquesta regla NO té el guardarail de magnitud de la regla 4: es
+       fia cegament de la posició relativa dels símbols. Avui és segur
+       perquè només hi arriben cadenes ja etiquetades com a concepte UTM
+       (`utm_x_utm_y`/`utm`) pel lector — mai text lliure sense
+       classificar. Si algun dia aquesta funció es crida amb entrada no
+       garantida UTM, cal revisar aquest punt.
+    2. Només coma: sempre decimal. És la convenció que fa servir el
+       lector/l'Eva per a xifres UTM (cas verificat "308781,86" →
+       "308781.86"); no hi ha ambigüitat possible perquè cap font
+       d'aquest projecte fa servir la coma com a milers.
+    3. Més d'un punt, sense coma: tots són milers (un número decimal
+       real només pot tenir UN punt); es descarten tots.
+    4. Un sol punt, sense coma: AMBIGU entre decimal ("314418.9",
+       "4613950.63") i milers ("308.781" = 308781). Es desempata per
+       MAGNITUD: si interpretar el punt com a decimal dona un valor per
+       sota de `_UTM_XY_MIN_PLAUSIBLE`, no pot ser una coordenada UTM
+       real → era separador de milers, es descarta el punt. Si el valor
+       resultant és prou gran (cas normal) o si `float()` no l'accepta
+       (p.ex. "308.78X", una lectura espatllada) es deixa el punt tal
+       qual (regla conservadora: més val un valor dubtós i visible que
+       arriscar-se a trencar un decimal legítim o inventar un número a
+       partir de brossa).
+    5. Sense cap separador: intacte.
+
+    El signe (`-`) es conserva sempre; no compta com a separador.
+    """
+    s = raw.strip()
+    if not s:
+        return s
+
+    sign = ""
+    if s[0] in "+-":
+        sign, s = s[0], s[1:]
+
+    has_dot = "." in s
+    has_comma = "," in s
+
+    if has_dot and has_comma:
+        if s.rfind(",") > s.rfind("."):
+            s = s.replace(".", "").replace(",", ".")
+        else:
+            s = s.replace(",", "")
+        return sign + s
+
+    if has_comma:
+        return sign + s.replace(",", ".")
+
+    if has_dot:
+        if s.count(".") > 1:
+            return sign + s.replace(".", "")
+        try:
+            as_decimal = float(s)
+        except ValueError:
+            return sign + s
+        if abs(as_decimal) < _UTM_XY_MIN_PLAUSIBLE:
+            return sign + s.replace(".", "")
+        return sign + s
+
+    return sign + s
+
 
 # ---------------------------------------------------------------------------
 # validate_decisions
@@ -372,13 +463,17 @@ def _split_utm(entry: dict) -> tuple[dict, dict]:
 
     Si el `value` no matcheja el patró (o no és una cadena, p. ex. `None`
     per a `no_trobat`), es fa servir el mateix `value` per a totes dues.
+
+    Els dos trossos es normalitzen amb `normalize_utm_xy_decimal` (separador
+    decimal canònic = punt) abans de desar-los: és aquí on el valor neix i
+    on ha de quedar canònic per a tothom (wizard inclòs).
     """
     value = entry.get("value")
     x_value = y_value = value
     if isinstance(value, str):
         m = _UTM_RE.search(value)
         if m:
-            x_value, y_value = m.group(1), m.group(2)
+            x_value, y_value = normalize_utm_xy_decimal(m.group(1)), normalize_utm_xy_decimal(m.group(2))
 
     x_entry = copy.deepcopy(entry)
     x_entry["value"] = x_value

@@ -6397,6 +6397,82 @@
             }, 10);
         }
 
+        // Xarxa de seguretat (2026-09-17): rèplica JS de
+        // `contract.normalize_utm_xy_decimal` (Python) — ha de coincidir
+        // camp a camp amb la Python, incloent el rebuig de valors no
+        // numèrics (regla 4). Un `<input type="number">` descarta EN
+        // SILENCI un valor amb coma decimal ("308781,86" → "");
+        // vegeu docs/troballes/TROBALLA-UTM-COMA-DECIMAL-2026-09-17.md. El
+        // pipeline Python ja normalitza a l'origen (`_split_utm`); això és
+        // només la xarxa per si un valor amb coma arriba per un altre camí
+        // (p.ex. `user_data.json` editat a mà, o un format futur no previst).
+        //
+        // ⚠️ NOMÉS per a utm_x/utm_y (magnituds ~3·10^5 / ~4,6·10^6). NO
+        // reutilitzar per a cap altre camp decimal (Z, superfícies...): la
+        // regla 4 (desempat per magnitud) donaria un resultat fals fora
+        // d'aquest rang. Vegeu l'avís complet al docstring de la funció
+        // Python germana.
+        const UTM_XY_MIN_PLAUSIBLE = 10000;
+        function normalizeUtmXyDecimal(raw) {
+            if (raw === null || raw === undefined) return raw;
+            let s = String(raw).trim();
+            if (!s) return s;
+            let sign = '';
+            if (s[0] === '+' || s[0] === '-') { sign = s[0]; s = s.slice(1); }
+            const hasDot = s.includes('.');
+            const hasComma = s.includes(',');
+            if (hasDot && hasComma) {
+                s = (s.lastIndexOf(',') > s.lastIndexOf('.'))
+                    ? s.replace(/\./g, '').replace(/,/g, '.')
+                    : s.replace(/,/g, '');
+                return sign + s;
+            }
+            if (hasComma) {
+                return sign + s.replace(/,/g, '.');
+            }
+            if (hasDot) {
+                if ((s.match(/\./g) || []).length > 1) {
+                    return sign + s.replace(/\./g, '');
+                }
+                // Equivalent estricte al tot-o-res del `float()` de Python:
+                // `parseFloat` és tolerant amb sufixos no numèrics
+                // ("308.78X" → 308.78) i inventaria un número a partir de
+                // brossa; aquesta regex el rebutja sencer, com fa `float()`
+                // llançant ValueError (revisió del revisor, 2026-09-17).
+                if (/^-?\d+(\.\d+)?$/.test(s)) {
+                    const asDecimal = parseFloat(s);
+                    if (Math.abs(asDecimal) < UTM_XY_MIN_PLAUSIBLE) {
+                        return sign + s.replace(/\./g, '');
+                    }
+                }
+                return sign + s;
+            }
+            return sign + s;
+        }
+
+        // L'element `.utm-warning` és un node DOM ESTÀTIC (reutilitzat per a
+        // tots els projectes, review.html:3180-3184): cal assignar-li SEMPRE
+        // el contingut que toca per a AQUEST projecte, no només quan hi ha
+        // problema, o l'avís d'un projecte espatllat es queda enganxat en
+        // canviar a un de net (mateixa fuita entre projectes que documenta
+        // `_lecturaRestoreSelections`, revisió del revisor 2026-09-17).
+        // `el` = l'input `wiz-utm_x`/`wiz-utm_y`; `v` = valor ja normalitzat
+        // (abans d'assignar-lo a `el.value`).
+        function _updateUtmWarning(el, v) {
+            const badValue = v !== null && v !== '' && el.value === '';
+            let warning = el.parentElement.querySelector('.utm-warning');
+            if (badValue && !warning) {
+                warning = document.createElement('div');
+                warning.className = 'utm-warning';
+                el.parentElement.appendChild(warning);
+            }
+            if (warning) {
+                warning.textContent = badValue
+                    ? `Valor llegit "${v}" no s'ha pogut interpretar com a número — revisa'l manualment`
+                    : '';
+            }
+        }
+
         function renderWizardForm() {
             // Standard text/number fields
             const textFields = [
@@ -6416,8 +6492,16 @@
                 const { value, source } = getWizardValue(field);
                 const el = document.getElementById(`wiz-${field}`);
                 if (el) {
-                    el.value = value !== null ? value : '';
+                    const isUtm = field === 'utm_x' || field === 'utm_y';
+                    const v = (isUtm && typeof value === 'string') ? normalizeUtmXyDecimal(value) : value;
+                    el.value = v !== null ? v : '';
                     if (value !== null && source === 'user') el.classList.add('has-user-value');
+                    // Xarxa de seguretat: <input type="number"> descarta en silenci
+                    // un valor no numèric (p.ex. coma decimal que la normalització
+                    // no ha sabut resoldre). Que no quedi mut: avisar visiblement
+                    // (i netejar l'avís si aquest projecte no en té cap, vegeu
+                    // `_updateUtmWarning`).
+                    if (isUtm) _updateUtmWarning(el, v);
                 }
                 setSourceBadge(field, source);
             });
