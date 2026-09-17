@@ -78,6 +78,52 @@ def test_reading_row_leads_with_the_counter():
     assert row["accio"] == "attach"
 
 
+def test_reading_row_with_no_telemetry_basis_shows_no_fake_time():
+    """2026-09-17 (mesura Rubí): abans que `Job._recompute_estimate()` s'hagi cridat mai,
+    `estimate_s` són els valors de naixement del dataclass — `{"remaining": 0, "basis": ""}`.
+    Aquest zero vol dir "encara no tinc cap mesura", no "ja quasi està": la fila NO ha de
+    dir cap temps. Mesurat de veritat: la fila va dir «0/12 · < 1 min restants» durant
+    3 min 43 s abans que el primer document acabés de llegir-se."""
+    row = JT.row({
+        "project": "3001621 CASTELLAR",
+        "state": "reading",
+        "step": {"index": 2, "total": 4},
+        "docs": {"done": 0, "total": 12},
+        "estimate_s": {"remaining": 0, "basis": ""},
+    }, now=NOW)
+    assert row["comptador"] == "0/12"
+    assert row["estimacio"] is None
+    assert row["detall"] is None
+
+
+def test_reading_row_keeps_a_real_less_than_one_minute():
+    """El «< 1 min» segueix sent legítim quan HI HA base (encara que sigui la mediana per
+    defecte per manca de mostres) i el temps restant real és petit — no es pot matar aquest
+    cas per arreglar el fals de dalt.
+
+    Nota (reviewer 2026-09-17): guarda d'invariant adjacent, no prova de la correcció —
+    `_job()` ja posa `basis="test"` per defecte, així que aquest test passaria igual sense
+    l'arreglo; el que fixa el defecte és `test_reading_row_with_no_telemetry_basis_shows_no_fake_time`."""
+    row = JT.row(_job("reading", step=2, done=11, total=12, remaining=30), now=NOW)
+    assert row["estimacio"] == "< 1 min"
+    assert row["detall"] == "< 1 min restants"
+
+
+def test_ready_row_never_shows_a_new_time_even_with_a_stale_estimate():
+    """El job acabat no ha de guanyar cap text de temps nou, encara que `estimate_s` porti
+    un `remaining`/`basis` residual d'abans d'acabar (READY ja força `estimacio = None`,
+    aquest test ho fixa perquè no torni a trencar-se).
+
+    Nota (reviewer 2026-09-17): guarda d'invariant adjacent, no prova de la correcció — READY
+    ja sobreescriu `estimacio = None` explícitament abans i després de l'arreglo."""
+    row = JT.row(
+        _job("ready", step=4, done=13, total=13, finished_at="2026-08-25T18:32:00", remaining=45),
+        now=NOW,
+    )
+    assert row["estimacio"] is None
+    assert "restants" not in (row["detall"] or "")
+
+
 def test_ready_row_says_when_and_offers_enllestir():
     row = JT.row(_job("ready", step=4, done=13, total=13, finished_at="2026-08-25T18:32:00"), now=NOW)
     assert row["pas"] == "✓"
