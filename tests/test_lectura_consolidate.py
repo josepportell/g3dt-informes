@@ -1016,6 +1016,33 @@ def test_utm_pair_split_and_lab_cte_nested_flattened(tmp_path):
     assert f["cte_edificacio"]["estat"] == "candidats" and f["cte_edificacio"]["value"] == "C1"  # cte mai segur
 
 
+def test_utm_pair_split_normalizes_comma_decimal(tmp_path):
+    # Cas real: docs/troballes/TROBALLA-UTM-COMA-DECIMAL-2026-09-17.md —
+    # ANNEXES/ALTRES/COORDENADES.txt d'Alcoletge te "308781,86 ; 4613950.63"
+    # (coma a X, punt a Y). Sense normalitzar, l'input type="number" del
+    # wizard descarta la X en silenci.
+    out = tmp_path / "lectura"
+    out.mkdir()
+    _doc(out, "c", "ANNEXES/ALTRES/COORDENADES.txt", "coordenades_txt", [
+        _ta("utm_x_utm_y", "X 308781,86 ; Y 4613950.63", 0.9),
+    ])
+    dec = C.consolidate_python(out, None, project_name="X")
+    f = dec["fields"]
+    assert f["utm_x"]["value"] == "308781.86"
+    assert f["utm_y"]["value"] == "4613950.63"
+
+
+def test_split_utm_direct_table():
+    cases = [
+        ("X 308781,86 ; Y 4613950,63", ("308781.86", "4613950.63")),
+        ("X 308.781,86 ; Y 4.613.950,63", ("308781.86", "4613950.63")),
+        ("X 308781 ; Y 4613950", ("308781", "4613950")),
+        ("X 314418.9 ; Y 4611117.6", ("314418.9", "4611117.6")),
+    ]
+    for raw, expected in cases:
+        assert C._split_utm(raw) == expected
+
+
 def test_parse_coordenades():
     pts = C.parse_coordenades("Coordenades UTM (X);(Y);(Z);\nP-1\n423167.0 ; 4609608.0 ; 571.5\n\nS-1\n423182.0 ; 4609623.0 ; 570.9\n")
     assert [p["punt"] for p in pts] == ["P-1", "S-1"]

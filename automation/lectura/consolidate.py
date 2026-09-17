@@ -43,7 +43,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from automation.lectura.contract import ALLOWED_FIELD_KEYS, TABLE_ROW_GROUPS, VALID_ESTATS
+from automation.lectura.contract import (
+    ALLOWED_FIELD_KEYS,
+    TABLE_ROW_GROUPS,
+    VALID_ESTATS,
+    normalize_utm_xy_decimal,
+)
 from automation.municipis import lookup as _municipi_lookup
 from automation.lectura.normalize import (
     COMPONENT_VALUE_KEY,
@@ -1065,17 +1070,34 @@ def _inventory_duplicate_of(inv: dict, f: dict) -> str | None:
 
 _LAB_SUBKEYS = ("lab_testing_company", "lab_sample_id", "lab_depth", "lab_location")
 _CTE_SUBKEYS = ("cte_edificacio", "cte_sol")
-_UTM_PAIR_RE = re.compile(r"(\d{6,7}(?:[.,]\d+)?)\D+(\d{7}(?:[.,]\d+)?)")
+#: Nombre amb separador de milers (punt, "308.781" / "4.613.950") + decimal
+#: opcional (coma, "308.781,86") — format espanyol/català sencer. Cada
+#: alternativa (aquest o el número pla de sota) es prova per separat: el
+#: format pla ("308781,86", "4613950.63", "308781") és l'habitual; aquest
+#: cobreix el cas "308.781,86" (2026-09-17, vegeu
+#: docs/troballes/TROBALLA-UTM-COMA-DECIMAL-2026-09-17.md).
+_UTM_GROUPED_RE = r"\d{1,3}(?:\.\d{3})+(?:,\d+)?"
+_UTM_PAIR_RE = re.compile(
+    rf"({_UTM_GROUPED_RE}|\d{{6,7}}(?:[.,]\d+)?)\D+({_UTM_GROUPED_RE}|\d{{7}}(?:[.,]\d+)?)"
+)
+
+
+def _normalize_utm_component(v: Any) -> Any:
+    """Normalitza un component UTM (x o y) si és una cadena amb separador
+    decimal ambigu. Vegeu `contract.normalize_utm_xy_decimal`."""
+    return normalize_utm_xy_decimal(v) if isinstance(v, str) else v
 
 
 def _split_utm(value: Any) -> tuple[Any, Any] | None:
     if isinstance(value, dict):
         x = value.get("utm_x", value.get("x"))
         y = value.get("utm_y", value.get("y"))
-        return (x, y) if x is not None or y is not None else None
+        if x is None and y is None:
+            return None
+        return _normalize_utm_component(x), _normalize_utm_component(y)
     m = _UTM_PAIR_RE.search(str(value))
     if m:
-        return m.group(1), m.group(2)
+        return normalize_utm_xy_decimal(m.group(1)), normalize_utm_xy_decimal(m.group(2))
     return None
 
 

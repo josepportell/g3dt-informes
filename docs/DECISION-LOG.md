@@ -6807,3 +6807,121 @@ marge per fusionar-la i tornar a verificar-la amb calma al clon, en comptes d'en
 El sistema ja fa la feina sencera sense aquesta correcció: el defecte era cosmètic.
 
 *Fi entrada 2026-09-17 (2). Rubí de punta a punta en 27 minuts, zero errors amb confiança, i el rellotge dels primers minuts arreglat.*
+
+---
+
+## 2026-09-17 (3) — La coma decimal de les UTM, i dues troballes que no es toquen encara
+
+### Context
+Investigant el defecte menor «"No UTM coordinates" en generar Alcoletge tot i que Cadastre havia
+trobat la referència» (llista «després del 18-09»), resulta que no era un defecte menor ni
+d'Alcoletge. Amb la visita desplaçada (objectiu 26-09-2026, sense confirmar) hi ha marge per
+arreglar-ho bé.
+
+### Decisions arquitectòniques clau
+
+**1. La normalització del separador decimal va a l'origen, no al formulari.**
+*Per què:* el valor neix a la consolidació i d'allà va a l'informe, a la geocodificació i a la
+pantalla. Arreglar-ho només al formulari deixaria els altres camins trencats.
+*Alternativa rebutjada:* `replace(',', '.')` a cegues. Trencaria `308.781,86` (punt de milers).
+La regla implementada és explícita: el símbol **més a la dreta** mana quan conviuen coma i punt;
+només coma és sempre decimal; més d'un punt són milers; **un sol punt és ambigu** i es desempata
+per magnitud (una X/Y d'UTM per sota de 10.000 no existeix), i si no es pot llegir com a número
+es deixa **intacte**.
+*Compromís acceptat:* la funció és específica d'X/Y i no serveix per a Z ni decimals petits
+(`"198.9"` → `"1989"`). Es mitiga amb el nom (`normalize_utm_xy_decimal`) i un avís al docstring.
+
+**2. La rèplica JS del wizard valida amb regex estricta, no amb `parseFloat`.**
+*Per què:* `parseFloat("308.78X")` és tolerant amb el sufix i retorna `308.78`, mentre
+`float()` de Python llença. Amb hores de vida, les dues implementacions **ja divergien**: el JS
+convertia `"308.78X"` en `"30878X"`. El camp el rebutjava igual, però **l'avís hauria ensenyat a
+l'Eva un número corromput diferent del que va llegir el lector**, justament mentre intentava
+entendre què passava.
+*Xarxa de seguretat:* `tests/test_review_html_utm_normalize.py` executa el bloc JS amb Node
+contra la mateixa taula de casos del Python.
+*Limitació coneguda i NO resolta:* sense Node al `PATH` aquest test **se salta en silenci**
+(verificat: 14 SKIPPED, codi de sortida 0). En una màquina sense Node es pot trencar la paritat
+i la suite surt verda. Decisió pendent del Josep: fer-lo fallar o deixar-lo així.
+
+**3. L'avís del wizard es reassigna sempre, no només quan hi ha problema.**
+*Per què:* els camps UTM són nodes DOM **estàtics** compartits per tots els projectes. L'avís
+d'un projecte espatllat es quedava visible en obrir-ne un de net. És la mateixa classe de fuita
+entre projectes que el fitxer ja documenta com a risc conegut.
+
+### Implementació
+`automation/lectura/contract.py` (+97), `automation/lectura/consolidate.py` (+30),
+`templates/validation/review.html` (+86), tests (+88 i un fitxer nou). Commit `649b2b4`.
+
+**Descobriment important durant la feina:** hi ha **dues** `_split_utm`. La de `contract.py`
+només adapta fixtures d'or als tests (`adapt_legacy`, usada per `mesura_informe.py` i
+`compare_consolida.py`); **la via real de producció és `consolidate.py`**, i el seu regex ni tan
+sols reconeixia el format `308.781,86` — no arribava a cridar cap normalització. La primera
+versió de la troballa citava el fitxer equivocat. Es descobreix escrivint el test i executant-lo,
+no llegint el codi.
+
+### Validació empírica
+- L'origen és el fitxer de camp de la mateixa G3DT: `ANNEXES/COORDENADES.txt` d'Alcoletge conté
+  literalment `308781,86 ; 4613950.63 ; 198.9` — **coma a la X, punt a la Y, a la mateixa línia**.
+  No és cosa del lector ni de l'LLM. Tornarà a passar.
+- Verificat al navegador: `input type="number"` ← `'308781,86'` dona `""`; ← `'4613950.63'`
+  sobreviu.
+- Els 7 valors `utm_x_utm_y` d'or passen correctament pel regex ampliat (inclòs Castellar, amb
+  text llarg i 5 punts).
+- Suite: **31 vermells amb els mateixos NOMS, 2.662 verds**, cap contaminació de xarxa.
+
+### Tests
+`normalize_utm_xy_decimal` amb taula de casos als dos llenguatges; `_split_utm` a les dues vies;
+fuita de l'avís entre projectes (verificat que **falla de debò** contra el codi anterior,
+reconstruint-lo en un banc de proves de Node).
+
+### Limitacions conegudes
+- El test de paritat se salta en silenci sense Node (vegeu decisió 2).
+- La taula de casos està **duplicada a mà** entre el fitxer Python i el JS, lligada per un
+  comentari. És el patró que ja segueixen altres tests del repo; si algú afegeix un cas a un
+  costat i no a l'altre, ningú ho detecta.
+- No s'han tocat els altres `input type="number"` del wizard. Repassats un per un: cap més rep
+  text cru del lector amb coma (`num_soil_levels` arriba ja consolidat com a enter; la resta són
+  floats de Python).
+
+### Dues troballes documentades i NO tocades
+Totes dues a `docs/troballes/`, per decisió del Josep de no engegar res més avui:
+
+1. **`TROBALLA-SOLAR-PLA-VS-VESSANT-2026-09-17.md`** — l'informe de Rubí diu «es tracta d'un
+   solar pla» a 3.3.1 i porta «4.5 ESTABILITAT DE VESSANT» (pendent real 21,6 %). Causa: sense
+   `COORDENADES.txt`, quan es calculen els prefills no hi ha UTM, `_phase3_slope` no s'executa i
+   `slope_percent` queda buit; `wizard_service.py:558` fa `float(slope_pct) if slope_pct else 0.0`
+   i escriu la frase del solar pla. Les UTM arriben **després** per la via dels adjacents, i en
+   generar l'ICGC ja diu 21,6 % i activa les seccions de vessant. **Ningú recalcula la frase.**
+   A Alcoletge no es veia perquè la coma decimal impedia arribar-hi: **un defecte n'amagava
+   l'altre.**
+2. **Els camps que el sistema decideix i presenta com a resolts** — a Rubí, **18 de 64** camps de
+   cara a l'Eva arriben amb valor generat/plantilla/per defecte amb font «automàtica». Alguns són
+   derivacions legítimes (`num_dpsh_tests`, `table_dpsh_range`); els que preocupen són els que
+   **escriuen prosa a l'informe** (`site_condition`, `site_description`, `access_description`,
+   `settlement_sentence`, `access_street`, `lab_tests_text`) i els **defectes estàndard** sobre
+   l'edifici (`foundation_depth_m=0,3`, `has_basement=False`, `has_retaining_walls=False`,
+   `num_soil_levels=1`, `sulfate_level_name`). Cap d'ells compta a «Queden N camps a revisar»:
+   verificat que la classe `revisar` només s'assigna amb el literal `'revisar'`, i aquestes fonts
+   mapegen a `auto`. Per això la capa «Observacions de camp» que s'obre sola **no és redundant**:
+   és avui l'únic avís que existeix per als seus 3 camps, i treure-la sense més **empitjoraria**
+   les coses.
+
+### El patró de fons (val més que els tres arranjaments)
+Els tres defectes d'avui són **el mateix error**: el rellotge deia «< 1 min» perquè un zero de
+«encara no ho sé» passava per zero real; la frase del solar pla existeix perquè un pendent
+desconegut passa per 0 %; les UTM desapareixien perquè un valor que no cap es torna buit sense
+queixar-se. **El sistema converteix «no ho sé» en una afirmació concreta, i ho fa en silenci.**
+Buscar aquest patró sistemàticament és feina de dies; tapar els forats coneguts és d'una tarda.
+Decisió del Josep, pendent.
+
+### GO/NO-GO
+- ✅ Coma decimal de les UTM: corregida, revisada 2 rondes, suite neta.
+- ⏳ Contradicció «solar pla» vs. vessant: documentada, **no tocada**.
+- ⏳ Els 18 camps decidits pel sistema: documentats, **no tocats**.
+- ⏳ Test de paritat que se salta sense Node: decisió pendent.
+
+### Següents passos
+Sessió nova amb context sencer per a les dues decisions grosses (handoff
+`docs/_FOR-NEW-YOU-20260917-1900.md`).
+
+*Fi entrada 2026-09-17 (3). La coma que esborrava coordenades, i el patró que hi ha sota les tres avaries del dia.*

@@ -23,7 +23,12 @@ import pytest
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from automation.lectura.contract import adapt_legacy, validate_decisions
+from automation.lectura.contract import (
+    _split_utm,
+    adapt_legacy,
+    normalize_utm_xy_decimal,
+    validate_decisions,
+)
 
 GOLDEN_READ = PROJECT_ROOT / "docs" / "golden-read"
 GOLDEN_READ_TAULES = PROJECT_ROOT / "docs" / "golden-read-taules"
@@ -293,3 +298,57 @@ def test_missing_schema_version_is_rejected():
     errors = validate_decisions(doc)
 
     assert any("schema_version" in e for e in errors)
+
+
+# ---------------------------------------------------------------------------
+# normalize_utm_xy_decimal — docs/troballes/TROBALLA-UTM-COMA-DECIMAL-2026-09-17.md
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        # cas real (COORDENADES.txt d'Alcoletge): coma = decimal
+        ("308781,86", "308781.86"),
+        # punt = milers, coma = decimals
+        ("308.781,86", "308781.86"),
+        # ja canònic: no es toca
+        ("4613950.63", "4613950.63"),
+        ("314418.9", "314418.9"),
+        # sense part decimal: intacte
+        ("308781", "308781"),
+        # negatius conservats
+        ("-308781,86", "-308781.86"),
+        ("-308.781,86", "-308781.86"),
+        # múltiples punts sense coma: tots són milers
+        ("4.613.950", "4613950"),
+        ("4.613.950,63", "4613950.63"),
+        # ambigu "un sol punt, milers" (magnitud < 10.000 -> milers)
+        ("308.781", "308781"),
+        # buit i None-like
+        ("", ""),
+    ],
+)
+def test_normalize_utm_xy_decimal_table(raw: str, expected: str):
+    assert normalize_utm_xy_decimal(raw) == expected
+
+
+def test_normalize_utm_xy_decimal_conservative_on_unparseable_dot_value():
+    # Un sol punt, no numèric després de treure'l -> es deixa intacte
+    # (regla conservadora: mai arriscar-se a trencar un valor legítim).
+    assert normalize_utm_xy_decimal("308.78X") == "308.78X"
+
+
+def test_split_utm_contract_normalizes_comma_decimal():
+    entry = {"estat": "segur", "value": "X 308781,86 ; Y 4613950.63"}
+    x_entry, y_entry = _split_utm(entry)
+    assert x_entry["value"] == "308781.86"
+    assert y_entry["value"] == "4613950.63"
+
+
+def test_split_utm_contract_preserves_estat_and_font():
+    entry = {"estat": "candidats", "font": "COORDENADES.txt", "value": "X 308781,86 ; Y 4613950,63"}
+    x_entry, y_entry = _split_utm(entry)
+    assert x_entry["estat"] == "candidats" and x_entry["font"] == "COORDENADES.txt"
+    assert x_entry["value"] == "308781.86"
+    assert y_entry["value"] == "4613950.63"
