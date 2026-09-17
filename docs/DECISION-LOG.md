@@ -6591,3 +6591,102 @@ release, tercer pas 2 curt (Bell-lloc en cau: 2 s) per veure la fila d'error sim
 `docs/GUIA-EVA-WIZARD.md` desfasada (substituir pel doc HTML) i el pas 3 presencial.
 
 *Fi entrada 2026-09-16. Pas 2 repetit amb la UX A-G: Alcoletge 30,9 min, GO condicionat a auth-sistèmica i log G fiable.*
+
+## 2026-09-17 — Les dues troballes de la prova WSL, corregides i verificades amb una sessió realment caducada: la lectura que no llegeix res ja no es disfressa de «Preparat», i el log de camps de l'Eva deixa de mentir
+
+### Context
+Les dues troballes de l'entrada d'ahir (2026-09-16) bloquejaven la visita del 18-09. El Josep va decidir
+corregir-les abans de la visita. Loop implementer → reviewer → tester complet, tres rondes de revisió,
+i una verificació de punta a punta al clon WSL amb una sessió de Claude realment caducada.
+Commit `1ba4924` a `experiment/nivell-a-2026-08`, fusionat a `release/2026-09` (`35d4fd3`).
+
+### Decisions arquitectòniques clau
+
+1. **La fallada d'autenticació és una parada sistèmica amb codi propi, no un error de document.**
+   `_SYSTEMIC_RE` (`automation/lectura/runner.py`) reconeix ara «failed to authenticate», «oauth»,
+   «session expired», «could not be refreshed»; un classificador públic `systemic_kind()` separa `auth`
+   de `usage_limit` i **auth mana** quan un text encaixa amb tots dos (una sessió caducada sovint també
+   parla de límits). **Why:** reintentar 13 documents contra una sessió morta crema 90 segons i deixa
+   l'Eva amb un informe buit. *Alternativa rebutjada:* tractar-ho com el límit d'ús i reaprofitar-ne el
+   text — la sortida és una altra (allà s'espera, aquí s'actua), i dir-li que esperi seria enganyar-la.
+
+2. **L'enduriment es basa en fallades DEFINITIVES, no en errors ni en documents «fets».**
+   Dues rondes de revisió van tombar dues condicions abans d'arribar a la bona:
+   - `done < total` (ronda 1): **forat real** — `docs.done` s'inflava amb els documents saltats per
+     duplicat, i amb 1 document + el seu duplicat la fila tornava a dir «Preparat».
+   - `errors >= total` (ronda 2): **fals positiu real**, reproduït pel reviewer — amb `_MAX_ATTEMPTS = 2`,
+     un run 100 % sa on cada document encerta al segon intent dona `errors == total`.
+   - Final: comptador nou `docs_failed` a `automation/lectura/jobs.py`, alimentat per la llista que el
+     runner ja construïa a `lectura_fi` a partir de l'estat **final** de cada document. Un reintent que
+     acaba bé no hi apareix mai. **Why:** l'única pregunta que importa és «quants documents han quedat
+     sense llegir», i el runner ja la sabia respondre; la resta eren indicadors indirectes.
+   - *Compatibilitat:* els `_job.json` ja escrits no tenen la clau; `get("failed") or 0` fa la guarda
+     inert amb ells. Verificat en viu: les files d'Alcoletge (16-09) i Bell-lloc (10-09) segueixen
+     sortint «Preparat» net.
+
+3. **Un document saltat per duplicat ja no compta com a llegit** (`jobs.py`, branca `lectura_doc`).
+   **Why:** era l'arrel del forat de la ronda 1 i, de passada, del defecte que l'Eva veia a la taula
+   («19/18» a Bell-lloc, «15/13» a Alcoletge, entrades 2026-09-10 (4) i 2026-09-16). Un run sa cau ara
+   exactament a `total/total`.
+
+4. **El wizard no li demana a l'Eva que obri un terminal: li demana un doble clic** (decisió del Josep,
+   2026-09-17). El detall de la fila i el missatge del servei apunten a una icona de l'escriptori
+   anomenada exactament **«Tornar a entrar a Claude»**. **Why:** l'Eva arrenca el wizard amb un `.bat` i
+   treballa al navegador; no obre mai un terminal. *Alternatives rebutjades:* l'ordre literal al terminal
+   (el reviewer la va marcar com a ambigua en un desplegament Windows+WSL), i «avisa l'Eficients» (la
+   deixa aturada depenent de la disponibilitat del Josep). *Cost acceptat:* el text queda lligat a que la
+   icona existeixi; per això el pla de la visita (§5.6) l'exigeix pel seu nom exacte.
+   **Dada trobada per sorpresa:** en aquesta versió del CLI **`claude login` no existeix** (s'interpretaria
+   com un prompt); el correcte és `claude auth login`, i `claude auth status` retorna un JSON amb
+   `loggedIn` que la drecera (`scripts/G3DT-Tornar-a-entrar-a-Claude.bat`) usa per confirmar el resultat
+   en lloc de fiar-se del codi de sortida.
+
+5. **La base de comparació del desat encadena cache → `user_data.json` anterior → heurística antiga**
+   (`web/wizard_service.py`). **Why:** la `_prefill_cache` es buida a cada desat, i sense base tot camp no
+   buit semblava un canvi de l'Eva: 2 camps tocats sortien com 5, el segon desat com 28, i `user_data.json`
+   acabava amb 33 `_sources: user` falsos que muden la precedència **Eva > lector**. Ara les fonts reals
+   (lectura, ICGC/Cadastre, calculat) sobreviuen al desat i la comparació és normalitzada (nombres,
+   blancs, llistes).
+
+6. **Un camp que l'Eva esborra expressament no compta com a canvi seu** (decisió del Josep, confirmada
+   2026-09-16). *Cost acceptat i explícit:* una relectura posterior pot tornar a omplir aquell camp.
+   **Why:** el fals positiu simètric és molt pitjor — marcar com a seus camps que no ha tocat congela
+   valors vells contra lectures noves.
+
+### Validació empírica
+| què | resultat |
+|---|---|
+| Suite sencera | 31 vermells = els 31 esperats, comparats per NOM en els dos sentits; 2626 passats |
+| Tests focalitzats dels dos canvis | 286 passats (23 s), sense xarxa ni claus |
+| Suite focalitzada al worktree de release després del merge | 237 passats |
+| Prova real, sessió caducada (projecte de prova d'1 document, clon WSL sense claus) | job **error** en 7 s, codi `auth`, `docs {done:0, total:1, errors:1, failed:1}`; fila «✗ Aturat: cal tornar a iniciar sessió a Claude» amb el text de la drecera |
+| Recuperació **sense reiniciar el wizard** | credencial restaurada → botó «Començar · 1 document · uns 15 min» → **ready en 4,2 min**, `docs {done:1, total:1, errors:0, failed:0}`, fila «✓ Preparat» |
+| Snapshots antics a la mateixa taula | Alcoletge i Bell-lloc, sense la clau `failed`, segueixen «Preparat» net |
+
+Artefactes: `docs/wizard-headless/mesures/runs/2026-09-17-auth-caducada/` (meta, `_job.json`, dues captures).
+
+### Limitacions conegudes
+1. **`G3DT_LECTURA_MODE=projecte`** (mode de reserva, **no** actiu al `.env` de l'Eva) no emet `lectura_inici`
+   ni `docs_failed`: la guarda hi queda inert. No bloqueja avui; cal recordar-ho si mai s'activa.
+2. **Falta un test d'integració** que exerceixi `run_lectura()` amb un document que falla el primer intent i
+   encerta el segon. El tester s'ha aturat expressament en comptes de fabricar mig arnès: el mock compartit
+   no sap distingir intents. Disseny proposat: comptar ocurrències prèvies al `SPAWN_LOG` i un mode nou
+   `fail_once_then_ok`. Per després del 18-09.
+3. **`test_cancellation_mid_flight_kills_live_process` és inestable des d'abans** (~30 % de fallades amb les
+   8 CPU saturades; 10/10 sense càrrega). Mecanisme diagnosticat: el test arma un timer de 0,6 s i assumeix
+   que la cancel·lació arribarà a mig vol; sota càrrega salta al primer punt de control, que retorna
+   `per_doc=[]` — comportament correcte del runner, assumpció fixa del test. No tocat.
+4. La regla del camp esborrat (decisió 6) i la dependència de la icona (decisió 4) són compromisos
+   acceptats, no defectes latents.
+
+### GO/NO-GO
+- ✅ Correcció 1 (sessió caducada): aprovada pel reviewer a la tercera ronda, verificada de punta a punta.
+- ✅ Correcció 2 (log de camps i `_sources`): aprovada a la segona ronda, sense canvis posteriors.
+- ✅ Fusionada a `release/2026-09` (`35d4fd3`) i pujada; clon WSL actualitzat.
+- ⏳ La icona «Tornar a entrar a Claude» s'ha de crear a l'escriptori de l'Eva el 18-09 (pla §5.6).
+
+### Següents passos
+Visita del 18-09 amb el pla §5 tal com està. Després: els dos seguiments de manteniment de la suite
+(limitacions 2 i 3) i els defectes menors que ja eren al pla «després del 18-09».
+
+*Fi entrada 2026-09-17. Les dues troballes corregides, revisades tres rondes i provades amb una sessió caducada de debò.*

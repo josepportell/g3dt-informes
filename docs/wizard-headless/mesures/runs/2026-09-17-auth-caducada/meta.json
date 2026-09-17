@@ -1,0 +1,17 @@
+{
+  "label": "2026-09-17-auth-caducada",
+  "date": "2026-09-17",
+  "project": "9999999 PROVA-AUTH-EFICIENTS (projecte de prova, 1 document)",
+  "commit_base": "35d4fd3 (release/2026-09, merge de experiment 1ba4924)",
+  "conditions": "Verificació de punta a punta de la correcció de la sessió caducada, al clon WSL sense claus API. Servidor 8766 amb HOME de sessió caducada (credencial buida; `claude auth status` -> loggedIn false, i `claude -p` retorna «Failed to authenticate: OAuth session expired and could not be refreshed», el mateix text de la prova del 16-09). Projecte de prova d'1 document creat per a la prova.",
+  "resultat": {
+    "abans_del_fix_16_09": "job ready, fila «✓ Preparat», 0 documents llegits, botó Enllestir",
+    "amb_el_fix": "job error en 7 s, codi «auth», docs {done:0,total:1,errors:1,failed:1}; fila «✗ Aturat: cal tornar a iniciar sessió a Claude» + «fes doble clic a «Tornar a entrar a Claude» a l'escriptori…» + botó «Veure error»",
+    "recuperacio": "credencial restaurada (equivalent al doble clic a la drecera) SENSE reiniciar el wizard; el botó torna a dir «Començar · 1 document · uns 15 min»; job ready en 4,2 min (13:44:27 -> 13:48:40), docs {done:1,total:1,errors:0,failed:0}; fila «✓ Preparat (avui 13:48)»",
+    "compatibilitat_snapshots_antics": "a la mateixa taula, Alcoletge (16-09) i Bell-lloc (10-09), desats amb el format anterior i sense la clau `failed`, segueixen sortint «Preparat» net: cap avís fals"
+  },
+  "captures": [
+    "auth-2026-09-17-fila-sessio-caducada.png",
+    "auth-2026-09-17-fila-recuperada.png"
+  ]
+}
