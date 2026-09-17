@@ -1,0 +1,45 @@
+{
+ "source": "lector",
+ "site_1": null,
+ "site_2": null,
+ "dpsh": "FOTOS DE CAMP + PLANOL PUNTS/P1 - ALCOLETGE.jpeg",
+ "sondeig": null,
+ "materials": "FOTOS DE CAMP + PLANOL PUNTS/spt alcoletge.png",
+ "alternatives": {
+  "dpsh": [
+   {
+    "rel": "FOTOS DE CAMP + PLANOL PUNTS/P2 - ALCOLETGE.jpeg",
+    "rao": "P-2, la mateixa màquina en un altre punt (F-2 de l'annex)"
+   },
+   {
+    "rel": "FOTOS DE CAMP + PLANOL PUNTS/P3 - ALCOLETGE.jpeg",
+    "rao": "P-3, la mateixa màquina en un altre punt (F-3 de l'annex)"
+   }
+  ]
+ },
+ "_lector": {
+  "data": "2026-09-16 11:59",
+  "model": "sonnet",
+  "effort": "medium",
+  "elapsed_s": 25.8,
+  "exclude_slug": null,
+  "raons": {
+   "dpsh": "màquina DPSH sencera al solar, és la primera foto de l'annex (F-1, peu «vista de l'emplaçament de la màquina... DPSH P-1»)",
+   "materials": "detall dels tubs/testimonis recuperats, és F-4 de l'annex (peu «detall dels materials recuperats en l'assaig SPT-1»)"
+  },
+  "confianca": {
+   "site_1": 0.0,
+   "dpsh": 0.95,
+   "sondeig": 1.0,
+   "materials": 0.9
+  },
+  "cap_font": [
+   "sondeig",
+   "site_1",
+   "site_2"
+  ],
+  "notes": "El projecte només té 3 punts DPSH (P1, P2, P3), sense sondeig a rotació: cap foto de màquina compacta amb caixa blava de mocadors ni context de sondeig (S1/S2/EMPL S). Cap de les fotos és una vista general del solar sense màquina: CROQUIS.jpeg és el croquis a mà, PENETROS.jpeg és el full de camp, 'ampliació habitatge v2.png' és un plànol/croquis d'ampliació, cap val per site_1/site_2.",
+  "warnings": [],
+  "fingerprint": "b6b08f72332c02974b083df22d1214d836bcc511"
+ }
+}

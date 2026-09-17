@@ -1,0 +1,4 @@
+Intent 1 (11:24:59-11:26:32): 13 docs, 26 intents fallits, 0 llegits.
+Causa: "Failed to authenticate: OAuth session expired and could not be refreshed" (credencial copiada el 10-09, renovada pel HOME principal).
+Resultat: job ready, result {ok:true, degraded:true}, fila "Preparat (avui 11:26)" + Enllestir.
+Telemetria del primer intent no conservada (workspace esborrat abans de la copia).

@@ -3091,26 +3091,88 @@ def _build_lectura_block(
     }
 
 
-def _persisted_user_fields(project_path: Path) -> set[str]:
-    """Camps marcats `'user'` a `_sources` de `user_data.json`, ARA MATEIX.
+def _load_persisted_user_data(project_path: Path) -> dict[str, Any]:
+    """`user_data.json` ARA MATEIX (abans d'aquest desat), o `{}`.
 
     Font persistent (no la `_prefill_cache` volàtil): sobreviu entre desats
-    automàtics consecutius del mateix projecte. Fitxer absent o JSON invàlid
-    -> conjunt buit (mai bloqueja el desat).
+    automàtics consecutius del mateix projecte, quan la cache ja s'ha buidat
+    (`_prefill_cache.pop` al final de `save_wizard`) i ningú l'ha reomplert.
+    Fitxer absent o JSON invàlid -> `{}` (mai bloqueja el desat).
     """
     ud_path = project_path / 'user_data.json'
     if not ud_path.exists():
-        return set()
+        return {}
     try:
         data = json.loads(ud_path.read_text(encoding='utf-8'))
     except (OSError, json.JSONDecodeError, UnicodeDecodeError):
-        return set()
-    if not isinstance(data, dict):
-        return set()
-    sources = data.get('_sources')
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _persisted_sources(previous_user_data: dict[str, Any]) -> dict[str, str]:
+    """`_sources` del `user_data.json` previ, o `{}`."""
+    sources = previous_user_data.get('_sources')
+    return dict(sources) if isinstance(sources, dict) else {}
+
+
+def _persisted_user_fields(previous_user_data: dict[str, Any]) -> set[str]:
+    """Camps marcats `'user'` a `_sources` del `user_data.json` previ."""
+    sources = previous_user_data.get('_sources')
     if not isinstance(sources, dict):
         return set()
     return {k for k, v in sources.items() if v == 'user'}
+
+
+def _values_equal(old: Any, new: Any) -> bool:
+    """Compara valors de camp evitant falsos "canvi" per format, no contingut.
+
+    Bloc G (correcció 2026-09-16): `str(a) != str(b)` marcava com a canvi
+    coses com prefill `0.0` vs desat `"0"`/`0`, o una llista amb el mateix
+    contingut pero re-serialitzada. Evidencia real (Alcoletge, mateix dia):
+    `geomech_cohesion` 0.0 -> None, `geomech_gamma` 2.0 -> None i
+    `soil_types` re-enviada identica es comptaven com a "canviats per l'Eva".
+    """
+    def _is_blank(v: Any) -> bool:
+        return v is None or (isinstance(v, str) and v.strip() == '')
+
+    if _is_blank(old) and _is_blank(new):
+        return True
+
+    def _as_number(v: Any) -> float | None:
+        if isinstance(v, bool):
+            return None
+        if isinstance(v, (int, float)):
+            return float(v)
+        if isinstance(v, str):
+            s = v.strip().replace(',', '.')
+            if not s:
+                return None
+            try:
+                return float(s)
+            except ValueError:
+                return None
+        return None
+
+    old_num, new_num = _as_number(old), _as_number(new)
+    if old_num is not None and new_num is not None:
+        return abs(old_num - new_num) < 1e-9
+
+    if isinstance(old, (list, dict)) or isinstance(new, (list, dict)):
+        def _canonical(v: Any) -> Any:
+            if isinstance(v, dict):
+                return {k: _canonical(val) for k, val in sorted(v.items())}
+            if isinstance(v, (list, tuple)):
+                return [_canonical(x) for x in v]
+            if isinstance(v, str):
+                return v.strip()
+            n = _as_number(v)
+            return n if n is not None else v
+        return _canonical(old) == _canonical(new)
+
+    if isinstance(old, str) or isinstance(new, str):
+        return str(old).strip() == str(new).strip()
+
+    return old == new
 
 
 def save_wizard(
@@ -3122,35 +3184,81 @@ def save_wizard(
     """Save wizard data to user_data.json."""
     project_path = _resolve_project(project_name)
 
-    # Collect current sources from prefill cache so they survive save/reload.
-    # Mark fields Eva changed as 'user' so badges turn green on reload.
-    current_sources = {}
+    # Bloc G (2026-09, `docs/PLA-UX-WIZARD-2026-09.md`): base de comparacio
+    # per detectar que ha canviat l'Eva ARA. La `_prefill_cache` es buida al
+    # final de CADA desat (`_prefill_cache.pop` mes avall) i res la reomple
+    # entre autosaves consecutius (p.ex. el desat automatic del boto "Generar
+    # informe" just despres d'un desat manual): amb la cache buida, `cached`
+    # es {} i tot camp no buit del formulari (> 60 camps, no nomes els que
+    # l'Eva ha tocat) es marcava com a canvi seu. Correccio 2026-09-16:
+    # quan la cache no te un camp, la base cau al `user_data.json` DESAT EN
+    # AQUEST DESAT ANTERIOR -- un valor identic a l'ultim desat no es "canviat
+    # ARA", vingui d'on vingui.
     cached = _prefill_cache.get(project_name, {})
-    for k, v in cached.items():
-        if isinstance(v, dict) and 'source' in v and not k.startswith('_'):
-            current_sources[k] = v['source']
-    # Bloc G (2026-09, `docs/PLA-UX-WIZARD-2026-09.md`): quins camps eren JA
-    # 'user' abans d'aquest desat -- per no comptar-los com a "canviats ARA"
-    # a cada desat automàtic posterior del mateix valor.
-    #
-    # Es llegeix de `user_data.json` (`_sources`), NO de `_prefill_cache`: la
-    # cache es buida al final de cada desat (`_prefill_cache.pop` mes avall) i
-    # res la reomple entre autosaves consecutius, de manera que un segon desat
-    # la trobava sempre buida i tornava a comptar com a "canviat ara" tot el
-    # que ja era de l'Eva des del desat anterior.
-    _already_user = _persisted_user_fields(project_path)
+    previous_user_data = _load_persisted_user_data(project_path)
+    _already_user = _persisted_user_fields(previous_user_data)
     changed_now: list[str] = []
 
+    # Sources: si la cache hi es, es la millor font (es la que ha vist Eva en
+    # carregar el formulari). Si no hi es (autosave sense recarrega), es parteix
+    # de les `_sources` JA PERSISTIDES perque les fonts reals (lectura,
+    # ICGC/Cadastre, calculat...) no es perdin -- abans, amb `current_sources`
+    # nomes construit des de la cache buida, CADA camp no buit acabava marcat
+    # 'user' via `save_wizard_data` (`existing_sources.update(sources)`),
+    # encara que el seu valor no hagues canviat gens.
+    if cached:
+        current_sources = {
+            k: v['source'] for k, v in cached.items()
+            if isinstance(v, dict) and 'source' in v and not k.startswith('_')
+        }
+    else:
+        current_sources = dict(_persisted_sources(previous_user_data))
+
     def _prefill_val(key):
+        """Retorna `(valor, trobat)` per `key` a la millor base disponible."""
         pf = cached.get(key)
-        return pf['value'] if isinstance(pf, dict) and 'value' in pf else None
+        if isinstance(pf, dict) and 'value' in pf:
+            return pf['value'], True
+        if key in previous_user_data:
+            return previous_user_data[key], True
+        # `geomech_*` es persisteix niat a `geomech_params`, no com a clau plana.
+        if key.startswith('geomech_'):
+            gp = previous_user_data.get('geomech_params')
+            param = key[len('geomech_'):]
+            if isinstance(gp, dict) and param in gp:
+                return gp[param], True
+        # `soil_types` (array) el reconstrueix el FRONTEND a partir dels
+        # selects `soil_type_level_{i}` (`templates/validation/review.html`,
+        # funcio que omple `fields.soil_types`) -- no hi ha cap prefill amb
+        # aquesta clau exacta, nomes per nivell. Sense aquest cas especial,
+        # `soil_types` sempre queia a "no trobat" i es marcava 'user' encara
+        # que Eva no hagues tocat cap select.
+        if key == 'soil_types':
+            levels = []
+            i = 1
+            while True:
+                entry = cached.get(f'soil_type_level_{i}')
+                if entry is None:
+                    break
+                levels.append(entry['value'] if isinstance(entry, dict) and 'value' in entry else entry)
+                i += 1
+            if levels:
+                return [str(v).lower() for v in levels], True
+        return None, False
 
     def _is_changed(key, new_val):
-        old = _prefill_val(key)
-        if old is None:
-            # No prefill existed — only mark as user if Eva typed something
+        old, found = _prefill_val(key)
+        if not found:
+            # No hi ha base coneguda — nomes es "de l'Eva" si ha escrit res.
             return bool(new_val) and str(new_val).strip() != ''
-        return str(new_val) != str(old)
+        # Un valor buit que arriba del formulari MAI promou a canvi de l'Eva,
+        # encara que la base en tingues un: evidencia real (`geomech_cohesion`
+        # 0.0 -> None) es un reenviament del formulari, no un esborrat expres.
+        # Sacrifica el cas (rar) que l'Eva esborri un camp expressament: es
+        # preferible a corrompre la precedencia Eva > lector amb falsos 'user'.
+        if new_val is None or (isinstance(new_val, str) and new_val.strip() == ''):
+            return False
+        return not _values_equal(old, new_val)
 
     # Detect changes: compare wizard_fields against prefill values
     for field, new_val in wizard_fields.items():

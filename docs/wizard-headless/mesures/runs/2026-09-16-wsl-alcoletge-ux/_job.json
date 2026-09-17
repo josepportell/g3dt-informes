@@ -1,0 +1,33 @@
+{
+ "schema_version": 1,
+ "project": "4001670 ALCOLETGE",
+ "button": "enllestir",
+ "state": "ready",
+ "step": {
+  "index": 5,
+  "total": 5
+ },
+ "docs": {
+  "total": 13,
+  "done": 15,
+  "cached": 13,
+  "errors": 0,
+  "current": []
+ },
+ "started_at": "2026-09-16T12:01:25",
+ "updated_at": "2026-09-16T12:01:28",
+ "finished_at": "2026-09-16T12:01:28",
+ "estimate_s": {
+  "remaining": 60,
+  "basis": "median_doc_s=223 from 31 telemetry rows"
+ },
+ "result": {
+  "ok": true,
+  "degraded": false,
+  "fallback": null
+ },
+ "error": null,
+ "pid": 1798806,
+ "claude_version": null,
+ "network_delta": null
+}

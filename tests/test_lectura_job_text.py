@@ -87,6 +87,71 @@ def test_ready_row_says_when_and_offers_enllestir():
     assert row["viu"] is False
 
 
+def test_ready_row_never_says_preparat_when_nothing_was_actually_read():
+    """2026-09-16: prova WSL amb la sessió de Claude caducada — 13 documents × 2 intents,
+    cap llegit (`docs.failed == 13 == total`; els 2 "done" venen de duplicats saltats,
+    ja no compten arran de l'arreglo a l'origen, però la guarda ni els mira). El job va
+    acabar en `ready` dient «Preparat» net, com si l'informe es pogués enllestir amb zero
+    documents llegits."""
+    job = _job("ready", step=4, finished_at="2026-08-26T11:26:00",
+                docs={"total": 13, "done": 2, "cached": 0, "errors": 26, "failed": 13})
+    row = JT.row(job, now=NOW)
+    assert "Preparat (" not in row["titol"]
+    assert "sense llegir" in row["titol"]
+
+
+def test_ready_row_never_says_preparat_even_when_done_matches_total_with_reviewer_snapshot():
+    """CRÍTIC (reviewer, 2026-09-16): l'snapshot reproduït amb un projecte d'1 document real + el
+    seu duplicat, on `done == total` (1 == 1) amagava que el document real havia fallat sencer
+    (`docs.failed == 1 == total`, amb els 2 errors — un per intent — que el runner hi ha atribuït).
+    La guarda no pot dependre de `done` (ni tan sols de comparar-lo amb `total`)."""
+    job = _job("ready", step=4, finished_at="2026-08-26T11:26:00",
+                docs={"total": 1, "done": 1, "cached": 0, "errors": 2, "failed": 1})
+    row = JT.row(job, now=NOW)
+    assert "Preparat (" not in row["titol"]
+    assert "sense llegir" in row["titol"]
+
+
+def test_ready_row_stays_preparat_when_transient_retries_succeeded_the_known_false_positive():
+    """CRÍTIC (reviewer, 2026-09-17): el defecte de la versió anterior de la guarda (`errors >=
+    total`). 2 documents, tots dos han necessitat un reintent transitori (PENETROS ja treballa a
+    tocar del topall de temps, `runner.py` ~L614 — no és hipotètic) i els DOS s'han llegit:
+    `{"total": 2, "done": 2, "errors": 2, "failed": 0}`. La fila ha de ser un «Preparat» NET."""
+    job = _job("ready", step=4, finished_at="2026-08-26T11:26:00",
+                docs={"total": 2, "done": 2, "cached": 0, "errors": 2, "failed": 0})
+    row = JT.row(job, now=NOW)
+    assert row["titol"] == "Preparat (avui 11:26)"
+
+
+def test_ready_row_still_says_preparat_for_a_healthy_run_with_more_done_than_total():
+    """Abans de l'arrel arreglada a `jobs.py`, `done` podia superar `total` en un job SA
+    (duplicats saltats comptant com a `lectura_doc` abans que `docs_total` es conegués). Es manté
+    com a test de robustesa (job antic al disc, o una altra font futura de `done` inflat): amb
+    `failed == 0` la fila no ha de disparar l'avís de C encara que `done` no quadri amb `total`."""
+    job = _job("ready", step=4, finished_at="2026-08-26T11:26:00",
+                docs={"total": 13, "done": 15, "cached": 0, "errors": 0, "failed": 0})
+    row = JT.row(job, now=NOW)
+    assert row["titol"] == "Preparat (avui 11:26)"
+
+
+def test_ready_row_still_says_preparat_when_everything_came_from_cache():
+    job = _job("ready", step=4, finished_at="2026-08-26T11:26:00",
+                docs={"total": 13, "done": 13, "cached": 13, "errors": 0, "failed": 0})
+    row = JT.row(job, now=NOW)
+    assert row["titol"] == "Preparat (avui 11:26)"
+
+
+def test_ready_row_is_clean_for_an_old_job_json_without_the_failed_key():
+    """Compatibilitat amb `_job.json` escrits abans d'aquest arreglo (2026-09-17): sense la clau
+    `failed`, la guarda ha de ser INNÒCUA — mai un avís fals en repintar un job vell. Snapshot
+    real trobat al clon de proves: 18 documents, 19 "done" (el comptador antic, inflat per un
+    duplicat), 0 errors, i CAP clau `failed`."""
+    job = _job("ready", step=4, finished_at="2026-08-26T11:26:00",
+                docs={"total": 18, "done": 19, "cached": 0, "errors": 0})
+    row = JT.row(job, now=NOW)
+    assert row["titol"] == "Preparat (avui 11:26)"
+
+
 def test_interrupted_is_not_an_error():
     """§3.3, literal: «Interromput» NO és un error."""
     row = JT.row(_job("interrupted", step=2, done=12, total=17), now=NOW)
@@ -110,6 +175,21 @@ def test_usage_limit_row_is_not_a_breakdown_and_says_how_to_resume():
     assert row["pas"] == "✗"
     assert "límit d'ús" in row["titol"]
     assert "prem Preparar" in row["detall"] and "es conserven" in row["detall"]
+    assert row["viu"] is False
+
+
+def test_expired_auth_row_says_to_log_in_again_not_that_eficients_was_told():
+    """2026-09-16: sessió de Claude caducada — no és una avaria nostra, així que la fila
+    no ha de dir «avisat Eficients» sinó explicar el que l'Eva pot fer ella mateixa.
+    2026-09-17 (decisió del Josep): l'Eva no obre mai un terminal — el detall apunta a la
+    drecera dedicada de l'escriptori, «Tornar a entrar a Claude», no a `claude login`."""
+    row = JT.row(_job("error", step=2, error={"code": "auth", "detail": "OAuth session expired"}), now=NOW)
+    assert row["pas"] == "✗"
+    assert "tornar a iniciar sessió" in row["titol"]
+    assert "es conserven" in row["detall"] and "Preparar" in row["detall"]
+    assert "Tornar a entrar a Claude" in row["detall"]
+    assert "claude login" not in row["detall"] and "terminal" not in row["detall"]
+    assert "avisat Eficients" not in row["titol"] and "avisat Eficients" not in row["detall"]
     assert row["viu"] is False
 
 

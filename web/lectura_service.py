@@ -64,7 +64,7 @@ from typing import Any, Callable
 
 from automation.lectura import jobs as jobs_module
 from automation.lectura.jobs import Job, registry
-from automation.lectura.runner import LecturaResult, run_lectura
+from automation.lectura.runner import LecturaResult, run_lectura, systemic_kind
 from web import wizard_service
 from web.wizard_service import (
     _auto_extract_cached,
@@ -541,15 +541,24 @@ def run_lectura_job(
         return
 
     if systemic_holder:
-        emit("error_event", {
-            "code": "usage_limit",
-            "reason": systemic_holder[0],
-            "message": (
+        reason = systemic_holder[0]
+        kind = systemic_kind(reason)
+        if kind == "auth":
+            # 2026-09-17 (decisió del Josep): l'Eva no obre mai un terminal — drecera dedicada
+            # a l'escriptori, «Tornar a entrar a Claude», no `claude login`.
+            message = (
+                "La lectura s'ha aturat: la sessió de Claude ha caducat. Fes doble clic a "
+                "«Tornar a entrar a Claude» a l'escriptori; els documents ja llegits es conserven, "
+                "i quan hagis tornat a iniciar sessió prem «Preparar» perquè es llegeixin els que "
+                "falten."
+            )
+        else:
+            message = (
                 "La lectura s'ha aturat: el compte de Claude no pot atendre més crides ara mateix "
-                f"({systemic_holder[0]}). Els documents ja llegits es conserven; quan el pla torni a estar "
+                f"({reason}). Els documents ja llegits es conserven; quan el pla torni a estar "
                 "disponible, prem «Preparar» i només es llegiran els que falten."
-            ),
-        })
+            )
+        emit("error_event", {"code": kind, "reason": reason, "message": message})
         return
 
     if auto_error_holder:
