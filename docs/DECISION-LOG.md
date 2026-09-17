@@ -6925,3 +6925,107 @@ Sessió nova amb context sencer per a les dues decisions grosses (handoff
 `docs/_FOR-NEW-YOU-20260917-1900.md`).
 
 *Fi entrada 2026-09-17 (3). La coma que esborrava coordenades, i el patró que hi ha sota les tres avaries del dia.*
+
+## 2026-09-17 (4) — Un pendent desconegut deixa de ser «pla», i cap secció torna a sortir amb la capçalera sola
+
+### Context
+
+La troballa del matí (`docs/troballes/TROBALLA-SOLAR-PLA-VS-VESSANT-2026-09-17.md`) deia que l'informe de
+Rubí es contradiu: «es tracta d'un solar pla» a 3.3.1 i «4.5 ESTABILITAT DE VESSANT» a l'índex, amb un
+pendent real del 21,6 %. El Josep va triar atacar aquesta decisió abans que la dels 18 camps.
+
+**Mesurar abans de codificar (memòria `feedback_measure_baseline_before_coding`) va capgirar el diagnòstic.**
+La troballa donava per bo que la frase era el que havia quedat obsolet i que les seccions eren correctes.
+És al revés.
+
+### Decisions arquitectòniques clau
+
+**1. Les dues seccions eren capçaleres BUIDES, i aquest era el problema gros.**
+Al `.docx` de Rubí, sota «4.4 EMPENTES DE TERRES» i «4.5 ESTABILITAT DE VESSANT» no hi ha ni una línia:
+ve directament el tancament i la signatura de l'Eva. `docs/QA-STATUS.md:134` ja advertia que els àbacs de
+Hoek & Bray no estan implementats. La mesura del 2026-09-10 mostra que **Castellar també les tenia buides**:
+tot informe que hagi activat mai aquestes seccions ha sortit amb dos títols nus. Ningú ho havia vist perquè
+ningú havia mirat sota la capçalera.
+
+*Per què no ho vam veure abans:* la comparació es fa per variables, i una variable buida amb la seva
+capçalera renderitzada no la distingeix cap mètrica de les que teníem.
+
+**2. Causa arrel: dues auto-activacions mal ordenades, no «ningú recalcula».**
+`generate()` pas 2b activa els flags des de `report_data.is_sloped`, que ve del prefill on la Fase 3 no va
+córrer (sense UTM) → `Section4Generator` retorna `None` als dos paràgrafs. Després `_build_template_context`
+fa una crida ICGC **nova**, obté 21,6 % i activa els flags **de la plantilla**. La lectura tardana arriba a
+les capçaleres i no al contingut. *Alternativa rebutjada:* recalcular la frase al final — no hauria omplert
+les seccions, que era el mal de debò.
+
+**3. El pendent mitjà de l'ICGC no és el fet que decideix — i per tant el sistema no ha de decidir.**
+Evidència dels signats: Castellar (33 %) porta les dues seccions amb Hoek & Bray i F=1,8; Rubí (21,6 %) no
+en porta cap, i al 2.1.2 l'Eva explica per què: 13,20 m de desnivell «tot i que la zona de treball es mostra
+totalment plana. La pendent comença la zona posterior». **Cap llindar sobre la mitjana separa els dos casos.**
+És la mateixa forma que la regla d'or dels càlculs: mana l'estrat **on recolza la fonamentació**.
+
+*Decisió del Josep:* el sistema **calcula amb el que sap i ho proposa a l'Eva al wizard** («Pendent mitjà
+(font: ICGC): X. Amb això, l'informe inclouria…»), ella tria, i l'informe escriu el que ella decideixi.
+*Alternativa rebutjada:* buscar un llindar millor — l'evidència diu que no n'hi ha cap de derivable.
+
+**4. La capçalera neutra «Al solar,» és de l'Eva, no inventada.**
+Repassats els signats llegibles, Rubí és **l'únic** on 3.3.1 i 4.2 duen capçalera diferent, i la de 3.3.1
+no afirma res (ni topografia ni antropització). `ANALISI-NARRATIVA-2026-09-06.md` §4 no l'havia registrat.
+És el defecte honest quan el pendent no es coneix. Confirmació demanada (pregunta 17 ampliada).
+
+**5. La provinença existia i no es mirava.**
+`report_generator.py` decidia si manava el text del wizard **pel recompte de paraules**, que no distingeix un
+text de l'Eva d'una conjectura pròpia. `user_data['_sources']` ja ho registra (`'computed (slope 0%)'` vs
+`'user'`), i el mateix fitxer ja el consultava per a `cota_referencia`. Ara mana `_sources`; sense `_sources`
+(informes antics) cau al comportament d'abans.
+
+### Implementació
+
+| fitxer | què |
+|---|---|
+| `automation/narrative_criteria.py` | pendent desconegut → `None`, mai `0.0`; capçalera `neutre` («Al solar»); decideix per l'eix que sí es coneix |
+| `web/wizard_service.py` | deixa de forçar `0.0`; consulta l'ICGC quan les UTM arriben per la via de reserva dels adjacents; proposa `include_earth_pressure`/`include_slope_stability` **sempre**, amb la raó a `note` |
+| `automation/report_generator.py` | resol el pendent **abans** de generar les seccions (una sola crida ICGC); `_sources` en comptes del recompte de paraules; cap `include_*` a True amb el paràgraf buit |
+| `automation/sections/section4_conclusions.py` | tot el català del 4.5 reescrit amb accents i apòstrofs |
+
+### Validació empírica
+
+- Suite: **31 vermells esperats, coincidència exacta per nom en els dos sentits, 0 errors**, 2683 passats.
+- Rubí generat de debò: 4.4 i 4.5 passen de buides a tenir contingut; una sola crida ICGC (abans dues).
+- Castellar: `slope_percent`, `is_sloped` i `site_condition` idèntics a la línia base; **guanya** el contingut
+  del 4.5 que a la mesura del 10-09 sortia buit.
+- Linyola: idèntic byte a byte. Alcoletge (4,5 %) i Bell-lloc (3,3 %) tenen el pendent resolt → no canvien.
+- La frase neutra generada és **idèntica caràcter a caràcter** a la del `.docx` signat de Rubí.
+
+### Tests
+
++19 (2 a `test_narrative_criteria.py`, 8 a `test_wizard_service_slope_and_site_condition.py`, 9 a
+`test_report_generator_slope_and_sections.py`). L'invariant clavat: `site_condition_sentence(None, None)` i
+`site_condition_sentence(0.0, None)` **han de diferir**.
+
+### Limitacions conegudes
+
+- **La UI no hi és.** Els dos camps arriben al prefill marcats i amb la raó, però `review.html` no té input ni
+  badge: **avui no compten a «Queden N camps a revisar»**. Tanda pròpia, i és la que tanca la decisió del Josep.
+- **Rubí seguirà divergint del signat**: amb el pendent resolt dirà «Tot i no ser un solar pla» i proposarà les
+  dues seccions. És el comportament volgut fins que l'Eva decideixi al wizard.
+- **El número balla**: segons el camí de geocodificació, el mateix solar dona 21,6 % o 12,3 % (dos punts UTM
+  dins la parcel·la). Els dos passen de 10 %, o sigui que la frase no canvia, però la xifra impresa sí.
+- **El mètode del 4.5 no és el de l'Eva**: nosaltres escrivim la fórmula inline i F=1,5 del CTE; ella redacta
+  en prosa, remet als àbacs i fa servir F=1,8. Pregunta 40 (c-bis), no tocat.
+- **Dos defectes veïns trobats i NO arreglats** (§8 de la troballa): Vilanova es genera en català un informe
+  que l'Eva signa en castellà; i `wizard_service.py:369` converteix un `is_anthropized=False` **conegut** en
+  «no ho sé» (`'' or None`) — la imatge especular del defecte principal.
+
+### GO/NO-GO
+
+✅ Suite neta · ✅ cap regressió als 7 projectes · ✅ frase neutra verificada contra el signat ·
+✅ capçaleres buides tancades (Rubí i Castellar) · ⏳ UI del wizard · ⏳ criteri de l'Eva (preguntes 17 i 40)
+
+### Següents passos
+
+1. El grup de camps al wizard: raó + alternatives + text lliure, per a `site_condition` i els dos flags.
+2. Repàs d'accents a la resta de seccions — **començant per quines arriben al `.docx`** (`STATUS.md` punt 0a:
+   393 coincidències en 55 fitxers, però les de sections 1/2/3 no s'imprimeixen enlloc).
+3. Preguntes 17 i 40 a l'Eva el 26-09.
+
+*Fi entrada 2026-09-17 (4). El pendent desconegut deixa de ser «pla», i cap secció torna a sortir amb la capçalera sola.*

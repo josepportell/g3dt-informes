@@ -504,6 +504,30 @@ Regressió: **32 failed / 1023 passed** (baseline inalterat — reverificat 2 co
 
 ## Open items (per prioritat)
 
+0a. **Repàs d'accents a TOTES les seccions generades** (Josep, 2026-09-17, després de la tanda del pendent).
+   Motiu: el paràgraf de la secció **4.5 Estabilitat de vessant** (`automation/sections/section4_conclusions.py`)
+   està escrit en **català sense accents ni apòstrofs** («realitzacio», «seguents», «presencia», «freatic»,
+   «parametres geomecanics», «metode», «minim»…) i anava a sortir dins un informe signat per una col·legiada.
+   Era invisible perquè la secció es renderitzava **buida** — l'arranjament de les capçaleres nues el va destapar.
+
+   **Mesura feta el 2026-09-17** (abans de repassar res): 393 coincidències en 55 fitxers d'`automation/`, però
+   **la majoria NO arriben al `.docx`**. Verificat: cap de les frases de `section1_presentacio.py`,
+   `section2_treballs.py` ni `section3_geologia.py` («condicions hidrologiques», «posicio del nivell freatic»,
+   «caracteristiques geotecniques», «fonamentacio mes adequat»…) apareix a cap informe generat ni al signat de
+   l'Eva — la plantilla porta el seu propi text fix i aquesta prosa no s'hi enganxa.
+
+   **Per tant el repàs NO és «accentuar 393 literals».** L'ordre correcte és:
+   1. Per cada mòdul de secció, establir **si el seu text arriba de debò al `.docx`** (la prova és generar i
+      cercar-hi la frase, com s'ha fet aquí). Sense això es repassaria prosa morta i es deixaria la viva.
+   2. Accentuar **només** el que hi arriba, i comparar-ho amb el text signat de l'Eva abans de tocar-lo
+      (memòria `feedback_check_signed_phrasing_before_template_change`).
+   3. Anotar què ha resultat ser codi mort: si sections 1/2/3 generen prosa que la plantilla no fa servir,
+      això és una pregunta pròpia (esborrar-la? o és que la plantilla la va substituir i ningú ho va netejar?).
+
+   Prioritat: **alta però no urgent** — el que arribava a l'informe (4.5) es corregeix en aquesta tanda; la resta
+   no s'imprimeix enlloc avui. El risc és que un arranjament futur torni a destapar prosa morta, com ha passat ara.
+
+
 0. **Objectiu global — qualitat de les 341 variables de l'informe** (Josep 2026-08-25): després del nivell A i la latència,
    grup B (càlculs) i tota la resta fins a revisar cada variable de l'informe. Cap variable queda "més o menys".
 0b. **Cadastre — RESOLT (2026-08-31, Fix D, commit `349ecca`).** No fallava: per «Carrer Arbrells 18A» torna la

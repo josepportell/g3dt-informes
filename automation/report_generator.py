@@ -1191,8 +1191,17 @@ class ReportGenerator:
                 self.warnings.append(f"Introducció dels adjacents: {e}")
                 context.setdefault('adjacent_intro', '')
 
-            # Auto-fill is_sloped from ICGC MDT slope analysis
-            if self.report_data.utm_x and self.report_data.utm_y:
+            # Auto-fill is_sloped from ICGC MDT slope analysis. Fix D1 (2026-09-17): quan `_resolve_slope()` ja ho
+            # ha resolt (crida des de `generate()`/`build_context_preview()` ABANS de `generate_sections()`, perquè
+            # `Section4Generator` vegi el pendent fresc), es reaprofita el resultat i NO es torna a trucar a l'ICGC
+            # aquí — abans hi havia dues consultes: una massa tard per activar les seccions, i aquesta.
+            if getattr(self, '_slope_resolved', False):
+                context['is_sloped'] = getattr(self.report_data, 'is_sloped', False)
+                if self.report_data.slope_percent is not None:
+                    context['slope_percent'] = f"{self.report_data.slope_percent:.1f}"
+                if self.report_data.slope_direction:
+                    context['slope_direction'] = self.report_data.slope_direction
+            elif self.report_data.utm_x and self.report_data.utm_y:
                 try:
                     from .icgc_geology import get_slope
                     slope_pct, slope_dir = get_slope(
@@ -1211,6 +1220,8 @@ class ReportGenerator:
                 except (ImportError, Exception) as e:
                     self.warnings.append(f"Could not calculate slope from ICGC MDT: {e}")
                     context['is_sloped'] = getattr(self.report_data, 'is_sloped', False)
+            else:
+                context['is_sloped'] = getattr(self.report_data, 'is_sloped', False)
 
             # Site condition: FRASE SENCERA per criteri (`narrative_criteria.site_condition_sentence`, 2026-09-06):
             # pendent > 10 % → «Tot i no ser un solar pla…»; antropitzat → «Degut a que…»; si no «Com que es tracta
@@ -1220,7 +1231,14 @@ class ReportGenerator:
             _slope_pct = context.get('slope_percent') or getattr(self.report_data, 'slope_percent', None)
             _sc = site_condition_sentence(_slope_pct, getattr(self.report_data, 'is_anthropized', None), _lang)
             _sc_user = str(self.user_data.get('site_condition') or '').strip()
-            if len(_sc_user.split()) >= 4:
+            # Fix C (2026-09-17): el recompte de paraules NO distingeix un text de l'Eva d'una conjectura pròpia
+            # del sistema (`_sources['site_condition']` pot ser `'computed (slope 0%)'` amb 4+ paraules i encara
+            # ser una frase inventada). La provinença real ja es guarda a `user_data['_sources']` (mateix patró que
+            # `cota_source`, més amunt): mana només si l'Eva l'ha tocat de debò. Sense `_sources` (informes antics),
+            # es manté el criteri d'abans (recompte) com a reserva.
+            _sc_source = (self.user_data.get('_sources') or {}).get('site_condition')
+            _sc_use_user = (_sc_source == 'user') if _sc_source is not None else (len(_sc_user.split()) >= 4)
+            if _sc_use_user:
                 context['site_condition'] = _sc_user
             else:
                 context['site_condition'] = _sc.value
@@ -1237,7 +1255,13 @@ class ReportGenerator:
                 _own = own_parcel_buildings(context.get('_parcel_rcs') or [])
             except Exception as e:
                 self.warnings.append(f"Construccions de la parcel·la pròpia (DNPRC): {e}")
-            _sd = site_description_sentence(_slope_pct, _own, _lang, current=self.report_data.site_description)
+            # Fix C (2026-09-17): mateixa confusió que `site_condition` — `site_description_sentence` decideix amb
+            # el recompte de paraules (`len(cur.split()) >= 4`) si `current` és «text de l'Eva». Es passa `current`
+            # NOMÉS quan la provinença real ho confirma (`_sources['site_description'] == 'user'`); si no hi ha
+            # `_sources`, es manté el comportament d'abans (deixar-ho decidir a la funció pel recompte).
+            _sd_source = (self.user_data.get('_sources') or {}).get('site_description')
+            _sd_current = self.report_data.site_description if (_sd_source is None or _sd_source == 'user') else None
+            _sd = site_description_sentence(_slope_pct, _own, _lang, current=_sd_current)
             context['site_description'] = _sd.value
             context['_narr_site_description'] = _sd.to_dict()
             context['_own_parcel_building'] = _own
@@ -1261,21 +1285,7 @@ class ReportGenerator:
 
             # Phase 3: Conditional sections
             include_expansivity = getattr(self.report_data, 'include_expansivity', False)
-            include_earth_pressure = getattr(self.report_data, 'include_earth_pressure', False)
-            include_slope_stability = getattr(self.report_data, 'include_slope_stability', False)
-
-            # Auto-activate slope stability + earth pressure when slope detected
-            if context.get('is_sloped'):
-                if not include_slope_stability:
-                    include_slope_stability = True
-                    logger.info("Auto-activated slope stability (slope auto-detected from ICGC MDT)")
-                if not include_earth_pressure:
-                    include_earth_pressure = True
-                    logger.info("Auto-activated earth pressure (slope auto-detected → retaining walls needed)")
-
             context['include_expansivity'] = include_expansivity
-            context['include_earth_pressure'] = include_earth_pressure
-            context['include_slope_stability'] = include_slope_stability
             context['show_granulometric'] = getattr(self.report_data, 'show_granulometric', False)
 
             # Dynamic section numbering for Section 3 (affected by expansivity)
@@ -1288,14 +1298,13 @@ class ReportGenerator:
                 context['section_sismica_num'] = '3.6'
                 context['section_rado_num'] = '3.7'
 
-            # Dynamic section numbering for Section 4 (affected by earth pressure + slope)
+            # `include_earth_pressure` / `include_slope_stability` i la numeració de la secció 4 es decideixen MÉS
+            # AVALL (Fix D2, 2026-09-17), un cop se sap si `Section4Generator` ha omplert de debò `empentes_paragraph`
+            # / `estabilitat_paragraph` — mai abans. Activar-les aquí a partir de `is_sloped` sense mirar si el
+            # paràgraf existeix és el que produïa capçaleres («4.4 EMPENTES DE TERRES», «4.5 ESTABILITAT DE VESSANT»)
+            # completament buides sobre la signatura de l'Eva (cas Rubí, 2026-09-17). L'activació real que sí
+            # alimenta `generate_sections()` és `_resolve_slope()` (abans del pas 2b de `generate()`).
             context['section_fonamentacio_num'] = '4.3'
-            if include_earth_pressure:
-                context['section_empentes_num'] = '4.4'
-                context['section_estabilitat_num'] = '4.5' if include_slope_stability else ''
-            else:
-                context['section_empentes_num'] = ''
-                context['section_estabilitat_num'] = '4.4' if include_slope_stability else ''
 
             # Soil levels for section 3.2 - built later after section3 processing
 
@@ -1896,6 +1905,23 @@ class ReportGenerator:
             context.setdefault('conclusions_water_statement', '')
             context.setdefault('conclusions_aggressivity_statement', '')
 
+            # Fix D2 (2026-09-17): «cap capçalera de secció sense contingut, mai». Mateixa convenció que la resta
+            # de condicionals de la plantilla (`{%p if adjacent_north_fmt %}`, `{%p if photo_site_text %}`…): la
+            # condició ÉS el contingut. Al `.docx`, `include_earth_pressure` i `include_slope_stability` embolcallen
+            # LA CAPÇALERA I EL PARÀGRAF junts (`{%p if include_earth_pressure %}…EMPENTES DE TERRES…{{
+            # empentes_paragraph }}…{%p endif %}`), o sigui que gatejar sobre el paràgraf ja fet és exactament
+            # equivalent i no introdueix cap convenció nova. Abans, aquests dos flags depenien de `is_sloped`
+            # (calculat massa d'hora, sense saber si `Section4Generator` havia pogut omplir el paràgraf) i podien
+            # quedar True amb el paràgraf buit: capçalera nua sobre la signatura de l'Eva (cas Rubí).
+            context['include_earth_pressure'] = bool(context.get('empentes_paragraph'))
+            context['include_slope_stability'] = bool(context.get('estabilitat_paragraph'))
+            if context['include_earth_pressure']:
+                context['section_empentes_num'] = '4.4'
+                context['section_estabilitat_num'] = '4.5' if context['include_slope_stability'] else ''
+            else:
+                context['section_empentes_num'] = ''
+                context['section_estabilitat_num'] = '4.4' if context['include_slope_stability'] else ''
+
             # Include full structured data for advanced templates
             context['project'] = report_data_to_dict(self.report_data)
 
@@ -1941,6 +1967,42 @@ class ReportGenerator:
 
         doc.render(context)
         doc.save(str(output_path))
+
+    def _resolve_slope(self) -> None:
+        """Resol `report_data.slope_percent/slope_direction/is_sloped` ABANS de `generate_sections()` (Fix D1,
+        2026-09-17).
+
+        Causa arrel del cas Rubí (pendent real 21,6 %, capçaleres «4.4 EMPENTES DE TERRES» / «4.5 ESTABILITAT DE
+        VESSANT» buides sobre la signatura de l'Eva): hi havia DUES consultes ICGC mal ordenades. El pas 2b de
+        `generate()` activava `include_slope_stability`/`include_earth_pressure` a partir de `report_data.is_sloped`
+        — que ve del prefill, on la Fase 3 de `auto_extractor` no va córrer perquè encara no hi havia UTM — o sigui
+        que quedava `False` i `Section4Generator` no generava cap paràgraf. `_build_template_context()` feia una
+        SEGONA consulta ICGC, ja amb UTM disponible, i amb aquesta activava els flags... però només els locals a la
+        plantilla (`context['include_*']`), massa tard per canviar els paràgrafs ja buits.
+
+        Aquest mètode fa la consulta ICGC (si cal) abans que res més passi, de manera que el pas 2b vegi el pendent
+        real i `generate_sections()` produeixi contingut de debò. Es marca `self._slope_resolved` perquè
+        `_build_template_context()` reaprofiti el resultat en lloc de tornar a consultar l'ICGC.
+
+        Si `slope_percent` ja es coneix (wizard/user_data — Fix B del wizard_service ja el sol haver resolt abans
+        de desar), no es toca. Sense UTM, o si la crida a l'ICGC falla (xarxa), el pendent es queda desconegut —
+        MAI es força a `False`/pla: un pendent que no sabem no és el mateix que un pendent que sabem que és zero.
+        """
+        if getattr(self, '_slope_resolved', False):
+            return
+        rd = self.report_data
+        if rd is not None and rd.slope_percent is None and rd.utm_x and rd.utm_y:
+            try:
+                from .icgc_geology import get_slope
+                slope_pct, slope_dir = get_slope(rd.utm_x, rd.utm_y)
+                rd.slope_percent = slope_pct
+                rd.slope_direction = slope_dir
+                if slope_pct > 15.0:
+                    rd.is_sloped = True
+                    logger.info(f"Pendent resolt abans de les seccions: is_sloped=True ({slope_pct:.1f}% {slope_dir})")
+            except Exception as e:
+                self.warnings.append(f"Could not calculate slope from ICGC MDT (pre-secció): {e}")
+        self._slope_resolved = True
 
     def generate(self, output_path: str | Path) -> GenerationResult:
         """
@@ -1990,6 +2052,10 @@ class ReportGenerator:
 
         # Step 2b: Auto-activate conditional sections before generation
         # (Section4Generator checks these flags to decide what to generate)
+        # Fix D1 (2026-09-17): el pendent es resol ARA, abans d'aquest check — si no, `is_sloped` és el del
+        # prefill (sovint `False` per manca d'UTM a la Fase 3) i els flags s'activen massa tard perquè
+        # `generate_sections()` en tregui profit.
+        self._resolve_slope()
         if getattr(self.report_data, 'is_sloped', False):
             if not getattr(self.report_data, 'include_slope_stability', False):
                 self.report_data.include_slope_stability = True
@@ -2049,6 +2115,7 @@ class ReportGenerator:
             )
 
         # Step 2b: Auto-activate conditional sections (same as generate())
+        self._resolve_slope()
         if getattr(self.report_data, 'is_sloped', False):
             if not getattr(self.report_data, 'include_slope_stability', False):
                 self.report_data.include_slope_stability = True

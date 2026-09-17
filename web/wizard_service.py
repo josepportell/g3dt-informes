@@ -359,6 +359,38 @@ def _fill_missing_adjacents(merged: dict[str, Any], project_path: Path) -> None:
         logger.warning(f"Failed to fill missing adjacents: {e}")
 
 
+def _fill_missing_slope(merged: dict[str, Any]) -> None:
+    """Consulta el pendent ICGC quan encara no es coneix però ja hi ha UTM (típicament acabades d'obtenir per
+    `_fill_missing_adjacents`, que geocodifica DESPRÉS de la Fase 3 de `auto_extractor` — als 7 projectes de
+    referència no hi ha `COORDENADES.txt`, o sigui que aquest camí és la norma, no l'excepció).
+
+    Mateix llindar que `automation.auto_extractor._phase3_slope` (15,0 %): es reutilitza el criteri, no se'n fa
+    un de nou. Si la crida a l'ICGC falla (xarxa), el camp queda absent — MAI 0: el desconegut segueix sent
+    desconegut (`narrative_criteria.site_condition_sentence` en depèn per no confondre «no ho sabem» amb «pla»).
+    """
+    def _raw(key: str) -> Any:
+        entry = merged.get(key)
+        return entry.get('value') if isinstance(entry, dict) else entry
+
+    if _raw('slope_percent') not in (None, ''):
+        return
+    utm_x, utm_y = _raw('utm_x'), _raw('utm_y')
+    if utm_x in (None, '') or utm_y in (None, ''):
+        return
+    try:
+        from automation.icgc_geology import get_slope
+        slope_pct, direction = get_slope(float(utm_x), float(utm_y))
+    except Exception as e:
+        logger.debug("Pendent ICGC post-geocode d'adjacents: %s", e)
+        return
+    merged['slope_percent'] = {'value': round(slope_pct, 1), 'source': 'ICGC MDT 2m (post-geocode adjacents)'}
+    merged['slope_direction'] = {'value': direction, 'source': 'ICGC MDT 2m (post-geocode adjacents)'}
+    merged['is_sloped'] = {
+        'value': slope_pct > 15.0,
+        'source': f"ICGC MDT ({slope_pct:.0f}% {direction}, post-geocode adjacents)",
+    }
+
+
 def _crossref_lab_from_sondeig(merged: dict[str, Any], project_path: Path) -> None:
     """Deduce lab_location and lab_sample_id by cross-referencing sondeig SPT depths.
 
@@ -555,20 +587,74 @@ def _generate_template_prefills_from_merged(merged: dict[str, Any]) -> None:
         # fa servir el generador. `is_anthropized` només compta si ve d'una font real (no del defecte).
         from automation.narrative_criteria import site_condition_sentence
         lang = _get_project_language(merged)
-        slope_pct = _get_val('slope_percent')
+        # 2026-09-17: el pendent desconegut NO es força a 0,0 (`site_condition_sentence` distingeix «pla» real de
+        # «no ho sabem»). `_get_val` fa `entry.get('value') or ''`, que amagaria un 0,0 explícit: es llegeix el
+        # valor cru, no la versió en text de `_get_val`.
+        _slope_entry = merged.get('slope_percent')
+        _raw_slope = _slope_entry.get('value') if isinstance(_slope_entry, dict) else _slope_entry
         try:
-            slope_val = float(slope_pct) if slope_pct else 0.0
+            slope_val = float(_raw_slope) if _raw_slope not in (None, '') else None
         except (ValueError, TypeError):
-            slope_val = 0.0
+            slope_val = None
         is_anthro_entry = merged.get('is_anthropized', {})
         anthro_source = is_anthro_entry.get('source', '') if isinstance(is_anthro_entry, dict) else ''
         is_anthro = None if 'default' in anthro_source else (_get_val('is_anthropized') or None)
         choice = site_condition_sentence(slope_val, is_anthro, lang)
+        slope_source_txt = f'slope {slope_val:.0f}%' if slope_val is not None else 'slope desconegut'
         merged['site_condition'] = {
             'value': choice.value,
-            'source': 'computed (ES template)' if lang == 'es' else f'computed (slope {slope_val:.0f}%)',
+            'source': 'computed (ES template)' if lang == 'es' else f'computed ({slope_source_txt})',
             'candidates': [c.value for c in choice.candidates],
         }
+
+    # D3/D4 (2026-09-17): «Empentes de terres» / «Estabilitat de vessant» NO les decideix mai el sistema en
+    # silenci. Decisió del Josep: el pendent MITJÀ de l'ICGC no és el fet que decideix si toquen aquestes
+    # seccions — ho decideix el pendent ALLÀ ON ES FONAMENTA L'EDIFICI, judici de la visita que el sistema
+    # no pot saber mai (Castellar 33% → l'Eva hi escriu les dues; Rubí 21,6% → cap de les dues, «la zona de
+    # treball es mostra totalment plana»). D3 només marcava els camps quan la consulta ICGC fallava (pendent
+    # desconegut): amb xarxa disponible el pendent es resolia sol i el marcador no s'activava mai (detectat
+    # pel tester). Ara es PROPOSA sempre — amb pendent conegut, la mateixa llindar que `_fill_missing_slope`
+    # (15,0%) dona una proposta (True/False); amb pendent desconegut, la proposta queda buida (`None`) com
+    # abans — i s'explica la raó a `note` (font + valor del pendent), en comptes de codificar-la al valor,
+    # perquè el wizard hi pugui escriure la frase de proposta. NOMÉS backend: fa falta a
+    # `templates/validation/review.html` un input + badge per aquests dos camps perquè comptin de debò a
+    # «Queden N camps a revisar» (avui cap dels dos existeix a la UI) — no s'ha fet en aquesta tanda.
+    _iep_existing = merged.get('include_earth_pressure')
+    _iss_existing = merged.get('include_slope_stability')
+    _iep_is_user = isinstance(_iep_existing, dict) and _iep_existing.get('source') == 'user'
+    _iss_is_user = isinstance(_iss_existing, dict) and _iss_existing.get('source') == 'user'
+    if not _iep_is_user and not _iss_is_user:
+        _slope_entry_d3 = merged.get('slope_percent')
+        _raw_slope_d3 = _slope_entry_d3.get('value') if isinstance(_slope_entry_d3, dict) else _slope_entry_d3
+        _slope_source_d3 = (
+            (_slope_entry_d3.get('source') if isinstance(_slope_entry_d3, dict) else None) or 'ICGC MDT'
+        )
+        _dir_entry_d3 = merged.get('slope_direction')
+        _dir_d3 = _dir_entry_d3.get('value') if isinstance(_dir_entry_d3, dict) else _dir_entry_d3
+
+        if _raw_slope_d3 in (None, ''):
+            _proposed_d3 = None
+            _reason_earth = "Pendent desconegut: no se sap si calen les empentes de terres. Revisar amb l'Eva."
+            _reason_slope = "Pendent desconegut: no se sap si cal l'estabilitat de vessant. Revisar amb l'Eva."
+        else:
+            try:
+                _slope_val_d3 = float(_raw_slope_d3)
+            except (TypeError, ValueError):
+                _slope_val_d3 = None
+            _proposed_d3 = _slope_val_d3 is not None and _slope_val_d3 > 15.0
+            _slope_txt = f"{_slope_val_d3:.1f}".replace('.', ',') + '%' if _slope_val_d3 is not None else str(_raw_slope_d3)
+            _dir_txt = f" cap a {_dir_d3}" if _dir_d3 else ""
+            _base = f"Pendent mitjà (font: {_slope_source_d3}): {_slope_txt}{_dir_txt}."
+            _caveat = "el pendent que compta és el de la zona on es fonamenta l'edifici, no la mitjana de l'ICGC; revisar amb l'Eva."
+            if _proposed_d3:
+                _reason_earth = f"{_base} Amb això, l'informe inclouria la secció 4.4 Empentes de terres — {_caveat}"
+                _reason_slope = f"{_base} Amb això, l'informe inclouria la secció 4.5 Estabilitat de vessant — {_caveat}"
+            else:
+                _reason_earth = f"{_base} Amb això, l'informe no inclouria la secció 4.4 Empentes de terres — {_caveat}"
+                _reason_slope = f"{_base} Amb això, l'informe no inclouria la secció 4.5 Estabilitat de vessant — {_caveat}"
+
+        merged['include_earth_pressure'] = {'value': _proposed_d3, 'source': 'revisar', 'note': _reason_earth}
+        merged['include_slope_stability'] = {'value': _proposed_d3, 'source': 'revisar', 'note': _reason_slope}
 
 
 def _clear_stale_user_data(project_path: Path) -> None:
@@ -2385,6 +2471,10 @@ def _merge_prefills(
     # If auto_extract skipped adjacents (no UTM coords), try geocoding from
     # planol address now that vision data is available in the merged prefills.
     _fill_missing_adjacents(merged, project_path)
+
+    # El pendent (ICGC) sovint es pot saber un cop hi ha UTM (via geocode dels adjacents, just a sobre) però
+    # ningú el consultava: la Fase 3 de `auto_extractor` ja havia passat sense UTM. Fix B2 (2026-09-17).
+    _fill_missing_slope(merged)
 
     # Generate formatted adjacent sentences for diagnostic comparison
     def _get_merged_val(key: str) -> str:

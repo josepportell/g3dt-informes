@@ -383,7 +383,11 @@ _SITE_HEADS_CA = {
     "pendent": "Tot i no ser un solar pla",
     "antropitzat": "Degut a que es tracta d'un solar antropitzat",
     "no_antropitzat": "Es tracta d'un solar no antropitzat",
+    # Capçalera neutra (2026-09-17): quan ni el pendent ni l'antropització tenen font, sense inventar cap afirmació
+    # topogràfica. Literal del §3.3.1 del Rubí signat, l'únic cas on l'Eva no fa cap afirmació d'aquest tipus.
+    "neutre": "Al solar",
 }
+_SITE_CONDITION_HEADS_ORDER = ("pla", "pendent", "antropitzat", "no_antropitzat")
 SLOPE_THRESHOLD_PCT = 10.0
 
 
@@ -396,27 +400,50 @@ def _to_bool(v: Any) -> bool | None:
 
 
 def site_condition_sentence(slope_percent: Any = None, is_anthropized: Any = None, lang: str = "ca") -> NarrativeChoice:
-    """Frase sencera de l'estat del solar (3.3.1 i 4.2). Criteri del wizard (2026-04) + els altres caps com a candidats."""
+    """Frase sencera de l'estat del solar (3.3.1 i 4.2). Criteri del wizard (2026-04) + els altres caps com a candidats.
+
+    Pendent desconegut (`None`/«»/no convertible) → `slope = None`, MAI 0,0 (2026-09-17: un pendent desconegut ja
+    no es confonia amb un solar pla de debò). Si a més l'antropització també és desconeguda, no es fa cap afirmació
+    topogràfica ni d'antropització: capçalera neutra «Al solar,» (literal del Rubí signat). Si el pendent és
+    desconegut però l'antropització sí es coneix, es tria únicament per aquest eix. Un pendent conegut (inclòs un
+    0,0 explícit) manté el criteri d'abans intacte.
+    """
     if lang == "es":
         return NarrativeChoice(SITE_CONDITION_ES, "fórmula única en castellà (Vilanova, Anciles)",
                                [Candidate(SITE_CONDITION_ES, "signat ES")])
     try:
-        slope = float(slope_percent) if slope_percent not in (None, "") else 0.0
+        slope = float(slope_percent) if slope_percent not in (None, "") else None
     except (TypeError, ValueError):
-        slope = 0.0
+        slope = None
     anthro = _to_bool(is_anthropized)
-    sloped = slope > SLOPE_THRESHOLD_PCT
-    if sloped and anthro is False:
-        key, why = "no_antropitzat", f"pendent {slope:.0f} % i no antropitzat (Rubí)"
-    elif sloped:
-        key, why = "pendent", f"pendent {slope:.0f} % > {SLOPE_THRESHOLD_PCT:.0f} % (Castellar)"
-    elif anthro:
-        key, why = "antropitzat", "solar antropitzat (Bell-lloc)"
+    notes: list[str] = []
+    if slope is None and anthro is None:
+        key = "neutre"
+        why = "pendent i antropització sense font: cap afirmació topogràfica ni d'antropització"
+        notes.append("pendent i antropització sense font: capçalera neutra «Al solar,» (Rubí)")
+    elif slope is None:
+        if anthro:
+            key, why = "antropitzat", "solar antropitzat (Bell-lloc); pendent desconeguda: cap afirmació topogràfica"
+        else:
+            key, why = "no_antropitzat", "explícitament no antropitzat; pendent desconeguda: cap afirmació topogràfica"
+        notes.append("pendent desconeguda (sense UTM): tria només per l'antropització")
     else:
-        key, why = "pla", f"pendent {slope:.0f} % ≤ {SLOPE_THRESHOLD_PCT:.0f} %, no antropitzat (Linyola, Alcoletge)"
-    order = [key] + [k for k in ("pla", "pendent", "antropitzat", "no_antropitzat") if k != key]
+        sloped = slope > SLOPE_THRESHOLD_PCT
+        if sloped and anthro is False:
+            key, why = "no_antropitzat", f"pendent {slope:.0f} % i no antropitzat (Rubí)"
+        elif sloped:
+            key, why = "pendent", f"pendent {slope:.0f} % > {SLOPE_THRESHOLD_PCT:.0f} % (Castellar)"
+        elif anthro:
+            key, why = "antropitzat", "solar antropitzat (Bell-lloc)"
+        else:
+            key, why = "pla", f"pendent {slope:.0f} % ≤ {SLOPE_THRESHOLD_PCT:.0f} %, no antropitzat (Linyola, Alcoletge)"
+        if anthro is None:
+            notes.append("antropitzat sense font (no derivable del Cadastre ni de l'ICGC): revisar")
+    if key == "neutre":
+        order = ["neutre"] + list(_SITE_CONDITION_HEADS_ORDER)
+    else:
+        order = [key] + [k for k in _SITE_CONDITION_HEADS_ORDER if k != key]
     cands = [Candidate(_SITE_HEADS_CA[k] + SITE_CONDITION_TAIL_CA, f"cap «{_SITE_HEADS_CA[k]}»") for k in order]
-    notes = [] if anthro is not None else ["antropitzat sense font (no derivable del Cadastre ni de l'ICGC): revisar"]
     return NarrativeChoice(cands[0].value, why, cands, notes)
 
 

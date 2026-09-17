@@ -67,6 +67,29 @@ def test_site_condition_criterion_matches_the_five_signed_heads():
     assert site_condition_sentence(None, None, "es").value == SITE_CONDITION_ES
 
 
+def test_site_condition_unknown_slope_is_not_zero():
+    """Fix A (2026-09-17): un pendent desconegut (`None`) NO és el mateix que un 0,0 explícit."""
+    tail = ", no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin."
+    r_unknown = site_condition_sentence(None, None)
+    r_zero = site_condition_sentence(0.0, None)
+    assert r_unknown.value != r_zero.value, "None i 0,0 explícit han de diferir (invariant de l'encàrrec)"
+    assert r_zero.value == "Com que es tracta d'un solar pla" + tail, "un 0,0 llegit de debò segueix sent «pla»"
+    assert r_unknown.value == "Al solar" + tail, "cap dels dos eixos coneguts → capçalera neutra (Rubí)"
+    assert len(r_unknown.candidates) == 5, "les quatre capçaleres existents + la neutra, totes com a candidats"
+    assert any("sense font" in n for n in r_unknown.notes)
+
+
+def test_site_condition_unknown_slope_known_anthropization():
+    """Pendent desconegut però antropització coneguda: es tria per aquest eix, sense parlar de topografia."""
+    tail = ", no s'han detectat marques i/o indicis de processos d'erosió relacionats amb l'escolament hídric superficial, ni es preveu que apareguin."
+    r_anthro = site_condition_sentence(None, True)
+    assert r_anthro.value == "Degut a que es tracta d'un solar antropitzat" + tail
+    assert len(r_anthro.candidates) == 4, "les quatre capçaleres existents, sense la neutra (l'eix conegut ja decideix)"
+    r_not = site_condition_sentence(None, False)
+    assert r_not.value == "Es tracta d'un solar no antropitzat" + tail
+    assert any("pendent desconeguda" in n for n in r_anthro.notes + r_not.notes)
+
+
 def test_building_structure_clause_variants_and_legacy_values():
     a = building_structure_clause("PB (planta baixa, 1 nivell)").value
     assert a == ("en planta baixa, i per tant, no es preveu cap excavació important, únicament l'excavació pel sanejament, "
