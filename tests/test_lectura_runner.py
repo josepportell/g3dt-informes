@@ -1100,3 +1100,25 @@ def test_systemic_reason_only_on_failed_calls():
     assert lectura_runner.systemic_reason(timeout) is None
     plain_fail = {"rc": 1, "timeout": False, "cancelled": False, "cli": {"is_error": True, "result_head": "JSON invalid at line 3"}}
     assert lectura_runner.systemic_reason(plain_fail) is None
+
+
+def test_systemic_reason_detects_expired_oauth_session_only_on_bad_calls():
+    """2026-09-16: prova WSL amb el HOME de sessió caducat — el CLI diu literalment aquest
+    text i abans no era reconegut, així que 13 documents es reintentaven en va (26 errors)
+    sense aturar mai la lectura."""
+    text = "Failed to authenticate: OAuth session expired and could not be refreshed"
+    bad = {"rc": 1, "timeout": False, "cancelled": False, "cli": {"is_error": True, "result_head": text}}
+    assert lectura_runner.systemic_reason(bad).lower().startswith("failed to authenticate")
+    is_error_only = {"rc": 0, "timeout": False, "cancelled": False, "cli": {"is_error": True, "result_head": text}}
+    assert lectura_runner.systemic_reason(is_error_only) is not None
+    ok_call = {"rc": 0, "timeout": False, "cancelled": False, "cli": {"is_error": False, "result_head": text}}
+    assert lectura_runner.systemic_reason(ok_call) is None
+
+
+def test_systemic_kind_distinguishes_auth_from_usage_limit_and_auth_wins_ties():
+    auth_text = "Failed to authenticate: OAuth session expired and could not be refreshed"
+    assert lectura_runner.systemic_kind(auth_text) == "auth"
+    usage_text = "You've hit your usage limit. Your limit resets at 3pm"
+    assert lectura_runner.systemic_kind(usage_text) == "usage_limit"
+    both = "OAuth session expired — regain access by logging in again before your limit resets"
+    assert lectura_runner.systemic_kind(both) == "auth"

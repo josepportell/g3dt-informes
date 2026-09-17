@@ -341,6 +341,17 @@ def _parse_cli_output(stdout_path: Path, log_path: Path) -> dict[str, Any]:
             stdout_path.unlink()
 
 
+#: Subconjunt de `_SYSTEMIC_RE` específic de sessió/credencials caducades o invàlides (2026-09-16:
+#: prova WSL amb el HOME de sessió caducat — el CLI diu literalment «Failed to authenticate: OAuth
+#: session expired and could not be refreshed», text que el `_SYSTEMIC_RE` d'abans no reconeixia).
+#: Es manté separat de `_SYSTEMIC_RE` perquè `systemic_kind()` el necessita per classificar, no
+#: només per detectar.
+_AUTH_RE = re.compile(
+    r"not logged in|please (run )?/?login|log in to continue|invalid api key|authentication_error|unauthorized"
+    r"|failed to authenticate|oauth|session expired|could not be refreshed|refresh token",
+    re.IGNORECASE,
+)
+
 #: Missatges del CLI (o de l'API a través seu) que volen dir «cap crida més servirà fins que
 #: canviï alguna cosa del compte»: límit d'ús del pla (finestra de 5 h / setmanal), sessió no
 #: iniciada o caducada, clau sense crèdit (memòria `reference_anthropic_usage_cap_error_shape`:
@@ -349,9 +360,21 @@ def _parse_cli_output(stdout_path: Path, log_path: Path) -> dict[str, Any]:
 _SYSTEMIC_RE = re.compile(
     r"usage limit|hit your (usage )?limit|limit reached|regain access|resets? (at|in) |out of (extra )?usage"
     r"|rate limit exceeded|credit balance|insufficient credit|billing"
-    r"|not logged in|please (run )?/?login|log in to continue|invalid api key|authentication_error|unauthorized",
+    r"|" + _AUTH_RE.pattern,
     re.IGNORECASE,
 )
+
+
+def systemic_kind(reason: str) -> str:
+    """Classifica un motiu ja detectat per `systemic_reason()` en `"auth"` (sessió caducada o
+    credencials invàlides) o `"usage_limit"` (límit d'ús/crèdit/facturació del pla).
+
+    Auth mana quan el text esmenta totes dues coses alhora: una sessió caducada sovint
+    acompanya el missatge amb la paraula «limit» (p. ex. «regain access»), i el que cal fer-hi
+    (tornar a iniciar sessió) no té res a veure amb esperar que es renovi un límit."""
+    if _AUTH_RE.search(reason or ""):
+        return "auth"
+    return "usage_limit"
 
 
 def systemic_reason(call: dict[str, Any], log_path: Path | None = None) -> str | None:

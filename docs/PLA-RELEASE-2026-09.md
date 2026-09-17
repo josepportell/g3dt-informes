@@ -197,7 +197,10 @@ requirements-lock.txt`; `.env` **calcat al de l'Eva** (tres claus, `G3DT_*` de p
 5. **App:** `git clone --branch production/g3dt-eva-v1 …` a `/home/eva/g3dt/app`; venv + `pip install -e . -c
    requirements-lock.txt`; `.env` (copiar el seu, camins Linux, bloc de lectura); carpetes workspace/reports/cache/logs.
 6. **Icona:** `scripts/G3DT-Wizard.bat` + `G3DT-config.bat` (`G3DT_PATH=/home/eva/g3dt/app`) a l'escriptori; la de maig es
-   reanomena «(antic)».
+   reanomena «(antic)». **També `scripts/G3DT-Tornar-a-entrar-a-Claude.bat` a l'escriptori, amb la icona anomenada
+   exactament «Tornar a entrar a Claude»**: és el nom que el wizard li diu a l'Eva quan la sessió de Claude caduca
+   (decisió del Josep 2026-09-17; fila «Aturat: cal tornar a iniciar sessió a Claude»). Si la icona no hi és o es diu
+   d'una altra manera, el missatge la deixa sense sortida.
 7. **Un projecte seu de cap a cap amb ella al costat:** «Preparar» (cronometrar; dir-li el temps per endavant), Imatges,
    Generar, Word. Si el compte diu prou: la taula ho dirà (§2.2); anotar l'hora.
 8. **Tornar enrere si cal:** la icona antiga segueix funcionant (Windows natiu, `1f1d7fd`); res no s'ha esborrat.

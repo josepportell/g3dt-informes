@@ -87,7 +87,7 @@ def test_transitions_happy_path_reading_consolidating_merging_ready(tmp_path):
     job.emit("lectura_doc", {"doc": "c.pdf", "cached": False, "attempt": 1})
     on_disk = _read_job(job.job_path)
     assert on_disk["state"] == jobs.READING
-    assert on_disk["docs"] == {"total": 3, "done": 3, "cached": 1, "errors": 0, "current": []}
+    assert on_disk["docs"] == {"total": 3, "done": 3, "cached": 1, "errors": 0, "failed": 0, "current": []}
 
     job.emit("lectura_decisions_marker", {"cached": False})
     on_disk = _read_job(job.job_path)
@@ -134,6 +134,50 @@ def test_lectura_doc_error_increments_errors_without_touching_done(tmp_path):
     on_disk = _read_job(job.job_path)
     assert on_disk["docs"]["errors"] == 1
     assert on_disk["docs"]["done"] == 0
+
+
+def test_docs_failed_only_counts_definitive_failures_from_lectura_fi(tmp_path):
+    """Tercera passada (reviewer, 2026-09-17): `docs.failed` és un comptador NOU, separat
+    d'`errors` (per intent). Un document que falla al primer intent i encerta al segon aporta
+    un `errors` però NO ha de comptar mai a `failed` — `automation/lectura/runner.py` només
+    inclou a `docs_failed` (dins `lectura_fi`) els documents amb estat FINAL `"failed"` o
+    `"skipped_systemic"`, mai un intent intermedi."""
+    job = _fresh_job(tmp_path)
+    job.emit("lectura_inici", {"n_claude": 3})
+    # a.pdf: falla el primer intent, encerta el segon — errors puja, failed NO.
+    job.emit("lectura_doc_error", {"doc": "a.pdf", "attempt": 1, "rc": 1, "timeout": False})
+    job.emit("lectura_doc", {"doc": "a.pdf", "cached": False, "attempt": 2})
+    # b.pdf i c.pdf: intents esgotats / parada sistèmica — el runner ho reporta a `docs_failed`.
+    job.emit("lectura_fi", {"n_docs": 3, "by_status": {"ok": 1, "failed": 1, "skipped_systemic": 1},
+                            "elapsed_s_total": 3.0, "degraded": True,
+                            "docs_failed": ["b.pdf", "c.pdf"]})
+
+    assert job.docs_errors == 1
+    assert job.docs_done == 1
+    assert job.docs_failed == 2
+    on_disk = _read_job(job.job_path)
+    assert on_disk["docs"]["failed"] == 2
+    assert on_disk["docs"]["errors"] == 1
+    assert on_disk["docs"]["done"] == 1
+
+
+def test_skipped_duplicate_does_not_inflate_done_or_cached(tmp_path):
+    """CRÍTIC (reviewer, 2026-09-16): un duplicat saltat (`runner._run_lectura` emet
+    `lectura_doc` amb `skipped_duplicate: True` ABANS de conèixer `docs_total`) no és un
+    document llegit. Comptar-lo com a "done" produïa els defectes coneguts 19/18 i 15/13
+    (DECISION-LOG 2026-09-10/2026-09-16) i, més greu, permetia que un `done` inflat amagués
+    un run 100% trencat a `job_text._reading_found_nothing`. El progrés d'un run sa ha de
+    seguir arribant EXACTAMENT a `total/total`, mai per sobre."""
+    job = _fresh_job(tmp_path)
+    job.emit("lectura_doc", {"doc": "annex_a_copy.pdf", "skipped_duplicate": True})
+    assert job.docs_done == 0 and job.docs_cached == 0
+
+    job.emit("lectura_inici", {"n_claude": 2, "docs": ["a.pdf", "b.pdf"]})
+    job.emit("lectura_doc", {"doc": "a.pdf", "cached": False, "attempt": 1})
+    job.emit("lectura_doc", {"doc": "b.pdf", "cached": True})
+
+    on_disk = _read_job(job.job_path)
+    assert on_disk["docs"] == {"total": 2, "done": 2, "cached": 1, "errors": 0, "failed": 0, "current": []}
 
 
 def test_cancelled_event_sets_cancelled_state(tmp_path):

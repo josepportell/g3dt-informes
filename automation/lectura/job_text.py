@@ -97,6 +97,40 @@ def _docs(job: dict) -> tuple[int, int]:
         return 0, 0
 
 
+def _reading_found_nothing(job: dict) -> bool:
+    """Cert quan un job `ready` no ha llegit realment CAP document — ni un.
+
+    Historial (per què `done` i `errors` ja es van descartar com a senyal, tercera passada
+    2026-09-17): `done` compta duplicats saltats que mai passen per `claude -p` (arreglat a
+    l'origen, `Job._apply_event`, però sense cap invariant que el protegeixi de tornar-se a
+    inflar per una causa futura). `errors` és PER INTENT, no per document: amb `_MAX_ATTEMPTS =
+    2`, un document que encerta al segon intent aporta 1 error i està LLEGIT — el reviewer ho va
+    reproduir en directe amb 2 documents, tots dos amb un reintent transitori i tots dos llegits
+    (`{"total": 2, "done": 2, "errors": 2}`), que la versió anterior d'aquesta funció marcava
+    fals-positiu com «sense llegir cap document» quan s'havia llegit tot.
+
+    Font de veritat actual: `docs.failed`, un comptador NOU (`Job.docs_failed`) que només
+    s'incrementa amb la fallada DEFINITIVA d'un document — `automation/lectura/runner.py` ja
+    calcula aquesta llista (`docs_failed`) amb l'estat FINAL de cada document (`"failed"` amb els
+    `_MAX_ATTEMPTS` esgotats, o `"skipped_systemic"` si la parada sistèmica el va deixar sense
+    enviar) i la porta a l'event `lectura_fi`; mai un intent que després ha reeixit. La guarda és
+    doncs «hi havia documents i TOTS han quedat sense llegir» (`failed >= total`), mai `errors`
+    ni `done`.
+
+    Compatibilitat amb `_job.json` antics (escrits abans d'aquest camp): `d.get("failed")` no hi
+    és → per defecte 0 → la condició és sempre falsa per a qualsevol `total > 0` → repintar un
+    job vell mai dispara un avís fals (verificat amb un snapshot real de disc,
+    `{"total": 18, "done": 19, "errors": 0}`, sense la clau `failed`)."""
+    d = job.get("docs")
+    d = d if isinstance(d, dict) else {}
+    try:
+        total = int(d.get("total") or 0)
+        failed = int(d.get("failed") or 0)
+    except (TypeError, ValueError):
+        return False
+    return total > 0 and failed >= total
+
+
 def _delta_phrase(job: dict) -> str | None:
     """«2 documents nous des de llavors → Enllestir ≈ 8 min» (§3.3, fila `ready`).
 
@@ -161,8 +195,12 @@ def row(job: dict[str, Any], *, now: datetime | None = None) -> dict[str, Any]:
         counter = None
     elif state == READY:
         when = _when(job.get("finished_at") or job.get("updated_at"), now)
-        title = f"Preparat ({when})" if when else "Preparat"
-        detail = _delta_phrase(job)
+        if _reading_found_nothing(job):
+            title = "Preparat sense llegir cap document"
+            detail = "torna-ho a provar amb «Preparar» — si persisteix, avisa Eficients"
+        else:
+            title = f"Preparat ({when})" if when else "Preparat"
+            detail = _delta_phrase(job)
         counter = None
         estimate = None
     elif state == INTERRUPTED:
@@ -176,11 +214,23 @@ def row(job: dict[str, Any], *, now: datetime | None = None) -> dict[str, Any]:
         estimate = None
     elif state == ERROR:
         err = job.get("error") if isinstance(job.get("error"), dict) else {}
-        if err.get("code") == "usage_limit":
+        code = err.get("code")
+        if code == "usage_limit":
             # No és una avaria nostra: el compte de Claude ha dit prou per avui (o fins que es
             # renovi la finestra). Els documents ja llegits queden a la cau; «Preparar» reprèn.
             title = "Aturat: el compte de Claude ha arribat al límit d'ús"
             detail = "els documents ja llegits es conserven — prem Preparar quan el pla torni a estar disponible"
+        elif code == "auth":
+            # Tampoc és una avaria nostra: la sessió de Claude ha caducat (2026-09-16, prova WSL).
+            # Els documents ja llegits queden a la cau igual que amb el límit d'ús. 2026-09-17
+            # (decisió del Josep): l'Eva no obre mai un terminal — arrenca el wizard amb un .bat i
+            # treballa al navegador —, així que el detall apunta a la drecera dedicada de
+            # l'escriptori («Tornar a entrar a Claude»), no a `claude login` ni a cap terminal.
+            title = "Aturat: cal tornar a iniciar sessió a Claude"
+            detail = (
+                "fes doble clic a «Tornar a entrar a Claude» a l'escriptori; després torna aquí i "
+                "prem «Preparar» — els documents ja llegits es conserven"
+            )
         else:
             title = "No s'ha pogut preparar"
             detail = "avisat Eficients"

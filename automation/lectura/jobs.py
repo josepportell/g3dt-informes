@@ -150,6 +150,13 @@ class Job:
     docs_done: int = 0
     docs_cached: int = 0
     docs_errors: int = 0
+    #: Fallades DEFINITIVES (2026-09-17, tercera passada de l'enduriment C): a diferència de
+    #: `docs_errors` (un per INTENT — un reintent transitori que després encerta ja hi compta),
+    #: aquest només compta documents que han quedat sense llegir de veritat: `lectura_fi` porta
+    #: `docs_failed` (la llista que el runner ja calcula amb l'estat FINAL de cada document —
+    #: `"failed"` amb els intents esgotats, o `"skipped_systemic"` si la parada sistèmica el va
+    #: deixar sense enviar). Font de veritat única per a `job_text._reading_found_nothing`.
+    docs_failed: int = 0
     lectors_done: int = 0
     docs_current: list[str] = field(default_factory=list)
     started_at: str = ""
@@ -188,6 +195,7 @@ class Job:
                 "done": self.docs_done,
                 "cached": self.docs_cached,
                 "errors": self.docs_errors,
+                "failed": self.docs_failed,
                 "current": list(self.docs_current),
             },
             "started_at": self.started_at,
@@ -277,9 +285,14 @@ class Job:
             doc = detail.get("doc")
             if doc in self.docs_current:
                 self.docs_current.remove(doc)
-            self.docs_done += 1
-            if detail.get("cached"):
-                self.docs_cached += 1
+            if not detail.get("skipped_duplicate"):
+                # Un duplicat saltat (`runner._run_lectura`) mai passa per `claude -p`: comptar-lo
+                # com a "done" inflava el comptador per sobre de `docs_total` (defectes coneguts
+                # 19/18 i 15/13, DECISION-LOG 2026-09-10/2026-09-16) i, més greu, deixava un run
+                # 100% trencat semblar parcialment llegit (`job_text._reading_found_nothing`).
+                self.docs_done += 1
+                if detail.get("cached"):
+                    self.docs_cached += 1
             self._recompute_estimate()
         elif event_type == "lectura_doc_error":
             self.docs_errors += 1
@@ -287,6 +300,9 @@ class Job:
             self._set_state(CONSOLIDATING)
         elif event_type == "lectura_fi":
             self._degraded = bool(detail.get("degraded", False))
+            docs_failed = detail.get("docs_failed")
+            if isinstance(docs_failed, list):
+                self.docs_failed = len(docs_failed)
             self._set_state(MERGING)
         elif event_type == "lector_imatges_inici":
             # `n` = quin lector comença (1 o 2): l'estimació en depèn.

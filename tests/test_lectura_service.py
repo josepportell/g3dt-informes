@@ -1335,3 +1335,35 @@ def test_usage_limit_ends_the_job_in_error_not_in_silent_fallback(fake_project, 
     assert "prefills" not in names and "lectura_fallback" not in names
     assert "lector_imatges_inici" not in names and calls == []
     assert vision_calls == []
+
+
+def test_expired_auth_session_ends_the_job_with_its_own_error_code(fake_project, monkeypatch):
+    """2026-09-16: sessió de Claude caducada — mateix camí que el límit d'ús (aturar-se i
+    dir-ho), però amb `code == "auth"` perquè el missatge a l'Eva sigui el correcte
+    (tornar a iniciar sessió, no esperar que es renovi el pla)."""
+    project_name, _ = fake_project
+    vision_calls: list = []
+    monkeypatch.setattr(wizard_service, "_run_vision_phase", lambda *a, **k: vision_calls.append(1))
+    monkeypatch.setattr("automation.auto_extractor.auto_extract", _make_fake_auto_extract())
+    monkeypatch.setattr(lectura_service.shutil, "which", lambda *_: "/usr/bin/claude")
+    calls = _install_fake_lectors(monkeypatch)
+
+    def _expired(project_path, *, out_dir=None, on_event=None, should_cancel=None, force=False):
+        return LecturaResult(decisions=None, per_doc=[{"doc": "a.pdf", "status": "failed", "systemic": "auth"}],
+                             degraded=True, mode="document", telemetry_path=None, docs_failed=["a.pdf"],
+                             systemic="Failed to authenticate: OAuth session expired and could not be refreshed")
+    monkeypatch.setattr(lectura_service, "run_lectura", _expired)
+
+    events = _parse_sse(list(lectura_service.get_lectura_streaming(project_name)))
+    names = [n for n, _ in events]
+    assert names[-1] == "error_event"
+    err = events[-1][1]
+    assert err["code"] == "auth"
+    assert "sessió" in err["message"].lower() and "Preparar" in err["message"]
+    # 2026-09-17 (decisió del Josep): l'Eva no obre mai un terminal — drecera dedicada de
+    # l'escriptori, «Tornar a entrar a Claude», no `claude login`.
+    assert "Tornar a entrar a Claude" in err["message"]
+    assert "claude login" not in err["message"] and "terminal" not in err["message"]
+    assert "prefills" not in names and "lectura_fallback" not in names
+    assert "lector_imatges_inici" not in names and calls == []
+    assert vision_calls == []
