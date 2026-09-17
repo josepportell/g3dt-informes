@@ -1,0 +1,45 @@
+{
+  "label": "2026-09-17-wsl-rubi-e2e",
+  "date": "2026-09-17",
+  "project": "3001631 RUBI",
+  "model": "sonnet (claude-sonnet-5)",
+  "concurrency": 2,
+  "claude_version": "2.1.273",
+  "commit_base": "35d4fd3 (release/2026-09 al clon; codi idèntic a b17f573, que només hi afegeix documentació)",
+  "conditions": "Prova punta a punta amb un projecte DIFERENT d'Alcoletge, demanada pel Josep per comprovar que les correccions del 17-09 i la UX A-G no eren específiques del cas d'ahir. Mateix clon net ~/g3dt-release-wsl-test/app, mateix .env SENSE CAP CLAU API, xarxa simulada niada, HOME net. Credencial copiada del HOME principal i verificada amb un `claude -p` mínim real (is_error=false) JUST abans d'arrencar: l'error que va arruïnar l'intent 1 del 16-09 no s'ha repetit. Rubí mai llegit en aquest clon (temps reals, cap cau). Playwright: navegador 3 nivells -> Rubí -> «Començar» -> recàrrega en plena lectura -> Enllestir -> Ometre observacions -> Generar -> porta suau inline -> docx a la xarxa.",
+  "wall_real_s": 1624,
+  "temps": {
+    "estimacio_del_boto": "12 documents · uns 35 min",
+    "lectura_s": 1624,
+    "lectura_min": 27.1,
+    "enllestir_s": 4,
+    "generar_s": 17
+  },
+  "docs": {"total": 12, "done": 12, "cached": 0, "errors": 0, "failed": 0},
+  "telemetria": {"documents_mesurats": 12, "mediana_s": 207.2, "max_s": 385.2, "suma_min": 42.1},
+  "docx": {"mida_mb": 7.4, "marcadors_jinja": 0, "imatges": 10, "caracters_text": 26779, "desat_a": "carpeta de xarxa del projecte"},
+  "escalars": {"OK": 14, "CAUTELA": 4, "ALERTA": 2, "NOU": 1, "FORA": 1},
+  "taules": {"OK": 15, "ALERTA": 3, "CAUTELA": 1, "BUIT": 2, "ABSENT": 2},
+  "quality_judgement": {
+    "erroni_amb_confianca_fons": 0,
+    "notes": [
+      "Les 5 ALERTA s'han obert una per una i cap és un error de lectura; totes són l'artefacte «prod més confiat que l'or».",
+      "architect_name: NO cau al parany que l'or mateix anota ('VIVIENDAS MODULARES' és el fabricant, no l'arquitecte). Proposa 'Joana Martínez' com a CANDIDAT amb cita literal del pressupost (pàg. 2/2) i la nota 'arquitecte absent a la carpeta: l'Eva hi escriu el client'.",
+      "referencia_catastral: l'informe signat porta 'PARC. 6-105 B' (identificador d'urbanització). El sistema proposa la referència cadastral real com a candidat i avisa que ve de consulta HTTP, no d'un document de la carpeta.",
+      "dpsh_tests[0]/[2].cota_inici: puja a 'segur' amb cita textual de l'annex ('P-1 +212,50 msnm, segons el planol del ICGC'). Font d'autoritat A; defensable.",
+      "soil_levels or 3 files vs prod 2 files NO és una discrepància geològica: or i prod coincideixen en num_soil_levels='1' (candidats), tots dos citen la llegenda de tall.pdf i tots dos anoten la capa 'Sòls superficials' sense numerar. És repartiment de files.",
+      "3001631_DPSH.xls: llegit 0 de 6 dades, avisat amb el banner de format nou. Sense cost: les 3 files de dpsh_tests surten de l'annex PDF i s'alineen amb l'or 3/3. Format après i desat després de generar."
+    ]
+  },
+  "ux_verificada": [
+    "Estimació al botó ABANS del clic («12 documents · uns 35 min»).",
+    "Recàrrega en plena lectura: la fila es repinta («2/5 · Llegint documents · 3/12 ≈ 30 min restants»).",
+    "Comptador final exactament 12/12 (confirma la correcció dels duplicats del 16-09 en un projecte verge).",
+    "Porta suau INLINE en generar amb camps pendents («Revisar primer» / «Generar igualment (21 a revisar)»), cap window.confirm.",
+    "Res del pipeline visible abans de prémer «Començar»."
+  ],
+  "defectes_observats": [
+    "T1 (NOU, corregit avui): «< 1 min restants» durant 3 min 43 s al principi de la lectura. Veure _troballes.md.",
+    "«Observacions de camp» torna a sortir a cada obertura (defecte menor ja conegut, pla «després del 18-09»)."
+  ]
+}

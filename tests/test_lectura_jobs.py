@@ -448,6 +448,7 @@ def test_estimate_remaining_default_basis_with_no_telemetry(tmp_path):
     job.state = jobs.READING
     job.docs_total = 5
     job.docs_done = 0
+    job._docs_total_known = True  # simula que `lectura_inici` ja ha passat
 
     result = jobs.estimate_remaining(job, [], concurrency=2)
 
@@ -458,6 +459,7 @@ def test_estimate_remaining_default_basis_with_no_telemetry(tmp_path):
 def test_estimate_remaining_median_from_five_samples(tmp_path):
     job = _fresh_job(tmp_path)
     job.state = jobs.READING
+    job._docs_total_known = True  # simula que `lectura_inici` ja ha passat
     telemetry_path = tmp_path / "_telemetry.jsonl"
     lines = [
         json.dumps({"mode": "only", "cached": False, "rc": 0, "elapsed_s": v})
@@ -473,6 +475,7 @@ def test_estimate_remaining_median_from_five_samples(tmp_path):
 def test_estimate_remaining_ignores_cached_and_nonzero_rc_rows(tmp_path):
     job = _fresh_job(tmp_path)
     job.state = jobs.READING
+    job._docs_total_known = True  # simula que `lectura_inici` ja ha passat
     telemetry_path = tmp_path / "_telemetry.jsonl"
     good = [{"mode": "only", "cached": False, "rc": 0, "elapsed_s": 250} for _ in range(50)]
     bad_cached = [{"mode": "only", "cached": True, "rc": 0, "elapsed_s": 999} for _ in range(5)]
@@ -491,6 +494,7 @@ def test_estimate_remaining_blocks_ceiling_with_concurrency(tmp_path):
     job.state = jobs.READING
     job.docs_total = 7
     job.docs_done = 0
+    job._docs_total_known = True  # simula que `lectura_inici` ja ha passat
 
     result = jobs.estimate_remaining(job, [], concurrency=3)
 
@@ -504,6 +508,87 @@ def test_estimate_remaining_terminal_state_is_zero(tmp_path):
     result = jobs.estimate_remaining(job, [], concurrency=2)
 
     assert result == {"remaining": 0, "basis": "terminal"}
+
+
+def test_estimate_remaining_reading_before_docs_total_is_known_gives_no_fake_number(tmp_path):
+    """Reviewer 2026-09-17 (forat real): sense la guarda, `job.state == READING` amb
+    `docs_total` encara a 0 ("no sabut", no "sabut i és zero") calculava `blocks=0` i encara
+    hi sumava els extres de READING (consolidació + lectors), donant un número real-semblant
+    però fals — `basis` ja no era buida perquè hi havia telemetria a la màquina."""
+    job = _fresh_job(tmp_path)
+    job.state = jobs.READING
+    telemetry_path = tmp_path / "_telemetry.jsonl"
+    lines = [
+        json.dumps({"mode": "only", "cached": False, "rc": 0, "elapsed_s": v})
+        for v in (100, 200, 300, 400, 500)
+    ]
+    telemetry_path.write_text("\n".join(lines), encoding="utf-8")
+
+    assert job._docs_total_known is False
+    result = jobs.estimate_remaining(job, [telemetry_path], concurrency=2)
+
+    assert result == {"remaining": 0, "basis": ""}
+
+
+def test_lectura_inici_recomputes_estimate_immediately_when_telemetry_exists(tmp_path):
+    """2026-09-17 (mesura Rubí): abans, `estimate_remaining_s`/`estimate_basis` es quedaven
+    als valors de naixement del dataclass (`0`/`""`) fins al primer `lectura_doc` —
+    amb 12 documents i concurrència 2, això podia trigar minuts, i durant aquesta finestra
+    la fila deia «< 1 min restants» (fals). A `lectura_inici` ja se sap `docs_total`; si hi
+    ha telemetria disponible a la màquina, l'estimació ha de ser real de seguida, no `0`."""
+    job = _fresh_job(tmp_path)
+    telemetry_path = tmp_path / "_telemetry.jsonl"
+    lines = [
+        json.dumps({"mode": "only", "cached": False, "rc": 0, "elapsed_s": v})
+        for v in (100, 200, 300, 400, 500)
+    ]
+    telemetry_path.write_text("\n".join(lines), encoding="utf-8")
+    job.telemetry_paths_fn = lambda: [telemetry_path]
+
+    job.emit("lectura_inventari", {"n_files": 12})
+    assert job.docs_total == 0
+    assert job.estimate_basis == ""  # encara no es coneix `docs_total`
+
+    job.emit("lectura_inici", {"n_claude": 12, "n_python": 0, "docs": []})
+
+    assert job.docs_total == 12
+    assert job.docs_done == 0
+    assert job.estimate_remaining_s > 0
+    assert "median_doc_s=300" in job.estimate_basis
+
+
+def test_skipped_duplicate_before_lectura_inici_does_not_produce_a_fake_estimate(tmp_path):
+    """Reviewer 2026-09-17 — seqüència reproduïda EXACTA de `runner._run_lectura`
+    (~L1255-1263): els duplicats saltats emeten `lectura_doc` amb `skipped_duplicate=True`
+    ABANS que `lectura_inici` sàpiga `docs_total`. `_recompute_estimate()` es crida igualment
+    des d'aquell `lectura_doc` (és incondicional): abans de la guarda, com que hi havia
+    telemetria a la màquina, `basis` ja no era buida i sortia un número real-semblant però
+    fals («≈ 14 min» amb `blocks=0`). Ha de seguir sense estimació fins que `lectura_inici`
+    sàpiga de veritat quants documents hi ha."""
+    job = _fresh_job(tmp_path)
+    telemetry_path = tmp_path / "_telemetry.jsonl"
+    lines = [
+        json.dumps({"mode": "only", "cached": False, "rc": 0, "elapsed_s": v})
+        for v in (100, 200, 300, 400, 500)
+    ]
+    telemetry_path.write_text("\n".join(lines), encoding="utf-8")
+    job.telemetry_paths_fn = lambda: [telemetry_path]
+
+    job.emit("lectura_inventari", {"n_files": 13})
+    assert job.estimate_basis == ""
+    assert job.estimate_remaining_s == 0
+
+    # Duplicat saltat, ABANS de `lectura_inici` (com fa `runner.py`).
+    job.emit("lectura_doc", {"doc": "annex_a_copy.pdf", "skipped_duplicate": True})
+    assert job.docs_done == 0 and job.docs_cached == 0  # invariant intacte: no compta com llegit
+    assert job.estimate_basis == "", "no ha de sortir cap número mentre `docs_total` és desconegut"
+    assert job.estimate_remaining_s == 0
+
+    # Ara sí: `lectura_inici` fixa `docs_total` amb un valor de veritat.
+    job.emit("lectura_inici", {"n_claude": 12, "n_python": 0, "docs": []})
+    assert job.docs_total == 12
+    assert job.estimate_remaining_s > 0
+    assert "median_doc_s=300" in job.estimate_basis
 
 
 # ---------------------------------------------------------------------------

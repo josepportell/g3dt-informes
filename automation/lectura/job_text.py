@@ -166,10 +166,18 @@ def row(job: dict[str, Any], *, now: datetime | None = None) -> dict[str, Any]:
     done, total = _docs(job)
     est = job.get("estimate_s")
     remaining = est.get("remaining") if isinstance(est, dict) else None
+    basis = (est.get("basis") if isinstance(est, dict) else None) or ""
 
     pas = _ICON.get(state) or (f"{step_index}/{step_total}" if step_index else "—")
     counter = f"{done}/{total}" if total else None
-    estimate = _round_estimate(remaining)
+    # `basis` buida vol dir que `Job._recompute_estimate()` encara no s'ha cridat mai
+    # (`estimate_remaining_s`/`estimate_basis` són als valors de naixement del dataclass,
+    # `0`/`""`) — no que la mediana de telemetria hagi donat 0. Sense aquesta guarda,
+    # `_round_estimate(0)` diu «< 1 min», que és fals: mesurat al projecte Rubí
+    # (2026-09-17), la fila va dir «0/12 · < 1 min restants» durant 3 min 43 s abans que
+    # el primer document acabés. Un cop hi ha base (encara que sigui el default per manca
+    # de mostres), el número és real i es mostra igual que sempre.
+    estimate = _round_estimate(remaining) if basis else None
     detail: str | None = None
 
     if state == QUEUED:

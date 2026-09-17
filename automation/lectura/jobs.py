@@ -179,6 +179,10 @@ class Job:
     lock: threading.RLock = field(default_factory=threading.RLock)
     #: Intern: `degraded` de l'últim `lectura_fi`, per construir `result` a `prefills`.
     _degraded: bool = False
+    #: Intern (reviewer 2026-09-17): cert des que `lectura_inici` ha fixat `docs_total` amb un
+    #: valor de veritat. Mentre és fals, `docs_total == 0` vol dir "encara no ho sé" — NO "el
+    #: projecte no té res a llegir". Vegeu la guarda a `estimate_remaining()`.
+    _docs_total_known: bool = False
 
     # -- Persistència -------------------------------------------------------
 
@@ -277,6 +281,15 @@ class Job:
             self._set_state(READING)
         elif event_type == "lectura_inici":
             self.docs_total = int(detail.get("n_claude") or 0)
+            self._docs_total_known = True
+            # 2026-09-17 (mesura Rubí): sense això, `estimate_remaining_s`/`estimate_basis`
+            # es queden als valors de naixement del dataclass (`0`/`""`) fins al primer
+            # `lectura_doc` — que amb 12 documents i concurrència 2 pot trigar minuts. La
+            # taula mostrava «< 1 min restants» (fals) durant tota aquesta finestra. Aquí
+            # `docs_total` ja està assignat (línia de dalt) i `docs_done` és 0, així que
+            # `estimate_remaining` ja pot calcular un total real amb les medianes de
+            # telemetria de tota la màquina.
+            self._recompute_estimate()
         elif event_type == "lectura_doc_inici":
             doc = detail.get("doc")
             if doc and doc not in self.docs_current:
@@ -363,6 +376,14 @@ def estimate_remaining(job: Job, telemetry_paths: list[Path], concurrency: int) 
     `mode == "only"`, `cached is False`, `rc == 0` → mostres per document.
     `mode == "consolida"`, `rc == 0` → mostres per consolidació. Línies
     malformades s'ignoren silenciosament.
+
+    Requereix que `job` hagi passat per l'event `lectura_inici` (`job._docs_total_known ==
+    True`); si no, la branca READING/SYNCING/QUEUED retorna `{"remaining": 0, "basis": ""}`
+    sense mirar `docs_total`. Construint un `Job` a mà (tests, eines de mesura), cal fixar
+    `job._docs_total_known = True` explícitament. No n'hi ha prou amb `docs_total > 0`: després
+    de `lectura_inici`, `docs_total == 0` és un resultat LEGÍTIM (projecte on tot és duplicat o
+    tot va per la ruta Python, `n_claude=0`), i derivar el flag del total tornaria a confondre
+    «sabut i és zero» amb «encara no sabut» — el bug del 2026-09-17 (mesura Rubí).
     """
     if job.state in TERMINAL:
         return {"remaining": 0, "basis": "terminal"}
@@ -377,6 +398,25 @@ def estimate_remaining(job: Job, telemetry_paths: list[Path], concurrency: int) 
     elif job.state == MERGING:
         remaining = 60
     else:
+        # Reviewer 2026-09-17 (forat real, projecte Rubí): aquesta branca (QUEUED/SYNCING/
+        # READING) és l'ÚNICA que fa servir `docs_total` per calcular `blocks`. Abans de
+        # `lectura_inici`, `docs_total` és 0 perquè encara no se sap — no perquè el projecte
+        # no tingui res a llegir. `runner._run_lectura` emet `lectura_doc` amb
+        # `skipped_duplicate=True` pels duplicats saltats ABANS d'emetre `lectura_inici`
+        # (~L1255-1263), i `_recompute_estimate()` es crida igualment: amb `blocks=0` sortia
+        # un número real-semblant («≈ 14 min») però fals.
+        #
+        # La guarda viu AQUÍ (no al principi de `Job._recompute_estimate()`) perquè en mode
+        # "projecte" (reserva, `runner._run_mode_projecte`) `lectura_inici` NO s'emet MAI —
+        # `docs_total` es queda a 0 tota la vida del job — però sí que es criden
+        # `lector_imatges_inici/fi`, que arriben amb `job.state == IMATGES` (branca pròpia,
+        # sense dependre de `docs_total`). Una guarda a l'arrel de `_recompute_estimate()`
+        # els hauria tallat també, trencant l'estimació d'imatges d'aquell mode. Amb la
+        # guarda aquí, aquesta branca "else" compartida per QUEUED/SYNCING/READING queda
+        # protegida sencera — inclòs el `SYNCING` reservat per a la Fase 11 que encara no
+        # crida `_recompute_estimate()` però hi cauria igual el dia que ho faci.
+        if not job._docs_total_known:
+            return {"remaining": 0, "basis": ""}
         pending = max(0, job.docs_total - job.docs_done)
         blocks = math.ceil(pending / max(1, concurrency)) if pending else 0
         extra_consolida = median_consolida if job.state == READING else 0.0

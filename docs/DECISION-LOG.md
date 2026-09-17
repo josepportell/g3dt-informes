@@ -6690,3 +6690,120 @@ Visita del 18-09 amb el pla §5 tal com està. Després: els dos seguiments de m
 (limitacions 2 i 3) i els defectes menors que ja eren al pla «després del 18-09».
 
 *Fi entrada 2026-09-17. Les dues troballes corregides, revisades tres rondes i provades amb una sessió caducada de debò.*
+
+---
+
+## 2026-09-17 (2) — Prova amb un projecte diferent d'Alcoletge: el sistema aguanta, i el rellotge de la lectura mentia els primers minuts
+
+### Context
+El Josep demana repetir la prova de punta a punta **amb un projecte que el clon no hagi vist mai i
+que no sigui Alcoletge**, per separar «el sistema funciona» de «el sistema funciona amb el cas d'ahir».
+Quedaven 5 projectes verges al clon: Castellar, Rubí, Linyola, Vilanova i Anciles.
+
+Es tria **Rubí** (12 documents, 42 MB): el més curt dels verges, i de zona BCN, on ICGC i Cadastre
+tenen cobertura normal — així, si falla res, és del sistema i no de la geografia. Descartat Anciles
+tot i ser el més exigent, perquè és fora de Catalunya i ja sabíem que és un cas diferent: hauria
+barrejat dues preguntes.
+
+### Decisions arquitectòniques clau
+
+**1. La guarda de l'estimació va dins la branca `else` d'`estimate_remaining()`, no a l'arrel de
+`_recompute_estimate()`.**
+*Per què:* el mode de reserva `projecte` no emet mai `lectura_inici`, o sigui que `docs_total` es
+queda a 0 tota la vida del job; però sí que crida `lector_imatges_inici/fi`, que arriben amb
+`state == IMATGES`, una branca que no llegeix `docs_total`. Una guarda a l'arrel hauria tallat
+també aquell càlcul legítim. El reviewer ho va verificar simulant un job en mode `projecte`:
+a `IMATGES` l'estimació segueix sortint bé amb el flag a `False`.
+*Alternativa rebutjada:* derivar-ho de `docs_total > 0`, que és el que semblava més net i no calia
+camp nou. **Es rebutja perquè `docs_total == 0` és un resultat LEGÍTIM** després de `lectura_inici`
+(projecte on tot són duplicats, o tot va per la ruta Python: `n_claude=0`). Derivar el flag del
+total tornaria a confondre «sabut i és zero» amb «encara no sabut» — exactament el bug que
+s'estava corregint. Queda escrit al docstring públic perquè no es reinventi.
+*Compromís acceptat:* `_docs_total_known` és un camp intern i `estimate_remaining()` ara en depèn
+en silenci. Avui només té un cridador de producció, però una eina de mesura futura que construeixi
+un `Job` a mà cauria a `remaining=0` sense avís. Es mitiga documentant-ho al docstring, no fent-lo
+públic.
+
+**2. El zero de «no ho sé» no es mostra mai com a temps.**
+`_round_estimate(0)` retornava «< 1 min» perquè entra per `if s < 60`. La guarda ara és sobre
+`basis` (buida = mai calculat), no sobre el número, perquè el «< 1 min» legítim ha de sobreviure.
+
+**3. No es fusiona a `release/2026-09` de moment.** La correcció es queda a
+`experiment/nivell-a-2026-08` i el clon WSL segueix a `35d4fd3` **sense** la correcció, cosa que té
+l'avantatge que el run de Rubí mesura exactament el codi que hi ha a release.
+*Nota del mateix dia, al vespre:* la decisió es va prendre sota el supòsit que la visita era l'endemà
+(18-09). **L'Eva no ha respost cap dels últims correus, així que el 18-09 es dona per perdut i
+s'espera el 26-09-2026** (sense confirmar). Amb ~9 dies pel mig, la raó per no fusionar (congelar
+release la vigília) ja no s'aguanta; la fusió queda com a decisió oberta del Josep, ara sense pressa.
+
+### Implementació
+`automation/lectura/jobs.py` (+40): `_recompute_estimate()` a `lectura_inici`, camp
+`_docs_total_known`, guarda a `estimate_remaining()`, docstring.
+`automation/lectura/job_text.py` (+10/-1): `estimate = _round_estimate(remaining) if basis else None`.
+Tests (+131): 6 de nous entre `tests/test_lectura_jobs.py` i `tests/test_lectura_job_text.py`.
+
+### Validació empírica
+**Run `docs/wizard-headless/mesures/runs/2026-09-17-wsl-rubi-e2e/`** (clon net, `.env` sense cap clau API):
+
+| mesura | valor |
+|---|---|
+| estimació del botó abans del clic | «12 documents · uns 35 min» |
+| lectura real | **27 min 04 s** (mediana 207 s/doc, màx 385 s, suma 42,1 min a c2) |
+| comptador final | **12/12**, 0 cau, 0 err-intents, **0 fallats** |
+| Enllestir · Generar | 4 s · 17 s |
+| docx | 7,4 MB, **0 marcadors Jinja**, 10 imatges, 26.779 caràcters |
+| escalars vs or | 14 OK · 4 CAUTELA · 2 ALERTA · 1 NOU · 1 FORA |
+| taules vs or | 15 OK · 3 ALERTA · 1 CAUTELA · 2 BUIT · 2 ABSENT |
+| **erroni amb confiança** | **0** |
+
+El **12/12 exacte** confirma en un projecte verge la correcció dels duplicats del 16-09.
+
+**Les 5 ALERTA, obertes una per una, no són errors de lectura.** Totes són l'artefacte «prod més
+confiat que l'or»:
+- `architect_name`: **no cau al parany que l'or mateix anota** («VIVIENDAS MODULARES» és el
+  fabricant, no l'arquitecte). Proposa «Joana Martínez» com a CANDIDAT, amb cita literal de la
+  pàg. 2/2 del pressupost i la nota «arquitecte absent a la carpeta: l'Eva hi escriu el client».
+- `referencia_catastral`: el signat porta «PARC. 6-105 B», un identificador d'urbanització. El
+  sistema proposa la referència cadastral real com a candidat i avisa que ve de consulta HTTP.
+- `dpsh_tests[0]/[2].cota_inici`: puja a «segur» amb cita textual de l'annex («P-1 +212,50 msnm,
+  segons el planol del ICGC»). Font d'autoritat A.
+- `soil_levels` or 3 files vs prod 2 **no és discrepància geològica**: tots dos donen
+  `num_soil_levels = "1"` (candidats), tots dos citen la llegenda de `tall.pdf` i tots dos anoten
+  la capa «Sòls superficials» sense numerar.
+
+**Mesura del defecte T1 dins d'aquest mateix run:** «< 1 min restants» de 14:28:32 (clic) a
+14:32:15 (primer document acabat) = **3 min 43 s**, i llavors salt correcte a «≈ 35 min restants».
+
+### Tests
+6 de nous. El tester confirma per lectura que **4 fallen de debò** amb el codi antic; els altres 2
+(`test_reading_row_keeps_a_real_less_than_one_minute`,
+`test_ready_row_never_shows_a_new_time_even_with_a_stale_estimate`) passarien igual i estan marcats
+amb un comentari com a guardes d'invariants adjacents, perquè ningú no es pensi que cobreixen la
+correcció. Suite sencera: **31 vermells amb els mateixos NOMS que els esperats, 2.632 verds**, cap
+contaminació de xarxa, i l'inestable `test_cancellation_mid_flight_kills_live_process` no ha saltat
+(càrrega 2,02 sobre 8 CPU).
+
+### Limitacions conegudes
+- `_docs_total_known` no es serialitza a `_job.json`. No és problema perquè **no existeix cap camí
+  que rehidrati un `Job` des de disc** (verificat: `JobRegistry.start()` és l'únic lloc que
+  instancia `Job`, i `list_jobs()` llegeix el disc com a dict pla), però si algun dia se n'afegeix
+  un, caldrà recordar-ho.
+- `SYNCING` (reservat per a la Fase 11) queda cobert per la guarda, però quan s'implementi la
+  transició caldrà recordar-hi `_recompute_estimate()`.
+- `3001631_DPSH.xls`: 0 de 6 dades llegides, avisat pel banner de format nou. Sense cost aquí
+  (les 3 files surten de l'annex PDF i s'alineen 3/3 amb l'or), però queda per mirar.
+- «Observacions de camp» segueix sortint a cada obertura (ja al pla «després del 18-09»).
+
+### GO/NO-GO
+- ✅ Sistema verificat de punta a punta amb un projecte que no és Alcoletge: cap comportament específic del cas d'ahir.
+- ✅ Correcció T1 implementada, revisada dues rondes i provada; suite neta.
+- ⏳ Fusió a `release/2026-09` i actualització del clon: **decisió del Josep**, no feta (ja sense la pressa de la vigília).
+- ⏳ Icona «Tornar a entrar a Claude» a l'escriptori de l'Eva: segueix sent l'únic pendent manual de la visita.
+- ⚠️ **Data de la visita:** el 18-09 es dona per perdut (l'Eva no respon els correus). Objectiu ara: **26-09-2026, sense confirmar**.
+
+### Següents passos
+Decidir si T1 entra a release. Amb la visita desplaçada (objectiu 26-09-2026, sense confirmar) hi ha
+marge per fusionar-la i tornar a verificar-la amb calma al clon, en comptes d'entrar-hi la vigília.
+El sistema ja fa la feina sencera sense aquesta correcció: el defecte era cosmètic.
+
+*Fi entrada 2026-09-17 (2). Rubí de punta a punta en 27 minuts, zero errors amb confiança, i el rellotge dels primers minuts arreglat.*
