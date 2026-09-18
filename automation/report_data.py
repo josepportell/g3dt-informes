@@ -717,11 +717,25 @@ def build_report_data(
     cte_soil_class = _determine_soil_class(dpsh_data)
 
     # Determina seccions condicionals
-    include_earth_pressure = (
-        user_data.get('has_basement', False) or
-        user_data.get('has_retaining_walls', False)
-    )
-    include_slope_stability = user_data.get('is_sloped', False)
+    # 2026-09-17: «el sistema proposa, no decideix» (docs/... D3/D4 + UI wizard). El wizard ja envia
+    # `include_earth_pressure`/`include_slope_stability` com a proposta sempre marcada `_sources=='revisar'`
+    # fins que l'Eva hi toca. Quan l'Eva ha decidit de debò (`_sources[...] == 'user'`), la seva tria mana
+    # per damunt del càlcul derivat de `has_basement`/`has_retaining_walls`/`is_sloped` — encara que
+    # contradigui el pendent mitjà de l'ICGC (cas Rubí: 21,6 % però «zona de treball totalment plana»).
+    # Sense decisió seva, es manté EXACTAMENT el comportament d'abans (derivat), perquè cap projecte antic
+    # sense aquests dos camps a `user_data.json` canviï de comportament.
+    _sources = user_data.get('_sources') or {}
+    if _sources.get('include_earth_pressure') == 'user' and 'include_earth_pressure' in user_data:
+        include_earth_pressure = bool(user_data['include_earth_pressure'])
+    else:
+        include_earth_pressure = (
+            user_data.get('has_basement', False) or
+            user_data.get('has_retaining_walls', False)
+        )
+    if _sources.get('include_slope_stability') == 'user' and 'include_slope_stability' in user_data:
+        include_slope_stability = bool(user_data['include_slope_stability'])
+    else:
+        include_slope_stability = user_data.get('is_sloped', False)
 
     return ReportData(
         # Identificacio

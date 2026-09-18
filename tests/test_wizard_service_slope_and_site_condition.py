@@ -6,6 +6,9 @@ comú als dos fitxers.
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import pytest
 
 from web import wizard_service
@@ -74,23 +77,26 @@ def test_fill_missing_slope_skips_when_slope_already_known(monkeypatch: pytest.M
 
 
 def test_site_condition_prefill_unknown_slope_is_not_forced_to_zero():
-    """Fix B1: sense `slope_percent` a `merged`, la font NO diu «slope 0%» (era el bug: forçava el pendent
-    a 0,0 i el `source` mentia dient que ho sabia)."""
+    """Fix B1: sense `slope_percent` a `merged`, la raó (ara a `note`, 2026-09-17 — «el sistema proposa, no
+    decideix») NO diu «0%» (era el bug: forçava el pendent a 0,0 i mentia dient que ho sabia)."""
     merged: dict = {"site_description": {"value": "text ja fixat", "source": "user"}}
     wizard_service._generate_template_prefills_from_merged(merged)
     assert "site_condition" in merged
-    assert "0%" not in merged["site_condition"]["source"], merged["site_condition"]["source"]
-    assert "desconegut" in merged["site_condition"]["source"]
+    assert merged["site_condition"]["source"] == "revisar"
+    assert "0%" not in merged["site_condition"]["note"], merged["site_condition"]["note"]
+    assert "desconegut" in merged["site_condition"]["note"]
 
 
 def test_site_condition_prefill_explicit_zero_slope_still_says_zero():
-    """Un 0,0 llegit de debò (ICGC) sí ha de dir «slope 0%» — no es toca el comportament conegut."""
+    """Un 0,0 llegit de debò (ICGC) sí ha de dir «0%» a `note` — no es toca el comportament conegut, només
+    on es guarda la raó (2026-09-17: `source='revisar'` + `note`, no codificat dins el `source`)."""
     merged: dict = {
         "site_description": {"value": "text ja fixat", "source": "user"},
         "slope_percent": {"value": 0.0, "source": "ICGC MDT 2m"},
     }
     wizard_service._generate_template_prefills_from_merged(merged)
-    assert "slope 0%" in merged["site_condition"]["source"]
+    assert merged["site_condition"]["source"] == "revisar"
+    assert "0,0%" in merged["site_condition"]["note"]
 
 
 def test_include_flags_marked_revisar_when_slope_unknown():
@@ -152,3 +158,111 @@ def test_include_flags_respect_user_edit():
     wizard_service._generate_template_prefills_from_merged(merged)
     assert merged["include_earth_pressure"] == {"value": False, "source": "user"}
     assert merged["include_slope_stability"] == {"value": False, "source": "user"}
+
+
+# --- Revisió 2026-09-18: la `note` de `site_condition` desapareixia després del primer autosave ---
+#
+# `_load_existing_user_data()` (`automation/wizard.py`) NOMÉS persisteix `value`/`source`, mai `note`.
+# La guarda antiga (`if not _get_val('site_condition')`) confonia «el camp té valor» amb «l'Eva ho ha
+# decidit» — a partir del segon autosave el recàlcul se saltava i la nota (la raó que l'Eva ha de
+# llegir) es perdia en silenci, encara que `source` seguís sent 'revisar'.
+
+@pytest.fixture
+def project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    ref_dir = tmp_path / "projectes"
+    p = ref_dir / "3001621 CASTELLAR"
+    p.mkdir(parents=True)
+    monkeypatch.setattr(wizard_service, "_REF_DIR", ref_dir)
+    return p
+
+
+def test_site_condition_note_survives_second_prefill_pass_after_autosave(
+    project: Path, monkeypatch: pytest.MonkeyPatch
+):
+    """Dues passades de prefills amb un `user_data.json` desat entremig: la `note` ha de seguir
+    sent-hi a la segona passada. Reprodueix la cadena real: 1a crida (calcula i proposa) -> autosave
+    (persisteix value+source, SENSE note) -> 2a crida (havia de recalcular i no ho feia)."""
+    from web.wizard_service import save_wizard
+    from automation.wizard import UserDataWizard
+
+    project_name = project.name
+
+    # 1a passada: es calcula la proposta (com faria `_merge_prefills` la primera vegada).
+    merged1: dict = {
+        "site_description": {"value": "text ja fixat", "source": "user"},
+        "slope_percent": {"value": 21.6, "source": "ICGC MDT 2m"},
+    }
+    wizard_service._generate_template_prefills_from_merged(merged1)
+    assert "note" in merged1["site_condition"], "la 1a passada ha de generar la nota"
+
+    # Autosave: un altre camp del formulari es toca (site_condition arriba igual, com fa
+    # `collectWizardFields()` sempre). La cache de prefills reflecteix el que ha vist l'Eva.
+    monkeypatch.setitem(
+        wizard_service._prefill_cache,
+        project_name,
+        {"site_condition": merged1["site_condition"], "slope_percent": merged1["slope_percent"]},
+    )
+    save_wizard(project_name, {"site_condition": merged1["site_condition"]["value"]})
+
+    user_data = json.loads((project / "user_data.json").read_text(encoding="utf-8"))
+    assert user_data["_sources"]["site_condition"] == "revisar", "no l'ha tocat l'Eva: no promou a 'user'"
+
+    # 2a passada: es recarrega el projecte (com faria `UserDataWizard.load_prefills()` a la
+    # següent obertura o al següent autosave). El prefill reconstruït NO té 'note' (mai es
+    # persisteix) — és exactament el bug reproduït.
+    wizard = UserDataWizard(str(project))
+    wizard.load_prefills()
+    assert "note" not in wizard.prefills["site_condition"], (
+        "`_load_existing_user_data` mai persisteix 'note' — si aquesta assumpció canvia, cal repensar el fix"
+    )
+
+    merged2: dict = {"slope_percent": merged1["slope_percent"]}
+    merged2.update(wizard.prefills)
+    wizard_service._generate_template_prefills_from_merged(merged2)
+
+    assert "note" in merged2["site_condition"], "la nota ha de reaparèixer a la 2a passada"
+    assert "21,6%" in merged2["site_condition"]["note"]
+    assert merged2["site_condition"]["source"] == "revisar"
+
+
+def test_site_condition_recomputes_when_slope_becomes_known_later():
+    """Si el pendent es resol més endavant (p. ex. una consulta ICGC que abans havia fallat), la frase
+    proposada s'ha d'actualitzar — no quedar-se amb la vella («desconegut») presentada com a vigent."""
+    merged: dict = {
+        "site_description": {"value": "text ja fixat", "source": "user"},
+    }
+    wizard_service._generate_template_prefills_from_merged(merged)
+    assert "desconegut" in merged["site_condition"]["note"]
+
+    # El pendent es resol (nova crida ICGC, mateix `merged` que continua sense decisió de l'Eva).
+    merged["slope_percent"] = {"value": 33.0, "source": "ICGC MDT 2m"}
+    wizard_service._generate_template_prefills_from_merged(merged)
+    assert "desconegut" not in merged["site_condition"]["note"]
+    assert "33,0%" in merged["site_condition"]["note"]
+
+
+def test_site_condition_user_edit_is_never_recomputed():
+    """Una frase escrita per l'Eva (`source == 'user'`) no es toca mai, encara que el pendent canviï."""
+    merged: dict = {
+        "site_description": {"value": "text ja fixat", "source": "user"},
+        "slope_percent": {"value": 21.6, "source": "ICGC MDT 2m"},
+        "site_condition": {"value": "Text escrit per l'Eva a mà.", "source": "user"},
+    }
+    wizard_service._generate_template_prefills_from_merged(merged)
+    assert merged["site_condition"] == {"value": "Text escrit per l'Eva a mà.", "source": "user"}
+
+
+def test_include_flags_independent_when_only_one_decided_by_user():
+    """Cas típic (revisió 2026-09-18): l'Eva decideix «no calen empentes» i deixa «estabilitat de
+    vessant» sense tocar. El segon camp ha de seguir-se recalculant amb `note`, no quedar-se congelat
+    a 'revisar' sense raó — la guarda antiga era tot-o-res i el saltava sencer."""
+    merged: dict = {
+        "site_description": {"value": "text ja fixat", "source": "user"},
+        "slope_percent": {"value": 21.6, "source": "ICGC MDT 2m"},
+        "include_earth_pressure": {"value": False, "source": "user"},
+    }
+    wizard_service._generate_template_prefills_from_merged(merged)
+    assert merged["include_earth_pressure"] == {"value": False, "source": "user"}
+    assert merged["include_slope_stability"]["source"] == "revisar"
+    assert "note" in merged["include_slope_stability"]
+    assert "21,6%" in merged["include_slope_stability"]["note"]

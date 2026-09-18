@@ -2004,6 +2004,22 @@ class ReportGenerator:
                 self.warnings.append(f"Could not calculate slope from ICGC MDT (pre-secció): {e}")
         self._slope_resolved = True
 
+    def _include_flags_user_decided(self) -> tuple[bool, bool]:
+        """`(earth_pressure_decidit_per_eva, slope_stability_decidit_per_eva)` (2026-09-17).
+
+        «El sistema proposa, no decideix»: el wizard envia sempre una proposta de
+        `include_earth_pressure`/`include_slope_stability` derivada del pendent mitjà de l'ICGC, marcada
+        `_sources[...] == 'revisar'` fins que l'Eva hi toca de debò (llavors `'user'`). Sense aquest mètode,
+        el pas 2b de sota trepitjava en silenci una decisió explícita de l'Eva («no calen»,
+        `include_slope_stability=False`) sempre que `is_sloped` fos `True` — exactament el cas Rubí que
+        aquesta tanda tanca (pendent ICGC 21,6 %, però «la zona de treball es mostra totalment plana»).
+        """
+        sources = (self.user_data.get('_sources') or {}) if isinstance(self.user_data, dict) else {}
+        return (
+            sources.get('include_earth_pressure') == 'user',
+            sources.get('include_slope_stability') == 'user',
+        )
+
     def generate(self, output_path: str | Path) -> GenerationResult:
         """
         Main entry point - generate complete report.
@@ -2056,11 +2072,12 @@ class ReportGenerator:
         # prefill (sovint `False` per manca d'UTM a la Fase 3) i els flags s'activen massa tard perquè
         # `generate_sections()` en tregui profit.
         self._resolve_slope()
+        _iep_user, _iss_user = self._include_flags_user_decided()
         if getattr(self.report_data, 'is_sloped', False):
-            if not getattr(self.report_data, 'include_slope_stability', False):
+            if not _iss_user and not getattr(self.report_data, 'include_slope_stability', False):
                 self.report_data.include_slope_stability = True
                 logger.info("Auto-activated slope stability (is_sloped=True)")
-            if not getattr(self.report_data, 'include_earth_pressure', False):
+            if not _iep_user and not getattr(self.report_data, 'include_earth_pressure', False):
                 self.report_data.include_earth_pressure = True
                 logger.info("Auto-activated earth pressure (is_sloped=True → retaining walls)")
 
@@ -2116,10 +2133,11 @@ class ReportGenerator:
 
         # Step 2b: Auto-activate conditional sections (same as generate())
         self._resolve_slope()
+        _iep_user, _iss_user = self._include_flags_user_decided()
         if getattr(self.report_data, 'is_sloped', False):
-            if not getattr(self.report_data, 'include_slope_stability', False):
+            if not _iss_user and not getattr(self.report_data, 'include_slope_stability', False):
                 self.report_data.include_slope_stability = True
-            if not getattr(self.report_data, 'include_earth_pressure', False):
+            if not _iep_user and not getattr(self.report_data, 'include_earth_pressure', False):
                 self.report_data.include_earth_pressure = True
 
         # Step 3: Generate sections

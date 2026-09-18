@@ -192,3 +192,61 @@ def test_include_flags_true_when_paragraph_present(tmp_path):
     assert ctx["include_slope_stability"] is False
     assert ctx["section_empentes_num"] == "4.4"
     assert ctx["section_estabilitat_num"] == ""
+
+
+# --- Punt 4 (2026-09-17): «el sistema proposa, no decideix» — la tria de l'Eva mana sobre l'auto-activació
+#     del pas 2b de `generate()`/`build_context_preview()`, encara que `is_sloped` sigui `True` (cas Rubí:
+#     pendent ICGC 21,6 %, «la zona de treball es mostra totalment plana») ------------------------------------
+
+def test_include_flags_user_decided_reads_sources(tmp_path):
+    gen = _generator({
+        "_sources": {"include_earth_pressure": "user", "include_slope_stability": "revisar"},
+    }, tmp_path)
+    assert gen._include_flags_user_decided() == (True, False)
+
+
+def test_include_flags_user_decided_defaults_false_without_sources(tmp_path):
+    gen = _generator(tmp_path=tmp_path)
+    assert gen._include_flags_user_decided() == (False, False)
+
+
+def test_generate_step2b_respects_eva_explicit_no(tmp_path):
+    """L'Eva ha dit «no calen» (`_sources` == 'user', valor False) tot i que `is_sloped=True` — `generate()`
+    NO li ha de trepitjar la decisió amb l'auto-activació derivada del pendent mitjà."""
+    gen = _generator({
+        "is_sloped": True,
+        "include_earth_pressure": False,
+        "include_slope_stability": False,
+        "_sources": {"include_earth_pressure": "user", "include_slope_stability": "user"},
+    }, tmp_path)
+    gen.extract_project_data = lambda: None
+    gen.build_report_data = lambda: setattr(
+        gen, "report_data",
+        _minimal_report_data(is_sloped=True, include_earth_pressure=False, include_slope_stability=False),
+    )
+    gen.generate_sections = lambda: {}
+    gen.render_template = lambda context, output_path: None
+
+    result = gen.generate(tmp_path / "out.docx")
+
+    assert result.success is True
+    assert gen.report_data.include_earth_pressure is False
+    assert gen.report_data.include_slope_stability is False
+
+
+def test_generate_step2b_still_auto_activates_without_eva_decision(tmp_path):
+    """Regressió: sense cap decisió de l'Eva (`_sources` absent), es manté el comportament d'abans — el
+    pendent `is_sloped=True` segueix activant les dues seccions."""
+    gen = _generator({"is_sloped": True}, tmp_path)
+    gen.extract_project_data = lambda: None
+    gen.build_report_data = lambda: setattr(
+        gen, "report_data", _minimal_report_data(is_sloped=True),
+    )
+    gen.generate_sections = lambda: {}
+    gen.render_template = lambda context, output_path: None
+
+    result = gen.generate(tmp_path / "out.docx")
+
+    assert result.success is True
+    assert gen.report_data.include_earth_pressure is True
+    assert gen.report_data.include_slope_stability is True
