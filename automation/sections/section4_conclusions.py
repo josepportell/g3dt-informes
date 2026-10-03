@@ -373,7 +373,7 @@ class Section4Generator:
                 return settlement_text
 
         return (
-            "Els assentaments maxims previstos per la carrega recomanada "
+            "Els assentaments màxims previstos per la càrrega recomanada "
             "anteriorment seran admissibles segons la normativa vigent."
         )
 
@@ -463,12 +463,12 @@ class Section4Generator:
 
         # Fallback: generic recommendation
         return (
-            "Donada la presencia de vessant a la zona del projecte, "
-            "es recomana realitzar un estudi especific d'estabilitat "
-            "de talussos segons el metode de Hoek & Bray o equivalent. "
-            "S'haura de considerar l'angle del vessant natural, "
-            "les caracteristiques resistents del terreny i les "
-            "condicions hidrologiques de la zona."
+            "Donada la presència de vessant a la zona del projecte, "
+            "es recomana realitzar un estudi específic d'estabilitat "
+            "de talussos segons el mètode de Hoek & Bray o equivalent. "
+            "S'haurà de considerar l'angle del vessant natural, "
+            "les característiques resistents del terreny i les "
+            "condicions hidrològiques de la zona."
         )
 
     def _format_estabilitat_calculated(self, result, params) -> str:
@@ -476,13 +476,13 @@ class Section4Generator:
         lines = []
 
         lines.append(
-            "Per a la realitzacio de les recomanacions d'estabilitat de talussos "
-            "s'han tingut en compte les seguents premisses:"
+            "Per a la realització de les recomanacions d'estabilitat de talussos "
+            "s'han tingut en compte les següents premisses:"
         )
         lines.append("")
 
         # Premises
-        dir_text = f" en direccio {result.slope_direction}" if result.slope_direction else ""
+        dir_text = f" en direcció {result.slope_direction}" if result.slope_direction else ""
         lines.append(
             f"- El solar presenta un pendent del {result.slope_percent:.0f}% "
             f"({result.slope_angle_deg:.0f} graus){dir_text}."
@@ -490,16 +490,16 @@ class Section4Generator:
 
         if result.water_detected:
             lines.append(
-                "- S'ha detectat presencia de nivell freatic durant els treballs de camp."
+                "- S'ha detectat presència de nivell freàtic durant els treballs de camp."
             )
         else:
             lines.append(
-                "- Talussos sense presencia de nivell freatic."
+                "- Talussos sense presència de nivell freàtic."
             )
 
         lines.append(
-            f"- Factor de seguretat minim F={result.fs_required} "
-            f"(CTE DB SE-C apartat 7.2.2.1, situacio persistent)."
+            f"- Factor de seguretat mínim F={result.fs_required} "
+            f"(CTE DB SE-C apartat 7.2.2.1, situació persistent)."
         )
 
         # Determine level description for params reference
@@ -519,7 +519,7 @@ class Section4Generator:
             level_desc = f"{ordinal} nivell ({matched.description})"
 
         lines.append(
-            f"- S'han considerat els parametres geomecanics del {level_desc} "
+            f"- S'han considerat els paràmetres geomecànics del {level_desc} "
             f"(phi={params.phi:.0f} graus, gamma={params.gamma:.2f} g/cm3"
             + (f", c={params.cohesion:.2f} kg/cm2" if params.cohesion > 0 else "")
             + ")."
@@ -531,15 +531,15 @@ class Section4Generator:
         is_hoek_bray = "Hoek" in result.method
         if is_hoek_bray:
             lines.append(
-                f"El metode de calcul utilitzat es el de ruptura circular "
+                f"El mètode de càlcul utilitzat és el de ruptura circular "
                 f"({result.method}), "
-                f"aplicable a talussos amb cohesio on la superficie de ruptura "
-                f"es de tipus circular."
+                f"aplicable a talussos amb cohesió on la superfície de ruptura "
+                f"és de tipus circular."
             )
         else:
             lines.append(
-                f"El metode de calcul utilitzat es el del talus infinit ({result.method}), "
-                f"aplicable a ruptures superficials paral.leles al vessant."
+                f"El mètode de càlcul utilitzat és el del talús infinit ({result.method}), "
+                f"aplicable a ruptures superficials paral·leles al vessant."
             )
         lines.append("")
 
@@ -572,20 +572,20 @@ class Section4Generator:
         # Conclusion
         if result.safety_factor > 3.5:
             lines.append(
-                f"Els factors de seguretat obtinguts son superiors a 3.5, "
+                f"Els factors de seguretat obtinguts són superiors a 3.5, "
                 f"complint amb escreix les premisses del CTE "
-                f"(minim exigit F={result.fs_required})."
+                f"(mínim exigit F={result.fs_required})."
             )
         elif result.compliant:
             lines.append(
-                f"El factor de seguretat obtingut (FS={result.safety_factor:.2f}) es superior "
-                f"al minim exigit (F={result.fs_required}), complint les premisses del CTE."
+                f"El factor de seguretat obtingut (FS={result.safety_factor:.2f}) és superior "
+                f"al mínim exigit (F={result.fs_required}), complint les premisses del CTE."
             )
         else:
             lines.append(
-                f"El factor de seguretat obtingut (FS={result.safety_factor:.2f}) es inferior "
-                f"al minim exigit (F={result.fs_required}), no complint les premisses del CTE. "
-                f"Es recomana adoptar mesures d'estabilitzacio del talus."
+                f"El factor de seguretat obtingut (FS={result.safety_factor:.2f}) és inferior "
+                f"al mínim exigit (F={result.fs_required}), no complint les premisses del CTE. "
+                f"Es recomana adoptar mesures d'estabilització del talús."
             )
 
         return "\n".join(lines)
@@ -660,13 +660,13 @@ if __name__ == '__main__':
         settlement_type: str = "immediat"
 
         def format_for_report(self) -> str:
-            return f"Qa= {self.Qa:.1f} Kg/cm2 amb un factor de seguretat inclos de F={int(self.safety_factor)}"
+            return f"Qa= {self.Qa:.1f} Kg/cm2 amb un factor de seguretat inclòs de F={int(self.safety_factor)}"
 
         def format_settlement_for_report(self) -> str:
             if self.settlement_cm is None:
                 return ""
             return (
-                f"Els assentaments maxims previstos per la carrega recomanada "
+                f"Els assentaments màxims previstos per la càrrega recomanada "
                 f"anteriorment seran inferiors a {self.settlement_cm:.2f} cm, "
                 f"{self.settlement_type}s en el temps"
             )
@@ -834,9 +834,9 @@ if __name__ == '__main__':
     print("\n[Figura 6 Reference]")
     print(content.figura6_reference)
 
-    print("\n[Taula 10: Parametres geotecnics]")
+    print("\n[Taula 10: Paràmetres geotècnics]")
     if content.taula10:
-        print("  Nivell | Descripcio | Gruix | Nb | N | gamma | c | phi | E | N20")
+        print("  Nivell | Descripció | Gruix | Nb | N | gamma | c | phi | E | N20")
         print("  " + "-" * 70)
         for row in content.taula10:
             print(f"  {row.nivell} | {row.descripcio[:15]} | {row.gruix} | "

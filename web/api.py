@@ -73,6 +73,11 @@ class WizardSaveRequest(BaseModel):
     #: (`"{bloc}.{index}.{cel·la}"`) i sobre camps de lectura sense input al
     #: wizard. Absent a la via B i als clients antics.
     lectura_selections: dict[str, Any] | None = None
+    #: 2026-09-17: camps que l'Eva ha tocat de debò encara que el valor final
+    #: coincideixi amb la proposta del sistema (`include_earth_pressure`/
+    #: `include_slope_stability`) — la comparació per valor de `_is_changed`
+    #: no ho detectaria com a canvi i es perdria la seva decisió explícita.
+    forced_user_fields: list[str] | None = None
 
 
 class TargetedExtractRequest(BaseModel):
@@ -840,6 +845,7 @@ def save_wizard(project_name: str, req: WizardSaveRequest):
         path = wizard_service.save_wizard(
             project_name, req.wizard_fields, req.expert_overrides,
             lectura_selections=req.lectura_selections,
+            forced_user_fields=req.forced_user_fields,
         )
         return {"saved": True, "path": str(path)}
     except ValueError as e:

@@ -3014,7 +3014,16 @@
                                 </div>
                                 <div class="wizard-field full-width">
                                     <label>Estat del solar (2.1.2, frase sencera) <span class="source-badge" id="src-site_condition"></span></label>
-                                    <textarea id="wiz-site_condition" data-field="site_condition" onchange="markWizardDirty(event)"></textarea>
+                                    <textarea id="wiz-site_condition" data-field="site_condition" data-touched="0" onchange="markWizardDirty(event)"></textarea>
+                                    <small class="calc-note" id="calc-note-site_condition" style="color:#888;font-size:11px;display:block"></small>
+                                    <!-- Control generic de confirmacio de proposta (2026-09-18, vegeu
+                                         `confirmProposalField`/`_updateConfirmButton`): marca la frase
+                                         proposada com a decidida per l'Eva SENSE canviar-ne el text --
+                                         nomes visible quan encara esta a "revisar" (`setSourceBadge` en
+                                         controla la visibilitat a cada render). -->
+                                    <button type="button" class="btn btn-secondary confirm-proposal-btn" id="confirm-site_condition"
+                                            style="align-self:flex-start; padding:4px 10px; font-size:12px; display:none; margin-top:4px;"
+                                            onclick="confirmProposalField('site_condition')">D'acord, així</button>
                                 </div>
                                 <div class="wizard-field full-width">
                                     <label>Estructura prevista («…construccio d'una estructura ___») <span class="source-badge" id="src-building_structure_desc"></span></label>
@@ -3089,6 +3098,27 @@
                                         <button type="button" class="toggle-switch" id="wiz-has_retaining_walls" onclick="toggleSwitch(this); markWizardDirty('has_retaining_walls')"></button>
                                         <span class="toggle-switch-label" id="wiz-has_retaining_walls-label">No</span>
                                     </div>
+                                </div>
+                                <!-- D3/D4 (2026-09-17): «el sistema proposa, no decideix». El pendent mitjà de l'ICGC
+                                     NOMES dona un punt de partida (`note` sota el camp) -- el que compta es el pendent
+                                     A LA FONAMENTACIO, judici de la visita que el sistema no pot saber. Nomes es desa
+                                     quan l'Eva hi fa clic de debo (`toggleProposalSwitch`, `data-touched`); si no hi
+                                     toca, l'informe es queda amb el calcul derivat de sempre. -->
+                                <div class="wizard-field full-width">
+                                    <label>Informe amb «4.4 Empentes de terres»? <span class="source-badge" id="src-include_earth_pressure"></span></label>
+                                    <div class="toggle-switch-container">
+                                        <button type="button" class="toggle-switch" id="wiz-include_earth_pressure" data-touched="0" onclick="toggleProposalSwitch(this); markWizardDirty('include_earth_pressure')"></button>
+                                        <span class="toggle-switch-label" id="wiz-include_earth_pressure-label">No</span>
+                                    </div>
+                                    <small class="calc-note" id="calc-note-include_earth_pressure" style="color:#888;font-size:11px;display:block"></small>
+                                </div>
+                                <div class="wizard-field full-width">
+                                    <label>Informe amb «4.5 Estabilitat de vessant»? <span class="source-badge" id="src-include_slope_stability"></span></label>
+                                    <div class="toggle-switch-container">
+                                        <button type="button" class="toggle-switch" id="wiz-include_slope_stability" data-touched="0" onclick="toggleProposalSwitch(this); markWizardDirty('include_slope_stability')"></button>
+                                        <span class="toggle-switch-label" id="wiz-include_slope_stability-label">No</span>
+                                    </div>
+                                    <small class="calc-note" id="calc-note-include_slope_stability" style="color:#888;font-size:11px;display:block"></small>
                                 </div>
                             </div>
                         </div>
@@ -6330,9 +6360,35 @@
             return { label: 'llegit als documents', cls: 'auto' };
         }
 
+        // Nota generica (2026-09-17): qualsevol camp amb `note` al prefill (avui:
+        // include_earth_pressure/include_slope_stability/site_condition) pinta la raó de la
+        // proposta sota el camp, a `<small class="calc-note" id="calc-note-{field}">`. S'assigna
+        // SEMPRE, buit inclos -- mateixa lliço que `_updateUtmWarning`: el node es estatic i
+        // compartit entre projectes, i una nota que nomes s'escriu quan n'hi ha es queda
+        // enganxada sobre el projecte seguent que no en te.
+        function _applyFieldNote(field) {
+            const noteEl = document.getElementById(`calc-note-${field}`);
+            if (!noteEl) return;
+            const pf = wizardPrefills[field];
+            noteEl.textContent = (pf && typeof pf === 'object' && pf.note) ? String(pf.note) : '';
+        }
+
+        // Boto "D'acord, així" generic (2026-09-18): nomes te sentit per a camps que el
+        // sistema PROPOSA i presenta com a resolts (prosa, avui `site_condition`) -- si el
+        // camp no en te un al DOM (`confirm-{field}`), no fa res. Es mostra NOMES quan la
+        // font encara es "revisar": si l'Eva ja l'ha confirmat o ha reescrit el text (i per
+        // tant la font ja es 'user' via `_is_changed`), oferir el boto no te sentit.
+        function _updateConfirmButton(field, source) {
+            const btn = document.getElementById(`confirm-${field}`);
+            if (!btn) return;
+            btn.style.display = (source === 'revisar') ? 'inline-block' : 'none';
+        }
+
         function setSourceBadge(field, source) {
             const badge = document.getElementById(`src-${field}`);
             if (!badge) return;
+            _applyFieldNote(field);
+            _updateConfirmButton(field, source);
             if (!source) {
                 badge.textContent = '';
                 badge.className = 'source-badge';
@@ -6525,6 +6581,38 @@
                     if (label) label.textContent = isActive ? 'Si' : 'No';
                 }
                 setSourceBadge(field, source);
+            });
+
+            // D3/D4 (2026-09-17): toggles-proposta include_earth_pressure/include_slope_stability.
+            // El valor pot arribar `null` (pendent desconegut, cap proposta): es representa igual
+            // que "No" (el toggle binari no té tercer estat) -- la incertesa la comunica el badge
+            // "revisar" + la nota sota el camp, no un estat visual nou. `data-touched` es reinicia
+            // a '1' NOMES quan la font ja és 'user' (decisió d'una sessió anterior); en cas
+            // contrari es reinicia a '0' a cada render perquè un clic anterior sobre un ALTRE
+            // projecte no es quedi enganxat en canviar de projecte.
+            ['include_earth_pressure', 'include_slope_stability'].forEach(field => {
+                const { value, source } = getWizardValue(field);
+                const btn = document.getElementById(`wiz-${field}`);
+                const label = document.getElementById(`wiz-${field}-label`);
+                if (btn) {
+                    const isActive = value === true || value === 'true';
+                    btn.classList.toggle('active', isActive);
+                    btn.dataset.touched = (source === 'user') ? '1' : '0';
+                    if (label) label.textContent = isActive ? 'Si' : 'No';
+                }
+                setSourceBadge(field, source);
+            });
+
+            // Camps de prosa amb boto "D'acord" (2026-09-18, generic -- vegeu
+            // `confirmProposalField`/`_updateConfirmButton`): mateix reinici de `data-touched`
+            // que els toggles de dalt, i pel mateix motiu -- un clic anterior sobre un ALTRE
+            // projecte no es pot quedar enganxat en canviar de projecte. El textarea ja rep el
+            // seu valor i badge al bucle `textFields` de mes amunt; aqui nomes es sincronitza
+            // l'estat de "tocat" (necessari per `collectForcedUserFields`).
+            CONFIRMABLE_PROPOSAL_FIELDS.forEach(field => {
+                const { source } = getWizardValue(field);
+                const el = document.getElementById(`wiz-${field}`);
+                if (el) el.dataset.touched = (source === 'user') ? '1' : '0';
             });
 
             // is_anthropized radio buttons
@@ -7367,6 +7455,36 @@
             if (label) label.textContent = isActive ? 'Si' : 'No';
         }
 
+        // D3/D4 (2026-09-17): «el sistema proposa, no decideix» (include_earth_pressure/
+        // include_slope_stability). El valor de partida del toggle és NOMÉS la proposta del
+        // sistema (pendent ICGC) -- fins que l'Eva no hi fa clic de debò, `data-touched` es
+        // queda a '0' i `collectWizardFields()` no envia res per aquest camp (mai un "No" en
+        // silenci per un pendent desconegut, que el toggle només pot representar com a inactiu).
+        function toggleProposalSwitch(btn) {
+            toggleSwitch(btn);
+            btn.dataset.touched = '1';
+        }
+
+        // Control generic "D'acord" (2026-09-18): equivalent de `toggleProposalSwitch` per a
+        // camps de PROSA que el sistema proposa i presenta com a resolts (avui `site_condition`,
+        // vegeu `docs/` -- 18 camps de prosa comparteixen el mateix patró, aquest es el primer).
+        // Font unica de la llista: s'usa aqui (reset de `data-touched` a cada render) i a
+        // `collectForcedUserFields`. Backend: `web/wizard_service.py::_FORCEABLE_USER_FIELDS`
+        // (allowlist propia, no es refia d'aquesta llista del client).
+        const CONFIRMABLE_PROPOSAL_FIELDS = ['site_condition'];
+
+        // Marca la frase proposada com a decidida per l'Eva SENSE tocar-ne el text -- el
+        // `<textarea>` no canvia de valor, nomes la seva font. `markWizardDirty(field)` ja fa
+        // tota la resta (badge -> 'tu', programa l'autodesat); aqui nomes calen `data-touched`
+        // (perque `collectForcedUserFields` el reculli) i amagar el boto d'immediat, sense
+        // esperar la propera crida a `setSourceBadge`.
+        function confirmProposalField(field) {
+            const el = document.getElementById(`wiz-${field}`);
+            if (el) el.dataset.touched = '1';
+            markWizardDirty(field);
+            _updateConfirmButton(field, 'user');
+        }
+
         function toggleWizardGroup(header) {
             const arrow = header.querySelector('.collapsed-arrow');
             const body = header.nextElementSibling;
@@ -7890,6 +8008,16 @@
             fields.has_basement = document.getElementById('wiz-has_basement').classList.contains('active');
             fields.has_retaining_walls = document.getElementById('wiz-has_retaining_walls').classList.contains('active');
 
+            // D3/D4 (2026-09-17): include_earth_pressure/include_slope_stability NOMÉS es desen si
+            // l'Eva hi ha fet clic de debò (`data-touched`, `toggleProposalSwitch`) -- si no, mai
+            // un "No" en silenci sobre una proposta que encara no ha vist ni decidit.
+            ['include_earth_pressure', 'include_slope_stability'].forEach(field => {
+                const el = document.getElementById(`wiz-${field}`);
+                if (el && el.dataset.touched === '1') {
+                    fields[field] = el.classList.contains('active');
+                }
+            });
+
             // Num soil levels
             const nsl = parseInt(document.getElementById('wiz-num_soil_levels').value) || 1;
             fields.num_soil_levels = nsl;
@@ -7988,6 +8116,19 @@
             loadProjectData(selectedProject, { refresh: true });
         }
 
+        // D3/D4 (2026-09-17): camps que l'Eva ha tocat de debò (`data-touched`) encara que el
+        // valor final coincideixi amb la proposta -- `_is_changed` del backend compara per VALOR
+        // i no ho detectaria com a canvi seu (vegeu `toggleProposalSwitch`).
+        function collectForcedUserFields() {
+            // Toggles (D3/D4) + camps de prosa amb boto "D'acord" (`CONFIRMABLE_PROPOSAL_FIELDS`,
+            // 2026-09-18) -- mateix mecanisme `data-touched`, dues famílies de control diferents.
+            return ['include_earth_pressure', 'include_slope_stability', ...CONFIRMABLE_PROPOSAL_FIELDS]
+                .filter(field => {
+                    const el = document.getElementById(`wiz-${field}`);
+                    return el && el.dataset.touched === '1';
+                });
+        }
+
         async function saveWizard() {
             if (!selectedProject) return true;
 
@@ -8004,6 +8145,7 @@
                     // resol contra `_decisions.json` i les congela a user_data,
                     // que es d'on el generador munta les taules del .docx.
                     lectura_selections: getLecturaSelections(),
+                    forced_user_fields: collectForcedUserFields(),
                 };
 
                 const res = await fetch(`/api/wizard/${encodeURIComponent(selectedProject)}`, {

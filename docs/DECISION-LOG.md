@@ -6925,3 +6925,193 @@ Sessió nova amb context sencer per a les dues decisions grosses (handoff
 `docs/_FOR-NEW-YOU-20260917-1900.md`).
 
 *Fi entrada 2026-09-17 (3). La coma que esborrava coordenades, i el patró que hi ha sota les tres avaries del dia.*
+
+## 2026-09-17 (4) — Un pendent desconegut deixa de ser «pla», i cap secció torna a sortir amb la capçalera sola
+
+### Context
+
+La troballa del matí (`docs/troballes/TROBALLA-SOLAR-PLA-VS-VESSANT-2026-09-17.md`) deia que l'informe de
+Rubí es contradiu: «es tracta d'un solar pla» a 3.3.1 i «4.5 ESTABILITAT DE VESSANT» a l'índex, amb un
+pendent real del 21,6 %. El Josep va triar atacar aquesta decisió abans que la dels 18 camps.
+
+**Mesurar abans de codificar (memòria `feedback_measure_baseline_before_coding`) va capgirar el diagnòstic.**
+La troballa donava per bo que la frase era el que havia quedat obsolet i que les seccions eren correctes.
+És al revés.
+
+### Decisions arquitectòniques clau
+
+**1. Les dues seccions eren capçaleres BUIDES, i aquest era el problema gros.**
+Al `.docx` de Rubí, sota «4.4 EMPENTES DE TERRES» i «4.5 ESTABILITAT DE VESSANT» no hi ha ni una línia:
+ve directament el tancament i la signatura de l'Eva. `docs/QA-STATUS.md:134` ja advertia que els àbacs de
+Hoek & Bray no estan implementats. La mesura del 2026-09-10 mostra que **Castellar també les tenia buides**:
+tot informe que hagi activat mai aquestes seccions ha sortit amb dos títols nus. Ningú ho havia vist perquè
+ningú havia mirat sota la capçalera.
+
+*Per què no ho vam veure abans:* la comparació es fa per variables, i una variable buida amb la seva
+capçalera renderitzada no la distingeix cap mètrica de les que teníem.
+
+**2. Causa arrel: dues auto-activacions mal ordenades, no «ningú recalcula».**
+`generate()` pas 2b activa els flags des de `report_data.is_sloped`, que ve del prefill on la Fase 3 no va
+córrer (sense UTM) → `Section4Generator` retorna `None` als dos paràgrafs. Després `_build_template_context`
+fa una crida ICGC **nova**, obté 21,6 % i activa els flags **de la plantilla**. La lectura tardana arriba a
+les capçaleres i no al contingut. *Alternativa rebutjada:* recalcular la frase al final — no hauria omplert
+les seccions, que era el mal de debò.
+
+**3. El pendent mitjà de l'ICGC no és el fet que decideix — i per tant el sistema no ha de decidir.**
+Evidència dels signats: Castellar (33 %) porta les dues seccions amb Hoek & Bray i F=1,8; Rubí (21,6 %) no
+en porta cap, i al 2.1.2 l'Eva explica per què: 13,20 m de desnivell «tot i que la zona de treball es mostra
+totalment plana. La pendent comença la zona posterior». **Cap llindar sobre la mitjana separa els dos casos.**
+És la mateixa forma que la regla d'or dels càlculs: mana l'estrat **on recolza la fonamentació**.
+
+*Decisió del Josep:* el sistema **calcula amb el que sap i ho proposa a l'Eva al wizard** («Pendent mitjà
+(font: ICGC): X. Amb això, l'informe inclouria…»), ella tria, i l'informe escriu el que ella decideixi.
+*Alternativa rebutjada:* buscar un llindar millor — l'evidència diu que no n'hi ha cap de derivable.
+
+**4. La capçalera neutra «Al solar,» és de l'Eva, no inventada.**
+Repassats els signats llegibles, Rubí és **l'únic** on 3.3.1 i 4.2 duen capçalera diferent, i la de 3.3.1
+no afirma res (ni topografia ni antropització). `ANALISI-NARRATIVA-2026-09-06.md` §4 no l'havia registrat.
+És el defecte honest quan el pendent no es coneix. Confirmació demanada (pregunta 17 ampliada).
+
+**5. La provinença existia i no es mirava.**
+`report_generator.py` decidia si manava el text del wizard **pel recompte de paraules**, que no distingeix un
+text de l'Eva d'una conjectura pròpia. `user_data['_sources']` ja ho registra (`'computed (slope 0%)'` vs
+`'user'`), i el mateix fitxer ja el consultava per a `cota_referencia`. Ara mana `_sources`; sense `_sources`
+(informes antics) cau al comportament d'abans.
+
+### Implementació
+
+| fitxer | què |
+|---|---|
+| `automation/narrative_criteria.py` | pendent desconegut → `None`, mai `0.0`; capçalera `neutre` («Al solar»); decideix per l'eix que sí es coneix |
+| `web/wizard_service.py` | deixa de forçar `0.0`; consulta l'ICGC quan les UTM arriben per la via de reserva dels adjacents; proposa `include_earth_pressure`/`include_slope_stability` **sempre**, amb la raó a `note` |
+| `automation/report_generator.py` | resol el pendent **abans** de generar les seccions (una sola crida ICGC); `_sources` en comptes del recompte de paraules; cap `include_*` a True amb el paràgraf buit |
+| `automation/sections/section4_conclusions.py` | tot el català del 4.5 reescrit amb accents i apòstrofs |
+
+### Validació empírica
+
+- Suite: **31 vermells esperats, coincidència exacta per nom en els dos sentits, 0 errors**, 2683 passats.
+- Rubí generat de debò: 4.4 i 4.5 passen de buides a tenir contingut; una sola crida ICGC (abans dues).
+- Castellar: `slope_percent`, `is_sloped` i `site_condition` idèntics a la línia base; **guanya** el contingut
+  del 4.5 que a la mesura del 10-09 sortia buit.
+- Linyola: idèntic byte a byte. Alcoletge (4,5 %) i Bell-lloc (3,3 %) tenen el pendent resolt → no canvien.
+- La frase neutra generada és **idèntica caràcter a caràcter** a la del `.docx` signat de Rubí.
+
+### Tests
+
++19 (2 a `test_narrative_criteria.py`, 8 a `test_wizard_service_slope_and_site_condition.py`, 9 a
+`test_report_generator_slope_and_sections.py`). L'invariant clavat: `site_condition_sentence(None, None)` i
+`site_condition_sentence(0.0, None)` **han de diferir**.
+
+### Limitacions conegudes
+
+- **La UI no hi és.** Els dos camps arriben al prefill marcats i amb la raó, però `review.html` no té input ni
+  badge: **avui no compten a «Queden N camps a revisar»**. Tanda pròpia, i és la que tanca la decisió del Josep.
+- **Rubí seguirà divergint del signat**: amb el pendent resolt dirà «Tot i no ser un solar pla» i proposarà les
+  dues seccions. És el comportament volgut fins que l'Eva decideixi al wizard.
+- **El número balla**: segons el camí de geocodificació, el mateix solar dona 21,6 % o 12,3 % (dos punts UTM
+  dins la parcel·la). Els dos passen de 10 %, o sigui que la frase no canvia, però la xifra impresa sí.
+- **El mètode del 4.5 no és el de l'Eva**: nosaltres escrivim la fórmula inline i F=1,5 del CTE; ella redacta
+  en prosa, remet als àbacs i fa servir F=1,8. Pregunta 40 (c-bis), no tocat.
+- **Dos defectes veïns trobats i NO arreglats** (§8 de la troballa): Vilanova es genera en català un informe
+  que l'Eva signa en castellà; i `wizard_service.py:369` converteix un `is_anthropized=False` **conegut** en
+  «no ho sé» (`'' or None`) — la imatge especular del defecte principal.
+
+### GO/NO-GO
+
+✅ Suite neta · ✅ cap regressió als 7 projectes · ✅ frase neutra verificada contra el signat ·
+✅ capçaleres buides tancades (Rubí i Castellar) · ⏳ UI del wizard · ⏳ criteri de l'Eva (preguntes 17 i 40)
+
+### Següents passos
+
+1. El grup de camps al wizard: raó + alternatives + text lliure, per a `site_condition` i els dos flags.
+2. Repàs d'accents a la resta de seccions — **començant per quines arriben al `.docx`** (`STATUS.md` punt 0a:
+   393 coincidències en 55 fitxers, però les de sections 1/2/3 no s'imprimeixen enlloc).
+3. Preguntes 17 i 40 a l'Eva el 26-09.
+
+*Fi entrada 2026-09-17 (4). El pendent desconegut deixa de ser «pla», i cap secció torna a sortir amb la capçalera sola.*
+
+## 2026-09-18 — El wizard passa de decidir a proposar: l'Eva veu el pendent, la raó, i hi diu la seva
+
+### Context
+
+L'entrada de 2026-09-17 (4) va tancar que un pendent desconegut deixés de ser «pla» i que cap secció sortís
+amb la capçalera sola, però hi deixava el forat de fons obert: **el pendent mitjà de l'ICGC no és el fet que
+decideix** si l'informe porta «4.4 Empentes de terres» i «4.5 Estabilitat de vessant» ni quina frase va a
+§3.3.1 — ho decideix el pendent **allà on es fonamenta l'edifici**, judici de la visita. Castellar (33 %) les
+porta; Rubí (21,6 %) no, perquè «la zona de treball es mostra totalment plana. La pendent comença la zona
+posterior».
+
+Decisió del Josep, en les seves paraules: *«que el sistema calculi a partir de la informació disponible
+(pendent mitjà) i presenti aquesta informació a l'Eva al wizard… "Pendent mitjà (font: ICGC): X. Segons això,
+a l'informe posaríem '……'. Vols modificar-ho?" i permetre-li modificar-ho de forma senzilla. I que a l'informe
+s'escrigui el que l'Eva decideixi.»*
+
+### Decisions arquitectòniques clau
+
+**1. Els dos camps de secció existeixen per primer cop de cara a l'Eva.**
+`include_earth_pressure` i `include_slope_stability` no eren enlloc de la UI ni a `WIZARD_FIELDS`: el sistema
+els decidia sol i ella no els veia mai. Ara arriben com a proposta (`source: 'revisar'`) amb la raó a `note`,
+i la seva decisió mana sobre l'auto-activació del pas 2b del generador. *Alternativa rebutjada:* buscar un
+llindar millor sobre el pendent mitjà — l'evidència dels signats diu que no n'hi ha cap de derivable.
+
+**2. `forced_user_fields`: confirmar una proposta és una decisió, encara que el valor no canviï.**
+`_is_changed` compara valors, o sigui que un clic que confirma la proposta era indistingible de no fer res.
+Calia un canal explícit. Amb **allowlist al servidor** (`_FORCEABLE_USER_FIELDS`): el servidor no es pot
+refiar de qualsevol nom que li arribi, perquè marcar `'user'` un camp que l'Eva no ha tocat trencaria la
+precedència Eva > lector.
+
+**3. Un botó «D'acord, així» — i «vist» no és «decidit».**
+Trobat verificant: l'Eva no tenia cap manera de dir que hi estava d'acord sense **reescriure** la frase. El
+camp es quedava a `revisar` per sempre i la porta suau li sortiria cada vegada — i un avís que surt sempre
+deixa de ser un avís. El botó es veu només mentre el camp està pendent, no toca el text, i **l'ha de prémer
+ella**: res de marcar-ho per focus, per estar a pantalla o per un autodesat, que seria tornar a convertir un
+silenci en una afirmació. Fet **genèric** (`CONFIRMABLE_PROPOSAL_FIELDS`) perquè els altres camps de la
+decisió 2 el reaprofitin.
+
+**4. La raó ha de sobreviure al desat** (troballa de la revisió, era una regressió nostra).
+`site_condition` es persisteix al primer autosave (el `<textarea>` viatja sempre, encara que ningú l'hagi
+tocat) i `_load_existing_user_data()` no persisteix mai `note`. Amb la guarda antiga (`if not _get_val(...)`)
+la raó **desapareixia a partir del segon autosave**. Abans d'aquesta tanda la informació anava dins el
+`source` persistit (`'computed (slope 36%)'`) i sobrevivia congelada; en moure-la a `note` es perdia del tot.
+Guarda corregida al mateix criteri que la resta: mana només si `source == 'user'`.
+
+### Implementació
+
+| fitxer | què |
+|---|---|
+| `templates/validation/review.html` | dos interruptors nous amb badge i raó; nota genèrica (`_applyFieldNote`, assignació **sempre**, buit inclòs); botó «D'acord, així» (`CONFIRMABLE_PROPOSAL_FIELDS`, `confirmProposalField`) |
+| `web/wizard_service.py` | `site_condition` i els dos camps proposats amb `source:'revisar'` + `note`; guardes independents per camp; `_FORCEABLE_USER_FIELDS` |
+| `web/api.py`, `automation/wizard.py` | `forced_user_fields` de punta a punta; els dos camps a `WIZARD_FIELDS` |
+| `automation/report_data.py`, `automation/report_generator.py` | la decisió de l'Eva mana sobre el càlcul derivat i sobre l'auto-activació del pas 2b |
+
+### Validació empírica
+
+- **Suite: 31 vermells esperats, coincidència exacta per NOM en els dos sentits, 0 errors, 2702 passats.**
+- Punta a punta sobre Rubí real: l'Eva diu «no» → `context.include_*` False i `section_*_num` buits.
+- Al navegador: badge `revisar` → `tu` en confirmar, comptador 3 → 0, **text intacte**, nota conservada.
+- **La nota no es queda enganxada entre projectes** (provat canviant a un projecte sense notes).
+- **La confirmació aguanta un desat posterior** que ja no porta el camp a `forced_user_fields`.
+
+### Limitacions conegudes
+
+- El comptador puja **+3 per projecte** (decisió explícita del Josep: és el que volia).
+- La xifra del pendent balla segons el camí de geocodificació (21,6 % o 12,3 % al mateix solar de Rubí).
+  Ara l'Eva la veu i la pot corregir; abans no.
+- El mètode del 4.5 segueix sense ser el de l'Eva (fórmula inline i F=1,5 del CTE, contra la seva prosa amb
+  àbacs i F=1,8). Pregunta 40 (c-bis).
+- Els altres camps de prosa (`building_structure_desc`, `access_street`, `lab_tests_text`…) encara **no**
+  proposen res amb `'revisar'`: quan ho facin, n'hi haurà prou d'afegir-los a les dues llistes i posar-hi el
+  botó.
+
+### GO/NO-GO
+
+✅ Suite neta · ✅ la decisió de l'Eva mana en els dos sentits · ✅ la raó sobreviu al desat ·
+✅ verificat al navegador · ⏳ criteri de l'Eva (preguntes 17 i 40, visita del 26-09)
+
+### Següents passos
+
+1. Preguntes 17 i 40 a l'Eva, inclòs d'on surt el seu F=1,8.
+2. Repàs d'accents (`STATUS.md` 0a), **començant per quines seccions arriben al `.docx`**.
+3. Decisió 2: els 18 camps. El botó «D'acord» ja hi és, fet genèric a posta.
+
+*Fi entrada 2026-09-18. El wizard deixa de decidir pel seu compte: proposa, explica per què, i espera.*
