@@ -78,8 +78,7 @@ console.log(JSON.stringify(inputs.map((s) => normalizeUtmXyDecimal(s))));
 @pytest.fixture(scope="module")
 def normalized(tmp_path_factory) -> list[str]:
     node = shutil.which("node")
-    if not node:
-        pytest.skip("node no disponible")
+    assert node, "node no disponible: aquest test no es pot saltar"
     script = tmp_path_factory.mktemp("utm-normalize-js") / "harness.mjs"
     script.write_text(
         _HARNESS
@@ -156,8 +155,7 @@ console.log(JSON.stringify(steps));
 
 def test_utm_warning_does_not_leak_across_project_switch(tmp_path_factory):
     node = shutil.which("node")
-    if not node:
-        pytest.skip("node no disponible")
+    assert node, "node no disponible: aquest test no es pot saltar"
     src = REVIEW_HTML.read_text(encoding="utf-8")
     extracted = "\n\n".join(
         _extract_block(src, header) for header in ["function _updateUtmWarning("]
@@ -169,3 +167,37 @@ def test_utm_warning_does_not_leak_across_project_switch(tmp_path_factory):
     steps = json.loads(proc.stdout)
     assert steps[0], "el projecte espatllat hauria de mostrar l'avís"
     assert steps[1] == "", f"l'avís del projecte anterior s'ha quedat enganxat: {steps[1]!r}"
+
+
+# ---------------------------------------------------------------------------
+# _utmValueForInput — xarxa de seguretat del camí de la lectura headless.
+# ---------------------------------------------------------------------------
+
+_INPUT_HARNESS = r"""
+'use strict';
+
+__EXTRACTED__
+
+console.log(JSON.stringify([
+    _utmValueForInput('utm_x', '308781,86'),
+    _utmValueForInput('utm_y', '4613950,63'),
+    _utmValueForInput('cota_referencia', '198,9'),
+    _utmValueForInput('utm_x', 308781.86),
+]));
+"""
+
+
+def test_utm_value_for_input_js(tmp_path):
+    node = shutil.which("node")
+    assert node, "node no disponible: aquest test no es pot saltar"
+    src = REVIEW_HTML.read_text(encoding="utf-8")
+    extracted = (
+        _extract_const_statement(src, "const UTM_XY_MIN_PLAUSIBLE = ")
+        + "\n\n" + _extract_block(src, "function normalizeUtmXyDecimal(")
+        + "\n\n" + _extract_block(src, "function _utmValueForInput(")
+    )
+    script = tmp_path / "harness.mjs"
+    script.write_text(_INPUT_HARNESS.replace("__EXTRACTED__", extracted), encoding="utf-8")
+    proc = subprocess.run([node, str(script)], capture_output=True, text=True, timeout=60)
+    assert proc.returncode == 0, proc.stderr
+    assert json.loads(proc.stdout) == ["308781.86", "4613950.63", "198,9", 308781.86]

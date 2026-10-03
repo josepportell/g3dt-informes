@@ -1203,10 +1203,13 @@ def python_signals(project_path: Path) -> list[Signal]:
             continue
         first = next((p for p in points if p["punt"].upper() in ("P-1", "P1")), points[0])
         note_pts = ", ".join(f"{p['punt']} {p['x']}/{p['y']}" for p in points)
-        out.append(Signal("utm_x", first["x"], f"{rel} ({first['punt']})", first["raw"], 0.9, rel, "coordenades_gps",
+        # z, raw i extra.punts queden crus a propòsit: z és fora de l'abast de normalize_utm_xy_decimal; raw/punts són la cita literal del fitxer.
+        utm_x = _normalize_utm_component(first["x"])
+        utm_y = _normalize_utm_component(first["y"])
+        out.append(Signal("utm_x", utm_x, f"{rel} ({first['punt']})", first["raw"], 0.9, rel, "coordenades_gps",
                           "python", f"regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: {note_pts}",
                           is_a=True, extra={"punts": points}))
-        out.append(Signal("utm_y", first["y"], f"{rel} ({first['punt']})", first["raw"], 0.9, rel, "coordenades_gps",
+        out.append(Signal("utm_y", utm_y, f"{rel} ({first['punt']})", first["raw"], 0.9, rel, "coordenades_gps",
                           "python", f"regla Pas 3: UTM de l'informe = P-1 de COORDENADES.txt; punts: {note_pts}",
                           is_a=True, extra={"punts": points}))
         if first.get("z") is not None:

@@ -10897,6 +10897,11 @@
 
         // -- Aplicar decisions (escalars + taules) --------------------------------
 
+        function _utmValueForInput(wizardKey, v) {
+            return ((wizardKey === 'utm_x' || wizardKey === 'utm_y') && typeof v === 'string')
+                ? normalizeUtmXyDecimal(v) : v;
+        }
+
         function applyLecturaDecisions(decisions, degraded) {
             if (!decisions || typeof decisions !== 'object') return;
             lecturaState.decisions = decisions;
@@ -10919,12 +10924,12 @@
                     // deien el valor consolidat. Font 'user' = mai es trepitja.
                     if (cell.value !== null && cell.value !== undefined && cell.value !== ''
                         && (!el.value || !_lecturaIsUserSourced(wizardKey))) {
-                        el.value = cell.value;
+                        el.value = _utmValueForInput(wizardKey, cell.value);
                     }
                 } else if (el && estat === 'candidats') {
                     const first = cell.candidates && cell.candidates[0] ? cell.candidates[0].value : cell.value;
                     if (first !== null && first !== undefined && (!el.value || !_lecturaIsUserSourced(wizardKey))) {
-                        el.value = first;
+                        el.value = _utmValueForInput(wizardKey, first);
                     }
                 }
                 // no_trobat: mai escriu (regla 4 del contracte).

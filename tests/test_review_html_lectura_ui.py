@@ -62,6 +62,8 @@ _FUNCTIONS = [
     "function _lecturaBadgeClassAndLabel(",
     "function _lecturaLitologiaSelect(",
     "function _lecturaN30Cell(",
+    "function normalizeUtmXyDecimal(",
+    "function _utmValueForInput(",
     "function applyLecturaDecisions(",
     "function getLecturaSelections(",
 ]
@@ -109,6 +111,8 @@ def _extracted_source() -> str:
     src = REVIEW_HTML.read_text(encoding="utf-8")
     blocks = [_extract_block(src, h) for h in _CONSTS]
     blocks = [b if b.endswith(";") else b + ";" for b in blocks]
+    start = src.index("const UTM_XY_MIN_PLAUSIBLE = ")
+    blocks.append(src[start: src.index(";", start) + 1])
     blocks += [_extract_block(src, h) for h in _FUNCTIONS]
     return "\n\n".join(blocks)
 
@@ -313,8 +317,7 @@ console.log(JSON.stringify(out));
 @pytest.fixture(scope="module")
 def js(tmp_path_factory) -> dict:
     node = shutil.which("node")
-    if not node:
-        pytest.skip("node no disponible")
+    assert node, "node no disponible: aquest test no es pot saltar"
     script = tmp_path_factory.mktemp("lectura-js") / "harness.js"
     script.write_text(_HARNESS.replace("__EXTRACTED__", _extracted_source()), encoding="utf-8")
     proc = subprocess.run([node, str(script)], capture_output=True, text=True, timeout=60)

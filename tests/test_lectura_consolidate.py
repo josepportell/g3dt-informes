@@ -1346,6 +1346,26 @@ def test_geocoded_utm_only_fills_in_when_there_is_no_coordenades_txt(tmp_path: P
     assert cell["value"] == "423167"
 
 
+def test_python_signals_normalizes_utm_decimal_comma_alcoletge(tmp_path: Path):
+    """COORDENADES.txt d'Alcoletge: x amb coma decimal; z (cota) no es toca."""
+    proj = tmp_path / "4001670 ALCOLETGE"
+    (proj / "ANNEXES").mkdir(parents=True)
+    (proj / "ANNEXES" / "COORDENADES.txt").write_text(
+        "Coordenades UTM (X);(Y);(Z);\nP-1\n308781,86 ; 4613950.63 ; 198.9\n", encoding="utf-8")
+    sigs = {s.concept: s for s in C.python_signals(proj)}
+    assert sigs["utm_x"].value == "308781.86"
+    assert sigs["utm_y"].value == "4613950.63"
+    assert sigs["cota_referencia"].value == "198.9"
+    assert "308781,86" in sigs["utm_x"].quote
+
+    other = tmp_path / "4001671 ALTRE"
+    other.mkdir()
+    (other / "COORDENADES.txt").write_text("P-1\n308781.86 ; 4613950,63 ; 198.9\n", encoding="utf-8")
+    sigs = {s.concept: s for s in C.python_signals(other)}
+    assert sigs["utm_x"].value == "308781.86"
+    assert sigs["utm_y"].value == "4613950.63"
+
+
 def test_no_auto_result_means_no_http_signals(tmp_path: Path, monkeypatch):
     """Primera lectura d'un projecte que no ha passat mai pel wizard."""
     monkeypatch.setenv("G3DT_LECTURA_HTTP_SOURCES", "icgc,geocodificacio,cadastre")
